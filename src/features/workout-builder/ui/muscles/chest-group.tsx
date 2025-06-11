@@ -1,0 +1,87 @@
+import React from "react";
+import { ExerciseAttributeValueEnum } from "@prisma/client";
+
+export const ChestGroup = ({
+  onToggleMuscle,
+  getMuscleClasses,
+}: {
+  onToggleMuscle: (muscle: ExerciseAttributeValueEnum) => void;
+  getMuscleClasses: (muscle: ExerciseAttributeValueEnum) => string;
+}) => {
+  return (
+    <g className="group cursor-pointer" onClick={() => onToggleMuscle(ExerciseAttributeValueEnum.CHEST)}>
+      <path
+        className={getMuscleClasses(ExerciseAttributeValueEnum.CHEST)}
+        d="M 128.00,122.83
+           C 132.18,123.49 136.25,123.15 140.14,121.62
+             145.31,119.58 149.70,116.28 153.73,112.49
+             154.47,111.79 154.70,110.91 154.40,109.98
+             153.95,108.57 153.53,107.12 152.81,105.84
+             149.78,100.45 146.82,95.05 144.62,89.25
+             143.53,86.37 139.34,82.87 136.11,83.86
+             131.78,85.18 127.51,86.71 123.26,88.29
+             119.12,89.83 116.94,93.03 116.62,97.33
+             116.32,101.36 116.14,105.41 116.31,109.44
+             116.56,115.50 121.62,121.81 128.00,122.83"
+        data-elem={ExerciseAttributeValueEnum.CHEST}
+        id="path106"
+        stroke="black"
+        strokeWidth="0"
+      />
+      <path
+        className={getMuscleClasses(ExerciseAttributeValueEnum.CHEST)}
+        d="M 115.70,124.93
+           C 116.59,123.70 117.47,122.46 118.32,121.20
+             118.61,120.76 118.81,120.26 119.06,119.77
+             118.96,119.45 118.93,119.13 118.77,118.89
+             117.79,117.39 116.84,115.87 115.76,114.45
+             114.99,113.43 114.47,113.43 113.69,114.49
+             112.62,115.92 111.67,117.44 110.74,118.97
+             110.55,119.30 110.53,119.94 110.72,120.25
+             111.72,121.86 112.79,123.44 113.91,124.98
+             114.45,125.72 115.15,125.69 115.70,124.93"
+        data-elem={ExerciseAttributeValueEnum.CHEST}
+        id="path138"
+        stroke="black"
+        strokeWidth="0"
+      />
+
+      <path
+        className={getMuscleClasses(ExerciseAttributeValueEnum.CHEST)}
+        d="M 112.42,97.33
+           C 112.10,93.03 109.92,89.83 105.78,88.29
+             101.53,86.71 97.26,85.18 92.93,83.86
+             89.70,82.87 85.51,86.37 84.42,89.25
+             82.22,95.05 79.26,100.45 76.23,105.84
+             75.51,107.12 75.09,108.57 74.64,109.98
+             74.34,110.91 74.57,111.79 75.31,112.49
+             79.34,116.28 83.73,119.58 88.90,121.62
+             92.79,123.15 96.86,123.49 101.04,122.83
+             107.42,121.81 112.48,115.50 112.73,109.44
+             112.90,105.41 112.72,101.36 112.42,97.33"
+        data-elem={ExerciseAttributeValueEnum.CHEST}
+        id="path198"
+        stroke="black"
+        strokeWidth="0"
+      />
+
+      <path
+        d="M 114.71,95.58
+           C 114.89,95.35 115.00,95.27 115.02,95.18
+             115.68,92.72 116.69,90.44 118.43,88.53
+             118.64,88.30 118.61,87.85 118.69,87.50
+             118.33,87.47 117.94,87.32 117.63,87.42
+             115.83,88.01 114.05,88.05 112.23,87.51
+             111.81,87.38 111.31,87.52 110.84,87.54
+             111.01,87.97 111.09,88.49 111.37,88.83
+             112.74,90.47 113.65,92.33 114.26,94.36
+             114.37,94.74 114.53,95.10 114.71,95.58"
+        data-elem={ExerciseAttributeValueEnum.CHEST}
+        fill="#757575"
+        id="path160"
+        stroke="black"
+        strokeWidth="0"
+      />
+    </g>
+  );
+};

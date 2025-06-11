@@ -55,6 +55,7 @@ export function useWorkoutStepper() {
   // Gestion des muscles
   const toggleMuscle = useCallback(
     (muscle: ExerciseAttributeValueEnum) => {
+      console.log("muscle:", muscle);
       setSelectedMuscles((prev) => {
         if (prev.includes(muscle)) {
           return prev.filter((m) => m !== muscle);

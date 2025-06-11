@@ -45,6 +45,34 @@ export default {
         description: "Customize your workout",
       },
     },
+    muscles: {
+      abdominals: "Abdominals",
+      back: "Back",
+      biceps: "Biceps",
+      triceps: "Triceps",
+      chest: "Chest",
+      shoulders: "Shoulders",
+      quadriceps: "Quadriceps",
+      hamstrings: "Hamstrings",
+      glutes: "Glutes",
+      calves: "Calves",
+      forearms: "Forearms",
+      traps: "Traps",
+      obliques: "Obliques",
+    },
+    exercise: {
+      watch_video: "Watch video",
+      shuffle: "Shuffle",
+      pick: "Pick",
+      remove: "Remove",
+    },
+    loading: {
+      exercises: "Loading exercises...",
+    },
+    error: {
+      loading_exercises: "Error loading exercises",
+    },
+    no_exercises_found: "No exercises found",
     equipment: {
       bodyweight: {
         label: "Bodyweight",

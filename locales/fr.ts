@@ -45,6 +45,34 @@ export default {
         description: "Personnalisez votre séance",
       },
     },
+    muscles: {
+      abdominals: "Abdominaux",
+      back: "Dos",
+      biceps: "Biceps",
+      triceps: "Triceps",
+      chest: "Pectoraux",
+      shoulders: "Épaules",
+      quadriceps: "Quadriceps",
+      hamstrings: "Ischio-jambiers",
+      glutes: "Fessiers",
+      calves: "Mollets",
+      forearms: "Avant-bras",
+      traps: "Trapèzes",
+      obliques: "Obliques",
+    },
+    exercise: {
+      watch_video: "Voir la vidéo",
+      shuffle: "Mélanger",
+      pick: "Choisir",
+      remove: "Supprimer",
+    },
+    loading: {
+      exercises: "Chargement des exercices...",
+    },
+    error: {
+      loading_exercises: "Erreur lors du chargement des exercices",
+    },
+    no_exercises_found: "Aucun exercice trouvé",
     equipment: {
       bodyweight: {
         label: "Poids du corps",
@@ -102,7 +130,7 @@ export default {
       select_equipment_description: "Sélectionnez l'équipement pour débloquer des entraînements personnalisés",
       clear_all: "Tout effacer",
       muscle_selection_coming_soon: "Sélection des muscles (Bientôt disponible)",
-      muscle_selection_description: "Cette étape vous permettra de sélectionner les muscles cibles pour votre entraînement.",
+      muscle_selection_description: "Sélectionnez le(s) muscle(s) que vous voulez entraîner en cliquant dessus.",
       exercise_selection_coming_soon: "Sélection des exercices (Bientôt disponible)",
       exercise_selection_description: "Cette étape vous montrera des recommandations d'exercices personnalisées.",
     },

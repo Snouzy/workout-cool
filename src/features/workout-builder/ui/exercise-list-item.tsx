@@ -1,9 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { Play, Shuffle, Star, Trash2, GripVertical } from "lucide-react";
 
 import { useI18n } from "locales/client";
+import { InlineTooltip } from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
 
 import type { ExerciseWithAttributes } from "../types";
@@ -47,24 +49,46 @@ export function ExerciseListItem({ exercise, muscle, onShuffle, onPick, onDelete
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Ligne de fond pour l'effet de carte */}
-
       <div className="relative flex items-center justify-between py-2 px-2">
         {/* Section gauche - Infos principales */}
         <div className="flex items-center gap-4 flex-1 min-w-0">
           {/* Drag handle */}
           <GripVertical className="h-5 w-5 text-slate-400 dark:text-slate-500 cursor-grab active:cursor-grabbing" />
 
+          {/* Image de l'exercice */}
+          {exercise.fullVideoImageUrl && (
+            <div className="relative w-10 h-10 rounded-lg overflow-hidden shrink-0 bg-slate-100 dark:bg-slate-800 cursor-pointer border border-slate-200 dark:border-slate-700/50">
+              <Image
+                alt={exercise.name}
+                className="w-full h-full object-cover scale-[1.5]"
+                height={40}
+                onError={(e) => {
+                  // Fallback si l'image ne charge pas
+                  e.currentTarget.style.display = "none";
+                }}
+                src={exercise.fullVideoImageUrl}
+                width={40}
+              />
+              {/* Overlay play icon */}
+              <div className="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                <Play className="h-3 w-3 text-white fill-current" />
+              </div>
+            </div>
+          )}
+
           {/* Badge muscle avec animation */}
-          <div
-            className={`
-            relative flex items-center justify-center w-10 h-10 rounded-xl font-bold text-sm shrink-0
+          <InlineTooltip className="cursor-pointer" title={t(("workout_builder.muscles." + muscle.toLowerCase()) as keyof typeof t)}>
+            <div
+              className={`
+            relative flex items-center justify-center w-5 h-5 rounded-sm font-bold text-xs shrink-0
             ${muscleConfig.bg} ${muscleConfig.color}
             transition-all duration-200 
+            cursor-pointer
           `}
-          >
-            {muscle.charAt(0)}
-          </div>
+            >
+              {muscle.charAt(0)}
+            </div>
+          </InlineTooltip>
 
           {/* Nom de l'exercice avec indicateurs */}
           <div className="flex-1 min-w-0">

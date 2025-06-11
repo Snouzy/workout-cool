@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { StepperStepProps } from "../types";
 import { useWorkoutStepper } from "../model/use-workout-stepper";
 import { StepperHeader } from "./stepper-header";
+import { MuscleSelection } from "./muscle-selection";
 import { EquipmentSelection } from "./equipment-selection";
 
 function NavigationFooter({
@@ -142,8 +143,21 @@ function NavigationFooter({
 
 export function WorkoutStepper() {
   const t = useI18n();
-  const { currentStep, selectedEquipment, nextStep, prevStep, toggleEquipment, clearEquipment, canProceedToStep2, canProceedToStep3 } =
-    useWorkoutStepper();
+  const {
+    currentStep,
+    selectedEquipment,
+    nextStep,
+    prevStep,
+    toggleEquipment,
+    clearEquipment,
+    selectedMuscles,
+    toggleMuscle,
+    canProceedToStep2,
+    canProceedToStep3,
+  } = useWorkoutStepper();
+
+  // Calculer si on peut continuer selon l'étape
+  const canContinue = currentStep === 1 ? canProceedToStep2 : currentStep === 2 ? canProceedToStep3 : false;
 
   // Calculer l'état des étapes avec traductions
   const STEPPER_STEPS: StepperStepProps[] = [
@@ -176,9 +190,6 @@ export function WorkoutStepper() {
     isCompleted: step.stepNumber < currentStep,
   }));
 
-  // Déterminer si on peut continuer
-  const canContinue = (currentStep === 1 && canProceedToStep2) || (currentStep === 2 && canProceedToStep3) || currentStep === 3;
-
   // Rendu du contenu de l'étape actuelle
   const renderStepContent = () => {
     switch (currentStep) {
@@ -187,17 +198,12 @@ export function WorkoutStepper() {
           <EquipmentSelection onClearEquipment={clearEquipment} onToggleEquipment={toggleEquipment} selectedEquipment={selectedEquipment} />
         );
       case 2:
-        return (
-          <div className="text-center py-12">
-            <h2 className="text-2xl font-bold mb-4">{t("workout_builder.selection.muscle_selection_coming_soon")}</h2>
-            <p className="text-muted-foreground">{t("workout_builder.selection.muscle_selection_description")}</p>
-          </div>
-        );
+        return <MuscleSelection onToggleMuscle={toggleMuscle} selectedEquipment={selectedEquipment} selectedMuscles={selectedMuscles} />;
       case 3:
         return (
-          <div className="text-center py-12">
-            <h2 className="text-2xl font-bold mb-4">{t("workout_builder.selection.exercise_selection_coming_soon")}</h2>
-            <p className="text-muted-foreground">{t("workout_builder.selection.exercise_selection_description")}</p>
+          <div className="text-center py-20">
+            <h3 className="text-xl font-semibold mb-4">{t("workout_builder.coming_soon.exercises")}</h3>
+            <p className="text-slate-600 dark:text-slate-400">{t("workout_builder.coming_soon.exercises_description")}</p>
           </div>
         );
       default:

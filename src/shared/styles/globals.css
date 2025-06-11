@@ -50,6 +50,34 @@
   --color-accent-red: #cf0026;
 }
 
+@layer components {
+  /* Muscle illustration styles */
+  .muscle-enabled {
+    @apply fill-blue-300 stroke-blue-500 cursor-pointer;
+  }
+
+  .muscle-enabled:hover {
+    @apply fill-blue-400 stroke-blue-600;
+  }
+
+  .muscle-active {
+    @apply fill-emerald-400 stroke-emerald-600;
+    stroke-width: 1 !important;
+  }
+
+  .muscle-active:hover {
+    @apply fill-emerald-500 stroke-emerald-700;
+  }
+
+  .muscle-hover {
+    @apply fill-slate-300 stroke-slate-600;
+  }
+
+  .muscle-loading {
+    @apply opacity-50 animate-pulse;
+  }
+}
+
 .skeleton {
   @apply animate-pulse bg-gray-200 dark:bg-gray-700;
 }

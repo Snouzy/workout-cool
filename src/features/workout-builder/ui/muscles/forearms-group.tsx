@@ -216,7 +216,7 @@ export const ForearmsGroup = ({
       />
 
       <path
-        className="hover:fill-red-500 fill-transparent"
+        className="fill-transparent"
         d="M 334.25,147.25
            C 334.25,147.25 326.75,161.25 326.75,161.25
              326.75,161.25 324.25,172.50 324.25,172.50
@@ -243,7 +243,7 @@ export const ForearmsGroup = ({
       />
 
       <path
-        className="hover:fill-red-500 fill-transparent"
+        className="fill-transparent"
         d="M 464.50,162.00
            C 464.50,162.00 485.75,208.75 485.75,208.75
              485.75,208.75 491.00,215.75 491.00,215.75

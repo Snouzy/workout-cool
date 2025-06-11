@@ -86,6 +86,9 @@ export default {
       complete_workout: "Complete Workout",
     },
     stats: {
+      "muscle_selected#zero": "0 muscle selected",
+      "muscle_selected#one": "1 muscle selected",
+      "muscle_selected#other": "{count} muscles selected",
       equipment_selected: "equipment selected",
       equipment_selected_plural: "equipment selected",
       selected: "Selected",

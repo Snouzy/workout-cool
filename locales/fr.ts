@@ -72,7 +72,7 @@ export default {
     error: {
       loading_exercises: "Erreur lors du chargement des exercices",
     },
-    no_exercises_found: "Aucun exercice trouvé",
+    no_exercises_found: "Aucun exercice trouvé. Essayez de changer vos équipements ou vos muscles sélectionnés.",
     equipment: {
       bodyweight: {
         label: "Poids du corps",

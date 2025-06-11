@@ -49,7 +49,7 @@ function NavigationFooter({
                 </span>
               </div>
             )}
-            {currentStep !== 1 && (
+            {currentStep === 2 && (
               <div className="flex items-center gap-2 text-sm">
                 <CheckCircle className="h-4 w-4 text-blue-500" />
                 <span className="font-medium text-slate-700 dark:text-slate-300">
@@ -109,7 +109,7 @@ function NavigationFooter({
               </span>
             </div>
           )}
-          {currentStep !== 1 && (
+          {currentStep === 2 && (
             <div className="flex items-center gap-2 text-sm">
               <CheckCircle className="h-4 w-4 text-blue-500" />
               <span className="font-medium text-slate-700 dark:text-slate-300">
@@ -161,7 +161,7 @@ export function WorkoutStepper() {
   const [pickedExercises, setPickedExercises] = useState<string[]>([]);
 
   // Calculer si on peut continuer selon l'étape
-  const canContinue = currentStep === 1 ? canProceedToStep2 : currentStep === 2 ? canProceedToStep3 : false;
+  const canContinue = currentStep === 1 ? canProceedToStep2 : currentStep === 2 ? canProceedToStep3 : pickedExercises.length > 0;
 
   // Actions pour les exercices
   const handleShuffleExercise = (exerciseId: string, muscle: string) => {
@@ -300,17 +300,15 @@ export function WorkoutStepper() {
       <div className="min-h-[400px] mb-8">{renderStepContent()}</div>
 
       {/* Navigation footer gamifiée */}
-      {currentStep < 3 && (
-        <NavigationFooter
-          canContinue={canContinue}
-          currentStep={currentStep}
-          onNext={nextStep}
-          onPrevious={prevStep}
-          selectedEquipment={selectedEquipment}
-          selectedMuscles={selectedMuscles}
-          totalSteps={STEPPER_STEPS.length}
-        />
-      )}
+      <NavigationFooter
+        canContinue={canContinue}
+        currentStep={currentStep}
+        onNext={nextStep}
+        onPrevious={prevStep}
+        selectedEquipment={selectedEquipment}
+        selectedMuscles={selectedMuscles}
+        totalSteps={STEPPER_STEPS.length}
+      />
     </div>
   );
 }

@@ -12,7 +12,8 @@
     "old-vercel-build": "prisma generate && prisma migrate deploy && next build",
     "postinstall": "prisma generate",
     "lint": "next lint",
-    "import:exercises-full": "tsx scripts/import-exercises-with-attributes.ts"
+    "import:exercises-full": "tsx scripts/import-exercises-with-attributes.ts",
+    "db:seed": "pnpm run import:exercises-full ./data/sample-exercises.csv"
   },
   "resolutions": {
     "prettier": "^3.4.2"

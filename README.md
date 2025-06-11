@@ -69,7 +69,9 @@ management._
 ### Prerequisites
 
 - Node.js 18+
-- PostgreSQL database
+- Either:
+  - Docker
+  - OR PostgreSQL external database
 - pnpm (recommended) or npm
 
 ### Installation
@@ -103,18 +105,34 @@ management._
 
 4. **Set up the database**
 
+   #### Option 1: Using Docker
+
+   The project provides a convenient `make` command that handles everything:
+
    ```bash
-   npx prisma migrate deploy
-   npx prisma generate
+   make init
    ```
 
-5. **Start the development server**
+   This single command will:
+
+   - Start the PostgreSQL database using Docker
+   - Run database migrations
+   - Start the development server
+
+   #### Option 2: Manual PostgreSQL Setup
+
+   If you prefer to use your own PostgreSQL installation:
 
    ```bash
+   # Run migrations
+   npx prisma migrate deploy
+   npx prisma generate
+
+   # Start the development server
    pnpm dev
    ```
 
-6. **Open your browser** Navigate to [http://localhost:3000](http://localhost:3000)
+5. **Open your browser** Navigate to [http://localhost:3000](http://localhost:3000)
 
 ## Exercise Database Import
 

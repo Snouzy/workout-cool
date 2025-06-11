@@ -23,15 +23,24 @@ export const Header = () => {
   };
 
   return (
-    <div className="navbar bg-base-100 px-0">
+    <div className="navbar bg-base-100 px-4">
       {/* Logo and Title */}
       <div className="navbar-start">
-        <Link className="btn btn-ghost text-xl" href="/">
-          <Image alt="workout cool logo" className="w-8" height={32} src={Logo} width={32} />
-          <span className="font-semibold hidden sm:inline">Workout.cool</span>
+        <Link className="group flex items-center space-x-3 rounded-xl bg-gradient-to-r px-4 py-2 transition-all duration-200 " href="/">
+          <div className="relative">
+            <Image
+              alt="workout cool logo"
+              className="h-8 w-8 transition-transform duration-200 group-hover:rotate-[20deg] group-hover:scale-110"
+              height={32}
+              src={Logo}
+              width={32}
+            />
+            <div className="absolute -top-1 -right-1 h-3 w-3 rounded-full bg-emerald-400 opacity-0 transition-opacity duration-200 group-hover:opacity-100"></div>
+          </div>
+          <div className="flex flex-col">
+            <span className="font-bold transition-colors duration-200 group-hover:text-blue-400">Workout.cool</span>
+          </div>
         </Link>
-
-        <div className="badge badge-secondary badge-sm ml-2">Beta</div>
       </div>
 
       {/* User Menu */}
@@ -40,7 +49,7 @@ export const Header = () => {
 
         <div className="dropdown dropdown-end">
           <div className="btn btn-ghost btn-circle avatar" role="button" tabIndex={0}>
-            <div className="w-8 rounded-full bg-primary text-primary-content flex items-center justify-center text-sm font-medium">
+            <div className="w-8 rounded-full bg-primary text-primary-content !flex items-center justify-center text-sm font-medium">
               {userAvatar || <User className="w-4 h-4" />}
             </div>
           </div>

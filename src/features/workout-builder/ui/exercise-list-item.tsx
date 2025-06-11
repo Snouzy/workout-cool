@@ -40,11 +40,7 @@ export function ExerciseListItem({ exercise, muscle, onShuffle, onPick, onDelete
     <div
       className={`
         group relative overflow-hidden transition-all duration-300 ease-out
-        ${
-          isPicked
-            ? "bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/50 dark:to-indigo-950/50 border-l-4 border-l-blue-500"
-            : "bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800/70"
-        }
+        bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800/70
         border-b border-slate-200 dark:border-slate-700/50
         ${isHovered ? "shadow-lg shadow-slate-200/50 dark:shadow-slate-900/50" : ""}
       `}

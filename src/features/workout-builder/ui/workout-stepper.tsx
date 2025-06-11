@@ -18,6 +18,7 @@ function NavigationFooter({
   onPrevious,
   onNext,
   selectedEquipment,
+  selectedMuscles,
 }: {
   currentStep: number;
   totalSteps: number;
@@ -25,6 +26,7 @@ function NavigationFooter({
   onPrevious: () => void;
   onNext: () => void;
   selectedEquipment: any[];
+  selectedMuscles: any[];
 }) {
   const t = useI18n();
   const isFirstStep = currentStep === 1;
@@ -41,10 +43,7 @@ function NavigationFooter({
               <div className="flex items-center gap-2 text-sm">
                 <Zap className="h-4 w-4 text-emerald-500" />
                 <span className="font-medium text-slate-700 dark:text-slate-300">
-                  {selectedEquipment.length}{" "}
-                  {selectedEquipment.length === 1
-                    ? t("workout_builder.stats.equipment_selected")
-                    : t("workout_builder.stats.equipment_selected_plural")}
+                  {t("workout_builder.stats.equipment_selected", { count: selectedEquipment.length })}
                 </span>
               </div>
             )}
@@ -52,7 +51,7 @@ function NavigationFooter({
               <div className="flex items-center gap-2 text-sm">
                 <CheckCircle className="h-4 w-4 text-blue-500" />
                 <span className="font-medium text-slate-700 dark:text-slate-300">
-                  {t(`workout_builder.steps.${currentStep === 2 ? "muscles" : "exercises"}.title`)}
+                  {t("workout_builder.stats.muscle_selected", { count: selectedMuscles.length })}
                 </span>
               </div>
             )}
@@ -104,10 +103,7 @@ function NavigationFooter({
             <div className="flex items-center gap-2 text-sm">
               <Zap className="h-4 w-4 text-emerald-500" />
               <span className="font-medium text-slate-700 dark:text-slate-300">
-                {selectedEquipment.length}{" "}
-                {selectedEquipment.length === 1
-                  ? t("workout_builder.stats.equipment_selected")
-                  : t("workout_builder.stats.equipment_selected_plural")}
+                {t("workout_builder.stats.equipment_selected", { count: selectedEquipment.length })}
               </span>
             </div>
           )}
@@ -115,7 +111,7 @@ function NavigationFooter({
             <div className="flex items-center gap-2 text-sm">
               <CheckCircle className="h-4 w-4 text-blue-500" />
               <span className="font-medium text-slate-700 dark:text-slate-300">
-                {t(`workout_builder.steps.${currentStep === 2 ? "muscles" : "exercises"}.title`)}
+                {t("workout_builder.stats.muscle_selected", { count: selectedMuscles.length })}
               </span>
             </div>
           )}
@@ -226,6 +222,7 @@ export function WorkoutStepper() {
         onNext={nextStep}
         onPrevious={prevStep}
         selectedEquipment={selectedEquipment}
+        selectedMuscles={selectedMuscles}
         totalSteps={STEPPER_STEPS.length}
       />
     </div>

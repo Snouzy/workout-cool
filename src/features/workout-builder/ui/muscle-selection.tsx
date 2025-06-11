@@ -1222,16 +1222,6 @@ export function MuscleSelection({ onToggleMuscle, selectedMuscles }: MuscleSelec
       <div className="flex justify-center">
         <MuscleIllustration onToggleMuscle={onToggleMuscle} selectedMuscles={selectedMuscles} />
       </div>
-
-      {selectedMuscles.length > 0 && (
-        <div className="text-center">
-          <p className="text-sm text-slate-600 dark:text-slate-300">
-            {selectedMuscles.length === 1
-              ? t("workout_builder.stats.muscle_selected", { count: selectedMuscles.length })
-              : t("workout_builder.stats.muscle_selected", { count: selectedMuscles.length })}
-          </p>
-        </div>
-      )}
     </div>
   );
 }

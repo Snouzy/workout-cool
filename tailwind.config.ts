@@ -52,7 +52,7 @@ const config: Config = {
           DEFAULT: "#171718",
           dark: "#232324",
         },
-        primary: "#3E84F4",
+        primary: "#238BE6",
         green: {
           "100": "#DCFCE7",
           "200": "#D9F9EB",

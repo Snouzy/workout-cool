@@ -150,6 +150,9 @@ export function WorkoutStepper() {
     toggleMuscle,
     canProceedToStep2,
     canProceedToStep3,
+    isLoadingExercises,
+    exercisesByMuscle,
+    exercisesError,
   } = useWorkoutStepper();
 
   // Calculer si on peut continuer selon l'étape
@@ -197,9 +200,44 @@ export function WorkoutStepper() {
         return <MuscleSelection onToggleMuscle={toggleMuscle} selectedEquipment={selectedEquipment} selectedMuscles={selectedMuscles} />;
       case 3:
         return (
-          <div className="text-center py-20">
-            <h3 className="text-xl font-semibold mb-4">{t("workout_builder.coming_soon.exercises")}</h3>
-            <p className="text-slate-600 dark:text-slate-400">{t("workout_builder.coming_soon.exercises_description")}</p>
+          <div className="space-y-6">
+            {isLoadingExercises ? (
+              <div className="text-center py-20">
+                <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+                <p className="mt-4 text-slate-600 dark:text-slate-400">{t("workout_builder.loading.exercises")}</p>
+              </div>
+            ) : exercisesByMuscle.length > 0 ? (
+              <div className="space-y-8">
+                {exercisesByMuscle.map((group) => (
+                  <div className="space-y-4" key={group.muscle}>
+                    <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
+                      {t(`workout_builder.muscles.${group.muscle.toLowerCase()}` as keyof typeof t)}
+                    </h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                      {group.exercises.map((exercise) => (
+                        <div
+                          className="bg-white dark:bg-slate-800 rounded-lg p-4 border border-slate-200 dark:border-slate-700"
+                          key={exercise.id}
+                        >
+                          <h4 className="font-medium text-slate-900 dark:text-slate-100">{exercise.name}</h4>
+                          {exercise.description && (
+                            <p className="text-sm text-slate-600 dark:text-slate-400 mt-2 line-clamp-3">{exercise.description}</p>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : exercisesError ? (
+              <div className="text-center py-20">
+                <p className="text-red-600 dark:text-red-400">{t("workout_builder.error.loading_exercises")}</p>
+              </div>
+            ) : (
+              <div className="text-center py-20">
+                <p className="text-slate-600 dark:text-slate-400">{t("workout_builder.no_exercises_found")}</p>
+              </div>
+            )}
           </div>
         );
       default:

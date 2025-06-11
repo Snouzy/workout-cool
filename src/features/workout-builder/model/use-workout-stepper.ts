@@ -5,6 +5,7 @@ import { useQueryState, parseAsInteger, parseAsArrayOf, parseAsString } from "nu
 import { ExerciseAttributeValueEnum } from "@prisma/client";
 
 import { WorkoutBuilderStep } from "../types";
+import { useExercises } from "./use-exercises";
 
 export function useWorkoutStepper() {
   // État persistant dans l'URL avec nuqs
@@ -13,6 +14,17 @@ export function useWorkoutStepper() {
   const [selectedEquipment, setSelectedEquipment] = useQueryState("equipment", parseAsArrayOf(parseAsString).withDefault([]));
 
   const [selectedMuscles, setSelectedMuscles] = useQueryState("muscles", parseAsArrayOf(parseAsString).withDefault([]));
+
+  // Récupération des exercices
+  const {
+    data: exercisesByMuscle = [],
+    isLoading: isLoadingExercises,
+    error: exercisesError,
+  } = useExercises({
+    equipment: selectedEquipment as ExerciseAttributeValueEnum[],
+    muscles: selectedMuscles as ExerciseAttributeValueEnum[],
+    enabled: currentStep === 3, // Récupérer seulement à l'étape 3
+  });
 
   // Navigation entre les étapes
   const goToStep = useCallback(
@@ -80,6 +92,11 @@ export function useWorkoutStepper() {
     currentStep: currentStep as WorkoutBuilderStep,
     selectedEquipment: selectedEquipment as ExerciseAttributeValueEnum[],
     selectedMuscles: selectedMuscles as ExerciseAttributeValueEnum[],
+
+    // Exercices
+    exercisesByMuscle,
+    isLoadingExercises,
+    exercisesError,
 
     // Navigation
     goToStep,

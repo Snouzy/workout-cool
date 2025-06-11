@@ -17,9 +17,9 @@
 
 ## Contributors
 
-[![snouzy_biceps](https://avatars.githubusercontent.com/u/32961176?s=52&v=4)](https://twitter.com/snouzy_biceps)
-[![lucaasnp_](https://avatars.githubusercontent.com/u/44783073?s=52&v=4)](https://twitter.com/lucaasnp_)
-
+<a href="https://github.com/Snouzy/workout-cool/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=Snouzy/workout-cool" />
+</a>
 ## About
 
 A comprehensive fitness coaching platform that allows create workout plans for you, track progress, and access a vast exercise database with

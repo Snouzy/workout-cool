@@ -33,7 +33,6 @@ const ALL_MUSCLES: ExerciseAttributeValueEnum[] = [
 const MuscleIllustration = ({
   selectedMuscles,
   onToggleMuscle,
-  isLoading = false,
 }: {
   selectedMuscles: ExerciseAttributeValueEnum[];
   onToggleMuscle: (muscle: ExerciseAttributeValueEnum) => void;
@@ -517,7 +516,6 @@ const MuscleIllustration = ({
         strokeWidth="1"
       />
       <path
-        className={styles.muscle}
         d="M 406.94,81.88
            C 405.66,78.80 403.68,76.45 400.04,75.90
              395.59,75.23 391.12,74.84 386.69,75.63
@@ -539,7 +537,6 @@ const MuscleIllustration = ({
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 424.86,75.58
            C 421.55,75.92 418.66,76.93 416.95,80.04
              414.97,83.62 413.60,87.52 413.16,91.51
@@ -562,7 +559,6 @@ const MuscleIllustration = ({
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 412.34,201.13
            C 412.33,204.02 412.23,206.91 412.21,209.80
              412.20,210.15 412.41,210.50 412.52,210.85
@@ -581,14 +577,13 @@ const MuscleIllustration = ({
              412.42,165.95 412.44,173.58 412.44,181.22
              412.41,181.22 412.38,181.22 412.35,181.22
              412.35,187.86 412.36,194.49 412.34,201.13"
-        data-elem="Lower back"
+        data-elem={ExerciseAttributeValueEnum.BACK}
         fill="#757575"
         id="path20"
         stroke="black"
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 410.63,151.32
            C 410.49,151.32 410.49,146.96 410.13,144.87
              409.76,142.69 408.79,140.61 408.02,138.52
@@ -607,14 +602,13 @@ const MuscleIllustration = ({
              410.50,210.53 410.75,210.20 410.76,209.86
              410.78,209.06 410.64,208.25 410.64,207.44
              410.63,188.73 410.63,170.03 410.63,151.32"
-        data-elem="Lower back"
+        data-elem={ExerciseAttributeValueEnum.BACK}
         fill="#757575"
         id="path22"
         stroke="black"
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 452.92,116.24
            C 452.92,116.24 452.75,111.80 452.75,111.80
              452.75,111.80 452.74,111.80 452.74,111.80
@@ -639,7 +633,6 @@ const MuscleIllustration = ({
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 403.69,137.15
            C 405.75,134.61 405.91,133.56 404.16,130.82
              401.53,126.69 398.77,122.65 396.09,118.55
@@ -667,7 +660,6 @@ const MuscleIllustration = ({
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 451.05,138.61
            C 450.93,138.58 450.82,138.55 450.71,138.52
              450.53,138.88 450.38,139.24 450.18,139.59
@@ -687,7 +679,6 @@ const MuscleIllustration = ({
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 392.64,149.10
            C 392.27,149.18 392.12,149.19 391.99,149.25
              389.72,150.24 387.35,150.69 384.89,150.56
@@ -710,7 +701,6 @@ const MuscleIllustration = ({
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 419.29,75.38
            C 419.29,75.38 424.79,74.06 424.79,74.06
              424.79,74.06 424.79,74.06 424.79,74.06
@@ -791,7 +781,6 @@ const MuscleIllustration = ({
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 388.14,174.91
            C 388.01,174.75 387.84,174.60 387.64,174.46
              387.64,174.46 387.63,174.45 387.63,174.45
@@ -821,7 +810,6 @@ const MuscleIllustration = ({
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 377.55,225.66
            C 377.43,221.86 376.90,218.14 374.63,214.79
              373.56,213.23 372.20,211.95 370.22,211.34
@@ -848,14 +836,13 @@ const MuscleIllustration = ({
              383.39,240.94 382.38,241.28 381.39,241.64
              379.65,242.21 375.47,243.31 375.42,240.71
              376.68,235.77 377.72,230.79 377.55,225.66"
-        data-elem="Hamstrings"
+        data-elem={ExerciseAttributeValueEnum.HAMSTRINGS}
         fill="#757575"
         id="path38"
         stroke="black"
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 383.65,325.91
            C 384.19,325.50 384.56,325.24 384.91,324.95
              385.95,324.09 386.91,323.13 388.02,322.36
@@ -866,14 +853,13 @@ const MuscleIllustration = ({
              380.01,316.93 380.25,317.62 380.67,318.41
              381.50,319.99 382.19,321.65 382.87,323.29
              383.19,324.07 383.36,324.90 383.65,325.91"
-        data-elem="Hamstrings"
+        data-elem={ExerciseAttributeValueEnum.HAMSTRINGS}
         fill="#757575"
         id="path40"
         stroke="black"
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 395.62,188.85
            C 395.10,186.99 394.11,186.43 391.89,186.71
              387.21,187.30 383.33,189.20 380.03,191.94
@@ -894,7 +880,6 @@ const MuscleIllustration = ({
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 374.54,178.09
            C 375.35,177.34 375.98,176.40 376.84,175.71
              378.25,174.58 379.79,173.60 381.34,172.50
@@ -910,7 +895,6 @@ const MuscleIllustration = ({
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 378.79,319.96
            C 378.38,319.97 377.85,320.51 377.62,320.95
              376.44,323.18 374.52,325.61 373.42,327.88
@@ -924,14 +908,13 @@ const MuscleIllustration = ({
              380.43,333.81 381.25,329.63 381.25,325.35
              381.25,323.72 380.80,322.28 380.00,320.91
              379.75,320.49 379.19,319.95 378.79,319.96"
-        data-elem="Calves"
+        data-elem={ExerciseAttributeValueEnum.CALVES}
         fill="#757575"
         id="path46"
         stroke="black"
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 406.39,232.13
            C 406.41,231.95 406.41,231.77 406.40,231.60
              406.29,230.62 405.13,230.16 404.41,230.88
@@ -956,14 +939,13 @@ const MuscleIllustration = ({
              406.96,279.95 407.06,266.09 407.64,255.95
              407.73,254.53 406.41,236.96 406.38,235.53
              406.38,235.53 406.39,232.13 406.39,232.13"
-        data-elem="Hamstrings"
+        data-elem={ExerciseAttributeValueEnum.HAMSTRINGS}
         fill="#757575"
         id="path48"
         stroke="black"
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 391.16,336.61
            C 391.17,334.59 391.24,331.20 391.35,329.19
              391.44,327.76 391.43,326.32 391.37,324.89
@@ -979,7 +961,7 @@ const MuscleIllustration = ({
              395.13,373.95 395.94,371.21 396.20,368.76
              396.77,363.45 396.19,358.46 394.59,353.24
              392.50,346.48 391.13,344.21 391.16,336.61"
-        data-elem="Calves"
+        data-elem={ExerciseAttributeValueEnum.CALVES}
         fill="#757575"
         id="path50"
         stroke="black"
@@ -1007,7 +989,6 @@ const MuscleIllustration = ({
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 383.21,380.05
            C 381.52,378.52 380.53,376.62 379.87,374.54
              379.70,374.02 379.56,373.70 378.79,373.77
@@ -1036,14 +1017,13 @@ const MuscleIllustration = ({
              388.91,395.27 389.44,391.29 390.71,385.61
              391.09,383.91 391.48,382.20 391.92,380.26
              388.46,383.07 386.45,382.97 383.21,380.05"
-        data-elem="Calves"
+        data-elem={ExerciseAttributeValueEnum.CALVES}
         fill="#757575"
         id="path54"
         stroke="black"
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 431.03,186.03
            C 434.21,186.80 437.40,187.52 440.48,188.54
              441.32,188.82 442.10,189.23 442.87,189.68
@@ -1073,7 +1053,6 @@ const MuscleIllustration = ({
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 434.82,322.36
            C 435.93,323.13 436.89,324.09 437.93,324.95
              438.28,325.24 438.65,325.50 439.19,325.91
@@ -1084,14 +1063,13 @@ const MuscleIllustration = ({
              438.81,310.34 438.69,310.50 438.65,310.67
              437.79,314.07 436.20,317.16 434.26,320.11
              433.54,321.21 433.74,321.62 434.82,322.36"
-        data-elem="Hamstrings"
+        data-elem={ExerciseAttributeValueEnum.HAMSTRINGS}
         fill="#757575"
         id="path58"
         stroke="black"
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 446.16,166.84
            C 444.58,168.72 443.04,170.63 441.50,172.50
              443.05,173.60 444.59,174.58 446.00,175.71
@@ -1107,7 +1085,6 @@ const MuscleIllustration = ({
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 445.04,355.80
            C 445.38,359.38 445.29,363.00 445.58,366.58
              445.81,369.61 447.92,370.87 451.00,370.05
@@ -1121,14 +1098,13 @@ const MuscleIllustration = ({
              442.04,322.28 441.59,323.72 441.59,325.35
              441.58,329.63 442.41,333.81 442.99,338.03
              443.80,343.93 444.48,349.86 445.04,355.80"
-        data-elem="Calves"
+        data-elem={ExerciseAttributeValueEnum.CALVES}
         fill="#757575"
         id="path62"
         stroke="black"
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 432.29,380.53
            C 433.40,381.41 434.63,381.43 435.95,380.70
              439.00,379.01 440.64,376.49 441.69,373.67
@@ -1144,14 +1120,13 @@ const MuscleIllustration = ({
              426.65,358.46 426.07,363.45 426.64,368.76
              426.90,371.21 427.71,373.95 429.59,377.24
              429.96,377.89 431.65,380.01 432.29,380.53"
-        data-elem="Calves"
+        data-elem={ExerciseAttributeValueEnum.CALVES}
         fill="#757575"
         id="path64"
         stroke="black"
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 424.40,232.59
            C 429.67,235.69 435.46,237.94 441.58,239.60
              443.95,240.25 445.11,239.44 444.76,237.31
@@ -1172,7 +1147,6 @@ const MuscleIllustration = ({
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 435.16,400.96
            C 435.80,403.90 435.68,408.43 434.86,411.24
              434.49,412.51 434.02,413.76 433.62,415.03
@@ -1201,14 +1175,13 @@ const MuscleIllustration = ({
              436.39,382.97 434.38,383.07 430.92,380.26
              431.36,382.20 431.74,383.91 432.13,385.61
              433.40,391.29 433.93,395.27 435.16,400.96"
-        data-elem="Calves"
+        data-elem={ExerciseAttributeValueEnum.CALVES}
         fill="#757575"
         id="path68"
         stroke="black"
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 429.00,338.21
            C 429.23,338.17 429.46,338.13 429.69,338.09
              429.69,338.09 429.79,327.66 429.79,327.66
@@ -1233,7 +1206,7 @@ const MuscleIllustration = ({
              416.76,295.71 418.39,304.42 420.34,311.87
              422.59,320.53 423.36,325.91 427.66,335.88
              428.14,336.65 428.55,337.43 429.00,338.21"
-        data-elem="Hamstrings"
+        data-elem={ExerciseAttributeValueEnum.HAMSTRINGS}
         fill="#757575"
         id="path70"
         stroke="black"
@@ -1261,7 +1234,6 @@ const MuscleIllustration = ({
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 441.45,241.64
            C 440.46,241.28 439.45,240.94 438.44,240.64
              436.85,240.18 436.23,240.55 436.10,242.07
@@ -1288,7 +1260,7 @@ const MuscleIllustration = ({
              445.94,218.14 445.41,221.86 445.29,225.66
              445.12,230.79 446.16,235.77 447.42,240.71
              447.37,243.31 443.19,242.21 441.45,241.64"
-        data-elem="Hamstrings"
+        data-elem={ExerciseAttributeValueEnum.HAMSTRINGS}
         fill="#757575"
         id="path74"
         stroke="black"
@@ -1350,7 +1322,6 @@ const MuscleIllustration = ({
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 478.44,132.70
            C 477.17,132.60 475.86,132.25 474.77,131.75
              472.83,130.86 471.05,129.76 468.96,128.62
@@ -1376,14 +1347,13 @@ const MuscleIllustration = ({
              482.37,149.83 482.84,147.43 482.80,145.04
              482.73,141.31 482.10,137.61 480.56,134.07
              480.20,133.25 479.68,132.80 478.44,132.70"
-        data-elem="Triceps"
+        data-elem={ExerciseAttributeValueEnum.TRICEPS}
         fill="#757575"
         id="path78"
         stroke="black"
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 483.49,158.01
            C 487.25,161.99 490.63,166.23 493.44,170.86
              493.60,171.12 493.87,171.31 494.09,171.54
@@ -1393,14 +1363,13 @@ const MuscleIllustration = ({
              484.36,148.53 484.08,148.91 483.99,149.33
              483.55,151.44 483.18,153.57 482.75,155.68
              482.57,156.59 482.84,157.32 483.49,158.01"
-        data-elem="Forearms"
+        data-elem={ExerciseAttributeValueEnum.FOREARMS}
         fill="#757575"
         id="path80"
         stroke="black"
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 466.43,137.75
            C 466.50,137.55 466.56,137.34 466.58,137.14
              466.79,135.14 466.99,133.14 467.13,131.75
@@ -1412,14 +1381,13 @@ const MuscleIllustration = ({
              453.65,115.00 453.56,119.37 453.74,123.73
              454.00,129.73 456.89,134.72 461.26,139.01
              463.57,141.28 465.45,140.75 466.43,137.75"
-        data-elem="Triceps"
+        data-elem={ExerciseAttributeValueEnum.TRICEPS}
         fill="#757575"
         id="path82"
         stroke="black"
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 465.31,111.50
            C 464.02,111.23 462.74,110.93 461.05,110.56
              461.36,111.45 461.48,112.00 461.74,112.50
@@ -1431,14 +1399,13 @@ const MuscleIllustration = ({
              478.34,118.21 477.07,115.56 475.92,112.89
              475.60,112.16 475.11,111.53 473.87,111.81
              470.99,112.47 468.13,112.09 465.31,111.50"
-        data-elem="Triceps"
+        data-elem={ExerciseAttributeValueEnum.TRICEPS}
         fill="#757575"
         id="path84"
         stroke="black"
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 507.15,213.55
            C 508.29,213.77 508.51,213.26 508.10,212.14
              505.85,206.00 503.54,199.88 501.38,193.70
@@ -1482,14 +1449,13 @@ const MuscleIllustration = ({
              484.92,200.78 488.96,208.28 492.89,215.84
              493.38,216.80 493.97,216.75 494.83,216.36
              498.72,214.58 502.56,212.64 507.15,213.55"
-        data-elem="Forearms"
+        data-elem={ExerciseAttributeValueEnum.FOREARMS}
         fill="#757575"
         id="path86"
         stroke="black"
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 439.90,90.50
            C 439.84,91.35 440.15,91.90 440.89,92.40
              442.70,93.63 444.57,94.83 446.15,96.32
@@ -1502,7 +1468,7 @@ const MuscleIllustration = ({
              463.08,84.64 457.68,81.65 451.71,79.64
              450.88,79.36 449.84,79.33 448.98,79.53
              444.58,80.55 440.20,85.93 439.90,90.50"
-        data-elem="Shoulders"
+        data-elem={ExerciseAttributeValueEnum.SHOULDERS}
         fill="#757575"
         id="path88"
         stroke="black"
@@ -1564,7 +1530,6 @@ const MuscleIllustration = ({
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 328.92,170.86
            C 331.73,166.23 335.11,161.99 338.87,158.01
              339.52,157.32 339.80,156.59 339.61,155.68
@@ -1574,14 +1539,13 @@ const MuscleIllustration = ({
              332.60,155.30 328.07,162.55 327.92,171.34
              328.04,171.41 328.15,171.47 328.27,171.54
              328.49,171.31 328.76,171.12 328.92,170.86"
-        data-elem="Forearms"
+        data-elem={ExerciseAttributeValueEnum.FOREARMS}
         fill="#757575"
         id="path92"
         stroke="black"
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 355.58,156.70
            C 355.59,156.41 355.36,155.93 355.14,155.87
              354.89,155.80 354.44,156.04 354.24,156.27
@@ -1623,14 +1587,13 @@ const MuscleIllustration = ({
              350.94,169.78 351.85,168.51 352.52,167.15
              353.47,165.20 354.59,163.29 355.25,161.25
              355.71,159.84 355.54,158.22 355.58,156.70"
-        data-elem="Forearms"
+        data-elem={ExerciseAttributeValueEnum.FOREARMS}
         fill="#757575"
         id="path94"
         stroke="black"
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 349.30,110.19
            C 350.53,110.32 351.75,110.47 352.37,110.54
              358.40,110.63 363.20,108.85 367.19,105.28
@@ -1643,14 +1606,13 @@ const MuscleIllustration = ({
              351.53,92.89 349.96,97.39 349.10,102.16
              348.71,104.40 348.57,106.68 348.31,108.93
              348.22,109.69 348.54,110.10 349.30,110.19"
-        data-elem="Shoulders"
+        data-elem={ExerciseAttributeValueEnum.SHOULDERS}
         fill="#757575"
         id="path96"
         stroke="black"
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 368.73,110.63
            C 368.73,110.30 368.72,109.93 368.58,109.64
              368.32,109.10 367.99,108.23 367.62,108.19
@@ -1662,14 +1624,13 @@ const MuscleIllustration = ({
              356.91,140.75 358.79,141.28 361.10,139.01
              365.47,134.72 368.36,129.73 368.62,123.73
              368.80,119.37 368.71,115.00 368.73,110.63"
-        data-elem="Triceps"
+        data-elem={ExerciseAttributeValueEnum.TRICEPS}
         fill="#757575"
         id="path98"
         stroke="black"
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 341.97,153.63
            C 343.63,153.95 345.24,154.50 346.81,155.06
              347.35,155.25 347.82,155.34 348.23,155.27
@@ -1695,14 +1656,13 @@ const MuscleIllustration = ({
              340.26,137.61 339.63,141.31 339.56,145.04
              339.52,147.43 340.00,149.83 340.26,152.23
              340.35,153.04 340.86,153.43 341.97,153.63"
-        data-elem="Triceps"
+        data-elem={ExerciseAttributeValueEnum.TRICEPS}
         fill="#757575"
         id="path100"
         stroke="black"
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 346.98,130.86
            C 350.90,128.13 354.53,125.22 356.32,121.01
              357.54,118.12 359.19,115.34 360.62,112.50
@@ -1714,7 +1674,7 @@ const MuscleIllustration = ({
              342.44,123.17 342.21,125.50 341.84,127.79
              341.75,128.33 341.89,128.91 342.05,129.45
              342.72,131.80 344.74,132.42 346.98,130.86"
-        data-elem="Triceps"
+        data-elem={ExerciseAttributeValueEnum.TRICEPS}
         fill="#757575"
         id="path102"
         stroke="black"
@@ -2044,7 +2004,6 @@ const MuscleIllustration = ({
         strokeWidth="1"
       />
       <path
-        className={styles.muscle}
         d="M 128.00,122.83
            C 132.18,123.49 136.25,123.15 140.14,121.62
              145.31,119.58 149.70,116.28 153.73,112.49
@@ -2056,14 +2015,13 @@ const MuscleIllustration = ({
              119.12,89.83 116.94,93.03 116.62,97.33
              116.32,101.36 116.14,105.41 116.31,109.44
              116.56,115.50 121.62,121.81 128.00,122.83"
-        data-elem="Chest"
+        data-elem={ExerciseAttributeValueEnum.CHEST}
         fill="#757575"
         id="path106"
         stroke="black"
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 124.01,216.93
            C 127.66,211.39 129.67,205.22 131.16,198.84
              132.43,193.41 133.29,187.93 133.58,182.34
@@ -2075,14 +2033,13 @@ const MuscleIllustration = ({
              115.16,213.81 115.16,217.59 115.17,221.37
              115.17,222.78 115.33,222.87 116.71,222.46
              119.83,221.53 122.21,219.67 124.01,216.93"
-        data-elem="Abdominals"
+        data-elem={ExerciseAttributeValueEnum.ABDOMINALS}
         fill="#757575"
         id="path108"
         stroke="black"
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 113.13,184.90
            C 112.97,183.30 112.15,182.24 110.54,181.81
              109.81,181.62 109.12,181.24 108.39,181.05
@@ -2094,14 +2051,13 @@ const MuscleIllustration = ({
              114.33,221.88 114.41,221.20 114.40,220.52
              114.36,212.51 114.42,204.50 114.22,196.50
              114.12,192.63 113.51,188.77 113.13,184.90"
-        data-elem="Abdominals"
+        data-elem={ExerciseAttributeValueEnum.ABDOMINALS}
         fill="#757575"
         id="path110"
         stroke="black"
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 125.27,217.07
            C 125.09,217.39 125.10,217.82 125.02,218.20
              125.41,218.20 125.87,218.33 126.20,218.18
@@ -2115,14 +2071,13 @@ const MuscleIllustration = ({
              136.30,179.97 135.45,181.45 135.46,183.84
              135.49,188.83 134.47,193.68 133.09,198.45
              131.22,204.97 128.54,211.14 125.27,217.07"
-        data-elem="Obliques"
+        data-elem={ExerciseAttributeValueEnum.OBLIQUES}
         fill="#757575"
         id="path112"
         stroke="black"
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 97.07,214.29
            C 99.04,215.92 101.02,217.56 103.56,218.25
              103.88,218.33 104.26,218.19 104.62,218.15
@@ -2137,14 +2092,13 @@ const MuscleIllustration = ({
              80.19,172.85 79.48,175.86 79.05,178.91
              78.44,183.21 78.48,187.48 80.18,191.62
              83.88,200.63 89.61,208.11 97.07,214.29"
-        data-elem="Obliques"
+        data-elem={ExerciseAttributeValueEnum.OBLIQUES}
         fill="#757575"
         id="path114"
         stroke="black"
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 115.63,177.74
            C 115.65,179.88 116.89,180.73 118.92,180.17
              122.26,179.25 125.60,178.34 128.98,177.57
@@ -2157,14 +2111,13 @@ const MuscleIllustration = ({
              115.56,165.58 115.56,167.94 115.56,170.30
              115.58,170.30 115.60,170.30 115.62,170.30
              115.62,172.78 115.61,175.26 115.63,177.74"
-        data-elem="Abdominals"
+        data-elem={ExerciseAttributeValueEnum.ABDOMINALS}
         fill="#757575"
         id="path116"
         stroke="black"
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 100.30,177.50
            C 103.85,178.35 107.39,179.28 110.91,180.25
              112.64,180.72 113.82,179.88 113.85,178.06
@@ -2176,14 +2129,13 @@ const MuscleIllustration = ({
              94.06,162.51 93.60,163.18 93.79,164.24
              94.25,168.25 95.34,172.06 97.50,175.52
              98.15,176.56 99.06,177.20 100.30,177.50"
-        data-elem="Abdominals"
+        data-elem={ExerciseAttributeValueEnum.ABDOMINALS}
         fill="#757575"
         id="path118"
         stroke="black"
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 115.59,154.23
            C 115.61,155.82 115.88,156.08 117.49,156.12
              119.51,156.17 121.53,156.18 123.55,156.17
@@ -2197,14 +2149,13 @@ const MuscleIllustration = ({
              116.35,141.43 115.94,141.83 115.65,143.62
              115.59,143.95 115.56,144.30 115.56,144.64
              115.56,147.84 115.54,151.03 115.59,154.23"
-        data-elem="Abdominals"
+        data-elem={ExerciseAttributeValueEnum.ABDOMINALS}
         fill="#757575"
         id="path120"
         stroke="black"
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 113.79,142.93
            C 113.63,141.98 113.08,141.52 112.09,141.38
              106.45,140.63 101.57,142.46 97.19,145.83
@@ -2218,14 +2169,13 @@ const MuscleIllustration = ({
              109.84,156.13 111.22,156.13 112.59,156.13
              113.34,156.13 113.81,155.81 113.89,155.00
              114.31,150.97 114.46,146.95 113.79,142.93"
-        data-elem="Abdominals"
+        data-elem={ExerciseAttributeValueEnum.ABDOMINALS}
         fill="#757575"
         id="path122"
         stroke="black"
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 115.58,129.73
            C 115.56,132.16 115.55,134.60 115.56,137.04
              115.56,137.96 116.07,138.54 116.95,138.74
@@ -2239,14 +2189,13 @@ const MuscleIllustration = ({
              120.53,122.26 119.80,122.52 119.30,123.26
              118.12,125.03 116.97,126.83 115.85,128.63
              115.66,128.94 115.59,129.36 115.58,129.73"
-        data-elem="Abdominals"
+        data-elem={ExerciseAttributeValueEnum.ABDOMINALS}
         fill="#757575"
         id="path124"
         stroke="black"
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 113.76,128.72
            C 112.63,126.83 111.41,124.99 110.18,123.16
              109.73,122.48 109.05,122.30 108.26,122.60
@@ -2261,14 +2210,13 @@ const MuscleIllustration = ({
              113.68,138.50 114.03,138.01 114.04,136.57
              114.04,134.51 114.05,132.45 114.03,130.39
              114.02,129.83 114.03,129.18 113.76,128.72"
-        data-elem="Abdominals"
+        data-elem={ExerciseAttributeValueEnum.ABDOMINALS}
         fill="#757575"
         id="path126"
         stroke="black"
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 134.28,178.67
            C 135.80,178.08 137.44,177.63 138.74,176.72
              142.62,174.02 145.10,170.17 146.78,165.84
@@ -2280,14 +2228,13 @@ const MuscleIllustration = ({
              138.11,170.47 136.77,174.56 133.37,177.76
              133.19,177.94 133.06,178.17 132.66,178.69
              133.43,178.69 133.91,178.81 134.28,178.67"
-        data-elem="Obliques"
+        data-elem={ExerciseAttributeValueEnum.OBLIQUES}
         fill="#757575"
         id="path128"
         stroke="black"
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 96.36,177.87
            C 93.31,175.14 91.86,171.59 91.33,167.64
              90.63,162.39 91.23,157.23 92.57,152.14
@@ -2300,7 +2247,7 @@ const MuscleIllustration = ({
              88.38,175.05 90.74,177.28 93.94,178.36
              94.81,178.66 95.73,179.06 96.79,178.44
              96.58,178.17 96.50,177.99 96.36,177.87"
-        data-elem="Obliques"
+        data-elem={ExerciseAttributeValueEnum.OBLIQUES}
         fill="#757575"
         id="path130"
         stroke="black"
@@ -2357,7 +2304,6 @@ const MuscleIllustration = ({
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 115.70,124.93
            C 116.59,123.70 117.47,122.46 118.32,121.20
              118.61,120.76 118.81,120.26 119.06,119.77
@@ -2368,14 +2314,13 @@ const MuscleIllustration = ({
              110.55,119.30 110.53,119.94 110.72,120.25
              111.72,121.86 112.79,123.44 113.91,124.98
              114.45,125.72 115.15,125.69 115.70,124.93"
-        data-elem="Chest"
+        data-elem={ExerciseAttributeValueEnum.CHEST}
         fill="#757575"
         id="path138"
         stroke="black"
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 49.72,164.55
            C 49.74,165.40 49.90,166.25 50.02,167.32
              50.27,167.02 50.37,166.93 50.44,166.81
@@ -2388,14 +2333,13 @@ const MuscleIllustration = ({
              44.67,130.15 44.23,132.58 43.93,137.71
              43.78,140.37 44.59,145.02 46.86,147.85
              49.98,151.75 49.59,159.48 49.72,164.55"
-        data-elem="Biceps"
+        data-elem={ExerciseAttributeValueEnum.BICEPS}
         fill="#757575"
         id="path140"
         stroke="black"
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 53.58,115.39
            C 55.17,114.35 57.67,113.27 59.35,112.42
              61.32,111.43 66.87,110.54 68.88,109.64
@@ -2409,14 +2353,13 @@ const MuscleIllustration = ({
              51.53,102.38 52.08,109.59 51.85,116.06
              51.84,116.23 51.93,116.40 52.02,116.76
              52.40,116.42 53.28,115.59 53.58,115.39"
-        data-elem="Shoulders"
+        data-elem={ExerciseAttributeValueEnum.SHOULDERS}
         fill="#757575"
         id="path142"
         stroke="black"
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 62.31,163.12
            C 63.71,160.46 64.19,157.56 63.39,154.58
              63.25,154.08 62.91,153.46 62.49,153.27
@@ -2431,14 +2374,13 @@ const MuscleIllustration = ({
              43.00,211.29 47.28,204.56 50.36,196.97
              53.06,190.34 56.21,182.49 58.55,175.72
              60.09,171.29 60.12,167.29 62.31,163.12"
-        data-elem="Forearms"
+        data-elem={ExerciseAttributeValueEnum.FOREARMS}
         fill="#757575"
         id="path144"
         stroke="black"
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 27.08,209.38
            C 30.78,205.15 33.99,200.56 36.87,195.74
              43.13,185.26 47.45,174.13 48.40,161.83
@@ -2449,14 +2391,13 @@ const MuscleIllustration = ({
              25.52,209.49 25.10,210.11 24.73,210.76
              24.85,210.87 24.96,210.98 25.08,211.10
              25.75,210.53 26.50,210.03 27.08,209.38"
-        data-elem="Forearms"
+        data-elem={ExerciseAttributeValueEnum.FOREARMS}
         fill="#757575"
         id="path146"
         stroke="black"
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 62.71,151.36
            C 63.28,151.31 63.91,150.47 64.20,149.99
              64.90,148.86 66.62,146.19 67.19,144.99
@@ -2468,14 +2409,13 @@ const MuscleIllustration = ({
              66.83,134.62 65.35,140.02 63.86,145.42
              63.43,146.98 63.07,148.57 62.68,150.14
              62.81,150.23 62.54,151.37 62.71,151.36"
-        data-elem="Biceps"
+        data-elem={ExerciseAttributeValueEnum.BICEPS}
         fill="#757575"
         id="path148"
         stroke="black"
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 160.10,114.96
            C 160.64,121.59 161.87,128.11 163.78,134.48
              164.74,137.69 165.80,140.87 166.86,144.05
@@ -2488,14 +2428,13 @@ const MuscleIllustration = ({
              185.30,132.58 184.87,130.15 182.68,125.43
              177.61,114.52 170.89,114.39 163.98,111.93
              161.46,111.02 159.88,112.29 160.10,114.96"
-        data-elem="Biceps"
+        data-elem={ExerciseAttributeValueEnum.BICEPS}
         fill="#757575"
         id="path150"
         stroke="black"
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 145.59,86.76
            C 146.96,92.75 151.13,99.57 154.22,104.96
              156.56,109.06 156.74,107.90 160.65,109.64
@@ -2509,14 +2448,13 @@ const MuscleIllustration = ({
              152.27,80.82 151.35,80.76 150.79,81.09
              149.27,82.00 147.83,83.08 146.44,84.18
              145.66,84.81 145.36,85.71 145.59,86.76"
-        data-elem="Shoulders"
+        data-elem={ExerciseAttributeValueEnum.SHOULDERS}
         fill="#757575"
         id="path152"
         stroke="black"
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 184.01,182.16
            C 182.46,177.62 180.92,173.06 179.01,168.66
              177.34,164.81 174.77,161.45 172.04,158.24
@@ -2531,14 +2469,13 @@ const MuscleIllustration = ({
              190.54,220.56 190.68,220.53 190.83,220.50
              190.89,219.68 191.04,218.87 191.01,218.05
              190.61,205.71 187.98,193.80 184.01,182.16"
-        data-elem="Forearms"
+        data-elem={ExerciseAttributeValueEnum.FOREARMS}
         fill="#757575"
         id="path154"
         stroke="black"
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 182.33,152.10
            C 180.80,155.22 180.88,158.50 181.14,161.83
              182.08,174.13 186.40,185.26 192.66,195.74
@@ -2549,14 +2486,13 @@ const MuscleIllustration = ({
              199.12,199.31 196.21,189.39 195.39,178.81
              194.62,168.95 191.67,159.76 185.65,151.73
              184.29,149.90 183.34,150.04 182.33,152.10"
-        data-elem="Forearms"
+        data-elem={ExerciseAttributeValueEnum.FOREARMS}
         fill="#757575"
         id="path156"
         stroke="black"
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 166.82,151.36
            C 166.99,151.37 166.72,150.23 166.86,150.14
              166.46,148.57 166.10,146.98 165.67,145.42
@@ -2568,14 +2504,13 @@ const MuscleIllustration = ({
              158.57,137.01 159.49,139.00 162.34,144.99
              162.91,146.19 164.64,148.86 165.33,149.99
              165.62,150.47 166.25,151.31 166.82,151.36"
-        data-elem="Biceps"
+        data-elem={ExerciseAttributeValueEnum.BICEPS}
         fill="#757575"
         id="path158"
         stroke="black"
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 114.71,95.58
            C 114.89,95.35 115.00,95.27 115.02,95.18
              115.68,92.72 116.69,90.44 118.43,88.53
@@ -2586,7 +2521,7 @@ const MuscleIllustration = ({
              111.01,87.97 111.09,88.49 111.37,88.83
              112.74,90.47 113.65,92.33 114.26,94.36
              114.37,94.74 114.53,95.10 114.71,95.58"
-        data-elem="Chest"
+        data-elem={ExerciseAttributeValueEnum.CHEST}
         fill="#757575"
         id="path160"
         stroke="black"
@@ -2646,7 +2581,6 @@ const MuscleIllustration = ({
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 94.81,346.10
            C 94.77,345.86 94.63,338.63 94.42,338.10
              94.22,338.70 93.09,342.82 93.01,343.14
@@ -2677,14 +2611,13 @@ const MuscleIllustration = ({
              91.63,388.97 94.77,384.69 96.95,374.36
              97.92,369.81 98.16,363.49 97.15,358.77
              96.19,354.30 95.64,350.59 94.81,346.10"
-        data-elem="Calves"
+        data-elem={ExerciseAttributeValueEnum.CALVES}
         fill="#757575"
         id="path166"
         stroke="black"
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 89.90,310.63
            C 89.35,311.67 88.76,312.72 88.42,313.84
              87.19,317.76 85.96,321.69 84.92,325.67
@@ -2701,14 +2634,13 @@ const MuscleIllustration = ({
              92.95,316.65 92.23,313.76 91.63,310.85
              91.55,310.48 91.15,310.03 90.81,309.92
              90.59,309.86 90.08,310.30 89.90,310.63"
-        data-elem="Calves"
+        data-elem={ExerciseAttributeValueEnum.CALVES}
         fill="#757575"
         id="path168"
         stroke="black"
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 98.39,269.85
            C 98.33,270.21 98.24,270.57 98.21,270.93
              97.87,274.80 97.58,278.68 97.20,282.55
@@ -2721,14 +2653,13 @@ const MuscleIllustration = ({
              99.74,323.86 101.95,313.60 102.45,302.95
              102.99,291.71 101.95,280.64 98.86,269.81
              98.71,269.82 98.55,269.84 98.39,269.85"
-        data-elem="Quads"
+        data-elem={ExerciseAttributeValueEnum.QUADRICEPS}
         fill="#757575"
         id="path170"
         stroke="black"
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 95.65,269.75
            C 95.73,264.98 95.58,260.18 94.51,255.53
              92.85,248.29 90.84,241.13 89.07,233.91
@@ -2750,14 +2681,13 @@ const MuscleIllustration = ({
              87.96,310.08 90.00,306.35 91.28,302.28
              93.64,294.74 94.44,286.92 95.25,279.11
              95.58,276.01 95.60,272.87 95.65,269.75"
-        data-elem="Quads"
+        data-elem={ExerciseAttributeValueEnum.QUADRICEPS}
         fill="#757575"
         id="path172"
         stroke="black"
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 108.84,225.24
            C 106.63,223.43 100.82,220.73 98.71,218.80
              93.08,213.68 90.27,212.08 86.11,205.66
@@ -2772,14 +2702,13 @@ const MuscleIllustration = ({
              107.68,256.43 107.79,254.80 108.84,246.48
              109.82,238.30 110.01,236.87 110.01,232.26
              110.01,227.97 110.07,226.24 108.84,225.24"
-        data-elem="Quads"
+        data-elem={ExerciseAttributeValueEnum.QUADRICEPS}
         fill="#757575"
         id="path174"
         stroke="black"
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 68.30,275.34
            C 68.32,275.60 75.63,303.92 75.71,304.19
              75.94,302.37 73.80,274.89 73.95,266.76
@@ -2794,14 +2723,13 @@ const MuscleIllustration = ({
              72.10,212.75 68.60,224.48 67.71,234.79
              67.13,241.61 65.44,249.80 65.76,255.84
              66.15,262.99 67.13,267.34 68.30,275.34"
-        data-elem="Quads"
+        data-elem={ExerciseAttributeValueEnum.QUADRICEPS}
         fill="#757575"
         id="path176"
         stroke="black"
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 140.06,310.63
            C 139.89,310.30 139.37,309.86 139.16,309.92
              138.81,310.03 138.41,310.48 138.33,310.85
@@ -2818,14 +2746,13 @@ const MuscleIllustration = ({
              147.14,335.43 146.30,330.50 145.04,325.67
              144.00,321.69 142.77,317.76 141.55,313.84
              141.20,312.72 140.61,311.67 140.06,310.63"
-        data-elem="Calves"
+        data-elem={ExerciseAttributeValueEnum.CALVES}
         fill="#757575"
         id="path178"
         stroke="black"
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 152.52,325.64
            C 152.54,321.57 152.50,317.76 152.60,313.96
              152.70,309.35 152.87,304.74 153.10,300.13
@@ -2847,14 +2774,13 @@ const MuscleIllustration = ({
              139.96,306.35 142.00,310.08 144.26,313.66
              146.66,317.46 149.27,321.12 151.79,324.84
              151.95,325.08 152.18,325.27 152.52,325.64"
-        data-elem="Quads"
+        data-elem={ExerciseAttributeValueEnum.QUADRICEPS}
         fill="#757575"
         id="path180"
         stroke="black"
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 134.73,333.62
            C 134.68,332.24 134.61,330.86 134.60,329.48
              134.55,322.18 134.93,314.93 137.19,307.90
@@ -2867,14 +2793,13 @@ const MuscleIllustration = ({
              128.01,280.64 126.98,291.71 127.51,302.95
              128.01,313.60 130.23,323.86 134.41,333.65
              134.52,333.64 134.62,333.63 134.73,333.62"
-        data-elem="Quads"
+        data-elem={ExerciseAttributeValueEnum.QUADRICEPS}
         fill="#757575"
         id="path182"
         stroke="black"
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 139.32,424.05
            C 141.70,421.08 144.08,418.10 146.45,415.12
              148.97,411.96 152.26,405.62 153.51,401.86
@@ -2905,14 +2830,13 @@ const MuscleIllustration = ({
              138.78,416.70 138.50,420.33 137.91,423.85
              137.85,424.21 138.01,424.61 138.12,425.30
              138.67,424.74 139.02,424.42 139.32,424.05"
-        data-elem="Calves"
+        data-elem={ExerciseAttributeValueEnum.CALVES}
         fill="#757575"
         id="path184"
         stroke="black"
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 161.67,275.34
            C 162.84,267.34 163.81,262.99 164.20,255.84
              164.53,249.80 162.84,241.61 162.25,234.79
@@ -2927,14 +2851,13 @@ const MuscleIllustration = ({
              154.39,245.74 155.80,255.40 156.01,266.76
              156.17,274.89 154.02,302.37 154.26,304.19
              154.33,303.92 161.64,275.60 161.67,275.34"
-        data-elem="Quads"
+        data-elem={ExerciseAttributeValueEnum.QUADRICEPS}
         fill="#757575"
         id="path186"
         stroke="black"
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 129.16,270.61
            C 132.77,254.88 136.72,239.25 141.63,223.88
              143.77,217.18 145.61,210.42 146.74,203.48
@@ -2949,7 +2872,7 @@ const MuscleIllustration = ({
              124.83,269.24 126.49,274.88 126.96,277.74
              127.02,278.05 127.13,278.34 127.45,278.62
              128.01,275.95 128.55,273.27 129.16,270.61"
-        data-elem="Quads"
+        data-elem={ExerciseAttributeValueEnum.QUADRICEPS}
         fill="#757575"
         id="path188"
         stroke="black"
@@ -2980,7 +2903,6 @@ const MuscleIllustration = ({
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 133.30,127.21
            C 134.46,133.05 135.57,138.89 136.92,144.67
              137.30,146.28 138.27,147.83 139.28,149.17
@@ -2997,14 +2919,13 @@ const MuscleIllustration = ({
              135.99,124.40 135.99,124.41 135.99,124.41
              135.78,124.42 135.56,124.44 135.32,124.48
              133.82,124.70 133.01,125.72 133.30,127.21"
-        data-elem="Obliques"
+        data-elem={ExerciseAttributeValueEnum.OBLIQUES}
         fill="#757575"
         id="path192"
         stroke="black"
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 79.63,119.11
            C 79.59,119.09 79.56,119.08 79.52,119.06
              79.52,119.06 79.39,119.02 79.39,119.02
@@ -3027,14 +2948,13 @@ const MuscleIllustration = ({
              93.80,124.42 93.73,124.42 93.65,124.41
              93.65,124.41 93.66,124.40 93.66,124.40
              93.66,124.40 79.63,119.11 79.63,119.11"
-        data-elem="Obliques"
+        data-elem={ExerciseAttributeValueEnum.OBLIQUES}
         fill="#757575"
         id="path194"
         stroke="black"
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 130.40,72.56
            C 128.92,75.95 126.41,78.57 123.97,81.24
              122.71,82.62 121.38,83.93 120.11,85.30
@@ -3057,7 +2977,6 @@ const MuscleIllustration = ({
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 112.42,97.33
            C 112.10,93.03 109.92,89.83 105.78,88.29
              101.53,86.71 97.26,85.18 92.93,83.86
@@ -3069,14 +2988,13 @@ const MuscleIllustration = ({
              92.79,123.15 96.86,123.49 101.04,122.83
              107.42,121.81 112.48,115.50 112.73,109.44
              112.90,105.41 112.72,101.36 112.42,97.33"
-        data-elem="Chest"
+        data-elem={ExerciseAttributeValueEnum.CHEST}
         fill="#757575"
         id="path198"
         stroke="black"
         strokeWidth="0"
       />
       <path
-        className={styles.muscle}
         d="M 85.02,84.19
            C 86.82,83.05 90.21,81.65 92.21,82.21
              92.23,82.21 92.25,82.22 92.27,82.22
@@ -3368,7 +3286,7 @@ const MuscleIllustration = ({
              441.00,86.00 443.50,81.75 443.50,81.75
              443.50,81.75 448.50,78.00 448.50,78.00
              448.50,78.00 453.75,76.75 453.75,76.75"
-        data-elem="Shoulders"
+        data-elem={ExerciseAttributeValueEnum.SHOULDERS}
         fill="transparent"
         stroke="black"
         strokeWidth="0"
@@ -3393,7 +3311,7 @@ const MuscleIllustration = ({
              378.50,80.25 374.25,79.00 374.25,79.00
              374.25,79.00 369.50,78.25 369.50,78.25
              369.50,78.25 370.75,78.25 367.25,78.75"
-        data-elem="Shoulders"
+        data-elem={ExerciseAttributeValueEnum.SHOULDERS}
         fill="transparent"
         stroke="black"
         strokeWidth="0"
@@ -3416,7 +3334,7 @@ const MuscleIllustration = ({
              155.25,107.75 149.25,97.00 149.25,97.00
              149.25,97.00 146.25,90.50 146.25,90.50
              146.25,90.50 145.00,87.00 145.00,87.00"
-        data-elem="Shoulders"
+        data-elem={ExerciseAttributeValueEnum.SHOULDERS}
         fill="transparent"
         stroke="black"
         strokeWidth="0"
@@ -3438,7 +3356,7 @@ const MuscleIllustration = ({
              76.00,105.00 80.75,96.50 80.75,96.50
              80.75,96.50 85.00,86.25 85.00,86.25
              85.00,86.25 82.75,82.50 82.75,82.50"
-        data-elem="Shoulders"
+        data-elem={ExerciseAttributeValueEnum.SHOULDERS}
         fill="transparent"
         stroke="black"
         strokeWidth="0"
@@ -3464,7 +3382,7 @@ const MuscleIllustration = ({
              174.50,115.00 165.50,111.75 165.50,111.75
              165.50,111.75 158.25,111.00 158.25,111.00
              158.25,111.00 155.25,113.50 155.25,113.50"
-        data-elem="Biceps"
+        data-elem={ExerciseAttributeValueEnum.BICEPS}
         fill="transparent"
         stroke="black"
         strokeWidth="0"
@@ -3492,7 +3410,7 @@ const MuscleIllustration = ({
              71.25,111.50 68.00,110.50 68.00,110.50
              68.00,110.50 57.75,114.25 57.75,114.25
              57.75,114.25 49.50,117.50 49.50,117.50"
-        data-elem="Biceps"
+        data-elem={ExerciseAttributeValueEnum.BICEPS}
         fill="transparent"
         stroke="black"
         strokeWidth="0"
@@ -3520,7 +3438,7 @@ const MuscleIllustration = ({
              472.50,156.75 464.75,155.00 464.75,155.00
              464.75,155.00 463.75,157.50 463.75,157.50
              463.75,157.50 463.50,159.50 464.50,162.25"
-        data-elem="Forearms"
+        data-elem={ExerciseAttributeValueEnum.FOREARMS}
         fill="transparent"
         stroke="black"
         strokeWidth="0"
@@ -3547,7 +3465,7 @@ const MuscleIllustration = ({
              342.75,155.25 340.25,153.25 340.25,153.25
              340.25,153.25 338.00,146.25 338.00,146.25
              338.00,146.25 333.75,147.50 333.75,147.50"
-        data-elem="Forearms"
+        data-elem={ExerciseAttributeValueEnum.FOREARMS}
         fill="transparent"
         stroke="black"
         strokeWidth="0"
@@ -3584,7 +3502,7 @@ const MuscleIllustration = ({
              164.00,152.00 164.00,155.00 164.00,155.00
              164.00,155.00 165.25,164.00 165.25,164.00
              165.25,164.00 167.25,175.75 167.25,175.75"
-        data-elem="Forearms"
+        data-elem={ExerciseAttributeValueEnum.FOREARMS}
         fill="transparent"
         stroke="black"
         strokeWidth="0"
@@ -3619,7 +3537,7 @@ const MuscleIllustration = ({
              50.00,157.50 48.25,150.25 48.25,150.25
              48.25,150.25 46.75,148.75 46.75,148.75
              46.75,148.75 43.50,146.75 43.50,146.75"
-        data-elem="Forearms"
+        data-elem={ExerciseAttributeValueEnum.FOREARMS}
         fill="transparent"
         stroke="black"
         strokeWidth="0"
@@ -3644,7 +3562,7 @@ const MuscleIllustration = ({
              467.75,111.00 462.00,110.25 462.00,110.25
              462.00,110.25 458.25,108.75 458.25,108.75
              458.25,108.75 456.25,108.00 453.75,106.75"
-        data-elem="Triceps"
+        data-elem={ExerciseAttributeValueEnum.TRICEPS}
         fill="transparent"
         stroke="black"
         strokeWidth="0"
@@ -3668,7 +3586,7 @@ const MuscleIllustration = ({
              364.50,109.00 357.00,111.00 357.00,111.00
              357.00,111.00 350.00,111.25 350.00,111.25
              350.00,111.25 344.75,110.25 344.75,110.25"
-        data-elem="Triceps"
+        data-elem={ExerciseAttributeValueEnum.TRICEPS}
         fill="transparent"
         stroke="black"
         strokeWidth="0"
@@ -3700,7 +3618,7 @@ const MuscleIllustration = ({
              152.00,117.00 145.75,120.25 145.75,120.25
              145.75,120.25 138.25,123.50 138.25,123.50
              138.25,123.50 131.50,125.00 131.50,125.00"
-        data-elem="Obliques"
+        data-elem={ExerciseAttributeValueEnum.OBLIQUES}
         fill="transparent"
         stroke="black"
         strokeWidth="0"
@@ -3731,7 +3649,7 @@ const MuscleIllustration = ({
              96.75,127.75 98.50,125.00 98.50,125.00
              98.50,125.00 80.50,119.00 80.50,119.00
              80.50,119.00 75.25,115.50 75.25,115.50"
-        data-elem="Obliques"
+        data-elem={ExerciseAttributeValueEnum.OBLIQUES}
         fill="transparent"
         stroke="black"
         strokeWidth="0"
@@ -3769,7 +3687,7 @@ const MuscleIllustration = ({
              119.50,122.00 114.50,126.75 114.50,126.75
              114.50,126.75 109.50,120.75 109.50,120.75
              109.50,120.75 101.00,124.00 101.00,124.00"
-        data-elem="Abdominals"
+        data-elem={ExerciseAttributeValueEnum.ABDOMINALS}
         fill="transparent"
         stroke="black"
         strokeWidth="0"
@@ -3834,7 +3752,7 @@ const MuscleIllustration = ({
              118.25,247.00 118.25,236.75 118.25,236.75
              118.25,236.75 118.00,228.75 118.00,228.75
              118.00,228.75 118.00,224.50 118.00,224.50"
-        data-elem="Quads"
+        data-elem={ExerciseAttributeValueEnum.QUADRICEPS}
         fill="transparent"
         stroke="black"
         strokeWidth="0"
@@ -3998,7 +3916,7 @@ const MuscleIllustration = ({
              414.25,274.50 414.00,251.50 414.00,251.50
              414.00,251.50 414.25,237.25 414.25,237.25
              414.25,237.25 414.75,232.00 414.75,229.25"
-        data-elem="Hamstrings"
+        data-elem={ExerciseAttributeValueEnum.HAMSTRINGS}
         fill="transparent"
         stroke="black"
         strokeWidth="0"
@@ -4040,7 +3958,7 @@ const MuscleIllustration = ({
              363.00,268.50 362.00,246.25 362.00,246.25
              362.00,246.25 362.25,216.50 362.25,216.50
              362.25,216.50 364.25,211.75 365.00,209.25"
-        data-elem="Hamstrings"
+        data-elem={ExerciseAttributeValueEnum.HAMSTRINGS}
         fill="transparent"
         stroke="black"
         strokeWidth="0"
@@ -4075,7 +3993,7 @@ const MuscleIllustration = ({
              432.50,322.75 431.25,324.75 431.25,324.75
              431.25,324.75 430.75,338.00 430.75,338.00
              430.75,338.00 429.00,342.25 429.00,342.25"
-        data-elem="Calves"
+        data-elem={ExerciseAttributeValueEnum.CALVES}
         fill="transparent"
         stroke="black"
         strokeWidth="0"

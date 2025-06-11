@@ -27,8 +27,7 @@
 }
 
 .muscle.enabled.active {
-  /* fill: #228be6; */
-  fill: red;
+  fill: #228be6 !important;
 }
 
 .muscle.enabled {

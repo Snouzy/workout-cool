@@ -17,7 +17,8 @@
 
 ## Contributors
 
-[![snouzy_biceps](https://github-production-user-asset-6210df.s3.amazonaws.com/43953403/248202501-4d5ae3c3-b83b-4a2c-b7e2-0e38705f5487.jpg)](https://twitter.com/snouzy_biceps)
+[![snouzy_biceps](https://avatars.githubusercontent.com/u/32961176?s=52&v=4)](https://twitter.com/snouzy_biceps)
+[![lucaasnp_](https://avatars.githubusercontent.com/u/44783073?s=52&v=4)](https://twitter.com/lucaasnp_)
 
 ## About
 

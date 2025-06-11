@@ -1,0 +1,53 @@
+.svgContainer {
+  text-align: center;
+  margin: 2em 0;
+  position: relative;
+}
+
+.illustration {
+  width: 100%;
+  height: auto;
+}
+
+.illustration path {
+  position: relative;
+  z-index: 0;
+}
+
+.muscle {
+}
+.muscleContainer {
+  z-index: 1;
+  cursor: pointer;
+}
+
+.muscle.enabled.hover {
+  fill: #69b0ee;
+  cursor: pointer;
+}
+
+.muscle.enabled.active {
+  /* fill: #228be6; */
+  fill: red;
+}
+
+.muscle.enabled {
+  fill: #bdbdbd;
+}
+
+.loading {
+  fill: #757575;
+  animation: pulse 2s linear infinite;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0.5;
+  }
+}

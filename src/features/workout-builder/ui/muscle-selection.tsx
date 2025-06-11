@@ -13,97 +13,29 @@ interface MuscleSelectionProps {
   selectedEquipment: ExerciseAttributeValueEnum[];
 }
 
-// Mapping des muscles disponibles selon l'équipement
-const MUSCLE_EQUIPMENT_MAPPING: Partial<Record<ExerciseAttributeValueEnum, ExerciseAttributeValueEnum[]>> = {
-  [ExerciseAttributeValueEnum.BODY_ONLY]: [
-    ExerciseAttributeValueEnum.CHEST,
-    ExerciseAttributeValueEnum.SHOULDERS,
-    ExerciseAttributeValueEnum.BICEPS,
-    ExerciseAttributeValueEnum.TRICEPS,
-    ExerciseAttributeValueEnum.FOREARMS,
-    ExerciseAttributeValueEnum.ABDOMINALS,
-    ExerciseAttributeValueEnum.OBLIQUES,
-    ExerciseAttributeValueEnum.QUADRICEPS,
-    ExerciseAttributeValueEnum.HAMSTRINGS,
-    ExerciseAttributeValueEnum.GLUTES,
-    ExerciseAttributeValueEnum.CALVES,
-    ExerciseAttributeValueEnum.BACK,
-    ExerciseAttributeValueEnum.LATS,
-    ExerciseAttributeValueEnum.TRAPS,
-  ],
-  [ExerciseAttributeValueEnum.DUMBBELL]: [
-    ExerciseAttributeValueEnum.CHEST,
-    ExerciseAttributeValueEnum.SHOULDERS,
-    ExerciseAttributeValueEnum.BICEPS,
-    ExerciseAttributeValueEnum.TRICEPS,
-    ExerciseAttributeValueEnum.FOREARMS,
-    ExerciseAttributeValueEnum.BACK,
-    ExerciseAttributeValueEnum.LATS,
-    ExerciseAttributeValueEnum.TRAPS,
-    ExerciseAttributeValueEnum.QUADRICEPS,
-    ExerciseAttributeValueEnum.HAMSTRINGS,
-    ExerciseAttributeValueEnum.GLUTES,
-    ExerciseAttributeValueEnum.CALVES,
-  ],
-  [ExerciseAttributeValueEnum.BARBELL]: [
-    ExerciseAttributeValueEnum.CHEST,
-    ExerciseAttributeValueEnum.SHOULDERS,
-    ExerciseAttributeValueEnum.BICEPS,
-    ExerciseAttributeValueEnum.TRICEPS,
-    ExerciseAttributeValueEnum.BACK,
-    ExerciseAttributeValueEnum.LATS,
-    ExerciseAttributeValueEnum.TRAPS,
-    ExerciseAttributeValueEnum.QUADRICEPS,
-    ExerciseAttributeValueEnum.HAMSTRINGS,
-    ExerciseAttributeValueEnum.GLUTES,
-  ],
-  [ExerciseAttributeValueEnum.KETTLEBELLS]: [
-    ExerciseAttributeValueEnum.SHOULDERS,
-    ExerciseAttributeValueEnum.BACK,
-    ExerciseAttributeValueEnum.GLUTES,
-    ExerciseAttributeValueEnum.HAMSTRINGS,
-    ExerciseAttributeValueEnum.QUADRICEPS,
-    ExerciseAttributeValueEnum.FOREARMS,
-  ],
-  [ExerciseAttributeValueEnum.BANDS]: [
-    ExerciseAttributeValueEnum.CHEST,
-    ExerciseAttributeValueEnum.SHOULDERS,
-    ExerciseAttributeValueEnum.BICEPS,
-    ExerciseAttributeValueEnum.TRICEPS,
-    ExerciseAttributeValueEnum.BACK,
-    ExerciseAttributeValueEnum.LATS,
-    ExerciseAttributeValueEnum.GLUTES,
-  ],
-  [ExerciseAttributeValueEnum.WEIGHT_PLATE]: [
-    ExerciseAttributeValueEnum.ABDOMINALS,
-    ExerciseAttributeValueEnum.OBLIQUES,
-    ExerciseAttributeValueEnum.SHOULDERS,
-    ExerciseAttributeValueEnum.BACK,
-    ExerciseAttributeValueEnum.CHEST,
-  ],
-  [ExerciseAttributeValueEnum.PULLUP_BAR]: [
-    ExerciseAttributeValueEnum.BACK,
-    ExerciseAttributeValueEnum.LATS,
-    ExerciseAttributeValueEnum.BICEPS,
-    ExerciseAttributeValueEnum.FOREARMS,
-    ExerciseAttributeValueEnum.ABDOMINALS,
-  ],
-  [ExerciseAttributeValueEnum.BENCH]: [
-    ExerciseAttributeValueEnum.CHEST,
-    ExerciseAttributeValueEnum.SHOULDERS,
-    ExerciseAttributeValueEnum.TRICEPS,
-    ExerciseAttributeValueEnum.ABDOMINALS,
-  ],
-};
+const ALL_MUSCLES: ExerciseAttributeValueEnum[] = [
+  ExerciseAttributeValueEnum.CHEST,
+  ExerciseAttributeValueEnum.SHOULDERS,
+  ExerciseAttributeValueEnum.BICEPS,
+  ExerciseAttributeValueEnum.TRICEPS,
+  ExerciseAttributeValueEnum.FOREARMS,
+  ExerciseAttributeValueEnum.ABDOMINALS,
+  ExerciseAttributeValueEnum.OBLIQUES,
+  ExerciseAttributeValueEnum.QUADRICEPS,
+  ExerciseAttributeValueEnum.HAMSTRINGS,
+  ExerciseAttributeValueEnum.GLUTES,
+  ExerciseAttributeValueEnum.CALVES,
+  ExerciseAttributeValueEnum.BACK,
+  ExerciseAttributeValueEnum.LATS,
+  ExerciseAttributeValueEnum.TRAPS,
+];
 
 const MuscleIllustration = ({
   selectedMuscles,
-  availableMuscles,
   onToggleMuscle,
   isLoading = false,
 }: {
   selectedMuscles: ExerciseAttributeValueEnum[];
-  availableMuscles: ExerciseAttributeValueEnum[];
   onToggleMuscle: (muscle: ExerciseAttributeValueEnum) => void;
   isLoading?: boolean;
 }) => {
@@ -112,16 +44,16 @@ const MuscleIllustration = ({
     if (!parentElement) return;
 
     // Nettoyer les classes existantes
-    const activeElements = parentElement.querySelectorAll(".muscle-active");
+    const activeElements = parentElement.querySelectorAll(".active");
     activeElements.forEach((element) => {
-      element.classList.remove("muscle-active");
+      element.classList.remove("active");
     });
 
     // Appliquer les classes active pour les muscles sélectionnés
     selectedMuscles.forEach((muscle) => {
       const elements = parentElement.querySelectorAll(`[data-elem="${muscle}"]`);
       elements.forEach((element) => {
-        element.classList.add("muscle-active");
+        element.classList.add("active");
       });
     });
   }, [selectedMuscles]);
@@ -131,68 +63,68 @@ const MuscleIllustration = ({
     if (!parentElement) return;
 
     // Nettoyer les classes enabled existantes
-    const enabledElements = parentElement.querySelectorAll(".muscle-enabled");
+    const enabledElements = parentElement.querySelectorAll(".enabled");
     enabledElements.forEach((element) => {
-      element.classList.remove("muscle-enabled");
+      element.classList.remove("enabled");
     });
 
     // Appliquer les classes enabled pour les muscles disponibles
-    availableMuscles.forEach((muscle) => {
+    ALL_MUSCLES.forEach((muscle) => {
       const elements = parentElement.querySelectorAll(`[data-elem="${muscle}"]`);
       elements.forEach((element) => {
-        element.classList.add("muscle-enabled");
+        element.classList.add("enabled");
       });
     });
-  }, [availableMuscles]);
+  }, []);
 
   useEffect(() => {
     const parentElement = document.getElementById("muscle-illustration");
     if (!parentElement) return;
 
-    const elements = parentElement.querySelectorAll(".muscle[data-elem]");
-    if (isLoading) {
-      elements.forEach((element) => {
-        element.classList.add("muscle-loading");
-      });
-    } else {
-      elements.forEach((element) => {
-        element.classList.remove("muscle-loading");
-      });
-    }
-  }, [isLoading]);
-
-  useEffect(() => {
-    const parentElement = document.getElementById("muscle-illustration");
-    if (!parentElement) return;
-
-    const handleHover = (event: Event) => {
+    const handleMouseEnter = (event: Event) => {
       const target = event.target as HTMLElement;
       const dataElemValue = target.dataset.elem;
+
+      if (!dataElemValue || !target.classList.contains("enabled")) return;
+
+      // Ajouter la classe hover à tous les éléments avec le même data-elem
+      const elements = parentElement.querySelectorAll(`[data-elem="${dataElemValue}"]`);
+      elements.forEach((element) => {
+        element.classList.add("hover");
+      });
+    };
+
+    const handleMouseLeave = (event: Event) => {
+      const target = event.target as HTMLElement;
+      const dataElemValue = target.dataset.elem;
+
       if (!dataElemValue) return;
 
-      const elements = parentElement.querySelectorAll(`.muscle[data-elem="${dataElemValue}"]`);
+      // Retirer la classe hover de tous les éléments avec le même data-elem
+      const elements = parentElement.querySelectorAll(`[data-elem="${dataElemValue}"]`);
       elements.forEach((element) => {
-        element.classList.toggle("muscle-hover");
+        element.classList.remove("hover");
       });
     };
 
     const handleClick = (event: Event) => {
       const target = event.target as HTMLElement;
       const dataElemValue = target.dataset.elem;
-      const isEnabled = target.classList.contains("muscle-enabled");
+      const isEnabled = target.classList.contains("enabled");
 
       if (dataElemValue && isEnabled) {
         onToggleMuscle(dataElemValue as ExerciseAttributeValueEnum);
       }
     };
 
-    parentElement.addEventListener("mouseover", handleHover);
-    parentElement.addEventListener("mouseout", handleHover);
+    // Utiliser mouseenter/mouseleave au lieu de mouseover/mouseout pour éviter le bubbling
+    parentElement.addEventListener("mouseenter", handleMouseEnter, true);
+    parentElement.addEventListener("mouseleave", handleMouseLeave, true);
     parentElement.addEventListener("click", handleClick);
 
     return () => {
-      parentElement.removeEventListener("mouseover", handleHover);
-      parentElement.removeEventListener("mouseout", handleHover);
+      parentElement.removeEventListener("mouseenter", handleMouseEnter, true);
+      parentElement.removeEventListener("mouseleave", handleMouseLeave, true);
       parentElement.removeEventListener("click", handleClick);
     };
   }, [onToggleMuscle]);
@@ -600,7 +532,7 @@ const MuscleIllustration = ({
              410.61,139.02 410.79,137.33 410.77,135.65
              410.67,122.97 410.48,110.28 410.41,97.59
              410.37,92.08 409.03,86.89 406.94,81.88"
-        data-elem="Traps"
+        data-elem={ExerciseAttributeValueEnum.TRAPS}
         fill="#757575"
         id="path16"
         stroke="black"
@@ -3328,7 +3260,7 @@ const MuscleIllustration = ({
              400.42,44.40 403.28,40.95 403.28,40.95
              403.28,40.95 408.08,38.40 408.08,38.40
              408.08,38.40 410.78,37.80 410.78,37.80"
-        data-elem="Traps"
+        data-elem={ExerciseAttributeValueEnum.TRAPS}
         fill="transparent"
         stroke="black"
         strokeWidth="0"
@@ -3411,7 +3343,7 @@ const MuscleIllustration = ({
              98.50,124.75 91.75,123.25 91.75,123.25
              91.75,123.25 80.00,118.00 80.00,118.00
              80.00,118.00 73.00,111.75 73.00,111.75"
-        data-elem="Chest"
+        data-elem={ExerciseAttributeValueEnum.CHEST}
         fill="transparent"
         stroke="black"
         strokeWidth="0"
@@ -4148,137 +4080,12 @@ const MuscleIllustration = ({
         stroke="black"
         strokeWidth="0"
       />
-      <path
-        className={styles.muscleContainer}
-        d="M 370.00,328.00
-           C 370.00,328.00 365.25,339.75 365.25,339.75
-             365.25,339.75 361.75,349.00 361.75,349.00
-             361.75,349.00 361.75,362.25 361.75,362.25
-             361.75,362.25 364.25,377.00 364.25,377.00
-             364.25,377.00 370.50,395.75 370.50,395.75
-             370.50,395.75 373.00,409.50 373.00,409.50
-             373.00,409.50 372.00,428.25 372.00,428.25
-             372.00,428.25 375.00,425.75 375.00,425.75
-             375.00,425.75 378.50,419.00 378.50,419.00
-             378.50,419.00 382.75,415.75 382.75,415.75
-             382.75,415.75 388.50,415.75 388.50,415.75
-             388.50,415.75 393.25,421.75 393.25,421.75
-             393.25,421.75 390.25,408.25 390.25,408.25
-             390.25,408.25 390.75,397.00 390.75,397.00
-             390.75,397.00 395.50,379.75 395.50,379.75
-             395.50,379.75 399.75,371.75 399.75,371.75
-             399.75,371.75 400.00,360.00 400.00,360.00
-             400.00,360.00 396.00,348.50 396.00,348.50
-             396.00,348.50 393.00,339.75 393.00,339.75
-             393.00,339.75 392.25,324.00 392.25,324.00
-             392.25,324.00 391.50,322.00 391.50,322.00
-             391.50,322.00 384.00,326.25 384.00,326.25
-             384.00,326.25 381.25,322.00 381.25,322.00
-             381.25,322.00 378.75,319.00 378.75,319.00
-             378.75,319.00 374.00,325.75 374.00,325.75
-             374.00,325.75 370.00,327.75 370.00,327.75"
-        data-elem="Calves"
-        fill="transparent"
-        stroke="black"
-        strokeWidth="0"
-      />
-      <path
-        className={styles.muscleContainer}
-        d="M 137.50,309.75
-           C 137.50,309.75 135.75,325.75 135.75,325.75
-             135.75,325.75 134.50,335.75 134.50,335.75
-             134.50,335.75 131.25,347.00 131.25,347.00
-             131.25,347.00 128.75,358.75 128.75,358.75
-             128.75,358.75 128.75,369.50 128.75,369.50
-             128.75,369.50 132.00,382.75 132.00,382.75
-             132.00,382.75 135.75,391.25 135.75,391.25
-             135.75,391.25 138.00,403.25 138.00,403.25
-             138.00,403.25 137.50,413.25 137.50,413.25
-             137.50,413.25 135.50,425.75 135.50,425.75
-             135.50,425.75 141.00,423.75 141.00,423.75
-             141.00,423.75 149.00,413.75 149.00,413.75
-             149.00,413.75 153.75,408.00 153.75,408.00
-             153.75,408.00 159.50,394.00 159.50,394.00
-             159.50,394.00 161.75,375.50 161.75,375.50
-             161.75,375.50 163.00,361.25 163.00,361.25
-             163.00,361.25 162.00,347.00 162.00,347.00
-             162.00,347.00 159.00,337.50 159.00,337.50
-             159.00,337.50 154.75,330.00 154.75,329.75
-             154.75,329.50 147.25,320.25 147.25,320.25
-             147.25,320.25 142.75,314.25 142.75,314.25
-             142.75,314.25 141.75,310.75 139.50,309.25"
-        data-elem="Calves"
-        fill="transparent"
-        stroke="black"
-        strokeWidth="0"
-      />
-      <path
-        className={styles.muscleContainer}
-        d="M 90.50,307.75
-           C 90.50,307.75 77.50,324.75 77.50,324.75
-             77.50,324.75 72.50,337.00 72.50,337.00
-             72.50,337.00 68.25,350.75 68.25,350.75
-             68.25,350.75 68.25,368.75 68.25,368.75
-             68.25,368.75 69.75,385.25 69.75,385.25
-             69.75,385.25 74.25,402.00 74.25,402.00
-             74.25,402.00 79.50,411.25 79.50,411.25
-             79.50,411.25 88.25,422.25 88.25,422.25
-             88.25,422.25 93.75,428.25 93.75,428.25
-             93.75,428.25 94.00,421.25 94.00,421.25
-             94.00,421.25 91.50,404.75 91.50,404.75
-             91.50,404.75 93.75,391.75 93.75,391.75
-             93.75,391.75 99.25,378.25 99.25,378.25
-             99.25,378.25 101.25,365.75 101.25,365.75
-             101.25,365.75 97.50,346.75 97.50,346.75
-             97.50,346.75 95.25,332.50 95.25,332.50
-             95.25,332.50 94.50,319.75 94.50,319.75
-             94.50,319.75 92.75,310.25 92.75,310.25"
-        data-elem="Calves"
-        fill="transparent"
-        stroke="black"
-        strokeWidth="0"
-      />
-
-      <path
-        className={styles.muscleContainer}
-        d="M 411.25,142.25
-           C 411.25,142.25 407.25,135.50 407.25,135.50
-             407.25,135.50 396.75,146.00 396.75,146.00
-             396.75,146.00 393.25,151.25 393.25,151.25
-             393.25,151.25 389.50,159.50 389.50,159.50
-             389.50,159.50 388.00,168.25 388.00,168.25
-             388.00,168.25 387.75,171.50 387.75,171.50
-             387.75,171.50 391.75,175.25 391.75,175.25
-             391.75,175.25 396.75,184.50 396.75,184.50
-             396.75,184.50 400.00,194.50 400.00,194.50
-             400.00,194.50 404.50,205.25 404.50,205.25
-             404.50,205.25 408.50,211.50 408.50,211.50
-             408.50,211.50 410.75,213.25 410.75,213.25
-             410.75,213.25 415.25,209.25 415.25,209.25
-             415.25,209.25 419.75,202.75 419.75,202.75
-             419.75,202.75 424.00,193.50 424.00,193.50
-             424.00,193.50 427.25,183.50 427.25,183.50
-             427.25,183.50 429.25,177.25 429.25,177.25
-             429.25,177.25 435.50,172.50 435.50,172.50
-             435.50,172.50 436.25,168.75 436.25,168.75
-             436.25,168.75 435.00,161.75 435.00,161.75
-             435.00,161.75 431.25,152.50 431.25,152.50
-             431.25,152.50 426.25,145.00 426.25,145.00
-             426.25,145.00 418.00,136.50 418.00,136.50
-             418.00,136.50 415.25,135.50 415.25,135.50
-             415.25,135.50 411.00,143.00 411.00,142.75"
-        data-elem="Lower back"
-        fill="transparent"
-        stroke="black"
-        strokeWidth="0"
-      />
     </svg>
   );
 };
 
-export function MuscleSelection({ onToggleMuscle, selectedMuscles, selectedEquipment }: MuscleSelectionProps) {
+export function MuscleSelection({ onToggleMuscle, selectedMuscles }: MuscleSelectionProps) {
   const t = useI18n();
-  const availableMuscles = new Set<ExerciseAttributeValueEnum>(Object.values(MUSCLE_EQUIPMENT_MAPPING).flat());
 
   return (
     <div className="space-y-6">
@@ -4287,7 +4094,7 @@ export function MuscleSelection({ onToggleMuscle, selectedMuscles, selectedEquip
       </div>
 
       <div className="flex justify-center">
-        <MuscleIllustration availableMuscles={availableMuscles} onToggleMuscle={onToggleMuscle} selectedMuscles={selectedMuscles} />
+        <MuscleIllustration onToggleMuscle={onToggleMuscle} selectedMuscles={selectedMuscles} />
       </div>
 
       {selectedMuscles.length > 0 && (

@@ -4,7 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { Play, Shuffle, Star, Trash2, GripVertical } from "lucide-react";
 
-import { useI18n } from "locales/client";
+import { useCurrentLocale, useI18n } from "locales/client";
 import { InlineTooltip } from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
 
@@ -22,6 +22,8 @@ interface ExerciseListItemProps {
 export function ExerciseListItem({ exercise, muscle, onShuffle, onPick, onDelete, isPicked = false }: ExerciseListItemProps) {
   const t = useI18n();
   const [isHovered, setIsHovered] = useState(false);
+  const locale = useCurrentLocale();
+  const exerciseName = locale === "fr" ? exercise.name : exercise.nameEn;
 
   // Déterminer la couleur du muscle
   const getMuscleConfig = (muscle: string) => {
@@ -59,7 +61,7 @@ export function ExerciseListItem({ exercise, muscle, onShuffle, onPick, onDelete
           {exercise.fullVideoImageUrl && (
             <div className="relative w-10 h-10 rounded-lg overflow-hidden shrink-0 bg-slate-100 dark:bg-slate-800 cursor-pointer border border-slate-200 dark:border-slate-700/50">
               <Image
-                alt={exercise.name}
+                alt={exerciseName ?? ""}
                 className="w-full h-full object-cover scale-[1.5]"
                 height={40}
                 onError={(e) => {
@@ -93,24 +95,13 @@ export function ExerciseListItem({ exercise, muscle, onShuffle, onPick, onDelete
           {/* Nom de l'exercice avec indicateurs */}
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-3 mb-1">
-              <h3 className="font-semibold text-slate-900 dark:text-slate-100 truncate text-sm">{exercise.name}</h3>
+              <h3 className="font-semibold text-slate-900 dark:text-slate-100 truncate text-sm">{exerciseName}</h3>
             </div>
           </div>
         </div>
 
         {/* Section droite - Actions */}
         <div className="flex items-center gap-2 shrink-0">
-          {/* Bouton vidéo */}
-          {exercise.fullVideoUrl && (
-            <Button
-              className="h-9 w-9 rounded-lg bg-blue-500/10 hover:bg-blue-500/20 text-blue-600 dark:text-blue-400 border-0 transition-all duration-200 hover:scale-110"
-              size="small"
-              variant="ghost"
-            >
-              <Play className="h-4 w-4" />
-            </Button>
-          )}
-
           {/* Bouton shuffle */}
           <Button onClick={() => onShuffle(exercise.id, muscle)} size="small" variant="outline">
             <Shuffle />

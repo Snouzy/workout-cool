@@ -5,11 +5,10 @@ import { LogIn, UserPlus, LogOut, User } from "lucide-react";
 
 import { useI18n } from "locales/client";
 import Logo from "@public/logo.png";
+import { ReleaseNotesDialog } from "@/features/release-notes";
 import { useLogout } from "@/features/auth/model/useLogout";
 import { useSession } from "@/features/auth/lib/auth-client";
 import { Link } from "@/components/ui/link";
-import { ReleaseNotesDialog } from "@/features/release-notes";
-
 
 export const Header = () => {
   const session = useSession();
@@ -38,7 +37,7 @@ export const Header = () => {
       {/* User Menu */}
       <div className="navbar-end">
         <ReleaseNotesDialog />
-        
+
         <div className="dropdown dropdown-end">
           <div className="btn btn-ghost btn-circle avatar" role="button" tabIndex={0}>
             <div className="w-8 rounded-full bg-primary text-primary-content flex items-center justify-center text-sm font-medium">
@@ -52,9 +51,8 @@ export const Header = () => {
                 {t("commons.profile")}
               </Link>
             </li>
-            <li>
-              <hr className="my-1" />
-            </li>
+
+            <hr className="my-1" />
 
             {!session.data ? (
               <>

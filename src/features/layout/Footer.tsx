@@ -39,7 +39,7 @@ export const Footer = async () => {
           {SOCIAL_LINKS.map(({ href, icon: Icon, label }) => (
             <a
               aria-label={label}
-              className="btn btn-ghost btn-sm btn-circle"
+              className="btn btn-ghost btn-sm btn-circle text-gray-700"
               href={href}
               key={label}
               rel="noopener noreferrer"
@@ -51,7 +51,7 @@ export const Footer = async () => {
         </div>
 
         {/* Navigation Links */}
-        <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 text-center">
+        <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 text-center text-gray-700">
           {NAVIGATION(t).map(({ name, href }) => (
             <Link
               href={href}

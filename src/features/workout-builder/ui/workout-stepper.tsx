@@ -158,11 +158,9 @@ export function WorkoutStepper() {
     exercisesError,
   } = useWorkoutStepper();
 
-  // Session d'entraînement
   const {
     isWorkoutActive,
     session,
-    elapsedTime,
     isTimerRunning,
     currentExercise,
     startWorkout,
@@ -266,7 +264,6 @@ export function WorkoutStepper() {
     isCompleted: step.stepNumber < currentStep,
   }));
 
-  // Rendu du contenu de l'étape actuelle
   const renderStepContent = () => {
     switch (currentStep) {
       case 1:
@@ -287,9 +284,9 @@ export function WorkoutStepper() {
               <div className="max-w-4xl mx-auto">
                 {/* Liste des exercices */}
                 <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 overflow-hidden">
-                  {exercisesByMuscle.map((group, groupIndex) => (
+                  {exercisesByMuscle.map((group) => (
                     <div key={group.muscle}>
-                      {group.exercises.map((exercise, exerciseIndex) => (
+                      {group.exercises.map((exercise) => (
                         <ExerciseListItem
                           exercise={exercise}
                           isPicked={true}

@@ -3,6 +3,7 @@
 import { ArrowLeft, ArrowRight, CheckCircle, Zap, Plus } from "lucide-react";
 
 import { useI18n } from "locales/client";
+import { WorkoutExerciseSets } from "@/features/workout-session/ui/WorkoutExerciseSets";
 import { Button } from "@/components/ui/button";
 
 import { StepperStepProps } from "../types";
@@ -220,16 +221,7 @@ export function WorkoutStepper() {
           totalExercises={session.exercises.length}
         />
 
-        {/* Interface d&apos;entraînement - À développer */}
-        <div className="bg-white dark:bg-slate-900 rounded-xl p-8 text-center">
-          <h2 className="text-2xl font-bold mb-4">Interface d&apos;entraînement</h2>
-          <p className="text-slate-600 dark:text-slate-400 mb-4">Cette interface sera développée dans la prochaine étape</p>
-          {currentExercise && (
-            <div className="bg-slate-100 dark:bg-slate-800 rounded-lg p-4">
-              <h3 className="font-semibold">{currentExercise.name}</h3>
-            </div>
-          )}
-        </div>
+        <WorkoutExerciseSets />
       </div>
     );
   }

@@ -1,20 +1,8 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { ExerciseAttributeValueEnum } from "@prisma/client";
 
-import type { ExerciseWithAttributes } from "../types";
-
-interface WorkoutSession {
-  id: string;
-  startTime: number;
-  exercises: ExerciseWithAttributes[];
-  equipment: ExerciseAttributeValueEnum[];
-  muscles: ExerciseAttributeValueEnum[];
-  currentExerciseIndex: number;
-  isActive: boolean;
-  elapsedTime: number; // en secondes
-}
+import type { WorkoutSession, WorkoutSessionExercise, WorkoutSet } from "@/features/workout-session/types/workout-set";
 
 interface WorkoutSessionProgress {
   exerciseId: string;
@@ -41,8 +29,8 @@ export function useWorkoutSession() {
       try {
         const parsedSession: WorkoutSession = JSON.parse(savedSession);
         setSession(parsedSession);
-        setElapsedTime(parsedSession.elapsedTime || 0);
-        setIsTimerRunning(parsedSession.isActive);
+        setElapsedTime(parsedSession.duration || 0);
+        setIsTimerRunning(!!parsedSession.endedAt === false);
       } catch (error) {
         console.error("Error loading workout session:", error);
         localStorage.removeItem(STORAGE_KEY);
@@ -53,51 +41,130 @@ export function useWorkoutSession() {
   // Chronomètre automatique
   useEffect(() => {
     let interval: NodeJS.Timeout;
-
     if (isTimerRunning && session) {
       interval = setInterval(() => {
         setElapsedTime((prev) => {
           const newElapsedTime = prev + 1;
-          // Mettre à jour le localStorage avec le nouveau temps
           if (session) {
-            const updatedSession = { ...session, elapsedTime: newElapsedTime };
+            const updatedSession = { ...session, duration: newElapsedTime };
+            setSession(updatedSession);
             localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedSession));
           }
           return newElapsedTime;
         });
       }, 1000);
     }
-
     return () => {
-      if (interval) {
-        clearInterval(interval);
-      }
+      if (interval) clearInterval(interval);
     };
   }, [isTimerRunning, session]);
 
-  // Démarrer une nouvelle session d'entraînement
-  const startWorkout = useCallback(
-    (exercises: ExerciseWithAttributes[], equipment: ExerciseAttributeValueEnum[], muscles: ExerciseAttributeValueEnum[]) => {
-      const newSession: WorkoutSession = {
-        id: Date.now().toString(),
-        startTime: Date.now(),
-        exercises,
-        equipment,
-        muscles,
-        currentExerciseIndex: 0,
-        isActive: true,
-        elapsedTime: 0,
-      };
+  const startWorkout = useCallback((exercises: any[], equipment: any[], muscles: any[]) => {
+    // On crée la structure WorkoutSession avec les sets vides, même si l'exercice d'origine a déjà un champ sets, on l'écrase
+    const sessionExercises: WorkoutSessionExercise[] = exercises.map((ex, idx) => ({
+      id: ex.id,
+      exerciseId: ex.id,
+      order: idx,
+      sets: [
+        {
+          id: `${ex.id}-set-1`,
+          setIndex: 0,
+          type: "REPS",
+          completed: false,
+        },
+      ],
+      // On peut ajouter d'autres champs utiles ici (nom, etc.) si besoin
+    }));
+    const newSession: WorkoutSession = {
+      id: Date.now().toString(),
+      userId: "local", // à remplacer par l'id user réel si connecté
+      startedAt: new Date().toISOString(),
+      exercises: sessionExercises,
+    };
+    setSession(newSession);
+    setElapsedTime(0);
+    setIsTimerRunning(true);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(newSession));
+  }, []);
 
-      setSession(newSession);
-      setElapsedTime(0);
-      setIsTimerRunning(true);
-      setProgress({});
+  // Navigation entre exercices
+  const currentExerciseIndex = session?.exercises.findIndex((ex, idx) => idx === (session as any)?.currentExerciseIndex) ?? 0;
+  const currentExercise = session?.exercises[currentExerciseIndex];
 
-      // Sauvegarder dans localStorage
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(newSession));
+  // Guard pour éviter les erreurs si sets est absent
+  const safeCurrentExercise = currentExercise && Array.isArray(currentExercise.sets) ? currentExercise : { ...currentExercise, sets: [] };
+
+  const goToNextExercise = useCallback(() => {
+    if (!session) return;
+    const idx = currentExerciseIndex;
+    if (idx < session.exercises.length - 1) {
+      const updatedSession = { ...session, currentExerciseIndex: idx + 1 };
+      setSession(updatedSession);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedSession));
+    }
+  }, [session, currentExerciseIndex]);
+
+  const goToPrevExercise = useCallback(() => {
+    if (!session) return;
+    const idx = currentExerciseIndex;
+    if (idx > 0) {
+      const updatedSession = { ...session, currentExerciseIndex: idx - 1 };
+      setSession(updatedSession);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedSession));
+    }
+  }, [session, currentExerciseIndex]);
+
+  // Ajout d'un set
+  const addSet = useCallback(() => {
+    if (!session || !currentExercise) return;
+    const exIdx = currentExerciseIndex;
+    const sets = currentExercise.sets;
+    const newSet: WorkoutSet = {
+      id: `${currentExercise.id}-set-${sets.length + 1}`,
+      setIndex: sets.length,
+      type: "REPS",
+      completed: false,
+    };
+    const updatedExercises = session.exercises.map((ex, idx) => (idx === exIdx ? { ...ex, sets: [...ex.sets, newSet] } : ex));
+    const updatedSession = { ...session, exercises: updatedExercises };
+    setSession(updatedSession);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedSession));
+  }, [session, currentExercise, currentExerciseIndex]);
+
+  // Mise à jour d'un set
+  const updateSet = useCallback(
+    (setIndex: number, data: Partial<WorkoutSet>) => {
+      if (!session || !currentExercise) return;
+      const exIdx = currentExerciseIndex;
+      const updatedSets = currentExercise.sets.map((set, idx) => (idx === setIndex ? { ...set, ...data } : set));
+      const updatedExercises = session.exercises.map((ex, idx) => (idx === exIdx ? { ...ex, sets: updatedSets } : ex));
+      const updatedSession = { ...session, exercises: updatedExercises };
+      setSession(updatedSession);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedSession));
     },
-    [],
+    [session, currentExercise, currentExerciseIndex],
+  );
+
+  // Suppression d'un set
+  const removeSet = useCallback(
+    (setIndex: number) => {
+      if (!session || !currentExercise) return;
+      const exIdx = currentExerciseIndex;
+      const updatedSets = currentExercise.sets.filter((_, idx) => idx !== setIndex);
+      const updatedExercises = session.exercises.map((ex, idx) => (idx === exIdx ? { ...ex, sets: updatedSets } : ex));
+      const updatedSession = { ...session, exercises: updatedExercises };
+      setSession(updatedSession);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedSession));
+    },
+    [session, currentExercise, currentExerciseIndex],
+  );
+
+  // Marquer un set comme terminé
+  const finishSet = useCallback(
+    (setIndex: number) => {
+      updateSet(setIndex, { completed: true });
+    },
+    [updateSet],
   );
 
   // Mettre en pause/reprendre le chronomètre
@@ -117,7 +184,7 @@ export function useWorkoutSession() {
   const resetTimer = useCallback(() => {
     setElapsedTime(0);
     if (session) {
-      const updatedSession = { ...session, elapsedTime: 0 };
+      const updatedSession = { ...session, duration: 0 };
       setSession(updatedSession);
       localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedSession));
     }
@@ -159,30 +226,6 @@ export function useWorkoutSession() {
     }));
   }, []);
 
-  // Passer à l'exercice suivant
-  const goToNextExercise = useCallback(() => {
-    if (session && session.currentExerciseIndex < session.exercises.length - 1) {
-      const updatedSession = {
-        ...session,
-        currentExerciseIndex: session.currentExerciseIndex + 1,
-      };
-      setSession(updatedSession);
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedSession));
-    }
-  }, [session]);
-
-  // Aller à l'exercice précédent
-  const goToPreviousExercise = useCallback(() => {
-    if (session && session.currentExerciseIndex > 0) {
-      const updatedSession = {
-        ...session,
-        currentExerciseIndex: session.currentExerciseIndex - 1,
-      };
-      setSession(updatedSession);
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedSession));
-    }
-  }, [session]);
-
   // Formater le temps écoulé en HH:MM:SS
   const formatElapsedTime = useCallback((seconds: number) => {
     const hours = Math.floor(seconds / 3600);
@@ -202,7 +245,8 @@ export function useWorkoutSession() {
     elapsedTime,
     isTimerRunning,
     isWorkoutActive: !!session,
-    currentExercise: session?.exercises[session.currentExerciseIndex],
+    currentExercise: safeCurrentExercise,
+    currentExerciseIndex,
 
     // Actions
     startWorkout,
@@ -211,10 +255,14 @@ export function useWorkoutSession() {
     toggleTimer,
     resetTimer,
     updateExerciseProgress,
+    addSet,
+    updateSet,
+    removeSet,
+    finishSet,
     goToNextExercise,
-    goToPreviousExercise,
+    goToPrevExercise,
 
-    // Utilitaires
+    // Utils
     formatElapsedTime: () => formatElapsedTime(elapsedTime),
   };
 }

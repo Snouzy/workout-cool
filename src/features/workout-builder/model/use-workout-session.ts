@@ -134,36 +134,38 @@ export function useWorkoutSession() {
 
   // Mise à jour d'un set
   const updateSet = useCallback(
-    (setIndex: number, data: Partial<WorkoutSet>) => {
-      if (!session || !currentExercise) return;
-      const exIdx = currentExerciseIndex;
-      const updatedSets = currentExercise.sets.map((set, idx) => (idx === setIndex ? { ...set, ...data } : set));
-      const updatedExercises = session.exercises.map((ex, idx) => (idx === exIdx ? { ...ex, sets: updatedSets } : ex));
+    (exerciseIndex: number, setIndex: number, data: Partial<WorkoutSet>) => {
+      if (!session) return;
+      const targetExercise = session.exercises[exerciseIndex];
+      if (!targetExercise) return;
+      const updatedSets = targetExercise.sets.map((set, idx) => (idx === setIndex ? { ...set, ...data } : set));
+      const updatedExercises = session.exercises.map((ex, idx) => (idx === exerciseIndex ? { ...ex, sets: updatedSets } : ex));
       const updatedSession = { ...session, exercises: updatedExercises };
       setSession(updatedSession);
       localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedSession));
     },
-    [session, currentExercise, currentExerciseIndex],
+    [session],
   );
 
   // Suppression d'un set
   const removeSet = useCallback(
-    (setIndex: number) => {
-      if (!session || !currentExercise) return;
-      const exIdx = currentExerciseIndex;
-      const updatedSets = currentExercise.sets.filter((_, idx) => idx !== setIndex);
-      const updatedExercises = session.exercises.map((ex, idx) => (idx === exIdx ? { ...ex, sets: updatedSets } : ex));
+    (exerciseIndex: number, setIndex: number) => {
+      if (!session) return;
+      const targetExercise = session.exercises[exerciseIndex];
+      if (!targetExercise) return;
+      const updatedSets = targetExercise.sets.filter((_, idx) => idx !== setIndex);
+      const updatedExercises = session.exercises.map((ex, idx) => (idx === exerciseIndex ? { ...ex, sets: updatedSets } : ex));
       const updatedSession = { ...session, exercises: updatedExercises };
       setSession(updatedSession);
       localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedSession));
     },
-    [session, currentExercise, currentExerciseIndex],
+    [session],
   );
 
   // Marquer un set comme terminé
   const finishSet = useCallback(
-    (setIndex: number) => {
-      updateSet(setIndex, { completed: true });
+    (exerciseIndex: number, setIndex: number) => {
+      updateSet(exerciseIndex, setIndex, { completed: true });
     },
     [updateSet],
   );

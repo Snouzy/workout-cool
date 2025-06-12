@@ -30,10 +30,11 @@ model User {
   accounts      Account[]
   feedbacks     Feedbacks[]
 
-  role       UserRole? @default(user)
-  banned     Boolean?  @default(false)
-  banReason  String?
-  banExpires DateTime?
+  role           UserRole?        @default(user)
+  banned         Boolean?         @default(false)
+  banReason      String?
+  banExpires     DateTime?
+  WorkoutSession WorkoutSession[]
 
   @@map("user")
 }
@@ -114,7 +115,8 @@ model Exercise {
   updatedAt         DateTime @updatedAt
 
   // Relations
-  attributes ExerciseAttribute[]
+  attributes             ExerciseAttribute[]
+  WorkoutSessionExercise WorkoutSessionExercise[]
 
   @@map("exercises")
 }
@@ -262,4 +264,49 @@ enum ExerciseAttributeValueEnum {
   // Types de mécanique
   ISOLATION
   COMPOUND
+}
+
+model WorkoutSession {
+  id        String                   @id @default(cuid())
+  userId    String
+  user      User                     @relation(fields: [userId], references: [id])
+  startedAt DateTime
+  endedAt   DateTime?
+  duration  Int? // en secondes
+  exercises WorkoutSessionExercise[]
+}
+
+model WorkoutSessionExercise {
+  id               String         @id @default(cuid())
+  workoutSessionId String
+  exerciseId       String
+  order            Int
+  workoutSession   WorkoutSession @relation(fields: [workoutSessionId], references: [id])
+  exercise         Exercise       @relation(fields: [exerciseId], references: [id])
+  sets             WorkoutSet[]
+}
+
+model WorkoutSet {
+  id                       String                 @id @default(cuid())
+  workoutSessionExerciseId String
+  setIndex                 Int
+  type                     WorkoutSetType
+  valueInt                 Int? // reps, poids, minutes, etc.
+  valueSec                 Int? // secondes si TIME
+  unit                     WorkoutSetUnit?
+  completed                Boolean                @default(false)
+  workoutSessionExercise   WorkoutSessionExercise @relation(fields: [workoutSessionExerciseId], references: [id])
+}
+
+enum WorkoutSetType {
+  TIME
+  WEIGHT
+  REPS
+  BODYWEIGHT
+  NA
+}
+
+enum WorkoutSetUnit {
+  kg
+  lbs
 }

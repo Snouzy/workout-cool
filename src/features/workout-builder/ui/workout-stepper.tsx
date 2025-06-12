@@ -8,6 +8,8 @@ import { Button } from "@/components/ui/button";
 
 import { StepperStepProps } from "../types";
 import { useWorkoutStepper } from "../model/use-workout-stepper";
+import { useWorkoutSession } from "../model/use-workout-session";
+import { WorkoutSessionHeader } from "./workout-session-header";
 import { StepperHeader } from "./stepper-header";
 import { MuscleSelection } from "./muscle-selection";
 import { ExerciseListItem } from "./exercise-list-item";
@@ -157,6 +159,20 @@ export function WorkoutStepper() {
     exercisesError,
   } = useWorkoutStepper();
 
+  // Session d'entraînement
+  const {
+    isWorkoutActive,
+    session,
+    elapsedTime,
+    isTimerRunning,
+    currentExercise,
+    startWorkout,
+    quitWorkout,
+    toggleTimer,
+    resetTimer,
+    formatElapsedTime,
+  } = useWorkoutSession();
+
   // État pour les exercices sélectionnés (picked)
   const [pickedExercises, setPickedExercises] = useState<string[]>([]);
 
@@ -182,6 +198,52 @@ export function WorkoutStepper() {
     // TODO: Implémenter la logique pour ajouter un exercice
     console.log("Add exercise");
   };
+
+  // Fonction pour démarrer l'entraînement
+  const handleStartWorkout = () => {
+    // Récupérer les exercices sélectionnés (picked)
+    const selectedExercises = exercisesByMuscle
+      .flatMap((group) => group.exercises)
+      .filter((exercise) => pickedExercises.includes(exercise.id));
+
+    if (selectedExercises.length > 0) {
+      startWorkout(selectedExercises, selectedEquipment, selectedMuscles);
+    }
+  };
+
+  // Si un entraînement est actif, afficher l'interface d'entraînement
+  if (isWorkoutActive && session) {
+    return (
+      <div className="w-full max-w-6xl mx-auto">
+        <WorkoutSessionHeader
+          currentExerciseIndex={session.currentExerciseIndex}
+          elapsedTime={formatElapsedTime()}
+          exerciseName={currentExercise?.name}
+          isTimerRunning={isTimerRunning}
+          onQuitWorkout={quitWorkout}
+          onResetTimer={resetTimer}
+          onSaveAndQuit={() => {
+            // TODO: Implémenter la sauvegarde pour plus tard
+            console.log("Save workout for later");
+            quitWorkout();
+          }}
+          onToggleTimer={toggleTimer}
+          totalExercises={session.exercises.length}
+        />
+
+        {/* Interface d&apos;entraînement - À développer */}
+        <div className="bg-white dark:bg-slate-900 rounded-xl p-8 text-center">
+          <h2 className="text-2xl font-bold mb-4">Interface d&apos;entraînement</h2>
+          <p className="text-slate-600 dark:text-slate-400 mb-4">Cette interface sera développée dans la prochaine étape</p>
+          {currentExercise && (
+            <div className="bg-slate-100 dark:bg-slate-800 rounded-lg p-4">
+              <h3 className="font-semibold">{currentExercise.name}</h3>
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  }
 
   // Calculer l'état des étapes avec traductions
   const STEPPER_STEPS: StepperStepProps[] = [
@@ -270,7 +332,12 @@ export function WorkoutStepper() {
                   <Button className="px-8" size="large" variant="outline">
                     Save for later
                   </Button>
-                  <Button className="px-8 bg-blue-600 hover:bg-blue-700" size="large">
+                  <Button
+                    className="px-8 bg-blue-600 hover:bg-blue-700"
+                    disabled={pickedExercises.length === 0}
+                    onClick={handleStartWorkout}
+                    size="large"
+                  >
                     Start Workout
                   </Button>
                 </div>

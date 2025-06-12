@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { ArrowLeft, ArrowRight, CheckCircle, Zap, Plus } from "lucide-react";
 
 import { useI18n } from "locales/client";
@@ -173,11 +172,7 @@ export function WorkoutStepper() {
     formatElapsedTime,
   } = useWorkoutSession();
 
-  // État pour les exercices sélectionnés (picked)
-  const [pickedExercises, setPickedExercises] = useState<string[]>([]);
-
-  // Calculer si on peut continuer selon l'étape
-  const canContinue = currentStep === 1 ? canProceedToStep2 : currentStep === 2 ? canProceedToStep3 : pickedExercises.length > 0;
+  const canContinue = currentStep === 1 ? canProceedToStep2 : currentStep === 2 ? canProceedToStep3 : exercisesByMuscle.length > 0;
 
   // Actions pour les exercices
   const handleShuffleExercise = (exerciseId: string, muscle: string) => {
@@ -186,7 +181,8 @@ export function WorkoutStepper() {
   };
 
   const handlePickExercise = (exerciseId: string) => {
-    setPickedExercises((prev) => (prev.includes(exerciseId) ? prev.filter((id) => id !== exerciseId) : [...prev, exerciseId]));
+    // later
+    console.log("Pick exercise:", exerciseId);
   };
 
   const handleDeleteExercise = (exerciseId: string, muscle: string) => {
@@ -198,16 +194,11 @@ export function WorkoutStepper() {
     // TODO: Implémenter la logique pour ajouter un exercice
     console.log("Add exercise");
   };
-
-  // Fonction pour démarrer l'entraînement
   const handleStartWorkout = () => {
-    // Récupérer les exercices sélectionnés (picked)
-    const selectedExercises = exercisesByMuscle
-      .flatMap((group) => group.exercises)
-      .filter((exercise) => pickedExercises.includes(exercise.id));
+    const allExercises = exercisesByMuscle.flatMap((group) => group.exercises);
 
-    if (selectedExercises.length > 0) {
-      startWorkout(selectedExercises, selectedEquipment, selectedMuscles);
+    if (allExercises.length > 0) {
+      startWorkout(allExercises, selectedEquipment, selectedMuscles);
     }
   };
 
@@ -245,7 +236,6 @@ export function WorkoutStepper() {
     );
   }
 
-  // Calculer l'état des étapes avec traductions
   const STEPPER_STEPS: StepperStepProps[] = [
     {
       stepNumber: 1,
@@ -302,7 +292,7 @@ export function WorkoutStepper() {
                       {group.exercises.map((exercise, exerciseIndex) => (
                         <ExerciseListItem
                           exercise={exercise}
-                          isPicked={pickedExercises.includes(exercise.id)}
+                          isPicked={true}
                           key={exercise.id}
                           muscle={group.muscle}
                           onDelete={handleDeleteExercise}
@@ -334,7 +324,7 @@ export function WorkoutStepper() {
                   </Button>
                   <Button
                     className="px-8 bg-blue-600 hover:bg-blue-700"
-                    disabled={pickedExercises.length === 0}
+                    disabled={exercisesByMuscle.length === 0}
                     onClick={handleStartWorkout}
                     size="large"
                   >

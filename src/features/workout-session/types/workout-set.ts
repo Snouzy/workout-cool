@@ -16,6 +16,8 @@ export interface WorkoutSessionExercise {
   exerciseId: string;
   order: number;
   sets: WorkoutSet[];
+  name?: string;
+  nameEn?: string;
 }
 
 export interface WorkoutSession {

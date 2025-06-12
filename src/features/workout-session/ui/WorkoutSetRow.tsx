@@ -28,88 +28,114 @@ export function WorkoutSetRow({ set, setIndex, onChange, onFinish, onRemove }: W
   };
 
   return (
-    <div className="flex flex-col md:flex-row items-center gap-4 w-full">
-      {/* Sélecteur de type */}
-      <select className="border rounded px-2 py-1 text-sm" disabled={set.completed} onChange={handleTypeChange} value={set.type}>
-        {SET_TYPES.map((type) => (
-          <option key={type} value={type}>
-            {type}
-          </option>
-        ))}
-      </select>
+    <div className="flex items-center gap-4 w-full py-2">
+      {/* Label SET X */}
+      <div className="w-16 text-right font-bold text-slate-700">SET {setIndex + 1}</div>
 
-      {/* Champs dynamiques selon le type */}
-      {set.type === "REPS" && (
-        <input
-          className="border rounded px-2 py-1 w-20 text-sm"
+      {/* TEMPS */}
+      <div className="flex flex-col items-center w-32">
+        <select
+          className="border border-black rounded font-bold px-2 py-1 text-lg w-full mb-1 bg-white"
           disabled={set.completed}
-          min={0}
-          onChange={handleValueIntChange}
-          placeholder="Reps"
-          type="number"
-          value={set.valueInt ?? ""}
-        />
-      )}
-      {set.type === "WEIGHT" && (
-        <>
+          onChange={handleTypeChange}
+          value={set.type}
+        >
+          <option value="TIME">TEMPS</option>
+          <option value="WEIGHT">POIDS</option>
+          <option value="REPS">REPS</option>
+          <option value="BODYWEIGHT">BODYWEIGHT</option>
+        </select>
+        <div className="flex gap-1 w-full">
           <input
-            className="border rounded px-2 py-1 w-20 text-sm"
-            disabled={set.completed}
-            min={0}
-            onChange={handleValueIntChange}
-            placeholder="Weight"
-            type="number"
-            value={set.valueInt ?? ""}
-          />
-          <select
-            className="border rounded px-2 py-1 text-sm"
-            disabled={set.completed}
-            onChange={handleUnitChange}
-            value={set.unit ?? "kg"}
-          >
-            {UNITS.map((unit) => (
-              <option key={unit} value={unit}>
-                {unit}
-              </option>
-            ))}
-          </select>
-        </>
-      )}
-      {set.type === "TIME" && (
-        <div className="flex items-center gap-2">
-          <input
-            className="border rounded px-2 py-1 w-16 text-sm"
-            disabled={set.completed}
+            className="border border-black rounded px-1 py-1 w-1/2 text-lg text-center font-bold"
+            disabled={set.completed || set.type !== "TIME"}
             min={0}
             onChange={handleValueIntChange}
             placeholder="min"
             type="number"
-            value={set.valueInt ?? ""}
+            value={set.type === "TIME" ? (set.valueInt ?? "") : ""}
           />
-          <span>min</span>
           <input
-            className="border rounded px-2 py-1 w-16 text-sm"
-            disabled={set.completed}
+            className="border border-black rounded px-1 py-1 w-1/2 text-lg text-center font-bold"
+            disabled={set.completed || set.type !== "TIME"}
             max={59}
             min={0}
             onChange={handleValueSecChange}
             placeholder="sec"
             type="number"
-            value={set.valueSec ?? ""}
+            value={set.type === "TIME" ? (set.valueSec ?? "") : ""}
           />
-          <span>sec</span>
         </div>
-      )}
-      {set.type === "BODYWEIGHT" && <span className="px-2 py-1 rounded bg-slate-200 text-slate-700 text-xs">Bodyweight</span>}
-      {set.type === "NA" && <span className="px-2 py-1 rounded bg-slate-100 text-slate-400 text-xs">N/A</span>}
+      </div>
 
-      {/* Actions */}
-      <Button className="bg-blue-600 text-white" disabled={set.completed} onClick={onFinish}>
-        {set.completed ? "Done" : "Finish"}
-      </Button>
-      <Button className="text-red-500 border-red-300 ml-2" onClick={onRemove} variant="outline">
-        Remove
-      </Button>
+      {/* POIDS */}
+      <div className="flex flex-col items-center w-32">
+        <select className="border border-black rounded font-bold px-2 py-1 text-lg w-full mb-1 bg-white" disabled={true} value="WEIGHT">
+          <option value="WEIGHT">POIDS</option>
+        </select>
+        <div className="flex gap-1 w-full items-center">
+          <input
+            className="border border-black rounded px-1 py-1 w-1/2 text-lg text-center font-bold"
+            disabled={set.completed || set.type !== "WEIGHT"}
+            min={0}
+            onChange={handleValueIntChange}
+            placeholder=""
+            type="number"
+            value={set.type === "WEIGHT" ? (set.valueInt ?? "") : ""}
+          />
+          <select
+            className="border border-black rounded px-1 py-1 w-1/2 text-lg font-bold bg-white"
+            disabled={set.completed || set.type !== "WEIGHT"}
+            onChange={handleUnitChange}
+            value={set.unit ?? "kg"}
+          >
+            <option value="kg">kg</option>
+            <option value="lbs">lbs</option>
+          </select>
+        </div>
+      </div>
+
+      {/* REPS */}
+      <div className="flex flex-col items-center w-32">
+        <select className="border border-black rounded font-bold px-2 py-1 text-lg w-full mb-1 bg-white" disabled={true} value="REPS">
+          <option value="REPS">REPS</option>
+        </select>
+        <input
+          className="border border-black rounded px-1 py-1 w-full text-lg text-center font-bold"
+          disabled={set.completed || set.type !== "REPS"}
+          min={0}
+          onChange={handleValueIntChange}
+          placeholder=""
+          type="number"
+          value={set.type === "REPS" ? (set.valueInt ?? "") : ""}
+        />
+      </div>
+
+      {/* BODYWEIGHT */}
+      <div className="flex flex-col items-center w-32">
+        <select className="border border-black rounded font-bold px-2 py-1 text-lg w-full mb-1 bg-white" disabled={true} value="BODYWEIGHT">
+          <option value="BODYWEIGHT">BODYWEIGHT</option>
+        </select>
+        <input
+          className="border border-black rounded px-1 py-1 w-full text-lg text-center font-bold"
+          disabled={true}
+          placeholder=""
+          readOnly
+          value={set.type === "BODYWEIGHT" ? "✔" : ""}
+        />
+      </div>
+
+      {/* Finish button */}
+      <div className="flex items-center w-32 justify-end">
+        <Button
+          className="bg-blue-500 hover:bg-blue-600 text-white font-bold px-8 py-2 text-lg rounded"
+          disabled={set.completed}
+          onClick={onFinish}
+          style={{ minWidth: 100 }}
+        >
+          Finish
+        </Button>
+      </div>
     </div>
   );
 }

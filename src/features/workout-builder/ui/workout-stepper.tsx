@@ -9,7 +9,6 @@ import { Button } from "@/components/ui/button";
 import { StepperStepProps } from "../types";
 import { useWorkoutStepper } from "../model/use-workout-stepper";
 import { useWorkoutSession } from "../model/use-workout-session";
-import { WorkoutSessionHeader } from "./workout-session-header";
 import { StepperHeader } from "./stepper-header";
 import { MuscleSelection } from "./muscle-selection";
 import { ExerciseListItem } from "./exercise-list-item";
@@ -205,7 +204,7 @@ export function WorkoutStepper() {
   if (isWorkoutActive && session) {
     return (
       <div className="w-full max-w-6xl mx-auto">
-        <WorkoutSessionHeader
+        {/* <WorkoutSessionHeader
           currentExerciseIndex={session.currentExerciseIndex}
           elapsedTime={formatElapsedTime()}
           exerciseName={currentExercise?.name}
@@ -219,7 +218,7 @@ export function WorkoutStepper() {
           }}
           onToggleTimer={toggleTimer}
           totalExercises={session.exercises.length}
-        />
+        /> */}
 
         <WorkoutExerciseSets />
       </div>

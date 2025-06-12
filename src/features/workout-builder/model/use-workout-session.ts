@@ -64,6 +64,8 @@ export function useWorkoutSession() {
     const sessionExercises: WorkoutSessionExercise[] = exercises.map((ex, idx) => ({
       id: ex.id,
       exerciseId: ex.id,
+      name: ex.name,
+      nameEn: ex.nameEn,
       order: idx,
       sets: [
         {
@@ -73,7 +75,6 @@ export function useWorkoutSession() {
           completed: false,
         },
       ],
-      // On peut ajouter d'autres champs utiles ici (nom, etc.) si besoin
     }));
     const newSession: WorkoutSession = {
       id: Date.now().toString(),

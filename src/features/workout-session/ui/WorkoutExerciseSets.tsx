@@ -61,7 +61,7 @@ export function WorkoutExerciseSets() {
             </div>
             {/* Si exercice courant, afficher le détail */}
             {idx === currentExerciseIndex && (
-              <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-md p-6 mt-2 mb-2">
+              <div className="bg-white dark:bg-slate-900 rounded-xl mt-2 mb-2">
                 {/* Liste des sets */}
                 <div className="space-y-4 mb-8">
                   {ex.sets.map((set, setIdx) => (

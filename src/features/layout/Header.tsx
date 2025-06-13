@@ -46,11 +46,11 @@ export const Header = () => {
 
       {/* User Menu */}
       <div className="navbar-end">
-        <InlineTooltip title="Accueil">
-          <Link aria-label="Accueil" className="hover:bg-slate-100 rounded-full p-2 transition" href="/">
+        <Link aria-label="Accueil" className="hover:bg-slate-100 rounded-full p-2 transition" href="/">
+          <InlineTooltip title="Accueil">
             <Home className="w-6 h-6 text-blue-500" />
-          </Link>
-        </InlineTooltip>
+          </InlineTooltip>
+        </Link>
 
         <ReleaseNotesDialog />
 

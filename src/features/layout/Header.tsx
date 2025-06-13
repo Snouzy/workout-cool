@@ -63,7 +63,7 @@ export const Header = () => {
 
           <ul className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52" tabIndex={0}>
             <li>
-              <Link href="/profile" size="base" variant="nav">
+              <Link className="!no-underline" href="/profile" size="base" variant="nav">
                 {t("commons.profile")}
               </Link>
             </li>
@@ -73,13 +73,13 @@ export const Header = () => {
             {!session.data ? (
               <>
                 <li>
-                  <Link href="/auth/signin" size="base" variant="nav">
+                  <Link className="!no-underline" href="/auth/signin" size="base" variant="nav">
                     <LogIn className="w-4 h-4" />
                     {t("commons.login")}
                   </Link>
                 </li>
                 <li>
-                  <Link href="/auth/signup" size="base" variant="nav">
+                  <Link className="!no-underline" href="/auth/signup" size="base" variant="nav">
                     <UserPlus className="w-4 h-4" />
                     {t("commons.register")}
                   </Link>

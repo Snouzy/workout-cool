@@ -10,7 +10,6 @@ import { useI18n } from "locales/client";
 import Trophy from "@public/images/trophy.png";
 import { cn } from "@/shared/lib/utils";
 import { ExerciseVideoModal } from "@/features/workout-builder/ui/exercise-video-modal";
-import { useWorkoutStepper } from "@/features/workout-builder/model/use-workout-stepper";
 import { useWorkoutSession } from "@/features/workout-builder/model/use-workout-session";
 import { Button } from "@/components/ui/button";
 
@@ -42,8 +41,7 @@ export function WorkoutSessionSets({
     completeWorkout,
   } = useWorkoutSession(sessionId);
   const router = useRouter();
-  const { exercisesByMuscle } = useWorkoutStepper();
-  const exerciseDetailsMap = Object.fromEntries(exercisesByMuscle.flatMap((group) => group.exercises.map((ex) => [ex.id, ex])));
+  const exerciseDetailsMap = Object.fromEntries(session?.exercises.map((ex) => [ex.id, ex]) || []);
   const [videoModal, setVideoModal] = useState<{ open: boolean; exerciseId?: string }>({ open: false });
 
   if (!session) {

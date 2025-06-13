@@ -25,6 +25,7 @@ export function useWorkoutSession() {
   // Charger la session depuis localStorage au démarrage
   useEffect(() => {
     const savedSession = localStorage.getItem(STORAGE_KEY);
+    console.log("savedSession:", JSON.parse(savedSession || "{}"));
     if (savedSession) {
       try {
         const parsedSession: WorkoutSession = JSON.parse(savedSession);
@@ -39,25 +40,25 @@ export function useWorkoutSession() {
   }, []);
 
   // Chronomètre automatique
-  useEffect(() => {
-    let interval: NodeJS.Timeout;
-    if (isTimerRunning && session) {
-      interval = setInterval(() => {
-        setElapsedTime((prev) => {
-          const newElapsedTime = prev + 1;
-          if (session) {
-            const updatedSession = { ...session, duration: newElapsedTime };
-            setSession(updatedSession);
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedSession));
-          }
-          return newElapsedTime;
-        });
-      }, 1000);
-    }
-    return () => {
-      if (interval) clearInterval(interval);
-    };
-  }, [isTimerRunning, session]);
+  // useEffect(() => {
+  //   let interval: NodeJS.Timeout;
+  //   if (isTimerRunning && session) {
+  //     interval = setInterval(() => {
+  //       setElapsedTime((prev) => {
+  //         const newElapsedTime = prev + 1;
+  //         if (session) {
+  //           const updatedSession = { ...session, duration: newElapsedTime };
+  //           setSession(updatedSession);
+  //           localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedSession));
+  //         }
+  //         return newElapsedTime;
+  //       });
+  //     }, 1000);
+  //   }
+  //   return () => {
+  //     if (interval) clearInterval(interval);
+  //   };
+  // }, [isTimerRunning, session]);
 
   const startWorkout = useCallback((exercises: any[], equipment: any[], muscles: any[]) => {
     // On crée la structure WorkoutSession avec les sets vides, même si l'exercice d'origine a déjà un champ sets, on l'écrase

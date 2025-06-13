@@ -44,6 +44,8 @@ interface WorkoutSessionState {
   goToPrevExercise: () => void;
   goToExercise: (targetIndex: number) => void;
   formatElapsedTime: () => string;
+  getExercisesCompleted: () => number;
+  getTotalExercises: () => number;
   loadSessionFromLocal: () => void;
 }
 
@@ -183,15 +185,21 @@ export const useWorkoutSessionStore = create<WorkoutSessionState>((set, get) => 
   updateSet: (exerciseIndex, setIndex, data) => {
     const { session } = get();
     if (!session) return;
+
     const targetExercise = session.exercises[exerciseIndex];
     if (!targetExercise) return;
+
     const updatedSets = targetExercise.sets.map((set, idx) => (idx === setIndex ? { ...set, ...data } : set));
     const updatedExercises = session.exercises.map((ex, idx) => (idx === exerciseIndex ? { ...ex, sets: updatedSets } : ex));
+
     workoutSessionLocal.update(session.id, { exercises: updatedExercises });
+
     set({
       session: { ...session, exercises: updatedExercises },
       currentExercise: { ...updatedExercises[exerciseIndex] },
     });
+
+    // handle exercisesCompleted
   },
 
   removeSet: (exerciseIndex, setIndex) => {
@@ -262,6 +270,18 @@ export const useWorkoutSessionStore = create<WorkoutSessionState>((set, get) => 
         currentExercise: session.exercises[targetIndex],
       });
     }
+  },
+
+  getExercisesCompleted: () => {
+    const { session } = get();
+    if (!session) return 0;
+    return session.exercises.filter((exercise) => exercise.sets.every((set) => set.completed)).length;
+  },
+
+  getTotalExercises: () => {
+    const { session } = get();
+    if (!session) return 0;
+    return session.exercises.length;
   },
 
   formatElapsedTime: () => {

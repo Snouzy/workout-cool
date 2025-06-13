@@ -35,8 +35,9 @@ export function WorkoutSessionHeader({
   const t = useI18n();
   const [showQuitDialog, setShowQuitDialog] = useState(false);
 
-  const { exercisesCompleted, totalExercises } = useWorkoutSession();
-  console.log("exercisesCompleted:", exercisesCompleted);
+  const { getExercisesCompleted, getTotalExercises } = useWorkoutSession();
+  const exercisesCompleted = getExercisesCompleted();
+  const totalExercises = getTotalExercises();
 
   const handleQuitClick = () => {
     setShowQuitDialog(true);
@@ -132,7 +133,7 @@ export function WorkoutSessionHeader({
               <div className="space-y-2">
                 {/* Progress display */}
                 <div className="flex items-center justify-between">
-                  <span className="text-lg font-bold text-slate-900 dark:text-white">{currentExerciseIndex + 1}</span>
+                  <span className="text-lg font-bold text-slate-900 dark:text-white">{exercisesCompleted}</span>
                   <span className="text-slate-400">/ {totalExercises}</span>
                 </div>
 
@@ -147,13 +148,11 @@ export function WorkoutSessionHeader({
                 {/* Percentage */}
                 <div className="text-center">
                   <span className="text-xs text-slate-400">
-                    {Math.round(((currentExerciseIndex + 1) / totalExercises) * 100)}% {t("workout_builder.session.complete")}
+                    {Math.round((exercisesCompleted / totalExercises) * 100)}% {t("workout_builder.session.complete")}
                   </span>
                 </div>
               </div>
             </div>
-
-            {/* Card 3: Exercice actuel */}
           </div>
         </div>
       </div>

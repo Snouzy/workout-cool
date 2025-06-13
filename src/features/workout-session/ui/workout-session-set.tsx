@@ -227,7 +227,7 @@ export function WorkoutSessionSet({ set, setIndex, onChange, onFinish, onRemove 
             onClick={handleEdit}
             variant="outline"
           >
-            Éditer
+            {t("commons.edit")}
           </Button>
         )}
       </div>

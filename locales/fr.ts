@@ -82,6 +82,7 @@ export default {
       shuffle: "Mélanger",
       pick: "Choisir",
       remove: "Supprimer",
+      no_video_available: "Aucune vidéo disponible.",
     },
     loading: {
       exercises: "Chargement des exercices...",

@@ -82,6 +82,7 @@ export default {
       shuffle: "Shuffle",
       pick: "Pick",
       remove: "Remove",
+      no_video_available: "No video available.",
     },
     loading: {
       exercises: "Loading exercises...",

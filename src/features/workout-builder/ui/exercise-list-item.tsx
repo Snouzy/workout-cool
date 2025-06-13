@@ -8,6 +8,8 @@ import { useCurrentLocale, useI18n } from "locales/client";
 import { InlineTooltip } from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
 
+import { ExerciseVideoModal } from "./exercise-video-modal";
+
 import type { ExerciseWithAttributes } from "../types";
 
 interface ExerciseListItemProps {
@@ -24,6 +26,12 @@ export function ExerciseListItem({ exercise, muscle, onShuffle, onPick, onDelete
   const [isHovered, setIsHovered] = useState(false);
   const locale = useCurrentLocale();
   const exerciseName = locale === "fr" ? exercise.name : exercise.nameEn;
+  const [showVideo, setShowVideo] = useState(false);
+
+
+  const handleOpenVideo = () => {
+    setShowVideo(true);
+  };
 
   // Déterminer la couleur du muscle
   const getMuscleConfig = (muscle: string) => {
@@ -73,7 +81,7 @@ export function ExerciseListItem({ exercise, muscle, onShuffle, onPick, onDelete
               />
               {/* Overlay play icon */}
               <div className="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                <Play className="h-3 w-3 text-white fill-current" />
+                <Play className="h-3 w-3 text-white fill-current" onClick={handleOpenVideo} />
               </div>
             </div>
           )}
@@ -131,6 +139,16 @@ export function ExerciseListItem({ exercise, muscle, onShuffle, onPick, onDelete
           </Button>
         </div>
       </div>
+
+      {/* Video Modal */}
+      {exercise.fullVideoUrl && (
+        <ExerciseVideoModal
+          onOpenChange={setShowVideo}
+          open={showVideo}
+          title={exerciseName || exercise.name}
+          videoUrl={exercise.fullVideoUrl}
+        />
+      )}
     </div>
   );
 }

@@ -53,7 +53,7 @@ export function WorkoutSessionHeader({
     <>
       <div className="w-full mb-8">
         {/* Minimal header, fond blanc en clair, dégradé en dark */}
-        <div className="rounded-xl p-3 bg-white">
+        <div className="rounded-xl p-3 bg-slate-50">
           {/* Top row - Status et Quit button */}
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">

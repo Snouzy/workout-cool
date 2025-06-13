@@ -21,7 +21,7 @@ export default function ProfilePage() {
       : new Date().toISOString().slice(0, 10);
 
   return (
-    <div className="">
+    <div>
       <WorkoutSessionHeatmap until={until} values={values} />
       <WorkoutSessionList onSelect={(id) => router.push(`/workout-builder?sessionId=${id}`)} />
       <div className="mt-8 flex justify-center">

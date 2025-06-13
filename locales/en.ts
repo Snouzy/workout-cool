@@ -179,6 +179,13 @@ export default {
       save_and_quit: "Save & Quit",
       quit_without_save: "Quit Without Saving",
       continue_workout: "Continue Workout",
+      history: "Workout History [{count}]",
+      no_workout_yet: "No workout yet.",
+      start: "start",
+      end: "end",
+      exercise: "EXERCISE",
+      repeat: "Repeat",
+      delete: "Delete",
     },
   },
   commons: {

@@ -22,10 +22,11 @@ export function WorkoutSessionSets({
   isWorkoutActive,
 }: {
   showCongrats: boolean;
-  onCongrats: () => void;
+  onCongrats: VoidFunction;
   isWorkoutActive: boolean;
 }) {
   const t = useI18n();
+  const router = useRouter();
   const {
     currentExercise,
     currentExerciseIndex,
@@ -39,9 +40,19 @@ export function WorkoutSessionSets({
     goToExercise,
     completeWorkout,
   } = useWorkoutSession();
-  const router = useRouter();
   const exerciseDetailsMap = Object.fromEntries(session?.exercises.map((ex) => [ex.id, ex]) || []);
   const [videoModal, setVideoModal] = useState<{ open: boolean; exerciseId?: string }>({ open: false });
+
+  if (showCongrats) {
+    return (
+      <div className="flex flex-col items-center justify-center py-16">
+        <Image alt={t("workout_builder.session.complete") + " trophy"} className="w-56 h-56" src={Trophy} />
+        <h2 className="text-2xl font-bold mb-2">{t("workout_builder.session.complete") + " ! 🎉"}</h2>
+        <p className="text-lg text-slate-600 mb-6">{t("workout_builder.session.workout_in_progress")}</p>
+        <Button onClick={() => router.push("/profile")}>{t("commons.go_to_profile")}</Button>
+      </div>
+    );
+  }
 
   if (!session) {
     return <div className="text-center text-slate-500 py-12">{t("workout_builder.session.no_exercise_selected")}</div>;
@@ -79,17 +90,6 @@ export function WorkoutSessionSets({
     onCongrats();
     confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
   };
-
-  if (showCongrats) {
-    return (
-      <div className="flex flex-col items-center justify-center py-16">
-        <Image alt="Trophée" className="w-56 h-56" src={Trophy} />
-        <h2 className="text-2xl font-bold mb-2">Bravo, séance terminée ! 🎉</h2>
-        <p className="text-lg text-slate-600 mb-6">Tu as complété tous tes exercices.</p>
-        <Button onClick={() => router.push("/profile")}>{t("commons.go_to_profile")}</Button>
-      </div>
-    );
-  }
 
   return (
     <div className="w-full max-w-3xl mx-auto pb-8">
@@ -198,7 +198,7 @@ export function WorkoutSessionSets({
           );
         })}
       </ol>
-      {!showCongrats && isWorkoutActive && (
+      {isWorkoutActive && (
         <div className="flex justify-center mt-8">
           <Button className="bg-green-600 hover:bg-green-700 text-white font-bold px-8 py-3 text-lg rounded" onClick={handleFinishSession}>
             Terminer la séance

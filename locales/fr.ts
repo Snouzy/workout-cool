@@ -180,6 +180,13 @@ export default {
       save_and_quit: "Sauvegarder & Quitter",
       quit_without_save: "Quitter Sans Sauvegarder",
       continue_workout: "Continuer l'Entraînement",
+      history: "Historique des séances [{count}]",
+      no_workout_yet: "Aucune séance enregistrée.",
+      start: "début",
+      end: "fin",
+      exercise: "EXERCICE",
+      repeat: "Répéter",
+      delete: "Supprimer",
     },
   },
   commons: {

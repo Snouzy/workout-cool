@@ -1,12 +1,15 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { ArrowLeft, ArrowRight, CheckCircle, Zap, Plus } from "lucide-react";
 import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 import { DndContext, closestCenter, PointerSensor, useSensor, useSensors, DragEndEvent } from "@dnd-kit/core";
 
 import { useI18n } from "locales/client";
+import Trophy from "@public/images/trophy.png";
 import { workoutSessionLocal } from "@/shared/lib/workout-session/workout-session.local";
 import { WorkoutSessionSets } from "@/features/workout-session/ui/workout-session-sets";
 import { WorkoutSessionHeader } from "@/features/workout-session/ui/workout-session-header";
@@ -42,6 +45,7 @@ function NavigationFooter({
   const t = useI18n();
   const isFirstStep = currentStep === 1;
   const isFinalStep = currentStep === totalSteps;
+  const router = useRouter();
 
   return (
     <div className="w-full">
@@ -143,6 +147,7 @@ function NavigationFooter({
 
 export function WorkoutStepper({ sessionId: propSessionId }: { sessionId?: string } = {}) {
   const t = useI18n();
+  const router = useRouter();
   const {
     currentStep,
     selectedEquipment,
@@ -265,6 +270,17 @@ export function WorkoutStepper({ sessionId: propSessionId }: { sessionId?: strin
   };
 
   const [showCongrats, setShowCongrats] = useState(false);
+
+  if (showCongrats && !isWorkoutActive) {
+    return (
+      <div className="flex flex-col items-center justify-center py-16">
+        <Image alt="Trophée" className="w-56 h-56" src={Trophy} />
+        <h2 className="text-2xl font-bold mb-2">Bravo, séance terminée ! 🎉</h2>
+        <p className="text-lg text-slate-600 mb-6">Tu as complété tous tes exercices.</p>
+        <Button onClick={() => router.push("/profile")}>{t("commons.go_to_profile")}</Button>
+      </div>
+    );
+  }
   if (isWorkoutActive && session) {
     return (
       <div className="w-full max-w-6xl mx-auto">

@@ -146,14 +146,14 @@ export function WorkoutSetRow({ set, setIndex, onChange, onFinish, onRemove }: W
   };
 
   return (
-    <div className="flex flex-wrap items-center gap-2 w-full py-2">
+    <div className="w-full py-2 flex flex-col gap-2">
       {/* Label SET X */}
-      <div className="font-bold text-slate-700 min-w-[3rem] text-right">SET {setIndex + 1}</div>
+      <div className="font-bold text-slate-700 min-w-[3rem] text-left mb-1">SET {setIndex + 1}</div>
 
-      {/* Colonnes de types */}
-      <div className="flex flex-1 gap-2 min-w-0">
+      {/* Colonnes de types, stack vertical on mobile, horizontal on md+ */}
+      <div className="flex flex-col md:flex-row gap-2 w-full">
         {types.map((type, columnIndex) => (
-          <div className="flex flex-col min-w-0 flex-1" key={columnIndex}>
+          <div className="flex flex-col w-full md:w-auto" key={columnIndex}>
             <div className="flex items-center w-full gap-1 mb-1">
               <select
                 className="border border-black rounded font-bold px-1 py-1 text-sm w-full bg-white min-w-0"
@@ -180,23 +180,27 @@ export function WorkoutSetRow({ set, setIndex, onChange, onFinish, onRemove }: W
             {renderInputForType(type, columnIndex)}
           </div>
         ))}
+      </div>
 
-        {/* Bouton pour ajouter une colonne */}
-        {types.length < maxColumns && (
+      {/* Bouton pour ajouter une colonne, sous les colonnes */}
+      {types.length < maxColumns && (
+        <div className="flex w-full justify-start mt-1">
           <Button
-            className="self-start mt-1 p-1 h-auto bg-green-500 hover:bg-green-600 flex-shrink-0"
+            aria-label="Ajouter une colonne"
+            className="p-1 h-auto bg-green-500 hover:bg-green-600 flex-shrink-0 flex items-center gap-1 text-sm font-semibold"
             onClick={addColumn}
             size="small"
             variant="default"
           >
-            <Plus className="h-3 w-3" />
+            <Plus className="h-4 w-4" />
+            Ajouter une colonne
           </Button>
-        )}
-      </div>
+        </div>
+      )}
 
-      {/* Finish button */}
+      {/* Finish button, full width on mobile */}
       <Button
-        className="bg-blue-500 hover:bg-blue-600 text-white font-bold px-4 py-2 text-sm rounded flex-shrink-0"
+        className="bg-blue-500 hover:bg-blue-600 text-white font-bold px-4 py-2 text-sm rounded w-full md:w-auto mt-2"
         disabled={set.completed}
         onClick={onFinish}
       >

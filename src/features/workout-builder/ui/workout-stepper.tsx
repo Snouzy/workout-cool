@@ -174,17 +174,14 @@ export function WorkoutStepper({ sessionId: propSessionId }: { sessionId?: strin
           if (session) {
             // On met à jour l'ordre dans le tableau exercises
             const newExercises = newItems.map((item, idx) => {
-              // On cherche l'exercice d'origine pour garder les sets, etc.
               const original = session.exercises.find((ex) => ex.id === item.id);
               return original
                 ? { ...original, order: idx }
                 : {
-                    id: item.id,
-                    exerciseId: item.id,
+                    ...item.exercise,
                     order: idx,
                     sets: [],
-                    name: item.exercise.name,
-                    nameEn: item.exercise.nameEn ?? undefined,
+                    exerciseId: item.id,
                   };
             });
             workoutSessionLocal.update(sessionIdToUpdate, { exercises: newExercises });

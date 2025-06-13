@@ -163,12 +163,11 @@ export function WorkoutSessionSets({
                 </div>
               </div>
               {/* Modale vidéo */}
-              {details?.fullVideoUrl && videoModal.open && videoModal.exerciseId === ex.id && (
+              {details && details.fullVideoUrl && videoModal.open && videoModal.exerciseId === ex.id && (
                 <ExerciseVideoModal
+                  exercise={details}
                   onOpenChange={(open) => setVideoModal({ open, exerciseId: open ? ex.id : undefined })}
                   open={videoModal.open}
-                  title={details.name || details.nameEn || ""}
-                  videoUrl={details.fullVideoUrl}
                 />
               )}
               {/* Si exercice courant, afficher le détail */}

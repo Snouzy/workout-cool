@@ -4,16 +4,21 @@ import { useI18n } from "locales/client";
 import { getYouTubeEmbedUrl } from "@/shared/lib/youtube";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
+import type { ExerciseWithAttributes } from "../types";
+
 interface ExerciseVideoModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  videoUrl: string;
-  title: string;
+  exercise: ExerciseWithAttributes;
 }
 
-export function ExerciseVideoModal({ open, onOpenChange, videoUrl, title }: ExerciseVideoModalProps) {
-  const youTubeEmbedUrl = getYouTubeEmbedUrl(videoUrl);
+export function ExerciseVideoModal({ open, onOpenChange, exercise }: ExerciseVideoModalProps) {
+  console.log("exercise:", exercise);
   const t = useI18n();
+  const locale = typeof window !== "undefined" && window.navigator.language.startsWith("fr") ? "fr" : "en";
+  const title = locale === "fr" ? exercise.name : exercise.nameEn || exercise.name;
+  const videoUrl = exercise.fullVideoUrl;
+  const youTubeEmbedUrl = getYouTubeEmbedUrl(videoUrl ?? "");
 
   return (
     <Dialog onOpenChange={onOpenChange} open={open}>

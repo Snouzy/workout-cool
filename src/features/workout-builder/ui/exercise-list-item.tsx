@@ -157,14 +157,7 @@ export function ExerciseListItem({ exercise, muscle, onShuffle, onPick, onDelete
       </div>
 
       {/* Video Modal */}
-      {exercise.fullVideoUrl && (
-        <ExerciseVideoModal
-          onOpenChange={setShowVideo}
-          open={showVideo}
-          title={exerciseName || exercise.name}
-          videoUrl={exercise.fullVideoUrl}
-        />
-      )}
+      {exercise.fullVideoUrl && <ExerciseVideoModal exercise={exercise} onOpenChange={setShowVideo} open={showVideo} />}
     </div>
   );
 }

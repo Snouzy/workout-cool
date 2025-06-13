@@ -1,7 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ArrowLeft, ArrowRight, CheckCircle, Zap, Plus } from "lucide-react";
+import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
+import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
+import { DndContext, closestCenter, PointerSensor, useSensor, useSensors, DragEndEvent } from "@dnd-kit/core";
 
 import { useI18n } from "locales/client";
 import { workoutSessionLocal } from "@/shared/lib/workout-session/workout-session.local";
@@ -16,6 +19,8 @@ import { StepperHeader } from "./stepper-header";
 import { MuscleSelection } from "./muscle-selection";
 import { ExerciseListItem } from "./exercise-list-item";
 import { EquipmentSelection } from "./equipment-selection";
+
+import type { ExerciseWithAttributes } from "../types";
 
 function NavigationFooter({
   currentStep,
@@ -145,6 +150,38 @@ export function WorkoutStepper({ sessionId: propSessionId }: { sessionId?: strin
     exercisesError,
   } = useWorkoutStepper();
 
+  // dnd-kit et flatExercises doivent être avant tout return/condition
+  const [flatExercises, setFlatExercises] = useState<{ id: string; muscle: string; exercise: ExerciseWithAttributes }[]>([]);
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 5,
+      },
+    }),
+  );
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+    if (active.id !== over?.id) {
+      setFlatExercises((items) => {
+        const oldIndex = items.findIndex((item) => item.id === active.id);
+        const newIndex = items.findIndex((item) => item.id === over?.id);
+        return arrayMove(items, oldIndex, newIndex);
+      });
+    }
+  };
+  useEffect(() => {
+    if (exercisesByMuscle.length > 0) {
+      const flat = exercisesByMuscle.flatMap((group) =>
+        group.exercises.map((exercise) => ({
+          id: exercise.id,
+          muscle: group.muscle,
+          exercise,
+        })),
+      );
+      setFlatExercises(flat);
+    }
+  }, [exercisesByMuscle]);
+
   const sessionId = propSessionId || workoutSessionLocal.getCurrent() || undefined;
   const {
     isWorkoutActive,
@@ -264,44 +301,46 @@ export function WorkoutStepper({ sessionId: propSessionId }: { sessionId?: strin
                 <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
                 <p className="mt-4 text-slate-600 dark:text-slate-400">{t("workout_builder.loading.exercises")}</p>
               </div>
-            ) : exercisesByMuscle.length > 0 ? (
+            ) : flatExercises.length > 0 ? (
               <div className="max-w-4xl mx-auto">
-                {/* Liste des exercices */}
-                <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 overflow-hidden">
-                  {exercisesByMuscle.map((group) => (
-                    <div key={group.muscle}>
-                      {group.exercises.map((exercise) => (
+                {/* Liste des exercices drag and drop */}
+                <DndContext
+                  collisionDetection={closestCenter}
+                  modifiers={[restrictToVerticalAxis]}
+                  onDragEnd={handleDragEnd}
+                  sensors={sensors}
+                >
+                  <SortableContext items={flatExercises.map((item) => item.id)} strategy={verticalListSortingStrategy}>
+                    <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 overflow-hidden">
+                      {flatExercises.map((item) => (
                         <ExerciseListItem
-                          exercise={exercise}
+                          exercise={item.exercise}
                           isPicked={true}
-                          key={exercise.id}
-                          muscle={group.muscle}
+                          key={item.id}
+                          muscle={item.muscle}
                           onDelete={handleDeleteExercise}
                           onPick={handlePickExercise}
                           onShuffle={handleShuffleExercise}
                         />
                       ))}
-                    </div>
-                  ))}
-
-                  {/* Add exercise button */}
-                  <div className="border-t border-slate-200 dark:border-slate-800">
-                    <button
-                      className="w-full flex items-center gap-3 py-4 px-4 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950 transition-colors"
-                      onClick={handleAddExercise}
-                    >
-                      <div className="h-8 w-8 rounded-full bg-blue-600 flex items-center justify-center">
-                        <Plus className="h-4 w-4 text-white" />
+                      <div className="border-t border-slate-200 dark:border-slate-800">
+                        <button
+                          className="w-full flex items-center gap-3 py-4 px-4 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950 transition-colors"
+                          onClick={handleAddExercise}
+                        >
+                          <div className="h-8 w-8 rounded-full bg-blue-600 flex items-center justify-center">
+                            <Plus className="h-4 w-4 text-white" />
+                          </div>
+                          <span className="font-medium">Add</span>
+                        </button>
                       </div>
-                      <span className="font-medium">Add</span>
-                    </button>
-                  </div>
-                </div>
-
+                    </div>
+                  </SortableContext>
+                </DndContext>
                 <div className="flex items-center justify-center gap-4 mt-8">
                   <Button
                     className="px-8 bg-blue-600 hover:bg-blue-700"
-                    disabled={exercisesByMuscle.length === 0}
+                    disabled={flatExercises.length === 0}
                     onClick={handleStartWorkout}
                     size="large"
                   >

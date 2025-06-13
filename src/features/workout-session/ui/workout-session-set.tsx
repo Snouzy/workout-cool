@@ -219,7 +219,7 @@ export function WorkoutSessionSet({ set, setIndex, onChange, onFinish, onRemove 
           disabled={set.completed}
           onClick={onFinish}
         >
-          Finish
+          {t("workout_builder.session.finish_set")}
         </Button>
         {set.completed && (
           <Button

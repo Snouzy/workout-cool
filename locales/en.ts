@@ -153,6 +153,7 @@ export default {
       exercise_selection_description: "This step will show you personalized exercise recommendations.",
     },
     session: {
+      finish_set: "Finish Set",
       finish_session: "Finish Session",
       bodyweight: "Bodyweight",
       weight: "Weight",

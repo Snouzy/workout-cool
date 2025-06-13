@@ -153,6 +153,7 @@ export default {
       exercise_selection_description: "Cette étape vous montrera des recommandations d'exercices personnalisées.",
     },
     session: {
+      finish_set: "Valider la série",
       finish_session: "Terminer la séance",
       bodyweight: "Poids du corps",
       weight: "Poids",

@@ -126,7 +126,16 @@ function NavigationFooter({
               </span>
             </div>
           )}
+          {/* Next step */}
         </div>
+        {currentStep !== 3 && (
+          <Button disabled={!canContinue} onClick={onNext} size="large" variant="default">
+            <div className="flex items-center gap-2">
+              <span className="font-medium">{t("commons.next")}</span>
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
+            </div>
+          </Button>
+        )}
       </div>
     </div>
   );

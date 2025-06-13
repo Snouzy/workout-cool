@@ -12,11 +12,11 @@ interface Props {
 
 const DEFAULT_WEEK_NAMES = ["L", "M", "M", "J", "V", "S", "D"];
 const DEFAULT_MONTH_NAMES = ["Jan", "Fév", "Mar", "Avr", "Mai", "Juin", "Juil", "Août", "Sep", "Oct", "Nov", "Déc"];
-const DEFAULT_PANEL_COLORS = ["#EEE", "#E5E7EB", "#A7F3D0", "#34D399", "#059669"];
+const DEFAULT_PANEL_COLORS = ["#EEE", "#34D399", "#059669", "#065F46", "#042F2E"];
 const DEFAULT_DATE_FORMAT = "YYYY-MM-DD";
 
-const PANEL_SIZE = 14;
-const PANEL_MARGIN = 3;
+const PANEL_SIZE = 18;
+const PANEL_MARGIN = 2;
 const WEEK_LABEL_WIDTH = 18;
 const MONTH_LABEL_HEIGHT = 18;
 const MIN_COLUMNS = 10;
@@ -32,6 +32,13 @@ export const WorkoutSessionHeatmap: React.FC<Props> = ({
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [columns, setColumns] = useState(MAX_COLUMNS);
+  const [hovered, setHovered] = useState<null | {
+    i: number;
+    j: number;
+    tooltip: React.ReactNode;
+    mouseX: number;
+    mouseY: number;
+  }>(null);
 
   // Responsivité : adapte le nombre de colonnes à la largeur
   useEffect(() => {
@@ -83,7 +90,43 @@ export const WorkoutSessionHeatmap: React.FC<Props> = ({
       const y = MONTH_LABEL_HEIGHT + (PANEL_SIZE + PANEL_MARGIN) * j;
       const numOfColors = panelColors.length;
       const color = contribution.value >= numOfColors ? panelColors[numOfColors - 1] : panelColors[contribution.value];
-      innerDom.push(<rect fill={color} height={PANEL_SIZE} key={`panel_${i}_${j}`} width={PANEL_SIZE} x={x} y={y} />);
+      // TODO i18n
+      const d = dayjs(until, dateFormat)
+        .endOf("week")
+        .subtract((columns - i - 1) * 7 + (6 - j), "day");
+      const dateStr = d.format(dateFormat);
+      const tooltip =
+        contribution.value > 0 ? (
+          <div className="text-xs text-slate-50">
+            {dateStr} : <br />
+            {contribution.value} workout{contribution.value > 1 ? "s" : ""}
+          </div>
+        ) : (
+          <div className="text-xs text-slate-50">
+            {dateStr} : <br /> No workout
+          </div>
+        );
+      innerDom.push(
+        <rect
+          fill={color}
+          height={PANEL_SIZE}
+          key={`panel_${i}_${j}`}
+          onMouseEnter={(e) => setHovered({ i, j, tooltip, mouseX: e.clientX, mouseY: e.clientY })}
+          onMouseLeave={() => setHovered(null)}
+          onMouseMove={(e) => setHovered((prev) => prev && { ...prev, mouseX: e.clientX, mouseY: e.clientY })}
+          rx={3}
+          style={{
+            cursor: "pointer",
+            stroke: hovered && hovered.i === i && hovered.j === j ? "#059669" : "transparent",
+            strokeWidth: hovered && hovered.i === i && hovered.j === j ? 2 : 0,
+            opacity: hovered && hovered.i === i && hovered.j === j ? 0.85 : 1,
+            transition: "stroke 0.1s, opacity 0.1s",
+          }}
+          width={PANEL_SIZE}
+          x={x}
+          y={y}
+        />,
+      );
     }
   }
 
@@ -118,14 +161,38 @@ export const WorkoutSessionHeatmap: React.FC<Props> = ({
     prevMonth = c.month;
   }
 
+  // Tooltip custom HTML (fixed, suit la souris)
+  const tooltipNode = hovered ? (
+    <div
+      style={{
+        position: "fixed",
+        left: hovered.mouseX + 12,
+        top: hovered.mouseY - 8,
+        pointerEvents: "none",
+        zIndex: 9999,
+        background: "rgba(33,33,33,0.97)",
+        color: "#fff",
+        padding: "6px 12px",
+        borderRadius: 6,
+        fontSize: 13,
+        boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
+        whiteSpace: "nowrap",
+        maxWidth: 220,
+      }}
+    >
+      {hovered.tooltip}
+    </div>
+  ) : null;
+
   return (
-    <div ref={containerRef} style={{ width: "100%" }}>
+    <div ref={containerRef} style={{ width: "100%", position: "relative" }}>
       <svg
         height={MONTH_LABEL_HEIGHT + (PANEL_SIZE + PANEL_MARGIN) * 7}
         style={{ fontFamily: "Helvetica, Arial, sans-serif", width: "100%", display: "block" }}
       >
         {innerDom}
       </svg>
+      {tooltipNode}
     </div>
   );
 };

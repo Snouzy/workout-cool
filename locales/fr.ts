@@ -264,6 +264,7 @@ export default {
     looks_like_you_are_lost: "Il semble que vous soyez perdu",
     the_page_you_are_looking_for_is_not_available: "La page que vous cherchez n'est pas disponible",
     go_to_home: "Retour à l'accueil",
+    go_to_profile: "Aller à mon profil",
     terms: "Conditions d'utilisation",
     privacy: "Politique de confidentialité",
     sales_terms: "Conditions de vente",

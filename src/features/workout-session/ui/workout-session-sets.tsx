@@ -1,13 +1,19 @@
+"use client";
+
+import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { Check, Hourglass } from "lucide-react";
+import confetti from "canvas-confetti";
 
 import { useI18n } from "locales/client";
+import Trophy from "@public/images/trophy.png";
 import { cn } from "@/shared/lib/utils";
 import { useWorkoutSession } from "@/features/workout-builder/model/use-workout-session";
 import { Button } from "@/components/ui/button";
 
 import { WorkoutSessionSet } from "./workout-session-set";
 
-export function WorkoutSessionSets() {
+export function WorkoutSessionSets({ showCongrats, onCongrats }: { showCongrats: boolean; onCongrats: () => void }) {
   const t = useI18n();
   const {
     currentExercise,
@@ -21,6 +27,7 @@ export function WorkoutSessionSets() {
     goToPrevExercise,
     goToExercise,
   } = useWorkoutSession();
+  const router = useRouter();
 
   if (!session) {
     return <div className="text-center text-slate-500 py-12">{t("workout_builder.session.no_exercise_selected")}</div>;
@@ -52,6 +59,22 @@ export function WorkoutSessionSets() {
     }
     return "bg-slate-200 border-slate-200";
   };
+
+  const handleFinishSession = () => {
+    onCongrats();
+    confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+  };
+
+  if (showCongrats) {
+    return (
+      <div className="flex flex-col items-center justify-center py-16">
+        <Image alt="Trophée" className="w-56 h-56" src={Trophy} />
+        <h2 className="text-2xl font-bold mb-2">Bravo, séance terminée ! 🎉</h2>
+        <p className="text-lg text-slate-600 mb-6">Tu as complété tous tes exercices.</p>
+        <Button onClick={() => router.push("/profile")}>{t("commons.go_to_profile")}</Button>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full max-w-3xl mx-auto pb-8">
@@ -116,6 +139,13 @@ export function WorkoutSessionSets() {
           );
         })}
       </ol>
+      {!showCongrats && (
+        <div className="flex justify-center mt-8">
+          <Button className="bg-green-600 hover:bg-green-700 text-white font-bold px-8 py-3 text-lg rounded" onClick={handleFinishSession}>
+            Terminer la séance
+          </Button>
+        </div>
+      )}
     </div>
   );
 }

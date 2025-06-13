@@ -263,6 +263,7 @@ export default {
     looks_like_you_are_lost: "Looks like you are lost",
     the_page_you_are_looking_for_is_not_available: "The page you are looking for is not available",
     go_to_home: "Go to home",
+    go_to_profile: "Go to profile",
     terms: "Terms of Service",
     privacy: "Privacy Policy",
     sales_terms: "Sales Terms",

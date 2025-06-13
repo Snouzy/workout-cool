@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { ArrowLeft, ArrowRight, CheckCircle, Zap, Plus } from "lucide-react";
 
 import { useI18n } from "locales/client";
@@ -200,25 +201,28 @@ export function WorkoutStepper() {
       startWorkout(allExercises, selectedEquipment, selectedMuscles);
     }
   };
+
+  const [showCongrats, setShowCongrats] = useState(false);
   if (isWorkoutActive && session) {
     return (
       <div className="w-full max-w-6xl mx-auto">
-        <WorkoutSessionHeader
-          currentExerciseIndex={session.exercises.findIndex((exercise) => exercise.id === currentExercise?.id)}
-          elapsedTime={formatElapsedTime()}
-          isTimerRunning={isTimerRunning}
-          onQuitWorkout={quitWorkout}
-          onResetTimer={resetTimer}
-          onSaveAndQuit={() => {
-            // TODO: Implémenter la sauvegarde pour plus tard
-            console.log("Save workout for later");
-            quitWorkout();
-          }}
-          onToggleTimer={toggleTimer}
-          totalExercises={session.exercises.length}
-        />
-
-        <WorkoutSessionSets />
+        {!showCongrats && (
+          <WorkoutSessionHeader
+            currentExerciseIndex={session.exercises.findIndex((exercise) => exercise.id === currentExercise?.id)}
+            elapsedTime={formatElapsedTime()}
+            isTimerRunning={isTimerRunning}
+            onQuitWorkout={quitWorkout}
+            onResetTimer={resetTimer}
+            onSaveAndQuit={() => {
+              // TODO: Implémenter la sauvegarde pour plus tard
+              console.log("Save workout for later");
+              quitWorkout();
+            }}
+            onToggleTimer={toggleTimer}
+            totalExercises={session.exercises.length}
+          />
+        )}
+        <WorkoutSessionSets onCongrats={() => setShowCongrats(true)} showCongrats={showCongrats} />
       </div>
     );
   }

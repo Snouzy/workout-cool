@@ -127,7 +127,6 @@ export const useWorkoutSessionStore = create<WorkoutSessionState>((set, get) => 
       });
     }
 
-    // set current step to 0
     useWorkoutBuilderStore.getState().setStep(1);
   },
 
@@ -280,7 +279,11 @@ export const useWorkoutSessionStore = create<WorkoutSessionState>((set, get) => 
   getExercisesCompleted: () => {
     const { session } = get();
     if (!session) return 0;
-    return session.exercises.filter((exercise) => exercise.sets.every((set) => set.completed)).length;
+
+    // only count exercises with at least one set
+    return session.exercises
+      .filter((exercise) => exercise.sets.length > 0)
+      .filter((exercise) => exercise.sets.every((set) => set.completed)).length;
   },
 
   getTotalExercises: () => {

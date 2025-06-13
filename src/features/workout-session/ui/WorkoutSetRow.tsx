@@ -1,4 +1,4 @@
-import { Plus, Minus } from "lucide-react";
+import { Plus, Minus, Trash2 } from "lucide-react";
 
 import { useI18n } from "locales/client";
 import { WorkoutSet, WorkoutSetType, WorkoutSetUnit } from "@/features/workout-session/types/workout-set";
@@ -149,9 +149,17 @@ export function WorkoutSetRow({ set, setIndex, onChange, onFinish, onRemove }: W
 
   return (
     <div className="w-full py-4 flex flex-col gap-2 bg-slate-50 border border-slate-200 rounded-xl shadow-sm mb-3 relative px-2 sm:px-4">
-      {/* Label SET X */}
-      <div className="absolute -top-3 left-4 bg-blue-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow">
-        SET {setIndex + 1}
+      <div className="flex items-center justify-between mb-2">
+        <div className="bg-blue-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow">SET {setIndex + 1}</div>
+        <Button
+          aria-label="Supprimer la série"
+          className="bg-red-100 hover:bg-red-200 text-red-600 rounded-full p-1 h-8 w-8 flex items-center justify-center shadow transition"
+          disabled={set.completed}
+          onClick={onRemove}
+          type="button"
+        >
+          <Trash2 className="h-4 w-4" />
+        </Button>
       </div>
 
       {/* Colonnes de types, stack vertical on mobile, horizontal on md+ */}

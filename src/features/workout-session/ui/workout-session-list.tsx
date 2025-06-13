@@ -26,9 +26,34 @@ export function WorkoutSessionList({ onSelect }: { onSelect: (id: string) => voi
     setSessions(workoutSessionLocal.getAll().sort((a, b) => new Date(b.startedAt).getTime() - new Date(a.startedAt).getTime()));
   };
 
-  const handleSelect = (id: string) => {
-    workoutSessionLocal.setCurrent(id);
-    onSelect(id);
+  const handleRepeat = (id: string) => {
+    const sessionToCopy = sessions.find((s) => s.id === id);
+    if (!sessionToCopy) return;
+    // Deep copy des exercices et sets, reset des champs nécessaires
+    const newExercises = sessionToCopy.exercises.map((ex, idx) => ({
+      ...ex,
+      id: `${ex.exerciseId}-${Date.now()}-${idx}`,
+      sets: ex.sets.map((set, setIdx) => ({
+        ...set,
+        id: `${ex.exerciseId}-set-${setIdx + 1}-${Date.now()}`,
+        completed: false,
+      })),
+    }));
+    const newSession: WorkoutSession = {
+      ...sessionToCopy,
+      id: `${Date.now()}`,
+      startedAt: new Date().toISOString(),
+      endedAt: undefined,
+      duration: 0,
+      status: "active",
+      currentExerciseIndex: 0,
+      isActive: true,
+      exercises: newExercises,
+    };
+    workoutSessionLocal.add(newSession);
+    workoutSessionLocal.setCurrent(newSession.id);
+    setSessions(workoutSessionLocal.getAll().sort((a, b) => new Date(b.startedAt).getTime() - new Date(a.startedAt).getTime()));
+    onSelect(newSession.id);
   };
 
   return (
@@ -56,7 +81,7 @@ export function WorkoutSessionList({ onSelect }: { onSelect: (id: string) => voi
             </div>
             <div className="flex gap-2 items-center mt-2 sm:mt-0">
               <InlineTooltip title="Repeat">
-                <Button aria-label="Repeat" className="w-12 h-12" onClick={() => handleSelect(session.id)} size="icon" variant="ghost">
+                <Button aria-label="Repeat" className="w-12 h-12" onClick={() => handleRepeat(session.id)} size="icon" variant="ghost">
                   <Repeat2 className="w-7 h-7 text-blue-500" />
                 </Button>
               </InlineTooltip>

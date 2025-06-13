@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowRight, CheckCircle, Zap, Plus } from "lucide-react";
 
 import { useI18n } from "locales/client";
 import { WorkoutExerciseSets } from "@/features/workout-session/ui/WorkoutExerciseSets";
+import { WorkoutSessionHeader } from "@/features/workout-builder/ui/workout-session-header";
 import { Button } from "@/components/ui/button";
 
 import { StepperStepProps } from "../types";
@@ -199,13 +200,14 @@ export function WorkoutStepper() {
       startWorkout(allExercises, selectedEquipment, selectedMuscles);
     }
   };
+  console.log("isWorkoutActive:", isWorkoutActive);
 
   // Si un entraînement est actif, afficher l'interface d'entraînement
   if (isWorkoutActive && session) {
     return (
       <div className="w-full max-w-6xl mx-auto">
-        {/* <WorkoutSessionHeader
-          currentExerciseIndex={session.currentExerciseIndex}
+        <WorkoutSessionHeader
+          currentExerciseIndex={session.exercises.findIndex((exercise) => exercise.id === currentExercise?.id)}
           elapsedTime={formatElapsedTime()}
           exerciseName={currentExercise?.name}
           isTimerRunning={isTimerRunning}
@@ -218,7 +220,7 @@ export function WorkoutStepper() {
           }}
           onToggleTimer={toggleTimer}
           totalExercises={session.exercises.length}
-        /> */}
+        />
 
         <WorkoutExerciseSets />
       </div>

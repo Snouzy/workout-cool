@@ -32,7 +32,7 @@ export function WorkoutSetRow({ set, setIndex, onChange, onFinish, onRemove }: W
       {/* Label SET X */}
       <div className="w-16 text-right font-bold text-slate-700">SET {setIndex + 1}</div>
 
-      {/* TEMPS */}
+      {/* Type Selector */}
       <div className="flex flex-col items-center w-32">
         <select
           className="border border-black rounded font-bold px-2 py-1 text-lg w-full mb-1 bg-white"
@@ -45,84 +45,76 @@ export function WorkoutSetRow({ set, setIndex, onChange, onFinish, onRemove }: W
           <option value="REPS">REPS</option>
           <option value="BODYWEIGHT">BODYWEIGHT</option>
         </select>
-        <div className="flex gap-1 w-full">
-          <input
-            className="border border-black rounded px-1 py-1 w-1/2 text-lg text-center font-bold"
-            disabled={set.completed || set.type !== "TIME"}
-            min={0}
-            onChange={handleValueIntChange}
-            placeholder="min"
-            type="number"
-            value={set.type === "TIME" ? (set.valueInt ?? "") : ""}
-          />
-          <input
-            className="border border-black rounded px-1 py-1 w-1/2 text-lg text-center font-bold"
-            disabled={set.completed || set.type !== "TIME"}
-            max={59}
-            min={0}
-            onChange={handleValueSecChange}
-            placeholder="sec"
-            type="number"
-            value={set.type === "TIME" ? (set.valueSec ?? "") : ""}
-          />
-        </div>
-      </div>
 
-      {/* POIDS */}
-      <div className="flex flex-col items-center w-32">
-        <select className="border border-black rounded font-bold px-2 py-1 text-lg w-full mb-1 bg-white" disabled={true} value="WEIGHT">
-          <option value="WEIGHT">POIDS</option>
-        </select>
-        <div className="flex gap-1 w-full items-center">
+        {/* Input fields based on type */}
+        {set.type === "TIME" && (
+          <div className="flex gap-1 w-full">
+            <input
+              className="border border-black rounded px-1 py-1 w-1/2 text-lg text-center font-bold"
+              disabled={set.completed}
+              min={0}
+              onChange={handleValueIntChange}
+              placeholder="min"
+              type="number"
+              value={set.valueInt ?? ""}
+            />
+            <input
+              className="border border-black rounded px-1 py-1 w-1/2 text-lg text-center font-bold"
+              disabled={set.completed}
+              max={59}
+              min={0}
+              onChange={handleValueSecChange}
+              placeholder="sec"
+              type="number"
+              value={set.valueSec ?? ""}
+            />
+          </div>
+        )}
+
+        {set.type === "WEIGHT" && (
+          <div className="flex gap-1 w-full items-center">
+            <input
+              className="border border-black rounded px-1 py-1 w-1/2 text-lg text-center font-bold"
+              disabled={set.completed}
+              min={0}
+              onChange={handleValueIntChange}
+              placeholder=""
+              type="number"
+              value={set.valueInt ?? ""}
+            />
+            <select
+              className="border border-black rounded px-1 py-1 w-1/2 text-lg font-bold bg-white"
+              disabled={set.completed}
+              onChange={handleUnitChange}
+              value={set.unit ?? "kg"}
+            >
+              <option value="kg">kg</option>
+              <option value="lbs">lbs</option>
+            </select>
+          </div>
+        )}
+
+        {set.type === "REPS" && (
           <input
-            className="border border-black rounded px-1 py-1 w-1/2 text-lg text-center font-bold"
-            disabled={set.completed || set.type !== "WEIGHT"}
+            className="border border-black rounded px-1 py-1 w-full text-lg text-center font-bold"
+            disabled={set.completed}
             min={0}
             onChange={handleValueIntChange}
             placeholder=""
             type="number"
-            value={set.type === "WEIGHT" ? (set.valueInt ?? "") : ""}
+            value={set.valueInt ?? ""}
           />
-          <select
-            className="border border-black rounded px-1 py-1 w-1/2 text-lg font-bold bg-white"
-            disabled={set.completed || set.type !== "WEIGHT"}
-            onChange={handleUnitChange}
-            value={set.unit ?? "kg"}
-          >
-            <option value="kg">kg</option>
-            <option value="lbs">lbs</option>
-          </select>
-        </div>
-      </div>
+        )}
 
-      {/* REPS */}
-      <div className="flex flex-col items-center w-32">
-        <select className="border border-black rounded font-bold px-2 py-1 text-lg w-full mb-1 bg-white" disabled={true} value="REPS">
-          <option value="REPS">REPS</option>
-        </select>
-        <input
-          className="border border-black rounded px-1 py-1 w-full text-lg text-center font-bold"
-          disabled={set.completed || set.type !== "REPS"}
-          min={0}
-          onChange={handleValueIntChange}
-          placeholder=""
-          type="number"
-          value={set.type === "REPS" ? (set.valueInt ?? "") : ""}
-        />
-      </div>
-
-      {/* BODYWEIGHT */}
-      <div className="flex flex-col items-center w-32">
-        <select className="border border-black rounded font-bold px-2 py-1 text-lg w-full mb-1 bg-white" disabled={true} value="BODYWEIGHT">
-          <option value="BODYWEIGHT">BODYWEIGHT</option>
-        </select>
-        <input
-          className="border border-black rounded px-1 py-1 w-full text-lg text-center font-bold"
-          disabled={true}
-          placeholder=""
-          readOnly
-          value={set.type === "BODYWEIGHT" ? "✔" : ""}
-        />
+        {set.type === "BODYWEIGHT" && (
+          <input
+            className="border border-black rounded px-1 py-1 w-full text-lg text-center font-bold"
+            disabled={set.completed}
+            placeholder=""
+            readOnly
+            value="✔"
+          />
+        )}
       </div>
 
       {/* Finish button */}

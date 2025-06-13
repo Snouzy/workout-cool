@@ -13,12 +13,30 @@ export function WorkoutExerciseSets() {
     return <div className="text-center text-slate-500 py-12">{t("workout_builder.session.no_exercise_selected")}</div>;
   }
 
+  const handleExerciseClick = (targetIndex: number) => {
+    if (targetIndex < currentExerciseIndex) {
+      // Si on va en arrière
+      for (let i = currentExerciseIndex; i > targetIndex; i--) {
+        goToPrevExercise();
+      }
+    } else {
+      // Si on va en avant
+      for (let i = currentExerciseIndex; i < targetIndex; i++) {
+        goToNextExercise();
+      }
+    }
+  };
+
   return (
     <div className="w-full max-w-3xl mx-auto py-8">
       <h4 className="font-bold mb-8 text-lg">{t("workout_builder.session.exercise_progress")}</h4>
       <ol className="relative border-l-2 border-slate-200 dark:border-slate-700">
         {session.exercises.map((ex, idx) => (
-          <li className="mb-8 ml-4" key={ex.id}>
+          <li
+            className={`mb-8 ml-4 ${idx !== currentExerciseIndex ? "cursor-pointer hover:opacity-80" : ""}`}
+            key={ex.id}
+            onClick={() => idx !== currentExerciseIndex && handleExerciseClick(idx)}
+          >
             {/* Cercle étape */}
             <span
               className={
@@ -32,7 +50,9 @@ export function WorkoutExerciseSets() {
             {/* Nom de l'exercice */}
             <div
               className={
-                idx === currentExerciseIndex ? "font-bold text-blue-600 text-xl mb-2" : "text-slate-700 dark:text-slate-300 text-xl mb-2"
+                idx === currentExerciseIndex
+                  ? "font-bold text-blue-600 text-xl mb-2"
+                  : "text-slate-700 dark:text-slate-300 text-xl mb-2 transition-colors hover:text-blue-500"
               }
             >
               {ex.name}

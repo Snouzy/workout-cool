@@ -119,7 +119,7 @@ export function WorkoutSessionSets({
               <div className="flex items-center gap-3 ml-2">
                 {details?.fullVideoImageUrl && (
                   <div
-                    className="relative w-12 h-12 rounded-lg overflow-hidden shrink-0 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700/50 cursor-pointer"
+                    className="relative aspect-video max-w-24 rounded-lg overflow-hidden shrink-0 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700/50 cursor-pointer"
                     onClick={(e) => {
                       e.stopPropagation();
                       setVideoModal({ open: true, exerciseId: ex.id });

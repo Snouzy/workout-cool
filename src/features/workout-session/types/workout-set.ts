@@ -1,3 +1,5 @@
+import { ExerciseWithAttributes } from "@/features/workout-builder/types";
+
 export type WorkoutSetType = "TIME" | "WEIGHT" | "REPS" | "BODYWEIGHT" | "NA";
 export type WorkoutSetUnit = "kg" | "lbs";
 
@@ -14,13 +16,10 @@ export interface WorkoutSet {
   completed: boolean;
 }
 
-export interface WorkoutSessionExercise {
+export interface WorkoutSessionExercise extends ExerciseWithAttributes {
   id: string;
-  exerciseId: string;
   order: number;
   sets: WorkoutSet[];
-  name?: string;
-  nameEn?: string;
 }
 
 export interface WorkoutSession {

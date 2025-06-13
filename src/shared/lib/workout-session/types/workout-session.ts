@@ -1,3 +1,5 @@
+import { WorkoutSessionExercise } from "@/features/workout-session/types/workout-set";
+
 export interface WorkoutSession {
   id: string; // local: "local-xxx", serveur: uuid
   userId: string;
@@ -5,11 +7,10 @@ export interface WorkoutSession {
   startedAt: string;
   endedAt?: string;
   duration?: number;
-  exercises: import("@/features/workout-session/types/workout-set").WorkoutSessionExercise[];
+  exercises: WorkoutSessionExercise[];
   currentExerciseIndex?: number;
   isActive?: boolean;
   serverId?: string; // Si synchronisé
-  // ...autres champs
 }
 
 export type WorkoutSessionStatus = WorkoutSession["status"];

@@ -1,5 +1,12 @@
 import { StaticImageData } from "next/image";
-import { ExerciseAttributeValueEnum, Exercise, ExerciseAttribute, ExerciseAttributeName, ExerciseAttributeValue } from "@prisma/client";
+import {
+  ExerciseAttributeValueEnum,
+  Exercise,
+  ExerciseAttribute,
+  ExerciseAttributeName,
+  ExerciseAttributeValue,
+  WorkoutSet,
+} from "@prisma/client";
 
 export interface WorkoutBuilderState {
   currentStep: number;
@@ -32,6 +39,10 @@ export type ExerciseWithAttributes = Exercise & {
     attributeName: ExerciseAttributeName;
     attributeValue: ExerciseAttributeValue;
   })[];
+};
+
+export type ExerciseWithAttributesAndSets = ExerciseWithAttributes & {
+  sets: WorkoutSet[];
 };
 
 export interface ExercisesByMuscle {

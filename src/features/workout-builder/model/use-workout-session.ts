@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 
 import { workoutSessionLocal } from "@/shared/lib/workout-session/workout-session.local";
+import { ExerciseWithAttributes } from "@/features/workout-builder/types";
 
 import type { WorkoutSession, WorkoutSessionExercise, WorkoutSet } from "@/features/workout-session/types/workout-set";
 
@@ -58,12 +59,9 @@ export function useWorkoutSession(sessionId?: string) {
   //   };
   // }, [isTimerRunning, session]);
 
-  const startWorkout = useCallback((exercises: any[], equipment: any[], muscles: any[]) => {
+  const startWorkout = useCallback((exercises: ExerciseWithAttributes[], equipment: any[], muscles: any[]) => {
     const sessionExercises: WorkoutSessionExercise[] = exercises.map((ex, idx) => ({
-      id: ex.id,
-      exerciseId: ex.id,
-      name: ex.name,
-      nameEn: ex.nameEn,
+      ...ex,
       order: idx,
       sets: [
         {

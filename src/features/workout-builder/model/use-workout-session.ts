@@ -2,6 +2,8 @@
 
 import { useState, useEffect, useCallback } from "react";
 
+import { workoutSessionLocal } from "@/shared/lib/workout-session/workout-session.local";
+
 import type { WorkoutSession, WorkoutSessionExercise, WorkoutSet } from "@/features/workout-session/types/workout-set";
 
 interface WorkoutSessionProgress {
@@ -16,28 +18,26 @@ interface WorkoutSessionProgress {
 
 const STORAGE_KEY = "workout-session";
 
-export function useWorkoutSession() {
+export function useWorkoutSession(sessionId?: string) {
   const [session, setSession] = useState<WorkoutSession | null>(null);
   const [progress, setProgress] = useState<Record<string, WorkoutSessionProgress>>({});
   const [elapsedTime, setElapsedTime] = useState(0);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
 
-  // Charger la session depuis localStorage au démarrage
+  // Charger la session depuis localStorage au démarrage ou quand sessionId change
   useEffect(() => {
-    const savedSession = localStorage.getItem(STORAGE_KEY);
-    console.log("savedSession:", JSON.parse(savedSession || "{}"));
-    if (savedSession) {
-      try {
-        const parsedSession: WorkoutSession = JSON.parse(savedSession);
-        setSession(parsedSession);
-        setElapsedTime(parsedSession.duration || 0);
-        setIsTimerRunning(!!parsedSession.endedAt === false);
-      } catch (error) {
-        console.error("Error loading workout session:", error);
-        localStorage.removeItem(STORAGE_KEY);
-      }
+    if (!sessionId) return;
+    const found = workoutSessionLocal.getById(sessionId);
+    if (found) {
+      setSession(found);
+      setElapsedTime(found.duration || 0);
+      setIsTimerRunning(!!found.endedAt === false);
+    } else {
+      setSession(null);
+      setElapsedTime(0);
+      setIsTimerRunning(false);
     }
-  }, []);
+  }, [sessionId]);
 
   // Chronomètre automatique
   // useEffect(() => {
@@ -61,7 +61,6 @@ export function useWorkoutSession() {
   // }, [isTimerRunning, session]);
 
   const startWorkout = useCallback((exercises: any[], equipment: any[], muscles: any[]) => {
-    // On crée la structure WorkoutSession avec les sets vides, même si l'exercice d'origine a déjà un champ sets, on l'écrase
     const sessionExercises: WorkoutSessionExercise[] = exercises.map((ex, idx) => ({
       id: ex.id,
       exerciseId: ex.id,
@@ -82,14 +81,16 @@ export function useWorkoutSession() {
     }));
     const newSession: WorkoutSession = {
       id: Date.now().toString(),
-      userId: "local", // à remplacer par l'id user réel si connecté
+      userId: "local",
       startedAt: new Date().toISOString(),
       exercises: sessionExercises,
+      status: "active",
     };
+    workoutSessionLocal.add(newSession);
+    workoutSessionLocal.setCurrent(newSession.id);
     setSession(newSession);
     setElapsedTime(0);
     setIsTimerRunning(true);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(newSession));
   }, []);
 
   // Navigation entre exercices
@@ -105,7 +106,7 @@ export function useWorkoutSession() {
     if (idx < session.exercises.length - 1) {
       const updatedSession = { ...session, currentExerciseIndex: idx + 1 };
       setSession(updatedSession);
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedSession));
+      workoutSessionLocal.update(session.id, { currentExerciseIndex: idx + 1 });
     }
   }, [session, currentExerciseIndex]);
 
@@ -115,7 +116,7 @@ export function useWorkoutSession() {
     if (idx > 0) {
       const updatedSession = { ...session, currentExerciseIndex: idx - 1 };
       setSession(updatedSession);
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedSession));
+      workoutSessionLocal.update(session.id, { currentExerciseIndex: idx - 1 });
     }
   }, [session, currentExerciseIndex]);
 
@@ -136,7 +137,7 @@ export function useWorkoutSession() {
     const updatedExercises = session.exercises.map((ex, idx) => (idx === exIdx ? { ...ex, sets: [...ex.sets, newSet] } : ex));
     const updatedSession = { ...session, exercises: updatedExercises };
     setSession(updatedSession);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedSession));
+    workoutSessionLocal.update(session.id, { exercises: updatedExercises });
   }, [session, currentExercise, currentExerciseIndex]);
 
   // Mise à jour d'un set
@@ -149,7 +150,7 @@ export function useWorkoutSession() {
       const updatedExercises = session.exercises.map((ex, idx) => (idx === exerciseIndex ? { ...ex, sets: updatedSets } : ex));
       const updatedSession = { ...session, exercises: updatedExercises };
       setSession(updatedSession);
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedSession));
+      workoutSessionLocal.update(session.id, { exercises: updatedExercises });
     },
     [session],
   );
@@ -164,7 +165,7 @@ export function useWorkoutSession() {
       const updatedExercises = session.exercises.map((ex, idx) => (idx === exerciseIndex ? { ...ex, sets: updatedSets } : ex));
       const updatedSession = { ...session, exercises: updatedExercises };
       setSession(updatedSession);
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedSession));
+      workoutSessionLocal.update(session.id, { exercises: updatedExercises });
     },
     [session],
   );
@@ -184,7 +185,7 @@ export function useWorkoutSession() {
       if (session) {
         const updatedSession = { ...session, isActive: newIsRunning };
         setSession(updatedSession);
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedSession));
+        workoutSessionLocal.update(session.id, { isActive: newIsRunning });
       }
       return newIsRunning;
     });
@@ -196,30 +197,29 @@ export function useWorkoutSession() {
     if (session) {
       const updatedSession = { ...session, duration: 0 };
       setSession(updatedSession);
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedSession));
+      workoutSessionLocal.update(session.id, { duration: 0 });
     }
   }, [session]);
 
   // Quitter l'entraînement
   const quitWorkout = useCallback(() => {
+    if (session) {
+      workoutSessionLocal.remove(session.id);
+    }
     setSession(null);
     setProgress({});
     setElapsedTime(0);
     setIsTimerRunning(false);
-    localStorage.removeItem(STORAGE_KEY);
-  }, []);
+  }, [session]);
 
-  // Terminer l'entraînement
   const completeWorkout = useCallback(() => {
     if (session) {
-      // Ici on pourrait sauvegarder l'entraînement terminé dans une base de données
-      // Pour l'instant, on retire juste de localStorage
-      localStorage.removeItem(STORAGE_KEY);
-      setSession(null);
-      setProgress({});
-      setElapsedTime(0);
-      setIsTimerRunning(false);
+      workoutSessionLocal.update(session.id, { status: "completed", endedAt: new Date().toISOString() });
+      setSession({ ...session, status: "completed", endedAt: new Date().toISOString() });
     }
+    setProgress({});
+    setElapsedTime(0);
+    setIsTimerRunning(false);
   }, [session]);
 
   // Mettre à jour le progrès d'un exercice
@@ -254,7 +254,7 @@ export function useWorkoutSession() {
       if (targetIndex >= 0 && targetIndex < session.exercises.length) {
         const updatedSession = { ...session, currentExerciseIndex: targetIndex };
         setSession(updatedSession);
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedSession));
+        workoutSessionLocal.update(session.id, { currentExerciseIndex: targetIndex });
       }
     },
     [session],

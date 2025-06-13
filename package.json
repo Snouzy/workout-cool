@@ -123,6 +123,7 @@
     "@eslint/eslintrc": "^3.3.1",
     "@eslint/js": "^9.28.0",
     "@next/eslint-plugin-next": "^15.2.4",
+    "@types/canvas-confetti": "^1.9.0",
     "@types/lodash.debounce": "^4.0.9",
     "@types/lodash.set": "^4.3.9",
     "@types/node": "^20",

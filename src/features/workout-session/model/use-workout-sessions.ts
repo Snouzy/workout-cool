@@ -1,73 +1,68 @@
-// src/features/workout-session/model/use-workout-sessions.ts
 import { useCallback, useEffect, useState } from "react";
 
-import {
-  getLocalSessions,
-  addLocalSession,
-  updateLocalSession,
-  deleteLocalSession,
-  syncSessions,
-  LocalWorkoutSession,
-} from "@/shared/lib/storage/workout-session-storage";
-import { useSession } from "@/features/auth/lib/auth-client";
+import { syncLocalWorkoutSessions } from "@/shared/lib/workout-session/workout-session.sync";
+import { workoutSessionService } from "@/shared/lib/workout-session/workout-session.service";
+import { useNetworkStatus } from "@/shared/lib/network/use-network-status";
+import { useCurrentSession } from "@/entities/user/model/useCurrentSession";
 
-import { useNetworkStatus } from "@/shared/lib/network/use";
+import type { WorkoutSession } from "@/shared/lib/workout-session/types/workout-session";
 
 export function useWorkoutSessions() {
-  const [sessions, setSessions] = useState<LocalWorkoutSession[]>([]);
+  const [workoutSessions, setWorkoutSessions] = useState<WorkoutSession[]>([]);
   const [isSyncing, setIsSyncing] = useState(false);
   const { isOnline } = useNetworkStatus();
-  const { data: authSession } = useSession(); // ou ton hook d'auth
-  const userId = authSession?.user?.id;
+  const session = useCurrentSession();
+  const userId = session?.user?.id;
 
-  // Charge les séances locales au démarrage
+  // Charge les séances au démarrage
   useEffect(() => {
-    setSessions(getLocalSessions());
+    workoutSessionService.getAll().then(setWorkoutSessions);
   }, []);
 
-  // Sync auto quand online
+  // Sync auto quand online et connecté
   useEffect(() => {
     if (isOnline && userId) {
       setIsSyncing(true);
-      syncSessions(userId)
-        .then(setSessions)
+      syncLocalWorkoutSessions()
+        .then(() => workoutSessionService.getAll().then(setWorkoutSessions))
         .finally(() => setIsSyncing(false));
     }
   }, [isOnline, userId]);
 
   // Ajout
-  const addSession = useCallback((session) => {
-    addLocalSession(session);
-    setSessions(getLocalSessions());
+  const addWorkoutSession = useCallback((session: WorkoutSession) => {
+    workoutSessionService.add(session).then(() => workoutSessionService.getAll().then(setWorkoutSessions));
   }, []);
 
   // Update
-  const updateSession = useCallback((session) => {
-    updateLocalSession(session);
-    setSessions(getLocalSessions());
+  const updateWorkoutSession = useCallback((id: string, data: Partial<WorkoutSession>) => {
+    workoutSessionService.update(id, data).then(() => workoutSessionService.getAll().then(setWorkoutSessions));
   }, []);
 
-  // Delete
-  const deleteSession = useCallback((sessionId) => {
-    deleteLocalSession(sessionId);
-    setSessions(getLocalSessions());
+  // Delete (local only for now)
+  const deleteWorkoutSession = useCallback((id: string) => {
+    // TODO: gérer suppression côté API si besoin
+    import("@/shared/lib/workout-session/workout-session.local").then(({ workoutSessionLocal }) => {
+      workoutSessionLocal.remove(id);
+      workoutSessionService.getAll().then(setWorkoutSessions);
+    });
   }, []);
 
   // Sync manuel
   const manualSync = useCallback(() => {
     if (userId) {
       setIsSyncing(true);
-      syncSessions(userId)
-        .then(setSessions)
+      syncLocalWorkoutSessions()
+        .then(() => workoutSessionService.getAll().then(setWorkoutSessions))
         .finally(() => setIsSyncing(false));
     }
   }, [userId]);
 
   return {
-    sessions,
-    addSession,
-    updateSession,
-    deleteSession,
+    workoutSessions,
+    addWorkoutSession,
+    updateWorkoutSession,
+    deleteWorkoutSession,
     isSyncing,
     manualSync,
   };

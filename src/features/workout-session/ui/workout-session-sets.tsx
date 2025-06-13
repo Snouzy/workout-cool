@@ -13,7 +13,15 @@ import { Button } from "@/components/ui/button";
 
 import { WorkoutSessionSet } from "./workout-session-set";
 
-export function WorkoutSessionSets({ showCongrats, onCongrats }: { showCongrats: boolean; onCongrats: () => void }) {
+export function WorkoutSessionSets({
+  showCongrats,
+  onCongrats,
+  sessionId,
+}: {
+  showCongrats: boolean;
+  onCongrats: () => void;
+  sessionId: string;
+}) {
   const t = useI18n();
   const {
     currentExercise,
@@ -26,7 +34,8 @@ export function WorkoutSessionSets({ showCongrats, onCongrats }: { showCongrats:
     goToNextExercise,
     goToPrevExercise,
     goToExercise,
-  } = useWorkoutSession();
+    completeWorkout,
+  } = useWorkoutSession(sessionId);
   const router = useRouter();
 
   if (!session) {
@@ -61,6 +70,7 @@ export function WorkoutSessionSets({ showCongrats, onCongrats }: { showCongrats:
   };
 
   const handleFinishSession = () => {
+    completeWorkout();
     onCongrats();
     confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
   };
@@ -81,7 +91,6 @@ export function WorkoutSessionSets({ showCongrats, onCongrats }: { showCongrats:
       <ol className="relative border-l-2 ml-2 border-slate-200 dark:border-slate-700">
         {session.exercises.map((ex, idx) => {
           const allSetsCompleted = ex.sets.length > 0 && ex.sets.every((set) => set.completed);
-          console.log("allSetsCompleted:", allSetsCompleted);
           return (
             <li
               className={`mb-8 ml-4 ${idx !== currentExerciseIndex ? "cursor-pointer hover:opacity-80" : ""}`}

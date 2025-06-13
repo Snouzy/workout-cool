@@ -4,6 +4,7 @@ import { useState } from "react";
 import { ArrowLeft, ArrowRight, CheckCircle, Zap, Plus } from "lucide-react";
 
 import { useI18n } from "locales/client";
+import { workoutSessionLocal } from "@/shared/lib/workout-session/workout-session.local";
 import { WorkoutSessionSets } from "@/features/workout-session/ui/workout-session-sets";
 import { WorkoutSessionHeader } from "@/features/workout-session/ui/workout-session-header";
 import { Button } from "@/components/ui/button";
@@ -142,7 +143,7 @@ function NavigationFooter({
   );
 }
 
-export function WorkoutStepper() {
+export function WorkoutStepper({ sessionId: propSessionId }: { sessionId?: string } = {}) {
   const t = useI18n();
   const {
     currentStep,
@@ -160,6 +161,7 @@ export function WorkoutStepper() {
     exercisesError,
   } = useWorkoutStepper();
 
+  const sessionId = propSessionId || workoutSessionLocal.getCurrent() || undefined;
   const {
     isWorkoutActive,
     session,
@@ -170,7 +172,7 @@ export function WorkoutStepper() {
     toggleTimer,
     resetTimer,
     quitWorkout,
-  } = useWorkoutSession();
+  } = useWorkoutSession(sessionId);
 
   const canContinue = currentStep === 1 ? canProceedToStep2 : currentStep === 2 ? canProceedToStep3 : exercisesByMuscle.length > 0;
 
@@ -222,7 +224,7 @@ export function WorkoutStepper() {
             totalExercises={session.exercises.length}
           />
         )}
-        <WorkoutSessionSets onCongrats={() => setShowCongrats(true)} showCongrats={showCongrats} />
+        <WorkoutSessionSets onCongrats={() => setShowCongrats(true)} sessionId={session.id} showCongrats={showCongrats} />
       </div>
     );
   }

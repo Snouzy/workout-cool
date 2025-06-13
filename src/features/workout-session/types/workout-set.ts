@@ -30,4 +30,7 @@ export interface WorkoutSession {
   endedAt?: string;
   duration?: number;
   exercises: WorkoutSessionExercise[];
+  status?: "active" | "completed" | "synced";
+  currentExerciseIndex?: number;
+  isActive?: boolean;
 }

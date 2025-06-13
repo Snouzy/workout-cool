@@ -6,7 +6,7 @@ import Image from "next/image";
 import { Check, Hourglass, Play } from "lucide-react";
 import confetti from "canvas-confetti";
 
-import { useI18n } from "locales/client";
+import { useCurrentLocale, useI18n } from "locales/client";
 import Trophy from "@public/images/trophy.png";
 import { cn } from "@/shared/lib/utils";
 import { ExerciseVideoModal } from "@/features/workout-builder/ui/exercise-video-modal";
@@ -27,6 +27,7 @@ export function WorkoutSessionSets({
 }) {
   const t = useI18n();
   const router = useRouter();
+  const locale = useCurrentLocale();
   const {
     currentExercise,
     currentExerciseIndex,
@@ -96,6 +97,8 @@ export function WorkoutSessionSets({
       <ol className="relative border-l-2 ml-2 border-slate-200 dark:border-slate-700">
         {session.exercises.map((ex, idx) => {
           const allSetsCompleted = ex.sets.length > 0 && ex.sets.every((set) => set.completed);
+          const exerciseName = locale === "fr" ? ex.name : ex.nameEn;
+
           const details = exerciseDetailsMap[ex.id];
           return (
             <li
@@ -123,8 +126,8 @@ export function WorkoutSessionSets({
                     }}
                   >
                     <Image
-                      alt={details.name || details.nameEn || ""}
-                      className="w-full h-full object-cover scale-[1.5]"
+                      alt={exerciseName || "Exercise image"}
+                      className="w-full h-full object-cover scale-[1.35]"
                       height={48}
                       src={details.fullVideoImageUrl}
                       width={48}
@@ -144,7 +147,7 @@ export function WorkoutSessionSets({
                       : "text-slate-700 dark:text-slate-300 transition-colors hover:text-blue-500",
                   )}
                 >
-                  {ex.name}
+                  {exerciseName}
                   {details?.introduction && (
                     <span
                       className="block text-xs mt-1 text-slate-500 dark:text-slate-400 underline cursor-pointer hover:text-blue-600"

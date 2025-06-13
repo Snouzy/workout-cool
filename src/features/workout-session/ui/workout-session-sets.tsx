@@ -3,11 +3,11 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { Check, Hourglass, Play } from "lucide-react";
+import { Check, Hourglass, Play, ArrowRight, Trophy as TrophyIcon, Plus } from "lucide-react";
 import confetti from "canvas-confetti";
 
 import { useCurrentLocale, useI18n } from "locales/client";
-import Trophy from "@public/images/trophy.png";
+import TrophyImg from "@public/images/trophy.png";
 import { cn } from "@/shared/lib/utils";
 import { useWorkoutSession } from "@/features/workout-session/model/use-workout-session";
 import { ExerciseVideoModal } from "@/features/workout-builder/ui/exercise-video-modal";
@@ -32,10 +32,15 @@ export function WorkoutSessionSets({
   const exerciseDetailsMap = Object.fromEntries(session?.exercises.map((ex) => [ex.id, ex]) || []);
   const [videoModal, setVideoModal] = useState<{ open: boolean; exerciseId?: string }>({ open: false });
 
+  // Calcul de la progression (exercices terminés / total)
+  const totalExercises = session?.exercises.length || 0;
+  const completedExercises = session?.exercises.filter((ex) => ex.sets.length > 0 && ex.sets.every((set) => set.completed)).length || 0;
+  const progressPercent = totalExercises > 0 ? Math.round((completedExercises / totalExercises) * 100) : 0;
+
   if (showCongrats) {
     return (
       <div className="flex flex-col items-center justify-center py-16">
-        <Image alt={t("workout_builder.session.complete") + " trophy"} className="w-56 h-56" src={Trophy} />
+        <Image alt={t("workout_builder.session.complete") + " trophy"} className="w-56 h-56" src={TrophyImg} />
         <h2 className="text-2xl font-bold mb-2">{t("workout_builder.session.complete") + " ! 🎉"}</h2>
         <p className="text-lg text-slate-600 mb-6">{t("workout_builder.session.workout_in_progress")}</p>
         <Button onClick={() => router.push("/profile")}>{t("commons.go_to_profile")}</Button>
@@ -175,11 +180,21 @@ export function WorkoutSessionSets({
                     ))}
                   </div>
                   {/* Actions bas de page */}
-                  <div className="flex flex-col md:flex-row gap-4">
-                    <Button className="bg-blue-500 text-white flex-1 text-lg font-bold py-3" onClick={addSet}>
+                  <div className="flex flex-col md:flex-row gap-3 w-full mt-2 px-2">
+                    <Button
+                      aria-label="Ajouter une série"
+                      className="flex-1 flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white font-bold py-3 rounded-xl border border-green-600 transition-all duration-200 active:scale-95 focus:ring-2 focus:ring-green-400"
+                      onClick={addSet}
+                    >
+                      <Plus className="h-5 w-5" />
                       {t("workout_builder.session.add_set")}
                     </Button>
-                    <Button className="bg-blue-700 text-white flex-1 text-lg font-bold py-3" onClick={goToNextExercise}>
+                    <Button
+                      aria-label="Exercice suivant"
+                      className="flex-1 flex items-center justify-center gap-2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 rounded-xl border border-blue-600 transition-all duration-200 active:scale-95 focus:ring-2 focus:ring-blue-400"
+                      onClick={goToNextExercise}
+                    >
+                      <ArrowRight className="h-5 w-5" />
                       {t("workout_builder.session.next_exercise")}
                     </Button>
                   </div>
@@ -191,8 +206,13 @@ export function WorkoutSessionSets({
       </ol>
       {isWorkoutActive && (
         <div className="flex justify-center mt-8">
-          <Button className="bg-green-600 hover:bg-green-700 text-white font-bold px-8 py-3 text-lg rounded" onClick={handleFinishSession}>
-            Terminer la séance
+          <Button
+            aria-label="Terminer la séance"
+            className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white font-bold px-8 py-3 text-lg rounded-2xl border border-green-700 transition-all duration-200 active:scale-95 focus:ring-2 focus:ring-green-400"
+            onClick={handleFinishSession}
+          >
+            <TrophyIcon className="h-6 w-6" />
+            {t("workout_builder.session.finish_session")}
           </Button>
         </div>
       )}

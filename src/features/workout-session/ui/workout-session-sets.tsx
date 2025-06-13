@@ -116,7 +116,7 @@ export function WorkoutSessionSets({
                 {renderStepIcon(idx, allSetsCompleted)}
               </span>
               {/* Image + nom de l'exercice */}
-              <div className="flex items-center gap-3 ml-2">
+              <div className="flex items-center gap-3 ml-2 hover:opacity-80">
                 {details?.fullVideoImageUrl && (
                   <div
                     className="relative aspect-video max-w-24 rounded-lg overflow-hidden shrink-0 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700/50 cursor-pointer"

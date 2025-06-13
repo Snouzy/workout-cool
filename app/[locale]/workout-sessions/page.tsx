@@ -2,6 +2,7 @@
 import { useRouter } from "next/navigation";
 
 import { workoutSessionLocal } from "@/shared/lib/workout-session/workout-session.local";
+import { WorkoutSessionList } from "@/features/workout-session/ui/workout-session-list";
 import { WorkoutSessionHeatmap } from "@/features/workout-session/ui/workout-session-heatmap";
 import { Button } from "@/components/ui/button";
 
@@ -23,7 +24,7 @@ export default function WorkoutSessionsPage() {
   return (
     <div className="">
       <WorkoutSessionHeatmap until={until} values={values} />
-      {/* <WorkoutSessionList onSelect={(id) => router.push(`/workout-builder?sessionId=${id}`)} /> */}
+      <WorkoutSessionList onSelect={(id) => router.push(`/workout-builder?sessionId=${id}`)} />
       <div className="mt-8 flex justify-center">
         <Button onClick={() => router.push("/workout-builder")} size="large">
           Nouvelle séance

@@ -1,13 +1,16 @@
 "use client";
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { Check, Hourglass } from "lucide-react";
+import { Check, Hourglass, Play } from "lucide-react";
 import confetti from "canvas-confetti";
 
 import { useI18n } from "locales/client";
 import Trophy from "@public/images/trophy.png";
 import { cn } from "@/shared/lib/utils";
+import { ExerciseVideoModal } from "@/features/workout-builder/ui/exercise-video-modal";
+import { useWorkoutStepper } from "@/features/workout-builder/model/use-workout-stepper";
 import { useWorkoutSession } from "@/features/workout-builder/model/use-workout-session";
 import { Button } from "@/components/ui/button";
 
@@ -39,6 +42,9 @@ export function WorkoutSessionSets({
     completeWorkout,
   } = useWorkoutSession(sessionId);
   const router = useRouter();
+  const { exercisesByMuscle } = useWorkoutStepper();
+  const exerciseDetailsMap = Object.fromEntries(exercisesByMuscle.flatMap((group) => group.exercises.map((ex) => [ex.id, ex])));
+  const [videoModal, setVideoModal] = useState<{ open: boolean; exerciseId?: string }>({ open: false });
 
   if (!session) {
     return <div className="text-center text-slate-500 py-12">{t("workout_builder.session.no_exercise_selected")}</div>;
@@ -93,6 +99,7 @@ export function WorkoutSessionSets({
       <ol className="relative border-l-2 ml-2 border-slate-200 dark:border-slate-700">
         {session.exercises.map((ex, idx) => {
           const allSetsCompleted = ex.sets.length > 0 && ex.sets.every((set) => set.completed);
+          const details = exerciseDetailsMap[ex.id];
           return (
             <li
               className={`mb-8 ml-4 ${idx !== currentExerciseIndex ? "cursor-pointer hover:opacity-80" : ""}`}
@@ -108,17 +115,50 @@ export function WorkoutSessionSets({
               >
                 {renderStepIcon(idx, allSetsCompleted)}
               </span>
-              {/* Nom de l'exercice */}
-              <div
-                className={cn(
-                  "ml-2 text-xl",
-                  idx === currentExerciseIndex
-                    ? "font-bold text-blue-600"
-                    : "text-slate-700 dark:text-slate-300 transition-colors hover:text-blue-500",
+              {/* Image + nom de l'exercice */}
+              <div className="flex items-center gap-3 ml-2">
+                {details?.fullVideoImageUrl && (
+                  <div
+                    className="relative w-12 h-12 rounded-lg overflow-hidden shrink-0 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700/50 cursor-pointer"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setVideoModal({ open: true, exerciseId: ex.id });
+                    }}
+                  >
+                    <Image
+                      alt={details.name || details.nameEn || ""}
+                      className="w-full h-full object-cover scale-[1.5]"
+                      height={48}
+                      src={details.fullVideoImageUrl}
+                      width={48}
+                    />
+                    <div className="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-200">
+                      <Button className="bg-white/80" size="icon" variant="ghost">
+                        <Play className="h-4 w-4 text-blue-600" />
+                      </Button>
+                    </div>
+                  </div>
                 )}
-              >
-                {ex.name}
+                <div
+                  className={cn(
+                    "text-xl",
+                    idx === currentExerciseIndex
+                      ? "font-bold text-blue-600"
+                      : "text-slate-700 dark:text-slate-300 transition-colors hover:text-blue-500",
+                  )}
+                >
+                  {ex.name}
+                </div>
               </div>
+              {/* Modale vidéo */}
+              {details?.fullVideoUrl && videoModal.open && videoModal.exerciseId === ex.id && (
+                <ExerciseVideoModal
+                  onOpenChange={(open) => setVideoModal({ open, exerciseId: open ? ex.id : undefined })}
+                  open={videoModal.open}
+                  title={details.name || details.nameEn || ""}
+                  videoUrl={details.fullVideoUrl}
+                />
+              )}
               {/* Si exercice courant, afficher le détail */}
               {idx === currentExerciseIndex && (
                 <div className="bg-white dark:bg-slate-900 rounded-xl my-10">

@@ -1,8 +1,8 @@
 "use client";
 
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { getYouTubeEmbedUrl } from "@/shared/lib/youtube";
 import { useI18n } from "locales/client";
+import { getYouTubeEmbedUrl } from "@/shared/lib/youtube";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 interface ExerciseVideoModalProps {
   open: boolean;
@@ -10,7 +10,6 @@ interface ExerciseVideoModalProps {
   videoUrl: string;
   title: string;
 }
-
 
 export function ExerciseVideoModal({ open, onOpenChange, videoUrl, title }: ExerciseVideoModalProps) {
   const youTubeEmbedUrl = getYouTubeEmbedUrl(videoUrl);
@@ -33,18 +32,10 @@ export function ExerciseVideoModal({ open, onOpenChange, videoUrl, title }: Exer
                 title={title}
               />
             ) : (
-              <video
-                autoPlay
-                className="w-full h-full object-contain bg-black"
-                controls
-                poster=""
-                src={videoUrl}
-              />
+              <video autoPlay className="w-full h-full object-contain bg-black" controls poster="" src={videoUrl} />
             )
           ) : (
-            <div className="text-white text-center p-8">
-              {t("workout_builder.exercise.no_video_available")}
-            </div>
+            <div className="text-white text-center p-8">{t("workout_builder.exercise.no_video_available")}</div>
           )}
         </div>
       </DialogContent>

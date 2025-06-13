@@ -2,6 +2,7 @@ import { create } from "zustand";
 
 import { workoutSessionLocal } from "@/shared/lib/workout-session/workout-session.local";
 import { WorkoutSession, WorkoutSessionExercise, WorkoutSet } from "@/features/workout-session/types/workout-set";
+import { useWorkoutBuilderStore } from "@/features/workout-builder/model/workout-builder.store";
 
 import { ExerciseWithAttributes } from "../../workout-builder/types";
 
@@ -114,6 +115,7 @@ export const useWorkoutSessionStore = create<WorkoutSessionState>((set, get) => 
 
   completeWorkout: () => {
     const { session } = get();
+
     if (session) {
       workoutSessionLocal.update(session.id, { status: "completed", endedAt: new Date().toISOString() });
       set({
@@ -124,6 +126,9 @@ export const useWorkoutSessionStore = create<WorkoutSessionState>((set, get) => 
         isWorkoutActive: false,
       });
     }
+
+    // set current step to 0
+    useWorkoutBuilderStore.getState().setStep(1);
   },
 
   toggleTimer: () => {

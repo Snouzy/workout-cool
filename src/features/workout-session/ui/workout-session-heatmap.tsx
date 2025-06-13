@@ -10,8 +10,8 @@ interface Props {
   dateFormat?: string;
 }
 
-const DEFAULT_WEEK_NAMES = ["L", "M", "M", "J", "V", "S", "D"];
-const DEFAULT_MONTH_NAMES = ["Jan", "Fév", "Mar", "Avr", "Mai", "Juin", "Juil", "Août", "Sep", "Oct", "Nov", "Déc"];
+const DEFAULT_WEEK_NAMES = ["L", "M", "M", "J", "V", "S", "D"]; // TODO i18n
+const DEFAULT_MONTH_NAMES = ["Jan", "Fév", "Mar", "Avr", "Mai", "Juin", "Juil", "Août", "Sep", "Oct", "Nov", "Déc"]; // TODO i18n
 const DEFAULT_PANEL_COLORS = ["#EEE", "#34D399", "#059669", "#065F46", "#042F2E"];
 const DEFAULT_DATE_FORMAT = "YYYY-MM-DD";
 
@@ -40,12 +40,11 @@ export const WorkoutSessionHeatmap: React.FC<Props> = ({
     mouseY: number;
   }>(null);
 
-  // Responsivité : adapte le nombre de colonnes à la largeur
+  //   responsive: adapt the number of columns to the width
   useEffect(() => {
     function updateColumns() {
       if (!containerRef.current) return;
       const width = containerRef.current.offsetWidth;
-      // Calcule le nombre de colonnes qui rentrent (en gardant un minimum)
       const available = Math.floor((width - WEEK_LABEL_WIDTH) / (PANEL_SIZE + PANEL_MARGIN));
       setColumns(Math.max(MIN_COLUMNS, Math.min(MAX_COLUMNS, available)));
     }
@@ -55,7 +54,7 @@ export const WorkoutSessionHeatmap: React.FC<Props> = ({
     return () => observer.disconnect();
   }, []);
 
-  // Génère la matrice des contributions (colonnes x 7 jours)
+  //   matrix of contributions
   function makeCalendarData(history: { [k: string]: number }, lastDay: string, columns: number) {
     const d = dayjs(lastDay, dateFormat);
     const lastWeekend = d.endOf("week");
@@ -81,7 +80,6 @@ export const WorkoutSessionHeatmap: React.FC<Props> = ({
   const contributions = makeCalendarData(values, until, columns);
   const innerDom: React.ReactElement[] = [];
 
-  // Cases (panels)
   for (let i = 0; i < columns; i++) {
     for (let j = 0; j < 7; j++) {
       const contribution = contributions[i][j];
@@ -130,7 +128,6 @@ export const WorkoutSessionHeatmap: React.FC<Props> = ({
     }
   }
 
-  // Labels jours (week)
   for (let i = 0; i < weekNames.length; i++) {
     const x = WEEK_LABEL_WIDTH / 2;
     const y = MONTH_LABEL_HEIGHT + (PANEL_SIZE + PANEL_MARGIN) * i + PANEL_SIZE / 2;
@@ -141,7 +138,6 @@ export const WorkoutSessionHeatmap: React.FC<Props> = ({
     );
   }
 
-  // Labels mois (month)
   let prevMonth = -1;
   for (let i = 0; i < columns; i++) {
     const c = contributions[i][0];
@@ -161,7 +157,6 @@ export const WorkoutSessionHeatmap: React.FC<Props> = ({
     prevMonth = c.month;
   }
 
-  // Tooltip custom HTML (fixed, suit la souris)
   const tooltipNode = hovered ? (
     <div
       style={{

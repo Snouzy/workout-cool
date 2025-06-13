@@ -58,7 +58,7 @@ export function WorkoutSessionList({ onSelect }: { onSelect: (id: string) => voi
 
   return (
     <div className="space-y-4">
-      <h2 className="text-xl font-bold mb-2">Workout History [{sessions.length}]</h2>
+      <h2 className="text-xl font-bold mt-5 mb-2">Workout History [{sessions.length}]</h2>
       {sessions.length === 0 && <div className="text-slate-500">No workout yet.</div>}
       <ul className="divide-y divide-slate-200">
         {sessions.map((session) => (

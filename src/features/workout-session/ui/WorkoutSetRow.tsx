@@ -28,13 +28,13 @@ export function WorkoutSetRow({ set, setIndex, onChange, onFinish, onRemove }: W
 
   const handleValueIntChange = (columnIndex: number) => (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValuesInt = Array.isArray(set.valuesInt) ? [...set.valuesInt] : [];
-    newValuesInt[columnIndex] = e.target.value ? parseInt(e.target.value, 10) : undefined;
+    newValuesInt[columnIndex] = e.target.value ? parseInt(e.target.value, 10) : 0;
     onChange(setIndex, { valuesInt: newValuesInt });
   };
 
   const handleValueSecChange = (columnIndex: number) => (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValuesSec = Array.isArray(set.valuesSec) ? [...set.valuesSec] : [];
-    newValuesSec[columnIndex] = e.target.value ? parseInt(e.target.value, 10) : undefined;
+    newValuesSec[columnIndex] = e.target.value ? parseInt(e.target.value, 10) : 0;
     onChange(setIndex, { valuesSec: newValuesSec });
   };
 
@@ -46,7 +46,7 @@ export function WorkoutSetRow({ set, setIndex, onChange, onFinish, onRemove }: W
 
   const addColumn = () => {
     if (types.length < maxColumns) {
-      const newTypes = [...types, "REPS"];
+      const newTypes = [...types, "REPS" as WorkoutSetType];
       onChange(setIndex, { types: newTypes });
     }
   };
@@ -75,7 +75,7 @@ export function WorkoutSetRow({ set, setIndex, onChange, onFinish, onRemove }: W
         return (
           <div className="flex gap-1 w-full">
             <input
-              className="border border-black rounded px-1 py-1 w-1/2 text-lg text-center font-bold"
+              className="border border-black rounded px-1 py-1 w-1/2 text-sm text-center font-bold"
               disabled={set.completed}
               min={0}
               onChange={handleValueIntChange(columnIndex)}
@@ -84,7 +84,7 @@ export function WorkoutSetRow({ set, setIndex, onChange, onFinish, onRemove }: W
               value={valuesInt[columnIndex] ?? ""}
             />
             <input
-              className="border border-black rounded px-1 py-1 w-1/2 text-lg text-center font-bold"
+              className="border border-black rounded px-1 py-1 w-1/2 text-sm text-center font-bold"
               disabled={set.completed}
               max={59}
               min={0}
@@ -99,7 +99,7 @@ export function WorkoutSetRow({ set, setIndex, onChange, onFinish, onRemove }: W
         return (
           <div className="flex gap-1 w-full items-center">
             <input
-              className="border border-black rounded px-1 py-1 w-1/2 text-lg text-center font-bold"
+              className="border border-black rounded px-1 py-1 w-1/2 text-sm text-center font-bold"
               disabled={set.completed}
               min={0}
               onChange={handleValueIntChange(columnIndex)}
@@ -108,7 +108,7 @@ export function WorkoutSetRow({ set, setIndex, onChange, onFinish, onRemove }: W
               value={valuesInt[columnIndex] ?? ""}
             />
             <select
-              className="border border-black rounded px-1 py-1 w-1/2 text-lg font-bold bg-white"
+              className="border border-black rounded px-1 py-1 w-1/2 text-sm font-bold bg-white"
               disabled={set.completed}
               onChange={handleUnitChange(columnIndex)}
               value={units[columnIndex] ?? "kg"}
@@ -121,7 +121,7 @@ export function WorkoutSetRow({ set, setIndex, onChange, onFinish, onRemove }: W
       case "REPS":
         return (
           <input
-            className="border border-black rounded px-1 py-1 w-full text-lg text-center font-bold"
+            className="border border-black rounded px-1 py-1 w-full text-sm text-center font-bold"
             disabled={set.completed}
             min={0}
             onChange={handleValueIntChange(columnIndex)}
@@ -133,7 +133,7 @@ export function WorkoutSetRow({ set, setIndex, onChange, onFinish, onRemove }: W
       case "BODYWEIGHT":
         return (
           <input
-            className="border border-black rounded px-1 py-1 w-full text-lg text-center font-bold"
+            className="border border-black rounded px-1 py-1 w-full text-sm text-center font-bold"
             disabled={set.completed}
             placeholder=""
             readOnly
@@ -146,17 +146,17 @@ export function WorkoutSetRow({ set, setIndex, onChange, onFinish, onRemove }: W
   };
 
   return (
-    <div className="flex items-center gap-4 w-full py-2">
+    <div className="flex flex-wrap items-center gap-2 w-full py-2">
       {/* Label SET X */}
-      <div className="w-16 text-right font-bold text-slate-700">SET {setIndex + 1}</div>
+      <div className="font-bold text-slate-700 min-w-[3rem] text-right">SET {setIndex + 1}</div>
 
       {/* Colonnes de types */}
-      <div className="flex gap-4 flex-1">
+      <div className="flex flex-1 gap-2 min-w-0">
         {types.map((type, columnIndex) => (
-          <div className="flex flex-col items-center w-32 relative" key={columnIndex}>
-            <div className="flex items-center w-full mb-1">
+          <div className="flex flex-col min-w-0 flex-1" key={columnIndex}>
+            <div className="flex items-center w-full gap-1 mb-1">
               <select
-                className="border border-black rounded font-bold px-2 py-1 text-lg w-full bg-white"
+                className="border border-black rounded font-bold px-1 py-1 text-sm w-full bg-white min-w-0"
                 disabled={set.completed}
                 onChange={handleTypeChange(columnIndex)}
                 value={type}
@@ -168,12 +168,12 @@ export function WorkoutSetRow({ set, setIndex, onChange, onFinish, onRemove }: W
               </select>
               {types.length > 1 && (
                 <Button
-                  className="ml-1 p-1 h-auto bg-red-500 hover:bg-red-600"
+                  className="p-1 h-auto bg-red-500 hover:bg-red-600 flex-shrink-0"
                   onClick={() => removeColumn(columnIndex)}
                   size="small"
                   variant="destructive"
                 >
-                  <Minus className="h-4 w-4" />
+                  <Minus className="h-3 w-3" />
                 </Button>
               )}
             </div>
@@ -183,23 +183,25 @@ export function WorkoutSetRow({ set, setIndex, onChange, onFinish, onRemove }: W
 
         {/* Bouton pour ajouter une colonne */}
         {types.length < maxColumns && (
-          <Button className="self-start mt-1 p-2 h-auto bg-green-500 hover:bg-green-600" onClick={addColumn} size="small" variant="default">
-            <Plus className="h-4 w-4" />
+          <Button
+            className="self-start mt-1 p-1 h-auto bg-green-500 hover:bg-green-600 flex-shrink-0"
+            onClick={addColumn}
+            size="small"
+            variant="default"
+          >
+            <Plus className="h-3 w-3" />
           </Button>
         )}
       </div>
 
       {/* Finish button */}
-      <div className="flex items-center w-32 justify-end">
-        <Button
-          className="bg-blue-500 hover:bg-blue-600 text-white font-bold px-8 py-2 text-lg rounded"
-          disabled={set.completed}
-          onClick={onFinish}
-          style={{ minWidth: 100 }}
-        >
-          Finish
-        </Button>
-      </div>
+      <Button
+        className="bg-blue-500 hover:bg-blue-600 text-white font-bold px-4 py-2 text-sm rounded flex-shrink-0"
+        disabled={set.completed}
+        onClick={onFinish}
+      >
+        Finish
+      </Button>
     </div>
   );
 }

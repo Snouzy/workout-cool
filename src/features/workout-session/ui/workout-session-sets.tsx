@@ -148,6 +148,18 @@ export function WorkoutSessionSets({
                   )}
                 >
                   {ex.name}
+                  {details?.introduction && (
+                    <span
+                      className="block text-xs mt-1 text-slate-500 dark:text-slate-400 underline cursor-pointer hover:text-blue-600"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setVideoModal({ open: true, exerciseId: ex.id });
+                      }}
+                    >
+                      Voir les instructions
+                    </span>
+                  )}
+                  {/* Fallback: description si pas d'introduction */}
                 </div>
               </div>
               {/* Modale vidéo */}

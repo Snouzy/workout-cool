@@ -122,22 +122,6 @@ function NavigationFooter({
             </div>
           )}
         </div>
-
-        {/* Next/Complete button */}
-        <Button
-          disabled={!canContinue}
-          onClick={isFinalStep ? () => console.log("Complete workout!") : onNext}
-          size="large"
-          variant="default"
-        >
-          <div className="relative flex items-center gap-2">
-            <span className="font-semibold">
-              {isFinalStep ? t("workout_builder.navigation.complete_workout") : t("workout_builder.navigation.continue")}
-            </span>
-            {!isFinalStep && <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />}
-            {isFinalStep && <CheckCircle className="h-4 w-4" />}
-          </div>
-        </Button>
       </div>
     </div>
   );
@@ -224,7 +208,12 @@ export function WorkoutStepper({ sessionId: propSessionId }: { sessionId?: strin
             totalExercises={session.exercises.length}
           />
         )}
-        <WorkoutSessionSets onCongrats={() => setShowCongrats(true)} sessionId={session.id} showCongrats={showCongrats} />
+        <WorkoutSessionSets
+          isWorkoutActive={isWorkoutActive}
+          onCongrats={() => setShowCongrats(true)}
+          sessionId={session.id}
+          showCongrats={showCongrats}
+        />
       </div>
     );
   }
@@ -309,11 +298,7 @@ export function WorkoutStepper({ sessionId: propSessionId }: { sessionId?: strin
                   </div>
                 </div>
 
-                {/* Bottom actions */}
                 <div className="flex items-center justify-center gap-4 mt-8">
-                  <Button className="px-8" size="large" variant="outline">
-                    Save for later
-                  </Button>
                   <Button
                     className="px-8 bg-blue-600 hover:bg-blue-700"
                     disabled={exercisesByMuscle.length === 0}

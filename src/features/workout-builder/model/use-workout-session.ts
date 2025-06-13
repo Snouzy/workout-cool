@@ -16,8 +16,6 @@ interface WorkoutSessionProgress {
   completed: boolean;
 }
 
-const STORAGE_KEY = "workout-session";
-
 export function useWorkoutSession(sessionId?: string) {
   const [session, setSession] = useState<WorkoutSession | null>(null);
   const [progress, setProgress] = useState<Record<string, WorkoutSessionProgress>>({});

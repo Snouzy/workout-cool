@@ -1,13 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import { LogIn, UserPlus, LogOut, User } from "lucide-react";
+import { Home, LogIn, UserPlus, LogOut, User } from "lucide-react";
 
 import { useI18n } from "locales/client";
 import Logo from "@public/logo.png";
 import { ReleaseNotesDialog } from "@/features/release-notes";
 import { useLogout } from "@/features/auth/model/useLogout";
 import { useSession } from "@/features/auth/lib/auth-client";
+import { InlineTooltip } from "@/components/ui/tooltip";
 import { Link } from "@/components/ui/link";
 
 export const Header = () => {
@@ -25,7 +26,7 @@ export const Header = () => {
   return (
     <div className="navbar bg-base-100 px-4">
       {/* Logo and Title */}
-      <div className="navbar-start">
+      <div className="navbar-start flex items-center gap-2">
         <Link className="group flex items-center space-x-3 rounded-xl bg-gradient-to-r px-4 py-2 transition-all duration-200 " href="/">
           <div className="relative">
             <Image
@@ -45,7 +46,14 @@ export const Header = () => {
 
       {/* User Menu */}
       <div className="navbar-end">
+        <InlineTooltip title="Accueil">
+          <Link aria-label="Accueil" className="hover:bg-slate-100 rounded-full p-2 transition" href="/">
+            <Home className="w-6 h-6 text-blue-500" />
+          </Link>
+        </InlineTooltip>
+
         <ReleaseNotesDialog />
+
         <div className="dropdown dropdown-end">
           <div className="btn btn-ghost btn-circle avatar" role="button" tabIndex={0}>
             <div className="w-8 rounded-full bg-primary text-primary-content !flex items-center justify-center text-sm font-medium">

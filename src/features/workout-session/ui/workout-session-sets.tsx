@@ -17,10 +17,12 @@ export function WorkoutSessionSets({
   showCongrats,
   onCongrats,
   sessionId,
+  isWorkoutActive,
 }: {
   showCongrats: boolean;
   onCongrats: () => void;
   sessionId: string;
+  isWorkoutActive: boolean;
 }) {
   const t = useI18n();
   const {
@@ -148,7 +150,7 @@ export function WorkoutSessionSets({
           );
         })}
       </ol>
-      {!showCongrats && (
+      {!showCongrats && isWorkoutActive && (
         <div className="flex justify-center mt-8">
           <Button className="bg-green-600 hover:bg-green-700 text-white font-bold px-8 py-3 text-lg rounded" onClick={handleFinishSession}>
             Terminer la séance

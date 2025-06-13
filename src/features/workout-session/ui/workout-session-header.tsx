@@ -5,10 +5,11 @@ import { Clock, Play, Pause, RotateCcw, X, Target } from "lucide-react";
 
 import { useI18n } from "locales/client";
 import { cn } from "@/shared/lib/utils";
-import { useWorkoutSession } from "@/features/workout-builder/model/use-workout-session";
 import { Button } from "@/components/ui/button";
 
 import { QuitWorkoutDialog } from "../../workout-builder/ui/quit-workout-dialog";
+
+import { useWorkoutSession } from "@/features/workout-session/model/use-workout-session";
 
 interface WorkoutSessionHeaderProps {
   sessionId: string;
@@ -34,7 +35,7 @@ export function WorkoutSessionHeader({
   const t = useI18n();
   const [showQuitDialog, setShowQuitDialog] = useState(false);
 
-  const { exercisesCompleted, totalExercises } = useWorkoutSession(sessionId);
+  const { exercisesCompleted, totalExercises } = useWorkoutSession();
   console.log("exercisesCompleted:", exercisesCompleted);
 
   const handleQuitClick = () => {

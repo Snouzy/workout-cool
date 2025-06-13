@@ -10,20 +10,19 @@ import { useI18n } from "locales/client";
 import Trophy from "@public/images/trophy.png";
 import { cn } from "@/shared/lib/utils";
 import { ExerciseVideoModal } from "@/features/workout-builder/ui/exercise-video-modal";
-import { useWorkoutSession } from "@/features/workout-builder/model/use-workout-session";
 import { Button } from "@/components/ui/button";
 
 import { WorkoutSessionSet } from "./workout-session-set";
 
+import { useWorkoutSession } from "@/features/workout-session/model/use-workout-session";
+
 export function WorkoutSessionSets({
   showCongrats,
   onCongrats,
-  sessionId,
   isWorkoutActive,
 }: {
   showCongrats: boolean;
   onCongrats: () => void;
-  sessionId: string;
   isWorkoutActive: boolean;
 }) {
   const t = useI18n();
@@ -39,7 +38,7 @@ export function WorkoutSessionSets({
     goToPrevExercise,
     goToExercise,
     completeWorkout,
-  } = useWorkoutSession(sessionId);
+  } = useWorkoutSession();
   const router = useRouter();
   const exerciseDetailsMap = Object.fromEntries(session?.exercises.map((ex) => [ex.id, ex]) || []);
   const [videoModal, setVideoModal] = useState<{ open: boolean; exerciseId?: string }>({ open: false });

@@ -14,7 +14,7 @@ import { Button } from "@/components/ui/button";
 
 import { StepperStepProps } from "../types";
 import { useWorkoutStepper } from "../model/use-workout-stepper";
-import { useWorkoutSession } from "../model/use-workout-session";
+import { useWorkoutSession } from "../../workout-session/model/use-workout-session";
 import { StepperHeader } from "./stepper-header";
 import { MuscleSelection } from "./muscle-selection";
 import { ExerciseListItem } from "./exercise-list-item";
@@ -232,7 +232,7 @@ export function WorkoutStepper({ sessionId: propSessionId }: { sessionId?: strin
     toggleTimer,
     resetTimer,
     quitWorkout,
-  } = useWorkoutSession(sessionId);
+  } = useWorkoutSession();
 
   const canContinue = currentStep === 1 ? canProceedToStep2 : currentStep === 2 ? canProceedToStep3 : exercisesByMuscle.length > 0;
 
@@ -284,12 +284,7 @@ export function WorkoutStepper({ sessionId: propSessionId }: { sessionId?: strin
             sessionId={session.id}
           />
         )}
-        <WorkoutSessionSets
-          isWorkoutActive={isWorkoutActive}
-          onCongrats={() => setShowCongrats(true)}
-          sessionId={session.id}
-          showCongrats={showCongrats}
-        />
+        <WorkoutSessionSets isWorkoutActive={isWorkoutActive} onCongrats={() => setShowCongrats(true)} showCongrats={showCongrats} />
       </div>
     );
   }

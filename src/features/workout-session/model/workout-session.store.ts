@@ -3,7 +3,7 @@ import { create } from "zustand";
 import { workoutSessionLocal } from "@/shared/lib/workout-session/workout-session.local";
 import { WorkoutSession, WorkoutSessionExercise, WorkoutSet } from "@/features/workout-session/types/workout-set";
 
-import { ExerciseWithAttributes } from "../types";
+import { ExerciseWithAttributes } from "../../workout-builder/types";
 
 interface WorkoutSessionProgress {
   exerciseId: string;
@@ -58,7 +58,7 @@ export const useWorkoutSessionStore = create<WorkoutSessionState>((set, get) => 
   totalExercises: 0,
   progressPercent: 0,
 
-  startWorkout: (exercises, equipment, muscles) => {
+  startWorkout: (exercises, _equipment, _muscles) => {
     const sessionExercises: WorkoutSessionExercise[] = exercises.map((ex, idx) => ({
       ...ex,
       order: idx,

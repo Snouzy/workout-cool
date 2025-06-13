@@ -157,6 +157,7 @@ export function WorkoutStepper({ sessionId: propSessionId }: { sessionId?: strin
     isLoadingExercises,
     exercisesByMuscle,
     exercisesError,
+    fetchExercises,
   } = useWorkoutStepper();
 
   // dnd-kit et flatExercises doivent être avant tout return/condition
@@ -212,6 +213,13 @@ export function WorkoutStepper({ sessionId: propSessionId }: { sessionId?: strin
       setFlatExercises(flat);
     }
   }, [exercisesByMuscle]);
+
+  // Fetch exercises quand on arrive à l'étape 3
+  useEffect(() => {
+    if (currentStep === 3) {
+      fetchExercises();
+    }
+  }, [currentStep, selectedEquipment, selectedMuscles]);
 
   const sessionId = propSessionId || workoutSessionLocal.getCurrent() || undefined;
   const {

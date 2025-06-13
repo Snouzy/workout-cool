@@ -8,9 +8,9 @@ import { Button } from "@/components/ui/button";
 
 interface QuitWorkoutDialogProps {
   isOpen: boolean;
-  onClose: () => void;
-  onQuitWithSave: () => void;
-  onQuitWithoutSave: () => void;
+  onClose: VoidFunction;
+  onQuitWithSave: VoidFunction;
+  onQuitWithoutSave: VoidFunction;
   elapsedTime: string;
   exercisesCompleted: number;
   totalExercises: number;

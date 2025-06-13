@@ -12,13 +12,12 @@ import { QuitWorkoutDialog } from "../../workout-builder/ui/quit-workout-dialog"
 interface WorkoutSessionHeaderProps {
   elapsedTime: string;
   isTimerRunning: boolean;
-  onToggleTimer: () => void;
-  onResetTimer: () => void;
-  onQuitWorkout: () => void;
-  onSaveAndQuit?: () => void;
+  onToggleTimer: VoidFunction;
+  onResetTimer: VoidFunction;
+  onQuitWorkout: VoidFunction;
+  onSaveAndQuit?: VoidFunction;
   currentExerciseIndex: number;
   totalExercises: number;
-  exerciseName?: string;
 }
 
 export function WorkoutSessionHeader({
@@ -30,7 +29,6 @@ export function WorkoutSessionHeader({
   onSaveAndQuit,
   currentExerciseIndex,
   totalExercises,
-  exerciseName,
 }: WorkoutSessionHeaderProps) {
   const t = useI18n();
   const [showQuitDialog, setShowQuitDialog] = useState(false);
@@ -94,8 +92,8 @@ export function WorkoutSessionHeader({
                 <div className="flex items-center justify-center gap-2">
                   <Button
                     className={cn(
-                      "w-8 h-8 rounded-full p-0",
-                      isTimerRunning ? "bg-amber-500 hover:bg-amber-600 text-white" : "bg-emerald-500 hover:bg-emerald-600 text-white",
+                      "w-8 h-8 rounded-full p-0 text-white",
+                      isTimerRunning ? "bg-amber-500 hover:bg-amber-600" : "bg-emerald-500 hover:bg-emerald-600",
                     )}
                     onClick={onToggleTimer}
                   >

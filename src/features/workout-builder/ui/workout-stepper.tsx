@@ -200,16 +200,12 @@ export function WorkoutStepper() {
       startWorkout(allExercises, selectedEquipment, selectedMuscles);
     }
   };
-  console.log("isWorkoutActive:", isWorkoutActive);
-
-  // Si un entraînement est actif, afficher l'interface d'entraînement
   if (isWorkoutActive && session) {
     return (
       <div className="w-full max-w-6xl mx-auto">
         <WorkoutSessionHeader
           currentExerciseIndex={session.exercises.findIndex((exercise) => exercise.id === currentExercise?.id)}
           elapsedTime={formatElapsedTime()}
-          exerciseName={currentExercise?.name}
           isTimerRunning={isTimerRunning}
           onQuitWorkout={quitWorkout}
           onResetTimer={resetTimer}

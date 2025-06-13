@@ -6,6 +6,7 @@ import { DndContext, closestCenter, PointerSensor, useSensor, useSensors, DragEn
 
 import { Button } from "@/components/ui/button";
 
+import { useWorkoutStepper } from "../model/use-workout-stepper";
 import { ExerciseListItem } from "./exercise-list-item";
 
 import type { ExerciseWithAttributes } from "../types";
@@ -35,6 +36,7 @@ export const ExercisesSelection = ({
   t,
 }: ExercisesSelectionProps) => {
   const [flatExercises, setFlatExercises] = useState<{ id: string; muscle: string; exercise: ExerciseWithAttributes }[]>([]);
+  const { setExercisesOrder } = useWorkoutStepper();
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
@@ -64,7 +66,9 @@ export const ExercisesSelection = ({
       setFlatExercises((items) => {
         const oldIndex = items.findIndex((item) => item.id === active.id);
         const newIndex = items.findIndex((item) => item.id === over?.id);
-        return arrayMove(items, oldIndex, newIndex);
+        const newOrder = arrayMove(items, oldIndex, newIndex);
+        setExercisesOrder(newOrder.map((item) => item.id));
+        return newOrder;
       });
     }
   };

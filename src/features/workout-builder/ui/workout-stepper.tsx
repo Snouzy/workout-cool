@@ -41,6 +41,7 @@ export function WorkoutStepper() {
     exercisesByMuscle,
     exercisesError,
     fetchExercises,
+    exercisesOrder,
   } = useWorkoutStepper();
 
   useEffect(() => {
@@ -53,7 +54,7 @@ export function WorkoutStepper() {
   useEffect(() => {
     if (exercisesByMuscle.length > 0) {
       const flat = exercisesByMuscle.flatMap((group) =>
-        group.exercises.map((exercise) => ({
+        group.exercises.map((exercise: ExerciseWithAttributes) => ({
           id: exercise.id,
           muscle: group.muscle,
           exercise,
@@ -104,11 +105,17 @@ export function WorkoutStepper() {
     // TODO: Implémenter la logique pour ajouter un exercice
     console.log("Add exercise");
   };
-  const handleStartWorkout = () => {
-    const allExercises = flatExercises.map((item) => item.exercise);
 
-    if (allExercises.length > 0) {
-      startWorkout(allExercises, selectedEquipment, selectedMuscles);
+  const orderedExercises = exercisesOrder.length
+    ? exercisesOrder
+        .map((id) => flatExercises.find((item) => item.id === id))
+        .filter(Boolean)
+        .map((item) => item!.exercise)
+    : flatExercises.map((item) => item.exercise);
+
+  const handleStartWorkout = () => {
+    if (orderedExercises.length > 0) {
+      startWorkout(orderedExercises, selectedEquipment, selectedMuscles);
     }
   };
 

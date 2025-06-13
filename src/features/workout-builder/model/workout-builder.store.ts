@@ -12,6 +12,7 @@ interface WorkoutBuilderState {
   exercisesByMuscle: any[];
   isLoadingExercises: boolean;
   exercisesError: any;
+  exercisesOrder: string[];
 
   // Actions
   setStep: (step: WorkoutBuilderStep) => void;
@@ -22,6 +23,7 @@ interface WorkoutBuilderState {
   toggleMuscle: (muscle: ExerciseAttributeValueEnum) => void;
   clearMuscles: () => void;
   fetchExercises: () => Promise<void>;
+  setExercisesOrder: (order: string[]) => void;
 }
 
 export const useWorkoutBuilderStore = create<WorkoutBuilderState>((set, get) => ({
@@ -31,6 +33,7 @@ export const useWorkoutBuilderStore = create<WorkoutBuilderState>((set, get) => 
   exercisesByMuscle: [],
   isLoadingExercises: false,
   exercisesError: null,
+  exercisesOrder: [],
 
   setStep: (step) => set({ currentStep: step }),
   nextStep: () => set((state) => ({ currentStep: Math.min(state.currentStep + 1, 3) as WorkoutBuilderStep })),
@@ -69,4 +72,6 @@ export const useWorkoutBuilderStore = create<WorkoutBuilderState>((set, get) => 
       set({ exercisesError: error, isLoadingExercises: false });
     }
   },
+
+  setExercisesOrder: (order) => set({ exercisesOrder: order }),
 }));

@@ -18,6 +18,8 @@ export function useWorkoutStepper() {
     toggleMuscle,
     clearMuscles,
     fetchExercises,
+    exercisesOrder,
+    setExercisesOrder,
   } = useWorkoutBuilderStore();
 
   // Validation des étapes
@@ -54,5 +56,9 @@ export function useWorkoutStepper() {
 
     // Fetch
     fetchExercises,
+
+    // Order
+    exercisesOrder,
+    setExercisesOrder,
   };
 }

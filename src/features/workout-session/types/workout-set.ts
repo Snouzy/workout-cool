@@ -5,9 +5,13 @@ export interface WorkoutSet {
   id: string;
   setIndex: number;
   type: WorkoutSetType;
+  types?: WorkoutSetType[]; // Pour supporter plusieurs colonnes
   valueInt?: number; // reps, weight, minutes, etc.
+  valuesInt?: number[]; // Pour supporter plusieurs colonnes
   valueSec?: number; // seconds (if TIME)
+  valuesSec?: number[]; // Pour supporter plusieurs colonnes
   unit?: WorkoutSetUnit;
+  units?: WorkoutSetUnit[]; // Pour supporter plusieurs colonnes
   completed: boolean;
 }
 

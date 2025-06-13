@@ -1,3 +1,5 @@
+import { Plus, Minus } from "lucide-react";
+
 import { WorkoutSet, WorkoutSetType, WorkoutSetUnit } from "@/features/workout-session/types/workout-set";
 import { Button } from "@/components/ui/button";
 
@@ -13,100 +15,123 @@ const SET_TYPES: WorkoutSetType[] = ["REPS", "WEIGHT", "TIME", "BODYWEIGHT", "NA
 const UNITS: WorkoutSetUnit[] = ["kg", "lbs"];
 
 export function WorkoutSetRow({ set, setIndex, onChange, onFinish, onRemove }: WorkoutSetRowProps) {
+  // On utilise un tableau de types pour gérer plusieurs colonnes
+  const types = set.types || [set.type];
+  const maxColumns = 4;
+
   // Handlers pour chaque champ
-  const handleTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    onChange(setIndex, { type: e.target.value as WorkoutSetType });
-  };
-  const handleValueIntChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onChange(setIndex, { valueInt: e.target.value ? parseInt(e.target.value, 10) : undefined });
-  };
-  const handleValueSecChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onChange(setIndex, { valueSec: e.target.value ? parseInt(e.target.value, 10) : undefined });
-  };
-  const handleUnitChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    onChange(setIndex, { unit: e.target.value as WorkoutSetUnit });
+  const handleTypeChange = (columnIndex: number) => (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const newTypes = [...types];
+    newTypes[columnIndex] = e.target.value as WorkoutSetType;
+    onChange(setIndex, { types: newTypes });
   };
 
-  return (
-    <div className="flex items-center gap-4 w-full py-2">
-      {/* Label SET X */}
-      <div className="w-16 text-right font-bold text-slate-700">SET {setIndex + 1}</div>
+  const handleValueIntChange = (columnIndex: number) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValuesInt = Array.isArray(set.valuesInt) ? [...set.valuesInt] : [];
+    newValuesInt[columnIndex] = e.target.value ? parseInt(e.target.value, 10) : undefined;
+    onChange(setIndex, { valuesInt: newValuesInt });
+  };
 
-      {/* Type Selector */}
-      <div className="flex flex-col items-center w-32">
-        <select
-          className="border border-black rounded font-bold px-2 py-1 text-lg w-full mb-1 bg-white"
-          disabled={set.completed}
-          onChange={handleTypeChange}
-          value={set.type}
-        >
-          <option value="TIME">TEMPS</option>
-          <option value="WEIGHT">POIDS</option>
-          <option value="REPS">REPS</option>
-          <option value="BODYWEIGHT">BODYWEIGHT</option>
-        </select>
+  const handleValueSecChange = (columnIndex: number) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValuesSec = Array.isArray(set.valuesSec) ? [...set.valuesSec] : [];
+    newValuesSec[columnIndex] = e.target.value ? parseInt(e.target.value, 10) : undefined;
+    onChange(setIndex, { valuesSec: newValuesSec });
+  };
 
-        {/* Input fields based on type */}
-        {set.type === "TIME" && (
+  const handleUnitChange = (columnIndex: number) => (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const newUnits = Array.isArray(set.units) ? [...set.units] : [];
+    newUnits[columnIndex] = e.target.value as WorkoutSetUnit;
+    onChange(setIndex, { units: newUnits });
+  };
+
+  const addColumn = () => {
+    if (types.length < maxColumns) {
+      const newTypes = [...types, "REPS"];
+      onChange(setIndex, { types: newTypes });
+    }
+  };
+
+  const removeColumn = (columnIndex: number) => {
+    const newTypes = types.filter((_, idx) => idx !== columnIndex);
+    const newValuesInt = Array.isArray(set.valuesInt) ? set.valuesInt.filter((_, idx) => idx !== columnIndex) : [];
+    const newValuesSec = Array.isArray(set.valuesSec) ? set.valuesSec.filter((_, idx) => idx !== columnIndex) : [];
+    const newUnits = Array.isArray(set.units) ? set.units.filter((_, idx) => idx !== columnIndex) : [];
+
+    onChange(setIndex, {
+      types: newTypes,
+      valuesInt: newValuesInt,
+      valuesSec: newValuesSec,
+      units: newUnits,
+    });
+  };
+
+  const renderInputForType = (type: WorkoutSetType, columnIndex: number) => {
+    const valuesInt = Array.isArray(set.valuesInt) ? set.valuesInt : [set.valueInt];
+    const valuesSec = Array.isArray(set.valuesSec) ? set.valuesSec : [set.valueSec];
+    const units = Array.isArray(set.units) ? set.units : [set.unit];
+
+    switch (type) {
+      case "TIME":
+        return (
           <div className="flex gap-1 w-full">
             <input
               className="border border-black rounded px-1 py-1 w-1/2 text-lg text-center font-bold"
               disabled={set.completed}
               min={0}
-              onChange={handleValueIntChange}
+              onChange={handleValueIntChange(columnIndex)}
               placeholder="min"
               type="number"
-              value={set.valueInt ?? ""}
+              value={valuesInt[columnIndex] ?? ""}
             />
             <input
               className="border border-black rounded px-1 py-1 w-1/2 text-lg text-center font-bold"
               disabled={set.completed}
               max={59}
               min={0}
-              onChange={handleValueSecChange}
+              onChange={handleValueSecChange(columnIndex)}
               placeholder="sec"
               type="number"
-              value={set.valueSec ?? ""}
+              value={valuesSec[columnIndex] ?? ""}
             />
           </div>
-        )}
-
-        {set.type === "WEIGHT" && (
+        );
+      case "WEIGHT":
+        return (
           <div className="flex gap-1 w-full items-center">
             <input
               className="border border-black rounded px-1 py-1 w-1/2 text-lg text-center font-bold"
               disabled={set.completed}
               min={0}
-              onChange={handleValueIntChange}
+              onChange={handleValueIntChange(columnIndex)}
               placeholder=""
               type="number"
-              value={set.valueInt ?? ""}
+              value={valuesInt[columnIndex] ?? ""}
             />
             <select
               className="border border-black rounded px-1 py-1 w-1/2 text-lg font-bold bg-white"
               disabled={set.completed}
-              onChange={handleUnitChange}
-              value={set.unit ?? "kg"}
+              onChange={handleUnitChange(columnIndex)}
+              value={units[columnIndex] ?? "kg"}
             >
               <option value="kg">kg</option>
               <option value="lbs">lbs</option>
             </select>
           </div>
-        )}
-
-        {set.type === "REPS" && (
+        );
+      case "REPS":
+        return (
           <input
             className="border border-black rounded px-1 py-1 w-full text-lg text-center font-bold"
             disabled={set.completed}
             min={0}
-            onChange={handleValueIntChange}
+            onChange={handleValueIntChange(columnIndex)}
             placeholder=""
             type="number"
-            value={set.valueInt ?? ""}
+            value={valuesInt[columnIndex] ?? ""}
           />
-        )}
-
-        {set.type === "BODYWEIGHT" && (
+        );
+      case "BODYWEIGHT":
+        return (
           <input
             className="border border-black rounded px-1 py-1 w-full text-lg text-center font-bold"
             disabled={set.completed}
@@ -114,6 +139,53 @@ export function WorkoutSetRow({ set, setIndex, onChange, onFinish, onRemove }: W
             readOnly
             value="✔"
           />
+        );
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <div className="flex items-center gap-4 w-full py-2">
+      {/* Label SET X */}
+      <div className="w-16 text-right font-bold text-slate-700">SET {setIndex + 1}</div>
+
+      {/* Colonnes de types */}
+      <div className="flex gap-4 flex-1">
+        {types.map((type, columnIndex) => (
+          <div className="flex flex-col items-center w-32 relative" key={columnIndex}>
+            <div className="flex items-center w-full mb-1">
+              <select
+                className="border border-black rounded font-bold px-2 py-1 text-lg w-full bg-white"
+                disabled={set.completed}
+                onChange={handleTypeChange(columnIndex)}
+                value={type}
+              >
+                <option value="TIME">TEMPS</option>
+                <option value="WEIGHT">POIDS</option>
+                <option value="REPS">REPS</option>
+                <option value="BODYWEIGHT">BODYWEIGHT</option>
+              </select>
+              {types.length > 1 && (
+                <Button
+                  className="ml-1 p-1 h-auto bg-red-500 hover:bg-red-600"
+                  onClick={() => removeColumn(columnIndex)}
+                  size="sm"
+                  variant="destructive"
+                >
+                  <Minus className="h-4 w-4" />
+                </Button>
+              )}
+            </div>
+            {renderInputForType(type, columnIndex)}
+          </div>
+        ))}
+
+        {/* Bouton pour ajouter une colonne */}
+        {types.length < maxColumns && (
+          <Button className="self-start mt-1 p-2 h-auto bg-green-500 hover:bg-green-600" onClick={addColumn} size="small" variant="default">
+            <Plus className="h-4 w-4" />
+          </Button>
         )}
       </div>
 

@@ -291,9 +291,13 @@ model WorkoutSet {
   workoutSessionExerciseId String
   setIndex                 Int
   type                     WorkoutSetType
+  types                    WorkoutSetType[]       @default([])
   valueInt                 Int? // reps, poids, minutes, etc.
+  valuesInt                Int[]                  @default([])
   valueSec                 Int? // secondes si TIME
+  valuesSec                Int[]                  @default([])
   unit                     WorkoutSetUnit?
+  units                    WorkoutSetUnit[]       @default([])
   completed                Boolean                @default(false)
   workoutSessionExercise   WorkoutSessionExercise @relation(fields: [workoutSessionExerciseId], references: [id])
 }

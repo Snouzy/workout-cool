@@ -72,6 +72,10 @@ export function useWorkoutSession() {
           id: `${ex.id}-set-1`,
           setIndex: 0,
           type: "REPS",
+          types: ["REPS"],
+          valuesInt: [],
+          valuesSec: [],
+          units: [],
           completed: false,
         },
       ],
@@ -124,6 +128,10 @@ export function useWorkoutSession() {
       id: `${currentExercise.id}-set-${sets.length + 1}`,
       setIndex: sets.length,
       type: "REPS",
+      types: ["REPS"],
+      valuesInt: [],
+      valuesSec: [],
+      units: [],
       completed: false,
     };
     const updatedExercises = session.exercises.map((ex, idx) => (idx === exIdx ? { ...ex, sets: [...ex.sets, newSet] } : ex));

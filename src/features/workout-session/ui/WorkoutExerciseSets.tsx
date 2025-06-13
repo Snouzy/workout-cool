@@ -61,9 +61,9 @@ export function WorkoutExerciseSets() {
             </div>
             {/* Si exercice courant, afficher le détail */}
             {idx === currentExerciseIndex && (
-              <div className="bg-white dark:bg-slate-900 rounded-xl mt-2 mb-2">
+              <div className="bg-white dark:bg-slate-900 rounded-xl my-10">
                 {/* Liste des sets */}
-                <div className="space-y-4 mb-8">
+                <div className="space-y-10 mb-8">
                   {ex.sets.map((set, setIdx) => (
                     <WorkoutSetRow
                       key={set.id}

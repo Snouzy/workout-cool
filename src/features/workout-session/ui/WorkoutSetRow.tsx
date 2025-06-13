@@ -146,9 +146,11 @@ export function WorkoutSetRow({ set, setIndex, onChange, onFinish, onRemove }: W
   };
 
   return (
-    <div className="w-full py-2 flex flex-col gap-2">
+    <div className="w-full py-4 flex flex-col gap-2 bg-slate-50 border border-slate-200 rounded-xl shadow-sm mb-3 relative px-2 sm:px-4">
       {/* Label SET X */}
-      <div className="font-bold text-slate-700 min-w-[3rem] text-left mb-1">SET {setIndex + 1}</div>
+      <div className="absolute -top-3 left-4 bg-blue-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow">
+        SET {setIndex + 1}
+      </div>
 
       {/* Colonnes de types, stack vertical on mobile, horizontal on md+ */}
       <div className="flex flex-col md:flex-row gap-2 w-full">

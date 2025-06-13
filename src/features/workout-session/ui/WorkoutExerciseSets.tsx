@@ -78,10 +78,10 @@ export function WorkoutExerciseSets() {
                 {/* Actions bas de page */}
                 <div className="flex flex-col md:flex-row gap-4">
                   <Button className="bg-blue-500 text-white flex-1 text-lg font-bold py-3" onClick={addSet}>
-                    {t("workout_builder.session.add_set") || "Add a set"}
+                    {t("workout_builder.session.add_set")}
                   </Button>
                   <Button className="bg-blue-700 text-white flex-1 text-lg font-bold py-3" onClick={goToNextExercise}>
-                    {t("workout_builder.session.next_exercise") || "Next Exercise"}
+                    {t("workout_builder.session.next_exercise")}
                   </Button>
                 </div>
               </div>

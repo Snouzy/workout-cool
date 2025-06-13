@@ -170,7 +170,7 @@ export function WorkoutSetRow({ set, setIndex, onChange, onFinish, onRemove }: W
                 <Button
                   className="ml-1 p-1 h-auto bg-red-500 hover:bg-red-600"
                   onClick={() => removeColumn(columnIndex)}
-                  size="sm"
+                  size="small"
                   variant="destructive"
                 >
                   <Minus className="h-4 w-4" />

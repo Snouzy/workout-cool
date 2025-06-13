@@ -32,10 +32,9 @@ export function WorkoutSessionList({ onSelect }: { onSelect: (id: string) => voi
     // Deep copy des exercices et sets, reset des champs nécessaires
     const newExercises = sessionToCopy.exercises.map((ex, idx) => ({
       ...ex,
-      id: `${ex.exerciseId}-${Date.now()}-${idx}`,
       sets: ex.sets.map((set, setIdx) => ({
         ...set,
-        id: `${ex.exerciseId}-set-${setIdx + 1}-${Date.now()}`,
+        id: `${ex.id}-set-${setIdx + 1}-${Date.now()}`,
         completed: false,
       })),
     }));

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Clock, Play, Pause, RotateCcw, X, Dumbbell, Target } from "lucide-react";
+import { Clock, Play, Pause, RotateCcw, X, Target } from "lucide-react";
 
 import { useI18n } from "locales/client";
 import { cn } from "@/shared/lib/utils";
@@ -151,31 +151,6 @@ export function WorkoutSessionHeader({
             </div>
 
             {/* Card 3: Exercice actuel */}
-            <div className="bg-white dark:bg-gradient-to-br dark:from-slate-800/80 dark:to-slate-700/80 rounded-lg p-3 border border-slate-100 dark:border-slate-600/30">
-              <div className="flex items-center gap-2 mb-2">
-                <div className="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center">
-                  <Dumbbell className="h-4 w-4 text-emerald-400" />
-                </div>
-                <div>
-                  <h3 className="text-slate-700 dark:text-white font-semibold text-base">
-                    {t("workout_builder.session.current_exercise")}
-                  </h3>
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                {exerciseName ? (
-                  <>
-                    <h4 className="text-slate-900 dark:text-white font-medium text-base leading-tight line-clamp-2">{exerciseName}</h4>
-                  </>
-                ) : (
-                  <div className="text-slate-400 text-center py-4">
-                    <Target className="h-6 w-6 mx-auto mb-2 opacity-50" />
-                    <p className="text-xs">{t("workout_builder.session.no_exercise_selected")}</p>
-                  </div>
-                )}
-              </div>
-            </div>
           </div>
         </div>
       </div>

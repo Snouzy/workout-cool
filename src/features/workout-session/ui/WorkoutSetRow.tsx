@@ -67,6 +67,10 @@ export function WorkoutSetRow({ set, setIndex, onChange, onFinish, onRemove }: W
     });
   };
 
+  const handleEdit = () => {
+    onChange(setIndex, { completed: false });
+  };
+
   const renderInputForType = (type: WorkoutSetType, columnIndex: number) => {
     const valuesInt = Array.isArray(set.valuesInt) ? set.valuesInt : [set.valueInt];
     const valuesSec = Array.isArray(set.valuesSec) ? set.valuesSec : [set.valueSec];
@@ -208,14 +212,25 @@ export function WorkoutSetRow({ set, setIndex, onChange, onFinish, onRemove }: W
         </div>
       )}
 
-      {/* Finish button, full width on mobile */}
-      <Button
-        className="bg-blue-500 hover:bg-blue-600 text-white font-bold px-4 py-2 text-sm rounded w-full md:w-auto mt-2"
-        disabled={set.completed}
-        onClick={onFinish}
-      >
-        Finish
-      </Button>
+      {/* Finish & Edit buttons, full width on mobile */}
+      <div className="flex gap-2 w-full md:w-auto mt-2">
+        <Button
+          className="bg-blue-500 hover:bg-blue-600 text-white font-bold px-4 py-2 text-sm rounded flex-1"
+          disabled={set.completed}
+          onClick={onFinish}
+        >
+          Finish
+        </Button>
+        {set.completed && (
+          <Button
+            className="bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold px-4 py-2 text-sm rounded flex-1 border border-gray-300"
+            onClick={handleEdit}
+            variant="outline"
+          >
+            Éditer
+          </Button>
+        )}
+      </div>
     </div>
   );
 }

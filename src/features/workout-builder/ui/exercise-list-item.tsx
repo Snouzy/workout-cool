@@ -104,7 +104,7 @@ export function ExerciseListItem({ exercise, muscle, onShuffle, onPick, onDelete
         <div className="flex items-center gap-2 shrink-0">
           {/* Bouton shuffle */}
           <Button onClick={() => onShuffle(exercise.id, muscle)} size="small" variant="outline">
-            <Shuffle />
+            <Shuffle className="h-3.5 w-3.5" />
             <span className="hidden sm:inline">{t("workout_builder.exercise.shuffle")}</span>
           </Button>
 
@@ -116,7 +116,7 @@ export function ExerciseListItem({ exercise, muscle, onShuffle, onPick, onDelete
             onClick={() => onPick(exercise.id)}
             size="small"
           >
-            <Star />
+            <Star className="h-3.5 w-3.5" />
             <span className="hidden sm:inline">{t("workout_builder.exercise.pick")}</span>
           </Button>
 

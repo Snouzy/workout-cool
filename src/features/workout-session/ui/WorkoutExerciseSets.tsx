@@ -6,24 +6,26 @@ import { WorkoutSetRow } from "./WorkoutSetRow";
 
 export function WorkoutExerciseSets() {
   const t = useI18n();
-  const { currentExercise, currentExerciseIndex, session, addSet, updateSet, removeSet, finishSet, goToNextExercise, goToPrevExercise } =
-    useWorkoutSession();
+  const {
+    currentExercise,
+    currentExerciseIndex,
+    session,
+    addSet,
+    updateSet,
+    removeSet,
+    finishSet,
+    goToNextExercise,
+    goToPrevExercise,
+    goToExercise,
+  } = useWorkoutSession();
 
   if (!session) {
     return <div className="text-center text-slate-500 py-12">{t("workout_builder.session.no_exercise_selected")}</div>;
   }
 
   const handleExerciseClick = (targetIndex: number) => {
-    if (targetIndex < currentExerciseIndex) {
-      // Si on va en arrière
-      for (let i = currentExerciseIndex; i > targetIndex; i--) {
-        goToPrevExercise();
-      }
-    } else {
-      // Si on va en avant
-      for (let i = currentExerciseIndex; i < targetIndex; i++) {
-        goToNextExercise();
-      }
+    if (targetIndex !== currentExerciseIndex) {
+      goToExercise(targetIndex);
     }
   };
 
@@ -35,7 +37,7 @@ export function WorkoutExerciseSets() {
           <li
             className={`mb-8 ml-4 ${idx !== currentExerciseIndex ? "cursor-pointer hover:opacity-80" : ""}`}
             key={ex.id}
-            onClick={() => idx !== currentExerciseIndex && handleExerciseClick(idx)}
+            onClick={() => handleExerciseClick(idx)}
           >
             {/* Cercle étape */}
             <span

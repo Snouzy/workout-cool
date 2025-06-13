@@ -241,6 +241,18 @@ export function useWorkoutSession() {
     return `${minutes.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
   }, []);
 
+  const goToExercise = useCallback(
+    (targetIndex: number) => {
+      if (!session) return;
+      if (targetIndex >= 0 && targetIndex < session.exercises.length) {
+        const updatedSession = { ...session, currentExerciseIndex: targetIndex };
+        setSession(updatedSession);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedSession));
+      }
+    },
+    [session],
+  );
+
   return {
     // État
     session,
@@ -264,6 +276,7 @@ export function useWorkoutSession() {
     finishSet,
     goToNextExercise,
     goToPrevExercise,
+    goToExercise,
 
     // Utils
     formatElapsedTime: () => formatElapsedTime(elapsedTime),

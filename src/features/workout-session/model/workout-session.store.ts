@@ -44,6 +44,7 @@ interface WorkoutSessionState {
   goToPrevExercise: () => void;
   goToExercise: (targetIndex: number) => void;
   formatElapsedTime: () => string;
+  loadSessionFromLocal: () => void;
 }
 
 export const useWorkoutSessionStore = create<WorkoutSessionState>((set, get) => ({
@@ -258,5 +259,23 @@ export const useWorkoutSessionStore = create<WorkoutSessionState>((set, get) => 
       return `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
     }
     return `${minutes.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
+  },
+
+  loadSessionFromLocal: () => {
+    const currentId = workoutSessionLocal.getCurrent();
+    console.log("currentId:", currentId);
+    if (currentId) {
+      const session = workoutSessionLocal.getById(currentId);
+      if (session && session.status === "active") {
+        set({
+          session,
+          isWorkoutActive: true,
+          currentExerciseIndex: session.currentExerciseIndex ?? 0,
+          currentExercise: session.exercises[session.currentExerciseIndex ?? 0],
+          elapsedTime: 0,
+          isTimerRunning: false,
+        });
+      }
+    }
   },
 }));

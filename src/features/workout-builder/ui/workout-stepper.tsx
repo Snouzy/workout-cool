@@ -146,6 +146,8 @@ function NavigationFooter({
 }
 
 export function WorkoutStepper({ sessionId: propSessionId }: { sessionId?: string } = {}) {
+  const { loadSessionFromLocal } = useWorkoutSession();
+
   const t = useI18n();
   const router = useRouter();
   const {
@@ -164,6 +166,10 @@ export function WorkoutStepper({ sessionId: propSessionId }: { sessionId?: strin
     exercisesError,
     fetchExercises,
   } = useWorkoutStepper();
+
+  useEffect(() => {
+    loadSessionFromLocal();
+  }, []);
 
   // dnd-kit et flatExercises doivent être avant tout return/condition
   const [flatExercises, setFlatExercises] = useState<{ id: string; muscle: string; exercise: ExerciseWithAttributes }[]>([]);

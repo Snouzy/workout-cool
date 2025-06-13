@@ -7,7 +7,7 @@ import { useI18n } from "locales/client";
 import { cn } from "@/shared/lib/utils";
 import { Button } from "@/components/ui/button";
 
-import { QuitWorkoutDialog } from "./quit-workout-dialog";
+import { QuitWorkoutDialog } from "../../workout-builder/ui/quit-workout-dialog";
 
 interface WorkoutSessionHeaderProps {
   elapsedTime: string;

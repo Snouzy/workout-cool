@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const workoutSetSchema = z.object({
+export const workoutSessionSetSchema = z.object({
   id: z.string(),
   setIndex: z.number().int().min(0),
   type: z.enum(["TIME", "WEIGHT", "REPS", "BODYWEIGHT", "NA"]),
@@ -14,4 +14,4 @@ export const workoutSetSchema = z.object({
   completed: z.boolean(),
 });
 
-export type WorkoutSetInput = z.infer<typeof workoutSetSchema>;
+export type WorkoutSetInput = z.infer<typeof workoutSessionSetSchema>;

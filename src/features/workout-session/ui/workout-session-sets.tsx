@@ -5,9 +5,9 @@ import { cn } from "@/shared/lib/utils";
 import { useWorkoutSession } from "@/features/workout-builder/model/use-workout-session";
 import { Button } from "@/components/ui/button";
 
-import { WorkoutSetRow } from "./WorkoutSetRow";
+import { WorkoutSessionSet } from "./workout-session-set";
 
-export function WorkoutExerciseSets() {
+export function WorkoutSessionSets() {
   const t = useI18n();
   const {
     currentExercise,
@@ -91,7 +91,7 @@ export function WorkoutExerciseSets() {
                   {/* Liste des sets */}
                   <div className="space-y-10 mb-8">
                     {ex.sets.map((set, setIdx) => (
-                      <WorkoutSetRow
+                      <WorkoutSessionSet
                         key={set.id}
                         onChange={(sIdx: number, data: Partial<typeof set>) => updateSet(idx, sIdx, data)}
                         onFinish={() => finishSet(idx, setIdx)}

@@ -15,7 +15,7 @@ interface WorkoutSetRowProps {
 const SET_TYPES: WorkoutSetType[] = ["REPS", "WEIGHT", "TIME", "BODYWEIGHT", "NA"];
 const UNITS: WorkoutSetUnit[] = ["kg", "lbs"];
 
-export function WorkoutSetRow({ set, setIndex, onChange, onFinish, onRemove }: WorkoutSetRowProps) {
+export function WorkoutSessionSet({ set, setIndex, onChange, onFinish, onRemove }: WorkoutSetRowProps) {
   const t = useI18n();
   // On utilise un tableau de types pour gérer plusieurs colonnes
   const types = set.types || [];

@@ -93,14 +93,6 @@ function StepperStep({ description, isActive, isCompleted, stepNumber, title }: 
   );
 }
 
-function StepperConnector({ isCompleted }: { isCompleted: boolean }) {
-  return (
-    <div className="flex-1 flex items-center px-4">
-      <div className={cn("w-full h-1 transition-colors duration-300", isCompleted ? "bg-green-500" : "bg-gray-300 dark:bg-gray-600")} />
-    </div>
-  );
-}
-
 export function StepperHeader({ steps }: StepperHeaderProps) {
   return (
     <div className="w-full mb-8">

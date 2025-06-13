@@ -3,8 +3,8 @@
 import { ArrowLeft, ArrowRight, CheckCircle, Zap, Plus } from "lucide-react";
 
 import { useI18n } from "locales/client";
-import { WorkoutExerciseSets } from "@/features/workout-session/ui/WorkoutExerciseSets";
-import { WorkoutSessionHeader } from "@/features/workout-builder/ui/workout-session-header";
+import { WorkoutSessionSets } from "@/features/workout-session/ui/workout-session-sets";
+import { WorkoutSessionHeader } from "@/features/workout-session/ui/workout-session-header";
 import { Button } from "@/components/ui/button";
 
 import { StepperStepProps } from "../types";
@@ -222,7 +222,7 @@ export function WorkoutStepper() {
           totalExercises={session.exercises.length}
         />
 
-        <WorkoutExerciseSets />
+        <WorkoutSessionSets />
       </div>
     );
   }
@@ -340,13 +340,10 @@ export function WorkoutStepper() {
 
   return (
     <div className="w-full max-w-6xl mx-auto">
-      {/* En-tête du stepper */}
       <StepperHeader steps={steps} />
 
-      {/* Contenu de l'étape actuelle */}
       <div className="min-h-[400px] mb-8">{renderStepContent()}</div>
 
-      {/* Navigation footer gamifiée */}
       <NavigationFooter
         canContinue={canContinue}
         currentStep={currentStep}

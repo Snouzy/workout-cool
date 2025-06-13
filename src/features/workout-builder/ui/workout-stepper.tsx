@@ -165,7 +165,32 @@ export function WorkoutStepper({ sessionId: propSessionId }: { sessionId?: strin
       setFlatExercises((items) => {
         const oldIndex = items.findIndex((item) => item.id === active.id);
         const newIndex = items.findIndex((item) => item.id === over?.id);
-        return arrayMove(items, oldIndex, newIndex);
+        const newItems = arrayMove(items, oldIndex, newIndex);
+
+        // Persistance dans le localStorage
+        const sessionIdToUpdate = sessionId || workoutSessionLocal.getCurrent();
+        if (sessionIdToUpdate) {
+          const session = workoutSessionLocal.getById(sessionIdToUpdate);
+          if (session) {
+            // On met à jour l'ordre dans le tableau exercises
+            const newExercises = newItems.map((item, idx) => {
+              // On cherche l'exercice d'origine pour garder les sets, etc.
+              const original = session.exercises.find((ex) => ex.id === item.id);
+              return original
+                ? { ...original, order: idx }
+                : {
+                    id: item.id,
+                    exerciseId: item.id,
+                    order: idx,
+                    sets: [],
+                    name: item.exercise.name,
+                    nameEn: item.exercise.nameEn ?? undefined,
+                  };
+            });
+            workoutSessionLocal.update(sessionIdToUpdate, { exercises: newExercises });
+          }
+        }
+        return newItems;
       });
     }
   };
@@ -218,7 +243,7 @@ export function WorkoutStepper({ sessionId: propSessionId }: { sessionId?: strin
     console.log("Add exercise");
   };
   const handleStartWorkout = () => {
-    const allExercises = exercisesByMuscle.flatMap((group) => group.exercises);
+    const allExercises = flatExercises.map((item) => item.exercise);
 
     if (allExercises.length > 0) {
       startWorkout(allExercises, selectedEquipment, selectedMuscles);

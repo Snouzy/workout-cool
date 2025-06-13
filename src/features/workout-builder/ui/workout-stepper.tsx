@@ -273,7 +273,7 @@ export function WorkoutStepper({ sessionId: propSessionId }: { sessionId?: strin
               quitWorkout();
             }}
             onToggleTimer={toggleTimer}
-            totalExercises={session.exercises.length}
+            sessionId={session.id}
           />
         )}
         <WorkoutSessionSets

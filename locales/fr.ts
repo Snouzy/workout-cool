@@ -175,7 +175,6 @@ export default {
       active: "Actif",
       no_exercise_selected: "Aucun exercice sélectionné",
       quit_workout_title: "Quitter l'Entraînement ?",
-      time_spent: "Temps Passé",
       progress: "Progression",
       quit_warning: "Êtes-vous sûr de vouloir quitter ? Vous pouvez sauvegarder votre progression ou la perdre complètement.",
       save_and_quit: "Sauvegarder & Quitter",

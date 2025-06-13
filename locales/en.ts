@@ -174,7 +174,6 @@ export default {
       active: "Active",
       no_exercise_selected: "No exercise selected",
       quit_workout_title: "Quit Workout?",
-      time_spent: "Time Spent",
       progress: "Progress",
       quit_warning: "Are you sure you want to quit? You can save your progress or lose it completely.",
       save_and_quit: "Save & Quit",

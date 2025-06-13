@@ -96,6 +96,22 @@ export function useWorkoutSession(sessionId?: string) {
   // Guard pour éviter les erreurs si sets est absent
   const safeCurrentExercise = currentExercise && Array.isArray(currentExercise.sets) ? currentExercise : { ...currentExercise, sets: [] };
 
+  // Progression de la session
+  const totalExercises = session?.exercises.length ?? 0;
+  const finishedExercises = session
+    ? session.exercises.filter((ex) => ex.sets.length > 0 && ex.sets.every((set) => set.completed)).length
+    : 0;
+
+  const isCurrentExerciseFinished =
+    session &&
+    session.exercises[currentExerciseIndex] &&
+    session.exercises[currentExerciseIndex].sets.length > 0 &&
+    session.exercises[currentExerciseIndex].sets.every((set) => set.completed);
+
+  const exercisesCompleted = finishedExercises + (!isCurrentExerciseFinished ? 1 : 0);
+
+  const progressPercent = totalExercises > 0 ? Math.round((exercisesCompleted / totalExercises) * 100) : 0;
+
   const goToNextExercise = useCallback(() => {
     if (!session) return;
     const idx = currentExerciseIndex;
@@ -265,6 +281,11 @@ export function useWorkoutSession(sessionId?: string) {
     isWorkoutActive: !!session,
     currentExercise: safeCurrentExercise,
     currentExerciseIndex,
+
+    // Progression
+    exercisesCompleted,
+    totalExercises,
+    progressPercent,
 
     // Actions
     startWorkout,

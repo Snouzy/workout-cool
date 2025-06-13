@@ -43,10 +43,6 @@ export function QuitWorkoutDialog({
         <div className="bg-slate-800/50 rounded-xl p-4 mb-6">
           <div className="space-y-3">
             <div className="flex justify-between items-center">
-              <span className="text-slate-300">{t("workout_builder.session.time_spent")}</span>
-              <span className="font-mono font-bold text-white">{elapsedTime}</span>
-            </div>
-            <div className="flex justify-between items-center">
               <span className="text-slate-300">{t("workout_builder.session.progress")}</span>
               <span className="font-bold text-white">
                 {exercisesCompleted} / {totalExercises}

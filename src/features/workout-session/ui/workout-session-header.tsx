@@ -5,11 +5,13 @@ import { Clock, Play, Pause, RotateCcw, X, Target } from "lucide-react";
 
 import { useI18n } from "locales/client";
 import { cn } from "@/shared/lib/utils";
+import { useWorkoutSession } from "@/features/workout-builder/model/use-workout-session";
 import { Button } from "@/components/ui/button";
 
 import { QuitWorkoutDialog } from "../../workout-builder/ui/quit-workout-dialog";
 
 interface WorkoutSessionHeaderProps {
+  sessionId: string;
   elapsedTime: string;
   isTimerRunning: boolean;
   onToggleTimer: VoidFunction;
@@ -17,10 +19,10 @@ interface WorkoutSessionHeaderProps {
   onQuitWorkout: VoidFunction;
   onSaveAndQuit?: VoidFunction;
   currentExerciseIndex: number;
-  totalExercises: number;
 }
 
 export function WorkoutSessionHeader({
+  sessionId,
   elapsedTime,
   isTimerRunning,
   onToggleTimer,
@@ -28,10 +30,12 @@ export function WorkoutSessionHeader({
   onQuitWorkout,
   onSaveAndQuit,
   currentExerciseIndex,
-  totalExercises,
 }: WorkoutSessionHeaderProps) {
   const t = useI18n();
   const [showQuitDialog, setShowQuitDialog] = useState(false);
+
+  const { exercisesCompleted, totalExercises } = useWorkoutSession(sessionId);
+  console.log("exercisesCompleted:", exercisesCompleted);
 
   const handleQuitClick = () => {
     setShowQuitDialog(true);
@@ -156,7 +160,7 @@ export function WorkoutSessionHeader({
       {/* Dialog de confirmation pour quitter */}
       <QuitWorkoutDialog
         elapsedTime={elapsedTime}
-        exercisesCompleted={currentExerciseIndex}
+        exercisesCompleted={exercisesCompleted}
         isOpen={showQuitDialog}
         onClose={() => setShowQuitDialog(false)}
         onQuitWithoutSave={handleQuitWithoutSave}

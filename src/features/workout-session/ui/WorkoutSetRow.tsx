@@ -1,5 +1,6 @@
 import { Plus, Minus } from "lucide-react";
 
+import { useI18n } from "locales/client";
 import { WorkoutSet, WorkoutSetType, WorkoutSetUnit } from "@/features/workout-session/types/workout-set";
 import { Button } from "@/components/ui/button";
 
@@ -15,6 +16,7 @@ const SET_TYPES: WorkoutSetType[] = ["REPS", "WEIGHT", "TIME", "BODYWEIGHT", "NA
 const UNITS: WorkoutSetUnit[] = ["kg", "lbs"];
 
 export function WorkoutSetRow({ set, setIndex, onChange, onFinish, onRemove }: WorkoutSetRowProps) {
+  const t = useI18n();
   // On utilise un tableau de types pour gérer plusieurs colonnes
   const types = set.types || [set.type];
   const maxColumns = 4;
@@ -188,14 +190,12 @@ export function WorkoutSetRow({ set, setIndex, onChange, onFinish, onRemove }: W
       {types.length < maxColumns && (
         <div className="flex w-full justify-start mt-1">
           <Button
-            aria-label="Ajouter une colonne"
-            className="p-1 h-auto bg-green-500 hover:bg-green-600 flex-shrink-0 flex items-center gap-1 text-sm font-semibold"
+            className="bg-green-500 hover:bg-green-600 text-white font-bold px-4 py-2 text-sm rounded w-full md:w-auto mt-2"
+            disabled={set.completed}
             onClick={addColumn}
-            size="small"
-            variant="default"
           >
             <Plus className="h-4 w-4" />
-            Ajouter une colonne
+            {t("workout_builder.session.add_column")}
           </Button>
         </div>
       )}

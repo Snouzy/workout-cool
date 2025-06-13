@@ -18,7 +18,7 @@ const UNITS: WorkoutSetUnit[] = ["kg", "lbs"];
 export function WorkoutSetRow({ set, setIndex, onChange, onFinish, onRemove }: WorkoutSetRowProps) {
   const t = useI18n();
   // On utilise un tableau de types pour gérer plusieurs colonnes
-  const types = set.types || [set.type];
+  const types = set.types || [];
   const maxColumns = 4;
 
   // Handlers pour chaque champ
@@ -173,10 +173,10 @@ export function WorkoutSetRow({ set, setIndex, onChange, onFinish, onRemove }: W
                 onChange={handleTypeChange(columnIndex)}
                 value={type}
               >
-                <option value="TIME">TEMPS</option>
-                <option value="WEIGHT">POIDS</option>
-                <option value="REPS">REPS</option>
-                <option value="BODYWEIGHT">BODYWEIGHT</option>
+                <option value="TIME">{t("workout_builder.session.time")}</option>
+                <option value="WEIGHT">{t("workout_builder.session.weight")}</option>
+                <option value="REPS">{t("workout_builder.session.reps")}</option>
+                <option value="BODYWEIGHT">{t("workout_builder.session.bodyweight")}</option>
               </select>
               {types.length > 1 && (
                 <Button

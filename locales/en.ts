@@ -152,6 +152,10 @@ export default {
       exercise_selection_description: "This step will show you personalized exercise recommendations.",
     },
     session: {
+      bodyweight: "Bodyweight",
+      weight: "Weight",
+      reps: "Reps",
+      time: "Time",
       next_exercise: "Next Exercise",
       add_set: "Add set",
       add_column: "Add column",

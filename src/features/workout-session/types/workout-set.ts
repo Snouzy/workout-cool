@@ -4,8 +4,7 @@ export type WorkoutSetUnit = "kg" | "lbs";
 export interface WorkoutSet {
   id: string;
   setIndex: number;
-  type: WorkoutSetType;
-  types?: WorkoutSetType[]; // Pour supporter plusieurs colonnes
+  types: WorkoutSetType[]; // Pour supporter plusieurs colonnes
   valueInt?: number; // reps, weight, minutes, etc.
   valuesInt?: number[]; // Pour supporter plusieurs colonnes
   valueSec?: number; // seconds (if TIME)

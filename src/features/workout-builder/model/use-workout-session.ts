@@ -72,8 +72,7 @@ export function useWorkoutSession() {
         {
           id: `${ex.id}-set-1`,
           setIndex: 0,
-          type: "REPS",
-          types: ["REPS"],
+          types: ["REPS", "WEIGHT"],
           valuesInt: [],
           valuesSec: [],
           units: [],
@@ -128,7 +127,6 @@ export function useWorkoutSession() {
     const newSet: WorkoutSet = {
       id: `${currentExercise.id}-set-${sets.length + 1}`,
       setIndex: sets.length,
-      type: "REPS",
       types: ["REPS"],
       valuesInt: [],
       valuesSec: [],

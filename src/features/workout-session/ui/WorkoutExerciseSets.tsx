@@ -30,8 +30,7 @@ export function WorkoutExerciseSets() {
   };
 
   return (
-    <div className="w-full max-w-3xl mx-auto py-8">
-      <h4 className="font-bold mb-8 text-lg">{t("workout_builder.session.exercise_progress")}</h4>
+    <div className="w-full max-w-3xl mx-auto pb-8">
       <ol className="relative border-l-2 border-slate-200 dark:border-slate-700">
         {session.exercises.map((ex, idx) => (
           <li

@@ -158,7 +158,7 @@ export function WorkoutStepper() {
     exercisesError,
   } = useWorkoutStepper();
 
-  const { isWorkoutActive, session } = useWorkoutSession();
+  const { isWorkoutActive, session, startWorkout } = useWorkoutSession();
 
   const canContinue = currentStep === 1 ? canProceedToStep2 : currentStep === 2 ? canProceedToStep3 : exercisesByMuscle.length > 0;
 

@@ -17,9 +17,9 @@ export function ReleaseNotesDialog() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button aria-label={t("release_notes.release_notes")} size="icon" variant="ghost">
+        <Button aria-label={t("release_notes.release_notes")} className="rounded-full hover:bg-slate-100" size="small" variant="ghost">
           <span className="sr-only">{t("release_notes.release_notes")}</span>
-          <Bell className="h-4 w-4" />
+          <Bell className="text-slate-700 h-5 w-5" />
         </Button>
       </DialogTrigger>
       <DialogContent className="max-w-md">

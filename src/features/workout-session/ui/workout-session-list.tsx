@@ -66,8 +66,16 @@ export function WorkoutSessionList({ onSelect }: { onSelect: (id: string) => voi
             className="flex flex-col sm:flex-row items-start sm:items-center justify-between py-4 gap-2 sm:gap-0 hover:bg-slate-50 rounded-lg space-x-4"
             key={session.id}
           >
-            <div className="flex items-center">
+            <div className="flex items-center flex-col">
               <span className="font-bold text-base tabular-nums">{new Date(session.startedAt).toLocaleDateString()}</span>
+              <span className="text-xs text-slate-700 tabular-nums">
+                début : {new Date(session.startedAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+              </span>
+              {session.endedAt && (
+                <span className="text-xs text-slate-500 tabular-nums">
+                  fin : {new Date(session.endedAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                </span>
+              )}
             </div>
             <div className="flex flex-wrap gap-2 flex-1">
               {session.exercises?.map((ex, idx) => (

@@ -5,14 +5,12 @@ import { Clock, Play, Pause, RotateCcw, X, Target } from "lucide-react";
 
 import { useI18n } from "locales/client";
 import { cn } from "@/shared/lib/utils";
+import { useWorkoutSession } from "@/features/workout-session/model/use-workout-session";
 import { Button } from "@/components/ui/button";
 
 import { QuitWorkoutDialog } from "../../workout-builder/ui/quit-workout-dialog";
 
-import { useWorkoutSession } from "@/features/workout-session/model/use-workout-session";
-
 interface WorkoutSessionHeaderProps {
-  sessionId: string;
   elapsedTime: string;
   isTimerRunning: boolean;
   onToggleTimer: VoidFunction;
@@ -23,7 +21,6 @@ interface WorkoutSessionHeaderProps {
 }
 
 export function WorkoutSessionHeader({
-  sessionId,
   elapsedTime,
   isTimerRunning,
   onToggleTimer,

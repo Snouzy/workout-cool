@@ -9,12 +9,11 @@ import confetti from "canvas-confetti";
 import { useCurrentLocale, useI18n } from "locales/client";
 import Trophy from "@public/images/trophy.png";
 import { cn } from "@/shared/lib/utils";
+import { useWorkoutSession } from "@/features/workout-session/model/use-workout-session";
 import { ExerciseVideoModal } from "@/features/workout-builder/ui/exercise-video-modal";
 import { Button } from "@/components/ui/button";
 
 import { WorkoutSessionSet } from "./workout-session-set";
-
-import { useWorkoutSession } from "@/features/workout-session/model/use-workout-session";
 
 export function WorkoutSessionSets({
   showCongrats,
@@ -28,19 +27,8 @@ export function WorkoutSessionSets({
   const t = useI18n();
   const router = useRouter();
   const locale = useCurrentLocale();
-  const {
-    currentExercise,
-    currentExerciseIndex,
-    session,
-    addSet,
-    updateSet,
-    removeSet,
-    finishSet,
-    goToNextExercise,
-    goToPrevExercise,
-    goToExercise,
-    completeWorkout,
-  } = useWorkoutSession();
+  const { currentExerciseIndex, session, addSet, updateSet, removeSet, finishSet, goToNextExercise, goToExercise, completeWorkout } =
+    useWorkoutSession();
   const exerciseDetailsMap = Object.fromEntries(session?.exercises.map((ex) => [ex.id, ex]) || []);
   const [videoModal, setVideoModal] = useState<{ open: boolean; exerciseId?: string }>({ open: false });
 

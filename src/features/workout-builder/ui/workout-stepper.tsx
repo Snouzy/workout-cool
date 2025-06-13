@@ -147,7 +147,6 @@ export function WorkoutStepper() {
               quitWorkout();
             }}
             onToggleTimer={toggleTimer}
-            sessionId={session.id}
           />
         )}
         <WorkoutSessionSets isWorkoutActive={isWorkoutActive} onCongrats={() => setShowCongrats(true)} showCongrats={showCongrats} />

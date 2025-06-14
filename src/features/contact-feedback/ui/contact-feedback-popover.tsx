@@ -39,11 +39,11 @@ export const ContactFeedbackPopover = (props: ContactFeedbackPopoverProps) => {
     }
 
     if (result.serverError) {
-      brandedToast({ title: t(result.serverError as keyof typeof t), variant: "error" });
+      brandedToast({ title: t(`backend_errors.${result.serverError}` as keyof typeof t), variant: "error" });
       return;
     }
 
-    brandedToast({ title: t("feedback_sent"), variant: "success" });
+    brandedToast({ title: t("success.feedback_sent"), variant: "success" });
     form.reset();
     open.setFalse();
   };

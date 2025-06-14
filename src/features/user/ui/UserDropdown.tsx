@@ -27,18 +27,18 @@ export const UserDropdown = ({ children }: PropsWithChildren) => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>{children}</DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
-        <DropdownMenuLabel>{t("profile")}</DropdownMenuLabel>
+        <DropdownMenuLabel>{t("commons.profile")}</DropdownMenuLabel>
         <DropdownMenuItem asChild>
           <Link href="/account">
             <User2 className="mr-2 size-4" />
-            {t("my_account")}
+            {t("commons.my_account")}
           </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
           <Link href="/dashboard">
             <LayoutDashboard className="mr-2 size-4" />
-            {t("dashboard")}
+            {t("commons.dashboard")}
           </Link>
         </DropdownMenuItem>
 

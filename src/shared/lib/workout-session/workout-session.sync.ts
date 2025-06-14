@@ -9,7 +9,8 @@ export async function syncLocalWorkoutSessions() {
     try {
       const { id: serverId } = await workoutSessionApi.create(session);
       workoutSessionLocal.markSynced(session.id, serverId);
-    } catch (e) {
+    } catch (error) {
+      console.error(error);
       brandedToast({ title: "SYNC ERROR", variant: "error" });
     }
   }

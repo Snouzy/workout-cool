@@ -96,7 +96,6 @@ export const ExercisesSelection = ({
                 {flatExercises.map((item) => (
                   <ExerciseListItem
                     exercise={item.exercise}
-                    isPicked={true}
                     key={item.id}
                     muscle={item.muscle}
                     onDelete={onDelete}

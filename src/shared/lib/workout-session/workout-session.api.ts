@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import type { WorkoutSession } from "./types/workout-session";
 
 export const workoutSessionApi = {

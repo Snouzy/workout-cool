@@ -52,7 +52,7 @@ export const ContactSupportDialog = (props: ContactSupportDialogProps) => {
   return (
     <Dialog onOpenChange={(v) => setOpen(v)} open={open}>
       <DialogTrigger asChild className="cursor-pointer">
-        {props.children ? props.children : <span className={props.className}>{t("support")}</span>}
+        {props.children ? props.children : <span className={props.className}>{t("commons.support")}</span>}
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

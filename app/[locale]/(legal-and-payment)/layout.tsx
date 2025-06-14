@@ -1,5 +1,4 @@
 import { LayoutParams } from "@/shared/types/next";
-import { Footer } from "@/features/layout/Footer";
 
 type LocaleParams = Record<string, string> & {
   locale: string;

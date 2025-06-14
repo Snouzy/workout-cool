@@ -1,11 +1,8 @@
-import { getI18n } from "locales/server";
 import { SiteConfig } from "@/shared/config/site-config";
 
 import type { MetadataRoute } from "next";
 
 export default async function manifest(): Promise<MetadataRoute.Manifest> {
-  const t = await getI18n();
-
   return {
     name: SiteConfig.title,
     short_name: SiteConfig.title,

@@ -5,9 +5,9 @@ import { LockKeyhole, LockKeyholeOpen } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useI18n } from "locales/client";
-import { Input } from "@/fitlinks/components/ui/input";
-import { Button } from "@/fitlinks/components/ui/button";
-import { updatePasswordAction } from "@/features/settings/update-password/model/update-password.action";
+import { Input } from "@/workoutcool/components/ui/input";
+import { Button } from "@/workoutcool/components/ui/button";
+import { updatePasswordAction } from "@/features/update-password/model/update-password.action";
 import { brandedToast } from "@/components/ui/toast";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 
@@ -45,10 +45,10 @@ export function PasswordForm() {
         return;
       }
 
-      brandedToast({ title: t("password_updated_successfully"), variant: "success" });
+      brandedToast({ title: t("success.password_updated_successfully"), variant: "success" });
       form.reset();
     } catch (error) {
-      brandedToast({ title: t("generic_error"), variant: "error" });
+      brandedToast({ title: t("error.generic_error"), variant: "error" });
       console.error(error);
     }
   };

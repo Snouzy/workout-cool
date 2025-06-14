@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 import Image from "next/image";
 import { Play, Shuffle, Star, Trash2, GripVertical } from "lucide-react";
@@ -20,10 +18,9 @@ interface ExerciseListItemProps {
   onShuffle: (exerciseId: string, muscle: string) => void;
   onPick: (exerciseId: string) => void;
   onDelete: (exerciseId: string, muscle: string) => void;
-  isPicked?: boolean;
 }
 
-export function ExerciseListItem({ exercise, muscle, onShuffle, onPick, onDelete, isPicked = false }: ExerciseListItemProps) {
+export function ExerciseListItem({ exercise, muscle, onShuffle, onPick, onDelete }: ExerciseListItemProps) {
   const t = useI18n();
   const [isHovered, setIsHovered] = useState(false);
   const locale = useCurrentLocale();

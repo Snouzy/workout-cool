@@ -15,10 +15,18 @@ export default {
   register_privacy_link_2: "Privacy Policy",
   password_forgot_title: "Forgot password?",
   password_forgot_subtitle: "Enter your email to reset your password",
+  new_password: "New password",
+  new_password_placeholder: "Enter your new password",
+  current_password: "Current password",
+  current_password_placeholder: "Enter your current password",
+  confirm_password: "Confirm password",
+  confirm_password_placeholder: "Confirm your password",
 
   success: {
+    feedback_sent: "Feedback sent",
     password_forgot_success: "Email sent",
     reset_password_success: "Password reset successfully",
+    password_updated_successfully: "Password updated successfully",
   },
 
   error: {
@@ -326,5 +334,10 @@ export default {
     back_to_login: "Back to login",
     sending: "Sending...",
     send_me_link: "Send me a link",
+    extremely_dissatisfied: "Extremely dissatisfied",
+    somewhat_dissatisfied: "Somewhat dissatisfied",
+    neutral: "Neutral",
+    satisfied: "Satisfied",
+    support: "Support",
   },
 } as const;

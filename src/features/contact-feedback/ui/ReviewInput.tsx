@@ -1,5 +1,3 @@
-"use client";
-
 import { Angry, Frown, Meh, SmilePlus } from "lucide-react";
 
 import { useI18n } from "locales/client";
@@ -10,10 +8,10 @@ export const ReviewInput = ({ onChange, value }: { onChange: (value: string) => 
   const t = useI18n();
 
   const options = [
-    { value: "1", icon: Angry, tooltip: t("extremely_dissatisfied") },
-    { value: "2", icon: Frown, tooltip: t("somewhat_dissatisfied") },
-    { value: "3", icon: Meh, tooltip: t("neutral") },
-    { value: "4", icon: SmilePlus, tooltip: t("satisfied") },
+    { value: "1", icon: Angry, tooltip: t("commons.extremely_dissatisfied") },
+    { value: "2", icon: Frown, tooltip: t("commons.somewhat_dissatisfied") },
+    { value: "3", icon: Meh, tooltip: t("commons.neutral") },
+    { value: "4", icon: SmilePlus, tooltip: t("commons.satisfied") },
   ];
 
   return (

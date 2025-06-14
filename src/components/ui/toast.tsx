@@ -2,12 +2,13 @@
 
 import { toast } from "sonner";
 import * as React from "react";
+import Image from "next/image";
 import { X, CheckCircle2, AlertTriangle, Info, XCircle } from "lucide-react";
 import { cva, type VariantProps } from "class-variance-authority";
 import * as ToastPrimitives from "@radix-ui/react-toast";
 
+import Logo from "@public/logo.png";
 import { cn } from "@/shared/lib/utils";
-import { LogoSvg } from "@/components/svg/LogoSvg";
 
 const ToastProvider = ToastPrimitives.Provider;
 
@@ -140,7 +141,7 @@ const BrandedToastContent = ({ title, subtitle, variant = "default" }: BrandedTo
   return (
     <ToastDescription className={"dark:bg-black-dark dark:text-white"}>
       <div className={`-mt-0.5 flex items-center gap-2 border-b px-4 py-3 ${color}`}>
-        <LogoSvg className="h-4 w-12" />
+        <Image alt="logo" height={24} src={Logo} width={24} />
       </div>
       <div className="flex items-center p-4">
         {icon}

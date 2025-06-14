@@ -11,11 +11,11 @@ export const useSignIn = () => {
     const response = await authClient.signIn.email({
       email: values.email,
       password: values.password,
-      callbackURL: `/${paths.dashboard}`,
+      callbackURL: `/${paths.root}`,
     });
 
     if (response?.error) {
-      brandedToast({ title: t("INVLID_EMAIL_OR_PASSWORD"), variant: "error" });
+      brandedToast({ title: t("error.invalid_credentials"), variant: "error" });
       return;
     }
   };

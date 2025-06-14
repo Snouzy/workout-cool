@@ -32,15 +32,15 @@ export const useResetPassword = (): UseResetPasswordResult => {
       const { error } = await authClient.resetPassword({ token, newPassword: password });
 
       if (error) {
-        brandedToast({ title: t("generic_error"), variant: "error" });
+        brandedToast({ title: t("error.generic_error"), variant: "error" });
         return;
       }
 
-      brandedToast({ title: t("reset_password_success"), variant: "success" });
+      brandedToast({ title: t("success.reset_password_success"), variant: "success" });
       router.push(`/${paths.signIn}?reset=success`);
     } catch (e) {
       console.error(e);
-      brandedToast({ title: t("generic_error"), variant: "error" });
+      brandedToast({ title: t("error.generic_error"), variant: "error" });
     } finally {
       setIsLoading(false);
     }

@@ -12,16 +12,11 @@ interface WorkoutSetRowProps {
   onRemove: () => void;
 }
 
-const SET_TYPES: WorkoutSetType[] = ["REPS", "WEIGHT", "TIME", "BODYWEIGHT", "NA"];
-const UNITS: WorkoutSetUnit[] = ["kg", "lbs"];
-
 export function WorkoutSessionSet({ set, setIndex, onChange, onFinish, onRemove }: WorkoutSetRowProps) {
   const t = useI18n();
-  // On utilise un tableau de types pour gérer plusieurs colonnes
   const types = set.types || [];
   const maxColumns = 4;
 
-  // Handlers pour chaque champ
   const handleTypeChange = (columnIndex: number) => (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newTypes = [...types];
     newTypes[columnIndex] = e.target.value as WorkoutSetType;
@@ -166,7 +161,7 @@ export function WorkoutSessionSet({ set, setIndex, onChange, onFinish, onRemove 
         </Button>
       </div>
 
-      {/* Colonnes de types, stack vertical on mobile, horizontal on md+ */}
+      {/* Columns of types, stack vertical on mobile, horizontal on md+ */}
       <div className="flex flex-col md:flex-row gap-2 w-full">
         {types.map((type, columnIndex) => (
           <div className="flex flex-col w-full md:w-auto" key={columnIndex}>
@@ -198,7 +193,7 @@ export function WorkoutSessionSet({ set, setIndex, onChange, onFinish, onRemove 
         ))}
       </div>
 
-      {/* Bouton pour ajouter une colonne, sous les colonnes */}
+      {/* Add column button */}
       {types.length < maxColumns && (
         <div className="flex w-full justify-start mt-1">
           <Button

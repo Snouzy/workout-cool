@@ -1,5 +1,3 @@
-"use client";
-
 import Image from "next/image";
 import { Check, Zap } from "lucide-react";
 import { ExerciseAttributeValueEnum } from "@prisma/client";
@@ -12,7 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { EQUIPMENT_CONFIG } from "../model/equipment-config";
 
 interface EquipmentSelectionProps {
-  onClearEquipment: () => void;
+  onClearEquipment: VoidFunction;
   onToggleEquipment: (equipment: ExerciseAttributeValueEnum) => void;
   selectedEquipment: ExerciseAttributeValueEnum[];
 }
@@ -135,7 +133,8 @@ function EquipmentCard({ equipment, isSelected, onToggle }: EquipmentCardProps) 
   );
 }
 
-function StatsHeader({ selectedCount }: { selectedCount: number }) {
+function _StatsHeader({ selectedCount }: { selectedCount: number }) {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const t = useI18n();
 
   return (
@@ -169,7 +168,8 @@ function StatsHeader({ selectedCount }: { selectedCount: number }) {
   );
 }
 
-function ActionBar({ selectedCount, onClearEquipment }: { selectedCount: number; onClearEquipment: () => void }) {
+function _ActionBar({ selectedCount, onClearEquipment }: { selectedCount: number; onClearEquipment: () => void }) {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const t = useI18n();
 
   if (selectedCount === 0) return null;
@@ -198,7 +198,7 @@ function ActionBar({ selectedCount, onClearEquipment }: { selectedCount: number;
   );
 }
 
-export function EquipmentSelection({ onClearEquipment, onToggleEquipment, selectedEquipment }: EquipmentSelectionProps) {
+export function EquipmentSelection({ onToggleEquipment, selectedEquipment }: EquipmentSelectionProps) {
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">

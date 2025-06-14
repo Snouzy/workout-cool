@@ -37,7 +37,7 @@ export const ForgotPasswordForm = () => {
   if (isEmailSent) {
     return (
       <Alert variant="success">
-        <AlertDescription>{t("password_forgot_success")}</AlertDescription>
+        <AlertDescription>{t("success.password_forgot_success")}</AlertDescription>
       </Alert>
     );
   }
@@ -65,13 +65,13 @@ export const ForgotPasswordForm = () => {
         />
 
         <Button className="mt-6 w-full" disabled={isLoading} size="large" type="submit">
-          {isLoading ? t("sending") : t("send_me_link")}
+          {isLoading ? t("commons.sending") : t("commons.send_me_link")}
         </Button>
       </Form>
 
       <div className="text-center text-sm">
         <Link className="text-primary hover:underline" href={`/${paths.signIn}`}>
-          {t("back_to_login")}
+          {t("commons.back_to_login")}
         </Link>
       </div>
     </div>

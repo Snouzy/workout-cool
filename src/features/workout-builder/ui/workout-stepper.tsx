@@ -141,11 +141,6 @@ export function WorkoutStepper() {
             isTimerRunning={isTimerRunning}
             onQuitWorkout={quitWorkout}
             onResetTimer={resetTimer}
-            onSaveAndQuit={() => {
-              // TODO: Implémenter la sauvegarde pour plus tard
-              console.log("Save workout for later");
-              quitWorkout();
-            }}
             onToggleTimer={toggleTimer}
           />
         )}

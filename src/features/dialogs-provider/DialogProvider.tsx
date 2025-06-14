@@ -58,7 +58,7 @@ const useDialogStore = create<DialogStore>((set, get) => ({
               })
               .catch((e) => {
                 logger.error(e);
-                brandedToast({ title: t("generic_error"), variant: "error" });
+                brandedToast({ title: t("error.generic_error"), variant: "error" });
               });
           } else {
             dialog.action?.onClick();

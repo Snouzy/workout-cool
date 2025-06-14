@@ -27,14 +27,14 @@ export const useResendEmail = (email: string) => {
 
       const res = await authClient.sendVerificationEmail({
         email,
-        callbackURL: `${getServerUrl()}/${paths.dashboard}`,
+        callbackURL: `${getServerUrl()}/${paths.root}`,
       });
 
       if (res.error) brandedToast({ title: t(res.error.message as keyof typeof t), variant: "error" });
-      if (res.data?.status) brandedToast({ title: t("EMAIL_SENT"), variant: "success" });
+      if (res.data?.status) brandedToast({ title: t("email_sent"), variant: "success" });
     } catch (err) {
       console.error(err);
-      brandedToast({ title: t("CANT_SEND_EMAIL"), variant: "error" });
+      brandedToast({ title: t("cant_send_email"), variant: "error" });
     } finally {
       setIsDisabled(false);
     }

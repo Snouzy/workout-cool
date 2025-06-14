@@ -14,7 +14,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
   const auth = await serverRequiredUser();
 
   if (auth.emailVerified) {
-    redirect(`${getServerUrl()}/${paths.dashboard}`);
+    redirect(`${getServerUrl()}/${paths.root}`);
   }
 
   return <div>{children}</div>;

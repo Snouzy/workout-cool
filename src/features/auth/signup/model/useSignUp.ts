@@ -39,7 +39,7 @@ export const useSignUp = () => {
     },
 
     onError: (error: unknown) => {
-      const message = error instanceof Error ? t(error.message as keyof typeof t) : t("generic_error");
+      const message = error instanceof Error ? t(error.message as keyof typeof t) : t("error.generic_error");
 
       brandedToast({ title: message, variant: "error" });
     },

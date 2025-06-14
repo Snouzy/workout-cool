@@ -19,7 +19,7 @@ const BADGE_COLORS = [
   "bg-pink-100 text-pink-700 border-pink-300",
 ];
 
-export function WorkoutSessionList({ onSelect }: { onSelect: (id: string) => void }) {
+export function WorkoutSessionList() {
   const locale = useCurrentLocale();
   const t = useI18n();
   const router = useRouter();

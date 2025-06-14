@@ -1,8 +1,9 @@
 export const paths = {
-  dashboard: "dashboard",
+  root: "/",
   signUp: "auth/signup",
   signIn: "auth/signin",
   forgotPassword: "auth/forgot-password",
   resetPassword: "auth/reset-password",
   verifyEmail: "auth/verify-email",
+  profile: "profile",
 } as const;

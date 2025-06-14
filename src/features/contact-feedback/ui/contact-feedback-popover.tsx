@@ -34,7 +34,7 @@ export const ContactFeedbackPopover = (props: ContactFeedbackPopoverProps) => {
     const result = await contactFeedbackAction(values);
 
     if (!result) {
-      brandedToast({ title: t("generic_error"), variant: "error" });
+      brandedToast({ title: t("error.generic_error"), variant: "error" });
       return;
     }
 

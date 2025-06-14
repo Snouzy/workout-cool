@@ -3,7 +3,7 @@ import { workoutSessionApi } from "./workout-session.api";
 
 import type { WorkoutSession } from "./types/workout-session";
 
-// À remplacer par ton vrai hook/contexte d'auth
+// TODO: replace with auth context
 function isUserLoggedIn(): boolean {
   return !!localStorage.getItem("userToken");
 }

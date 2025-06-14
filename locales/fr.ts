@@ -1,4 +1,11 @@
 export default {
+  email_sent: "Email envoyé",
+  cant_send_email: "Impossible d'envoyer l'email",
+  logout: "Déconnexion",
+  verify_email: "Vérifier votre email",
+  verify_email_subtitle: "Veuillez vérifier votre email pour continuer.",
+  resend_email: "Renvoyer l'email",
+  resend_email_countdown: "Renvoyer l'email dans {seconds} secondes",
   signin_error_subtitle: "Veuillez vérifier vos identifiants et réessayer.",
   register_title: "Créer un compte",
   register_description: "Entrez vos informations ci-dessous pour créer votre compte",
@@ -6,8 +13,28 @@ export default {
   register_privacy: "Conditions d'utilisation",
   register_privacy_link: "et notre",
   register_privacy_link_2: "Politique de confidentialité",
+  password_forgot_title: "Forgot password?",
+  password_forgot_subtitle: "Enter your email to reset your password",
+
+  success: {
+    password_forgot_success: "Email envoyé",
+    reset_password_success: "Mot de passe réinitialisé avec succès",
+  },
+
   error: {
     invalid_credentials: "Identifiants invalides ou compte inexistant",
+    upload_failed: "Erreur lors du téléchargement",
+    generic_error: "Erreur lors de l'opération",
+    sending_email: "Erreur lors de l'envoi de l'email",
+  },
+
+  backend_errors: {
+    EMAIL_ALREADY_EXISTS: "Email déjà existant",
+    INVALID_FILE_TYPE: "Type de fichier invalide",
+    FILE_TOO_LARGE: "Fichier trop grand",
+    NO_FILE_UPLOADED: "Aucun fichier téléchargé",
+    IMAGE_PROCESSING_ERROR: "Erreur lors du traitement de l'image",
+    upload_failed: "Erreur lors du téléchargement",
   },
 
   profile: {
@@ -294,5 +321,11 @@ export default {
     dashboard: "Tableau de bord",
     home: "Accueil",
     changelog: "Annonces & notes de version",
+    stop_impersonation_button: "Arrêter l'impersonnalisation",
+    impersonating_user_label: "Impersonnification en cours",
+    re_hello: "Re Hello",
+    back_to_login: "Retour à la connexion",
+    sending: "Envoi...",
+    send_me_link: "Envoyer un lien",
   },
 } as const;

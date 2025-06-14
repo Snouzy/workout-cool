@@ -26,19 +26,16 @@ import {
   SquareKanban,
   TableProperties,
   UserCog,
-  Camera,
 } from "lucide-react";
 import { useMutation } from "@tanstack/react-query";
 
 import { useI18n } from "locales/client";
-import { LanguageSelector } from "@/widgets/language-selector/language-selector";
-import { cn } from "@/shared/lib/utils";
-import { getImageUrl } from "@/shared/lib/storage/get-image";
-import { PLACEHOLDERS } from "@/shared/constants/placeholders";
-import { paths } from "@/shared/constants/paths";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/workoutcool/components/ui/hover-card";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/workoutcool/components/ui/dropdown-menu";
 import { Button } from "@/workoutcool/components/ui/button";
+import { LanguageSelector } from "@/widgets/language-selector/language-selector";
+import { PLACEHOLDERS } from "@/shared/constants/placeholders";
+import { paths } from "@/shared/constants/paths";
 import { useSidebarToggle } from "@/features/layout/useSidebarToggle";
 import NavLink from "@/features/layout/nav-link";
 import { ContactFeedbackPopover } from "@/features/contact-feedback/ui/contact-feedback-popover";
@@ -75,116 +72,27 @@ export function useProfileImageUpload() {
         const data = await res.json();
 
         if (res.status === 415) {
-          brandedToast({ title: t("INVALID_FILE_TYPE"), variant: "error" });
+          brandedToast({ title: t("backend_errors.INVALID_FILE_TYPE"), variant: "error" });
         }
 
         if (res.status === 413) {
-          brandedToast({ title: t("FILE_TOO_LARGE"), variant: "error" });
+          brandedToast({ title: t("backend_errors.FILE_TOO_LARGE"), variant: "error" });
         }
 
         if (res.status === 400) {
-          brandedToast({ title: t("NO_FILE_UPLOADED"), variant: "error" });
+          brandedToast({ title: t("backend_errors.NO_FILE_UPLOADED"), variant: "error" });
         }
 
         if (res.status === 500) {
-          brandedToast({ title: t("IMAGE_PROCESSING_ERROR"), variant: "error" });
+          brandedToast({ title: t("backend_errors.IMAGE_PROCESSING_ERROR"), variant: "error" });
         }
 
-        throw new Error(data.error || t("upload_failed"));
+        throw new Error(data.error || t("error.upload_failed"));
       }
 
       return res.json();
     },
   });
-}
-
-export function ProfileImageUploadForm({ isDisabled }: { isDisabled: boolean }) {
-  const t = useI18n();
-  const [isUploading, setIsUploading] = useState(false);
-  const user = useCurrentUser();
-  const initialUrl = user?.image ? getImageUrl(user.image) : null;
-  const [preview, setPreview] = useState<string | null>(initialUrl);
-  const uploadMutation = useProfileImageUpload();
-
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  const handleUpload = (file: File) => {
-    if (isDisabled) return;
-    setIsUploading(true);
-    uploadMutation.mutate(
-      { file },
-      {
-        onSuccess: () => {
-          setIsUploading(false);
-          brandedToast({ title: t("upload_success"), variant: "success" });
-        },
-        onError: (error) => {
-          setPreview(initialUrl);
-          setIsUploading(false);
-          console.error("error", error);
-        },
-      },
-    );
-  };
-
-  return (
-    <div className="flex flex-col items-center gap-2 py-4">
-      <div className="group relative">
-        <div
-          className={cn(
-            "flex size-[72px] items-center justify-center overflow-hidden rounded-full border-2 border-gray-200 bg-gray-100 transition-opacity",
-            (isUploading || isDisabled) && "opacity-60",
-          )}
-        >
-          {!mounted ? (
-            <>
-              <Skeleton height={40} rounded="rounded-full" width={40} />
-            </>
-          ) : preview ? (
-            <Image alt="Preview" className="h-full w-full object-cover" height={72} src={preview} width={72} />
-          ) : (
-            <Skeleton height={40} rounded="rounded-full" width={40} />
-          )}
-          <label
-            className={cn(
-              "absolute inset-0 flex cursor-pointer items-center justify-center rounded-full bg-black/40 opacity-0 transition group-hover:bg-black/40 group-hover:opacity-100",
-              (isUploading || isDisabled) && "pointer-events-none",
-            )}
-            htmlFor="profileImage"
-            tabIndex={0}
-            title={t("change_profile_picture")}
-          >
-            <Camera className="size-7 text-white" />
-            <input
-              accept="image/png, image/jpeg"
-              className="hidden"
-              disabled={isUploading || isDisabled}
-              id="profileImage"
-              name="profileImage"
-              onChange={(e) => {
-                if (isDisabled) return;
-                const file = e.target.files?.[0];
-                if (file) {
-                  setPreview(URL.createObjectURL(file));
-                  handleUpload(file);
-                }
-              }}
-              type="file"
-            />
-          </label>
-          {(isUploading || isDisabled) && (
-            <div className="absolute inset-0 flex items-center justify-center rounded-full bg-white/60">
-              {isUploading ? <span className="h-6 w-6 animate-spin rounded-full border-2 border-gray-300 border-t-black" /> : null}
-            </div>
-          )}
-        </div>
-      </div>
-      <span className="text-xs text-gray-500">{t("profile_image_hint")}</span>
-    </div>
-  );
 }
 
 export const AuthenticatedHeader = () => {
@@ -207,7 +115,7 @@ export const AuthenticatedHeader = () => {
     } catch (error) {
       console.error("Erreur lors de l'arrêt de l'impersonnalisation:", error);
       brandedToast({
-        title: t("generic_error"),
+        title: t("error.generic_error"),
         variant: "error",
       });
     }
@@ -244,7 +152,7 @@ export const AuthenticatedHeader = () => {
                       alt="Profile Img"
                       className="h-full w-full object-cover"
                       height={32}
-                      src={user?.image ? getImageUrl(user.image) : PLACEHOLDERS.PROFILE_IMAGE}
+                      src={user?.image || PLACEHOLDERS.PROFILE_IMAGE}
                       width={32}
                     />
                   </div>
@@ -257,7 +165,7 @@ export const AuthenticatedHeader = () => {
                     ) : user ? (
                       <>
                         <h5 className="line-clamp-1 text-[10px]/3 font-semibold dark:text-gray-500">
-                          {isImpersonating ? t("impersonating_user_label") : t("re_hello")}
+                          {isImpersonating ? t("commons.impersonating_user_label") : t("commons.re_hello")}
                         </h5>
                         <h2 className="line-clamp-1 text-xs font-bold text-black dark:text-white">
                           {displayFirstNameAndFirstLetterLastName(user)}
@@ -288,17 +196,17 @@ export const AuthenticatedHeader = () => {
                       variant="ghost"
                     >
                       <LogOut className="size-[18px] shrink-0" />
-                      {t("stop_impersonation_button")}
+                      {t("commons.stop_impersonation_button")}
                     </Button>
                   </DropdownMenuItem>
                 )}
                 <DropdownMenuItem className="p-0">
                   <Link
-                    className={`flex items-center gap-1.5 rounded-lg px-3 py-2 ${pathName === `/${paths.settings}` && "!bg-gray-400 !text-black dark:!bg-white/5 dark:!text-white"}`}
-                    href={`/${paths.settings}`}
+                    className={`flex items-center gap-1.5 rounded-lg px-3 py-2 ${pathName === `/${paths.profile}` && "!bg-gray-400 !text-black dark:!bg-white/5 dark:!text-white"}`}
+                    href={`/${paths.profile}`}
                   >
                     <UserCog className="size-[18px] shrink-0" />
-                    {t("profile")}
+                    {t("commons.profile")}
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem className="p-0">

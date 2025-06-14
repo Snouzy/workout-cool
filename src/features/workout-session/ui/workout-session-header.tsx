@@ -17,7 +17,6 @@ interface WorkoutSessionHeaderProps {
   onToggleTimer: VoidFunction;
   onResetTimer: VoidFunction;
   onQuitWorkout: VoidFunction;
-  onSaveAndQuit?: VoidFunction;
   currentExerciseIndex: number;
 }
 
@@ -27,7 +26,6 @@ export function WorkoutSessionHeader({
   onToggleTimer,
   onResetTimer,
   onQuitWorkout,
-  onSaveAndQuit,
   currentExerciseIndex,
 }: WorkoutSessionHeaderProps) {
   const t = useI18n();
@@ -40,11 +38,6 @@ export function WorkoutSessionHeader({
 
   const handleQuitClick = () => {
     setShowQuitDialog(true);
-  };
-
-  const handleQuitWithSave = () => {
-    onSaveAndQuit?.();
-    setShowQuitDialog(false);
   };
 
   const handleQuitWithoutSave = () => {
@@ -157,12 +150,10 @@ export function WorkoutSessionHeader({
       </div>
 
       <QuitWorkoutDialog
-        elapsedTime={elapsedTime}
         exercisesCompleted={exercisesCompleted}
         isOpen={showQuitDialog}
         onClose={() => setShowQuitDialog(false)}
         onQuitWithoutSave={handleQuitWithoutSave}
-        onQuitWithSave={handleQuitWithSave}
         totalExercises={totalExercises}
       />
     </>

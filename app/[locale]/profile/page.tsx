@@ -25,7 +25,7 @@ export default function ProfilePage() {
   return (
     <div>
       <WorkoutSessionHeatmap until={until} values={values} />
-      <WorkoutSessionList onSelect={(id) => router.push(`/?sessionId=${id}`)} />
+      <WorkoutSessionList />
       <div className="mt-8 flex justify-center">
         <Button onClick={() => router.push("/")} size="large">
           {t("profile.new_workout")}

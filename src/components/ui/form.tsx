@@ -147,7 +147,7 @@ type UseZodFormProps<Schema extends ZodSchema> = Exclude<UseFormProps<z.infer<Sc
 function useZodForm<Schema extends ZodSchema>({ schema, ...formProps }: UseZodFormProps<Schema>): UseFormReturn<z.infer<Schema>> {
   return useForm<z.infer<Schema>>({
     ...formProps,
-    resolver: zodResolver(schema),
+    resolver: zodResolver(schema as any),
   });
 }
 

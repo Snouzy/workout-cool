@@ -3,9 +3,9 @@
 import { prisma } from "@/shared/lib/prisma";
 import { ERROR_MESSAGES } from "@/shared/constants/errors";
 import { actionClient, ActionError } from "@/shared/api/safe-actions";
-import { UpdatePasswordSchema } from "@/features/settings/update-password/model/update-password.schema";
-import { validatePassword } from "@/features/settings/update-password/lib/validate-password";
-import { hashStringWithSalt } from "@/features/settings/update-password/lib/hash";
+import { UpdatePasswordSchema } from "@/features/update-password/model/update-password.schema";
+import { validatePassword } from "@/features/update-password/lib/validate-password";
+import { hashStringWithSalt } from "@/features/update-password/lib/hash";
 import { env } from "@/env";
 import { serverRequiredUser } from "@/entities/user/model/get-server-session-user";
 

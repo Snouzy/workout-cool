@@ -21,14 +21,14 @@ export default async function AuthLayout(props: LayoutParams<{}>) {
   const user = await auth.api.getSession({ headers: headerStore });
 
   if (user) {
-    redirect(`/${paths.dashboard}`);
+    redirect(`/${paths.root}`);
   }
 
   return (
     <>
       <div>
         <div className="flex justify-center gap-2">
-          <Link className="flex items-center gap-2 font-medium" href={`/${paths.dashboard}`}>
+          <Link className="flex items-center gap-2 font-medium" href={`/${paths.root}`}>
             <Image alt="workout cool logo" className="w-16" height={64} src={Logo} width={64} />
           </Link>
         </div>

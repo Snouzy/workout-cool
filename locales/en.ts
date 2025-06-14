@@ -1,4 +1,11 @@
 export default {
+  email_sent: "Email sent",
+  cant_send_email: "Can't send email",
+  logout: "Logout",
+  verify_email: "Verify your email",
+  verify_email_subtitle: "Please verify your email to continue.",
+  resend_email: "Resend email",
+  resend_email_countdown: "Resend email in {seconds} seconds",
   signin_error_subtitle: "Please check your credentials and try again.",
   register_title: "Create an account",
   register_description: "Enter your information below to create your account",
@@ -6,8 +13,28 @@ export default {
   register_privacy: "Terms of Service",
   register_privacy_link: "and our",
   register_privacy_link_2: "Privacy Policy",
+  password_forgot_title: "Forgot password?",
+  password_forgot_subtitle: "Enter your email to reset your password",
+
+  success: {
+    password_forgot_success: "Email sent",
+    reset_password_success: "Password reset successfully",
+  },
+
   error: {
     invalid_credentials: "Invalid credentials or account does not exist",
+    upload_failed: "Upload failed",
+    generic_error: "Error during operation",
+    sending_email: "Error sending email",
+  },
+
+  backend_errors: {
+    EMAIL_ALREADY_EXISTS: "Email already exists",
+    INVALID_FILE_TYPE: "Invalid file type",
+    FILE_TOO_LARGE: "File too large",
+    NO_FILE_UPLOADED: "No file uploaded",
+    IMAGE_PROCESSING_ERROR: "Image processing error",
+    upload_failed: "Upload failed",
   },
 
   profile: {
@@ -293,5 +320,11 @@ export default {
     dashboard: "Dashboard",
     home: "Home",
     changelog: "Changelog",
+    stop_impersonation_button: "Stop impersonation",
+    impersonating_user_label: "Impersonating user",
+    re_hello: "Re Hello",
+    back_to_login: "Back to login",
+    sending: "Sending...",
+    send_me_link: "Send me a link",
   },
 } as const;

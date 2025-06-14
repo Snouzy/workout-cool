@@ -9,22 +9,12 @@ import { Button } from "@/components/ui/button";
 interface QuitWorkoutDialogProps {
   isOpen: boolean;
   onClose: VoidFunction;
-  onQuitWithSave: VoidFunction;
   onQuitWithoutSave: VoidFunction;
-  elapsedTime: string;
   exercisesCompleted: number;
   totalExercises: number;
 }
 
-export function QuitWorkoutDialog({
-  isOpen,
-  onClose,
-  onQuitWithSave,
-  onQuitWithoutSave,
-  elapsedTime,
-  exercisesCompleted,
-  totalExercises,
-}: QuitWorkoutDialogProps) {
+export function QuitWorkoutDialog({ isOpen, onClose, onQuitWithoutSave, exercisesCompleted, totalExercises }: QuitWorkoutDialogProps) {
   const t = useI18n();
 
   return (

@@ -38,6 +38,6 @@ export const signUpAction = actionClient.schema(signUpSchema).action(async ({ pa
     return user;
   } catch (error) {
     console.error(error);
-    throw new ActionError(t("EMAIL_ALREADY_EXISTS"));
+    throw new ActionError(t("backend_errors.EMAIL_ALREADY_EXISTS"));
   }
 });

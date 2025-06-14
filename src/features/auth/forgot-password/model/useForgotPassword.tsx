@@ -21,14 +21,14 @@ export const useForgotPassword = () => {
       });
 
       if (error) {
-        setFieldError(t("error_sending_email"));
+        setFieldError(t("error.sending_email"));
         return;
       }
 
       setIsEmailSent(true);
     } catch (error) {
       console.error(error);
-      setFieldError(t("generic_error"));
+      setFieldError(t("error.generic_error"));
     } finally {
       setIsLoading(false);
     }

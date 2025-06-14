@@ -8,8 +8,9 @@ import { VerifyEmail } from "@emails/VerifyEmail";
 import { ResetPasswordEmail } from "@emails/ResetPasswordEmail";
 import { prisma } from "@/shared/lib/prisma";
 import { sendEmail } from "@/shared/lib/mail/sendEmail";
-import { hashStringWithSalt } from "@/features/settings/update-password/lib/hash";
+import { hashStringWithSalt } from "@/features/update-password/lib/hash";
 import { env } from "@/env";
+
 export const auth = betterAuth({
   // trustedOrigins: [SiteConfig.prodUrl, "localhost:3000", "https://better-auth.com", "http://localhost:3000"],
   trustedOrigins: ["*"],

@@ -40,7 +40,7 @@ export const ContactSupportDialog = (props: ContactSupportDialogProps) => {
     const action = await contactSupportAction(values);
 
     if (!action || !action.data) {
-      brandedToast({ title: action?.serverError ?? t("generic_error"), variant: "error" });
+      brandedToast({ title: action?.serverError ?? t("error.generic_error"), variant: "error" });
       return;
     }
 

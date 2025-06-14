@@ -1,3 +1,5 @@
+import { brandedToast } from "@/components/ui/toast";
+
 import { workoutSessionLocal } from "./workout-session.local";
 import { workoutSessionApi } from "./workout-session.api";
 
@@ -8,7 +10,7 @@ export async function syncLocalWorkoutSessions() {
       const { id: serverId } = await workoutSessionApi.create(session);
       workoutSessionLocal.markSynced(session.id, serverId);
     } catch (e) {
-      // Gérer l'erreur (toast, etc.)
+      brandedToast({ title: "SYNC ERROR", variant: "error" });
     }
   }
   workoutSessionLocal.purgeSynced();

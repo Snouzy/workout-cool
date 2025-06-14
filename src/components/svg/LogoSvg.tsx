@@ -4,18 +4,18 @@ export type LogoSvgProps = ComponentPropsWithoutRef<"svg"> & { size?: number };
 
 export const LogoSvg = ({ size = 32, ...props }: LogoSvgProps) => {
   return (
-    <svg height={size} width={size} viewBox="0 0 100 40" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <svg height={size} viewBox="0 0 100 40" width={size} xmlns="http://www.w3.org/2000/svg" {...props}>
       {/* Disque gauche */}
-      <circle cx="15" cy="20" r="12" fill="currentColor" className="opacity-90" />
+      <circle className="opacity-90" cx="15" cy="20" fill="currentColor" r="12" />
 
       {/* Barre centrale */}
-      <rect x="12" y="18" width="76" height="4" fill="currentColor" rx="2" />
+      <rect fill="currentColor" height="4" rx="2" width="76" x="12" y="18" />
 
       {/* Disque droit */}
-      <circle cx="85" cy="20" r="12" fill="currentColor" className="opacity-90" />
+      <circle className="opacity-90" cx="85" cy="20" fill="currentColor" r="12" />
 
       {/* Poignée centrale (optionnel pour plus de détail) */}
-      <rect x="40" y="16" width="20" height="8" fill="none" stroke="currentColor" strokeWidth="1" rx="4" className="opacity-50" />
+      <rect className="opacity-50" fill="none" height="8" rx="4" stroke="currentColor" strokeWidth="1" width="20" x="40" y="16" />
     </svg>
   );
 };

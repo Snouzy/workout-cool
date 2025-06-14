@@ -274,6 +274,8 @@ model WorkoutSession {
   endedAt   DateTime?
   duration  Int? // en secondes
   exercises WorkoutSessionExercise[]
+
+  @@map("workout_sessions")
 }
 
 model WorkoutSessionExercise {
@@ -284,6 +286,8 @@ model WorkoutSessionExercise {
   workoutSession   WorkoutSession @relation(fields: [workoutSessionId], references: [id])
   exercise         Exercise       @relation(fields: [exerciseId], references: [id])
   sets             WorkoutSet[]
+
+  @@map("workout_session_exercises")
 }
 
 model WorkoutSet {
@@ -300,6 +304,8 @@ model WorkoutSet {
   units                    WorkoutSetUnit[]       @default([])
   completed                Boolean                @default(false)
   workoutSessionExercise   WorkoutSessionExercise @relation(fields: [workoutSessionExerciseId], references: [id])
+
+  @@map("workout_sets")
 }
 
 enum WorkoutSetType {

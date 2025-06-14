@@ -354,6 +354,9 @@ importers:
       daisyui:
         specifier: ^5.0.43
         version: 5.0.43
+      env-cmd:
+        specifier: ^10.1.0
+        version: 10.1.0
       eslint:
         specifier: ^9.23.0
         version: 9.29.0(jiti@2.4.2)
@@ -3100,6 +3103,11 @@ packages:
   entities@6.0.1:
     resolution: {integrity: sha512-aN97NXWF6AWBTahfVOIrB/NShkzi5H7F9r1s9mD3cDj4Ko5f2qhhVoYMibXF7GlLveb/D2ioWay8lxI97Ven3g==}
     engines: {node: '>=0.12'}
+
+  env-cmd@10.1.0:
+    resolution: {integrity: sha512-mMdWTT9XKN7yNth/6N6g2GuKuJTsKMDHlQFUDacb/heQRRWOTIZ42t1rMHnQu4jYxU1ajdTeJM+9eEETlqToMA==}
+    engines: {node: '>=8.0.0'}
+    hasBin: true
 
   es-abstract@1.24.0:
     resolution: {integrity: sha512-WSzPgsdLtTcQwm4CROfS5ju2Wa1QQcVeT37jFjYzdFz1r9ahadC8B8/a4qxJxM+09F18iumCdRmlr96ZYkQvEg==}
@@ -8331,6 +8339,11 @@ snapshots:
   entities@4.5.0: {}
 
   entities@6.0.1: {}
+
+  env-cmd@10.1.0:
+    dependencies:
+      commander: 4.1.1
+      cross-spawn: 7.0.6
 
   es-abstract@1.24.0:
     dependencies:

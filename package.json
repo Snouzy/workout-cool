@@ -13,7 +13,8 @@
     "postinstall": "prisma generate",
     "lint": "next lint",
     "import:exercises-full": "tsx scripts/import-exercises-with-attributes.ts",
-    "db:seed": "pnpm run import:exercises-full ./data/sample-exercises.csv"
+    "db:seed": "pnpm run import:exercises-full ./data/sample-exercises.csv",
+    "migrate:prod": "env-cmd -f .env.production prisma migrate deploy"
   },
   "resolutions": {
     "prettier": "^3.4.2"
@@ -135,6 +136,7 @@
     "@typescript-eslint/parser": "^8.29.0",
     "autoprefixer": "^10.4.21",
     "daisyui": "^5.0.43",
+    "env-cmd": "^10.1.0",
     "eslint": "^9.23.0",
     "eslint-config-next": "15.2.3",
     "eslint-plugin-import": "^2.31.0",

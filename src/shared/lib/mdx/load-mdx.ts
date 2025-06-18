@@ -3,6 +3,8 @@ import { readFile } from "fs/promises";
 
 import { compileMDX } from "next-mdx-remote/rsc";
 
+import { WorkoutLol } from "@/components/ui/workout-lol";
+
 export async function getLocalizedMdx(
   pageSlug: string, // ex: "privacy-policy"
   locale: string, // ex: "fr" or "en"
@@ -15,6 +17,9 @@ export async function getLocalizedMdx(
     source,
     options: {
       parseFrontmatter: true,
+    },
+    components: {
+      WorkoutLol,
     },
   });
 

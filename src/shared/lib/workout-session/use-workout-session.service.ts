@@ -73,16 +73,16 @@ export const useWorkoutSessionService = () => {
     return workoutSessionLocal.add(session);
   };
 
-  const update = async (id: string, data: Partial<WorkoutSession>) => {
+  const update = async (_id: string, _data: Partial<WorkoutSession>) => {
     // if (userId) {
-    //   // TODO: Créer une action updateWorkoutSessionAction
+    //   // TODO: create updateWorkoutSessionAction
     //   const result = await updateWorkoutSessionAction({ id, data });
     //   if (result.serverError) throw new Error(result.serverError);
     // }
     // return workoutSessionLocal.update(id, data);
   };
 
-  const complete = async (id: string) => {
+  const complete = async (_id: string) => {
     // const data = {
     //   status: "completed" as const,
     //   endedAt: new Date().toISOString(),

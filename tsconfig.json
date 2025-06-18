@@ -27,5 +27,5 @@
     ]
   },
   "exclude": ["node_modules", "src/utils/inapp.js", "src/utils/externalLinkOpener.js", "src/utils/browserEscape.js"],
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "tailwind.config.ts", "public/scripts/pixel.js"]
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "tailwind.config.ts"]
 }

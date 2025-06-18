@@ -13,7 +13,6 @@ import { Header } from "@/features/layout/Header";
 import { Footer } from "@/features/layout/Footer";
 import { TailwindIndicator } from "@/components/utils/TailwindIndicator";
 import { NextTopLoader } from "@/components/ui/next-top-loader";
-import FacebookPixel from "@/components/FacebookPixel";
 
 import { Providers } from "./providers";
 
@@ -163,7 +162,6 @@ export default async function RootLayout({ params, children }: RootLayoutProps) 
             </div>
 
             <TailwindIndicator />
-            <FacebookPixel />
           </Providers>
         </body>
       </html>

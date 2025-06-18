@@ -60,11 +60,16 @@ export default {
     title: "Nouveautés",
     release_notes: "Notes",
     notes: {
-      note_2024_06_01: {
+      note_2025_06_18: {
+        title: "🚀 Mis en avant #1 sur Hacker News !",
+        content:
+          "Workout.cool a atteint le top spot sur Hacker News ! Merci à tous pour le support incroyable — bienvenue à tous les nouveaux utilisateurs ! 💪",
+      },
+      note_2025_06_01: {
         title: "🎉 Nouveau : Dialogue des notes de version",
         content: "Vous pouvez maintenant voir les nouveautés directement depuis l'en-tête ! Restez à l'écoute pour plus de mises à jour.",
       },
-      note_2024_05_20: {
+      note_2025_05_20: {
         title: "Améliorations de l'interface",
         content: "Amélioration de la réactivité mobile et ajout d'effets de survol subtils aux boutons.",
       },

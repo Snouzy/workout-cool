@@ -6,13 +6,18 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
-    date: "2024-06-01",
-    titleKey: "release_notes.notes.note_2024_06_01.title",
-    contentKey: "release_notes.notes.note_2024_06_01.content",
+    date: "2025-06-18",
+    titleKey: "release_notes.notes.note_2025_06_18.title",
+    contentKey: "release_notes.notes.note_2025_06_18.content",
   },
   {
-    date: "2024-05-20",
-    titleKey: "release_notes.notes.note_2024_05_20.title",
-    contentKey: "release_notes.notes.note_2024_05_20.content",
+    date: "2025-06-01",
+    titleKey: "release_notes.notes.note_2025_06_01.title",
+    contentKey: "release_notes.notes.note_2025_06_01.content",
+  },
+  {
+    date: "2025-05-20",
+    titleKey: "release_notes.notes.note_2025_05_20.title",
+    contentKey: "release_notes.notes.note_2025_05_20.content",
   },
 ];

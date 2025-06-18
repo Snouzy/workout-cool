@@ -60,11 +60,16 @@ export default {
     title: "What's New",
     release_notes: "Release Notes",
     notes: {
-      note_2024_06_01: {
+      note_2025_06_18: {
+        title: "🚀 Featured #1 on Hacker News!",
+        content:
+          "Workout.cool reached the top spot on Hacker News! Thanks to everyone for the amazing support and welcome to all the new users! 💪",
+      },
+      note_2025_06_01: {
         title: "🎉 New: Release Notes Dialog",
         content: "You can now view what's new directly from the header! Stay tuned for more updates.",
       },
-      note_2024_05_20: {
+      note_2025_05_20: {
         title: "UI Improvements",
         content: "Improved mobile responsiveness and added subtle hover effects to buttons.",
       },

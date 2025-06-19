@@ -1,7 +1,3 @@
-import { withPlausibleProxy } from "next-plausible";
-
-import { env } from "@/env";
-
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
@@ -17,6 +13,22 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  experimental: {
+    turbo: {
+      rules: {
+        "*.svg": {
+          loaders: ["@svgr/webpack"],
+          as: "*.js",
+        },
+      },
+    },
+  },
+  webpack: (config, { dev }) => {
+    if (dev) {
+      config.devtool = "cheap-module-source-map";
+    }
+    return config;
+  },
 };
 
-export default withPlausibleProxy()(nextConfig);
+export default nextConfig;

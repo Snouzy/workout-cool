@@ -1,6 +1,5 @@
 "use client";
 
-import { usePlausible } from "next-plausible";
 import { AlertCircle, CheckCircle } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useMutation } from "@tanstack/react-query";
@@ -27,12 +26,10 @@ export const EmailForm = ({
   const form = useZodForm({
     schema: EmailActionSchema,
   });
-  const plausible = usePlausible();
 
   const submit = useMutation({
     mutationFn: async ({ email }: EmailActionSchemaType) => {
       const action = await addEmailAction({ email });
-      plausible("Email+Submit");
 
       if (action?.data) {
         return action.data;

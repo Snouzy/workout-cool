@@ -11,8 +11,6 @@ export function WorkoutBuilderFooter({
   onPrevious,
   onNext,
   onStartWorkout,
-  selectedEquipment,
-  selectedMuscles,
 }: {
   currentStep: number;
   totalSteps: number;
@@ -20,8 +18,6 @@ export function WorkoutBuilderFooter({
   onPrevious: VoidFunction;
   onNext: VoidFunction;
   onStartWorkout?: VoidFunction;
-  selectedEquipment: any[];
-  selectedMuscles: any[];
 }) {
   const t = useI18n();
   const isFirstStep = currentStep === 1;

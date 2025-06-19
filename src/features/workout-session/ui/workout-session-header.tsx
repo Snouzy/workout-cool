@@ -1,13 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Clock, Play, Pause, RotateCcw, X, Target, Weight } from "lucide-react";
+import { X, Target, Weight } from "lucide-react";
 
 import { useCurrentLocale, useI18n } from "locales/client";
 import { type WeightUnit } from "@/shared/lib/weight-conversion";
 import { cn } from "@/shared/lib/utils";
 import { useWorkoutSession } from "@/features/workout-session/model/use-workout-session";
-import { Timer } from "@/components/ui/timer";
 import { Button } from "@/components/ui/button";
 
 import { QuitWorkoutDialog } from "../../workout-builder/ui/quit-workout-dialog";
@@ -88,44 +87,6 @@ export function WorkoutSessionHeader({
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            {/* Card 1: elapsed time */}
-            <div className="bg-white dark:bg-slate-800 rounded-lg p-3 border border-slate-200 dark:border-slate-700 transition-colors duration-200 dark:text-white dark:hover:bg-slate-700">
-              <div className="flex items-center gap-2 mb-2">
-                <div className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center">
-                  <Clock className="h-4 w-4 text-blue-400" />
-                </div>
-                <div>
-                  <h3 className="text-slate-700 dark:text-white font-semibold text-base">{t("workout_builder.session.chronometer")}</h3>
-                </div>
-              </div>
-
-              <div className="text-center">
-                <div className="text-2xl font-mono font-bold text-slate-900 dark:text-white mb-2 tracking-wider">
-                  <Timer initialSeconds={typeof elapsedTime === "number" ? elapsedTime : 0} isRunning={isTimerRunning} key={resetCount} />
-                </div>
-
-                <div className="flex items-center justify-center gap-2">
-                  <Button
-                    className={cn(
-                      "w-8 h-8 rounded-full p-0 text-white",
-                      isTimerRunning ? "bg-amber-500 hover:bg-amber-600" : "bg-emerald-500 hover:bg-emerald-600",
-                    )}
-                    onClick={onToggleTimer}
-                  >
-                    {isTimerRunning ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
-                  </Button>
-
-                  <Button
-                    className="w-8 h-8 rounded-full p-0 border-slate-200 text-slate-400 hover:bg-slate-200 dark:border-slate-600 hover:dark:bg-slate-700"
-                    onClick={handleReset}
-                    variant="outline"
-                  >
-                    <RotateCcw className="h-4 w-4" />
-                  </Button>
-                </div>
-              </div>
-            </div>
-
             {/* Card 2: progress */}
             <div className="bg-white dark:bg-slate-800 rounded-lg p-3 border border-slate-200 dark:border-slate-700 transition-colors duration-200 dark:text-white dark:hover:bg-slate-700">
               <div className="flex items-center gap-2 mb-2">

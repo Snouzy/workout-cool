@@ -4,6 +4,7 @@ import { getI18n } from "locales/server";
 import { TFunction } from "locales/client";
 import { cn } from "@/shared/lib/utils";
 import { paths } from "@/shared/constants/paths";
+import { WorkoutSessionTimer } from "@/features/workout-session/ui/workout-session-timer";
 import { Link } from "@/components/ui/link";
 import { DiscordSvg } from "@/components/svg/DiscordSvg";
 
@@ -38,10 +39,11 @@ const NAVIGATION = (t: TFunction) => [
 
 export const Footer = async () => {
   const t = await getI18n();
-
   return (
-    <footer className="border-t border-base-300 dark:border-gray-800 bg-base-100 dark:bg-black px-4 sm:px-6 py-4 rounded-b-lg">
-      <div className="flex  sm:flex-row justify-between items-center gap-4">
+    <footer className="relative border-t border-base-300 dark:border-gray-800 bg-base-100 dark:bg-black px-4 sm:px-6 py-4 rounded-b-lg">
+      <WorkoutSessionTimer />
+
+      <div className="flex sm:flex-row justify-between items-center gap-4">
         {/* Social Icons */}
         <div className="flex gap-2">
           {SOCIAL_LINKS.map(({ href, icon: Icon, label }) => (

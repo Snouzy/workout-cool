@@ -23,12 +23,12 @@ const nextConfig: NextConfig = {
       },
     },
   },
-  webpack: (config, { dev }) => {
-    if (dev) {
-      config.devtool = "cheap-module-source-map";
-    }
-    return config;
-  },
+  // webpack: (config, { dev }) => {
+  //   if (dev) {
+  //     config.devtool = "cheap-module-source-map";
+  //   }
+  //   return config;
+  // },
 };
 
 export default nextConfig;

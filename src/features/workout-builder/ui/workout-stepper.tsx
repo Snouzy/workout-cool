@@ -84,7 +84,6 @@ export function WorkoutStepper() {
 
   const handleShuffleExercise = async (exerciseId: string, muscle: string) => {
     try {
-      // Convertir le muscle string vers enum
       const muscleEnum = muscle as ExerciseAttributeValueEnum;
       await shuffleExercise(exerciseId, muscleEnum);
     } catch (error) {
@@ -96,7 +95,6 @@ export function WorkoutStepper() {
   const handlePickExercise = async (exerciseId: string) => {
     try {
       await pickExercise(exerciseId);
-      // Optionnel: afficher un toast de succès
       console.log("Exercise picked successfully!");
     } catch (error) {
       console.error("Error picking exercise:", error);
@@ -255,8 +253,6 @@ export function WorkoutStepper() {
         onNext={nextStep}
         onPrevious={prevStep}
         onStartWorkout={handleStartWorkout}
-        selectedEquipment={selectedEquipment}
-        selectedMuscles={selectedMuscles}
         totalSteps={STEPPER_STEPS.length}
       />
     </div>

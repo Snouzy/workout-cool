@@ -92,7 +92,6 @@ export const ExercisesSelection = ({
       </div>
     );
   }
-  console.log("flatExercises:", flatExercises);
 
   return (
     <div className="space-y-6">

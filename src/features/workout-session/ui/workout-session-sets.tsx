@@ -207,7 +207,7 @@ export function WorkoutSessionSets({
         })}
       </ol>
       {isWorkoutActive && (
-        <div className="flex justify-center mt-8">
+        <div className="flex justify-center mt-8 mb-24">
           <Button
             aria-label="Terminer la séance"
             className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white font-bold px-8 py-3 text-lg rounded-2xl border border-green-700 transition-all duration-200 active:scale-95 focus:ring-2 focus:ring-green-400"

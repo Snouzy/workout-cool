@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { useTheme } from "next-themes";
 import { Check } from "lucide-react";
 
 import { cn } from "@/shared/lib/utils";
@@ -119,7 +118,6 @@ function StepperStep({
 }
 
 export function StepperHeader({ steps, currentStep, onStepClick }: StepperHeaderProps) {
-  const { resolvedTheme } = useTheme();
   return (
     <div className={cn("w-full my-8 px-2 sm:px-6")}>
       {/* Layout mobile - vertical */}

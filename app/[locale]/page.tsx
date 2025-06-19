@@ -7,7 +7,7 @@ export default async function HomePage() {
   // const t = await getI18n();
 
   return (
-    <div className="bg-background text-foreground relative flex h-fit flex-col h-full">
+    <div className="bg-background text-foreground relative flex  flex-col h-full">
       <WorkoutStepper />
     </div>
   );

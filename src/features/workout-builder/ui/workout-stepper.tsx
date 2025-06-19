@@ -49,6 +49,7 @@ export function WorkoutStepper() {
     pickExercise,
     isShuffling,
     goToStep,
+    deleteExercise,
   } = useWorkoutStepper();
 
   useEffect(() => {
@@ -103,9 +104,8 @@ export function WorkoutStepper() {
     }
   };
 
-  const handleDeleteExercise = (exerciseId: string, muscle: string) => {
-    alert("TODO : Delete exercise");
-    console.log("Delete exercise:", exerciseId, "for muscle:", muscle);
+  const handleDeleteExercise = (exerciseId: string) => {
+    deleteExercise(exerciseId);
   };
 
   const handleAddExercise = () => {

@@ -29,6 +29,7 @@ interface WorkoutBuilderState {
   setExercisesOrder: (order: string[]) => void;
   shuffleExercise: (exerciseId: string, muscle: ExerciseAttributeValueEnum) => Promise<void>;
   pickExercise: (exerciseId: string) => Promise<void>;
+  deleteExercise: (exerciseId: string) => void;
   loadFromSession: (params: {
     equipment: ExerciseAttributeValueEnum[];
     muscles: ExerciseAttributeValueEnum[];
@@ -89,6 +90,17 @@ export const useWorkoutBuilderStore = create<WorkoutBuilderState>((set, get) => 
   },
 
   setExercisesOrder: (order) => set({ exercisesOrder: order }),
+
+  deleteExercise: (exerciseId) =>
+    set((state) => ({
+      exercisesByMuscle: state.exercisesByMuscle
+        .map((group) => ({
+          ...group,
+          exercises: group.exercises.filter((ex: any) => ex.id !== exerciseId),
+        }))
+        .filter((group) => group.exercises.length > 0),
+      exercisesOrder: state.exercisesOrder.filter((id) => id !== exerciseId),
+    })),
 
   shuffleExercise: async (exerciseId, muscle) => {
     set({ isShuffling: true });

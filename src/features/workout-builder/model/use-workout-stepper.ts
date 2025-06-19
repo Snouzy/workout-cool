@@ -23,6 +23,7 @@ export function useWorkoutStepper() {
     shuffleExercise,
     pickExercise,
     isShuffling,
+    deleteExercise,
   } = useWorkoutBuilderStore();
 
   const canProceedToStep2 = selectedEquipment.length > 0;
@@ -71,5 +72,8 @@ export function useWorkoutStepper() {
 
     // pick
     pickExercise,
+
+    // delete
+    deleteExercise,
   };
 }

@@ -66,16 +66,25 @@ export function getYouTubeEmbedUrl(url: string, options: YouTubeEmbedOptions = {
 
   // --- Construct Embed URL ---
 
-  const baseEmbedUrl = "https://www.youtube.com/embed/";
+  const baseEmbedUrl = "https://www.youtube-nocookie.com/embed/";
   const queryParams = new URLSearchParams();
 
   if (options.autoplay) {
     queryParams.set("autoplay", "1");
   }
-  // Add other options here
-  // if (options.controls !== undefined) queryParams.set('controls', options.controls ? '1' : '0');
-  // if (options.loop) queryParams.set('loop', '1'); // Note: loop often requires playlist param too
-  // if (options.start) queryParams.set('start', String(options.start));
+
+  // Maximum `YouTube` branding removal
+  queryParams.set("modestbranding", "1");
+  queryParams.set("rel", "0");
+  queryParams.set("showinfo", "0");
+  queryParams.set("mute", "1");
+  queryParams.set("controls", "1");
+  queryParams.set("iv_load_policy", "3"); // Hide annotations
+  queryParams.set("cc_load_policy", "0"); // Hide captions by default
+  queryParams.set("fs", "0"); // Disable fullscreen button
+  queryParams.set("disablekb", "1"); // Disable keyboard controls
+  queryParams.set("playsinline", "1"); // Mobile optimization
+  queryParams.set("origin", typeof window !== "undefined" ? window.location.origin : "");
 
   // Prioritize playlist embed if playlistId is found
   if (playlistId) {

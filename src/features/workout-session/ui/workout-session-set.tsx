@@ -1,7 +1,9 @@
 import { Plus, Minus, Trash2 } from "lucide-react";
 
 import { useI18n } from "locales/client";
+import { AVAILABLE_WORKOUT_SET_TYPES, MAX_WORKOUT_SET_COLUMNS } from "@/shared/constants/workout-set-types";
 import { WorkoutSet, WorkoutSetType, WorkoutSetUnit } from "@/features/workout-session/types/workout-set";
+import { getWorkoutSetTypeLabels } from "@/features/workout-session/lib/workout-set-labels";
 import { Button } from "@/components/ui/button";
 
 interface WorkoutSetRowProps {
@@ -12,18 +14,10 @@ interface WorkoutSetRowProps {
   onRemove: () => void;
 }
 
-const ALL_WORKOUT_SET_TYPES: WorkoutSetType[] = ["TIME", "WEIGHT", "REPS", "BODYWEIGHT"];
-const maxColumns = 4;
-
 export function WorkoutSessionSet({ set, setIndex, onChange, onFinish, onRemove }: WorkoutSetRowProps) {
   const t = useI18n();
   const types = set.types || [];
-  const typeLabels: Record<WorkoutSetType, string> = {
-    TIME: t("workout_builder.session.time"),
-    WEIGHT: t("workout_builder.session.weight"),
-    REPS: t("workout_builder.session.reps"),
-    BODYWEIGHT: t("workout_builder.session.bodyweight"),
-  };
+  const typeLabels = getWorkoutSetTypeLabels(t);
 
   const handleTypeChange = (columnIndex: number) => (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newTypes = [...types];
@@ -50,8 +44,8 @@ export function WorkoutSessionSet({ set, setIndex, onChange, onFinish, onRemove 
   };
 
   const addColumn = () => {
-    if (types.length < maxColumns) {
-      const firstAvailableType = ALL_WORKOUT_SET_TYPES.find((t) => !types.includes(t));
+    if (types.length < MAX_WORKOUT_SET_COLUMNS) {
+      const firstAvailableType = AVAILABLE_WORKOUT_SET_TYPES.find((t) => !types.includes(t));
       if (firstAvailableType) {
         const newTypes = [...types, firstAvailableType];
         onChange(setIndex, { types: newTypes });
@@ -182,9 +176,7 @@ export function WorkoutSessionSet({ set, setIndex, onChange, onFinish, onRemove 
       <div className="flex flex-col md:flex-row gap-6 md:gap-2 w-full">
         {types.map((type, columnIndex) => {
           // An option is available if it's not used by another column, OR it's the current column's type.
-          const availableTypes = ALL_WORKOUT_SET_TYPES.filter(
-            (option) => !types.includes(option) || option === type,
-          );
+          const availableTypes = AVAILABLE_WORKOUT_SET_TYPES.filter((option) => !types.includes(option) || option === type);
 
           return (
             <div className="flex flex-col w-full md:w-auto" key={columnIndex}>
@@ -219,7 +211,7 @@ export function WorkoutSessionSet({ set, setIndex, onChange, onFinish, onRemove 
       </div>
 
       {/* Add column button */}
-      {types.length < maxColumns && !set.completed && (
+      {types.length < MAX_WORKOUT_SET_COLUMNS && !set.completed && (
         <div className="flex w-full justify-start mt-1">
           <Button
             className="font-bold px-4 py-2 text-sm rounded-xl w-full md:w-auto mt-2"

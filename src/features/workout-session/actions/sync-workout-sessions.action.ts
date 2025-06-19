@@ -5,17 +5,17 @@ import { ExerciseAttributeValueEnum } from "@prisma/client";
 
 import { workoutSessionStatuses } from "@/shared/lib/workout-session/types/workout-session";
 import { prisma } from "@/shared/lib/prisma";
+import { ALL_WORKOUT_SET_TYPES, WORKOUT_SET_UNITS_TUPLE } from "@/shared/constants/workout-set-types";
 import { actionClient } from "@/shared/api/safe-actions";
 import { serverAuth } from "@/entities/user/model/get-server-session-user";
 
-// Schéma WorkoutSet
 const workoutSetSchema = z.object({
   id: z.string(),
   setIndex: z.number(),
-  types: z.array(z.enum(["TIME", "WEIGHT", "REPS", "BODYWEIGHT", "NA"])),
+  types: z.array(z.enum(ALL_WORKOUT_SET_TYPES)),
   valuesInt: z.array(z.number()).optional(),
   valuesSec: z.array(z.number()).optional(),
-  units: z.array(z.enum(["kg", "lbs"])).optional(),
+  units: z.array(z.enum(WORKOUT_SET_UNITS_TUPLE)).optional(),
   completed: z.boolean(),
 });
 

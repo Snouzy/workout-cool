@@ -94,10 +94,15 @@ export const useWorkoutBuilderStore = create<WorkoutBuilderState>((set, get) => 
   deleteExercise: (exerciseId) =>
     set((state) => ({
       exercisesByMuscle: state.exercisesByMuscle
-        .map((group) => ({
-          ...group,
-          exercises: group.exercises.filter((ex: any) => ex.id !== exerciseId),
-        }))
+        .map((group) => {
+          const filteredExercises = group.exercises.filter((ex: any) => ex.id !== exerciseId);
+
+          if (filteredExercises.length === group.exercises.length) {
+            return group;
+          }
+
+          return { ...group, exercises: filteredExercises };
+        })
         .filter((group) => group.exercises.length > 0),
       exercisesOrder: state.exercisesOrder.filter((id) => id !== exerciseId),
     })),

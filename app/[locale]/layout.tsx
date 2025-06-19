@@ -13,6 +13,7 @@ import { Header } from "@/features/layout/Header";
 import { Footer } from "@/features/layout/Footer";
 import { TailwindIndicator } from "@/components/utils/TailwindIndicator";
 import { NextTopLoader } from "@/components/ui/next-top-loader";
+import { ServiceWorkerRegistration } from "@/components/pwa/ServiceWorkerRegistration";
 
 import { Providers } from "./providers";
 
@@ -116,6 +117,17 @@ export default async function RootLayout({ params, children }: RootLayoutProps) 
           <meta charSet="UTF-8" />
           <meta content="width=device-width, initial-scale=1, maximum-scale=1 viewport-fit=cover" name="viewport" />
 
+          {/* PWA Meta Tags */}
+          <meta content="yes" name="apple-mobile-web-app-capable" />
+          <meta content="default" name="apple-mobile-web-app-status-bar-style" />
+          <meta content="Workout Cool" name="apple-mobile-web-app-title" />
+          <meta content="yes" name="mobile-web-app-capable" />
+          <meta content="#FF5722" name="msapplication-TileColor" />
+          <meta content="/android-chrome-192x192.png" name="msapplication-TileImage" />
+          
+          {/* PWA Manifest */}
+          <link href="/manifest.json" rel="manifest" />
+
           {/* eslint-disable-next-line @next/next/no-page-custom-font */}
           <link as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="preload" />
 
@@ -123,8 +135,8 @@ export default async function RootLayout({ params, children }: RootLayoutProps) 
           <link href="https://www.workout.cool/fr" hrefLang="fr" rel="alternate" />
           <link href="https://www.workout.cool/en" hrefLang="en" rel="alternate" />
 
-          {/* Balise theme-color unique, synchronisée dynamiquement */}
-          <meta content="#f3f4f6" name="theme-color" />
+          {/* Theme color for PWA */}
+          <meta content="#FF5722" name="theme-color" />
 
           {/* TODO: maybe add some ads ? */}
           <noscript>
@@ -150,6 +162,7 @@ export default async function RootLayout({ params, children }: RootLayoutProps) 
           suppressHydrationWarning
         >
           <Providers locale={locale}>
+            <ServiceWorkerRegistration />
             <WorkoutSessionsSynchronizer />
             <ThemeSynchronizer />
             <NextTopLoader color="#FF5722" delay={100} showSpinner={false} />

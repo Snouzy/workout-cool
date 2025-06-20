@@ -19,8 +19,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      args:
-        WITH_SAMPLE_DATA: ${WITH_SAMPLE_DATA:-true}
     ports:
       - "${APP_PORT:-3000}:3000"
     depends_on:

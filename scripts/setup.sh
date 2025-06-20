@@ -6,11 +6,16 @@ npx prisma migrate deploy
 echo "Generating Prisma client..."
 npx prisma generate
 
-if [ "$WITH_SAMPLE_DATA" = "true" ]; then
-  echo "Sample data build found, importing sample data..."
-  npx tsx import-exercises-with-attributes.ts ./data/sample-exercises.csv
+if [ "$SEED_SAMPLE_DATA" = "true"  ]; then
+  echo "Seed sample data enabled, importing sample data..."
+    # Import exercises if CSV exists
+    if [ -f "./data/sample-exercises.csv" ]; then
+        npx tsx import-exercises-with-attributes.ts ./data/sample-exercises.csv
+    else
+        echo "No exercises sample data found, skipping import."
+    fi
 else
-  echo "No sample data build found, skipping import."
+  echo "Skipping sample data import."
 fi
 
 echo "Starting the app..."

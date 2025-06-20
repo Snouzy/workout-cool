@@ -13,7 +13,7 @@ help:
 
 # Start Postgres with Docker Compose
 up:
-	docker compose up -d
+	docker compose up -d postgres
 
 # Stop Docker Compose
 down:

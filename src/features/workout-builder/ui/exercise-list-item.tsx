@@ -48,7 +48,7 @@ export function ExerciseListItem({ exercise, muscle, onShuffle, onPick, onDelete
     () => ({
       transform: CSS.Transform.toString(transform),
       transition,
-      zIndex: isDragging ? 50 : undefined,
+      zIndex: isDragging ? 50 : 1,
       boxShadow: isDragging ? "0 4px 16px 0 rgba(0,0,0,0.10)" : undefined,
     }),
     [transform, transition, isDragging],

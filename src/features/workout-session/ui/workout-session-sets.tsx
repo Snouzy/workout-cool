@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Check, Play, ArrowRight, Trophy as TrophyIcon, Plus, Hourglass } from "lucide-react";
@@ -33,10 +33,11 @@ export function WorkoutSessionSets({
   const exerciseDetailsMap = Object.fromEntries(session?.exercises.map((ex) => [ex.id, ex]) || []);
   const [videoModal, setVideoModal] = useState<{ open: boolean; exerciseId?: string }>({ open: false });
   const { syncSessions } = useSyncWorkoutSessions();
+  const prevExerciseIndexRef = useRef<number>(currentExerciseIndex);
 
-  // auto-scroll to current exercise when index changes
+  // auto-scroll to current exercise when index changes (but not when adding sets)
   useEffect(() => {
-    if (session && currentExerciseIndex >= 0) {
+    if (session && currentExerciseIndex >= 0 && prevExerciseIndexRef.current !== currentExerciseIndex) {
       const exerciseElement = document.getElementById(`exercise-${currentExerciseIndex}`);
       if (exerciseElement) {
         const scrollContainer = exerciseElement.closest(".overflow-auto");
@@ -59,6 +60,7 @@ export function WorkoutSessionSets({
           });
         }
       }
+      prevExerciseIndexRef.current = currentExerciseIndex;
     }
   }, [currentExerciseIndex, session]);
 

@@ -80,3 +80,13 @@ jobs:
 
       - name: Build project
         run: pnpm build
+        env:
+          BETTER_AUTH_URL: http://localhost:3000
+          DATABASE_URL: postgresql://user:password@localhost:5432/test_db
+          GOOGLE_CLIENT_ID: test_client_id
+          GOOGLE_CLIENT_SECRET: test_client_secret
+          RESEND_API_KEY: re_test_key
+          BETTER_AUTH_SECRET: test_secret_key_32_chars_minimum
+          OPENPANEL_SECRET_KEY: test_secret
+          NEXT_PUBLIC_OPENPANEL_CLIENT_ID: test_client_id
+          NEXT_PUBLIC_FACEBOOK_PIXEL_ID: 123456789

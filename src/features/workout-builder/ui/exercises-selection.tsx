@@ -43,7 +43,7 @@ export const ExercisesSelection = ({
     }),
     useSensor(TouchSensor, {
       activationConstraint: {
-        delay: 250,
+        delay: 100,
         tolerance: 5,
       },
     }),

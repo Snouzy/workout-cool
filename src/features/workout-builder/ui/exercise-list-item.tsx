@@ -83,7 +83,7 @@ export function ExerciseListItem({ exercise, muscle, onShuffle, onPick, onDelete
         group relative overflow-hidden transition-all duration-300 ease-out
         bg-white dark:bg-slate-900 sm:hover:bg-slate-50 dark:sm:hover:bg-slate-800/70
         border-b border-slate-200 dark:border-slate-700/50
-        hover:shadow-lg hover:shadow-slate-200/50 dark:hover:shadow-slate-900/50
+        sm:hover:shadow-lg sm:hover:shadow-slate-200/50 dark:sm:hover:shadow-slate-900/50
         ${isDragging ? "ring-2 ring-blue-400" : ""}
       `}
       ref={setNodeRef}
@@ -114,7 +114,7 @@ export function ExerciseListItem({ exercise, muscle, onShuffle, onPick, onDelete
                 src={exercise.fullVideoImageUrl}
                 width={40}
               />
-              <div className="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+              <div className="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 sm:group-hover:opacity-100 transition-opacity duration-200">
                 <Play className="h-3 w-3 text-white fill-current" onClick={handleOpenVideo} />
               </div>
             </div>
@@ -136,7 +136,7 @@ export function ExerciseListItem({ exercise, muscle, onShuffle, onPick, onDelete
 
           {/* Nom de l'exercice avec indicateurs */}
           <InlineTooltip className="tooltip tooltip-bottom z-50 max-w-[300px]" title={exerciseName || ""}>
-            <div className="flex-1 min-w-0 ">
+            <div className="flex-1 min-w-0 items">
               <div className="flex items-center gap-3 mb-1">
                 <h3 className="font-semibold text-slate-900 dark:text-slate-200 md:truncate text-sm">{exerciseName}</h3>
               </div>
@@ -146,19 +146,29 @@ export function ExerciseListItem({ exercise, muscle, onShuffle, onPick, onDelete
 
         <div className="flex items-center gap-1 sm:gap-2 shrink-0">
           {/* Bouton shuffle */}
-          <Button className="p-1 sm:p-2" disabled={isShuffling} onClick={handleShuffle} size="small" variant="outline">
-            {isShuffling ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Shuffle className="h-3.5 w-3.5" />}
-            <span className="hidden sm:inline">{t("workout_builder.exercise.shuffle")}</span>
+          <Button
+            className="p-2 sm:p-2 min-h-[44px] min-w-[44px] sm:min-h-auto sm:min-w-auto touch-manipulation"
+            disabled={isShuffling}
+            onClick={handleShuffle}
+            size="small"
+            variant="outline"
+          >
+            {isShuffling ? (
+              <Loader2 className="h-4 w-4 sm:h-3.5 sm:w-3.5 animate-spin" />
+            ) : (
+              <Shuffle className="h-4 w-4 sm:h-3.5 sm:w-3.5" />
+            )}
+            <span className="hidden sm:inline ml-1">{t("workout_builder.exercise.shuffle")}</span>
           </Button>
 
           {/* Bouton delete */}
           <Button
-            className="p-1 sm:p-2 bg-red-50 dark:bg-red-950/50 hover:bg-red-100 dark:hover:bg-red-950 text-red-600 dark:text-red-400 border-0 rounded-lg  group-hover:opacity-100 transition-all duration-200 hover:scale-110"
+            className="p-2 sm:p-2 min-h-[44px] min-w-[44px] sm:min-h-auto sm:min-w-auto bg-red-50 dark:bg-red-950/50 sm:hover:bg-red-100 dark:sm:hover:bg-red-950 text-red-600 dark:text-red-400 border-0 rounded-lg opacity-100 sm:group-hover:opacity-100 transition-all duration-200 sm:hover:scale-110 touch-manipulation"
             onClick={handleDelete}
             size="small"
             variant="ghost"
           >
-            <Trash2 className="h-3.5 w-3.5" />
+            <Trash2 className="h-4 w-4 sm:h-3.5 sm:w-3.5" />
           </Button>
         </div>
       </div>

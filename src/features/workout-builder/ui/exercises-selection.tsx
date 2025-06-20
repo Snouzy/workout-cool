@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback, useMemo } from "react";
 import { Loader2, Plus } from "lucide-react";
 import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
-import { DndContext, closestCenter, PointerSensor, useSensor, useSensors, DragEndEvent } from "@dnd-kit/core";
+import { DndContext, closestCenter, TouchSensor, MouseSensor, useSensor, useSensors, DragEndEvent } from "@dnd-kit/core";
 
 import { useI18n } from "locales/client";
 
@@ -36,9 +36,15 @@ export const ExercisesSelection = ({
   const [flatExercises, setFlatExercises] = useState<{ id: string; muscle: string; exercise: ExerciseWithAttributes }[]>([]);
   const { setExercisesOrder, exercisesOrder } = useWorkoutStepper();
   const sensors = useSensors(
-    useSensor(PointerSensor, {
+    useSensor(MouseSensor, {
       activationConstraint: {
         distance: 5,
+      },
+    }),
+    useSensor(TouchSensor, {
+      activationConstraint: {
+        delay: 250,
+        tolerance: 5,
       },
     }),
   );
@@ -47,7 +53,7 @@ export const ExercisesSelection = ({
 
   const flatExercisesComputed = useMemo(() => {
     if (exercisesByMuscle.length === 0) return [];
-    
+
     const flat = exercisesByMuscle.flatMap((group) =>
       group.exercises.map((exercise) => ({
         id: exercise.id,
@@ -57,11 +63,11 @@ export const ExercisesSelection = ({
     );
 
     if (exercisesOrder.length === 0) return flat;
-    
-    const exerciseMap = new Map(flat.map(item => [item.id, item]));
-    const orderedFlat = exercisesOrder.map(id => exerciseMap.get(id)).filter(Boolean) as typeof flat;
+
+    const exerciseMap = new Map(flat.map((item) => [item.id, item]));
+    const orderedFlat = exercisesOrder.map((id) => exerciseMap.get(id)).filter(Boolean) as typeof flat;
     const newExercises = flat.filter((item) => !exercisesOrder.includes(item.id));
-    
+
     return [...orderedFlat, ...newExercises];
   }, [exercisesByMuscle, exercisesOrder]);
 
@@ -69,18 +75,21 @@ export const ExercisesSelection = ({
     setFlatExercises(flatExercisesComputed);
   }, [flatExercisesComputed]);
 
-  const handleDragEnd = useCallback((event: DragEndEvent) => {
-    const { active, over } = event;
-    if (active.id !== over?.id) {
-      setFlatExercises((items) => {
-        const oldIndex = items.findIndex((item) => item.id === active.id);
-        const newIndex = items.findIndex((item) => item.id === over?.id);
-        const newOrder = arrayMove(items, oldIndex, newIndex);
-        setExercisesOrder(newOrder.map((item) => item.id));
-        return newOrder;
-      });
-    }
-  }, [setExercisesOrder]);
+  const handleDragEnd = useCallback(
+    (event: DragEndEvent) => {
+      const { active, over } = event;
+      if (active.id !== over?.id) {
+        setFlatExercises((items) => {
+          const oldIndex = items.findIndex((item) => item.id === active.id);
+          const newIndex = items.findIndex((item) => item.id === over?.id);
+          const newOrder = arrayMove(items, oldIndex, newIndex);
+          setExercisesOrder(newOrder.map((item) => item.id));
+          return newOrder;
+        });
+      }
+    },
+    [setExercisesOrder],
+  );
 
   if (isLoading) {
     return (

@@ -81,7 +81,7 @@ export function ExerciseListItem({ exercise, muscle, onShuffle, onPick, onDelete
     <div
       className={`
         group relative overflow-hidden transition-all duration-300 ease-out
-        bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800/70
+        bg-white dark:bg-slate-900 sm:hover:bg-slate-50 dark:sm:hover:bg-slate-800/70
         border-b border-slate-200 dark:border-slate-700/50
         hover:shadow-lg hover:shadow-slate-200/50 dark:hover:shadow-slate-900/50
         ${isDragging ? "ring-2 ring-blue-400" : ""}
@@ -92,11 +92,13 @@ export function ExerciseListItem({ exercise, muscle, onShuffle, onPick, onDelete
       <div className="relative flex items-center justify-between py-2 px-2">
         <div className="flex items-center gap-2 sm:gap-4 flex-1 min-w-0">
           {/* Drag handle */}
-          <GripVertical
-            className="h-5 w-5 text-slate-400 dark:text-slate-500 cursor-grab active:cursor-grabbing"
+          <div
+            className="flex items-center justify-center p-2 -m-2 touch-manipulation cursor-grab active:cursor-grabbing"
             {...attributes}
             {...listeners}
-          />
+          >
+            <GripVertical className="h-6 w-6 sm:h-5 sm:w-5 text-slate-400 dark:text-slate-500" />
+          </div>
 
           {exercise.fullVideoImageUrl && (
             <div className="relative w-10 h-10 rounded-lg overflow-hidden shrink-0 bg-slate-200 dark:bg-slate-800 cursor-pointer border border-slate-200 dark:border-slate-700/50">

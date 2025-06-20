@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Check, Play, ArrowRight, Trophy as TrophyIcon, Plus, Hourglass } from "lucide-react";
@@ -33,6 +33,34 @@ export function WorkoutSessionSets({
   const exerciseDetailsMap = Object.fromEntries(session?.exercises.map((ex) => [ex.id, ex]) || []);
   const [videoModal, setVideoModal] = useState<{ open: boolean; exerciseId?: string }>({ open: false });
   const { syncSessions } = useSyncWorkoutSessions();
+
+  // auto-scroll to current exercise when index changes
+  useEffect(() => {
+    if (session && currentExerciseIndex >= 0) {
+      const exerciseElement = document.getElementById(`exercise-${currentExerciseIndex}`);
+      if (exerciseElement) {
+        const scrollContainer = exerciseElement.closest(".overflow-auto");
+
+        if (scrollContainer) {
+          const containerRect = scrollContainer.getBoundingClientRect();
+          const elementRect = exerciseElement.getBoundingClientRect();
+          const offset = 10;
+
+          const scrollTop = scrollContainer.scrollTop + elementRect.top - containerRect.top - offset;
+
+          scrollContainer.scrollTo({
+            top: scrollTop,
+            behavior: "smooth",
+          });
+        } else {
+          exerciseElement.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+          });
+        }
+      }
+    }
+  }, [currentExerciseIndex, session]);
 
   if (showCongrats) {
     return (
@@ -98,6 +126,7 @@ export function WorkoutSessionSets({
           return (
             <li
               className={`mb-8 ml-4 ${idx !== currentExerciseIndex ? "cursor-pointer hover:opacity-80" : ""}`}
+              id={`exercise-${idx}`}
               key={ex.id}
               onClick={() => handleExerciseClick(idx)}
             >

@@ -23,7 +23,7 @@ export function WorkoutSessionTimer() {
   }
 
   return (
-    <div className="absolute bottom-16 left-0 right-4 flex justify-center mb-3">
+    <div className="absolute bottom-16 left-1/2 transform -translate-x-1/2 mb-3">
       <div className="bg-white dark:bg-slate-900 rounded-full px-6 py-4 border border-slate-200 dark:border-slate-700 shadow-lg backdrop-blur-sm">
         <div className="flex items-center justify-between gap-4">
           {/* Timer display */}

@@ -144,10 +144,10 @@ export function ExerciseListItem({ exercise, muscle, onShuffle, onPick, onDelete
           </InlineTooltip>
         </div>
 
-        <div className="flex items-center gap-1 sm:gap-2 shrink-0">
+        <div className="flex items-center gap-1 sm:gap-2 shrink-0 ml-1">
           {/* Bouton shuffle */}
           <Button
-            className="p-2 sm:p-2 min-h-[44px] min-w-[44px] sm:min-h-auto sm:min-w-auto touch-manipulation"
+            className="p-2 sm:p-2 min-h-[44px] min-w-[44px] sm:min-h-min sm:min-w-min touch-manipulation"
             disabled={isShuffling}
             onClick={handleShuffle}
             size="small"
@@ -163,7 +163,7 @@ export function ExerciseListItem({ exercise, muscle, onShuffle, onPick, onDelete
 
           {/* Bouton delete */}
           <Button
-            className="p-2 sm:p-2 min-h-[44px] min-w-[44px] sm:min-h-auto sm:min-w-auto bg-red-50 dark:bg-red-950/50 sm:hover:bg-red-100 dark:sm:hover:bg-red-950 text-red-600 dark:text-red-400 border-0 rounded-lg opacity-100 sm:group-hover:opacity-100 transition-all duration-200 sm:hover:scale-110 touch-manipulation"
+            className="p-2 sm:p-2 min-h-[44px] min-w-[44px] sm:min-h-min sm:min-w-min bg-red-50 dark:bg-red-950/50 sm:hover:bg-red-100 dark:sm:hover:bg-red-950 text-red-600 dark:text-red-400 border-0 rounded-lg opacity-100 sm:group-hover:opacity-100 transition-all duration-200 sm:hover:scale-110 touch-manipulation"
             onClick={handleDelete}
             size="small"
             variant="ghost"

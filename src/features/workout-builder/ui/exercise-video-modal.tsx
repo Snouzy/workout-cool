@@ -12,7 +12,6 @@ interface ExerciseVideoModalProps {
 }
 
 export function ExerciseVideoModal({ open, onOpenChange, exercise }: ExerciseVideoModalProps) {
-  console.log("exercise:", exercise);
   const t = useI18n();
   const locale = useCurrentLocale();
   const title = locale === "fr" ? exercise.name : exercise.nameEn || exercise.name;

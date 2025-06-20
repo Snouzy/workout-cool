@@ -372,7 +372,6 @@ export const useWorkoutSessionStore = create<WorkoutSessionState>((set, get) => 
 
   loadSessionFromLocal: () => {
     const currentId = workoutSessionLocal.getCurrent();
-    console.log("currentId:", currentId);
     if (currentId) {
       const session = workoutSessionLocal.getById(currentId);
       if (session && session.status === "active") {

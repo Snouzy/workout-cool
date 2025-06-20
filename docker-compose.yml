@@ -19,21 +19,13 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        WITH_SAMPLE_DATA: ${WITH_SAMPLE_DATA:-true}
     ports:
       - "${APP_PORT:-3000}:3000"
     depends_on:
       postgres:
         condition: service_healthy
-    environment:
-      DATABASE_URL: ${DATABASE_URL:-postgresql://username:password@postgres:5432/workout_cool}
-      BETTER_AUTH_URL: ${BETTER_AUTH_URL:-http://localhost:3000}
-      BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET:-your-secret-key-here}
-      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-your-google-client-id.apps.googleusercontent.com}
-      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET:-your-google-client-secret}
-      RESEND_API_KEY: ${RESEND_API_KEY:-re_123456789}
-      RESEND_AUDIENCE_ID: ${RESEND_AUDIENCE_ID:-aud_123456789}
-      OPENPANEL_SECRET_KEY: ${OPENPANEL_SECRET_KEY:-op_sk_123456789}
-      NEXT_PUBLIC_OPENPANEL_CLIENT_ID: ${NEXT_PUBLIC_OPENPANEL_CLIENT_ID:-op_pk_123456789}
-      NODE_ENV: ${NODE_ENV:-development}
+    env_file: .env
 volumes:
   pgdata:

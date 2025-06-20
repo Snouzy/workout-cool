@@ -6,17 +6,11 @@ npx prisma migrate deploy
 echo "Generating Prisma client..."
 npx prisma generate
 
-
-if [ "$NODE_ENV" != "production" ]; then
-  echo "Non-production environment detected, importing sample data..."
-    # Import exercises if CSV exists
-    if [ -f "./data/sample-exercises.csv" ]; then
-        npx tsx scripts/import-exercises-with-attributes.ts ./sample-data/exercises.csv
-    else
-        echo "No exercises sample data found, skipping import."
-    fi
+if [ "$WITH_SAMPLE_DATA" = "true" ]; then
+  echo "Sample data build found, importing sample data..."
+  npx tsx import-exercises-with-attributes.ts ./data/sample-exercises.csv
 else
-  echo "Production environment, skipping sample data import."
+  echo "No sample data build found, skipping import."
 fi
 
 echo "Starting the app..."

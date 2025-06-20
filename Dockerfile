@@ -1,5 +1,7 @@
 FROM node:20-alpine AS base
 
+ARG WITH_SAMPLE_DATA=false
+
 WORKDIR /app
 RUN npm install -g pnpm
 
@@ -15,6 +17,11 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY --from=deps /app/prisma ./prisma
 COPY . .
 COPY .env.example .env
+
+RUN if [ "$WITH_SAMPLE_DATA" = "false" ]; then \
+      rm -f data/sample-exercises.csv; \
+    fi
+
 RUN pnpm run build
 
 # Production image, copy only necessary files
@@ -26,13 +33,15 @@ COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/prisma ./prisma
+COPY --from=builder /app/data ./data
 
-COPY scripts/setup.sh /app/setup.sh
+COPY scripts /app
 RUN chmod +x /app/setup.sh
-
-ENTRYPOINT ["/app/setup.sh"]
 
 EXPOSE 3000
 ENV PORT=3000
+ENV WITH_SAMPLE_DATA=$WITH_SAMPLE_DATA
+
+ENTRYPOINT ["/app/setup.sh"]
 
 CMD ["pnpm", "start"]

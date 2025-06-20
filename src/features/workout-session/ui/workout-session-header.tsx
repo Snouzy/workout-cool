@@ -50,15 +50,13 @@ export function WorkoutSessionHeader({ onQuitWorkout }: WorkoutSessionHeaderProp
 
   return (
     <>
-      <div className="w-full mt-4 mb-12 px-2 sm:px-6">
-        <div className="rounded-xl p-3 bg-slate-50 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-700">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-2">
-              <span className="text-emerald-400 font-semibold text-xs uppercase tracking-wider">
-                {t("workout_builder.session.started_at")}{" "}
-                {new Date(session?.startedAt || "").toLocaleTimeString(locale, { hour: "2-digit", minute: "2-digit" })}
-              </span>
-            </div>
+      <div className="w-full mt-2 mb-6 px-2 sm:px-6">
+        <div className="rounded-lg p-2 sm:p-3 bg-slate-50 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-700">
+          <div className="flex items-center justify-between mb-2 sm:mb-3">
+            <span className="text-emerald-400 font-medium text-xs tracking-wide">
+              {t("workout_builder.session.started_at")}{" "}
+              {new Date(session?.startedAt || "").toLocaleTimeString(locale, { hour: "2-digit", minute: "2-digit" })}
+            </span>
 
             <Button
               className="border-red-500/30 text-red-400 hover:bg-red-500/10 hover:border-red-500 px-2 py-1 text-xs dark:border-red-700/40 dark:text-red-300 dark:hover:bg-red-700/10"
@@ -70,27 +68,25 @@ export function WorkoutSessionHeader({ onQuitWorkout }: WorkoutSessionHeaderProp
             </Button>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3">
-            {/* Card 2: progress */}
-            <div className="bg-white dark:bg-slate-800 rounded-lg p-2 sm:p-3 border border-slate-200 dark:border-slate-700 transition-colors duration-200 dark:text-white dark:hover:bg-slate-700">
-              <div className="flex items-center gap-1.5 sm:gap-2 mb-1.5 sm:mb-2">
-                <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-purple-500/20 flex items-center justify-center">
-                  <Target className="h-3 w-3 sm:h-4 sm:w-4 text-purple-400" />
+          <div className="grid grid-cols-2 gap-2">
+            {/* Card 1: Exercise Progress */}
+            <div className="bg-white dark:bg-slate-800 rounded-md p-2 border border-slate-200 dark:border-slate-700">
+              <div className="flex items-center gap-2 mb-2">
+                <div className="w-5 h-5 rounded-full bg-purple-500/20 flex items-center justify-center shrink-0">
+                  <Target className="h-3 w-3 text-purple-400" />
                 </div>
-                <div>
-                  <h3 className="text-slate-700 dark:text-white font-semibold text-sm sm:text-base">
-                    {t("workout_builder.session.exercise_progress")}
-                  </h3>
-                </div>
+                <h3 className="text-slate-700 dark:text-white font-medium text-xs truncate">
+                  {t("workout_builder.session.exercise_progress")}
+                </h3>
               </div>
 
-              <div className="space-y-1.5 sm:space-y-2">
+              <div className="space-y-1">
                 <div className="flex items-center justify-between">
-                  <span className="text-base sm:text-lg font-bold text-slate-900 dark:text-white">{exercisesCompleted}</span>
-                  <span className="text-slate-400 dark:text-slate-400">/ {totalExercises}</span>
+                  <span className="text-lg font-bold text-slate-900 dark:text-white">{exercisesCompleted}</span>
+                  <span className="text-slate-400 text-sm">/ {totalExercises}</span>
                 </div>
 
-                <div className="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-1.5 sm:h-2 overflow-hidden">
+                <div className="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-1.5 overflow-hidden">
                   <div
                     className="h-full bg-gradient-to-r from-purple-500 to-pink-500 transition-all duration-500 ease-out"
                     style={{ width: `${(exercisesCompleted / totalExercises) * 100}%` }}
@@ -98,34 +94,30 @@ export function WorkoutSessionHeader({ onQuitWorkout }: WorkoutSessionHeaderProp
                 </div>
 
                 <div className="text-center">
-                  <span className="text-xs text-slate-400 dark:text-slate-400">
+                  <span className="text-xs text-slate-400">
                     {Math.round((exercisesCompleted / totalExercises) * 100)}% {t("workout_builder.session.complete")}
                   </span>
                 </div>
               </div>
             </div>
 
-            {/* Card 3: Volume Total */}
-            <div className="bg-white dark:bg-slate-800 rounded-lg p-2 sm:p-3 border border-slate-200 dark:border-slate-700 transition-colors duration-200 dark:text-white dark:hover:bg-slate-700">
-              <div className="flex items-center gap-1.5 sm:gap-2 mb-1.5 sm:mb-2">
-                <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-orange-500/20 flex items-center justify-center">
-                  <Weight className="h-3 w-3 sm:h-4 sm:w-4 text-orange-400" />
+            {/* Card 2: Total Volume */}
+            <div className="bg-white dark:bg-slate-800 rounded-md p-2 border border-slate-200 dark:border-slate-700">
+              <div className="flex items-center gap-2 mb-2">
+                <div className="w-5 h-5 rounded-full bg-orange-500/20 flex items-center justify-center shrink-0">
+                  <Weight className="h-3 w-3 text-orange-400" />
                 </div>
-                <div>
-                  <h3 className="text-slate-700 dark:text-white font-semibold text-sm sm:text-base">
-                    {t("workout_builder.session.total_volume")}
-                  </h3>
-                </div>
+                <h3 className="text-slate-700 dark:text-white font-medium text-xs truncate">{t("workout_builder.session.total_volume")}</h3>
               </div>
 
               <div className="text-center">
-                <div className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mb-1">
+                <div className="text-lg font-bold text-slate-900 dark:text-white mb-1">
                   {totalVolume.toFixed(volumeUnit === "lbs" ? 1 : 0)}
                 </div>
                 <div className="flex items-center justify-center gap-1">
                   <button
                     className={cn(
-                      "text-xs px-1.5 sm:px-2 py-0.5 sm:py-1 rounded transition-colors",
+                      "text-xs px-1.5 py-0.5 rounded transition-colors",
                       volumeUnit === "kg"
                         ? "bg-orange-100 text-orange-700 dark:bg-orange-900 dark:text-orange-100"
                         : "text-slate-400 hover:text-slate-600 dark:hover:text-slate-300",
@@ -137,7 +129,7 @@ export function WorkoutSessionHeader({ onQuitWorkout }: WorkoutSessionHeaderProp
                   <span className="text-slate-300 dark:text-slate-600">|</span>
                   <button
                     className={cn(
-                      "text-xs px-1.5 sm:px-2 py-0.5 sm:py-1 rounded transition-colors",
+                      "text-xs px-1.5 py-0.5 rounded transition-colors",
                       volumeUnit === "lbs"
                         ? "bg-orange-100 text-orange-700 dark:bg-orange-900 dark:text-orange-100"
                         : "text-slate-400 hover:text-slate-600 dark:hover:text-slate-300",

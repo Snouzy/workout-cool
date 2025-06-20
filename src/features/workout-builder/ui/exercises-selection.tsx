@@ -19,7 +19,7 @@ interface ExercisesSelectionProps {
   onPick: (exerciseId: string) => void;
   onDelete: (exerciseId: string, muscle: string) => void;
   onAdd: () => void;
-  isShuffling?: boolean;
+  shufflingExerciseId?: string | null;
 }
 
 export const ExercisesSelection = ({
@@ -30,7 +30,7 @@ export const ExercisesSelection = ({
   onPick,
   onDelete,
   onAdd,
-  isShuffling,
+  shufflingExerciseId,
 }: ExercisesSelectionProps) => {
   const t = useI18n();
   const [flatExercises, setFlatExercises] = useState<{ id: string; muscle: string; exercise: ExerciseWithAttributes }[]>([]);
@@ -113,7 +113,7 @@ export const ExercisesSelection = ({
                 {flatExercises.map((item) => (
                   <ExerciseListItem
                     exercise={item.exercise}
-                    isShuffling={isShuffling}
+                    isShuffling={shufflingExerciseId === item.exercise.id}
                     key={item.id}
                     muscle={item.muscle}
                     onDelete={onDelete}

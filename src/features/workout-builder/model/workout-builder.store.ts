@@ -15,7 +15,7 @@ interface WorkoutBuilderState {
   isLoadingExercises: boolean;
   exercisesError: any; //TODO: type this
   exercisesOrder: string[];
-  isShuffling: boolean;
+  shufflingExerciseId: string | null;
 
   // Actions
   setStep: (step: WorkoutBuilderStep) => void;
@@ -49,7 +49,7 @@ export const useWorkoutBuilderStore = create<WorkoutBuilderState>((set, get) => 
   isLoadingExercises: false,
   exercisesError: null,
   exercisesOrder: [],
-  isShuffling: false,
+  shufflingExerciseId: null,
 
   setStep: (step) => set({ currentStep: step }),
   nextStep: () => set((state) => ({ currentStep: Math.min(state.currentStep + 1, 3) as WorkoutBuilderStep })),
@@ -108,7 +108,7 @@ export const useWorkoutBuilderStore = create<WorkoutBuilderState>((set, get) => 
     })),
 
   shuffleExercise: async (exerciseId, muscle) => {
-    set({ isShuffling: true });
+    set({ shufflingExerciseId: exerciseId });
     try {
       const { selectedEquipment, exercisesByMuscle } = get();
 
@@ -144,7 +144,7 @@ export const useWorkoutBuilderStore = create<WorkoutBuilderState>((set, get) => 
       console.error("Error shuffling exercise:", error);
       throw error;
     } finally {
-      set({ isShuffling: false });
+      set({ shufflingExerciseId: null });
     }
   },
 

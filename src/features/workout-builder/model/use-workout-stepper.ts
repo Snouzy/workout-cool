@@ -10,6 +10,8 @@ export function useWorkoutStepper() {
     exercisesByMuscle,
     isLoadingExercises,
     exercisesError,
+    exercisesOrder,
+    shufflingExerciseId,
     setStep,
     nextStep,
     prevStep,
@@ -18,12 +20,11 @@ export function useWorkoutStepper() {
     toggleMuscle,
     clearMuscles,
     fetchExercises,
-    exercisesOrder,
     setExercisesOrder,
     shuffleExercise,
     pickExercise,
-    isShuffling,
     deleteExercise,
+    loadFromSession,
   } = useWorkoutBuilderStore();
 
   const canProceedToStep2 = selectedEquipment.length > 0;
@@ -68,12 +69,15 @@ export function useWorkoutStepper() {
     shuffleExercise,
 
     // additional
-    isShuffling,
+    shufflingExerciseId,
 
     // pick
     pickExercise,
 
     // delete
     deleteExercise,
+
+    // load
+    loadFromSession,
   };
 }

@@ -10,6 +10,7 @@ const languageFlags: Record<string, string> = {
   en: "🇬🇧",
   fr: "🇫🇷",
   es: "🇪🇸",
+  "zh-CN": "🇨🇳",
 };
 
 export function LanguageSelector() {
@@ -20,7 +21,7 @@ export function LanguageSelector() {
 
   const handleLanguageChange = async (newLocale: string) => {
     await action.execute({ locale: newLocale });
-    changeLocale(newLocale as "en" | "fr" | "es");
+    changeLocale(newLocale as "en" | "fr" | "es" | "zh-CN");
   };
 
   return (
@@ -41,11 +42,16 @@ export function LanguageSelector() {
         {languages.map((language) => (
           <li className="" key={language}>
             <button
-              className="flex items-center gap-2 text-base hover:bg-slate-200 dark:hover:bg-gray-800 rounded-lg px-3 py-2 transition-colors"
+              className="flex items-center gap-2 text-base hover:bg-slate-200 dark:hover:bg-gray-800 rounded-lg px-3 py-2 transition-colors whitespace-nowrap min-w-fit"
               onClick={() => handleLanguageChange(language)}
             >
               <span className="text-lg">{languageFlags[language]}</span>
-              <span className="text-base">{language === "en" ? "English" : language === "fr" ? "Français" : "Español"}</span>
+              <span className="text-base whitespace-nowrap">
+                {language === "en" ? "English" : 
+                 language === "fr" ? "Français" : 
+                 language === "es" ? "Español" :
+                 language === "zh-CN" ? "中文" : language}
+              </span>
             </button>
           </li>
         ))}

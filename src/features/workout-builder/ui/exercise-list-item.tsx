@@ -1,9 +1,12 @@
-import React from "react";
-import { Shuffle, Trash2, GripVertical, Loader2 } from "lucide-react";
+import React, { useState } from "react";
+import Image from "next/image";
+import { Play, Shuffle, Trash2, GripVertical, Loader2 } from "lucide-react";
 import { CSS } from "@dnd-kit/utilities";
 import { useSortable } from "@dnd-kit/sortable";
 
 import { useCurrentLocale } from "locales/client";
+
+import { ExerciseVideoModal } from "./exercise-video-modal";
 
 import type { ExerciseWithAttributes } from "../types";
 
@@ -24,6 +27,7 @@ export const ExerciseListItem = React.memo(function ExerciseListItem({
   isShuffling,
 }: Omit<ExerciseListItemProps, "onPick">) {
   const locale = useCurrentLocale();
+  const [showVideo, setShowVideo] = useState(false);
 
   const { attributes, listeners, setNodeRef, transform, isDragging } = useSortable({ id: exercise.id });
 
@@ -42,6 +46,25 @@ export const ExerciseListItem = React.memo(function ExerciseListItem({
       <div className="cursor-grab active:cursor-grabbing" {...attributes} {...listeners}>
         <GripVertical className="h-5 w-5 text-slate-400" />
       </div>
+
+      {exercise.fullVideoImageUrl && (
+        <div
+          className="relative h-10 w-10 rounded overflow-hidden shrink-0 bg-slate-200 dark:bg-slate-800 cursor-pointer"
+          onClick={() => setShowVideo(true)}
+        >
+          <Image
+            alt={exerciseName ?? ""}
+            className="w-full h-full object-cover scale-[1.5]"
+            height={32}
+            loading="lazy"
+            src={exercise.fullVideoImageUrl}
+            width={32}
+          />
+          <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
+            <Play className="h-3 w-3 text-white fill-current" />
+          </div>
+        </div>
+      )}
 
       <div className="w-2 h-2 rounded-full bg-blue-500 shrink-0" title={muscle} />
 
@@ -63,6 +86,8 @@ export const ExerciseListItem = React.memo(function ExerciseListItem({
       >
         <Trash2 className="h-4 w-4" />
       </button>
+
+      {exercise.fullVideoUrl && <ExerciseVideoModal exercise={exercise} onOpenChange={setShowVideo} open={showVideo} />}
     </div>
   );
 });

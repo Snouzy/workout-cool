@@ -1,11 +1,9 @@
-import Image from "next/image";
 import { Inter, Permanent_Marker } from "next/font/google";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 
 import { cn } from "@/shared/lib/utils";
 import { getServerUrl } from "@/shared/lib/server-url";
-import { FB_PIXEL_ID } from "@/shared/lib/facebook/fb-pixel";
 import { SiteConfig } from "@/shared/config/site-config";
 import { WorkoutSessionsSynchronizer } from "@/features/workout-session/ui/workout-sessions-synchronizer";
 import { ThemeSynchronizer } from "@/features/theme/ui/ThemeSynchronizer";
@@ -124,7 +122,7 @@ export default async function RootLayout({ params, children }: RootLayoutProps) 
           <meta content="yes" name="mobile-web-app-capable" />
           <meta content="#FF5722" name="msapplication-TileColor" />
           <meta content="/android-chrome-192x192.png" name="msapplication-TileImage" />
-          
+
           {/* PWA Manifest */}
           <link href="/manifest.json" rel="manifest" />
 
@@ -137,17 +135,6 @@ export default async function RootLayout({ params, children }: RootLayoutProps) 
 
           {/* Theme color for PWA */}
           <meta content="#FF5722" name="theme-color" />
-
-          {/* TODO: maybe add some ads ? */}
-          <noscript>
-            <Image
-              alt="Facebook Pixel"
-              height="1"
-              src={`https://www.facebook.com/tr?id=${FB_PIXEL_ID}&ev=PageView&noscript=1`}
-              style={{ display: "none" }}
-              width="1"
-            />
-          </noscript>
         </head>
 
         <body

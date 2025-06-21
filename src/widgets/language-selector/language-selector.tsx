@@ -20,8 +20,14 @@ export function LanguageSelector() {
   const t = useI18n();
 
   const handleLanguageChange = async (newLocale: string) => {
-    await action.execute({ locale: newLocale });
+    // update cookie to prevent auto-detection conflicts
+    document.cookie = `detected-locale=${newLocale}; max-age=${60 * 60 * 24 * 365}; path=/; samesite=lax`;
+
+    // change locale immediately for better UX
     changeLocale(newLocale as "en" | "fr" | "es" | "zh-CN");
+
+    // save to database (fire and forget)
+    action.execute({ locale: newLocale });
   };
 
   return (
@@ -47,10 +53,15 @@ export function LanguageSelector() {
             >
               <span className="text-lg">{languageFlags[language]}</span>
               <span className="text-base whitespace-nowrap">
-                {language === "en" ? "English" : 
-                 language === "fr" ? "Français" : 
-                 language === "es" ? "Español" :
-                 language === "zh-CN" ? "中文" : language}
+                {language === "en"
+                  ? "English"
+                  : language === "fr"
+                    ? "Français"
+                    : language === "es"
+                      ? "Español"
+                      : language === "zh-CN"
+                        ? "中文"
+                        : language}
               </span>
             </button>
           </li>

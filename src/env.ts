@@ -21,7 +21,7 @@ export const env = createEnv({
     SMTP_PASS: z.string().optional(),
     SMTP_FROM: z.string().optional(),
     //issue fixed in zod 4. See https://github.com/colinhacks/zod/issues/3906
-    SMTP_SECURE: z.enum(["true", "false"]).transform((val) => val === "true"),
+    SMTP_SECURE: z.enum(["true", "false"]).default("false").transform((val) => val === "true"),
   },
   /**
    * If you add `client` environment variables, you need to add them to

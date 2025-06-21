@@ -1,10 +1,11 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback } from "react";
 import Image from "next/image";
 import { Play, Shuffle, Trash2, GripVertical, Loader2 } from "lucide-react";
 import { CSS } from "@dnd-kit/utilities";
 import { useSortable } from "@dnd-kit/sortable";
 
 import { useCurrentLocale, useI18n } from "locales/client";
+import useBoolean from "@/hooks/useBoolean";
 import { Button } from "@/components/ui/button";
 
 import { ExerciseVideoModal } from "./exercise-video-modal";
@@ -38,7 +39,7 @@ export const ExerciseListItem = React.memo(function ExerciseListItem({
 }: Omit<ExerciseListItemProps, "onPick">) {
   const t = useI18n();
   const locale = useCurrentLocale();
-  const [showVideo, setShowVideo] = useState(false);
+  const playVideo = useBoolean();
 
   const { attributes, listeners, setNodeRef, transform, isDragging } = useSortable({ id: exercise.id });
 
@@ -64,10 +65,10 @@ export const ExerciseListItem = React.memo(function ExerciseListItem({
         msUserSelect: "none",
       }}
     >
-      <div 
-        className="cursor-grab active:cursor-grabbing touch-none select-none p-1 -m-1" 
+      <div
+        className="cursor-grab active:cursor-grabbing touch-none select-none p-1 -m-1"
         style={{ touchAction: "none" }}
-        {...attributes} 
+        {...attributes}
         {...listeners}
       >
         <GripVertical className="h-5 w-5 text-slate-400" />
@@ -76,7 +77,7 @@ export const ExerciseListItem = React.memo(function ExerciseListItem({
       {exercise.fullVideoImageUrl && (
         <div
           className="relative h-10 w-10 rounded overflow-hidden shrink-0 bg-slate-200 dark:bg-slate-800 cursor-pointer border border-slate-200 dark:border-slate-700/50"
-          onClick={() => setShowVideo(true)}
+          onClick={playVideo.setTrue}
         >
           <Image
             alt={exerciseName ?? ""}
@@ -129,7 +130,7 @@ export const ExerciseListItem = React.memo(function ExerciseListItem({
         <Trash2 className="h-4 w-4" />
       </button>
 
-      {exercise.fullVideoUrl && <ExerciseVideoModal exercise={exercise} onOpenChange={setShowVideo} open={showVideo} />}
+      {exercise.fullVideoUrl && <ExerciseVideoModal exercise={exercise} onOpenChange={playVideo.toggle} open={playVideo.value} />}
     </div>
   );
 });

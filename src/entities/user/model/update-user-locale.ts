@@ -28,10 +28,7 @@ export function useUpdateUserLocale() {
     },
     onError: (error) => {
       console.error("Failed to update user locale:", error);
-      // Silent fail pour ne pas gêner l'UX
-    },
-    onSuccess: () => {
-      // Silent success
+      // silent fail, ux friendly
     },
   });
 }

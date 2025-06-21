@@ -1,8 +1,7 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { Loader2, Plus } from "lucide-react";
 import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
-import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
-import { DndContext, closestCenter, TouchSensor, MouseSensor, useSensor, useSensors, DragEndEvent } from "@dnd-kit/core";
+import { DndContext, closestCenter, PointerSensor, useSensor, useSensors, DragEndEvent } from "@dnd-kit/core";
 
 import { useI18n } from "locales/client";
 
@@ -36,15 +35,9 @@ export const ExercisesSelection = ({
   const [flatExercises, setFlatExercises] = useState<{ id: string; muscle: string; exercise: ExerciseWithAttributes }[]>([]);
   const { setExercisesOrder, exercisesOrder } = useWorkoutStepper();
   const sensors = useSensors(
-    useSensor(MouseSensor, {
+    useSensor(PointerSensor, {
       activationConstraint: {
-        distance: 5,
-      },
-    }),
-    useSensor(TouchSensor, {
-      activationConstraint: {
-        delay: 100,
-        tolerance: 5,
+        distance: 1,
       },
     }),
   );
@@ -107,7 +100,7 @@ export const ExercisesSelection = ({
       {flatExercises.length > 0 ? (
         <div className="max-w-4xl mx-auto">
           {/* Liste des exercices drag and drop */}
-          <DndContext collisionDetection={closestCenter} modifiers={[restrictToVerticalAxis]} onDragEnd={handleDragEnd} sensors={sensors}>
+          <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd} sensors={sensors}>
             <SortableContext items={sortableItems} strategy={verticalListSortingStrategy}>
               <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 overflow-hidden">
                 {flatExercises.map((item) => (
@@ -117,7 +110,6 @@ export const ExercisesSelection = ({
                     key={item.id}
                     muscle={item.muscle}
                     onDelete={onDelete}
-                    onPick={onPick}
                     onShuffle={onShuffle}
                   />
                 ))}

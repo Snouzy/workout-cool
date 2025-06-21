@@ -30,6 +30,21 @@ export function LanguageSelector() {
     action.execute({ locale: newLocale });
   };
 
+  const getLanguageName = (language: string) => {
+    switch (language) {
+      case "en":
+        return "English";
+      case "fr":
+        return "Français";
+      case "es":
+        return "Español";
+      case "zh-CN":
+        return "中文";
+      default:
+        return language;
+    }
+  };
+
   return (
     <div className="dropdown dropdown-end">
       <div className="tooltip tooltip-bottom" data-tip={t("commons.change_language")}>
@@ -52,17 +67,7 @@ export function LanguageSelector() {
               onClick={() => handleLanguageChange(language)}
             >
               <span className="text-lg">{languageFlags[language]}</span>
-              <span className="text-base whitespace-nowrap">
-                {language === "en"
-                  ? "English"
-                  : language === "fr"
-                    ? "Français"
-                    : language === "es"
-                      ? "Español"
-                      : language === "zh-CN"
-                        ? "中文"
-                        : language}
-              </span>
+              <span className="text-base whitespace-nowrap">{getLanguageName(language)}</span>
             </button>
           </li>
         ))}

@@ -60,6 +60,11 @@ export default {
     title: "What's New",
     release_notes: "Release Notes",
     notes: {
+      note_2025_06_19: {
+        title: "📱 Now Available as a PWA!",
+        content:
+          "Workout.cool v1.2 is now a Progressive Web App! Install it on your phone for a native app experience with offline access. 🚀",
+      },
       note_2025_06_18: {
         title: "🚀 Featured #1 on Hacker News!",
         content:

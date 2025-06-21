@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { Loader2, Plus } from "lucide-react";
 import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
-import { DndContext, closestCenter, PointerSensor, useSensor, useSensors, DragEndEvent } from "@dnd-kit/core";
+import { DndContext, closestCenter, TouchSensor, MouseSensor, useSensor, useSensors, DragEndEvent } from "@dnd-kit/core";
 
 import { useI18n } from "locales/client";
 
@@ -19,7 +19,7 @@ interface ExercisesSelectionProps {
   onPick: (exerciseId: string) => void;
   onDelete: (exerciseId: string, muscle: string) => void;
   onAdd: () => void;
-  isShuffling?: boolean;
+  shufflingExerciseId?: string | null;
 }
 
 export const ExercisesSelection = ({
@@ -30,57 +30,66 @@ export const ExercisesSelection = ({
   onPick,
   onDelete,
   onAdd,
-  isShuffling,
+  shufflingExerciseId,
 }: ExercisesSelectionProps) => {
   const t = useI18n();
   const [flatExercises, setFlatExercises] = useState<{ id: string; muscle: string; exercise: ExerciseWithAttributes }[]>([]);
   const { setExercisesOrder, exercisesOrder } = useWorkoutStepper();
   const sensors = useSensors(
-    useSensor(PointerSensor, {
+    useSensor(MouseSensor, {
       activationConstraint: {
         distance: 5,
       },
     }),
+    useSensor(TouchSensor, {
+      activationConstraint: {
+        delay: 100,
+        tolerance: 5,
+      },
+    }),
   );
 
-  useEffect(() => {
-    if (exercisesByMuscle.length > 0) {
-      const flat = exercisesByMuscle.flatMap((group) =>
-        group.exercises.map((exercise) => ({
-          id: exercise.id,
-          muscle: group.muscle,
-          exercise,
-        })),
-      );
+  const sortableItems = useMemo(() => flatExercises.map((item) => item.id), [flatExercises]);
 
-      // if exerciseOrder is not empty, we need to order the exercises
-      if (exercisesOrder.length > 0) {
-        const orderedFlat = exercisesOrder.map((id) => flat.find((item) => item.id === id)).filter(Boolean) as typeof flat;
+  const flatExercisesComputed = useMemo(() => {
+    if (exercisesByMuscle.length === 0) return [];
 
-        // add new exercises that are not in exercisesOrder
-        const newExercises = flat.filter((item) => !exercisesOrder.includes(item.id));
+    const flat = exercisesByMuscle.flatMap((group) =>
+      group.exercises.map((exercise) => ({
+        id: exercise.id,
+        muscle: group.muscle,
+        exercise,
+      })),
+    );
 
-        setFlatExercises([...orderedFlat, ...newExercises]);
-      } else {
-        setFlatExercises(flat);
-      }
-    } else {
-      setFlatExercises([]);
-    }
+    if (exercisesOrder.length === 0) return flat;
+
+    const exerciseMap = new Map(flat.map((item) => [item.id, item]));
+    const orderedFlat = exercisesOrder.map((id) => exerciseMap.get(id)).filter(Boolean) as typeof flat;
+    const newExercises = flat.filter((item) => !exercisesOrder.includes(item.id));
+
+    return [...orderedFlat, ...newExercises];
   }, [exercisesByMuscle, exercisesOrder]);
 
-  const handleDragEnd = (event: DragEndEvent) => {
-    const { active, over } = event;
-    if (active.id !== over?.id) {
-      setFlatExercises((items) => {
-        const oldIndex = items.findIndex((item) => item.id === active.id);
-        const newIndex = items.findIndex((item) => item.id === over?.id);
-        const newOrder = arrayMove(items, oldIndex, newIndex);
-        setExercisesOrder(newOrder.map((item) => item.id));
-        return newOrder;
-      });
-    }
-  };
+  useEffect(() => {
+    setFlatExercises(flatExercisesComputed);
+  }, [flatExercisesComputed]);
+
+  const handleDragEnd = useCallback(
+    (event: DragEndEvent) => {
+      const { active, over } = event;
+      if (active.id !== over?.id) {
+        setFlatExercises((items) => {
+          const oldIndex = items.findIndex((item) => item.id === active.id);
+          const newIndex = items.findIndex((item) => item.id === over?.id);
+          const newOrder = arrayMove(items, oldIndex, newIndex);
+          setExercisesOrder(newOrder.map((item) => item.id));
+          return newOrder;
+        });
+      }
+    },
+    [setExercisesOrder],
+  );
 
   if (isLoading) {
     return (
@@ -99,13 +108,13 @@ export const ExercisesSelection = ({
         <div className="max-w-4xl mx-auto">
           {/* Liste des exercices drag and drop */}
           <DndContext collisionDetection={closestCenter} modifiers={[restrictToVerticalAxis]} onDragEnd={handleDragEnd} sensors={sensors}>
-            <SortableContext items={flatExercises.map((item) => item.id)} strategy={verticalListSortingStrategy}>
+            <SortableContext items={sortableItems} strategy={verticalListSortingStrategy}>
               <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 overflow-hidden">
-                {flatExercises.map((item, index) => (
+                {flatExercises.map((item) => (
                   <ExerciseListItem
                     exercise={item.exercise}
-                    isShuffling={isShuffling}
-                    key={`${item.id}-${index}`}
+                    isShuffling={shufflingExerciseId === item.exercise.id}
+                    key={item.id}
                     muscle={item.muscle}
                     onDelete={onDelete}
                     onPick={onPick}

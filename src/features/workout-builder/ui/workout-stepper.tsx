@@ -47,7 +47,7 @@ export function WorkoutStepper() {
     exercisesOrder,
     shuffleExercise,
     pickExercise,
-    isShuffling,
+    shufflingExerciseId,
     goToStep,
     deleteExercise,
   } = useWorkoutStepper();
@@ -220,11 +220,11 @@ export function WorkoutStepper() {
             error={exercisesError}
             exercisesByMuscle={exercisesByMuscle}
             isLoading={isLoadingExercises}
-            isShuffling={isShuffling}
             onAdd={handleAddExercise}
             onDelete={handleDeleteExercise}
             onPick={handlePickExercise}
             onShuffle={handleShuffleExercise}
+            shufflingExerciseId={shufflingExerciseId}
           />
         );
       default:

@@ -9,6 +9,7 @@ import { updateUserAction } from "@/entities/user/model/update-user.action";
 const languageFlags: Record<string, string> = {
   en: "🇬🇧",
   fr: "🇫🇷",
+  es: "🇪🇸",
 };
 
 export function LanguageSelector() {
@@ -19,7 +20,7 @@ export function LanguageSelector() {
 
   const handleLanguageChange = async (newLocale: string) => {
     await action.execute({ locale: newLocale });
-    changeLocale(newLocale as "en" | "fr");
+    changeLocale(newLocale as "en" | "fr" | "es");
   };
 
   return (
@@ -44,7 +45,7 @@ export function LanguageSelector() {
               onClick={() => handleLanguageChange(language)}
             >
               <span className="text-lg">{languageFlags[language]}</span>
-              <span className="text-base">{language === "en" ? "English" : "Français"}</span>
+              <span className="text-base">{language === "en" ? "English" : language === "fr" ? "Français" : "Español"}</span>
             </button>
           </li>
         ))}

@@ -7,17 +7,19 @@
 <img src="https://img.shields.io/github/forks/Snouzy/workout-cool" alt="Forks">
 <img src="https://img.shields.io/github/stars/Snouzy/workout-cool" alt="Stars">
 <img src="https://img.shields.io/github/issues/Snouzy/workout-cool" alt="Issues">
-<img src="https://img.shields.io/github/languages/count/Snouzy/workout-cool" alt="Languages">
 <img src="https://img.shields.io/github/repo-size/Snouzy/workout-cool" alt="Repository Size">
-<a href="https://discord.gg/NtrsUBuHUB">
-   <img src="https://img.shields.io/badge/Discord-Join%20Community-5865F2?logo=discord&logoColor=white&style=flat-square" alt="Discord">
-</a>
-<a href="https://ko-fi.com/workoutcool">
-   <img src="https://img.shields.io/badge/sponsor%20on-ko--fi-ff5f5f?logo=ko-fi&logoColor=white&style=flat-square">
-</a>
 <a href="LICENSE">
   <img src="https://img.shields.io/badge/License-MIT-green.svg" alt="MIT License">
 </a>
+
+<p>
+    <a href="https://discord.gg/NtrsUBuHUB">
+      <img src="https://img.shields.io/badge/Discord-Join%20Community-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="Discord">
+    </a>
+    <a href="https://ko-fi.com/workoutcool">
+      <img src="https://img.shields.io/badge/Ko--fi-Support%20Project-FF5E5B?style=for-the-badge&logo=ko-fi&logoColor=white" alt="Ko-fi">
+    </a>
+  </p>
 </p>
 </div>
 
@@ -30,7 +32,7 @@
 - [Project Architecture](#project-architecture)
 - [Roadmap](#roadmap)
 - [Contributing](#contributing)
-- [Deployment](#deployment)
+- [Deployment / Self-hosting](#deployment)
 - [Resources](#resources)
 - [License](#license)
 - [Sponsor This Project](#-sponsor-this-project)
@@ -162,7 +164,7 @@ id,name,name_en,description,description_en,full_video_url,full_video_image_url,i
 
 Want unlimited exercise for local development ?
 
-Just ask chatGPT the prompt from `./scripts/import-exercises-with-attributes.prompt.md`
+Just ask chatGPT with the prompt from `./scripts/import-exercises-with-attributes.prompt.md`
 
 ## Project Architecture
 
@@ -202,15 +204,13 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 
 ### Development Workflow
 
-1. **Create an issue** for the feature/bug you want to work on
-2. **Assign yourself** to the issue
-3. Fork the repository
-4. Create a feature branch (`git checkout -b feature/amazing-feature`)
-5. Make your changes following our [code standards](#code-style)
-6. Commit your changes (`git commit -m 'feat: add amazing feature'`)
-7. Push to the branch (`git push origin feature/amazing-feature`)
-8. Open a Pull Request (one issue = one PR)
-9. Address review comments promptly
+1. **Create an issue** for the feature/bug you want to work on. Say that you will work on it (or no)
+2. Fork the repository
+3. Create your feature|fix|chore|refactor branch (`git checkout -b feature/amazing-feature`)
+4. Make your changes following our [code standards](#code-style)
+5. Commit your changes (`git commit -m 'feat: add amazing feature'`)
+6. Push to the branch (`git push origin feature/amazing-feature`)
+7. Open a Pull Request (one issue = one PR)
 
 **📋 For complete contribution guidelines, see our [Contributing Guide](CONTRIBUTING.md)**
 
@@ -219,9 +219,8 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 - Follow TypeScript best practices
 - Use Feature-Sliced Design architecture
 - Write meaningful commit messages
-- Add tests for new features
 
-## Deployment
+## Deployment / Self-hosting
 
 ### Using Docker
 
@@ -273,9 +272,13 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 - 🔄 **Spread the word** to fellow fitness enthusiasts who lost hope
 - 🤝 **Contribute code** if you're a developer : let's build this together
 
-<div>
+<div align="center">
   <a href="https://discord.gg/NtrsUBuHUB" target="_blank">
-    <img src="https://img.shields.io/badge/Discord-Join%20Our%20Community-5865F2?logo=discord&logoColor=white&style=for-the-badge" alt="Discord">
+    <img src="https://img.shields.io/badge/Discord-Join%20Our%20Community-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="Discord">
+  </a>
+  <br><br>
+  <a href="https://www.producthunt.com/products/workout-cool?embed=true&utm_source=badge-featured&utm_medium=badge&utm_source=badge-workout&#0045;cool" target="_blank">
+    <img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=980519&theme=light&t=1750436372984" alt="Product Hunt" width="180">
   </a>
 </div>
 
@@ -294,7 +297,7 @@ Appear in the README and on the website as supporter by donating:
   </a> -->
 </div>
 
-<p align="center">
+<p align="center" style="margin-top:20px;">
   <em>If you believe in open-source fitness tools and want to help this project thrive,<br>
   consider buying me a coffee ☕ or sponsoring the continued development.</em>
 </p>
@@ -303,4 +306,3 @@ Appear in the README and on the website as supporter by donating:
   Your support helps cover hosting costs, exercise database updates, and continuous improvement.<br>
   Thank you for keeping <strong>workout.cool</strong> alive and evolving 💪
 </p>
-```

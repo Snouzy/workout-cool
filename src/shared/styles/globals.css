@@ -296,7 +296,6 @@
     linear-gradient(90deg, rgb(22, 22, 26), rgb(18, 24, 38));
 }
 
-
 @keyframes fade-in-up {
   from {
     opacity: 0;
@@ -319,12 +318,27 @@
   }
 }
 
+@keyframes colon-blink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  51%,
+  100% {
+    opacity: 0.3;
+  }
+}
+
 .animate-fade-in-up {
   animation: fade-in-up 0.6s ease-out;
 }
 
 .animate-slide-up {
   animation: slide-up 0.4s ease-out;
+}
+
+.animate-colon-blink {
+  animation: colon-blink 1s infinite ease-in-out;
 }
 
 /* Smooth focus styles pour l'accessibilité */

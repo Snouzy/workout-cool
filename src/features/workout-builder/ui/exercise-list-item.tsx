@@ -4,11 +4,20 @@ import { Play, Shuffle, Trash2, GripVertical, Loader2 } from "lucide-react";
 import { CSS } from "@dnd-kit/utilities";
 import { useSortable } from "@dnd-kit/sortable";
 
-import { useCurrentLocale } from "locales/client";
+import { useCurrentLocale, useI18n } from "locales/client";
 
 import { ExerciseVideoModal } from "./exercise-video-modal";
 
 import type { ExerciseWithAttributes } from "../types";
+
+const MUSCLE_CONFIGS: Record<string, string> = {
+  ABDOMINALS: "bg-red-500",
+  BICEPS: "bg-purple-500", 
+  BACK: "bg-blue-500",
+  CHEST: "bg-green-500",
+  SHOULDERS: "bg-orange-500",
+  OBLIQUES: "bg-pink-500",
+};
 
 interface ExerciseListItemProps {
   exercise: ExerciseWithAttributes;
@@ -26,12 +35,15 @@ export const ExerciseListItem = React.memo(function ExerciseListItem({
   onDelete,
   isShuffling,
 }: Omit<ExerciseListItemProps, "onPick">) {
+  const t = useI18n();
   const locale = useCurrentLocale();
   const [showVideo, setShowVideo] = useState(false);
 
   const { attributes, listeners, setNodeRef, transform, isDragging } = useSortable({ id: exercise.id });
 
   const exerciseName = locale === "fr" ? exercise.name : exercise.nameEn;
+  const muscleColor = MUSCLE_CONFIGS[muscle] || "bg-gray-500";
+  const muscleTitle = t(("workout_builder.muscles." + muscle.toLowerCase()) as any);
 
   return (
     <div
@@ -49,7 +61,7 @@ export const ExerciseListItem = React.memo(function ExerciseListItem({
 
       {exercise.fullVideoImageUrl && (
         <div
-          className="relative h-10 w-10 rounded overflow-hidden shrink-0 bg-slate-200 dark:bg-slate-800 cursor-pointer"
+          className="relative h-10 w-10 rounded overflow-hidden shrink-0 bg-slate-200 dark:bg-slate-800 cursor-pointer border border-slate-200 dark:border-slate-700/50"
           onClick={() => setShowVideo(true)}
         >
           <Image
@@ -66,7 +78,12 @@ export const ExerciseListItem = React.memo(function ExerciseListItem({
         </div>
       )}
 
-      <div className="w-2 h-2 rounded-full bg-blue-500 shrink-0" title={muscle} />
+      <div
+        className={`w-5 h-5 rounded text-white text-xs font-bold flex items-center justify-center shrink-0 cursor-pointer ${muscleColor}`}
+        title={muscleTitle}
+      >
+        {muscle.charAt(0)}
+      </div>
 
       <div className="flex-1 min-w-0">
         <span className="text-sm font-medium text-slate-900 dark:text-slate-100 truncate">{exerciseName}</span>

@@ -26,7 +26,7 @@ export const ExercisesSelection = ({
   exercisesByMuscle,
   error,
   onShuffle,
-  onPick,
+  onPick: _todo,
   onDelete,
   onAdd,
   shufflingExerciseId,

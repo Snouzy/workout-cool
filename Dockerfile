@@ -15,6 +15,7 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY --from=deps /app/prisma ./prisma
 COPY . .
 COPY .env.example .env
+
 RUN pnpm run build
 
 # Production image, copy only necessary files
@@ -26,8 +27,9 @@ COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/prisma ./prisma
+COPY --from=builder /app/data ./data
 
-COPY scripts/setup.sh /app/setup.sh
+COPY scripts /app
 RUN chmod +x /app/setup.sh
 
 ENTRYPOINT ["/app/setup.sh"]

@@ -2,7 +2,7 @@ services:
   postgres:
     image: postgres:15
     ports:
-      - "5432:5432"
+      - "${DB_PORT:-5432}:5432"
     environment:
       POSTGRES_USER: username
       POSTGRES_PASSWORD: password
@@ -15,5 +15,15 @@ services:
       timeout: 5s
       retries: 5
 
+  workout_cool:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "${APP_PORT:-3000}:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    env_file: .env
 volumes:
   pgdata:

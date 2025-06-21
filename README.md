@@ -222,6 +222,8 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 
 ## Deployment / Self-hosting
 
+To seed the database with the sample exercises, set the `SEED_SAMPLE_DATA` env variable to `true`.
+
 ### Using Docker
 
 ```bash
@@ -231,6 +233,17 @@ docker build -t yourusername/workout-cool .
 # Run the container
 docker run -p 3000:3000 --env-file .env.production yourusername/workout-cool
 ```
+
+### Using Docker Compose
+
+#### DATABASE_URL
+Update the `host` to point to the `postgres` service instead of `localhost`
+`DATABASE_URL=postgresql://username:password@postgres:5432/workout_cool`
+
+```bash
+docker compose up -d
+```
+
 
 ### Manual Deployment
 

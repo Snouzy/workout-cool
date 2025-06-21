@@ -52,15 +52,24 @@ export const ExerciseListItem = React.memo(function ExerciseListItem({
 
   return (
     <div
-      className={`flex items-center gap-3 p-3 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700 ${isDragging ? "shadow-lg" : ""}`}
+      className={`flex items-center gap-3 p-3 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700 select-none ${isDragging ? "shadow-lg" : ""}`}
       ref={setNodeRef}
       style={{
         transform: CSS.Transform.toString(transform),
         zIndex: isDragging ? 1000 : 1,
         position: isDragging ? "relative" : "static",
+        userSelect: "none",
+        WebkitUserSelect: "none",
+        MozUserSelect: "none",
+        msUserSelect: "none",
       }}
     >
-      <div className="cursor-grab active:cursor-grabbing" {...attributes} {...listeners}>
+      <div 
+        className="cursor-grab active:cursor-grabbing touch-none select-none p-1 -m-1" 
+        style={{ touchAction: "none" }}
+        {...attributes} 
+        {...listeners}
+      >
         <GripVertical className="h-5 w-5 text-slate-400" />
       </div>
 

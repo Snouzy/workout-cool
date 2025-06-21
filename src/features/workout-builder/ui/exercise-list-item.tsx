@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import Image from "next/image";
 import { Play, Shuffle, Trash2, GripVertical, Loader2 } from "lucide-react";
 import { CSS } from "@dnd-kit/utilities";
 import { useSortable } from "@dnd-kit/sortable";
 
 import { useCurrentLocale, useI18n } from "locales/client";
+import { Button } from "@/components/ui/button";
 
 import { ExerciseVideoModal } from "./exercise-video-modal";
 
@@ -12,7 +13,7 @@ import type { ExerciseWithAttributes } from "../types";
 
 const MUSCLE_CONFIGS: Record<string, string> = {
   ABDOMINALS: "bg-red-500",
-  BICEPS: "bg-purple-500", 
+  BICEPS: "bg-purple-500",
   BACK: "bg-blue-500",
   CHEST: "bg-green-500",
   SHOULDERS: "bg-orange-500",
@@ -43,7 +44,11 @@ export const ExerciseListItem = React.memo(function ExerciseListItem({
 
   const exerciseName = locale === "fr" ? exercise.name : exercise.nameEn;
   const muscleColor = MUSCLE_CONFIGS[muscle] || "bg-gray-500";
-  const muscleTitle = t(("workout_builder.muscles." + muscle.toLowerCase()) as any);
+  const muscleTitle = t(("workout_builder.muscles." + muscle.toLowerCase()) as keyof typeof t);
+
+  const handleShuffle = useCallback(() => {
+    onShuffle(exercise.id, muscle);
+  }, [onShuffle, exercise.id, muscle]);
 
   return (
     <div
@@ -79,23 +84,34 @@ export const ExerciseListItem = React.memo(function ExerciseListItem({
       )}
 
       <div
-        className={`w-5 h-5 rounded text-white text-xs font-bold flex items-center justify-center shrink-0 cursor-pointer ${muscleColor}`}
-        title={muscleTitle}
+        // eslint-disable-next-line max-len
+        className={`tooltip tooltip-bottom w-5 h-5 rounded text-white text-xs font-bold flex items-center justify-center shrink-0 cursor-pointer ${muscleColor}`}
+        data-tip={muscleTitle}
       >
         {muscle.charAt(0)}
       </div>
 
       <div className="flex-1 min-w-0">
-        <span className="text-sm font-medium text-slate-900 dark:text-slate-100 truncate">{exerciseName}</span>
+        <span className="text-sm font-medium text-slate-900 dark:text-slate-100 md:truncate">{exerciseName}</span>
       </div>
 
-      <button
+      <Button
+        className="p-2 sm:p-2 min-h-[44px] min-w-[44px] sm:min-h-min sm:min-w-min touch-manipulation"
+        disabled={isShuffling}
+        onClick={handleShuffle}
+        size="small"
+        variant="outline"
+      >
+        {isShuffling ? <Loader2 className="h-4 w-4 sm:h-3.5 sm:w-3.5 animate-spin" /> : <Shuffle className="h-4 w-4 sm:h-3.5 sm:w-3.5" />}
+        <span className="hidden sm:inline ml-1">{t("workout_builder.exercise.shuffle")}</span>
+      </Button>
+      {/* <button
         className="p-2 text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100"
         disabled={isShuffling}
-        onClick={() => onShuffle(exercise.id, muscle)}
+        onClick={handleShuffle}
       >
         {isShuffling ? <Loader2 className="h-4 w-4 animate-spin" /> : <Shuffle className="h-4 w-4" />}
-      </button>
+      </button> */}
 
       <button
         className="p-2 text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300"

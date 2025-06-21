@@ -35,7 +35,8 @@ export const ExerciseListItem = React.memo(function ExerciseListItem({
       ref={setNodeRef}
       style={{
         transform: CSS.Transform.toString(transform),
-        zIndex: isDragging ? 50 : 1,
+        zIndex: isDragging ? 1000 : 1,
+        position: isDragging ? "relative" : "static",
       }}
     >
       <div className="cursor-grab active:cursor-grabbing" {...attributes} {...listeners}>

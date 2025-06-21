@@ -12,7 +12,6 @@ interface ExerciseVideoModalProps {
 }
 
 export function ExerciseVideoModal({ open, onOpenChange, exercise }: ExerciseVideoModalProps) {
-  console.log("exercise:", exercise);
   const t = useI18n();
   const locale = useCurrentLocale();
   const title = locale === "fr" ? exercise.name : exercise.nameEn || exercise.name;
@@ -42,7 +41,7 @@ export function ExerciseVideoModal({ open, onOpenChange, exercise }: ExerciseVid
       <DialogContent className="max-w-2xl p-0 max-h-[80vh]">
         <DialogHeader className="flex flex-row items-center justify-between px-4 pt-4 pb-2">
           <DialogTitle className="text-lg md:text-xl font-bold flex flex-col gap-2">
-            {title}
+            <span className="text-slate-700 dark:text-slate-200 pr-10 text-left">{title}</span>
             <div className="flex flex-wrap gap-2 mt-2">
               {type && (
                 <span className={`px-2 py-0.5 rounded text-xs font-medium ${badgeColors.TYPE}`}>{getAttributeValueLabel(type, t)}</span>

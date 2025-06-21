@@ -3,7 +3,7 @@ import { create } from "zustand";
 import { workoutSessionLocal } from "@/shared/lib/workout-session/workout-session.local";
 import { WorkoutSession } from "@/shared/lib/workout-session/types/workout-session";
 import { convertWeight, type WeightUnit } from "@/shared/lib/weight-conversion";
-import { WorkoutSessionExercise, WorkoutSet } from "@/features/workout-session/types/workout-set";
+import { WorkoutSessionExercise, WorkoutSet, WorkoutSetType, WorkoutSetUnit } from "@/features/workout-session/types/workout-set";
 import { useWorkoutBuilderStore } from "@/features/workout-builder/model/workout-builder.store";
 
 import { ExerciseWithAttributes } from "../../workout-builder/types";
@@ -174,19 +174,39 @@ export const useWorkoutSessionStore = create<WorkoutSessionState>((set, get) => 
   addSet: () => {
     const { session, currentExerciseIndex } = get();
     if (!session) return;
+
     const exIdx = currentExerciseIndex;
-    const sets = session.exercises[exIdx].sets;
+    const currentExercise = session.exercises[exIdx];
+    const sets = currentExercise.sets;
+
+    let typesToCopy: WorkoutSetType[] = ["REPS"];
+    let unitsToCopy: WorkoutSetUnit[] = [];
+
+    if (sets.length > 0) {
+      const lastSet = sets[sets.length - 1];
+
+      if (lastSet.types && lastSet.types.length > 0) {
+        typesToCopy = [...lastSet.types];
+        if (lastSet.units && lastSet.units.length > 0) {
+          unitsToCopy = [...lastSet.units];
+        }
+      }
+    }
+
     const newSet: WorkoutSet = {
-      id: `${session.exercises[exIdx].id}-set-${sets.length + 1}`,
+      id: `${currentExercise.id}-set-${sets.length + 1}`,
       setIndex: sets.length,
-      types: ["REPS"],
+      types: typesToCopy,
       valuesInt: [],
       valuesSec: [],
-      units: [],
+      units: unitsToCopy,
       completed: false,
     };
+
     const updatedExercises = session.exercises.map((ex, idx) => (idx === exIdx ? { ...ex, sets: [...ex.sets, newSet] } : ex));
+
     workoutSessionLocal.update(session.id, { exercises: updatedExercises });
+
     set({
       session: { ...session, exercises: updatedExercises },
       currentExercise: { ...updatedExercises[exIdx] },
@@ -372,7 +392,6 @@ export const useWorkoutSessionStore = create<WorkoutSessionState>((set, get) => 
 
   loadSessionFromLocal: () => {
     const currentId = workoutSessionLocal.getCurrent();
-    console.log("currentId:", currentId);
     if (currentId) {
       const session = workoutSessionLocal.getById(currentId);
       if (session && session.status === "active") {

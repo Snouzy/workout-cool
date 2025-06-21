@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getSessionCookie } from "better-auth/cookies";
 
 const I18nMiddleware = createI18nMiddleware({
-  locales: ["en", "fr"],
+  locales: ["en", "fr", "es"],
   defaultLocale: "en",
   urlMappingStrategy: "rewrite",
 });

@@ -68,7 +68,6 @@ export function WorkoutSessionList() {
                 .filter(Boolean),
             ),
           );
-    console.log("allMuscles:", allMuscles);
 
     const exercisesByMuscle = allMuscles.map((muscle) => ({
       muscle,

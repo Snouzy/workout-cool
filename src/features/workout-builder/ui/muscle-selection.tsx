@@ -34,9 +34,8 @@ const MuscleIllustration = ({
   const getMuscleClasses = (muscle: ExerciseAttributeValueEnum) => {
     const isSelected = selectedMuscles.includes(muscle);
     return cn(
-      "cursor-pointer transition-colors",
-      isSelected ? "fill-primary" : "fill-[#757575]",
-      "md:group-hover:fill-primary/80 group-active:fill-primary/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary",
+      "cursor-pointer transition-all duration-100 ease-out",
+      isSelected ? "fill-blue-500 " : "fill-slate-400 group-hover:fill-blue-400",
     );
   };
 

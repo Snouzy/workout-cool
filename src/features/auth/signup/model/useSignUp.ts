@@ -4,8 +4,6 @@ import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
 
 import { useI18n } from "locales/client";
-import { event } from "@/shared/lib/facebook/fb-pixel";
-import { LogEvents } from "@/shared/lib/analytics/events";
 import { paths } from "@/shared/constants/paths";
 import { SignUpSchema } from "@/features/auth/signup/schema/signup.schema";
 import { signUpAction } from "@/features/auth/signup/model/signup.action";
@@ -30,12 +28,8 @@ export const useSignUp = () => {
       return result;
     },
 
-    onSuccess: (res) => {
+    onSuccess: () => {
       router.push(`/${paths.verifyEmail}?signin=true`);
-
-      event(LogEvents.Registered.facebookNativeName, {
-        email: res?.data?.user.email || "",
-      });
     },
 
     onError: (error: unknown) => {

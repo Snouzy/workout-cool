@@ -1,6 +1,7 @@
+import nodemailer from "nodemailer";
+import { render } from "@react-email/render";
+
 import { env } from "@/env";
-import nodemailer from 'nodemailer';
-import { render } from '@react-email/render';
 
 type EmailPayload = {
   from?: string;

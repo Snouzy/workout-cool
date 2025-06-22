@@ -18,7 +18,6 @@ export function DonationModal({ isOpen, onClose }: DonationModalProps) {
   useEffect(() => {
     const modal = modalRef.current;
     if (!modal) return;
-    modal.showModal();
 
     if (isOpen) {
       modal.showModal();

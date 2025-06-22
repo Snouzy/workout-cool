@@ -79,6 +79,25 @@ export default {
     },
   },
 
+  // Donation Modal
+  donation_modal: {
+    title: "支持项目",
+    congrats: "恭喜完成锻炼！🎉",
+    subtitle: "这个应用免费帮助您，但对我来说有真正的成本...",
+    costs_title: "成本现实",
+    costs_description: "目前，捐赠甚至无法覆盖基本成本：服务器、身份验证、基础设施、数据库等。",
+    open_source_title: "100% 开源",
+    open_source_description: "这个应用完全免费且开源。不产生任何利润 - 这是一个激情项目，帮助社区和帮助人们锻炼。",
+    no_ads: "无广告",
+    no_tracking: "无追踪",
+    impact_title: "您的影响",
+    impact_3_euros: "• 即使 €3 也能覆盖 1 周的服务器费用",
+    impact_support: "• 您的支持让应用对所有人保持免费",
+    impact_footer: "每一笔捐赠，即使很小，都会产生真正的影响！🙏",
+    later_button: "稍后",
+    support_button: "支持项目",
+  },
+
   // Contact Support
   contact_support: "联系支持",
   contact_support_subtitle: "描述您的问题，我们将尽快帮助您。您也可以直接写信给我们：",

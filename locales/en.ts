@@ -81,6 +81,26 @@ export default {
     },
   },
 
+  // Donation Modal
+  donation_modal: {
+    title: "Support the project",
+    congrats: "Congratulations on your workout! 🎉",
+    subtitle: "This app helps you for free, but it has a real cost for me...",
+    costs_title: "The reality of costs",
+    costs_description: "Currently, donations don't even cover basic costs: servers, authentication, infrastructure, database, etc.",
+    open_source_title: "100% Open Source",
+    open_source_description:
+      "This app is completely free and open source. No profit is generated - it's a passion project to help the community and help people exercise.",
+    no_ads: "No ads",
+    no_tracking: "No tracking",
+    impact_title: "Your impact",
+    impact_3_euros: "• Even €3 covers 1 week of server",
+    impact_support: "• Your support keeps the app free for everyone",
+    impact_footer: "Every donation, even small, makes a real difference! 🙏",
+    later_button: "Later",
+    support_button: "Support the project",
+  },
+
   // Contact Support
   contact_support: "Contact Support",
   contact_support_subtitle: "Describe your issue and we'll help you as soon as possible. You can also write to us directly at",

@@ -81,6 +81,27 @@ export default {
     },
   },
 
+  // Donation Modal
+  donation_modal: {
+    title: "Apoya el proyecto",
+    congrats: "¡Felicidades por tu entrenamiento! 🎉",
+    subtitle: "Esta app te ayuda gratis, pero tiene un costo real para mí...",
+    costs_title: "La realidad de los costos",
+    costs_description:
+      "Actualmente, las donaciones ni siquiera cubren los costos básicos: servidores, autenticación, infraestructura, base de datos, etc.",
+    open_source_title: "100% Open Source",
+    open_source_description:
+      "Esta app es completamente gratuita y de código abierto. No se genera ganancia - es un proyecto de pasión para ayudar a la comunidad y ayudar a las personas a hacer ejercicio.",
+    no_ads: "Sin publicidad",
+    no_tracking: "Sin rastreo",
+    impact_title: "Tu impacto",
+    impact_3_euros: "• Incluso €3 cubren 1 semana de servidor",
+    impact_support: "• Tu apoyo mantiene la app gratuita para todos",
+    impact_footer: "¡Cada donación, incluso pequeña, hace una diferencia real! 🙏",
+    later_button: "Más tarde",
+    support_button: "Apoyar el proyecto",
+  },
+
   // Contact Support
   contact_support: "Contactar soporte",
   contact_support_subtitle: "Describe tu problema y te ayudaremos lo antes posible. También puedes escribirnos directamente a",

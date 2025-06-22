@@ -84,7 +84,7 @@ export const Header = () => {
 
             <hr className="my-1 border-slate-200 dark:border-gray-800" />
 
-            {!session.data ? (
+            {!session.data && !session.isPending ? (
               <>
                 <li>
                   <Link className="!no-underline" href="/auth/signin" size="base" variant="nav">

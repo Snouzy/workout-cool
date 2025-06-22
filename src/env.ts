@@ -12,11 +12,16 @@ export const env = createEnv({
     DATABASE_URL: z.string().url(),
     GOOGLE_CLIENT_ID: z.string().min(1),
     GOOGLE_CLIENT_SECRET: z.string().min(1),
-    RESEND_API_KEY: z.string().min(1),
-    RESEND_AUDIENCE_ID: z.string().optional(),
     NODE_ENV: z.enum(["development", "production", "test"]),
     BETTER_AUTH_SECRET: z.string().min(1),
     OPENPANEL_SECRET_KEY: z.string().min(1),
+    SMTP_HOST: z.string().optional(),
+    SMTP_PORT: z.coerce.number().positive().optional(),
+    SMTP_USER: z.string().optional(),
+    SMTP_PASS: z.string().optional(),
+    SMTP_FROM: z.string().optional(),
+    //issue fixed in zod 4. See https://github.com/colinhacks/zod/issues/3906
+    SMTP_SECURE: z.enum(["true", "false"]).default("false").transform((val) => val === "true"),
   },
   /**
    * If you add `client` environment variables, you need to add them to

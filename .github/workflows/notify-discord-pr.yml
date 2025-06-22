@@ -1,0 +1,219 @@
+name: Discord PR Notification
+
+on:
+  pull_request:
+    types: [opened]
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: "Pull Request number"
+        required: true
+        type: string
+
+jobs:
+  Discord:
+    runs-on: ubuntu-latest
+    name: Discord PR Notifier
+    steps:
+      - uses: actions/checkout@v4
+        if: github.event_name == 'workflow_dispatch'
+
+      - name: Get PR info for manual trigger
+        id: pr-info
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          PR_INFO=$(gh pr view ${{ github.event.inputs.pr_number }} --json number,title,url,author,state,labels,createdAt,headRefName,baseRefName,isDraft,mergeable)
+          echo "number=$(echo "$PR_INFO" | jq -r '.number')" >> $GITHUB_OUTPUT
+          echo "title=$(echo "$PR_INFO" | jq -r '.title')" >> $GITHUB_OUTPUT
+          echo "html_url=$(echo "$PR_INFO" | jq -r '.url')" >> $GITHUB_OUTPUT
+          echo "author_login=$(echo "$PR_INFO" | jq -r '.author.login')" >> $GITHUB_OUTPUT
+          echo "author_html_url=https://github.com/$(echo "$PR_INFO" | jq -r '.author.login')" >> $GITHUB_OUTPUT
+          echo "state=$(echo "$PR_INFO" | jq -r '.state')" >> $GITHUB_OUTPUT
+          echo "created_at=$(echo "$PR_INFO" | jq -r '.createdAt')" >> $GITHUB_OUTPUT
+          echo "labels=$(echo "$PR_INFO" | jq -r '.labels | map(.name) | join(", ") // "None"')" >> $GITHUB_OUTPUT
+          echo "head_ref=$(echo "$PR_INFO" | jq -r '.headRefName')" >> $GITHUB_OUTPUT
+          echo "base_ref=$(echo "$PR_INFO" | jq -r '.baseRefName')" >> $GITHUB_OUTPUT
+          echo "is_draft=$(echo "$PR_INFO" | jq -r '.isDraft')" >> $GITHUB_OUTPUT
+          echo "mergeable=$(echo "$PR_INFO" | jq -r '.mergeable // "UNKNOWN"')" >> $GITHUB_OUTPUT
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      - name: Determine action color and emoji
+        id: action-info
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            # For manual trigger, use the current state
+            case "${{ steps.pr-info.outputs.state }}" in
+              "OPEN")
+                if [ "${{ steps.pr-info.outputs.is_draft }}" = "true" ]; then
+                  echo "color=8421504" >> $GITHUB_OUTPUT   # Gray
+                  echo "emoji=📝" >> $GITHUB_OUTPUT
+                  echo "action_text=Draft" >> $GITHUB_OUTPUT
+                else
+                  echo "color=5763719" >> $GITHUB_OUTPUT   # Green
+                  echo "emoji=🔄" >> $GITHUB_OUTPUT
+                  echo "action_text=Open" >> $GITHUB_OUTPUT
+                fi
+                ;;
+              "CLOSED")
+                echo "color=15158332" >> $GITHUB_OUTPUT    # Red
+                echo "emoji=❌" >> $GITHUB_OUTPUT
+                echo "action_text=Closed" >> $GITHUB_OUTPUT
+                ;;
+              "MERGED")
+                echo "color=6559689" >> $GITHUB_OUTPUT     # Purple
+                echo "emoji=🎉" >> $GITHUB_OUTPUT
+                echo "action_text=Merged" >> $GITHUB_OUTPUT
+                ;;
+            esac
+          else
+            # For automatic trigger, use the action
+            case "${{ github.event.action }}" in
+              "opened")
+                echo "color=5763719" >> $GITHUB_OUTPUT     # Green
+                echo "emoji=🔄" >> $GITHUB_OUTPUT
+                echo "action_text=Opened" >> $GITHUB_OUTPUT
+                ;;
+              "reopened")
+                echo "color=16776960" >> $GITHUB_OUTPUT    # Yellow
+                echo "emoji=🔄" >> $GITHUB_OUTPUT
+                echo "action_text=Reopened" >> $GITHUB_OUTPUT
+                ;;
+              "closed")
+                if [ "${{ github.event.pull_request.merged }}" = "true" ]; then
+                  echo "color=6559689" >> $GITHUB_OUTPUT   # Purple
+                  echo "emoji=🎉" >> $GITHUB_OUTPUT
+                  echo "action_text=Merged" >> $GITHUB_OUTPUT
+                else
+                  echo "color=15158332" >> $GITHUB_OUTPUT  # Red
+                  echo "emoji=❌" >> $GITHUB_OUTPUT
+                  echo "action_text=Closed" >> $GITHUB_OUTPUT
+                fi
+                ;;
+              "ready_for_review")
+                echo "color=5763719" >> $GITHUB_OUTPUT     # Green
+                echo "emoji=👀" >> $GITHUB_OUTPUT
+                echo "action_text=Ready for Review" >> $GITHUB_OUTPUT
+                ;;
+              "converted_to_draft")
+                echo "color=8421504" >> $GITHUB_OUTPUT     # Gray
+                echo "emoji=📝" >> $GITHUB_OUTPUT
+                echo "action_text=Converted to Draft" >> $GITHUB_OUTPUT
+                ;;
+            esac
+          fi
+
+      - name: Create Discord webhook payload
+        run: |
+          # Determine data source based on trigger type
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            PR_NUMBER="${{ steps.pr-info.outputs.number }}"
+            PR_TITLE="${{ steps.pr-info.outputs.title }}"
+            PR_URL="${{ steps.pr-info.outputs.html_url }}"
+            AUTHOR_LOGIN="${{ steps.pr-info.outputs.author_login }}"
+            AUTHOR_URL="${{ steps.pr-info.outputs.author_html_url }}"
+            PR_STATE="${{ steps.pr-info.outputs.state }}"
+            PR_LABELS="${{ steps.pr-info.outputs.labels }}"
+            CREATED_AT="${{ steps.pr-info.outputs.created_at }}"
+            HEAD_REF="${{ steps.pr-info.outputs.head_ref }}"
+            BASE_REF="${{ steps.pr-info.outputs.base_ref }}"
+            IS_DRAFT="${{ steps.pr-info.outputs.is_draft }}"
+          else
+            PR_NUMBER="${{ github.event.pull_request.number }}"
+            PR_TITLE="${{ github.event.pull_request.title }}"
+            PR_URL="${{ github.event.pull_request.html_url }}"
+            AUTHOR_LOGIN="${{ github.event.pull_request.user.login }}"
+            AUTHOR_URL="${{ github.event.pull_request.user.html_url }}"
+            PR_STATE="${{ github.event.pull_request.state }}"
+            PR_LABELS="${{ github.event.pull_request.labels[0].name && join(github.event.pull_request.labels.*.name, ', ') || 'None' }}"
+            CREATED_AT="${{ github.event.pull_request.created_at }}"
+            HEAD_REF="${{ github.event.pull_request.head.ref }}"
+            BASE_REF="${{ github.event.pull_request.base.ref }}"
+            IS_DRAFT="${{ github.event.pull_request.draft }}"
+          fi
+
+          # Escape special characters for JSON
+          PR_TITLE_ESCAPED=$(echo "$PR_TITLE" | sed 's/"/\\"/g' | sed "s/'/\\'/g")
+          
+          # Create a temporary JSON file using jq to ensure valid JSON
+          jq -n \
+            --arg avatar_url "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" \
+            --arg title "${{ steps.action-info.outputs.emoji }} Pull Request ${{ steps.action-info.outputs.action_text }}: #${PR_NUMBER}" \
+            --arg description "$PR_TITLE_ESCAPED" \
+            --arg url "$PR_URL" \
+            --argjson color ${{ steps.action-info.outputs.color }} \
+            --arg thumbnail_url "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" \
+            --arg pr_number "#${PR_NUMBER}" \
+            --arg author_name "$AUTHOR_LOGIN" \
+            --arg author_url "$AUTHOR_URL" \
+            --arg repo_name "${{ github.event.repository.name }}" \
+            --arg repo_url "${{ github.event.repository.html_url }}" \
+            --arg branch "${HEAD_REF} → ${BASE_REF}" \
+            --arg labels "$PR_LABELS" \
+            --arg status "$PR_STATE" \
+            --arg pr_url "$PR_URL" \
+            --arg timestamp "$CREATED_AT" \
+            --arg footer_text "Workout Cool • PR ${{ steps.action-info.outputs.action_text }}" \
+            --arg footer_icon "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" \
+            '{
+              "avatar_url": $avatar_url,
+              "embeds": [
+                {
+                  "title": $title,
+                  "description": $description,
+                  "url": $url,
+                  "color": $color,
+                  "thumbnail": {
+                    "url": $thumbnail_url
+                  },
+                  "fields": [
+                    {
+                      "name": "📋 PR #",
+                      "value": $pr_number,
+                      "inline": true
+                    },
+                    {
+                      "name": "👤 Author",
+                      "value": ("[\($author_name)](\($author_url))"),
+                      "inline": true
+                    },
+                    {
+                      "name": "📁 Repository",
+                      "value": ("[\($repo_name)](\($repo_url))"),
+                      "inline": true
+                    },
+                    {
+                      "name": "🌿 Branch",
+                      "value": $branch,
+                      "inline": true
+                    },
+                    {
+                      "name": "🏷️ Labels",
+                      "value": $labels,
+                      "inline": true
+                    },
+                    {
+                      "name": "📊 Status",
+                      "value": $status,
+                      "inline": true
+                    },
+                    {
+                      "name": "🔗 View PR",
+                      "value": ("[Pull Request](\($pr_url))"),
+                      "inline": true
+                    }
+                  ],
+                  "timestamp": $timestamp,
+                  "footer": {
+                    "text": $footer_text,
+                    "icon_url": $footer_icon
+                  }
+                }
+              ]
+            }' > discord_payload.json
+
+      - name: Send Discord notification
+        run: |
+          curl -H "Content-Type: application/json" \
+               -d @discord_payload.json \
+               "${{ secrets.DISCORD_PR_WEBHOOK }}"

@@ -78,7 +78,7 @@ export const auth = betterAuth({
   },
   emailVerification: {
     autoSignInAfterVerification: true,
-    sendOnSignUp: true,
+    sendOnSignUp: false, // FIXME: TEMPORARY
     sendVerificationEmail: async ({ user, url }, _req) => {
       try {
         const urlObject = new URL(url);
@@ -101,6 +101,7 @@ export const auth = betterAuth({
     },
   },
   emailAndPassword: {
+    requireEmailVerification: false, // FIXME: TEMPORARY
     sendResetPassword: async ({ user, url }) => {
       await sendEmail({
         to: user.email,

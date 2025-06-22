@@ -44,7 +44,7 @@ function StepperStep({
               "border-gray-300 bg-gray-100 text-gray-400 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-500":
                 !isActive && !isCompleted,
             },
-            canClick ? "cursor-pointer hover:scale-105" : "cursor-default",
+            canClick ? "cursor-pointer" : "cursor-default",
           )}
           onClick={handleClick}
         >
@@ -85,7 +85,7 @@ function StepperStep({
               "border-gray-300 bg-gray-100 text-gray-400 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-500":
                 !isActive && !isCompleted,
             },
-            canClick ? "cursor-pointer hover:scale-105" : "cursor-default",
+            canClick ? "cursor-pointer" : "cursor-default",
           )}
           onClick={handleClick}
         >

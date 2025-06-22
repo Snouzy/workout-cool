@@ -2,7 +2,7 @@ export default {
   email_sent: "Email envoyé",
   cant_send_email: "Impossible d'envoyer l'email",
   logout: "Déconnexion",
-  verify_email: "Vérifier votre email",
+  verify_email: "Vérifier votre email. ⚠️ Pensez à vérifier votre dossier SPAM.",
   verify_email_subtitle: "Veuillez vérifier votre email pour continuer.",
   resend_email: "Renvoyer l'email",
   resend_email_countdown: "Renvoyer l'email dans {seconds} secondes",
@@ -60,6 +60,11 @@ export default {
     title: "Nouveautés",
     release_notes: "Notes",
     notes: {
+      note_2025_06_22: {
+        title: "🌍 Nouvelles langues & amélioration des performances !",
+        content:
+          "L'application est maintenant disponible en chinois et en russe ! Nous avons aussi amélioré les performances du glisser-déposer pour une expérience plus fluide. ⚡",
+      },
       note_2025_06_19: {
         title: "📱 Maintenant disponible en PWA !",
         content:
@@ -79,6 +84,27 @@ export default {
         content: "Amélioration de la réactivité mobile et ajout d'effets de survol subtils aux boutons.",
       },
     },
+  },
+
+  // Donation Modal
+  donation_modal: {
+    title: "Soutenez le projet",
+    congrats: "Félicitations pour la séance ! 🎉",
+    subtitle: "Cette app vous aide gratuitement, mais elle a un coût réel pour moi...",
+    costs_title: "La réalité des coûts",
+    costs_description:
+      "Actuellement, les donations ne couvrent même pas les coûts de base : serveurs, authentification, infrastructure, base de données, etc.",
+    open_source_title: "100% Open Source",
+    open_source_description:
+      "Cette app est entièrement gratuite et open source. Aucun profit n'est généré - c'est un projet de passion pour aider la communauté et aider les gens à faire du sport.",
+    no_ads: "Pas de pub",
+    no_tracking: "Pas de tracking",
+    impact_title: "Votre impact",
+    impact_3_euros: "• Même 3€ couvrent 1 semaine de serveur",
+    impact_support: "• Votre soutien garde l'app gratuite pour tous",
+    impact_footer: "Chaque don, même petit, fait une vraie différence ! 🙏",
+    later_button: "Plus tard",
+    support_button: "Soutenir le projet",
   },
 
   // Contact Support

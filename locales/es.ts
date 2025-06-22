@@ -2,7 +2,7 @@ export default {
   email_sent: "Email enviado",
   cant_send_email: "No se puede enviar el email",
   logout: "Cerrar sesión",
-  verify_email: "Verificar tu email",
+  verify_email: "Verificar tu email. ⚠️ No olvides revisar tu carpeta de spam.",
   verify_email_subtitle: "Por favor verifica tu email para continuar.",
   resend_email: "Reenviar email",
   resend_email_countdown: "Reenviar email en {seconds} segundos",
@@ -60,6 +60,11 @@ export default {
     title: "Novedades",
     release_notes: "Notas",
     notes: {
+      note_2025_06_22: {
+        title: "🌍 ¡Nuevos idiomas y mejora de rendimiento!",
+        content:
+          "¡La aplicación ahora está disponible en chino y ruso! También hemos mejorado el rendimiento del arrastrar y soltar para una experiencia más fluida. ⚡",
+      },
       note_2025_06_19: {
         title: "📱 ¡Ahora disponible como PWA!",
         content:
@@ -79,6 +84,27 @@ export default {
         content: "Mejora de la responsividad móvil y adición de efectos de hover sutiles a los botones.",
       },
     },
+  },
+
+  // Donation Modal
+  donation_modal: {
+    title: "Apoya el proyecto",
+    congrats: "¡Felicidades por tu entrenamiento! 🎉",
+    subtitle: "Esta app te ayuda gratis, pero tiene un costo real para mí...",
+    costs_title: "La realidad de los costos",
+    costs_description:
+      "Actualmente, las donaciones ni siquiera cubren los costos básicos: servidores, autenticación, infraestructura, base de datos, etc.",
+    open_source_title: "100% Open Source",
+    open_source_description:
+      "Esta app es completamente gratuita y de código abierto. No se genera ganancia - es un proyecto de pasión para ayudar a la comunidad y ayudar a las personas a hacer ejercicio.",
+    no_ads: "Sin publicidad",
+    no_tracking: "Sin rastreo",
+    impact_title: "Tu impacto",
+    impact_3_euros: "• Incluso €3 cubren 1 semana de servidor",
+    impact_support: "• Tu apoyo mantiene la app gratuita para todos",
+    impact_footer: "¡Cada donación, incluso pequeña, hace una diferencia real! 🙏",
+    later_button: "Más tarde",
+    support_button: "Apoyar el proyecto",
   },
 
   // Contact Support

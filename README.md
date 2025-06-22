@@ -40,7 +40,7 @@
 ## Contributors
 
 <a href="https://github.com/Snouzy/workout-cool/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=Snouzy/workout-cool" />
+  <img src="https://contrib.rocks/image?repo=Snouzy/workout-cool&nocache=1" />
 </a>
 
 ## About

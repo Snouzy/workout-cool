@@ -1,33 +1,39 @@
-import { SiteConfig } from "@/shared/config/site-config";
+import nodemailer from "nodemailer";
+import { render } from "@react-email/components";
+
 import { env } from "@/env";
 
-import { resend } from "./resend";
+type EmailPayload = {
+  from?: string;
+  to: string;
+  subject: string;
+  text: string;
+  react?: React.ReactElement;
+};
 
-type ResendSendType = typeof resend.emails.send;
-type ResendParamsType = Parameters<ResendSendType>;
-type ResendParamsTypeWithConditionalFrom = [payload: Omit<ResendParamsType[0], "from"> & { from?: string }, options?: ResendParamsType[1]];
+const transporter = nodemailer.createTransport({
+  host: env.SMTP_HOST,
+  port: env.SMTP_PORT,
+  secure: env.SMTP_SECURE,
+  auth:
+    env.SMTP_USER && env.SMTP_PASS
+      ? {
+          user: env.SMTP_USER,
+          pass: env.SMTP_PASS,
+        }
+      : undefined,
+});
 
-/**
- * sendEmail will send an email using resend.
- * To avoid repeating the same "from" email, you can leave it empty and it will use the default one.
- * Also, in development, it will add "[DEV]" to the subject.
- * @param params[0] : payload
- * @param params[1] : options
- * @returns a promise of the email sent
- */
-export const sendEmail = async (...params: ResendParamsTypeWithConditionalFrom) => {
-  if (env.NODE_ENV === "development") {
-    params[0].subject = `[DEV] ${params[0].subject}`;
+export const sendEmail = async ({ from, to, subject, text, react }: EmailPayload) => {
+  try {
+    return transporter.sendMail({
+      from: from ?? env.SMTP_FROM,
+      to,
+      subject,
+      text,
+      html: react ? await render(react) : undefined,
+    });
+  } catch (error) {
+    console.error(error);
   }
-
-  const resendParams = [
-    {
-      ...params[0],
-      from: params[0].from ?? SiteConfig.email.from,
-      to: env.NODE_ENV === "development" ? "delivered@resend.dev" : params[0].to,
-    } as ResendParamsType[0],
-    params[1],
-  ] satisfies ResendParamsType;
-
-  return resend.emails.send(...resendParams);
 };

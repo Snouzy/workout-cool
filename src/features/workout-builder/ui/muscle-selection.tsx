@@ -34,10 +34,8 @@ const MuscleIllustration = ({
   const getMuscleClasses = (muscle: ExerciseAttributeValueEnum) => {
     const isSelected = selectedMuscles.includes(muscle);
     return cn(
-      "cursor-pointer transition-colors",
-      isSelected ? "fill-primary" : "fill-[#757575]",
-      "md:group-hover:fill-primary/80 group-active:fill-primary/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary",
-      "group-active:scale-[1.005]",
+      "cursor-pointer transition-all duration-100 ease-out",
+      isSelected ? "fill-blue-500 " : "fill-slate-400 group-hover:fill-blue-400",
     );
   };
 
@@ -1210,11 +1208,7 @@ export function MuscleSelection({ onToggleMuscle, selectedMuscles }: MuscleSelec
   return (
     <div className="space-y-6">
       <div className="text-center mb-6">
-        <p className="text-slate-600 dark:text-slate-300 text-sm italic">
-          {selectedMuscles.length > 0
-            ? t("workout_builder.stats.muscle_selected", { count: selectedMuscles.length })
-            : t("workout_builder.selection.muscle_selection_description")}
-        </p>
+        <p className="text-slate-600 dark:text-slate-300 text-sm italic">{t("workout_builder.selection.muscle_selection_description")}</p>
       </div>
 
       <div className="flex justify-center">

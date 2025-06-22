@@ -2,7 +2,7 @@ export default {
   email_sent: "Email sent",
   cant_send_email: "Can't send email",
   logout: "Logout",
-  verify_email: "Verify your email",
+  verify_email: "Verify your email. ⚠️ Don't forget to check your spam folder.",
   verify_email_subtitle: "Please verify your email to continue.",
   resend_email: "Resend email",
   resend_email_countdown: "Resend email in {seconds} seconds",
@@ -60,6 +60,11 @@ export default {
     title: "What's New",
     release_notes: "Release Notes",
     notes: {
+      note_2025_06_22: {
+        title: "🌍 New Languages & Performance Boost!",
+        content:
+          "The app is now available in Chinese and Russian! We've also improved drag'n'drop performance for a smoother experience. ⚡",
+      },
       note_2025_06_19: {
         title: "📱 Now Available as a PWA!",
         content:
@@ -79,6 +84,26 @@ export default {
         content: "Improved mobile responsiveness and added subtle hover effects to buttons.",
       },
     },
+  },
+
+  // Donation Modal
+  donation_modal: {
+    title: "Support the project",
+    congrats: "Congratulations on your workout! 🎉",
+    subtitle: "This app helps you for free, but it has a real cost for me...",
+    costs_title: "The reality of costs",
+    costs_description: "Currently, donations don't even cover basic costs: servers, authentication, infrastructure, database, etc.",
+    open_source_title: "100% Open Source",
+    open_source_description:
+      "This app is completely free and open source. No profit is generated - it's a passion project to help the community and help people exercise.",
+    no_ads: "No ads",
+    no_tracking: "No tracking",
+    impact_title: "Your impact",
+    impact_3_euros: "• Even €3 covers 1 week of server",
+    impact_support: "• Your support keeps the app free for everyone",
+    impact_footer: "Every donation, even small, makes a real difference! 🙏",
+    later_button: "Later",
+    support_button: "Support the project",
   },
 
   // Contact Support

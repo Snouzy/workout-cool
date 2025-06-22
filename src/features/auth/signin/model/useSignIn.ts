@@ -11,7 +11,7 @@ export const useSignIn = () => {
     const response = await authClient.signIn.email({
       email: values.email,
       password: values.password,
-      callbackURL: `/${paths.root}?signin=true`,
+      callbackURL: `${paths.root}?signin=true`,
     });
 
     if (response?.error) {

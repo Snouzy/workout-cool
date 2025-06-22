@@ -1,6 +1,34 @@
 User-agent: *
-Disallow: /admin
+Allow: /
+Disallow: /admin/
 Disallow: /api/
 Disallow: /dashboard/
 Disallow: /preview/
+Disallow: /auth/
+Disallow: /onboarding/
+Disallow: /profile/
+Disallow: /_next/
+Disallow: /.*\?
+
+# Crawl delay
+Crawl-delay: 1
+
+# Specific bot configurations
+User-agent: Googlebot
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /auth/
+Disallow: /onboarding/
+Disallow: /profile/
+
+User-agent: Bingbot
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /auth/
+Disallow: /onboarding/
+Disallow: /profile/
+
+# Sitemap
 Sitemap: https://www.workout.cool/sitemap.xml

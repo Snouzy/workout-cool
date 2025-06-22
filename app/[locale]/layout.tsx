@@ -3,6 +3,7 @@ import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 
 import { cn } from "@/shared/lib/utils";
+import { generateStructuredData, StructuredDataScript } from "@/shared/lib/structured-data";
 import { getServerUrl } from "@/shared/lib/server-url";
 import { SiteConfig } from "@/shared/config/site-config";
 import { WorkoutSessionsSynchronizer } from "@/features/workout-session/ui/workout-sessions-synchronizer";
@@ -26,7 +27,12 @@ export const metadata: Metadata = {
     template: `%s | ${SiteConfig.title}`,
   },
   description: SiteConfig.description,
+  keywords: SiteConfig.keywords,
+  applicationName: SiteConfig.seo.applicationName,
+  category: SiteConfig.seo.category,
+  classification: SiteConfig.seo.classification,
   metadataBase: new URL(getServerUrl()),
+  manifest: "/manifest.json",
   robots: {
     index: true,
     follow: true,
@@ -38,6 +44,9 @@ export const metadata: Metadata = {
       "max-video-preview": -1,
     },
   },
+  verification: {
+    google: process.env.GOOGLE_SITE_VERIFICATION,
+  },
   openGraph: {
     title: SiteConfig.title,
     description: SiteConfig.description,
@@ -45,16 +54,16 @@ export const metadata: Metadata = {
     siteName: SiteConfig.title,
     images: [
       {
-        url: `${getServerUrl()}/images/default-og-image_fr.png`,
-        width: 1200,
-        height: 630,
-        alt: SiteConfig.title,
+        url: `${getServerUrl()}/images/default-og-image_fr.jpg`,
+        width: SiteConfig.seo.ogImage.width,
+        height: SiteConfig.seo.ogImage.height,
+        alt: `${SiteConfig.title} - Plateforme de fitness moderne`,
       },
       {
-        url: `${getServerUrl()}/images/default-og-image_en.png`,
-        width: 1200,
-        height: 630,
-        alt: SiteConfig.title,
+        url: `${getServerUrl()}/images/default-og-image_en.jpg`,
+        width: SiteConfig.seo.ogImage.width,
+        height: SiteConfig.seo.ogImage.height,
+        alt: `${SiteConfig.title} - Modern fitness platform`,
       },
     ],
     locale: "fr_FR",
@@ -62,26 +71,52 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    site: "@workout_cool",
+    site: SiteConfig.seo.twitterHandle,
+    creator: SiteConfig.seo.twitterHandle,
     title: SiteConfig.title,
     description: SiteConfig.description,
-    images: [`${getServerUrl()}/images/default-og-image_fr.png`],
+    images: [
+      {
+        url: `${getServerUrl()}/images/default-og-image_fr.jpg`,
+        width: SiteConfig.seo.ogImage.width,
+        height: SiteConfig.seo.ogImage.height,
+        alt: `${SiteConfig.title} - Plateforme de fitness moderne`,
+      },
+    ],
   },
   alternates: {
     canonical: "https://www.workout.cool",
     languages: {
-      fr: "https://www.workout.cool/fr",
-      en: "https://www.workout.cool/en",
+      "fr-FR": "https://www.workout.cool/fr",
+      "en-US": "https://www.workout.cool/en",
+      "x-default": "https://www.workout.cool",
     },
   },
-  authors: [{ name: "Workout Cool", url: "https://www.workout.cool" }],
+  authors: [{ name: SiteConfig.company.name, url: getServerUrl() }],
+  creator: SiteConfig.company.name,
+  publisher: SiteConfig.company.name,
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: SiteConfig.title,
+  },
   icons: {
     icon: [
       { url: "/images/favicon-32x32.png", sizes: "32x32", type: "image/png" },
       { url: "/images/favicon-16x16.png", sizes: "16x16", type: "image/png" },
       { url: "/images/favicon.ico", type: "image/x-icon" },
     ],
-    apple: "/apple-touch-icon.png",
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+    shortcut: "/images/favicon.ico",
+  },
+  other: {
+    "msapplication-TileColor": "#FF5722",
+    "msapplication-TileImage": "/android-chrome-192x192.png",
   },
 };
 
@@ -107,6 +142,22 @@ interface RootLayoutProps {
 
 export default async function RootLayout({ params, children }: RootLayoutProps) {
   const { locale } = await params;
+
+  // Generate structured data
+  const websiteStructuredData = generateStructuredData({
+    type: "WebSite",
+    locale,
+  });
+
+  const organizationStructuredData = generateStructuredData({
+    type: "Organization",
+    locale,
+  });
+
+  const webAppStructuredData = generateStructuredData({
+    type: "WebApplication",
+    locale,
+  });
 
   return (
     <>
@@ -135,6 +186,11 @@ export default async function RootLayout({ params, children }: RootLayoutProps) 
 
           {/* Theme color for PWA */}
           <meta content="#FF5722" name="theme-color" />
+
+          {/* Structured Data */}
+          <StructuredDataScript data={websiteStructuredData} />
+          <StructuredDataScript data={organizationStructuredData} />
+          <StructuredDataScript data={webAppStructuredData} />
         </head>
 
         <body

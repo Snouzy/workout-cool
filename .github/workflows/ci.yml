@@ -89,4 +89,3 @@ jobs:
           BETTER_AUTH_SECRET: test_secret_key_32_chars_minimum
           OPENPANEL_SECRET_KEY: test_secret
           NEXT_PUBLIC_OPENPANEL_CLIENT_ID: test_client_id
-          NEXT_PUBLIC_FACEBOOK_PIXEL_ID: 123456789

@@ -4,11 +4,10 @@ import { prisma } from "@/shared/lib/prisma";
 import { billingService } from "@/features/billing/model/billing.service";
 import { auth } from "@/features/auth/lib/better-auth";
 
-import type { BillingStatus, UserLimits } from "@/features/billing/model/billing.types";
+import type { BillingStatus } from "@/features/billing/model/billing.types";
 
 export async function GET(request: NextRequest) {
   try {
-    // Vérifier l'authentification
     const session = await auth.api.getSession({
       headers: request.headers,
     });
@@ -30,7 +29,7 @@ export async function GET(request: NextRequest) {
     const isPremium = await billingService.canAccessPremiumFeature(userId);
 
     // Récupérer les limites
-    const limits = (await billingService.getUserLimits(userId)) as UserLimits;
+    const limits = await billingService.getUserLimits(userId);
 
     // Récupérer l'abonnement actif si présent
     const subscription = await prisma.subscription.findFirst({

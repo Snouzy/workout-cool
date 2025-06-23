@@ -2,6 +2,7 @@
 import { prisma } from "@/shared/lib/prisma";
 
 import type { BillingMode, PaymentProcessor, SubscriptionStatus, Platform } from "@prisma/client";
+import type { UserLimits } from "./billing.types";
 
 export class BillingService {
   private static instance: BillingService;
@@ -103,7 +104,7 @@ export class BillingService {
     }
   }
 
-  async getUserLimits(userId: string) {
+  async getUserLimits(userId: string): Promise<UserLimits> {
     const config = await this.getConfiguration();
     const isPremium = await this.canAccessPremiumFeature(userId);
 
@@ -116,14 +117,14 @@ export class BillingService {
       };
     }
 
-    return (
-      config.freeUserLimits || {
-        maxWorkouts: 10,
-        maxExercises: 100,
-        canTrackWorkouts: false,
-        premiumExercises: false,
-      }
-    );
+    const defaultLimits: UserLimits = {
+      maxWorkouts: 10,
+      maxExercises: 100,
+      canTrackWorkouts: false,
+      premiumExercises: false,
+    };
+    
+    return (config.freeUserLimits as unknown as UserLimits) || defaultLimits;
   }
 
   // ========================================

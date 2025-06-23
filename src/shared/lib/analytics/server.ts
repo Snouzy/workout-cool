@@ -16,7 +16,7 @@ export const setupAnalytics = async (options?: Props) => {
   const trackingConsent = !cookiesStore.has("tracking-consent") || cookiesStore.get("tracking-consent")?.value === "1";
 
   const client = new OpenPanel({
-    clientId: env.NEXT_PUBLIC_OPENPANEL_CLIENT_ID,
+    clientId: env.NEXT_PUBLIC_OPENPANEL_CLIENT_ID!,
     clientSecret: env.OPENPANEL_SECRET_KEY,
   });
 

@@ -124,7 +124,7 @@ export class BillingService {
   }
 
   // ========================================
-  // Gestion des abonnements
+  // Subscription management
   // ========================================
 
   async createSubscription(data: {
@@ -134,7 +134,7 @@ export class BillingService {
     revenueCatUserId?: string;
     revenueCatEntitlement?: string;
   }) {
-    // Vérifier s'il existe déjà un abonnement pour cette plateforme
+    // Check if there is already a subscription for this platform
     const existing = await prisma.subscription.findUnique({
       where: {
         userId_platform: {
@@ -145,7 +145,7 @@ export class BillingService {
     });
 
     if (existing) {
-      // Mettre à jour l'abonnement existant
+      // Update existing subscription
       return await prisma.subscription.update({
         where: { id: existing.id },
         data: {
@@ -158,7 +158,7 @@ export class BillingService {
       });
     }
 
-    // Créer un nouvel abonnement
+    // Create a new subscription
     return await prisma.subscription.create({
       data: {
         ...data,
@@ -180,7 +180,7 @@ export class BillingService {
   }
 
   // ========================================
-  // Gestion des licences (self-hosted)
+  // License management (self-hosted)
   // ========================================
 
   async validateLicense(key: string): Promise<boolean> {

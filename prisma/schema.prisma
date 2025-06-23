@@ -36,6 +36,12 @@ model User {
   banExpires     DateTime?
   WorkoutSession WorkoutSession[]
 
+  // Subscription fields
+  subscriptions     Subscription[]
+  licenses          License[]
+  isPremium         Boolean? @default(false)
+  premiumUntil      DateTime?
+
   @@map("user")
 }
 
@@ -318,3 +324,222 @@ enum WorkoutSetUnit {
   kg
   lbs
 }
+
+// ========================================
+// BILLING & SUBSCRIPTION MODELS
+// ========================================
+
+// Configuration globale pour self-hosted
+model AppConfiguration {
+  id                String   @id @default("default")
+  
+  // Mode de paiement
+  billingMode       BillingMode @default(DISABLED)
+  
+  // Limites pour le mode gratuit
+  freeUserLimits    Json?    // {"maxWorkouts": 10, "maxExercises": 100}
+  
+  // Configuration des processeurs
+  activeProcessor   PaymentProcessor?
+  processorConfig   Json?    // Clés API chiffrées, webhooks secrets, etc.
+  
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  @@map("app_configuration")
+}
+
+// Plans d'abonnement (optionnels en self-hosted)
+model SubscriptionPlan {
+  id                String   @id @default(cuid())
+  name              String
+  description       String?
+  
+  // Prix (optionnels en self-hosted)
+  priceMonthly      Decimal? @db.Decimal(10, 2)
+  priceYearly       Decimal? @db.Decimal(10, 2)
+  currency          String?  @default("EUR")
+  
+  // IDs externes
+  revenueCatProductId String? @unique
+  externalProductId   String? // Stripe, LemonSqueezy, etc.
+  
+  // Features et limites
+  features          Json?    // {"maxWorkouts": 100, "premiumExercises": true, etc.}
+  
+  // Visibilité
+  isActive          Boolean  @default(true)
+  isVisibleInSelfHosted Boolean @default(false)
+  
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  subscriptions     Subscription[]
+  
+  @@map("subscription_plans")
+}
+
+// Abonnements utilisateurs (source de vérité : RevenueCat pour mobile)
+model Subscription {
+  id                    String    @id @default(cuid())
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id])
+  
+  planId                String
+  plan                  SubscriptionPlan @relation(fields: [planId], references: [id])
+  
+  // RevenueCat data
+  revenueCatUserId      String?
+  revenueCatEntitlement String?
+  
+  // Status
+  status                SubscriptionStatus
+  
+  // Dates importantes
+  startedAt             DateTime
+  currentPeriodEnd      DateTime?
+  cancelledAt           DateTime?
+  
+  // Platform info
+  platform              Platform?
+  
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+  
+  // Historique des paiements
+  payments              Payment[]
+  
+  @@unique([userId, platform])
+  @@map("subscriptions")
+}
+
+// Paiements - abstrait pour supporter plusieurs processeurs
+model Payment {
+  id                String   @id @default(cuid())
+  subscriptionId    String
+  subscription      Subscription @relation(fields: [subscriptionId], references: [id])
+  
+  amount            Decimal  @db.Decimal(10, 2)
+  currency          String
+  
+  // Processeur flexible
+  processor         PaymentProcessor
+  processorPaymentId String? // ID Stripe, PayPal, LemonSqueezy, etc.
+  
+  // RevenueCat transaction ID
+  revenueCatTransactionId String?
+  
+  status            PaymentStatus
+  
+  paidAt            DateTime?
+  failedAt          DateTime?
+  
+  metadata          Json?    // Données spécifiques au processeur
+  
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  @@index([processorPaymentId])
+  @@map("payments")
+}
+
+// Licences pour self-hosted (alternative aux subscriptions)
+model License {
+  id                String   @id @default(cuid())
+  key               String   @unique
+  
+  // Propriétaire
+  userId            String?
+  user              User?    @relation(fields: [userId], references: [id])
+  
+  // Validité
+  validFrom         DateTime @default(now())
+  validUntil        DateTime?
+  
+  // Limites
+  maxUsers          Int?     @default(1)
+  features          Json?
+  
+  // Activation
+  activatedAt       DateTime?
+  lastCheckedAt     DateTime?
+  
+  createdAt         DateTime @default(now())
+  
+  @@map("licenses")
+}
+
+// Webhooks - traitement asynchrone et flexible
+model WebhookEvent {
+  id                String   @id @default(cuid())
+  
+  provider          PaymentProcessor  // Le provider qui a envoyé le webhook
+  eventType         String           // Type d'événement selon le provider
+  
+  payload           Json             // Payload brut du webhook
+  headers           Json?            // Headers du webhook (pour signature, etc.)
+  
+  processed         Boolean  @default(false)
+  processedAt       DateTime?
+  retryCount        Int      @default(0)
+  maxRetries        Int      @default(3)
+  
+  error             String?  @db.Text
+  
+  // Pour traçabilité
+  resultingAction   String?  // Ex: "subscription_created", "payment_failed"
+  relatedUserId     String?  // Pour recherche rapide
+  relatedPaymentId  String?  // Pour lier au paiement si applicable
+  
+  createdAt         DateTime @default(now())
+  
+  @@index([provider, processed])
+  @@index([relatedUserId])
+  @@index([createdAt])
+  @@map("webhook_events")
+}
+
+// ========================================
+// BILLING ENUMS
+// ========================================
+
+enum BillingMode {
+  DISABLED          // Self-hosted gratuit
+  LICENSE_KEY       // Self-hosted avec licence
+  SUBSCRIPTION      // SaaS avec abonnements
+  FREEMIUM         // Gratuit avec options premium
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  TRIAL
+  CANCELLED
+  EXPIRED
+  PAUSED
+}
+
+enum Platform {
+  WEB
+  IOS
+  ANDROID
+}
+
+enum PaymentProcessor {
+  STRIPE
+  PAYPAL
+  LEMONSQUEEZY
+  PADDLE
+  APPLE_PAY
+  GOOGLE_PAY
+  REVENUECAT
+  NONE              // Pour self-hosted gratuit
+  OTHER
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  REFUNDED
+}
+

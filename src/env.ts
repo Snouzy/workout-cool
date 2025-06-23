@@ -30,9 +30,11 @@ export const env = createEnv({
   client: {
     NEXT_PUBLIC_OPENPANEL_CLIENT_ID: z.string().min(1),
     NEXT_PUBLIC_FACEBOOK_PIXEL_ID: z.string().min(1),
+    NEXT_PUBLIC_OPENPANEL_ENABLED: z.enum(["true", "false"]).default("false").transform((val) => val === "true"),
   },
   experimental__runtimeEnv: {
     NEXT_PUBLIC_OPENPANEL_CLIENT_ID: process.env.NEXT_PUBLIC_OPENPANEL_CLIENT_ID,
     NEXT_PUBLIC_FACEBOOK_PIXEL_ID: process.env.NEXT_PUBLIC_FACEBOOK_PIXEL_ID,
+    NEXT_PUBLIC_OPENPANEL_ENABLED: process.env.NEXT_PUBLIC_OPENPANEL_ENABLED,
   },
 });

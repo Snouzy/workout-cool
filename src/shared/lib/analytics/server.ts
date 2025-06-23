@@ -35,6 +35,11 @@ export const setupAnalytics = async (options?: Props) => {
 
   return {
     track: (options: { event: string } & PostEventPayload["properties"]) => {
+      if (env.NODE_ENV !== "production") {
+        console.log("Track", options);
+        return;
+      }
+
       const { event, ...rest } = options;
 
       waitUntil(client.track(event, rest));

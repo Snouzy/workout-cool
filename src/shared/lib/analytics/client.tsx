@@ -4,17 +4,21 @@ import { env } from "@/env";
 
 const isProd = process.env.NODE_ENV === "production";
 
-const AnalyticsProvider = () => (
-  <OpenPanelComponent
-    clientId={env.NEXT_PUBLIC_OPENPANEL_CLIENT_ID!}
+const AnalyticsProvider = function() {
+  if(!env.NEXT_PUBLIC_OPENPANEL_CLIENT_ID){
+    return null;
+  }
+
+  return <OpenPanelComponent
+    clientId={env.NEXT_PUBLIC_OPENPANEL_CLIENT_ID}
     trackAttributes={true}
     trackOutgoingLinks={isProd}
     trackScreenViews={isProd}
   />
-);
+};
 
 const track = (options: { event: string } & PostEventPayload["properties"]) => {
-  if (!env.NEXT_PUBLIC_OPENPANEL_ENABLED) {
+  if (!env.NEXT_PUBLIC_OPENPANEL_CLIENT_ID || !isProd ) {
     return;
   }
 

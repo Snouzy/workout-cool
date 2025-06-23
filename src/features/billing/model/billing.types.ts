@@ -14,7 +14,7 @@ export interface UserLimits {
   maxWorkouts: number;
   maxExercises: number;
   premiumExercises: boolean;
-  [key: string]: any;
+  canTrackWorkouts: boolean;
 }
 
 // ========================================

@@ -18,7 +18,7 @@ export class WebhookService {
   }
 
   // ========================================
-  // Enregistrement des webhooks
+  // Webhook logging
   // ========================================
 
   async logWebhook(provider: PaymentProcessor, eventType: string, payload: any, headers?: any, relatedUserId?: string) {
@@ -34,7 +34,7 @@ export class WebhookService {
   }
 
   // ========================================
-  // Traitement asynchrone des webhooks
+  // Asynchronous webhook processing
   // ========================================
 
   async processWebhook(eventId: string) {
@@ -72,7 +72,7 @@ export class WebhookService {
           throw new Error(`Unsupported provider: ${event.provider}`);
       }
 
-      // Marquer comme traité avec succès
+      // Mark as processed with success
       await prisma.webhookEvent.update({
         where: { id: eventId },
         data: {
@@ -83,7 +83,7 @@ export class WebhookService {
         },
       });
     } catch (error) {
-      // Gérer les erreurs et les retry
+      // Handle errors and retries
       await this.handleWebhookError(eventId, error);
     }
   }
@@ -103,19 +103,18 @@ export class WebhookService {
       data: {
         retryCount: newRetryCount,
         error: error instanceof Error ? error.message : String(error),
-        processed: !shouldRetry, // Marquer comme traité si on ne retry pas
+        processed: !shouldRetry, // Mark as processed if not retrying
         processedAt: !shouldRetry ? new Date() : undefined,
       },
     });
 
     if (shouldRetry) {
-      // Programmer un retry (vous pouvez utiliser un job queue comme BullMQ)
-      console.log(`Webhook ${eventId} will be retried (${newRetryCount}/${event.maxRetries})`);
+      console.log(`TODO : Webhook ${eventId} will be retried (${newRetryCount}/${event.maxRetries})`);
     }
   }
 
   // ========================================
-  // Handlers spécifiques par provider
+  // Handlers specific to each provider
   // ========================================
 
   private async processRevenueCatWebhook(payload: RevenueCatWebhookPayload) {
@@ -136,7 +135,7 @@ export class WebhookService {
         await billingService.createSubscription({
           userId: user.id,
           planId: plan.id,
-          platform: "IOS", // ou déduire de event.environment
+          platform: "IOS", // TODO : Deduce from event.environment?
           revenueCatUserId: userId,
           revenueCatEntitlement: event.entitlement_id,
         });
@@ -188,7 +187,6 @@ export class WebhookService {
         const subscription = data.object;
         const customerId = subscription.customer;
 
-        // Trouver l'utilisateur par customer ID Stripe
         const payment = await prisma.payment.findFirst({
           where: {
             processorPaymentId: customerId,
@@ -214,12 +212,12 @@ export class WebhookService {
       }
 
       case "customer.subscription.deleted": {
-        // Gérer la suppression d'abonnement
+        // TODO : Handle subscription deletion
         break;
       }
 
       case "invoice.payment_succeeded": {
-        // Créer un enregistrement de paiement
+        // TODO : Handle payment success
         break;
       }
     }
@@ -232,7 +230,6 @@ export class WebhookService {
 
     switch (meta.event_name) {
       case "subscription_created": {
-        // Créer l'abonnement
         const attributes = data.attributes;
         const userEmail = attributes.user_email;
 
@@ -241,7 +238,6 @@ export class WebhookService {
         });
 
         if (user) {
-          // Trouver le plan par l'ID produit LemonSqueezy
           const plan = await prisma.subscriptionPlan.findFirst({
             where: { externalProductId: attributes.product_id.toString() },
           });
@@ -270,18 +266,18 @@ export class WebhookService {
     return { action: meta.event_name };
   }
 
-  private async processPaddleWebhook(payload: any) {
+  private async processPaddleWebhook(_payload: any) {
     // TODO: Implement Paddle webhook handling if needed.
     return { action: "paddle_event" };
   }
 
-  private async processPayPalWebhook(payload: any) {
+  private async processPayPalWebhook(_payload: any) {
     // TODO: Implement PayPal webhook handling if needed.
     return { action: "paypal_event" };
   }
 
   // ========================================
-  // Utilitaires
+  // Utilities
   // ========================================
 
   async getUnprocessedWebhooks(limit = 10) {

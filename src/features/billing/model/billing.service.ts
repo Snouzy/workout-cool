@@ -34,6 +34,7 @@ export class BillingService {
             maxWorkouts: -1, // Unlimited
             maxExercises: -1,
             premiumExercises: true,
+            canTrackWorkouts: true,
           },
         },
       });
@@ -62,7 +63,7 @@ export class BillingService {
         return true;
 
       case "LICENSE_KEY":
-        // Check license
+        // Check license key
         const license = await prisma.license.findFirst({
           where: {
             userId,
@@ -111,6 +112,7 @@ export class BillingService {
         maxWorkouts: -1,
         maxExercises: -1,
         premiumExercises: true,
+        canTrackWorkouts: true,
       };
     }
 
@@ -118,6 +120,7 @@ export class BillingService {
       config.freeUserLimits || {
         maxWorkouts: 10,
         maxExercises: 100,
+        canTrackWorkouts: false,
         premiumExercises: false,
       }
     );
@@ -191,12 +194,12 @@ export class BillingService {
 
     if (!license) return false;
 
-    // Vérifier la validité
+    // Check validity
     const now = new Date();
     if (license.validFrom > now) return false;
     if (license.validUntil && license.validUntil < now) return false;
 
-    // Mettre à jour lastCheckedAt
+    // Update lastCheckedAt
     await prisma.license.update({
       where: { id: license.id },
       data: { lastCheckedAt: now },

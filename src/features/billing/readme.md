@@ -13,8 +13,19 @@
 
 3. Flux des Webhooks
 
-RevenueCat/Stripe/LemonSqueezy ↓ Webhook reçu ↓ Vérification signature ↓ Enregistrement dans webhook_events ↓ Traitement immédiat ou async ↓
-Mise à jour subscription/user ↓ Marqué comme processed
+RevenueCat/Stripe/LemonSqueezy 
+        ↓
+Webhook reçu 
+        ↓
+Vérification signature 
+        ↓
+Enregistrement dans webhook_events 
+        ↓
+Traitement immédiat ou async 
+        ↓
+Mise à jour subscription/user 
+        ↓
+Marqué comme processed
 
 Exemple concret - RevenueCat :
 

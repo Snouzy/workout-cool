@@ -126,9 +126,9 @@ async function importExercisesFromCSV(filePath: string) {
 
           for (const exercise of exercises) {
             try {
-              console.log(`\n🔄 Traitement de "${exercise.name}"...`);
+              console.log(`\n🔄 Processing "${exercise.name}"...`);
 
-              // Créer ou mettre à jour l'exercice (version simplifiée)
+              // Create or update the exercise (simplified version)
               const createdExercise = await prisma.exercise.upsert({
                 where: { slug: exercise.slug || `exercise-${exercise.originalId}` },
                 update: {
@@ -156,12 +156,12 @@ async function importExercisesFromCSV(filePath: string) {
                 },
               });
 
-              // Supprimer les anciens attributs
+              // Remove old attributes
               await prisma.exerciseAttribute.deleteMany({
                 where: { exerciseId: createdExercise.id },
               });
 
-              // Créer les nouveaux attributs
+              // Create new attributes
               for (const attr of exercise.attributes) {
                 try {
                   const attributeName = await ensureAttributeNameExists(attr.attributeName);
@@ -228,7 +228,7 @@ async function main() {
 
     await importExercisesFromCSV(csvFilePath);
 
-    // Stats finales
+    // Final stats
     const totalExercises = await prisma.exercise.count();
     const totalAttributes = await prisma.exerciseAttribute.count();
 

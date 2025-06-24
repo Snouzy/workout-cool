@@ -1,6 +1,8 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { webhookService } from '@/features/billing/model/webhook.service';
-import type { StripeWebhookPayload } from '@/features/billing/model/billing.types';
+import { NextRequest, NextResponse } from "next/server";
+
+import { webhookService } from "@/features/billing/model/webhook.service";
+
+import type { StripeWebhookPayload } from "@/features/billing/model/billing.types";
 
 // Note: Pour Stripe, vous devriez utiliser leur SDK officiel
 // import Stripe from 'stripe';
@@ -9,13 +11,10 @@ import type { StripeWebhookPayload } from '@/features/billing/model/billing.type
 export async function POST(request: NextRequest) {
   try {
     const body = await request.text();
-    const signature = request.headers.get('stripe-signature');
+    const signature = request.headers.get("stripe-signature");
 
     if (!signature) {
-      return NextResponse.json(
-        { error: 'Missing signature' },
-        { status: 401 }
-      );
+      return NextResponse.json({ error: "Missing signature" }, { status: 401 });
     }
 
     // Vérifier la signature avec le SDK Stripe
@@ -30,22 +29,18 @@ export async function POST(request: NextRequest) {
 
     // Enregistrer le webhook pour traitement asynchrone
     const webhookEvent = await webhookService.logWebhook(
-      'STRIPE',
+      "STRIPE",
       payload.type,
       payload,
-      undefined // headers stockés dans le payload si nécessaire
+      undefined, // headers stockés dans le payload si nécessaire
     );
 
     // Traiter immédiatement (ou en background)
     await webhookService.processWebhook(webhookEvent.id);
 
     return NextResponse.json({ received: true });
-
   } catch (error) {
-    console.error('Stripe webhook error:', error);
-    return NextResponse.json(
-      { error: 'Webhook handler failed' },
-      { status: 400 }
-    );
+    console.error("Stripe webhook error:", error);
+    return NextResponse.json({ error: "Webhook handler failed" }, { status: 400 });
   }
 }

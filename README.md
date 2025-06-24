@@ -364,3 +364,9 @@ Appear in the README and on the website as supporter by donating:
   Your support helps cover hosting costs, exercise database updates, and continuous improvement.<br>
   Thank you for keeping <strong>workout.cool</strong> alive and evolving 💪
 </p>
+
+<br />
+<br />
+<a href="https://vercel.com/oss">
+<img alt="Vercel OSS Program" src="https://vercel.com/oss/program-badge.svg" />
+</a>

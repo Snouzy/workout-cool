@@ -10,7 +10,7 @@ export default {
     "your_coach#one": "Ваш крутой тренер",
     "your_coach#other": "Ваши крутые тренеры",
     community: "Активная сообщество",
-    community_count: "Coolbuilders присоединились",
+    community_count: "coolbuilders уже присоединились",
     week_short: "Нед.",
     week: "Неделя",
     exercises: "упражнений",

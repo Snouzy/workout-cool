@@ -359,7 +359,7 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
 
       {/* Gamified Floating CTA */}
       <button
-        className="absolute bottom-6 right-0 left-0 max-w-xs mx-auto bg-gradient-to-r from-[#4F8EF7] to-[#25CB78] hover:from-[#4F8EF7]/80 hover:to-[#25CB78]/80 text-white px-8 py-4 rounded-full font-bold border-2 border-white/20 hover:scale-105 transition-all duration-200 ease-in-out z-50 flex items-center justify-center gap-2"
+        className="absolute bottom-6 right-0 left-0 max-w-xs mx-auto bg-gradient-to-r from-[#4F8EF7] to-[#25CB78] hover:from-[#4F8EF7]/80 hover:to-[#25CB78]/80 text-white px-8 py-4 rounded-full font-bold border-2 border-white/20 hover:scale-105 transition-all duration-200 ease-in-out z-1 flex items-center justify-center gap-2"
         onClick={() => setShowWelcomeModal(true)}
       >
         {program.emoji ? (

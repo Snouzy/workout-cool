@@ -10,7 +10,7 @@ export default {
     "your_coach#one": "Tu coach",
     "your_coach#other": "Tus coaches",
     community: "Comunidad activa",
-    community_count: "Coolbuilders rejoints",
+    community_count: "coolbuilders han rejoint",
     week_short: "Sem.",
     week: "Semana",
     exercises: "ejercicios",

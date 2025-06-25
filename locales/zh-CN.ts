@@ -10,7 +10,7 @@ export default {
     "your_coach#one": "您的教练",
     "your_coach#other": "您的教练",
     community: "活跃社区",
-    community_count: "Coolbuilders 加入",
+    community_count: "coolbuilders 已加入",
     week_short: "周",
     week: "周",
     exercises: "练习",

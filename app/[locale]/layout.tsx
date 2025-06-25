@@ -213,7 +213,7 @@ export default async function RootLayout({ params, children }: RootLayoutProps) 
             <NextTopLoader color="#FF5722" delay={100} showSpinner={false} />
 
             {/* Main Card Container */}
-            <div className="card w-full max-w-3xl min-h-[500px] max-h-[90vh] h-[80vh] bg-white dark:bg-[#232324] shadow-xl border border-base-200 dark:border-slate-700 flex flex-col justify-between overflow-hidden max-sm:rounded-none max-sm:h-full rounded-lg">
+            <div className="card w-full max-w-3xl min-h-[500px] max-h-[90vh] bg-white dark:bg-[#232324] shadow-xl border border-base-200 dark:border-slate-700 flex flex-col justify-between overflow-hidden max-sm:rounded-none max-sm:h-full rounded-lg">
               <Header />
               <div className="flex-1 overflow-auto flex flex-col">{children}</div>
               <BottomNavigation />

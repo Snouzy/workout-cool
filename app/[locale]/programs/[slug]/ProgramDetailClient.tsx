@@ -171,16 +171,18 @@ export function ProgramDetailClient({ program }: ProgramDetailClientProps) {
             <div className="tab-content bg-base-100 border-base-300 rounded-box p-6" role="tabpanel">
               <div className="space-y-6">
                 {/* Week Selector with DaisyUI Tabs */}
-                <div className="tabs tabs-border w-fit">
-                  {program.sessions.map((weekData) => (
-                    <button
-                      className={`tab ${selectedWeek === weekData.week ? "tab-active" : ""}`}
-                      key={weekData.week}
-                      onClick={() => setSelectedWeek(weekData.week)}
-                    >
-                      Semaine {weekData.week}
-                    </button>
-                  ))}
+                <div className="overflow-x-auto">
+                  <div className="tabs tabs-box w-fit flex-nowrap">
+                    {program.sessions.map((weekData) => (
+                      <button
+                        className={`tab flex-shrink-0 ${selectedWeek === weekData.week ? "tab-active" : ""}`}
+                        key={weekData.week}
+                        onClick={() => setSelectedWeek(weekData.week)}
+                      >
+                        Sem. {weekData.week}
+                      </button>
+                    ))}
+                  </div>
                 </div>
 
                 {/* Current Week Title */}

@@ -1,7 +1,9 @@
+"use client";
+
+import { useQueryState, parseAsString } from "nuqs";
 import { notFound } from "next/navigation";
 import Image from "next/image";
-import { Metadata } from "next";
-import { BarChart3, Target, Clock, Calendar, Timer, Dumbbell, Share } from "lucide-react";
+import { BarChart3, Target, Clock, Calendar, Timer, Dumbbell, Share, Lock } from "lucide-react";
 
 const mockPrograms = [
   {
@@ -17,13 +19,49 @@ const mockPrograms = [
     frequency: "3 séances par semaine",
     sessionDuration: "20 à 30 min",
     equipment: "Élastique, Haltères, Tapis",
-    description: "Prête pour une reprise du sport !? Suis la programmation de Beast tout au long du mois de janvier !",
+    description: "Prêt pour dominer tes entraînements !? Suis la programmation Beast Mode tout au long du mois de janvier !",
     fullDescription:
-      "Beast Mode est le programme parfait pour les débutants ou celles qui souhaitent reprendre le sport en douceur. Avec des exercices au poids du corps et des accessoires simples, ce programme vous permettra de retrouver la forme progressivement.",
+      "Beast Mode est le programme parfait pour les débutants qui veulent reprendre le sport en force. Avec des exercices au poids du corps et des accessoires simples, ce programme te permettra de retrouver la forme progressivement.",
     participants: "75k",
     nutritionGuide: "Guide nutrition Starter Pack",
     mealPlan: "Rééquilibrage alimentaire",
     coaches: [{ name: "Jeremy", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face" }],
+    sessions: [
+      {
+        week: 1,
+        sessions: [
+          {
+            id: 1,
+            title: "Beast Power : Legs & Glutes Domination",
+            equipment: "Haltères, Kettlebell",
+            isLocked: true,
+          },
+          {
+            id: 2,
+            title: "Upper Beast : Chest, Back & Shoulders",
+            equipment: "Haltères, Barres",
+            isLocked: true,
+          },
+          {
+            id: 3,
+            title: "Core Destroyer : Abs & Stability",
+            equipment: "Tapis, Poids",
+            isLocked: true,
+          },
+        ],
+      },
+      {
+        week: 2,
+        sessions: [
+          {
+            id: 4,
+            title: "Beast Cardio : HIIT Inferno",
+            equipment: "Poids du corps",
+            isLocked: true,
+          },
+        ],
+      },
+    ],
   },
   {
     id: "warrior-hiit",
@@ -46,6 +84,19 @@ const mockPrograms = [
     coaches: [
       { name: "Jeremy", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face" },
       { name: "Warrior", image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face" },
+    ],
+    sessions: [
+      {
+        week: 1,
+        sessions: [
+          {
+            id: 1,
+            title: "HIIT Warrior Foundation",
+            equipment: "Poids du corps",
+            isLocked: false,
+          },
+        ],
+      },
     ],
   },
   {
@@ -71,6 +122,19 @@ const mockPrograms = [
       { name: "Alpha", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face" },
       { name: "Jeremy", image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face" },
     ],
+    sessions: [
+      {
+        week: 1,
+        sessions: [
+          {
+            id: 1,
+            title: "Alpha Strength Foundation",
+            equipment: "Haltères, Barres",
+            isLocked: false,
+          },
+        ],
+      },
+    ],
   },
   {
     id: "titan-core",
@@ -91,6 +155,19 @@ const mockPrograms = [
     nutritionGuide: "Guide nutrition Définition",
     mealPlan: "Plan définition musculaire",
     coaches: [{ name: "Titan", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face" }],
+    sessions: [
+      {
+        week: 1,
+        sessions: [
+          {
+            id: 1,
+            title: "Titan Core Basics",
+            equipment: "Tapis",
+            isLocked: false,
+          },
+        ],
+      },
+    ],
   },
 ];
 
@@ -98,23 +175,12 @@ interface ProgramDetailPageProps {
   params: Promise<{ slug: string; locale: string }>;
 }
 
-export async function generateMetadata({ params }: ProgramDetailPageProps): Promise<Metadata> {
-  const { slug } = await params;
-  const program = mockPrograms.find((p) => p.id === slug);
+export default function ProgramDetailPage({ params }: ProgramDetailPageProps) {
+  const [tab, setTab] = useQueryState("tab", parseAsString.withDefault("about"));
 
-  if (!program) {
-    return { title: "Programme non trouvé" };
-  }
-
-  return {
-    title: `${program.title} - Programme`,
-    description: program.description,
-  };
-}
-
-export default async function ProgramDetailPage({ params }: ProgramDetailPageProps) {
-  const { slug } = await params;
-  const program = mockPrograms.find((p) => p.id === slug);
+  // Pour le moment, nous utilisons le premier programme comme exemple
+  // Dans une vraie app, vous récupéreriez le slug depuis les params
+  const program = mockPrograms[0]; // Beast Mode pour l'exemple
 
   if (!program) {
     notFound();
@@ -125,12 +191,14 @@ export default async function ProgramDetailPage({ params }: ProgramDetailPagePro
       <div className="flex-1 overflow-auto pb-20">
         {/* Hero Image Section */}
         <div className="relative h-64 bg-gradient-to-br from-gray-800 to-black">
+          <Image alt={program.title} className="absolute inset-0 object-cover" fill src={program.image} />
+          <div className={`absolute inset-0 bg-gradient-to-br ${program.gradient} opacity-60`}></div>
           <div className="absolute inset-0 bg-black/40"></div>
           <div className="relative h-full flex items-end p-6">
             <div className="text-white">
               <div className="flex items-center gap-2 mb-2">
-                <span className="bg-white/20 backdrop-blur-sm px-2 py-1 rounded text-xs">Tonification</span>
-                <span className="bg-white/20 backdrop-blur-sm px-2 py-1 rounded text-xs">Bien-Être</span>
+                <span className="bg-white/20 backdrop-blur-sm px-2 py-1 rounded text-xs">Force</span>
+                <span className="bg-white/20 backdrop-blur-sm px-2 py-1 rounded text-xs">Performance</span>
               </div>
               <h1 className="text-3xl font-bold mb-2">{program.title}</h1>
             </div>
@@ -139,92 +207,160 @@ export default async function ProgramDetailPage({ params }: ProgramDetailPagePro
 
         <div className="p-4 space-y-6">
           {/* Tabs */}
-          <div className="flex gap-4">
-            <button className="bg-primary text-white px-6 py-2 rounded-full text-sm font-medium">À propos</button>
-            <button className="text-gray-500 px-6 py-2 text-sm font-medium">Les séances</button>
+          <div className="flex gap-2 bg-gray-100 dark:bg-gray-800 rounded-full p-1">
+            <button
+              className={`flex-1 px-6 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+                tab === "about" ? "bg-primary text-white shadow-sm" : "text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
+              }`}
+              onClick={() => setTab("about")}
+            >
+              À propos
+            </button>
+            <button
+              className={`flex-1 px-6 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+                tab === "sessions" ? "bg-primary text-white shadow-sm" : "text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
+              }`}
+              onClick={() => setTab("sessions")}
+            >
+              Les séances
+            </button>
           </div>
 
-          {/* Community Stats */}
-          <div className="flex items-center gap-3">
-            <div className="flex -space-x-2">
-              {program.coaches.slice(0, 3).map((coach, index) => (
-                <Image
-                  alt={coach.name}
-                  className="w-8 h-8 rounded-full border-2 border-white"
-                  height={32}
-                  key={index}
-                  src={coach.image}
-                  width={32}
-                />
-              ))}
-            </div>
-            <span className="text-sm text-gray-600 dark:text-gray-400">Joined by +{program.participants} cool people</span>
-            <div className="ml-auto flex gap-2">
-              <button className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors">
-                <Share className="text-gray-600 dark:text-gray-400" size={20} />
-              </button>
-            </div>
-          </div>
+          {/* Tab Content */}
+          {tab === "about" && (
+            <>
+              {/* Community Stats */}
+              <div className="flex items-center gap-3">
+                <div className="flex -space-x-2">
+                  {program.coaches.slice(0, 3).map((coach, index) => (
+                    <Image
+                      alt={coach.name}
+                      className="w-8 h-8 rounded-full border-2 border-white"
+                      height={32}
+                      key={index}
+                      src={coach.image}
+                      width={32}
+                    />
+                  ))}
+                </div>
+                <span className="text-sm text-gray-600 dark:text-gray-400">Rejoint par + de {program.participants} warriors</span>
+                <div className="ml-auto flex gap-2">
+                  <button className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors">
+                    <Share className="text-gray-600 dark:text-gray-400" size={20} />
+                  </button>
+                </div>
+              </div>
 
-          {/* Program Details */}
-          <div className="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="flex items-center gap-3">
-                <BarChart3 className="text-primary" size={20} />
-                <div>
-                  <div className="text-sm font-medium">{program.level}</div>
+              {/* Program Details */}
+              <div className="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700">
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="flex items-center gap-3">
+                    <BarChart3 className="text-primary" size={20} />
+                    <div>
+                      <div className="text-sm font-medium">{program.level}</div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Target className="text-primary" size={20} />
+                    <div>
+                      <div className="text-sm font-medium">{program.type}</div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Clock className="text-primary" size={20} />
+                    <div>
+                      <div className="text-sm font-medium">{program.duration}</div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Calendar className="text-primary" size={20} />
+                    <div>
+                      <div className="text-sm font-medium">{program.frequency}</div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Timer className="text-primary" size={20} />
+                    <div>
+                      <div className="text-sm font-medium">{program.sessionDuration}</div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Dumbbell className="text-primary" size={20} />
+                    <div>
+                      <div className="text-sm font-medium">{program.equipment}</div>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div className="flex items-center gap-3">
-                <Target className="text-primary" size={20} />
-                <div>
-                  <div className="text-sm font-medium">{program.type}</div>
+
+              {/* Description */}
+              <div className="space-y-4">
+                <p className="text-gray-700 dark:text-gray-300">{program.description}</p>
+              </div>
+
+              {/* Coaches */}
+              <div>
+                <h3 className="text-lg font-bold mb-3">Coachs :</h3>
+                <div className="flex gap-4 overflow-x-auto pb-2">
+                  {program.coaches.map((coach, index) => (
+                    <div className="flex flex-col items-center gap-2 flex-shrink-0" key={index}>
+                      <Image alt={coach.name} className="w-20 h-20 rounded-full" height={80} src={coach.image} width={80} />
+                      <span className="text-sm font-medium">{coach.name}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
-              <div className="flex items-center gap-3">
-                <Clock className="text-primary" size={20} />
-                <div>
-                  <div className="text-sm font-medium">{program.duration}</div>
-                </div>
+            </>
+          )}
+
+          {/* Sessions Tab */}
+          {tab === "sessions" && (
+            <div className="space-y-6">
+              {/* Week Selector */}
+              <div className="flex gap-4 overflow-x-auto pb-2">
+                {program.sessions.map((weekData, index) => (
+                  <button
+                    className={`flex-shrink-0 px-4 py-2 text-sm font-medium transition-all duration-200 ${
+                      index === 0
+                        ? "text-black dark:text-white border-b-2 border-black dark:border-white"
+                        : "text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                    }`}
+                    key={weekData.week}
+                  >
+                    Sem {weekData.week}
+                  </button>
+                ))}
               </div>
-              <div className="flex items-center gap-3">
-                <Calendar className="text-primary" size={20} />
-                <div>
-                  <div className="text-sm font-medium">{program.frequency}</div>
-                </div>
-              </div>
-              <div className="flex items-center gap-3">
-                <Timer className="text-primary" size={20} />
-                <div>
-                  <div className="text-sm font-medium">{program.sessionDuration}</div>
-                </div>
-              </div>
-              <div className="flex items-center gap-3">
-                <Dumbbell className="text-primary" size={20} />
-                <div>
-                  <div className="text-sm font-medium">{program.equipment}</div>
-                </div>
+
+              {/* Current Week Title */}
+              <h2 className="text-xl font-bold">Semaine 1</h2>
+
+              {/* Sessions List */}
+              <div className="space-y-4">
+                {program.sessions[0]?.sessions.map((session) => (
+                  <div
+                    className="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700 flex items-center gap-4"
+                    key={session.id}
+                  >
+                    {/* Lock Icon */}
+                    {session.isLocked && (
+                      <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center flex-shrink-0">
+                        <Lock className="text-white" size={16} />
+                      </div>
+                    )}
+
+                    {/* Session Info */}
+                    <div className="flex-1">
+                      <h4 className="font-semibold text-gray-900 dark:text-white mb-1">
+                        Séance {session.id} : {session.title}
+                      </h4>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">{session.equipment}</p>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
-          </div>
-
-          {/* Description */}
-          <div className="space-y-4">
-            <p className="text-gray-700 dark:text-gray-300">{program.description}</p>
-          </div>
-
-          {/* Coaches */}
-          <div>
-            <h3 className="text-lg font-bold mb-3">Coachs :</h3>
-            <div className="flex gap-4 overflow-x-auto pb-2">
-              {program.coaches.map((coach, index) => (
-                <div className="flex flex-col items-center gap-2 flex-shrink-0" key={index}>
-                  <Image alt={coach.name} className="w-20 h-20 rounded-full" height={80} src={coach.image} width={80} />
-                  <span className="text-sm font-medium">{coach.name}</span>
-                </div>
-              ))}
-            </div>
-          </div>
+          )}
         </div>
       </div>
 

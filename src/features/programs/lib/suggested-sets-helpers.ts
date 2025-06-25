@@ -8,11 +8,8 @@ export interface CreateSuggestedSetData {
   units?: WorkoutSetUnit[];
 }
 
-export function createSuggestedSetsForExercise(
-  programSessionExerciseId: string,
-  sets: CreateSuggestedSetData[]
-) {
-  return sets.map(set => ({
+export function createSuggestedSetsForExercise(programSessionExerciseId: string, sets: CreateSuggestedSetData[]) {
+  return sets.map((set) => ({
     programSessionExerciseId,
     setIndex: set.setIndex,
     types: set.types,
@@ -22,23 +19,23 @@ export function createSuggestedSetsForExercise(
   }));
 }
 
-// Helper pour créer des sets typiques
+// helpers to create suggested sets
 export const SUGGESTED_SET_TEMPLATES = {
-  // 3 séries de 10-12 reps avec poids
+  // 3 sets of 10-12 reps with weight
   strengthTraining: (weight: number = 20): CreateSuggestedSetData[] => [
     { setIndex: 0, types: [WorkoutSetType.WEIGHT, WorkoutSetType.REPS], valuesInt: [weight, 10], units: [WorkoutSetUnit.kg] },
     { setIndex: 1, types: [WorkoutSetType.WEIGHT, WorkoutSetType.REPS], valuesInt: [weight, 12], units: [WorkoutSetUnit.kg] },
     { setIndex: 2, types: [WorkoutSetType.WEIGHT, WorkoutSetType.REPS], valuesInt: [weight, 12], units: [WorkoutSetUnit.kg] },
   ],
-  
-  // 3 séries au poids du corps
+
+  // 3 sets of bodyweight
   bodyweight: (reps: number = 10): CreateSuggestedSetData[] => [
     { setIndex: 0, types: [WorkoutSetType.BODYWEIGHT, WorkoutSetType.REPS], valuesInt: [0, reps] },
     { setIndex: 1, types: [WorkoutSetType.BODYWEIGHT, WorkoutSetType.REPS], valuesInt: [0, reps] },
     { setIndex: 2, types: [WorkoutSetType.BODYWEIGHT, WorkoutSetType.REPS], valuesInt: [0, reps] },
   ],
-  
-  // Exercices chronométrés (HIIT)
+
+  // timed exercises
   timed: (seconds: number = 30): CreateSuggestedSetData[] => [
     { setIndex: 0, types: [WorkoutSetType.TIME], valuesSec: [seconds] },
     { setIndex: 1, types: [WorkoutSetType.TIME], valuesSec: [seconds] },

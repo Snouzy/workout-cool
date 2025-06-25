@@ -7,8 +7,9 @@ import { Plus, Trash2, Search } from "lucide-react";
 import { WorkoutSetType, WorkoutSetUnit } from "@prisma/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { SUGGESTED_SET_TEMPLATES } from "@/features/programs/lib/suggested-sets-helpers";
+import { CreateSuggestedSetData, SUGGESTED_SET_TEMPLATES } from "@/features/programs/lib/suggested-sets-helpers";
 
+import { ExerciseWithAttributes } from "../types/program.types";
 import { addExerciseToSession, getExercises } from "../actions/add-exercise.action";
 
 const exerciseSchema = z.object({
@@ -37,9 +38,9 @@ interface AddExerciseModalProps {
 
 export function AddExerciseModal({ open, onOpenChange, sessionId, nextOrder }: AddExerciseModalProps) {
   const [isLoading, setIsLoading] = useState(false);
-  const [exercises, setExercises] = useState<any[]>([]);
+  const [exercises, setExercises] = useState<ExerciseWithAttributes[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedExercise, setSelectedExercise] = useState<any>(null);
+  const [selectedExercise, setSelectedExercise] = useState<ExerciseWithAttributes | null>(null);
   const [suggestedSets, setSuggestedSets] = useState<any[]>([]);
 
   const {
@@ -47,7 +48,6 @@ export function AddExerciseModal({ open, onOpenChange, sessionId, nextOrder }: A
     handleSubmit,
     reset,
     setValue,
-    watch,
     formState: { errors },
   } = useForm<ExerciseFormData>({
     resolver: zodResolver(exerciseSchema),
@@ -55,8 +55,6 @@ export function AddExerciseModal({ open, onOpenChange, sessionId, nextOrder }: A
       suggestedSets: [],
     },
   });
-
-  const exerciseId = watch("exerciseId");
 
   // Load exercises
   useEffect(() => {
@@ -74,7 +72,7 @@ export function AddExerciseModal({ open, onOpenChange, sessionId, nextOrder }: A
     }
   };
 
-  const selectExercise = (exercise: any) => {
+  const selectExercise = (exercise: ExerciseWithAttributes) => {
     setSelectedExercise(exercise);
     setValue("exerciseId", exercise.id);
 
@@ -111,8 +109,8 @@ export function AddExerciseModal({ open, onOpenChange, sessionId, nextOrder }: A
     setValue("suggestedSets", newSets);
   };
 
-  const useTemplate = (template: string) => {
-    let sets: any[] = [];
+  const getTemplate = (template: string) => {
+    let sets: CreateSuggestedSetData[] = [];
     switch (template) {
       case "strength":
         sets = SUGGESTED_SET_TEMPLATES.strengthTraining();
@@ -158,6 +156,10 @@ export function AddExerciseModal({ open, onOpenChange, sessionId, nextOrder }: A
     onOpenChange(false);
   };
 
+  const strengthTemplate = () => getTemplate("strength");
+  const bodyweightTemplate = () => getTemplate("bodyweight");
+  const timedTemplate = () => getTemplate("timed");
+
   return (
     <>
       {open && (
@@ -165,21 +167,18 @@ export function AddExerciseModal({ open, onOpenChange, sessionId, nextOrder }: A
           <div className="modal-box w-11/12 max-w-4xl h-full max-h-[90vh] flex flex-col">
             <div className="flex justify-between items-center mb-4">
               <h3 className="font-bold text-lg">Ajouter un exercice</h3>
-              <button 
-                className="btn btn-sm btn-circle btn-ghost"
-                onClick={handleClose}
-              >
+              <button className="btn btn-sm btn-circle btn-ghost" onClick={handleClose}>
                 ✕
               </button>
             </div>
 
-            <div className="flex-1 overflow-y-auto space-y-6">
+            <div className="flex-1 overflow-y-auto space-y-6 h-full">
               {/* Exercise Selection */}
               {!selectedExercise && (
-                <div className="card bg-base-100 shadow-xl">
+                <div className="card bg-base-100 h-full">
                   <div className="card-body">
                     <h2 className="card-title">Sélectionner un exercice</h2>
-                    <div className="space-y-4">
+                    <div className="space-y-4 h-full">
                       <div className="relative">
                         <Search className="absolute left-3 top-3 h-4 w-4 text-base-content/60" />
                         <input
@@ -190,7 +189,7 @@ export function AddExerciseModal({ open, onOpenChange, sessionId, nextOrder }: A
                         />
                       </div>
 
-                      <div className="grid gap-2 max-h-60 overflow-y-auto">
+                      <div className="grid gap-2  overflow-y-auto">
                         {exercises.map((exercise) => (
                           <div
                             className="flex items-center justify-between p-3 border border-base-300 rounded-lg cursor-pointer hover:bg-base-200"
@@ -214,14 +213,14 @@ export function AddExerciseModal({ open, onOpenChange, sessionId, nextOrder }: A
               {selectedExercise && (
                 <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
                   {/* Exercise Info */}
-                  <div className="card bg-base-100 shadow-xl">
+                  <div className="card bg-base-100 shadow-xl h-full">
                     <div className="card-body">
                       <div className="flex items-center justify-between">
                         <div>
                           <h2 className="card-title">{selectedExercise.name}</h2>
                           <p className="text-sm text-base-content/60">{selectedExercise.nameEn}</p>
                         </div>
-                        <button onClick={() => setSelectedExercise(null)} type="button" className="btn btn-outline">
+                        <button className="btn btn-outline" onClick={() => setSelectedExercise(null)} type="button">
                           Changer
                         </button>
                       </div>
@@ -230,7 +229,7 @@ export function AddExerciseModal({ open, onOpenChange, sessionId, nextOrder }: A
 
                   {/* Instructions */}
                   <div className="card bg-base-100 shadow-xl">
-                    <div className="card-body">
+                    <div className="card-body h-full">
                       <h2 className="card-title">Instructions</h2>
                       <div className="space-y-4">
                         <div className="form-control">
@@ -238,8 +237,8 @@ export function AddExerciseModal({ open, onOpenChange, sessionId, nextOrder }: A
                             <span className="label-text">Instructions (FR)</span>
                           </label>
                           <textarea
-                            id="instructions"
                             className="textarea textarea-bordered"
+                            id="instructions"
                             {...register("instructions")}
                             placeholder="Instructions spécifiques pour cet exercice dans ce programme..."
                             rows={3}
@@ -251,8 +250,8 @@ export function AddExerciseModal({ open, onOpenChange, sessionId, nextOrder }: A
                             <span className="label-text">Instructions (EN)</span>
                           </label>
                           <textarea
-                            id="instructionsEn"
                             className="textarea textarea-bordered"
+                            id="instructionsEn"
                             {...register("instructionsEn")}
                             placeholder="Specific instructions for this exercise in this program..."
                             rows={3}
@@ -269,16 +268,16 @@ export function AddExerciseModal({ open, onOpenChange, sessionId, nextOrder }: A
                       <div className="flex items-center justify-between mb-4">
                         <h2 className="card-title">Séries suggérées</h2>
                         <div className="flex gap-2">
-                          <button onClick={() => useTemplate("strength")} className="btn btn-sm btn-outline" type="button">
+                          <button className="btn btn-sm btn-outline" onClick={strengthTemplate} type="button">
                             Musculation
                           </button>
-                          <button onClick={() => useTemplate("bodyweight")} className="btn btn-sm btn-outline" type="button">
+                          <button className="btn btn-sm btn-outline" onClick={bodyweightTemplate} type="button">
                             Poids du corps
                           </button>
-                          <button onClick={() => useTemplate("timed")} className="btn btn-sm btn-outline" type="button">
+                          <button className="btn btn-sm btn-outline" onClick={timedTemplate} type="button">
                             Chronométré
                           </button>
-                          <button onClick={addSet} className="btn btn-sm btn-primary" type="button">
+                          <button className="btn btn-sm btn-primary" onClick={addSet} type="button">
                             <Plus className="h-4 w-4 mr-1" />
                             Ajouter
                           </button>
@@ -295,9 +294,9 @@ export function AddExerciseModal({ open, onOpenChange, sessionId, nextOrder }: A
                                 <label className="label">
                                   <span className="label-text text-xs">Type</span>
                                 </label>
-                                <select 
-                                  className="select select-bordered select-sm" 
-                                  onChange={(e) => updateSet(index, "types", [e.target.value])} 
+                                <select
+                                  className="select select-bordered select-sm"
+                                  onChange={(e) => updateSet(index, "types", [e.target.value])}
                                   value={set.types?.[0] || ""}
                                 >
                                   <option value="">Sélectionner</option>
@@ -333,9 +332,9 @@ export function AddExerciseModal({ open, onOpenChange, sessionId, nextOrder }: A
                                 <label className="label">
                                   <span className="label-text text-xs">Unité</span>
                                 </label>
-                                <select 
-                                  className="select select-bordered select-sm" 
-                                  onChange={(e) => updateSet(index, "units", [e.target.value])} 
+                                <select
+                                  className="select select-bordered select-sm"
+                                  onChange={(e) => updateSet(index, "units", [e.target.value])}
                                   value={set.units?.[0] || ""}
                                 >
                                   <option value="">Sélectionner</option>
@@ -344,7 +343,7 @@ export function AddExerciseModal({ open, onOpenChange, sessionId, nextOrder }: A
                                 </select>
                               </div>
                             </div>
-                            <button onClick={() => removeSet(index)} className="btn btn-sm btn-outline" type="button">
+                            <button className="btn btn-sm btn-outline" onClick={() => removeSet(index)} type="button">
                               <Trash2 className="h-4 w-4" />
                             </button>
                           </div>
@@ -353,7 +352,7 @@ export function AddExerciseModal({ open, onOpenChange, sessionId, nextOrder }: A
                         {suggestedSets.length === 0 && (
                           <div className="text-center py-8 border-2 border-dashed border-base-300 rounded-lg">
                             <p className="text-base-content/60 mb-3">Aucune série configurée</p>
-                            <button onClick={addSet} className="btn btn-sm btn-primary" type="button">
+                            <button className="btn btn-sm btn-primary" onClick={addSet} type="button">
                               <Plus className="h-4 w-4 mr-1" />
                               Ajouter la première série
                             </button>
@@ -364,10 +363,10 @@ export function AddExerciseModal({ open, onOpenChange, sessionId, nextOrder }: A
                   </div>
 
                   <div className="flex justify-end gap-2 pt-4">
-                    <button onClick={handleClose} type="button" className="btn btn-outline">
+                    <button className="btn btn-outline" onClick={handleClose} type="button">
                       Annuler
                     </button>
-                    <button disabled={isLoading} type="submit" className="btn btn-primary">
+                    <button className="btn btn-primary" disabled={isLoading} type="submit">
                       {isLoading ? "Ajout..." : "Ajouter l'exercice"}
                     </button>
                   </div>

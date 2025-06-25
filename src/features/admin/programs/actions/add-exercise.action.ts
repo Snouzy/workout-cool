@@ -7,6 +7,8 @@ import { UserRole, WorkoutSetType, WorkoutSetUnit } from "@prisma/client";
 import { prisma } from "@/shared/lib/prisma";
 import { auth } from "@/features/auth/lib/better-auth";
 
+import { ExerciseWithAttributes } from "../types/program.types";
+
 interface SuggestedSetData {
   setIndex: number;
   types: WorkoutSetType[];
@@ -82,7 +84,7 @@ export async function addExerciseToSession(data: AddExerciseData) {
   return programSessionExercise;
 }
 
-export async function getExercises(search?: string) {
+export async function getExercises(search?: string): Promise<ExerciseWithAttributes[]> {
   const session = await auth.api.getSession({
     headers: await headers(),
   });

@@ -3,10 +3,11 @@
 import { useState } from "react";
 import { Plus, Clock, Dumbbell, Settings, ChevronDown, ChevronRight } from "lucide-react";
 
+import { SessionWithExercises } from "../types/program.types";
 import { AddExerciseModal } from "./add-exercise-modal";
 
 interface SessionCardProps {
-  session: any; // Type from session query
+  session: SessionWithExercises;
   weekId: string;
 }
 
@@ -75,7 +76,7 @@ export function SessionCard({ session, weekId }: SessionCardProps) {
             </div>
           ) : (
             <div className="space-y-2">
-              {session.exercises.map((exercise: any, index: number) => (
+              {session.exercises.map((exercise) => (
                 <div className="flex items-center justify-between p-3 bg-base-200 rounded-lg" key={exercise.id}>
                   <div className="flex items-center gap-3">
                     <div className="w-8 h-8 bg-primary text-primary-content rounded-full flex items-center justify-center text-sm font-semibold">

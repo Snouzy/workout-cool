@@ -5,8 +5,9 @@ import { UserRole } from "@prisma/client";
 
 import { prisma } from "@/shared/lib/prisma";
 import { auth } from "@/features/auth/lib/better-auth";
+import { ProgramWithStats, ProgramWithFullDetails } from "../types/program.types";
 
-export async function getPrograms() {
+export async function getPrograms(): Promise<ProgramWithStats[]> {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
@@ -59,7 +60,7 @@ export async function getPrograms() {
   }));
 }
 
-export async function getProgramById(id: string) {
+export async function getProgramById(id: string): Promise<ProgramWithFullDetails | null> {
   const session = await auth.api.getSession({
     headers: await headers(),
   });

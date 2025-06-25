@@ -1,14 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import { Plus, Calendar, Clock, Users, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import { AddWeekModal } from "./add-week-modal";
+import { Plus, Calendar, Clock, Users, ArrowLeft } from "lucide-react";
+
 import { WeekCard } from "./week-card";
+import { AddWeekModal } from "./add-week-modal";
+import { ProgramWithFullDetails } from "../types/program.types";
 
 interface ProgramBuilderProps {
-  program: any; // Type from getProgramById
+  program: ProgramWithFullDetails;
 }
 
 export function ProgramBuilder({ program }: ProgramBuilderProps) {
@@ -18,7 +20,7 @@ export function ProgramBuilder({ program }: ProgramBuilderProps) {
     <div className="space-y-6">
       {/* Header */}
       <div className="flex items-center gap-4">
-        <Link href="/admin/programs" className="btn btn-ghost btn-sm">
+        <Link className="btn btn-ghost btn-sm" href="/admin/programs">
           <ArrowLeft className="h-4 w-4 mr-2" />
           Retour aux programmes
         </Link>
@@ -30,24 +32,12 @@ export function ProgramBuilder({ program }: ProgramBuilderProps) {
           <div className="flex items-start justify-between">
             <div className="flex items-start gap-4">
               <div className="relative w-24 h-24 rounded-lg overflow-hidden">
-                <Image
-                  src={program.image}
-                  alt={program.title}
-                  fill
-                  className="object-cover"
-                />
+                <Image alt={program.title} className="object-cover" fill src={program.image} />
               </div>
               <div>
                 <div className="flex items-center gap-2 mb-2">
                   <h1 className="text-2xl font-bold">{program.title}</h1>
-                  {program.emoji && (
-                    <Image
-                      src={`/images/emojis/${program.emoji}`}
-                      alt="Emoji"
-                      width={32}
-                      height={32}
-                    />
-                  )}
+                  {program.emoji && <Image alt="Emoji" height={32} src={`/images/emojis/${program.emoji}`} width={32} />}
                 </div>
                 <p className="text-base-content/60 mb-3">{program.description}</p>
                 <div className="flex gap-2">
@@ -89,14 +79,20 @@ export function ProgramBuilder({ program }: ProgramBuilderProps) {
       {/* Content Tabs */}
       <div className="space-y-6">
         <div className="tabs tabs-boxed">
-          <input type="radio" name="program_tabs" className="tab" id="structure" defaultChecked />
-          <label htmlFor="structure" className="tab">Structure du programme</label>
-          
-          <input type="radio" name="program_tabs" className="tab" id="settings" />
-          <label htmlFor="settings" className="tab">Paramètres</label>
-          
-          <input type="radio" name="program_tabs" className="tab" id="analytics" />
-          <label htmlFor="analytics" className="tab">Statistiques</label>
+          <input className="tab" defaultChecked id="structure" name="program_tabs" type="radio" />
+          <label className="tab" htmlFor="structure">
+            Structure du programme
+          </label>
+
+          <input className="tab" id="settings" name="program_tabs" type="radio" />
+          <label className="tab" htmlFor="settings">
+            Paramètres
+          </label>
+
+          <input className="tab" id="analytics" name="program_tabs" type="radio" />
+          <label className="tab" htmlFor="analytics">
+            Statistiques
+          </label>
         </div>
 
         <div className="space-y-6">
@@ -128,22 +124,8 @@ export function ProgramBuilder({ program }: ProgramBuilderProps) {
                 </div>
               </div>
             ) : (
-              program.weeks.map((week: any) => (
-                <WeekCard key={week.id} week={week} programId={program.id} />
-              ))
+              program.weeks.map((week) => <WeekCard key={week.id} programId={program.id} week={week} />)
             )}
-          </div>
-        </div>
-        
-        {/* Settings Tab Content */}
-        <div className="hidden" id="settings-content">
-          <div className="card bg-base-100 shadow-xl">
-            <div className="card-body">
-              <h2 className="card-title">Paramètres du programme</h2>
-              <p className="text-base-content/60">
-                Configuration avancée du programme (à implémenter)
-              </p>
-            </div>
           </div>
         </div>
 
@@ -152,9 +134,7 @@ export function ProgramBuilder({ program }: ProgramBuilderProps) {
           <div className="card bg-base-100 shadow-xl">
             <div className="card-body">
               <h2 className="card-title">Statistiques</h2>
-              <p className="text-base-content/60">
-                Analytics et métriques du programme (à implémenter)
-              </p>
+              <p className="text-base-content/60">Analytics et métriques du programme (à implémenter)</p>
             </div>
           </div>
         </div>
@@ -162,10 +142,10 @@ export function ProgramBuilder({ program }: ProgramBuilderProps) {
 
       {/* Add Week Modal */}
       <AddWeekModal
-        open={isAddWeekModalOpen}
-        onOpenChange={setIsAddWeekModalOpen}
-        programId={program.id}
         nextWeekNumber={program.weeks.length + 1}
+        onOpenChange={setIsAddWeekModalOpen}
+        open={isAddWeekModalOpen}
+        programId={program.id}
       />
     </div>
   );

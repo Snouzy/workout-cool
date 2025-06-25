@@ -3,11 +3,12 @@
 import { useState } from "react";
 import { Plus, Clock, ChevronDown, ChevronRight } from "lucide-react";
 
+import { WeekWithSessions } from "../types/program.types";
 import { SessionCard } from "./session-card";
 import { AddSessionModal } from "./add-session-modal";
 
 interface WeekCardProps {
-  week: any; // Type from program query
+  week: WeekWithSessions;
   programId: string;
 }
 
@@ -58,7 +59,7 @@ export function WeekCard({ week, programId }: WeekCardProps) {
             </div>
           ) : (
             <div className="space-y-3">
-              {week.sessions.map((session: any) => (
+              {week.sessions.map((session) => (
                 <SessionCard key={session.id} session={session} weekId={week.id} />
               ))}
             </div>

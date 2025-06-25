@@ -15,7 +15,7 @@ export function BottomNavigation() {
     {
       id: "workout-builder",
       label: "Créateur",
-      shortLabel: "Créer",
+      shortLabel: "Create",
       href: paths.root,
       icon: Dumbbell,
       emoji: "WorkoutCoolHappy.png",
@@ -24,7 +24,7 @@ export function BottomNavigation() {
     {
       id: "programs",
       label: "Programmes",
-      shortLabel: "Explorer",
+      shortLabel: "Explore",
       href: `${paths.programs}`,
       icon: Search,
       emoji: "WorkoutCoolSwag.png",

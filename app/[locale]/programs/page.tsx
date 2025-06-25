@@ -12,7 +12,7 @@ const mockPrograms = [
   {
     id: "beast-mode",
     title: "BEAST MODE",
-    category: "Force & Puissance",
+    category: "Strength & Power",
     image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400&h=600&fit=crop",
     isLocked: true,
     gradient: "from-slate-400 to-gray-600",
@@ -20,10 +20,9 @@ const mockPrograms = [
     isNew: true,
     difficulty: "Débutant",
     participants: "75k+",
-    // Layout metadata
-    isFeatured: true, // Grande carte featured
+    isFeatured: true,
     displayOrder: 1,
-    section: "new", // "new" ou "discipline"
+    section: "new",
   },
   {
     id: "warrior-hiit",
@@ -43,8 +42,8 @@ const mockPrograms = [
   },
   {
     id: "alpha-strength",
-    title: "ALPHA STRENGTH",
-    category: "Musculation",
+    title: "ALPHA GRIP",
+    category: "Weightlifting",
     image: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=400&h=600&fit=crop",
     isLocked: false,
     gradient: "from-blue-500 to-indigo-600",
@@ -60,7 +59,7 @@ const mockPrograms = [
   {
     id: "titan-core",
     title: "TITAN CORE",
-    category: "Gainage & Abs",
+    category: "Core & Abs",
     image: "https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=400&h=600&fit=crop",
     isLocked: true,
     gradient: "from-emerald-500 to-teal-600",
@@ -144,8 +143,8 @@ export default function ProgrammesPage() {
       <div className="bg-gradient-to-r from-[#4F8EF7] to-[#25CB78] p-4 sm:p-6 text-white">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-lg sm:text-xl leading-tight font-bold mb-2">Programmes d&apos;entraînement</h1>
-            <p className="text-white/90 text-sm">Choisis ton défi et deviens plus fort ! 💪</p>
+            <h1 className="text-lg sm:text-xl leading-tight font-bold mb-2">Workout programs</h1>
+            <p className="text-white/90 text-sm">Choose your challenge and become stronger! 💪</p>
           </div>
           <div className="w-14 h-14 sm:w-16 sm:h-16 relative">
             <Image
@@ -165,7 +164,7 @@ export default function ProgrammesPage() {
           <div>
             <div className="flex items-center gap-3 mb-4">
               <TrendingUp className="text-[#4F8EF7]" size={24} />
-              <h3 className="text-xl font-bold text-base-content dark:text-gray-100">Nouveaux programmes</h3>
+              <h3 className="text-xl font-bold text-base-content dark:text-gray-100">New programs</h3>
               <div className="w-8 h-8 relative">
                 <Image
                   alt="Emoji fire"
@@ -190,7 +189,7 @@ export default function ProgrammesPage() {
         {disciplinePrograms.length > 0 && (
           <div>
             <div className="flex items-center gap-3 mb-4">
-              <h3 className="text-xl font-bold text-base-content dark:text-gray-100">Par discipline</h3>
+              <h3 className="text-xl font-bold text-base-content dark:text-gray-100">By discipline</h3>
               <div className="w-8 h-8 relative">
                 <Image
                   alt="Mascotte discipline"

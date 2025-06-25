@@ -1,13 +1,14 @@
 "use server";
 
 import { headers } from "next/headers";
-import { UserRole } from "@prisma/client";
+import { UserRole, ProgramVisibility } from "@prisma/client";
 
 import { prisma } from "@/shared/lib/prisma";
 import { auth } from "@/features/auth/lib/better-auth";
+
 import { ProgramWithStats, ProgramWithFullDetails } from "../types/program.types";
 
-export async function getPrograms(): Promise<ProgramWithStats[]> {
+export async function getPrograms(visibility?: ProgramVisibility): Promise<ProgramWithStats[]> {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
@@ -18,6 +19,7 @@ export async function getPrograms(): Promise<ProgramWithStats[]> {
   }
 
   const programs = await prisma.program.findMany({
+    where: visibility ? { visibility } : undefined,
     include: {
       coaches: {
         orderBy: { order: "asc" },

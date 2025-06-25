@@ -4,9 +4,11 @@ import { Eye, Edit, Users, Calendar, Dumbbell } from "lucide-react";
 
 import { getPrograms } from "../actions/get-programs.action";
 import { DeleteProgramButton } from "./delete-program-button";
+import { VisibilityBadge } from "./visibility-badge";
 
 export async function ProgramsList() {
   const programs = await getPrograms();
+  console.log("programs:", programs);
 
   if (programs.length === 0) {
     return (
@@ -32,7 +34,7 @@ export async function ProgramsList() {
                 {program.isPremium ? "Premium" : "Gratuit"}
               </div>
             </div>
-            <div className="absolute top-4 right-4">
+            <div className="absolute top-4 right-4 flex gap-2">
               <div className="badge badge-outline bg-white/20 text-white border-white/30">{program.level}</div>
             </div>
           </div>
@@ -40,9 +42,12 @@ export async function ProgramsList() {
           <div className="card-body">
             <div className="flex items-center justify-between mb-2">
               <h2 className="card-title truncate">{program.title}</h2>
-              {program.emoji && (
-                <Image alt="Emoji" className="flex-shrink-0" height={24} src={`/images/emojis/${program.emoji}`} width={24} />
-              )}
+              <div className="flex items-center gap-2">
+                <VisibilityBadge currentVisibility={program.visibility} programId={program.id} />
+                {program.emoji && (
+                  <Image alt="Emoji" className="flex-shrink-0" height={24} src={`/images/emojis/${program.emoji}`} width={24} />
+                )}
+              </div>
             </div>
             <p className="text-sm text-base-content/60 line-clamp-2 mb-4">{program.description}</p>
 

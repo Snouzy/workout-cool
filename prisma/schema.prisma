@@ -579,6 +579,7 @@ model Program {
   equipment          ExerciseAttributeValueEnum[] @default([])
   isPremium          Boolean                      @default(true)
   isActive           Boolean                      @default(true)
+  visibility         ProgramVisibility            @default(DRAFT)
   emoji              String?
   participantCount   Int                          @default(0)
 
@@ -733,4 +734,10 @@ enum ProgramLevel {
   INTERMEDIATE
   ADVANCED
   EXPERT
+}
+
+enum ProgramVisibility {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
 }

@@ -7,6 +7,7 @@ import { Plus, Calendar, Clock, Users, ArrowLeft } from "lucide-react";
 
 import { ProgramWithFullDetails } from "../types/program.types";
 import { WeekCard } from "./week-card";
+import { VisibilityBadge } from "./visibility-badge";
 import { AddWeekModal } from "./add-week-modal";
 
 interface ProgramBuilderProps {
@@ -41,6 +42,7 @@ export function ProgramBuilder({ program }: ProgramBuilderProps) {
                 </div>
                 <p className="text-base-content/60 mb-3">{program.description}</p>
                 <div className="flex gap-2">
+                  <VisibilityBadge currentVisibility={program.visibility} programId={program.id} />
                   <div className={`badge ${program.isPremium ? "badge-primary" : "badge-secondary"}`}>
                     {program.isPremium ? "Premium" : "Gratuit"}
                   </div>

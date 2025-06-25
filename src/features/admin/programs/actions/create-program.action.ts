@@ -2,7 +2,7 @@
 
 import { headers } from "next/headers";
 import { revalidatePath } from "next/cache";
-import { ProgramLevel, ExerciseAttributeValueEnum, UserRole } from "@prisma/client";
+import { ProgramLevel, ExerciseAttributeValueEnum, UserRole, ProgramVisibility } from "@prisma/client";
 
 import { prisma } from "@/shared/lib/prisma";
 import { auth } from "@/features/auth/lib/better-auth";
@@ -87,6 +87,7 @@ export async function createProgram(data: CreateProgramData) {
       sessionDurationMin: data.sessionDurationMin,
       equipment: data.equipment,
       isPremium: data.isPremium,
+      visibility: ProgramVisibility.DRAFT, // Always start as draft
       emoji: data.emoji,
       coaches: {
         create: data.coaches || [],

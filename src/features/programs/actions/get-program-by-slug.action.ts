@@ -1,0 +1,134 @@
+"use server";
+
+import { ExerciseAttributeValueEnum, ProgramLevel, ProgramVisibility } from "@prisma/client";
+
+import { prisma } from "@/shared/lib/prisma";
+
+export interface ProgramDetail {
+  id: string;
+  slug: string;
+  title: string;
+  titleEn: string;
+  description: string;
+  descriptionEn: string;
+  category: string;
+  image: string;
+  level: ProgramLevel;
+  type: ExerciseAttributeValueEnum;
+  durationWeeks: number;
+  sessionsPerWeek: number;
+  sessionDurationMin: number;
+  equipment: ExerciseAttributeValueEnum[];
+  isPremium: boolean;
+  emoji?: string;
+  participantCount: number;
+  totalEnrollments: number;
+  coaches: Array<{
+    id: string;
+    name: string;
+    image: string;
+    order: number;
+  }>;
+  weeks: Array<{
+    id: string;
+    weekNumber: number;
+    title: string;
+    description: string;
+    sessions: Array<{
+      id: string;
+      sessionNumber: number;
+      title: string;
+      description: string;
+      equipment: ExerciseAttributeValueEnum[];
+      estimatedMinutes: number;
+      isPremium: boolean;
+      totalExercises: number;
+    }>;
+  }>;
+}
+
+export async function getProgramBySlug(slug: string): Promise<ProgramDetail | null> {
+  try {
+    const program = await prisma.program.findUnique({
+      where: {
+        slug,
+        visibility: ProgramVisibility.PUBLISHED,
+        isActive: true,
+      },
+      include: {
+        coaches: {
+          orderBy: { order: "asc" },
+        },
+        weeks: {
+          include: {
+            sessions: {
+              include: {
+                exercises: {
+                  include: {
+                    suggestedSets: true,
+                  },
+                },
+              },
+              orderBy: { sessionNumber: "asc" },
+            },
+          },
+          orderBy: { weekNumber: "asc" },
+        },
+        enrollments: {
+          select: {
+            id: true,
+          },
+        },
+      },
+    });
+
+    if (!program) {
+      return null;
+    }
+
+    return {
+      id: program.id,
+      slug: program.slug,
+      title: program.title,
+      titleEn: program.titleEn,
+      description: program.description,
+      descriptionEn: program.descriptionEn,
+      category: program.category,
+      image: program.image,
+      level: program.level,
+      type: program.type,
+      durationWeeks: program.durationWeeks,
+      sessionsPerWeek: program.sessionsPerWeek,
+      sessionDurationMin: program.sessionDurationMin,
+      equipment: program.equipment,
+      isPremium: program.isPremium,
+      participantCount: program.participantCount,
+      totalEnrollments: program.enrollments.length,
+      coaches: program.coaches.map((coach) => ({
+        id: coach.id,
+        name: coach.name,
+        image: coach.image,
+        order: coach.order,
+      })),
+      weeks: program.weeks.map((week) => ({
+        id: week.id,
+        weekNumber: week.weekNumber,
+        title: week.title,
+        description: week.description,
+        sessions: week.sessions.map((session) => ({
+          id: session.id,
+          sessionNumber: session.sessionNumber,
+          title: session.title,
+          description: session.description,
+          equipment: session.equipment,
+          estimatedMinutes: session.estimatedMinutes,
+          isPremium: session.isPremium,
+          totalExercises: session.exercises.length,
+        })),
+      })),
+    };
+  } catch (error) {
+    console.error("Error fetching program by slug:", error);
+    return null;
+  }
+}

@@ -7,7 +7,6 @@ import { ProgramCard } from "./program-card";
 export async function ProgramsPage() {
   const programs = await getPublicPrograms();
 
-  // Séparer les programmes par type
   const premiumPrograms = programs.filter((p) => p.isPremium);
   const freePrograms = programs.filter((p) => !p.isPremium);
 

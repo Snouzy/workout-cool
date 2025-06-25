@@ -6,7 +6,7 @@ import { TFunction } from "locales/client";
  * Map enum values to translation keys for i18n
  */
 export const ATTRIBUTE_VALUE_TRANSLATION_KEYS: Record<ExerciseAttributeValueEnum, string> = {
-  // Types d'exercices
+  // exercise types
   BODYWEIGHT: "workout_builder.attribute_value.bodyweight",
   STRENGTH: "workout_builder.attribute_value.strength",
   POWERLIFTING: "workout_builder.attribute_value.powerlifting",
@@ -21,7 +21,7 @@ export const ATTRIBUTE_VALUE_TRANSLATION_KEYS: Record<ExerciseAttributeValueEnum
   CROSSFIT: "workout_builder.attribute_value.crossfit",
   WEIGHTLIFTING: "workout_builder.attribute_value.weightlifting",
 
-  // Groupes musculaires
+  // muscles
   BICEPS: "workout_builder.muscles.biceps",
   SHOULDERS: "workout_builder.muscles.shoulders",
   CHEST: "workout_builder.muscles.chest",
@@ -46,7 +46,7 @@ export const ATTRIBUTE_VALUE_TRANSLATION_KEYS: Record<ExerciseAttributeValueEnum
   ACHILLES_TENDON: "workout_builder.attribute_value.achilles_tendon",
   FINGERS: "workout_builder.attribute_value.fingers",
 
-  // Équipements
+  // equipment
   DUMBBELL: "workout_builder.equipment.dumbbell.label",
   KETTLEBELLS: "workout_builder.equipment.kettlebell.label",
   BARBELL: "workout_builder.equipment.barbell.label",
@@ -84,7 +84,6 @@ export const ATTRIBUTE_VALUE_TRANSLATION_KEYS: Record<ExerciseAttributeValueEnum
   ROPE: "workout_builder.attribute_value.rope",
   NA: "workout_builder.attribute_value.na",
 
-  // Types de mécanique
   ISOLATION: "workout_builder.attribute_value.isolation",
   COMPOUND: "workout_builder.attribute_value.compound",
 };

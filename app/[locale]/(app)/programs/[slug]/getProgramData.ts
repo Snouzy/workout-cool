@@ -1,3 +1,4 @@
+// TODO: delete
 const mockPrograms = [
   {
     id: "beast-mode",

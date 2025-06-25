@@ -22,6 +22,7 @@ import { StepperHeader } from "./stepper-header";
 import { MuscleSelection } from "./muscle-selection";
 import { ExercisesSelection } from "./exercises-selection";
 import { EquipmentSelection } from "./equipment-selection";
+import { AddExerciseModal } from "./add-exercise-modal";
 
 import type { ExerciseWithAttributes, WorkoutBuilderStep } from "../types";
 
@@ -107,9 +108,10 @@ export function WorkoutStepper() {
     deleteExercise(exerciseId);
   };
 
+  const [showAddExerciseModal, setShowAddExerciseModal] = useState(false);
+
   const handleAddExercise = () => {
-    alert("TODO : Add exercise 🥶");
-    console.log("Add exercise");
+    setShowAddExerciseModal(true);
   };
 
   const orderedExercises = exercisesOrder.length
@@ -260,6 +262,12 @@ export function WorkoutStepper() {
         onPrevious={prevStep}
         onStartWorkout={handleStartWorkout}
         totalSteps={STEPPER_STEPS.length}
+      />
+      
+      <AddExerciseModal
+        isOpen={showAddExerciseModal}
+        onClose={() => setShowAddExerciseModal(false)}
+        selectedEquipment={selectedEquipment}
       />
     </div>
   );

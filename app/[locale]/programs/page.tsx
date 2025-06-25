@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Metadata } from "next";
-import { Lock, Star, TrendingUp } from "lucide-react";
+import { Lock, TrendingUp } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Programmes",
@@ -103,7 +103,7 @@ export default function ProgrammesPage() {
             {/* Large featured card */}
             <div className="md:col-span-2">
               <Link
-                className="relative block h-48 rounded-xl overflow-hidden border-2 border-[#4F8EF7]/20 hover:border-[#4F8EF7] hover:scale-[1.02] transition-all duration-200 ease-in-out"
+                className="relative block h-48 rounded-xl overflow-hidden border-2 border-[#4F8EF7]/20 hover:border-[#4F8EF7] transition-all duration-200 ease-in-out"
                 href={`/programs/${mockPrograms[0].id}`}
               >
                 <div className={`absolute inset-0 bg-gradient-to-br ${mockPrograms[0].gradient}`}></div>
@@ -117,11 +117,6 @@ export default function ProgrammesPage() {
 
                 {/* Badges */}
                 <div className="absolute top-4 left-4 flex flex-wrap gap-2">
-                  {mockPrograms[0].isNew && (
-                    <span className="bg-[#25CB78] text-white text-xs px-2 py-1 rounded-full font-medium flex items-center gap-1">
-                      <Star size={12} /> NOUVEAU
-                    </span>
-                  )}
                   <span className="bg-white/20 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full">
                     {mockPrograms[0].difficulty}
                   </span>
@@ -149,15 +144,6 @@ export default function ProgrammesPage() {
                       <p className="text-sm opacity-90 mb-1">{mockPrograms[0].category}</p>
                       <p className="text-xs opacity-75">{mockPrograms[0].participants} participants</p>
                     </div>
-                    <div className="w-12 h-12 relative">
-                      <Image
-                        alt="Mascotte"
-                        className="w-full h-full object-contain"
-                        height={48}
-                        src={`/images/emojis/${mockPrograms[0].emoji}`}
-                        width={48}
-                      />
-                    </div>
                   </div>
                 </div>
               </Link>
@@ -180,11 +166,6 @@ export default function ProgrammesPage() {
 
                 {/* Badges */}
                 <div className="absolute top-3 left-3 flex flex-col gap-1">
-                  {mockPrograms[1].isNew && (
-                    <span className="bg-[#25CB78] text-white text-xs px-2 py-1 rounded-full font-medium">
-                      NOUVEAU
-                    </span>
-                  )}
                   <span className="bg-white/20 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full">
                     {mockPrograms[1].difficulty}
                   </span>
@@ -218,6 +199,7 @@ export default function ProgrammesPage() {
         {/* By Discipline Section */}
         <div>
           <div className="flex items-center gap-3 mb-4">
+            <h3 className="text-xl font-bold text-base-content dark:text-gray-100">Par discipline</h3>
             <div className="w-8 h-8 relative">
               <Image
                 alt="Mascotte discipline"
@@ -227,7 +209,6 @@ export default function ProgrammesPage() {
                 width={32}
               />
             </div>
-            <h3 className="text-xl font-bold text-base-content dark:text-gray-100">Par discipline</h3>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -248,9 +229,7 @@ export default function ProgrammesPage() {
 
                 {/* Badges */}
                 <div className="absolute top-3 left-3">
-                  <span className="bg-white/20 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full">
-                    {program.difficulty}
-                  </span>
+                  <span className="bg-white/20 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full">{program.difficulty}</span>
                 </div>
 
                 {/* Lock/Emoji */}
@@ -258,13 +237,7 @@ export default function ProgrammesPage() {
                   {program.isLocked ? (
                     <Lock className="text-white" size={14} />
                   ) : (
-                    <Image
-                      alt="Emoji"
-                      className="w-5 h-5 object-contain"
-                      height={20}
-                      src={`/images/emojis/${program.emoji}`}
-                      width={20}
-                    />
+                    <Image alt="Emoji" className="w-5 h-5 object-contain" height={20} src={`/images/emojis/${program.emoji}`} width={20} />
                   )}
                 </div>
 
@@ -274,15 +247,6 @@ export default function ProgrammesPage() {
                       <h4 className="font-bold text-lg mb-1 leading-tight">{program.title}</h4>
                       <p className="text-xs opacity-90">{program.category}</p>
                       <p className="text-xs opacity-75 mt-1">{program.participants}</p>
-                    </div>
-                    <div className="w-8 h-8 relative">
-                      <Image
-                        alt="Mascotte"
-                        className="w-full h-full object-contain"
-                        height={32}
-                        src={`/images/emojis/${program.emoji}`}
-                        width={32}
-                      />
                     </div>
                   </div>
                 </div>

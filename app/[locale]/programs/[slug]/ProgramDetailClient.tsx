@@ -50,15 +50,6 @@ export function ProgramDetailClient({ program }: ProgramDetailClientProps) {
           <Image alt={program.title} className="absolute inset-0 object-cover opacity-30" fill src={program.image} />
           <div className="absolute inset-0 bg-black/20"></div>
 
-          {/* Gamification Elements */}
-          <div className="absolute top-4 left-4 flex gap-2">
-            <div className="bg-[#25CB78] text-white px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1">
-              <Trophy size={12} />
-              PROGRAMME
-            </div>
-            {program.isLocked && <div className="bg-yellow-500 text-white px-3 py-1 rounded-full text-xs font-bold">PREMIUM</div>}
-          </div>
-
           {/* Mascot Emoji */}
           <div className="absolute top-4 right-4 w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full border-2 border-white/30 flex items-center justify-center">
             <Image
@@ -153,33 +144,33 @@ export function ProgramDetailClient({ program }: ProgramDetailClientProps) {
                     <h3 className="font-bold text-lg text-[#4F8EF7]">Caractéristiques</h3>
                   </div>
 
-                  {/* Compact List Layout - Inspired by modern apps */}
-                  <div className="space-y-4">
+                  {/* Compact Layout - Mobile: List, Desktop: 2 columns */}
+                  <div className="space-y-4 md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-4 md:space-y-0">
                     <div className="flex items-center gap-4">
                       <BarChart3 className="text-[#4F8EF7] flex-shrink-0" size={20} />
                       <span className="text-base font-medium text-gray-900 dark:text-white">{program.level}</span>
                     </div>
-                    
+
                     <div className="flex items-center gap-4">
                       <Target className="text-[#25CB78] flex-shrink-0" size={20} />
                       <span className="text-base font-medium text-gray-900 dark:text-white">{program.type}</span>
                     </div>
-                    
+
                     <div className="flex items-center gap-4">
                       <Clock className="text-[#4F8EF7] flex-shrink-0" size={20} />
                       <span className="text-base font-medium text-gray-900 dark:text-white">{program.duration}</span>
                     </div>
-                    
+
                     <div className="flex items-center gap-4">
                       <Calendar className="text-[#25CB78] flex-shrink-0" size={20} />
                       <span className="text-base font-medium text-gray-900 dark:text-white">{program.frequency}</span>
                     </div>
-                    
+
                     <div className="flex items-center gap-4">
                       <Timer className="text-[#4F8EF7] flex-shrink-0" size={20} />
                       <span className="text-base font-medium text-gray-900 dark:text-white">{program.sessionDuration}</span>
                     </div>
-                    
+
                     <div className="flex items-center gap-4">
                       <Dumbbell className="text-[#25CB78] flex-shrink-0" size={20} />
                       <span className="text-base font-medium text-gray-900 dark:text-white">{program.equipment}</span>

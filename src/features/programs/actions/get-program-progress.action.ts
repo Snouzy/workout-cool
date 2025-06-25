@@ -1,8 +1,9 @@
 "use server";
 
-import { auth } from "@/shared/lib/auth/better-auth";
-import { prisma } from "@/shared/lib/db/prisma";
 import { headers } from "next/headers";
+
+import { prisma } from "@/shared/lib/prisma";
+import { auth } from "@/features/auth/lib/better-auth";
 
 export async function getProgramProgress(programId: string) {
   const session = await auth.api.getSession({
@@ -13,7 +14,11 @@ export async function getProgramProgress(programId: string) {
     return null;
   }
 
-  const userId = session.user.id;
+  const userId = session.user?.id;
+
+  if (!userId) {
+    throw new Error("User not found");
+  }
 
   const enrollment = await prisma.userProgramEnrollment.findUnique({
     where: {
@@ -34,10 +39,10 @@ export async function getProgramProgress(programId: string) {
           weeks: {
             include: {
               sessions: {
-                orderBy: { sessionNumber: 'asc' },
+                orderBy: { sessionNumber: "asc" },
               },
             },
-            orderBy: { weekNumber: 'asc' },
+            orderBy: { weekNumber: "asc" },
           },
         },
       },
@@ -49,18 +54,11 @@ export async function getProgramProgress(programId: string) {
   }
 
   // Calculate completion stats
-  const totalSessions = enrollment.program.weeks.reduce(
-    (acc, week) => acc + week.sessions.length,
-    0
-  );
+  const totalSessions = enrollment.program.weeks.reduce((acc, week) => acc + week.sessions.length, 0);
 
-  const completedSessions = enrollment.sessionProgress.filter(
-    (progress) => progress.completedAt !== null
-  ).length;
+  const completedSessions = enrollment.sessionProgress.filter((progress) => progress.completedAt !== null).length;
 
-  const completionPercentage = totalSessions > 0 
-    ? Math.round((completedSessions / totalSessions) * 100)
-    : 0;
+  const completionPercentage = totalSessions > 0 ? Math.round((completedSessions / totalSessions) * 100) : 0;
 
   return {
     enrollment,

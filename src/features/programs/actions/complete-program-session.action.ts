@@ -1,14 +1,12 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
-import { auth } from "@/shared/lib/auth/better-auth";
-import { prisma } from "@/shared/lib/db/prisma";
 import { headers } from "next/headers";
+import { revalidatePath } from "next/cache";
 
-export async function completeProgramSession(
-  sessionProgressId: string,
-  workoutSessionId: string
-) {
+import { prisma } from "@/shared/lib/prisma";
+import { auth } from "@/features/auth/lib/better-auth";
+
+export async function completeProgramSession(sessionProgressId: string, workoutSessionId: string) {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
@@ -17,7 +15,11 @@ export async function completeProgramSession(
     throw new Error("Unauthorized");
   }
 
-  const userId = session.user.id;
+  const userId = session.user?.id;
+
+  if (!userId) {
+    throw new Error("User not found");
+  }
 
   // Get session progress with enrollment
   const sessionProgress = await prisma.userSessionProgress.findUnique({
@@ -30,10 +32,10 @@ export async function completeProgramSession(
               weeks: {
                 include: {
                   sessions: {
-                    orderBy: { sessionNumber: 'asc' },
+                    orderBy: { sessionNumber: "asc" },
                   },
                 },
-                orderBy: { weekNumber: 'asc' },
+                orderBy: { weekNumber: "asc" },
               },
             },
           },
@@ -72,25 +74,21 @@ export async function completeProgramSession(
   // Find next session
   const currentWeek = sessionProgress.session.week.weekNumber;
   const currentSession = sessionProgress.session.sessionNumber;
-  
+
   let nextWeek = currentWeek;
   let nextSession = currentSession + 1;
 
   // Check if we need to move to next week
-  const currentWeekSessions = enrollment.program.weeks
-    .find(w => w.weekNumber === currentWeek)?.sessions.length || 0;
-  
+  const currentWeekSessions = enrollment.program.weeks.find((w) => w.weekNumber === currentWeek)?.sessions.length || 0;
+
   if (nextSession > currentWeekSessions) {
     nextWeek = currentWeek + 1;
     nextSession = 1;
   }
 
   // Check if program is completed
-  const totalSessions = enrollment.program.weeks.reduce(
-    (acc, week) => acc + week.sessions.length,
-    0
-  );
-  
+  const totalSessions = enrollment.program.weeks.reduce((acc, week) => acc + week.sessions.length, 0);
+
   const isCompleted = completedSessionsCount >= totalSessions;
 
   // Update enrollment

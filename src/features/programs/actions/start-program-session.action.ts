@@ -1,9 +1,10 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
-import { auth } from "@/shared/lib/auth/better-auth";
-import { prisma } from "@/shared/lib/db/prisma";
 import { headers } from "next/headers";
+import { revalidatePath } from "next/cache";
+
+import { prisma } from "@/shared/lib/prisma";
+import { auth } from "@/features/auth/lib/better-auth";
 
 export async function startProgramSession(enrollmentId: string, sessionId: string) {
   const session = await auth.api.getSession({
@@ -14,7 +15,11 @@ export async function startProgramSession(enrollmentId: string, sessionId: strin
     throw new Error("Unauthorized");
   }
 
-  const userId = session.user.id;
+  const userId = session.user?.id;
+
+  if (!userId) {
+    throw new Error("User not found");
+  }
 
   // Verify enrollment belongs to user
   const enrollment = await prisma.userProgramEnrollment.findFirst({
@@ -63,10 +68,10 @@ export async function startProgramSession(enrollmentId: string, sessionId: strin
             },
           },
           suggestedSets: {
-            orderBy: { setIndex: 'asc' },
+            orderBy: { setIndex: "asc" },
           },
         },
-        orderBy: { order: 'asc' },
+        orderBy: { order: "asc" },
       },
     },
   });
@@ -94,8 +99,8 @@ export async function startProgramSession(enrollmentId: string, sessionId: strin
 
   revalidatePath(`/programs/${enrollment.program.slug}`);
 
-  return { 
-    sessionProgress, 
+  return {
+    sessionProgress,
     isNew: true,
     sessionData: programSession,
   };

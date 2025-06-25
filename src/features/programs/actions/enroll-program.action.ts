@@ -1,9 +1,10 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
-import { auth } from "@/shared/lib/auth/better-auth";
-import { prisma } from "@/shared/lib/db/prisma";
 import { headers } from "next/headers";
+import { revalidatePath } from "next/cache";
+
+import { prisma } from "@/shared/lib/prisma";
+import { auth } from "@/features/auth/lib/better-auth";
 
 export async function enrollInProgram(programId: string) {
   const session = await auth.api.getSession({
@@ -14,7 +15,11 @@ export async function enrollInProgram(programId: string) {
     throw new Error("Unauthorized");
   }
 
-  const userId = session.user.id;
+  const userId = session.user?.id;
+
+  if (!userId) {
+    throw new Error("User not found");
+  }
 
   // Check if user is premium
   const user = await prisma.user.findUnique({
@@ -62,6 +67,6 @@ export async function enrollInProgram(programId: string) {
   });
 
   revalidatePath(`/programs/${enrollment.program.slug}`);
-  
+
   return { enrollment, isNew: true };
 }

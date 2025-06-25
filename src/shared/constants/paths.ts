@@ -8,4 +8,5 @@ export const paths = {
   profile: "profile",
   privacy: "/legal/privacy",
   terms: "/legal/terms",
+  programs: "/programs",
 } as const;

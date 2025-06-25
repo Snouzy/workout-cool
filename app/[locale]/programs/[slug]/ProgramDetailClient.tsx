@@ -1,6 +1,6 @@
 "use client";
 
-import { useQueryState, parseAsString } from "nuqs";
+import { useQueryState, parseAsString, parseAsInteger } from "nuqs";
 import Image from "next/image";
 import { BarChart3, Target, Clock, Calendar, Timer, Dumbbell, Share, Lock } from "lucide-react";
 
@@ -40,6 +40,7 @@ interface ProgramDetailClientProps {
 
 export function ProgramDetailClient({ program }: ProgramDetailClientProps) {
   const [tab, setTab] = useQueryState("tab", parseAsString.withDefault("about"));
+  const [selectedWeek, setSelectedWeek] = useQueryState("week", parseAsInteger.withDefault(1));
 
   return (
     <div className="flex-1 flex flex-col overflow-hidden relative">
@@ -171,14 +172,15 @@ export function ProgramDetailClient({ program }: ProgramDetailClientProps) {
               <div className="space-y-6">
                 {/* Week Selector */}
                 <div className="flex gap-4 overflow-x-auto pb-2">
-                  {program.sessions.map((weekData, index) => (
+                  {program.sessions.map((weekData) => (
                     <button
-                      className={`flex-shrink-0 px-4 py-2 text-sm font-medium transition-all duration-200 ${
-                        index === 0
+                      className={`flex-shrink-0 px-4 py-2 text-sm font-medium ${
+                        selectedWeek === weekData.week
                           ? "text-black dark:text-white border-b-2 border-black dark:border-white"
                           : "text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
                       }`}
                       key={weekData.week}
+                      onClick={() => setSelectedWeek(weekData.week)}
                     >
                       Sem {weekData.week}
                     </button>
@@ -186,31 +188,33 @@ export function ProgramDetailClient({ program }: ProgramDetailClientProps) {
                 </div>
 
                 {/* Current Week Title */}
-                <h2 className="text-xl font-bold">Semaine 1</h2>
+                <h2 className="text-xl font-bold">Semaine {selectedWeek}</h2>
 
                 {/* Sessions List */}
                 <div className="space-y-4">
-                  {program.sessions[0]?.sessions.map((session) => (
-                    <div
-                      className="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700 flex items-center gap-4"
-                      key={session.id}
-                    >
-                      {/* Lock Icon */}
-                      {session.isLocked && (
-                        <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center flex-shrink-0">
-                          <Lock className="text-white" size={16} />
-                        </div>
-                      )}
+                  {program.sessions
+                    .find((w) => w.week === selectedWeek)
+                    ?.sessions.map((session) => (
+                      <div
+                        className="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700 flex items-center gap-4"
+                        key={session.id}
+                      >
+                        {/* Lock Icon */}
+                        {session.isLocked && (
+                          <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center flex-shrink-0">
+                            <Lock className="text-white" size={16} />
+                          </div>
+                        )}
 
-                      {/* Session Info */}
-                      <div className="flex-1">
-                        <h4 className="font-semibold text-gray-900 dark:text-white mb-1">
-                          Séance {session.id} : {session.title}
-                        </h4>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">{session.equipment}</p>
+                        {/* Session Info */}
+                        <div className="flex-1">
+                          <h4 className="font-semibold text-gray-900 dark:text-white mb-1">
+                            Séance {session.id} : {session.title}
+                          </h4>
+                          <p className="text-sm text-gray-500 dark:text-gray-400">{session.equipment}</p>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
                 </div>
               </div>
             </div>

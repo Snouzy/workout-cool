@@ -141,16 +141,16 @@ export default function ProgrammesPage() {
   return (
     <div className="flex flex-col ">
       {/* Hero Section with Mascot */}
-      <div className="bg-gradient-to-r from-[#4F8EF7] to-[#25CB78] p-6 text-white">
+      <div className="bg-gradient-to-r from-[#4F8EF7] to-[#25CB78] p-4 sm:p-6 text-white">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold mb-2">Programmes d&apos;entraînement</h1>
+            <h1 className="text-lg sm:text-xl leading-tight font-bold mb-2">Programmes d&apos;entraînement</h1>
             <p className="text-white/90 text-sm">Choisis ton défi et deviens plus fort ! 💪</p>
           </div>
-          <div className="w-16 h-16 relative">
+          <div className="w-14 h-14 sm:w-16 sm:h-16 relative">
             <Image
               alt="Mascotte WorkoutCool"
-              className="w-full h-full object-contain"
+              className="object-contain h-14 w-14 sm:h-16 sm:w-16"
               height={64}
               src="/images/emojis/WorkoutCoolHappy.png"
               width={64}

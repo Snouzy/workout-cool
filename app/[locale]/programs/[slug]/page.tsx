@@ -205,162 +205,161 @@ export default function ProgramDetailPage({ params }: ProgramDetailPageProps) {
           </div>
         </div>
 
-        <div className="p-4 space-y-6">
-          {/* Tabs */}
-          <div className="flex gap-2 bg-gray-100 dark:bg-gray-800 rounded-full p-1">
-            <button
-              className={`flex-1 px-6 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
-                tab === "about" ? "bg-primary text-white shadow-sm" : "text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
-              }`}
-              onClick={() => setTab("about")}
-            >
-              À propos
-            </button>
-            <button
-              className={`flex-1 px-6 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
-                tab === "sessions" ? "bg-primary text-white shadow-sm" : "text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
-              }`}
-              onClick={() => setTab("sessions")}
-            >
-              Les séances
-            </button>
-          </div>
-
-          {/* Tab Content */}
-          {tab === "about" && (
-            <>
-              {/* Community Stats */}
-              <div className="flex items-center gap-3">
-                <div className="flex -space-x-2">
-                  {program.coaches.slice(0, 3).map((coach, index) => (
-                    <Image
-                      alt={coach.name}
-                      className="w-8 h-8 rounded-full border-2 border-white"
-                      height={32}
-                      key={index}
-                      src={coach.image}
-                      width={32}
-                    />
-                  ))}
-                </div>
-                <span className="text-sm text-gray-600 dark:text-gray-400">Rejoint par + de {program.participants} warriors</span>
-                <div className="ml-auto flex gap-2">
-                  <button className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors">
-                    <Share className="text-gray-600 dark:text-gray-400" size={20} />
-                  </button>
-                </div>
-              </div>
-
-              {/* Program Details */}
-              <div className="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700">
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="flex items-center gap-3">
-                    <BarChart3 className="text-primary" size={20} />
-                    <div>
-                      <div className="text-sm font-medium">{program.level}</div>
-                    </div>
+        <div className="p-4">
+          {/* DaisyUI Tabs */}
+          <div className="tabs tabs-lift" role="tablist">
+            <input
+              aria-label="À propos"
+              checked={tab === "about"}
+              className="tab"
+              name="program_tabs"
+              onChange={() => setTab("about")}
+              role="tab"
+              type="radio"
+            />
+            <div className="tab-content bg-base-100 border-base-300 rounded-box p-6" role="tabpanel">
+              <div className="space-y-6">
+                {/* Community Stats */}
+                <div className="flex items-center gap-3">
+                  <div className="flex -space-x-2">
+                    {program.coaches.slice(0, 3).map((coach, index) => (
+                      <Image
+                        alt={coach.name}
+                        className="w-8 h-8 rounded-full border-2 border-white"
+                        height={32}
+                        key={index}
+                        src={coach.image}
+                        width={32}
+                      />
+                    ))}
                   </div>
-                  <div className="flex items-center gap-3">
-                    <Target className="text-primary" size={20} />
-                    <div>
-                      <div className="text-sm font-medium">{program.type}</div>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <Clock className="text-primary" size={20} />
-                    <div>
-                      <div className="text-sm font-medium">{program.duration}</div>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <Calendar className="text-primary" size={20} />
-                    <div>
-                      <div className="text-sm font-medium">{program.frequency}</div>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <Timer className="text-primary" size={20} />
-                    <div>
-                      <div className="text-sm font-medium">{program.sessionDuration}</div>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <Dumbbell className="text-primary" size={20} />
-                    <div>
-                      <div className="text-sm font-medium">{program.equipment}</div>
-                    </div>
+                  <span className="text-sm text-gray-600 dark:text-gray-400">Rejoint par + de {program.participants} warriors</span>
+                  <div className="ml-auto flex gap-2">
+                    <button className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors">
+                      <Share className="text-gray-600 dark:text-gray-400" size={20} />
+                    </button>
                   </div>
                 </div>
-              </div>
 
-              {/* Description */}
-              <div className="space-y-4">
-                <p className="text-gray-700 dark:text-gray-300">{program.description}</p>
-              </div>
-
-              {/* Coaches */}
-              <div>
-                <h3 className="text-lg font-bold mb-3">Coachs :</h3>
-                <div className="flex gap-4 overflow-x-auto pb-2">
-                  {program.coaches.map((coach, index) => (
-                    <div className="flex flex-col items-center gap-2 flex-shrink-0" key={index}>
-                      <Image alt={coach.name} className="w-20 h-20 rounded-full" height={80} src={coach.image} width={80} />
-                      <span className="text-sm font-medium">{coach.name}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </>
-          )}
-
-          {/* Sessions Tab */}
-          {tab === "sessions" && (
-            <div className="space-y-6">
-              {/* Week Selector */}
-              <div className="flex gap-4 overflow-x-auto pb-2">
-                {program.sessions.map((weekData, index) => (
-                  <button
-                    className={`flex-shrink-0 px-4 py-2 text-sm font-medium transition-all duration-200 ${
-                      index === 0
-                        ? "text-black dark:text-white border-b-2 border-black dark:border-white"
-                        : "text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
-                    }`}
-                    key={weekData.week}
-                  >
-                    Sem {weekData.week}
-                  </button>
-                ))}
-              </div>
-
-              {/* Current Week Title */}
-              <h2 className="text-xl font-bold">Semaine 1</h2>
-
-              {/* Sessions List */}
-              <div className="space-y-4">
-                {program.sessions[0]?.sessions.map((session) => (
-                  <div
-                    className="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700 flex items-center gap-4"
-                    key={session.id}
-                  >
-                    {/* Lock Icon */}
-                    {session.isLocked && (
-                      <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center flex-shrink-0">
-                        <Lock className="text-white" size={16} />
+                {/* Program Details */}
+                <div className="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="flex items-center gap-3">
+                      <BarChart3 className="text-primary" size={20} />
+                      <div>
+                        <div className="text-sm font-medium">{program.level}</div>
                       </div>
-                    )}
-
-                    {/* Session Info */}
-                    <div className="flex-1">
-                      <h4 className="font-semibold text-gray-900 dark:text-white mb-1">
-                        Séance {session.id} : {session.title}
-                      </h4>
-                      <p className="text-sm text-gray-500 dark:text-gray-400">{session.equipment}</p>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <Target className="text-primary" size={20} />
+                      <div>
+                        <div className="text-sm font-medium">{program.type}</div>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <Clock className="text-primary" size={20} />
+                      <div>
+                        <div className="text-sm font-medium">{program.duration}</div>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <Calendar className="text-primary" size={20} />
+                      <div>
+                        <div className="text-sm font-medium">{program.frequency}</div>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <Timer className="text-primary" size={20} />
+                      <div>
+                        <div className="text-sm font-medium">{program.sessionDuration}</div>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <Dumbbell className="text-primary" size={20} />
+                      <div>
+                        <div className="text-sm font-medium">{program.equipment}</div>
+                      </div>
                     </div>
                   </div>
-                ))}
+                </div>
+
+                {/* Description */}
+                <div className="space-y-4">
+                  <p className="text-gray-700 dark:text-gray-300">{program.description}</p>
+                </div>
+
+                {/* Coaches */}
+                <div>
+                  <h3 className="text-lg font-bold mb-3">Coachs :</h3>
+                  <div className="flex gap-4 overflow-x-auto pb-2">
+                    {program.coaches.map((coach, index) => (
+                      <div className="flex flex-col items-center gap-2 flex-shrink-0" key={index}>
+                        <Image alt={coach.name} className="w-16 h-16 rounded-full" height={64} src={coach.image} width={64} />
+                        <span className="text-sm font-medium">{coach.name}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
-          )}
+
+            <input
+              aria-label="Les séances"
+              checked={tab === "sessions"}
+              className="tab"
+              name="program_tabs"
+              onChange={() => setTab("sessions")}
+              role="tab"
+              type="radio"
+            />
+            <div className="tab-content bg-base-100 border-base-300 rounded-box p-6" role="tabpanel">
+              <div className="space-y-6">
+                {/* Week Selector */}
+                <div className="flex gap-4 overflow-x-auto pb-2">
+                  {program.sessions.map((weekData, index) => (
+                    <button
+                      className={`flex-shrink-0 px-4 py-2 text-sm font-medium transition-all duration-200 ${
+                        index === 0
+                          ? "text-black dark:text-white border-b-2 border-black dark:border-white"
+                          : "text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                      }`}
+                      key={weekData.week}
+                    >
+                      Sem {weekData.week}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Current Week Title */}
+                <h2 className="text-xl font-bold">Semaine 1</h2>
+
+                {/* Sessions List */}
+                <div className="space-y-4">
+                  {program.sessions[0]?.sessions.map((session) => (
+                    <div
+                      className="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700 flex items-center gap-4"
+                      key={session.id}
+                    >
+                      {/* Lock Icon */}
+                      {session.isLocked && (
+                        <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center flex-shrink-0">
+                          <Lock className="text-white" size={16} />
+                        </div>
+                      )}
+
+                      {/* Session Info */}
+                      <div className="flex-1">
+                        <h4 className="font-semibold text-gray-900 dark:text-white mb-1">
+                          Séance {session.id} : {session.title}
+                        </h4>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">{session.equipment}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 

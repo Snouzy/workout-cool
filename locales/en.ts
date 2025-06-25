@@ -108,7 +108,7 @@ export default {
     costs_description: "Currently, donations don't even cover basic costs: servers, authentication, infrastructure, database, etc.",
     open_source_title: "100% Open Source",
     open_source_description:
-      "This app is completely free and open source. No profit is generated - it's a passion project to help the community and help people exercise.",
+      "This app is completely free, ads free and open source. No profit is generated - it's a passion project to help the community and help people exercise.",
     no_ads: "No ads",
     no_tracking: "No tracking",
     impact_title: "Your impact",

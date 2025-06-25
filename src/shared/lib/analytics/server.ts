@@ -16,7 +16,7 @@ export const setupAnalytics = async (options?: Props) => {
   const trackingConsent = !cookiesStore.has("tracking-consent") || cookiesStore.get("tracking-consent")?.value === "1";
 
   const client = new OpenPanel({
-    clientId: env.NEXT_PUBLIC_OPENPANEL_CLIENT_ID,
+    clientId: env.NEXT_PUBLIC_OPENPANEL_CLIENT_ID!,
     clientSecret: env.OPENPANEL_SECRET_KEY,
   });
 
@@ -35,7 +35,7 @@ export const setupAnalytics = async (options?: Props) => {
 
   return {
     track: (options: { event: string } & PostEventPayload["properties"]) => {
-      if (process.env.NODE_ENV !== "production") {
+      if (env.NODE_ENV !== "production") {
         console.log("Track", options);
         return;
       }

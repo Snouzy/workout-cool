@@ -10,6 +10,7 @@ import { WorkoutSessionsSynchronizer } from "@/features/workout-session/ui/worko
 import { ThemeSynchronizer } from "@/features/theme/ui/ThemeSynchronizer";
 import { Header } from "@/features/layout/Header";
 import { Footer } from "@/features/layout/Footer";
+import { Version } from "@/components/version";
 import { TailwindIndicator } from "@/components/utils/TailwindIndicator";
 import { NextTopLoader } from "@/components/ui/next-top-loader";
 import { ServiceWorkerRegistration } from "@/components/pwa/ServiceWorkerRegistration";
@@ -216,6 +217,8 @@ export default async function RootLayout({ params, children }: RootLayoutProps) 
               <div className="flex-1 overflow-auto flex flex-col">{children}</div>
               <Footer />
             </div>
+
+            <Version />
 
             <TailwindIndicator />
           </Providers>

@@ -112,6 +112,14 @@ export function DonationModal({ isOpen, onClose }: DonationModalProps) {
             </ul>
             <p className="text-xs text-center text-green-700 dark:text-green-400 mt-2 font-medium">{t("donation_modal.impact_footer")}</p>
           </div>
+
+          <iframe
+            height="700"
+            id="kofiframe"
+            src="https://ko-fi.com/workoutcool/?hidefeed=true&widget=true&embed=true&preview=true"
+            style={{ border: "none", width: "100%", padding: "4px" }}
+            title="workoutcool"
+          ></iframe>
         </div>
 
         {/* Actions */}

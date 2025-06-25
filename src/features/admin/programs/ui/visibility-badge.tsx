@@ -31,8 +31,6 @@ const visibilityConfig = {
 };
 
 export function VisibilityBadge({ programId, currentVisibility }: VisibilityBadgeProps) {
-  console.log("currentVisibility:", currentVisibility);
-  const [isOpen, setIsOpen] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
   const router = useRouter();
 
@@ -41,14 +39,12 @@ export function VisibilityBadge({ programId, currentVisibility }: VisibilityBadg
 
   const handleVisibilityChange = async (newVisibility: ProgramVisibility) => {
     if (newVisibility === currentVisibility) {
-      setIsOpen(false);
       return;
     }
 
     setIsUpdating(true);
     try {
       await updateProgramVisibility(programId, newVisibility);
-      setIsOpen(false);
       router.refresh();
     } catch (error) {
       console.error("Error updating visibility:", error);
@@ -60,33 +56,30 @@ export function VisibilityBadge({ programId, currentVisibility }: VisibilityBadg
 
   return (
     <div className="dropdown dropdown-end">
-      <div className={`badge ${config.color} gap-1 cursor-pointer`} onClick={() => setIsOpen(!isOpen)} role="button" tabIndex={0}>
+      <div className={`badge ${config.color} gap-1 cursor-pointer hover:opacity-80`} role="button" tabIndex={0}>
         <Icon className="w-3 h-3" />
         {config.label}
         <ChevronDown className="w-3 h-3" />
       </div>
 
-      {isOpen && (
-        <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
-          {Object.entries(ProgramVisibility).map(([key, value]) => {
-            const itemConfig = visibilityConfig[value];
-            const ItemIcon = itemConfig.icon;
+      <ul className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52" tabIndex={0}>
+        {Object.entries(ProgramVisibility).map(([key, value]) => {
+          const itemConfig = visibilityConfig[value];
+          const ItemIcon = itemConfig.icon;
 
-            return (
-              <li key={key}>
-                <a
-                  className={`flex items-center gap-2 ${currentVisibility === value ? "active" : ""}`}
-                  onClick={() => handleVisibilityChange(value)}
-                  role="button"
-                >
-                  {isUpdating ? <span className="loading loading-spinner loading-xs"></span> : <ItemIcon className="w-4 h-4" />}
-                  {itemConfig.label}
-                </a>
-              </li>
-            );
-          })}
-        </ul>
-      )}
+          return (
+            <li key={key}>
+              <a
+                className={`flex items-center gap-2 ${currentVisibility === value ? "active" : ""}`}
+                onClick={() => handleVisibilityChange(value)}
+              >
+                {isUpdating ? <span className="loading loading-spinner loading-xs"></span> : <ItemIcon className="w-4 h-4" />}
+                {itemConfig.label}
+              </a>
+            </li>
+          );
+        })}
+      </ul>
     </div>
   );
 }

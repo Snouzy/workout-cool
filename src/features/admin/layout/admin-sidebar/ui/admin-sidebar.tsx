@@ -6,6 +6,8 @@ import { Users, LayoutDashboard, BarChart3, Settings } from "lucide-react";
 
 import { cn } from "@/shared/lib/utils";
 
+import version from "../../../../../../package.json";
+
 const navigation = [
   {
     name: "Tableau de bord",
@@ -80,7 +82,7 @@ export const AdminSidebar = () => {
         <div className="border-t border-gray-200 p-4 dark:border-gray-700">
           <div className="text-xs text-gray-500 dark:text-gray-400">
             <p>WorkoutCool Admin</p>
-            <p className="mt-1">Version 1.0</p>
+            <p className="mt-1">Version {version.version}</p>
           </div>
         </div>
       </div>

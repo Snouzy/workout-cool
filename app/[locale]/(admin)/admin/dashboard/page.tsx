@@ -1,44 +1,99 @@
-import Link from "next/link";
-import { Activity, Calendar, TrendingUp, Users } from "lucide-react";
+import { Suspense } from "react";
+import { Activity, Users, Dumbbell, Star } from "lucide-react";
 
+import { prisma } from "@/shared/lib/prisma";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
-function DashboardStats() {
-  // Mock data - replace with actual data fetching
-  const stats = [
+async function getDashboardStats() {
+  const [totalUsers, totalWorkoutSessions, totalExercises, activeSubscriptions, recentUsers, recentWorkouts, totalPrograms] =
+    await Promise.all([
+      // Total users
+      prisma.user.count(),
+
+      // Total workout sessions
+      prisma.workoutSession.count(),
+
+      // Total exercises
+      prisma.exercise.count(),
+
+      // Active subscriptions
+      prisma.subscription.count({
+        where: {
+          status: "ACTIVE",
+        },
+      }),
+
+      // Users created in last 7 days
+      prisma.user.count({
+        where: {
+          createdAt: {
+            gte: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
+          },
+        },
+      }),
+
+      // Workout sessions in last 7 days
+      prisma.workoutSession.count({
+        where: {
+          startedAt: {
+            gte: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
+          },
+        },
+      }),
+
+      // Total programs
+      prisma.program.count(),
+    ]);
+
+  return {
+    totalUsers,
+    totalWorkoutSessions,
+    totalExercises,
+    activeSubscriptions,
+    recentUsers,
+    recentWorkouts,
+    totalPrograms,
+  };
+}
+
+async function DashboardStats() {
+  const stats = await getDashboardStats();
+
+  const dashboardCards = [
     {
       title: "Total Utilisateurs",
-      value: "1,234",
-      description: "+20% ce mois",
+      value: stats.totalUsers.toLocaleString(),
+      description: `+${stats.recentUsers} cette semaine`,
       icon: Users,
       color: "text-blue-600",
     },
     {
-      title: "Sessions Actives",
-      value: "89",
-      description: "+12% aujourd'hui",
+      title: "Sessions d'Entraînement",
+      value: stats.totalWorkoutSessions.toLocaleString(),
+      description: `+${stats.recentWorkouts} cette semaine`,
       icon: Activity,
       color: "text-green-600",
     },
     {
-      title: "Croissance",
-      value: "+15%",
-      description: "Ce mois-ci",
-      icon: TrendingUp,
+      title: "Exercices Disponibles",
+      value: stats.totalExercises.toLocaleString(),
+      description: "Base d'exercices",
+      icon: Dumbbell,
       color: "text-purple-600",
     },
     {
-      title: "Évènements",
-      value: "42",
-      description: "Cette semaine",
-      icon: Calendar,
+      title: "Programmes Actifs",
+      value: stats.totalPrograms.toLocaleString(),
+      description: `${stats.activeSubscriptions} abonnements actifs`,
+      icon: Star,
       color: "text-orange-600",
     },
   ];
 
   return (
     <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-      {stats.map((stat) => {
+      {dashboardCards.map((stat) => {
         const Icon = stat.icon;
         return (
           <Card key={stat.title}>
@@ -57,6 +112,144 @@ function DashboardStats() {
   );
 }
 
+async function getRecentActivity() {
+  const [recentUsers, recentWorkouts] = await Promise.all([
+    // 3 last users
+    prisma.user.findMany({
+      take: 3,
+      orderBy: { createdAt: "desc" },
+      select: {
+        firstName: true,
+        lastName: true,
+        createdAt: true,
+      },
+    }),
+
+    // 3 last workout sessions
+    prisma.workoutSession.findMany({
+      take: 3,
+      orderBy: { startedAt: "desc" },
+      select: {
+        startedAt: true,
+        user: {
+          select: {
+            firstName: true,
+            lastName: true,
+          },
+        },
+      },
+    }),
+  ]);
+
+  return { recentUsers, recentWorkouts };
+}
+
+function formatTimeAgo(date: Date) {
+  const now = new Date();
+  const diffInMinutes = Math.floor((now.getTime() - date.getTime()) / (1000 * 60));
+
+  if (diffInMinutes < 1) return "À l'instant";
+  if (diffInMinutes < 60) return `Il y a ${diffInMinutes} min`;
+
+  const diffInHours = Math.floor(diffInMinutes / 60);
+  if (diffInHours < 24) return `Il y a ${diffInHours}h`;
+
+  const diffInDays = Math.floor(diffInHours / 24);
+  return `Il y a ${diffInDays}j`;
+}
+
+async function RecentActivity() {
+  const { recentUsers, recentWorkouts } = await getRecentActivity();
+
+  return (
+    <div className="grid gap-6 md:grid-cols-2">
+      <Card>
+        <CardHeader>
+          <CardTitle>Activité récente</CardTitle>
+          <CardDescription>Les dernières actions sur la plateforme</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {recentUsers.map((user, index) => (
+              <div className="flex items-center space-x-4" key={index}>
+                <div className="h-2 w-2 rounded-full bg-blue-600" />
+                <div className="flex-1 text-sm">
+                  Nouvel utilisateur : {user.firstName} {user.lastName}
+                  <span className="ml-2 text-muted-foreground">{formatTimeAgo(user.createdAt)}</span>
+                </div>
+              </div>
+            ))}
+
+            {recentWorkouts.map((workout, index) => (
+              <div className="flex items-center space-x-4" key={index}>
+                <div className="h-2 w-2 rounded-full bg-green-600" />
+                <div className="flex-1 text-sm">
+                  Session d&apos;entraînement : {workout.user.firstName} {workout.user.lastName}
+                  <span className="ml-2 text-muted-foreground">{formatTimeAgo(workout.startedAt)}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+
+function DashboardStatsLoading() {
+  return (
+    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+      {Array.from({ length: 4 }).map((_, i) => (
+        <Card key={i}>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <Skeleton className="h-4 w-20" />
+            <Skeleton className="h-4 w-4" />
+          </CardHeader>
+          <CardContent>
+            <Skeleton className="mb-2 h-8 w-16" />
+            <Skeleton className="h-3 w-24" />
+          </CardContent>
+        </Card>
+      ))}
+    </div>
+  );
+}
+
+function RecentActivityLoading() {
+  return (
+    <div className="grid gap-6 md:grid-cols-2">
+      <Card>
+        <CardHeader>
+          <CardTitle>Activité récente</CardTitle>
+          <CardDescription>Les dernières actions sur la plateforme</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {Array.from({ length: 3 }).map((_, i) => (
+              <div className="flex items-center space-x-4" key={i}>
+                <Skeleton className="h-2 w-2 rounded-full" />
+                <Skeleton className="h-4 w-full" />
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+      <Card>
+        <CardHeader>
+          <CardTitle>Actions rapides</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-2">
+            {Array.from({ length: 3 }).map((_, i) => (
+              <Skeleton className="h-12 w-full" key={i} />
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+
 export default function AdminDashboard() {
   return (
     <div className="space-y-6">
@@ -65,61 +258,13 @@ export default function AdminDashboard() {
         <p className="text-muted-foreground">Vue d&apos;ensemble de votre application WorkoutCool</p>
       </div>
 
-      <DashboardStats />
+      <Suspense fallback={<DashboardStatsLoading />}>
+        <DashboardStats />
+      </Suspense>
 
-      <div className="grid gap-6 md:grid-cols-2">
-        <Card>
-          <CardHeader>
-            <CardTitle>Activité récente</CardTitle>
-            <CardDescription>Les dernières actions sur la plateforme</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <div className="flex items-center space-x-4">
-                <div className="h-2 w-2 rounded-full bg-blue-600" />
-                <div className="flex-1 text-sm">
-                  Nouvel utilisateur inscrit
-                  <span className="ml-2 text-muted-foreground">Il y a 2 minutes</span>
-                </div>
-              </div>
-              <div className="flex items-center space-x-4">
-                <div className="h-2 w-2 rounded-full bg-green-600" />
-                <div className="flex-1 text-sm">
-                  Session d&apos;entraînement terminée
-                  <span className="ml-2 text-muted-foreground">Il y a 5 minutes</span>
-                </div>
-              </div>
-              <div className="flex items-center space-x-4">
-                <div className="h-2 w-2 rounded-full bg-purple-600" />
-                <div className="flex-1 text-sm">
-                  Nouveau programme créé
-                  <span className="ml-2 text-muted-foreground">Il y a 10 minutes</span>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>Actions rapides</CardTitle>
-            <CardDescription>Raccourcis vers les tâches courantes</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-2">
-              <Link className="block rounded-lg border p-3 text-sm hover:bg-gray-50 dark:hover:bg-gray-800" href="/admin/users">
-                Voir tous les utilisateurs
-              </Link>
-              <Link className="block rounded-lg border p-3 text-sm hover:bg-gray-50 dark:hover:bg-gray-800" href="/admin/analytics">
-                Analyser les données
-              </Link>
-              <Link className="block rounded-lg border p-3 text-sm hover:bg-gray-50 dark:hover:bg-gray-800" href="/admin/settings">
-                Configurer les paramètres
-              </Link>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+      <Suspense fallback={<RecentActivityLoading />}>
+        <RecentActivity />
+      </Suspense>
     </div>
   );
 }

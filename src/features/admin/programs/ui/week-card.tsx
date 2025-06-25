@@ -1,10 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { Plus, Clock, ChevronDown, ChevronRight } from "lucide-react";
+import { Plus, Clock, ChevronDown, ChevronRight, Edit } from "lucide-react";
 
 import { WeekWithSessions } from "../types/program.types";
 import { SessionCard } from "./session-card";
+import { EditWeekModal } from "./edit-week-modal";
 import { AddSessionModal } from "./add-session-modal";
 
 interface WeekCardProps {
@@ -14,6 +15,7 @@ interface WeekCardProps {
 export function WeekCard({ week }: WeekCardProps) {
   const [isExpanded, setIsExpanded] = useState(true);
   const [isAddSessionModalOpen, setIsAddSessionModalOpen] = useState(false);
+  const [isEditWeekModalOpen, setIsEditWeekModalOpen] = useState(false);
 
   return (
     <div className="card bg-base-100 shadow-xl">
@@ -35,6 +37,9 @@ export function WeekCard({ week }: WeekCardProps) {
             <div className="badge badge-outline">
               {week.sessions.length} séance{week.sessions.length !== 1 ? "s" : ""}
             </div>
+            <button className="btn btn-sm btn-ghost" onClick={() => setIsEditWeekModalOpen(true)} title="Éditer la semaine">
+              <Edit className="h-4 w-4" />
+            </button>
             <button className="btn btn-sm btn-primary" onClick={() => setIsAddSessionModalOpen(true)}>
               <Plus className="h-4 w-4 mr-1" />
               Séance
@@ -72,6 +77,8 @@ export function WeekCard({ week }: WeekCardProps) {
         open={isAddSessionModalOpen}
         weekId={week.id}
       />
+
+      <EditWeekModal onOpenChange={setIsEditWeekModalOpen} open={isEditWeekModalOpen} week={week} />
     </div>
   );
 }

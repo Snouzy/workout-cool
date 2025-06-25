@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Plus, Clock, Dumbbell, Settings, ChevronDown, ChevronRight } from "lucide-react";
 
 import { SessionWithExercises } from "../types/program.types";
+import { EditSetsModal } from "./edit-sets-modal";
 import { AddExerciseModal } from "./add-exercise-modal";
 
 interface SessionCardProps {
@@ -13,6 +14,7 @@ interface SessionCardProps {
 export function SessionCard({ session }: SessionCardProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isAddExerciseModalOpen, setIsAddExerciseModalOpen] = useState(false);
+  const [selectedExercise, setSelectedExercise] = useState<any>(null);
 
   return (
     <div className="card bg-base-100 shadow-sm border-l-4 border-l-primary">
@@ -88,7 +90,7 @@ export function SessionCard({ session }: SessionCardProps) {
                       </p>
                     </div>
                   </div>
-                  <button className="btn btn-sm btn-ghost">
+                  <button className="btn btn-sm btn-ghost" onClick={() => setSelectedExercise(exercise)} title="Éditer les séries">
                     <Settings className="h-4 w-4" />
                   </button>
                 </div>
@@ -104,6 +106,10 @@ export function SessionCard({ session }: SessionCardProps) {
         open={isAddExerciseModalOpen}
         sessionId={session.id}
       />
+
+      {selectedExercise && (
+        <EditSetsModal exercise={selectedExercise} onOpenChange={(open) => !open && setSelectedExercise(null)} open={!!selectedExercise} />
+      )}
     </div>
   );
 }

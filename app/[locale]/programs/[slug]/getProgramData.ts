@@ -54,6 +54,46 @@ const mockPrograms = [
           },
         ],
       },
+      {
+        week: 3,
+        sessions: [
+          {
+            id: 5,
+            title: "Beast Compound : Full Body Power",
+            equipment: "Haltères, Kettlebell",
+            isLocked: true,
+          },
+          {
+            id: 6,
+            title: "Beast Endurance : Strength & Stamina",
+            equipment: "Élastique, Haltères",
+            isLocked: true,
+          },
+          {
+            id: 7,
+            title: "Beast Agility : Speed & Coordination",
+            equipment: "Poids du corps, Tapis",
+            isLocked: true,
+          },
+        ],
+      },
+      {
+        week: 4,
+        sessions: [
+          {
+            id: 8,
+            title: "Beast Challenge : Ultimate Test",
+            equipment: "Haltères, Kettlebell, Tapis",
+            isLocked: true,
+          },
+          {
+            id: 9,
+            title: "Beast Finisher : Max Intensity",
+            equipment: "Poids du corps, Élastique",
+            isLocked: true,
+          },
+        ],
+      },
     ],
   },
   {

@@ -61,7 +61,7 @@ export function ProgramDetailClient({ program }: ProgramDetailClientProps) {
           </div>
         </div>
 
-        <div className="p-4">
+        <div className="px-2 sm:px-4 py-4">
           {/* DaisyUI Tabs */}
           <div className="tabs tabs-lift" role="tablist">
             <input
@@ -170,19 +170,15 @@ export function ProgramDetailClient({ program }: ProgramDetailClientProps) {
             />
             <div className="tab-content bg-base-100 border-base-300 rounded-box p-6" role="tabpanel">
               <div className="space-y-6">
-                {/* Week Selector */}
-                <div className="flex gap-4 overflow-x-auto pb-2">
+                {/* Week Selector with DaisyUI Tabs */}
+                <div className="tabs tabs-border w-fit">
                   {program.sessions.map((weekData) => (
                     <button
-                      className={`flex-shrink-0 px-4 py-2 text-sm font-medium ${
-                        selectedWeek === weekData.week
-                          ? "text-black dark:text-white border-b-2 border-black dark:border-white"
-                          : "text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
-                      }`}
+                      className={`tab ${selectedWeek === weekData.week ? "tab-active" : ""}`}
                       key={weekData.week}
                       onClick={() => setSelectedWeek(weekData.week)}
                     >
-                      Sem {weekData.week}
+                      Semaine {weekData.week}
                     </button>
                   ))}
                 </div>

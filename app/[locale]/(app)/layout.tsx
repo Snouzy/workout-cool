@@ -9,7 +9,7 @@ interface RootLayoutProps {
   children: ReactElement;
 }
 
-export default async function RootLayout({ params, children }: RootLayoutProps) {
+export default async function RootLayout({ children }: RootLayoutProps) {
   return (
     <div className="card w-full max-w-3xl min-h-[500px] max-h-[90vh] bg-white dark:bg-[#232324] shadow-xl border border-base-200 dark:border-slate-700 flex flex-col justify-between overflow-hidden max-sm:rounded-none max-sm:h-full rounded-lg">
       <Header />

@@ -73,11 +73,11 @@ export async function ProgramsList() {
               </div>
 
               <div className="flex gap-2">
-                <Link className="btn btn-outline btn-sm flex-1" href={`/admin/programs/${program.id}`}>
+                <Link className="btn btn-outline btn-sm flex-1" href={`/programs/${program.id}`} target="_blank">
                   <Eye className="h-4 w-4 mr-1" />
                   Voir
                 </Link>
-                <Link className="btn btn-outline btn-sm flex-1" href={`/admin/programs/${program.id}/edit`}>
+                <Link className="btn btn-outline btn-sm flex-1" href={`/admin/programs/${program.slug}/edit`}>
                   <Edit className="h-4 w-4 mr-1" />
                   Éditer
                 </Link>

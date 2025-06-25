@@ -8,10 +8,9 @@ import { AddExerciseModal } from "./add-exercise-modal";
 
 interface SessionCardProps {
   session: SessionWithExercises;
-  weekId: string;
 }
 
-export function SessionCard({ session, weekId }: SessionCardProps) {
+export function SessionCard({ session }: SessionCardProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isAddExerciseModalOpen, setIsAddExerciseModalOpen] = useState(false);
 

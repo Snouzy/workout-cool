@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Progress } from "@/components/ui/progress";
-import { CheckCircle, Circle, PlayCircle } from "lucide-react";
+import { CheckCircle, PlayCircle } from "lucide-react";
+
 import { getProgramProgress } from "@/features/programs/actions/get-program-progress.action";
 
 interface ProgramProgressProps {
@@ -29,9 +29,7 @@ export function ProgramProgress({ programId }: ProgramProgressProps) {
   };
 
   if (isLoading) {
-    return (
-      <div className="animate-pulse bg-gray-200 dark:bg-gray-700 h-20 rounded-xl"></div>
-    );
+    return <div className="animate-pulse bg-gray-200 dark:bg-gray-700 h-20 rounded-xl"></div>;
   }
 
   if (!progress) {
@@ -49,20 +47,16 @@ export function ProgramProgress({ programId }: ProgramProgressProps) {
             {stats.completedSessions} / {stats.totalSessions} séances complétées
           </p>
         </div>
-        <div className="text-3xl font-bold text-[#25CB78]">
-          {stats.completionPercentage}%
-        </div>
+        <div className="text-3xl font-bold text-[#25CB78]">{stats.completionPercentage}%</div>
       </div>
-      
-      <Progress value={stats.completionPercentage} className="h-3 mb-3" />
-      
+
       <div className="flex items-center gap-4 text-sm">
         <div className="flex items-center gap-2">
-          <CheckCircle size={16} className="text-[#25CB78]" />
+          <CheckCircle className="text-[#25CB78]" size={16} />
           <span className="text-gray-600 dark:text-gray-400">Complétées</span>
         </div>
         <div className="flex items-center gap-2">
-          <PlayCircle size={16} className="text-[#4F8EF7]" />
+          <PlayCircle className="text-[#4F8EF7]" size={16} />
           <span className="text-gray-600 dark:text-gray-400">
             Semaine {stats.currentWeek}, Séance {stats.currentSession}
           </span>

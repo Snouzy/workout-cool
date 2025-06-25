@@ -107,7 +107,7 @@ export function ProgramBuilder({ program }: ProgramBuilderProps) {
                 </div>
               </div>
             ) : (
-              program.weeks.map((week) => <WeekCard key={week.id} programId={program.id} week={week} />)
+              program.weeks.map((week) => <WeekCard key={week.id} week={week} />)
             )}
           </div>
         </div>

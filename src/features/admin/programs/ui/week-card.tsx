@@ -9,10 +9,9 @@ import { AddSessionModal } from "./add-session-modal";
 
 interface WeekCardProps {
   week: WeekWithSessions;
-  programId: string;
 }
 
-export function WeekCard({ week, programId }: WeekCardProps) {
+export function WeekCard({ week }: WeekCardProps) {
   const [isExpanded, setIsExpanded] = useState(true);
   const [isAddSessionModalOpen, setIsAddSessionModalOpen] = useState(false);
 
@@ -60,7 +59,7 @@ export function WeekCard({ week, programId }: WeekCardProps) {
           ) : (
             <div className="space-y-3">
               {week.sessions.map((session) => (
-                <SessionCard key={session.id} session={session} weekId={week.id} />
+                <SessionCard key={session.id} session={session} />
               ))}
             </div>
           )}

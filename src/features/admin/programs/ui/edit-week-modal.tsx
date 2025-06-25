@@ -1,7 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { X } from "lucide-react";
+
+import { updateWeek } from "../actions/update-week.action";
 
 interface EditWeekModalProps {
   week: {
@@ -15,15 +18,25 @@ interface EditWeekModalProps {
 }
 
 export function EditWeekModal({ week, open, onOpenChange }: EditWeekModalProps) {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     title: week.title,
     description: week.description,
   });
+  const [isSaving, setIsSaving] = useState(false);
 
   const handleSave = async () => {
-    // TODO: Implémenter la sauvegarde de la semaine
-    console.log("Saving week:", { ...week, ...formData });
-    onOpenChange(false);
+    setIsSaving(true);
+    try {
+      await updateWeek(week.id, formData);
+      onOpenChange(false);
+      router.refresh();
+    } catch (error) {
+      console.error("Error saving week:", error);
+      alert(error instanceof Error ? error.message : "Erreur lors de la sauvegarde");
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   if (!open) return null;
@@ -51,6 +64,7 @@ export function EditWeekModal({ week, open, onOpenChange }: EditWeekModalProps) 
               value={formData.title}
               onChange={(e) => setFormData({ ...formData, title: e.target.value })}
               placeholder="Titre de la semaine"
+              disabled={isSaving}
             />
           </div>
 
@@ -63,16 +77,32 @@ export function EditWeekModal({ week, open, onOpenChange }: EditWeekModalProps) 
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
               placeholder="Description de la semaine"
+              disabled={isSaving}
             />
           </div>
         </div>
 
         <div className="modal-action">
-          <button className="btn btn-ghost" onClick={() => onOpenChange(false)}>
+          <button 
+            className="btn btn-ghost" 
+            onClick={() => onOpenChange(false)}
+            disabled={isSaving}
+          >
             Annuler
           </button>
-          <button className="btn btn-primary" onClick={handleSave}>
-            Sauvegarder
+          <button 
+            className="btn btn-primary" 
+            onClick={handleSave}
+            disabled={isSaving}
+          >
+            {isSaving ? (
+              <>
+                <span className="loading loading-spinner loading-sm"></span>
+                Sauvegarde...
+              </>
+            ) : (
+              "Sauvegarder"
+            )}
           </button>
         </div>
       </div>

@@ -1,11 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { X, Plus, Minus, Trash2 } from "lucide-react";
 
 import { AVAILABLE_WORKOUT_SET_TYPES, MAX_WORKOUT_SET_COLUMNS, WORKOUT_SET_UNITS_TUPLE } from "@/shared/constants/workout-set-types";
 import { WorkoutSetType, WorkoutSetUnit } from "@/features/workout-session/types/workout-set";
 import { ProgramSessionExercise, ProgramSuggestedSet } from "@prisma/client";
+import { updateExerciseSets } from "../actions/update-exercise-sets.action";
 
 interface EditSetsModalProps {
   exercise: ProgramSessionExercise & {
@@ -26,6 +28,7 @@ interface SetData {
 }
 
 export function EditSetsModal({ exercise, open, onOpenChange }: EditSetsModalProps) {
+  const router = useRouter();
   const [sets, setSets] = useState<SetData[]>(() =>
     exercise.suggestedSets.length > 0
       ? exercise.suggestedSets.map((set) => ({
@@ -192,10 +195,20 @@ export function EditSetsModal({ exercise, open, onOpenChange }: EditSetsModalPro
     }
   };
 
+  const [isSaving, setIsSaving] = useState(false);
+
   const handleSave = async () => {
-    // TODO: Implémenter la sauvegarde des sets
-    console.log("Saving sets:", sets);
-    onOpenChange(false);
+    setIsSaving(true);
+    try {
+      await updateExerciseSets(exercise.id, sets);
+      onOpenChange(false);
+      router.refresh();
+    } catch (error) {
+      console.error("Error saving sets:", error);
+      alert(error instanceof Error ? error.message : "Erreur lors de la sauvegarde");
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const getTypeLabel = (type: WorkoutSetType): string => {
@@ -299,11 +312,26 @@ export function EditSetsModal({ exercise, open, onOpenChange }: EditSetsModalPro
         </div>
 
         <div className="modal-action">
-          <button className="btn btn-ghost" onClick={() => onOpenChange(false)}>
+          <button 
+            className="btn btn-ghost" 
+            onClick={() => onOpenChange(false)}
+            disabled={isSaving}
+          >
             Annuler
           </button>
-          <button className="btn btn-primary" onClick={handleSave}>
-            Sauvegarder
+          <button 
+            className="btn btn-primary" 
+            onClick={handleSave}
+            disabled={isSaving}
+          >
+            {isSaving ? (
+              <>
+                <span className="loading loading-spinner loading-sm"></span>
+                Sauvegarde...
+              </>
+            ) : (
+              "Sauvegarder"
+            )}
           </button>
         </div>
       </div>

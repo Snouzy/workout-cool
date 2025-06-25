@@ -1,8 +1,9 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Eye, Edit, Trash2, Users, Calendar, Dumbbell } from "lucide-react";
+import { Eye, Edit, Users, Calendar, Dumbbell } from "lucide-react";
 
 import { getPrograms } from "../actions/get-programs.action";
+import { DeleteProgramButton } from "./delete-program-button";
 
 export async function ProgramsList() {
   const programs = await getPrograms();
@@ -73,17 +74,15 @@ export async function ProgramsList() {
               </div>
 
               <div className="flex gap-2">
-                <Link className="btn btn-outline btn-sm flex-1" href={`/programs/${program.id}`} target="_blank">
+                <Link className="btn btn-outline btn-sm flex-1" href={`/programs/${program.slug}`} target="_blank">
                   <Eye className="h-4 w-4 mr-1" />
                   Voir
                 </Link>
-                <Link className="btn btn-outline btn-sm flex-1" href={`/admin/programs/${program.slug}/edit`}>
+                <Link className="btn btn-outline btn-sm flex-1" href={`/admin/programs/${program.id}/edit`}>
                   <Edit className="h-4 w-4 mr-1" />
-                  Éditer
+                  Gérer
                 </Link>
-                <button className="btn btn-outline btn-sm px-2">
-                  <Trash2 className="h-4 w-4 text-error" />
-                </button>
+                <DeleteProgramButton programId={program.id} programTitle={program.title} />
               </div>
             </div>
           </div>

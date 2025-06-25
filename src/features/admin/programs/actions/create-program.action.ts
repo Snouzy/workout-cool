@@ -13,8 +13,6 @@ interface CreateProgramData {
   titleEn: string;
   description: string;
   descriptionEn: string;
-  fullDescription?: string;
-  fullDescriptionEn?: string;
   category: string;
   image: string;
   level: ProgramLevel;

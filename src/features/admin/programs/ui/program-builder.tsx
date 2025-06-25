@@ -3,11 +3,12 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Plus, Calendar, Clock, Users, ArrowLeft } from "lucide-react";
+import { Plus, Calendar, Clock, Users, ArrowLeft, Edit } from "lucide-react";
 
 import { ProgramWithFullDetails } from "../types/program.types";
 import { WeekCard } from "./week-card";
 import { VisibilityBadge } from "./visibility-badge";
+import { EditProgramModal } from "./edit-program-modal";
 import { AddWeekModal } from "./add-week-modal";
 
 interface ProgramBuilderProps {
@@ -16,6 +17,7 @@ interface ProgramBuilderProps {
 
 export function ProgramBuilder({ program }: ProgramBuilderProps) {
   const [isAddWeekModalOpen, setIsAddWeekModalOpen] = useState(false);
+  const [isEditProgramModalOpen, setIsEditProgramModalOpen] = useState(false);
 
   return (
     <div className="space-y-6">
@@ -51,9 +53,14 @@ export function ProgramBuilder({ program }: ProgramBuilderProps) {
                 </div>
               </div>
             </div>
-            <div className="text-right">
-              <div className="text-sm text-base-content/60">Participants</div>
-              <div className="text-2xl font-bold">{program.participantCount}</div>
+            <div className="flex flex-col items-end gap-2">
+              <button className="btn btn-sm btn-ghost" onClick={() => setIsEditProgramModalOpen(true)} title="Éditer le programme">
+                <Edit className="h-4 w-4" />
+              </button>
+              <div className="text-right">
+                <div className="text-sm text-base-content/60">Participants</div>
+                <div className="text-2xl font-bold">{program.participantCount}</div>
+              </div>
             </div>
           </div>
           <div className="divider"></div>
@@ -132,6 +139,9 @@ export function ProgramBuilder({ program }: ProgramBuilderProps) {
         open={isAddWeekModalOpen}
         programId={program.id}
       />
+
+      {/* Edit Program Modal */}
+      <EditProgramModal onOpenChange={setIsEditProgramModalOpen} open={isEditProgramModalOpen} program={program} />
     </div>
   );
 }

@@ -16,7 +16,6 @@ const mockPrograms = [
     image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400&h=600&fit=crop",
     isLocked: true,
     gradient: "from-slate-400 to-gray-600",
-    emoji: "WorkoutCoolSwag.png",
     isNew: true,
     difficulty: "Débutant",
     participants: "75k+",
@@ -31,7 +30,6 @@ const mockPrograms = [
     image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=600&fit=crop",
     isLocked: true,
     gradient: "from-red-500 to-orange-600",
-    emoji: "WorkoutCoolExhausted.png",
     isNew: true,
     difficulty: "Intermédiaire",
     participants: "42k+",
@@ -47,7 +45,6 @@ const mockPrograms = [
     image: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=400&h=600&fit=crop",
     isLocked: false,
     gradient: "from-blue-500 to-indigo-600",
-    emoji: "WorkoutCoolHappy.png",
     isNew: false,
     difficulty: "Avancé",
     participants: "28k+",
@@ -63,7 +60,6 @@ const mockPrograms = [
     image: "https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=400&h=600&fit=crop",
     isLocked: true,
     gradient: "from-emerald-500 to-teal-600",
-    emoji: "WorkoutCoolTeeths.png",
     isNew: false,
     difficulty: "Intermédiaire",
     participants: "35k+",
@@ -111,7 +107,7 @@ function ProgramCard({ program }: { program: (typeof mockPrograms)[0] }) {
               alt="Emoji"
               className={`object-contain ${isFeatured ? "w-6 h-6" : "w-5 h-5"}`}
               height={isFeatured ? 24 : 20}
-              src={`/images/emojis/${program.emoji}`}
+              src={"/images/emojis/WorkoutCoolHappy.png"}
               width={isFeatured ? 24 : 20}
             />
           )}

@@ -13,8 +13,6 @@ const mockPrograms = [
     sessionDuration: "20 à 30 min",
     equipment: "Élastique, Haltères, Tapis",
     description: "Prêt pour dominer tes entraînements !? Suis la programmation Beast Mode tout au long du mois de janvier !",
-    fullDescription:
-      "Beast Mode est le programme parfait pour les débutants qui veulent reprendre le sport en force. Avec des exercices au poids du corps et des accessoires simples, ce programme te permettra de retrouver la forme progressivement.",
     participants: "75k",
     nutritionGuide: "Guide nutrition Starter Pack",
     mealPlan: "Rééquilibrage alimentaire",
@@ -110,7 +108,6 @@ const mockPrograms = [
     sessionDuration: "25 à 40 min",
     equipment: "Poids du corps, Kettlebell",
     description: "Entraînement HIIT intense pour warriors motivés !",
-    fullDescription: "Warrior HIIT est conçu pour ceux qui veulent repousser leurs limites avec des séances courtes mais intenses.",
     participants: "42k",
     nutritionGuide: "Guide nutrition Performance",
     mealPlan: "Plan haute performance",
@@ -146,8 +143,6 @@ const mockPrograms = [
     sessionDuration: "45 à 60 min",
     equipment: "Haltères, Barres, Banc",
     description: "Programme de musculation pour développer force et masse musculaire.",
-    fullDescription:
-      "Alpha Strength est le programme ultime pour ceux qui veulent construire un physique impressionnant et développer une force exceptionnelle.",
     participants: "28k",
     nutritionGuide: "Guide nutrition Mass",
     mealPlan: "Plan prise de masse",
@@ -183,7 +178,6 @@ const mockPrograms = [
     sessionDuration: "15 à 25 min",
     equipment: "Tapis, Swiss Ball",
     description: "Développez un core de titan avec ce programme intensif !",
-    fullDescription: "Titan Core se concentre exclusivement sur le renforcement du core pour une stabilité et une force exceptionnelles.",
     participants: "35k",
     nutritionGuide: "Guide nutrition Définition",
     mealPlan: "Plan définition musculaire",
@@ -218,7 +212,6 @@ export interface Program {
   sessionDuration: string;
   equipment: string;
   description: string;
-  fullDescription: string;
   participants: string;
   nutritionGuide: string;
   mealPlan: string;

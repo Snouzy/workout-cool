@@ -3,6 +3,7 @@ import { Check, Zap } from "lucide-react";
 import { ExerciseAttributeValueEnum } from "@prisma/client";
 
 import { useI18n } from "locales/client";
+import { getEquipmentTranslation } from "@/shared/lib/workout-session/equipments";
 import { cn } from "@/shared/lib/utils";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -24,27 +25,7 @@ interface EquipmentCardProps {
 function EquipmentCard({ equipment, isSelected, onToggle }: EquipmentCardProps) {
   const t = useI18n();
 
-  // Obtenir la traduction pour l'équipement
-  const getEquipmentTranslation = (value: ExerciseAttributeValueEnum) => {
-    const equipmentKeys: Partial<Record<ExerciseAttributeValueEnum, string>> = {
-      [ExerciseAttributeValueEnum.BODY_ONLY]: "bodyweight",
-      [ExerciseAttributeValueEnum.DUMBBELL]: "dumbbell",
-      [ExerciseAttributeValueEnum.BARBELL]: "barbell",
-      [ExerciseAttributeValueEnum.KETTLEBELLS]: "kettlebell",
-      [ExerciseAttributeValueEnum.BANDS]: "band",
-      [ExerciseAttributeValueEnum.WEIGHT_PLATE]: "plate",
-      [ExerciseAttributeValueEnum.PULLUP_BAR]: "pullup_bar",
-      [ExerciseAttributeValueEnum.BENCH]: "bench",
-    };
-
-    const key = equipmentKeys[value];
-    return {
-      label: t(`workout_builder.equipment.${key}.label` as keyof typeof t),
-      description: t(`workout_builder.equipment.${key}.description` as keyof typeof t),
-    };
-  };
-
-  const translation = getEquipmentTranslation(equipment.value);
+  const translation = getEquipmentTranslation(equipment.value, t);
 
   return (
     <Card

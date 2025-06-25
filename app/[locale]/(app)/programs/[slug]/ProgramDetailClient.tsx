@@ -22,7 +22,6 @@ interface Program {
   sessionDuration: string;
   equipment: string;
   description: string;
-  fullDescription: string;
   participants: string;
   nutritionGuide: string;
   mealPlan: string;

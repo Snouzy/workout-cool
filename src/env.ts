@@ -21,7 +21,13 @@ export const env = createEnv({
     SMTP_PASS: z.string().optional(),
     SMTP_FROM: z.string().optional(),
     //issue fixed in zod 4. See https://github.com/colinhacks/zod/issues/3906
-    SMTP_SECURE: z.enum(["true", "false"]).default("false").transform((val) => val === "true"),
+    SMTP_SECURE: z
+      .enum(["true", "false"])
+      .default("false")
+      .transform((val) => val === "true"),
+
+    STRIPE_SECRET_KEY: z.string().optional(),
+    STRIPE_WEBHOOK_SECRET: z.string().optional(),
   },
   /**
    * If you add `client` environment variables, you need to add them to
@@ -29,8 +35,10 @@ export const env = createEnv({
    */
   client: {
     NEXT_PUBLIC_OPENPANEL_CLIENT_ID: z.string().optional(),
+    NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: z.string().optional(),
   },
   experimental__runtimeEnv: {
     NEXT_PUBLIC_OPENPANEL_CLIENT_ID: process.env.NEXT_PUBLIC_OPENPANEL_CLIENT_ID,
+    NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
   },
 });

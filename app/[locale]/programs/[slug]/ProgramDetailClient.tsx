@@ -49,20 +49,16 @@ export function ProgramDetailClient({ program }: ProgramDetailClientProps) {
         <div className="relative h-64 bg-gradient-to-br from-[#4F8EF7] to-[#25CB78]">
           <Image alt={program.title} className="absolute inset-0 object-cover opacity-30" fill src={program.image} />
           <div className="absolute inset-0 bg-black/20"></div>
-          
+
           {/* Gamification Elements */}
           <div className="absolute top-4 left-4 flex gap-2">
             <div className="bg-[#25CB78] text-white px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1">
               <Trophy size={12} />
               PROGRAMME
             </div>
-            {program.isLocked && (
-              <div className="bg-yellow-500 text-white px-3 py-1 rounded-full text-xs font-bold">
-                PREMIUM
-              </div>
-            )}
+            {program.isLocked && <div className="bg-yellow-500 text-white px-3 py-1 rounded-full text-xs font-bold">PREMIUM</div>}
           </div>
-          
+
           {/* Mascot Emoji */}
           <div className="absolute top-4 right-4 w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full border-2 border-white/30 flex items-center justify-center">
             <Image
@@ -73,7 +69,7 @@ export function ProgramDetailClient({ program }: ProgramDetailClientProps) {
               width={48}
             />
           </div>
-          
+
           <div className="relative h-full flex items-end p-6">
             <div className="text-white flex-1">
               <div className="flex items-center gap-2 mb-3">
@@ -92,7 +88,7 @@ export function ProgramDetailClient({ program }: ProgramDetailClientProps) {
           </div>
         </div>
 
-        <div className="px-2 sm:px-4 py-4">
+        <div className="px-0 sm:px-4 py-4">
           {/* DaisyUI Tabs */}
           <div className="tabs tabs-lift" role="tablist">
             <input
@@ -104,7 +100,7 @@ export function ProgramDetailClient({ program }: ProgramDetailClientProps) {
               role="tab"
               type="radio"
             />
-            <div className="tab-content bg-base-100 border-base-300 rounded-md rounded-tl-none p-6" role="tabpanel">
+            <div className="tab-content bg-base-100 border-base-300 rounded-md rounded-tl-none p-2 sm:p-6" role="tabpanel">
               <div className="space-y-6">
                 {/* Gamified Community Stats */}
                 <div className="bg-gradient-to-r from-[#4F8EF7]/10 to-[#25CB78]/10 border-2 border-[#4F8EF7]/20 rounded-xl p-4">
@@ -144,8 +140,8 @@ export function ProgramDetailClient({ program }: ProgramDetailClientProps) {
                   </div>
                 </div>
 
-                {/* Gamified Program Details */}
-                <div className="bg-white dark:bg-gray-800 border-2 border-[#25CB78]/20 rounded-xl p-5">
+                {/* Gamified Program Details - Mobile Optimized */}
+                <div className="bg-white dark:bg-gray-800 border-2 border-[#25CB78]/20 rounded-xl p-4">
                   <div className="flex items-center gap-2 mb-4">
                     <Image
                       alt="Détails"
@@ -156,59 +152,66 @@ export function ProgramDetailClient({ program }: ProgramDetailClientProps) {
                     />
                     <h3 className="font-bold text-lg text-[#4F8EF7]">Caractéristiques</h3>
                   </div>
-                  <div className="grid grid-cols-2 gap-4">
+
+                  {/* Mobile: Single column, Desktop: 2 columns */}
+                  <div className="space-y-3 sm:grid sm:grid-cols-2 sm:gap-4 sm:space-y-0">
                     <div className="flex items-center gap-3 p-3 bg-[#4F8EF7]/5 rounded-lg border border-[#4F8EF7]/20">
-                      <div className="w-10 h-10 bg-[#4F8EF7] rounded-full flex items-center justify-center">
-                        <BarChart3 className="text-white" size={18} />
+                      <div className="w-8 h-8 sm:w-10 sm:h-10 bg-[#4F8EF7] rounded-full flex items-center justify-center flex-shrink-0">
+                        <BarChart3 className="text-white" size={16} />
                       </div>
-                      <div>
+                      <div className="min-w-0 flex-1">
                         <div className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Niveau</div>
-                        <div className="text-sm font-bold">{program.level}</div>
+                        <div className="text-sm font-bold truncate">{program.level}</div>
                       </div>
                     </div>
+
                     <div className="flex items-center gap-3 p-3 bg-[#25CB78]/5 rounded-lg border border-[#25CB78]/20">
-                      <div className="w-10 h-10 bg-[#25CB78] rounded-full flex items-center justify-center">
-                        <Target className="text-white" size={18} />
+                      <div className="w-8 h-8 sm:w-10 sm:h-10 bg-[#25CB78] rounded-full flex items-center justify-center flex-shrink-0">
+                        <Target className="text-white" size={16} />
                       </div>
-                      <div>
+                      <div className="min-w-0 flex-1">
                         <div className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Type</div>
-                        <div className="text-sm font-bold">{program.type}</div>
+                        <div className="text-sm font-bold truncate">{program.type}</div>
                       </div>
                     </div>
+
                     <div className="flex items-center gap-3 p-3 bg-[#4F8EF7]/5 rounded-lg border border-[#4F8EF7]/20">
-                      <div className="w-10 h-10 bg-[#4F8EF7] rounded-full flex items-center justify-center">
-                        <Clock className="text-white" size={18} />
+                      <div className="w-8 h-8 sm:w-10 sm:h-10 bg-[#4F8EF7] rounded-full flex items-center justify-center flex-shrink-0">
+                        <Clock className="text-white" size={16} />
                       </div>
-                      <div>
+                      <div className="min-w-0 flex-1">
                         <div className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Durée</div>
-                        <div className="text-sm font-bold">{program.duration}</div>
+                        <div className="text-sm font-bold truncate">{program.duration}</div>
                       </div>
                     </div>
+
                     <div className="flex items-center gap-3 p-3 bg-[#25CB78]/5 rounded-lg border border-[#25CB78]/20">
-                      <div className="w-10 h-10 bg-[#25CB78] rounded-full flex items-center justify-center">
-                        <Calendar className="text-white" size={18} />
+                      <div className="w-8 h-8 sm:w-10 sm:h-10 bg-[#25CB78] rounded-full flex items-center justify-center flex-shrink-0">
+                        <Calendar className="text-white" size={16} />
                       </div>
-                      <div>
+                      <div className="min-w-0 flex-1">
                         <div className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Fréquence</div>
-                        <div className="text-sm font-bold">{program.frequency}</div>
+                        <div className="text-sm font-bold truncate">{program.frequency}</div>
                       </div>
                     </div>
+
                     <div className="flex items-center gap-3 p-3 bg-[#4F8EF7]/5 rounded-lg border border-[#4F8EF7]/20">
-                      <div className="w-10 h-10 bg-[#4F8EF7] rounded-full flex items-center justify-center">
-                        <Timer className="text-white" size={18} />
+                      <div className="w-8 h-8 sm:w-10 sm:h-10 bg-[#4F8EF7] rounded-full flex items-center justify-center flex-shrink-0">
+                        <Timer className="text-white" size={16} />
                       </div>
-                      <div>
+                      <div className="min-w-0 flex-1">
                         <div className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Séance</div>
-                        <div className="text-sm font-bold">{program.sessionDuration}</div>
+                        <div className="text-sm font-bold truncate">{program.sessionDuration}</div>
                       </div>
                     </div>
+
                     <div className="flex items-center gap-3 p-3 bg-[#25CB78]/5 rounded-lg border border-[#25CB78]/20">
-                      <div className="w-10 h-10 bg-[#25CB78] rounded-full flex items-center justify-center">
-                        <Dumbbell className="text-white" size={18} />
+                      <div className="w-8 h-8 sm:w-10 sm:h-10 bg-[#25CB78] rounded-full flex items-center justify-center flex-shrink-0">
+                        <Dumbbell className="text-white" size={16} />
                       </div>
-                      <div>
+                      <div className="min-w-0 flex-1">
                         <div className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Équipement</div>
-                        <div className="text-sm font-bold">{program.equipment}</div>
+                        <div className="text-sm font-bold truncate">{program.equipment}</div>
                       </div>
                     </div>
                   </div>
@@ -216,7 +219,7 @@ export function ProgramDetailClient({ program }: ProgramDetailClientProps) {
 
                 {/* Description */}
                 <div className="space-y-4">
-                  <p className="text-gray-700 dark:text-gray-300">{program.description}</p>
+                  <p className="text-gray-700 dark:text-gray-300 text-center">{program.description}</p>
                 </div>
 
                 {/* Gamified Coaches Section */}
@@ -230,15 +233,22 @@ export function ProgramDetailClient({ program }: ProgramDetailClientProps) {
                       width={24}
                     />
                     <h3 className="text-lg font-bold text-[#25CB78]">Tes coachs warriors</h3>
-                    <div className="bg-[#25CB78] text-white px-2 py-1 rounded-full text-xs font-bold">
-                      {program.coaches.length}
-                    </div>
+                    <div className="bg-[#25CB78] text-white px-2 py-1 rounded-full text-xs font-bold">{program.coaches.length}</div>
                   </div>
                   <div className="flex gap-6 overflow-x-auto pb-2">
                     {program.coaches.map((coach, index) => (
-                      <div className="flex flex-col items-center gap-3 flex-shrink-0 p-3 bg-white dark:bg-gray-800 rounded-xl border-2 border-[#25CB78]/20 hover:border-[#25CB78] transition-all duration-200 ease-in-out hover:scale-105" key={index}>
+                      <div
+                        className="flex flex-col items-center gap-3 flex-shrink-0 p-3 bg-white dark:bg-gray-800 rounded-xl border-2 border-[#25CB78]/20 hover:border-[#25CB78] transition-all duration-200 ease-in-out hover:scale-105"
+                        key={index}
+                      >
                         <div className="relative">
-                          <Image alt={coach.name} className="w-16 h-16 rounded-full border-3 border-[#25CB78]" height={64} src={coach.image} width={64} />
+                          <Image
+                            alt={coach.name}
+                            className="w-16 h-16 rounded-full border-3 border-[#25CB78]"
+                            height={64}
+                            src={coach.image}
+                            width={64}
+                          />
                           <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-[#25CB78] rounded-full flex items-center justify-center">
                             <Trophy className="text-white" size={12} />
                           </div>
@@ -288,38 +298,30 @@ export function ProgramDetailClient({ program }: ProgramDetailClientProps) {
                     ?.sessions.map((session, index) => (
                       <div
                         className={`bg-white dark:bg-gray-800 rounded-xl p-4 border-2 ${
-                          session.isLocked 
-                            ? "border-yellow-200 dark:border-yellow-800 bg-yellow-50/50 dark:bg-yellow-900/10" 
+                          session.isLocked
+                            ? "border-yellow-200 dark:border-yellow-800 bg-yellow-50/50 dark:bg-yellow-900/10"
                             : "border-[#25CB78]/20 hover:border-[#25CB78] hover:scale-[1.02]"
                         } transition-all duration-200 ease-in-out flex items-center gap-4`}
                         key={session.id}
                       >
                         {/* Session Number Badge */}
-                        <div className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 font-bold text-white ${
-                          session.isLocked ? "bg-yellow-500" : "bg-[#25CB78]"
-                        }`}>
-                          {session.isLocked ? (
-                            <Lock size={18} />
-                          ) : (
-                            <span className="text-lg">{index + 1}</span>
-                          )}
+                        <div
+                          className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 font-bold text-white ${
+                            session.isLocked ? "bg-yellow-500" : "bg-[#25CB78]"
+                          }`}
+                        >
+                          {session.isLocked ? <Lock size={18} /> : <span className="text-lg">{index + 1}</span>}
                         </div>
 
                         {/* Session Info */}
                         <div className="flex-1">
                           <div className="flex items-center gap-2 mb-1">
-                            <h4 className="font-bold text-gray-900 dark:text-white">
-                              {session.title}
-                            </h4>
+                            <h4 className="font-bold text-gray-900 dark:text-white">{session.title}</h4>
                             {!session.isLocked && (
-                              <div className="bg-[#25CB78] text-white px-2 py-1 rounded-full text-xs font-bold">
-                                LIBRE
-                              </div>
+                              <div className="bg-[#25CB78] text-white px-2 py-1 rounded-full text-xs font-bold">LIBRE</div>
                             )}
                             {session.isLocked && (
-                              <div className="bg-yellow-500 text-white px-2 py-1 rounded-full text-xs font-bold">
-                                PREMIUM
-                              </div>
+                              <div className="bg-yellow-500 text-white px-2 py-1 rounded-full text-xs font-bold">PREMIUM</div>
                             )}
                           </div>
                           <p className="text-sm text-gray-500 dark:text-gray-400 flex items-center gap-1">
@@ -334,7 +336,7 @@ export function ProgramDetailClient({ program }: ProgramDetailClientProps) {
                             alt="Status"
                             className="w-8 h-8 object-contain"
                             height={32}
-                            src={`/images/emojis/${session.isLocked ? 'WorkoutCoolCry.png' : 'WorkoutCoolHappy.png'}`}
+                            src={`/images/emojis/${session.isLocked ? "WorkoutCoolCry.png" : "WorkoutCoolHappy.png"}`}
                             width={32}
                           />
                         </div>
@@ -349,13 +351,7 @@ export function ProgramDetailClient({ program }: ProgramDetailClientProps) {
 
       {/* Gamified Floating CTA */}
       <button className="absolute bottom-6 right-0 left-0 max-w-xs mx-auto bg-gradient-to-r from-[#4F8EF7] to-[#25CB78] hover:from-[#4F8EF7]/80 hover:to-[#25CB78]/80 text-white px-8 py-4 rounded-full font-bold border-2 border-white/20 hover:scale-105 transition-all duration-200 ease-in-out z-50 flex items-center justify-center gap-2">
-        <Image
-          alt="Rejoindre"
-          className="w-6 h-6 object-contain"
-          height={24}
-          src="/images/emojis/WorkoutCoolSwag.png"
-          width={24}
-        />
+        <Image alt="Rejoindre" className="w-6 h-6 object-contain" height={24} src="/images/emojis/WorkoutCoolSwag.png" width={24} />
         Rejoindre le défi
         <Trophy className="text-white" size={18} />
       </button>

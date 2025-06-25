@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Image from "next/image";
 import { Metadata } from "next";
 import { Lock } from "lucide-react";
@@ -56,7 +57,11 @@ export default function ProgrammesPage() {
 
           <div className="flex gap-4 overflow-x-auto pb-2">
             {mockPrograms.slice(0, 2).map((program) => (
-              <div className="relative flex-shrink-0 w-56 h-32 rounded-2xl overflow-hidden" key={program.id}>
+              <Link
+                className="relative flex-shrink-0 w-56 h-32 rounded-2xl overflow-hidden hover:scale-105 transition-transform duration-200"
+                href={`/programs/${program.id}`}
+                key={program.id}
+              >
                 <div className={`absolute inset-0 bg-gradient-to-br ${program.gradient}`}></div>
                 <Image
                   alt={program.title}
@@ -76,7 +81,7 @@ export default function ProgrammesPage() {
                   <h4 className="font-bold text-lg mb-1 leading-tight">{program.title}</h4>
                   <p className="text-sm opacity-90">{program.category}</p>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
@@ -89,7 +94,11 @@ export default function ProgrammesPage() {
 
           <div className="flex gap-4 overflow-x-auto pb-2">
             {mockPrograms.slice(2).map((program) => (
-              <div className="relative flex-shrink-0 w-56 h-32 rounded-2xl overflow-hidden" key={program.id}>
+              <Link
+                className="relative flex-shrink-0 w-56 h-32 rounded-2xl overflow-hidden hover:scale-105 transition-transform duration-200"
+                href={`/programs/${program.id}`}
+                key={program.id}
+              >
                 <div className={`absolute inset-0 bg-gradient-to-br ${program.gradient}`}></div>
                 <Image
                   alt={program.title}
@@ -109,7 +118,7 @@ export default function ProgrammesPage() {
                   <h4 className="font-bold text-lg mb-1 leading-tight">{program.title}</h4>
                   <p className="text-sm opacity-90">{program.category}</p>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>

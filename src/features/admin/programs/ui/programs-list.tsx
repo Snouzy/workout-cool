@@ -1,6 +1,7 @@
-import { Eye, Edit, Trash2, Users, Calendar, Dumbbell } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { Eye, Edit, Trash2, Users, Calendar, Dumbbell } from "lucide-react";
+
 import { getPrograms } from "../actions/get-programs.action";
 
 export async function ProgramsList() {
@@ -12,9 +13,7 @@ export async function ProgramsList() {
         <div className="card-body flex flex-col items-center justify-center py-12">
           <Dumbbell className="h-12 w-12 text-base-content/60 mb-4" />
           <h3 className="text-lg font-semibold mb-2">Aucun programme</h3>
-          <p className="text-base-content/60 text-center max-w-md">
-            Commencez par créer votre premier programme d'entraînement.
-          </p>
+          <p className="text-base-content/60 text-center max-w-md">Commencez par créer votre premier programme d&apos;entraînement.</p>
         </div>
       </div>
     );
@@ -23,14 +22,9 @@ export async function ProgramsList() {
   return (
     <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
       {programs.map((program) => (
-        <div key={program.id} className="card bg-base-100 shadow-xl overflow-hidden">
+        <div className="card bg-base-100 shadow-xl overflow-hidden" key={program.id}>
           <div className="relative h-48">
-            <Image
-              src={program.image}
-              alt={program.title}
-              fill
-              className="object-cover"
-            />
+            <Image alt={program.title} className="object-cover" fill src={program.image} />
             <div className="absolute inset-0 bg-black/40" />
             <div className="absolute top-4 left-4">
               <div className={`badge ${program.isPremium ? "badge-primary" : "badge-secondary"}`}>
@@ -38,29 +32,19 @@ export async function ProgramsList() {
               </div>
             </div>
             <div className="absolute top-4 right-4">
-              <div className="badge badge-outline bg-white/20 text-white border-white/30">
-                {program.level}
-              </div>
+              <div className="badge badge-outline bg-white/20 text-white border-white/30">{program.level}</div>
             </div>
           </div>
-          
+
           <div className="card-body">
             <div className="flex items-center justify-between mb-2">
               <h2 className="card-title truncate">{program.title}</h2>
               {program.emoji && (
-                <Image
-                  src={`/images/emojis/${program.emoji}`}
-                  alt="Emoji"
-                  width={24}
-                  height={24}
-                  className="flex-shrink-0"
-                />
+                <Image alt="Emoji" className="flex-shrink-0" height={24} src={`/images/emojis/${program.emoji}`} width={24} />
               )}
             </div>
-            <p className="text-sm text-base-content/60 line-clamp-2 mb-4">
-              {program.description}
-            </p>
-          
+            <p className="text-sm text-base-content/60 line-clamp-2 mb-4">{program.description}</p>
+
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4 text-sm">
                 <div className="flex items-center gap-2">
@@ -72,7 +56,7 @@ export async function ProgramsList() {
                   <span>{program.totalEnrollments} inscrits</span>
                 </div>
               </div>
-              
+
               <div className="grid grid-cols-3 gap-4 text-sm text-base-content/60">
                 <div className="text-center">
                   <div className="font-semibold text-base-content">{program.totalWeeks}</div>
@@ -87,13 +71,13 @@ export async function ProgramsList() {
                   <div>Exercices</div>
                 </div>
               </div>
-              
+
               <div className="flex gap-2">
-                <Link href={`/admin/programs/${program.id}`} className="btn btn-outline btn-sm flex-1">
+                <Link className="btn btn-outline btn-sm flex-1" href={`/admin/programs/${program.id}`}>
                   <Eye className="h-4 w-4 mr-1" />
                   Voir
                 </Link>
-                <Link href={`/admin/programs/${program.id}/edit`} className="btn btn-outline btn-sm flex-1">
+                <Link className="btn btn-outline btn-sm flex-1" href={`/admin/programs/${program.id}/edit`}>
                   <Edit className="h-4 w-4 mr-1" />
                   Éditer
                 </Link>

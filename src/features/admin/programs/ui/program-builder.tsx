@@ -5,9 +5,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { Plus, Calendar, Clock, Users, ArrowLeft } from "lucide-react";
 
+import { ProgramWithFullDetails } from "../types/program.types";
 import { WeekCard } from "./week-card";
 import { AddWeekModal } from "./add-week-modal";
-import { ProgramWithFullDetails } from "../types/program.types";
 
 interface ProgramBuilderProps {
   program: ProgramWithFullDetails;
@@ -78,23 +78,6 @@ export function ProgramBuilder({ program }: ProgramBuilderProps) {
 
       {/* Content Tabs */}
       <div className="space-y-6">
-        <div className="tabs tabs-boxed">
-          <input className="tab" defaultChecked id="structure" name="program_tabs" type="radio" />
-          <label className="tab" htmlFor="structure">
-            Structure du programme
-          </label>
-
-          <input className="tab" id="settings" name="program_tabs" type="radio" />
-          <label className="tab" htmlFor="settings">
-            Paramètres
-          </label>
-
-          <input className="tab" id="analytics" name="program_tabs" type="radio" />
-          <label className="tab" htmlFor="analytics">
-            Statistiques
-          </label>
-        </div>
-
         <div className="space-y-6">
           {/* Add Week Button */}
           <div className="flex justify-between items-center">

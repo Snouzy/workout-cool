@@ -19,7 +19,7 @@ export default async function AdminLayout({ children }: AdminLayoutProps) {
   }
 
   return (
-    <div className="flex h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="flex bg-gray-50 dark:bg-gray-900">
       {/* Sidebar */}
       <AdminSidebar />
 
@@ -30,7 +30,7 @@ export default async function AdminLayout({ children }: AdminLayoutProps) {
 
         {/* Page content */}
         <main className="flex-1 overflow-y-auto bg-white p-6 dark:bg-gray-800">
-          <div className="mx-auto max-w-7xl">{children}</div>
+          <div className="mx-auto max-w-7xl w-full">{children}</div>
         </main>
       </div>
     </div>

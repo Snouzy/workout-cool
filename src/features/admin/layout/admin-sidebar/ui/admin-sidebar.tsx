@@ -10,28 +10,28 @@ import version from "../../../../../../package.json";
 
 const navigation = [
   {
-    name: "Tableau de bord",
+    name: "Dashboard",
     href: "/admin/dashboard",
     icon: LayoutDashboard,
-    description: "Vue d'ensemble des statistiques",
+    description: "Overview of the statistics.",
   },
   {
-    name: "Utilisateurs",
+    name: "Users",
     href: "/admin/users",
     icon: Users,
-    description: "Gestion des utilisateurs",
+    description: "Manage users.",
   },
   {
-    name: "Analytiques",
-    href: "/admin/analytics",
+    name: "Programs",
+    href: "/admin/programs",
     icon: BarChart3,
-    description: "Données et métriques",
+    description: "Manage programs.",
   },
   {
-    name: "Paramètres",
+    name: "Settings",
     href: "/admin/settings",
     icon: Settings,
-    description: "Configuration du système",
+    description: "Configuration of the system.",
   },
 ];
 

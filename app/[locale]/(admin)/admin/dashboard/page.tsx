@@ -1,9 +1,9 @@
 import { Suspense } from "react";
-import { Activity, Users, Dumbbell, Star } from "lucide-react";
+import Image from "next/image";
+import { Users, Target } from "lucide-react";
 
 import { prisma } from "@/shared/lib/prisma";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 async function getDashboardStats() {
   const [totalUsers, totalWorkoutSessions, totalExercises, activeSubscriptions, recentUsers, recentWorkouts, totalPrograms] =
@@ -60,192 +60,146 @@ async function getDashboardStats() {
 async function DashboardStats() {
   const stats = await getDashboardStats();
 
-  const dashboardCards = [
-    {
-      title: "Total Utilisateurs",
-      value: stats.totalUsers.toLocaleString(),
-      description: `+${stats.recentUsers} cette semaine`,
-      icon: Users,
-      color: "text-blue-600",
-    },
-    {
-      title: "Sessions d'Entraînement",
-      value: stats.totalWorkoutSessions.toLocaleString(),
-      description: `+${stats.recentWorkouts} cette semaine`,
-      icon: Activity,
-      color: "text-green-600",
-    },
-    {
-      title: "Exercices Disponibles",
-      value: stats.totalExercises.toLocaleString(),
-      description: "Base d'exercices",
-      icon: Dumbbell,
-      color: "text-purple-600",
-    },
-    {
-      title: "Programmes Actifs",
-      value: stats.totalPrograms.toLocaleString(),
-      description: `${stats.activeSubscriptions} abonnements actifs`,
-      icon: Star,
-      color: "text-orange-600",
-    },
-  ];
-
   return (
-    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-      {dashboardCards.map((stat) => {
-        const Icon = stat.icon;
-        return (
-          <Card key={stat.title}>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">{stat.title}</CardTitle>
-              <Icon className={`h-4 w-4 ${stat.color}`} />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{stat.value}</div>
-              <p className="text-xs text-muted-foreground">{stat.description}</p>
-            </CardContent>
-          </Card>
-        );
-      })}
-    </div>
-  );
-}
-
-async function getRecentActivity() {
-  const [recentUsers, recentWorkouts] = await Promise.all([
-    // 3 last users
-    prisma.user.findMany({
-      take: 3,
-      orderBy: { createdAt: "desc" },
-      select: {
-        firstName: true,
-        lastName: true,
-        createdAt: true,
-      },
-    }),
-
-    // 3 last workout sessions
-    prisma.workoutSession.findMany({
-      take: 3,
-      orderBy: { startedAt: "desc" },
-      select: {
-        startedAt: true,
-        user: {
-          select: {
-            firstName: true,
-            lastName: true,
-          },
-        },
-      },
-    }),
-  ]);
-
-  return { recentUsers, recentWorkouts };
-}
-
-function formatTimeAgo(date: Date) {
-  const now = new Date();
-  const diffInMinutes = Math.floor((now.getTime() - date.getTime()) / (1000 * 60));
-
-  if (diffInMinutes < 1) return "À l'instant";
-  if (diffInMinutes < 60) return `Il y a ${diffInMinutes} min`;
-
-  const diffInHours = Math.floor(diffInMinutes / 60);
-  if (diffInHours < 24) return `Il y a ${diffInHours}h`;
-
-  const diffInDays = Math.floor(diffInHours / 24);
-  return `Il y a ${diffInDays}j`;
-}
-
-async function RecentActivity() {
-  const { recentUsers, recentWorkouts } = await getRecentActivity();
-
-  return (
-    <div className="grid gap-6 md:grid-cols-2">
-      <Card>
-        <CardHeader>
-          <CardTitle>Activité récente</CardTitle>
-          <CardDescription>Les dernières actions sur la plateforme</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {recentUsers.map((user, index) => (
-              <div className="flex items-center space-x-4" key={index}>
-                <div className="h-2 w-2 rounded-full bg-blue-600" />
-                <div className="flex-1 text-sm">
-                  Nouvel utilisateur : {user.firstName} {user.lastName}
-                  <span className="ml-2 text-muted-foreground">{formatTimeAgo(user.createdAt)}</span>
+    <div className="grid gap-4 md:gap-6">
+      <div className="grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
+        <div className="group col-span-3">
+          <div className="relative overflow-hidden rounded-2xl border border-gray-200 bg-gradient-to-br from-blue-50 to-blue-100 p-5 transition-all duration-200 ease-in-out hover:scale-[1.02] hover:border-blue-300 dark:border-gray-700 dark:from-blue-950/50 dark:to-blue-900/30 dark:hover:border-blue-600">
+            <div className="flex items-start justify-between">
+              <div>
+                <div className="mb-2 flex items-center space-x-2">
+                  <div className="rounded-xl bg-blue-500 p-2">
+                    <Users className="h-5 w-5 text-white" />
+                  </div>
+                  <span className="text-xs font-medium uppercase tracking-wider text-blue-600 dark:text-blue-400">Communauté</span>
                 </div>
+                <h3 className="text-3xl font-bold text-gray-900 dark:text-white">{stats.totalUsers.toLocaleString()}</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-300">
+                  <p className="text-xs text-gray-600 dark:text-gray-300">Utilisateurs</p>
+                  <span className="font-semibold text-green-600 dark:text-green-400">+{stats.recentUsers}</span> cette semaine
+                </p>
               </div>
-            ))}
-
-            {recentWorkouts.map((workout, index) => (
-              <div className="flex items-center space-x-4" key={index}>
-                <div className="h-2 w-2 rounded-full bg-green-600" />
-                <div className="flex-1 text-sm">
-                  Session d&apos;entraînement : {workout.user.firstName} {workout.user.lastName}
-                  <span className="ml-2 text-muted-foreground">{formatTimeAgo(workout.startedAt)}</span>
-                </div>
+              <div className="transition-transform duration-200 group-hover:rotate-6">
+                <Image alt="Happy mascot" className="h-12 w-12" height={48} src="/images/emojis/WorkoutCoolHappy.png" width={48} />
               </div>
-            ))}
+            </div>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+
+        {/* Workout Sessions Card */}
+        <div className="group col-span-2 md:col-span-1">
+          <div className="relative overflow-hidden rounded-2xl border border-gray-200 bg-gradient-to-br from-green-50 to-emerald-100 p-4 transition-all duration-200 ease-in-out hover:scale-[1.02] hover:border-green-300 dark:border-gray-700 dark:from-green-950/50 dark:to-emerald-900/30 dark:hover:border-green-600">
+            <div className="mb-3 flex items-center justify-between">
+              <div className="rounded-xl bg-green-500 p-2">
+                <Image
+                  alt="Swag mascot"
+                  className="h-8 w-8 transition-transform duration-200 group-hover:scale-110"
+                  height={32}
+                  src="/images/emojis/WorkoutCoolSwag.png"
+                  width={32}
+                />
+              </div>
+            </div>
+            <h3 className="text-2xl font-bold text-gray-900 dark:text-white">{stats.totalWorkoutSessions.toLocaleString()}</h3>
+            <p className="text-xs text-gray-600 dark:text-gray-300">Sessions</p>
+            <p className="text-xs text-green-600 dark:text-green-400">+{stats.recentWorkouts} cette semaine</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Row 2 */}
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-6">
+        {/* Programs Card */}
+        <div className="group">
+          <div className="relative overflow-hidden rounded-2xl border border-gray-200 bg-gradient-to-br from-amber-50 to-yellow-100 p-4 transition-all duration-200 ease-in-out hover:scale-[1.02] hover:border-amber-300 dark:border-gray-700 dark:from-amber-950/50 dark:to-yellow-900/30 dark:hover:border-amber-600">
+            <div className="mb-3 flex items-center justify-between">
+              <div className="rounded-xl bg-amber-500 p-2">
+                <Image
+                  alt="Wooow mascot"
+                  className="h-8 w-8 transition-transform duration-200 group-hover:scale-110"
+                  height={32}
+                  src="/images/emojis/WorkoutCoolWooow.png"
+                  width={32}
+                />
+              </div>
+            </div>
+            <h3 className="text-xl font-bold text-gray-900 dark:text-white">{stats.totalPrograms.toLocaleString()}</h3>
+            <p className="text-xs text-gray-600 dark:text-gray-300">Programmes</p>
+          </div>
+        </div>
+
+        <div className="group">
+          <div className="relative overflow-hidden rounded-2xl border border-gray-200 bg-gradient-to-br from-purple-50 to-violet-100 p-4 transition-all duration-200 ease-in-out hover:scale-[1.02] hover:border-purple-300 dark:border-gray-700 dark:from-purple-950/50 dark:to-violet-900/30 dark:hover:border-purple-600">
+            <div className="mb-3 flex items-center justify-between">
+              <div className="rounded-xl bg-purple-500 p-2">
+                <Image
+                  alt="Love mascot"
+                  className="h-8 w-8 transition-transform duration-200 group-hover:scale-110"
+                  height={32}
+                  src="/images/emojis/WorkoutCoolBiceps.png"
+                  width={32}
+                />
+              </div>
+            </div>
+            <h3 className="text-2xl font-bold text-gray-900 dark:text-white">{stats.totalExercises.toLocaleString()}</h3>
+            <p className="text-xs text-gray-600 dark:text-gray-300">Exercices</p>
+          </div>
+        </div>
+
+        {/* Growth Card */}
+        <div className="group">
+          <div className="relative overflow-hidden rounded-2xl border border-gray-200 bg-gradient-to-br from-cyan-50 to-blue-100 p-4 transition-all duration-200 ease-in-out hover:scale-[1.02] hover:border-cyan-300 dark:border-gray-700 dark:from-cyan-950/50 dark:to-blue-900/30 dark:hover:border-cyan-600">
+            <div className="mb-3 flex items-center justify-between">
+              <div className="rounded-xl bg-cyan-500 p-2">
+                <Image
+                  alt="Teeth mascot"
+                  className="h-8 w-8 transition-transform duration-200 group-hover:scale-110"
+                  height={32}
+                  src="/images/emojis/WorkoutCoolTeeths.png"
+                  width={32}
+                />
+              </div>
+            </div>
+            <h3 className="text-xl font-bold text-gray-900 dark:text-white">{stats.activeSubscriptions}</h3>
+            <p className="text-xs text-gray-600 dark:text-gray-300">Abonnés</p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
 
 function DashboardStatsLoading() {
   return (
-    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-      {Array.from({ length: 4 }).map((_, i) => (
-        <Card key={i}>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <Skeleton className="h-4 w-20" />
-            <Skeleton className="h-4 w-4" />
-          </CardHeader>
-          <CardContent>
-            <Skeleton className="mb-2 h-8 w-16" />
-            <Skeleton className="h-3 w-24" />
-          </CardContent>
-        </Card>
-      ))}
-    </div>
-  );
-}
-
-function RecentActivityLoading() {
-  return (
-    <div className="grid gap-6 md:grid-cols-2">
-      <Card>
-        <CardHeader>
-          <CardTitle>Activité récente</CardTitle>
-          <CardDescription>Les dernières actions sur la plateforme</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {Array.from({ length: 3 }).map((_, i) => (
-              <div className="flex items-center space-x-4" key={i}>
-                <Skeleton className="h-2 w-2 rounded-full" />
-                <Skeleton className="h-4 w-full" />
-              </div>
-            ))}
+    <div className="grid gap-4 md:gap-6">
+      <div className="grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
+        <div className="col-span-2 md:col-span-2">
+          <div className="rounded-2xl border border-gray-200 p-6 dark:border-gray-700">
+            <Skeleton className="mb-4 h-6 w-24" />
+            <Skeleton className="mb-2 h-8 w-20" />
+            <Skeleton className="h-4 w-32" />
           </div>
-        </CardContent>
-      </Card>
-      <Card>
-        <CardHeader>
-          <CardTitle>Actions rapides</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-2">
-            {Array.from({ length: 3 }).map((_, i) => (
-              <Skeleton className="h-12 w-full" key={i} />
-            ))}
+        </div>
+        <div className="rounded-2xl border border-gray-200 p-4 dark:border-gray-700">
+          <Skeleton className="mb-3 h-6 w-full" />
+          <Skeleton className="mb-2 h-6 w-16" />
+          <Skeleton className="h-3 w-20" />
+        </div>
+        <div className="rounded-2xl border border-gray-200 p-4 dark:border-gray-700">
+          <Skeleton className="mb-3 h-6 w-full" />
+          <Skeleton className="mb-2 h-6 w-16" />
+          <Skeleton className="h-3 w-20" />
+        </div>
+      </div>
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-6">
+        {Array.from({ length: 3 }).map((_, i) => (
+          <div className="rounded-2xl border border-gray-200 p-4 dark:border-gray-700" key={i}>
+            <Skeleton className="mb-3 h-6 w-full" />
+            <Skeleton className="mb-2 h-6 w-12" />
+            <Skeleton className="h-3 w-16" />
           </div>
-        </CardContent>
-      </Card>
+        ))}
+      </div>
     </div>
   );
 }
@@ -253,17 +207,18 @@ function RecentActivityLoading() {
 export default function AdminDashboard() {
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight">Tableau de bord</h1>
-        <p className="text-muted-foreground">Vue d&apos;ensemble de votre application WorkoutCool</p>
+      <div className="flex items-center space-x-4">
+        <div className="rounded-2xl bg-gradient-to-r from-blue-500 to-purple-600 p-3">
+          <Target className="h-6 w-6 text-white" />
+        </div>
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">Dashboard Admin</h1>
+          <p className="text-gray-600 dark:text-gray-300">WorkoutCool Admin</p>
+        </div>
       </div>
 
       <Suspense fallback={<DashboardStatsLoading />}>
         <DashboardStats />
-      </Suspense>
-
-      <Suspense fallback={<RecentActivityLoading />}>
-        <RecentActivity />
       </Suspense>
     </div>
   );

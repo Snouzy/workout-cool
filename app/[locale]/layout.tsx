@@ -140,7 +140,6 @@ interface RootLayoutProps {
 
 export default async function RootLayout({ params, children }: RootLayoutProps) {
   const { locale } = await params;
-
   // Generate structured data
   const websiteStructuredData = generateStructuredData({
     type: "WebSite",

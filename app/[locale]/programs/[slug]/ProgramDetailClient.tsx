@@ -153,66 +153,36 @@ export function ProgramDetailClient({ program }: ProgramDetailClientProps) {
                     <h3 className="font-bold text-lg text-[#4F8EF7]">Caractéristiques</h3>
                   </div>
 
-                  {/* Mobile: Single column, Desktop: 2 columns */}
-                  <div className="space-y-3 sm:grid sm:grid-cols-2 sm:gap-4 sm:space-y-0">
-                    <div className="flex items-center gap-3 p-3 bg-[#4F8EF7]/5 rounded-lg border border-[#4F8EF7]/20">
-                      <div className="w-8 h-8 sm:w-10 sm:h-10 bg-[#4F8EF7] rounded-full flex items-center justify-center flex-shrink-0">
-                        <BarChart3 className="text-white" size={16} />
-                      </div>
-                      <div className="min-w-0 flex-1">
-                        <div className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Niveau</div>
-                        <div className="text-sm font-bold truncate">{program.level}</div>
-                      </div>
+                  {/* Compact List Layout - Inspired by modern apps */}
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-4">
+                      <BarChart3 className="text-[#4F8EF7] flex-shrink-0" size={20} />
+                      <span className="text-base font-medium text-gray-900 dark:text-white">{program.level}</span>
                     </div>
-
-                    <div className="flex items-center gap-3 p-3 bg-[#25CB78]/5 rounded-lg border border-[#25CB78]/20">
-                      <div className="w-8 h-8 sm:w-10 sm:h-10 bg-[#25CB78] rounded-full flex items-center justify-center flex-shrink-0">
-                        <Target className="text-white" size={16} />
-                      </div>
-                      <div className="min-w-0 flex-1">
-                        <div className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Type</div>
-                        <div className="text-sm font-bold truncate">{program.type}</div>
-                      </div>
+                    
+                    <div className="flex items-center gap-4">
+                      <Target className="text-[#25CB78] flex-shrink-0" size={20} />
+                      <span className="text-base font-medium text-gray-900 dark:text-white">{program.type}</span>
                     </div>
-
-                    <div className="flex items-center gap-3 p-3 bg-[#4F8EF7]/5 rounded-lg border border-[#4F8EF7]/20">
-                      <div className="w-8 h-8 sm:w-10 sm:h-10 bg-[#4F8EF7] rounded-full flex items-center justify-center flex-shrink-0">
-                        <Clock className="text-white" size={16} />
-                      </div>
-                      <div className="min-w-0 flex-1">
-                        <div className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Durée</div>
-                        <div className="text-sm font-bold truncate">{program.duration}</div>
-                      </div>
+                    
+                    <div className="flex items-center gap-4">
+                      <Clock className="text-[#4F8EF7] flex-shrink-0" size={20} />
+                      <span className="text-base font-medium text-gray-900 dark:text-white">{program.duration}</span>
                     </div>
-
-                    <div className="flex items-center gap-3 p-3 bg-[#25CB78]/5 rounded-lg border border-[#25CB78]/20">
-                      <div className="w-8 h-8 sm:w-10 sm:h-10 bg-[#25CB78] rounded-full flex items-center justify-center flex-shrink-0">
-                        <Calendar className="text-white" size={16} />
-                      </div>
-                      <div className="min-w-0 flex-1">
-                        <div className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Fréquence</div>
-                        <div className="text-sm font-bold truncate">{program.frequency}</div>
-                      </div>
+                    
+                    <div className="flex items-center gap-4">
+                      <Calendar className="text-[#25CB78] flex-shrink-0" size={20} />
+                      <span className="text-base font-medium text-gray-900 dark:text-white">{program.frequency}</span>
                     </div>
-
-                    <div className="flex items-center gap-3 p-3 bg-[#4F8EF7]/5 rounded-lg border border-[#4F8EF7]/20">
-                      <div className="w-8 h-8 sm:w-10 sm:h-10 bg-[#4F8EF7] rounded-full flex items-center justify-center flex-shrink-0">
-                        <Timer className="text-white" size={16} />
-                      </div>
-                      <div className="min-w-0 flex-1">
-                        <div className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Séance</div>
-                        <div className="text-sm font-bold truncate">{program.sessionDuration}</div>
-                      </div>
+                    
+                    <div className="flex items-center gap-4">
+                      <Timer className="text-[#4F8EF7] flex-shrink-0" size={20} />
+                      <span className="text-base font-medium text-gray-900 dark:text-white">{program.sessionDuration}</span>
                     </div>
-
-                    <div className="flex items-center gap-3 p-3 bg-[#25CB78]/5 rounded-lg border border-[#25CB78]/20">
-                      <div className="w-8 h-8 sm:w-10 sm:h-10 bg-[#25CB78] rounded-full flex items-center justify-center flex-shrink-0">
-                        <Dumbbell className="text-white" size={16} />
-                      </div>
-                      <div className="min-w-0 flex-1">
-                        <div className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Équipement</div>
-                        <div className="text-sm font-bold truncate">{program.equipment}</div>
-                      </div>
+                    
+                    <div className="flex items-center gap-4">
+                      <Dumbbell className="text-[#25CB78] flex-shrink-0" size={20} />
+                      <span className="text-base font-medium text-gray-900 dark:text-white">{program.equipment}</span>
                     </div>
                   </div>
                 </div>

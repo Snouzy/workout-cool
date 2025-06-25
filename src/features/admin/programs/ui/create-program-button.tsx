@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { Plus } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { CreateProgramModal } from "./create-program-modal";
 
 export function CreateProgramButton() {
@@ -10,10 +9,13 @@ export function CreateProgramButton() {
 
   return (
     <>
-      <Button onClick={() => setIsModalOpen(true)}>
-        <Plus className="h-4 w-4 mr-2" />
+      <button 
+        className="btn btn-primary"
+        onClick={() => setIsModalOpen(true)}
+      >
+        <Plus className="h-4 w-4" />
         Créer un programme
-      </Button>
+      </button>
       
       <CreateProgramModal
         open={isModalOpen}

@@ -5,14 +5,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { ProgramLevel, ExerciseAttributeValueEnum } from "@prisma/client";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Switch } from "@/components/ui/switch";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Plus, Trash2 } from "lucide-react";
 import { createProgram } from "../actions/create-program.action";
 
@@ -136,204 +128,241 @@ export function CreateProgramForm({ currentStep, onStepComplete, onSuccess, onCa
   };
 
   const renderStep1 = () => (
-    <Card>
-      <CardHeader>
-        <CardTitle>Informations générales</CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <Label htmlFor="title">Titre (FR)</Label>
-            <Input id="title" {...register("title")} />
-            {errors.title && <p className="text-sm text-red-500">{errors.title.message}</p>}
+    <div className="card bg-base-100 shadow-xl">
+      <div className="card-body">
+        <h2 className="card-title">Informations générales</h2>
+        <div className="space-y-4">
+          <div className="grid grid-cols-2 gap-4">
+            <div className="form-control">
+              <label className="label" htmlFor="title">
+                <span className="label-text">Titre (FR)</span>
+              </label>
+              <input id="title" className="input input-bordered" {...register("title")} />
+              {errors.title && <div className="text-sm text-error mt-1">{errors.title.message}</div>}
+            </div>
+            <div className="form-control">
+              <label className="label" htmlFor="titleEn">
+                <span className="label-text">Titre (EN)</span>
+              </label>
+              <input id="titleEn" className="input input-bordered" {...register("titleEn")} />
+              {errors.titleEn && <div className="text-sm text-error mt-1">{errors.titleEn.message}</div>}
+            </div>
           </div>
-          <div>
-            <Label htmlFor="titleEn">Titre (EN)</Label>
-            <Input id="titleEn" {...register("titleEn")} />
-            {errors.titleEn && <p className="text-sm text-red-500">{errors.titleEn.message}</p>}
-          </div>
-        </div>
 
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <Label htmlFor="description">Description (FR)</Label>
-            <Textarea id="description" {...register("description")} />
-            {errors.description && <p className="text-sm text-red-500">{errors.description.message}</p>}
+          <div className="grid grid-cols-2 gap-4">
+            <div className="form-control">
+              <label className="label" htmlFor="description">
+                <span className="label-text">Description (FR)</span>
+              </label>
+              <textarea id="description" className="textarea textarea-bordered" {...register("description")} />
+              {errors.description && <div className="text-sm text-error mt-1">{errors.description.message}</div>}
+            </div>
+            <div className="form-control">
+              <label className="label" htmlFor="descriptionEn">
+                <span className="label-text">Description (EN)</span>
+              </label>
+              <textarea id="descriptionEn" className="textarea textarea-bordered" {...register("descriptionEn")} />
+              {errors.descriptionEn && <div className="text-sm text-error mt-1">{errors.descriptionEn.message}</div>}
+            </div>
           </div>
-          <div>
-            <Label htmlFor="descriptionEn">Description (EN)</Label>
-            <Textarea id="descriptionEn" {...register("descriptionEn")} />
-            {errors.descriptionEn && <p className="text-sm text-red-500">{errors.descriptionEn.message}</p>}
-          </div>
-        </div>
 
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <Label htmlFor="category">Catégorie</Label>
-            <Input id="category" {...register("category")} placeholder="ex: Musculation" />
-            {errors.category && <p className="text-sm text-red-500">{errors.category.message}</p>}
+          <div className="grid grid-cols-2 gap-4">
+            <div className="form-control">
+              <label className="label" htmlFor="category">
+                <span className="label-text">Catégorie</span>
+              </label>
+              <input id="category" className="input input-bordered" {...register("category")} placeholder="ex: Musculation" />
+              {errors.category && <div className="text-sm text-error mt-1">{errors.category.message}</div>}
+            </div>
+            <div className="form-control">
+              <label className="label" htmlFor="image">
+                <span className="label-text">URL de l'image</span>
+              </label>
+              <input id="image" className="input input-bordered" {...register("image")} placeholder="https://..." />
+              {errors.image && <div className="text-sm text-error mt-1">{errors.image.message}</div>}
+            </div>
           </div>
-          <div>
-            <Label htmlFor="image">URL de l'image</Label>
-            <Input id="image" {...register("image")} placeholder="https://..." />
-            {errors.image && <p className="text-sm text-red-500">{errors.image.message}</p>}
-          </div>
-        </div>
 
-        <div className="grid grid-cols-3 gap-4">
-          <div>
-            <Label htmlFor="level">Niveau</Label>
-            <Select onValueChange={(value) => setValue("level", value as ProgramLevel)}>
-              <SelectTrigger>
-                <SelectValue placeholder="Sélectionner" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value={ProgramLevel.BEGINNER}>Débutant</SelectItem>
-                <SelectItem value={ProgramLevel.INTERMEDIATE}>Intermédiaire</SelectItem>
-                <SelectItem value={ProgramLevel.ADVANCED}>Avancé</SelectItem>
-                <SelectItem value={ProgramLevel.EXPERT}>Expert</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          <div>
-            <Label htmlFor="type">Type</Label>
-            <Select onValueChange={(value) => setValue("type", value as ExerciseAttributeValueEnum)}>
-              <SelectTrigger>
-                <SelectValue placeholder="Sélectionner" />
-              </SelectTrigger>
-              <SelectContent>
+          <div className="grid grid-cols-3 gap-4">
+            <div className="form-control">
+              <label className="label" htmlFor="level">
+                <span className="label-text">Niveau</span>
+              </label>
+              <select 
+                className="select select-bordered" 
+                onChange={(e) => setValue("level", e.target.value as ProgramLevel)}
+                defaultValue={ProgramLevel.BEGINNER}
+              >
+                <option value={ProgramLevel.BEGINNER}>Débutant</option>
+                <option value={ProgramLevel.INTERMEDIATE}>Intermédiaire</option>
+                <option value={ProgramLevel.ADVANCED}>Avancé</option>
+                <option value={ProgramLevel.EXPERT}>Expert</option>
+              </select>
+            </div>
+            <div className="form-control">
+              <label className="label" htmlFor="type">
+                <span className="label-text">Type</span>
+              </label>
+              <select 
+                className="select select-bordered" 
+                onChange={(e) => setValue("type", e.target.value as ExerciseAttributeValueEnum)}
+                defaultValue={ExerciseAttributeValueEnum.STRENGTH}
+              >
                 {TYPE_OPTIONS.map(option => (
-                  <SelectItem key={option.value} value={option.value}>
+                  <option key={option.value} value={option.value}>
                     {option.label}
-                  </SelectItem>
+                  </option>
                 ))}
-              </SelectContent>
-            </Select>
-          </div>
-          <div>
-            <Label htmlFor="emoji">Emoji (optionnel)</Label>
-            <Input id="emoji" {...register("emoji")} placeholder="WorkoutCoolHappy.png" />
+              </select>
+            </div>
+            <div className="form-control">
+              <label className="label" htmlFor="emoji">
+                <span className="label-text">Emoji (optionnel)</span>
+              </label>
+              <input id="emoji" className="input input-bordered" {...register("emoji")} placeholder="WorkoutCoolHappy.png" />
+            </div>
           </div>
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 
   const renderStep2 = () => (
-    <Card>
-      <CardHeader>
-        <CardTitle>Configuration du programme</CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-6">
-        <div className="grid grid-cols-3 gap-4">
-          <div>
-            <Label htmlFor="durationWeeks">Durée (semaines)</Label>
-            <Input
-              id="durationWeeks"
-              type="number"
-              min="1"
-              {...register("durationWeeks", { valueAsNumber: true })}
-            />
-            {errors.durationWeeks && <p className="text-sm text-red-500">{errors.durationWeeks.message}</p>}
+    <div className="card bg-base-100 shadow-xl">
+      <div className="card-body">
+        <h2 className="card-title">Configuration du programme</h2>
+        <div className="space-y-6">
+          <div className="grid grid-cols-3 gap-4">
+            <div className="form-control">
+              <label className="label" htmlFor="durationWeeks">
+                <span className="label-text">Durée (semaines)</span>
+              </label>
+              <input
+                id="durationWeeks"
+                type="number"
+                min="1"
+                className="input input-bordered"
+                {...register("durationWeeks", { valueAsNumber: true })}
+              />
+              {errors.durationWeeks && <div className="text-sm text-error mt-1">{errors.durationWeeks.message}</div>}
+            </div>
+            <div className="form-control">
+              <label className="label" htmlFor="sessionsPerWeek">
+                <span className="label-text">Séances/semaine</span>
+              </label>
+              <input
+                id="sessionsPerWeek"
+                type="number"
+                min="1"
+                className="input input-bordered"
+                {...register("sessionsPerWeek", { valueAsNumber: true })}
+              />
+              {errors.sessionsPerWeek && <div className="text-sm text-error mt-1">{errors.sessionsPerWeek.message}</div>}
+            </div>
+            <div className="form-control">
+              <label className="label" htmlFor="sessionDurationMin">
+                <span className="label-text">Durée séance (min)</span>
+              </label>
+              <input
+                id="sessionDurationMin"
+                type="number"
+                min="5"
+                className="input input-bordered"
+                {...register("sessionDurationMin", { valueAsNumber: true })}
+              />
+              {errors.sessionDurationMin && <div className="text-sm text-error mt-1">{errors.sessionDurationMin.message}</div>}
+            </div>
           </div>
-          <div>
-            <Label htmlFor="sessionsPerWeek">Séances/semaine</Label>
-            <Input
-              id="sessionsPerWeek"
-              type="number"
-              min="1"
-              {...register("sessionsPerWeek", { valueAsNumber: true })}
-            />
-            {errors.sessionsPerWeek && <p className="text-sm text-red-500">{errors.sessionsPerWeek.message}</p>}
-          </div>
-          <div>
-            <Label htmlFor="sessionDurationMin">Durée séance (min)</Label>
-            <Input
-              id="sessionDurationMin"
-              type="number"
-              min="5"
-              {...register("sessionDurationMin", { valueAsNumber: true })}
-            />
-            {errors.sessionDurationMin && <p className="text-sm text-red-500">{errors.sessionDurationMin.message}</p>}
-          </div>
-        </div>
 
-        <div>
-          <Label>Équipement requis</Label>
-          <div className="flex flex-wrap gap-2 mt-2">
-            {EQUIPMENT_OPTIONS.map(option => (
-              <Badge
-                key={option.value}
-                variant={selectedEquipment.includes(option.value) ? "default" : "outline"}
-                className="cursor-pointer"
-                onClick={() => toggleEquipment(option.value)}
-              >
-                {option.label}
-              </Badge>
-            ))}
+          <div>
+            <label className="label">
+              <span className="label-text">Équipement requis</span>
+            </label>
+            <div className="flex flex-wrap gap-2 mt-2">
+              {EQUIPMENT_OPTIONS.map(option => (
+                <div
+                  key={option.value}
+                  className={`badge cursor-pointer ${
+                    selectedEquipment.includes(option.value) ? "badge-primary" : "badge-outline"
+                  }`}
+                  onClick={() => toggleEquipment(option.value)}
+                >
+                  {option.label}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="form-control">
+            <label className="label cursor-pointer justify-start gap-2">
+              <input
+                type="checkbox"
+                className="toggle toggle-primary"
+                id="isPremium"
+                onChange={(e) => setValue("isPremium", e.target.checked)}
+                defaultChecked={true}
+              />
+              <span className="label-text">Programme premium</span>
+            </label>
           </div>
         </div>
-
-        <div className="flex items-center space-x-2">
-          <Switch
-            id="isPremium"
-            onCheckedChange={(checked) => setValue("isPremium", checked)}
-            defaultChecked={true}
-          />
-          <Label htmlFor="isPremium">Programme premium</Label>
-        </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 
   const renderStep3 = () => (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center justify-between">
-          Coachs du programme
-          <Button type="button" onClick={addCoach} size="sm">
+    <div className="card bg-base-100 shadow-xl">
+      <div className="card-body">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="card-title">Coachs du programme</h2>
+          <button type="button" className="btn btn-sm btn-primary" onClick={addCoach}>
             <Plus className="h-4 w-4 mr-1" />
             Ajouter
-          </Button>
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        {coaches.length === 0 ? (
-          <p className="text-muted-foreground text-center py-8">
-            Aucun coach ajouté. Cliquez sur "Ajouter" pour commencer.
-          </p>
-        ) : (
-          coaches.map((_, index) => (
-            <div key={index} className="flex gap-4 items-end">
-              <div className="flex-1">
-                <Label htmlFor={`coach-name-${index}`}>Nom</Label>
-                <Input
-                  id={`coach-name-${index}`}
-                  {...register(`coaches.${index}.name`)}
-                  placeholder="Nom du coach"
-                />
+          </button>
+        </div>
+        <div className="space-y-4">
+          {coaches.length === 0 ? (
+            <p className="text-base-content/60 text-center py-8">
+              Aucun coach ajouté. Cliquez sur "Ajouter" pour commencer.
+            </p>
+          ) : (
+            coaches.map((_, index) => (
+              <div key={index} className="flex gap-4 items-end">
+                <div className="flex-1 form-control">
+                  <label className="label" htmlFor={`coach-name-${index}`}>
+                    <span className="label-text">Nom</span>
+                  </label>
+                  <input
+                    id={`coach-name-${index}`}
+                    className="input input-bordered"
+                    {...register(`coaches.${index}.name`)}
+                    placeholder="Nom du coach"
+                  />
+                </div>
+                <div className="flex-1 form-control">
+                  <label className="label" htmlFor={`coach-image-${index}`}>
+                    <span className="label-text">URL de l'image</span>
+                  </label>
+                  <input
+                    id={`coach-image-${index}`}
+                    className="input input-bordered"
+                    {...register(`coaches.${index}.image`)}
+                    placeholder="https://..."
+                  />
+                </div>
+                <button
+                  type="button"
+                  className="btn btn-outline btn-sm"
+                  onClick={() => removeCoach(index)}
+                >
+                  <Trash2 className="h-4 w-4" />
+                </button>
               </div>
-              <div className="flex-1">
-                <Label htmlFor={`coach-image-${index}`}>URL de l'image</Label>
-                <Input
-                  id={`coach-image-${index}`}
-                  {...register(`coaches.${index}.image`)}
-                  placeholder="https://..."
-                />
-              </div>
-              <Button
-                type="button"
-                variant="outline"
-                size="sm"
-                onClick={() => removeCoach(index)}
-              >
-                <Trash2 className="h-4 w-4" />
-              </Button>
-            </div>
-          ))
-        )}
-      </CardContent>
-    </Card>
+            ))
+          )}
+        </div>
+      </div>
+    </div>
   );
 
   return (
@@ -342,13 +371,13 @@ export function CreateProgramForm({ currentStep, onStepComplete, onSuccess, onCa
       {currentStep === 2 && renderStep2()}
       {currentStep === 3 && renderStep3()}
 
-      <div className="flex justify-between pt-6 border-t">
-        <Button type="button" variant="outline" onClick={onCancel}>
+      <div className="flex justify-between pt-6 border-t border-base-300">
+        <button type="button" className="btn btn-outline" onClick={onCancel}>
           Annuler
-        </Button>
-        <Button type="submit" disabled={isLoading}>
+        </button>
+        <button type="submit" className="btn btn-primary" disabled={isLoading}>
           {currentStep === 3 ? (isLoading ? "Création..." : "Créer le programme") : "Suivant"}
-        </Button>
+        </button>
       </div>
     </form>
   );

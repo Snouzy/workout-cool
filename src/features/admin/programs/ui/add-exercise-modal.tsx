@@ -8,13 +8,6 @@ import { WorkoutSetType, WorkoutSetUnit } from "@prisma/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { SUGGESTED_SET_TEMPLATES } from "@/features/programs/lib/suggested-sets-helpers";
-import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 
 import { addExerciseToSession, getExercises } from "../actions/add-exercise.action";
 
@@ -166,200 +159,224 @@ export function AddExerciseModal({ open, onOpenChange, sessionId, nextOrder }: A
   };
 
   return (
-    <Dialog onOpenChange={handleClose} open={open}>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-hidden flex flex-col">
-        <DialogHeader>
-          <DialogTitle>Ajouter un exercice</DialogTitle>
-        </DialogHeader>
+    <>
+      {open && (
+        <div className="modal modal-open">
+          <div className="modal-box w-11/12 max-w-4xl h-full max-h-[90vh] flex flex-col">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="font-bold text-lg">Ajouter un exercice</h3>
+              <button 
+                className="btn btn-sm btn-circle btn-ghost"
+                onClick={handleClose}
+              >
+                ✕
+              </button>
+            </div>
 
-        <div className="flex-1 overflow-y-auto space-y-6">
-          {/* Exercise Selection */}
-          {!selectedExercise && (
-            <Card>
-              <CardHeader>
-                <CardTitle>Sélectionner un exercice</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="relative">
-                  <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                  <Input
-                    className="pl-10"
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    placeholder="Rechercher un exercice..."
-                    value={searchTerm}
-                  />
+            <div className="flex-1 overflow-y-auto space-y-6">
+              {/* Exercise Selection */}
+              {!selectedExercise && (
+                <div className="card bg-base-100 shadow-xl">
+                  <div className="card-body">
+                    <h2 className="card-title">Sélectionner un exercice</h2>
+                    <div className="space-y-4">
+                      <div className="relative">
+                        <Search className="absolute left-3 top-3 h-4 w-4 text-base-content/60" />
+                        <input
+                          className="input input-bordered w-full pl-10"
+                          onChange={(e) => setSearchTerm(e.target.value)}
+                          placeholder="Rechercher un exercice..."
+                          value={searchTerm}
+                        />
+                      </div>
+
+                      <div className="grid gap-2 max-h-60 overflow-y-auto">
+                        {exercises.map((exercise) => (
+                          <div
+                            className="flex items-center justify-between p-3 border border-base-300 rounded-lg cursor-pointer hover:bg-base-200"
+                            key={exercise.id}
+                            onClick={() => selectExercise(exercise)}
+                          >
+                            <div>
+                              <h4 className="font-medium">{exercise.name}</h4>
+                              <p className="text-sm text-base-content/60">{exercise.nameEn}</p>
+                            </div>
+                            <button className="btn btn-sm btn-primary">Sélectionner</button>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
                 </div>
+              )}
 
-                <div className="grid gap-2 max-h-60 overflow-y-auto">
-                  {exercises.map((exercise) => (
-                    <div
-                      className="flex items-center justify-between p-3 border rounded-lg cursor-pointer hover:bg-muted/50"
-                      key={exercise.id}
-                      onClick={() => selectExercise(exercise)}
-                    >
-                      <div>
-                        <h4 className="font-medium">{exercise.name}</h4>
-                        <p className="text-sm text-muted-foreground">{exercise.nameEn}</p>
-                      </div>
-                      <Button size="small">Sélectionner</Button>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          )}
-
-          {/* Selected Exercise & Configuration */}
-          {selectedExercise && (
-            <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
-              {/* Exercise Info */}
-              <Card>
-                <CardHeader>
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <CardTitle>{selectedExercise.name}</CardTitle>
-                      <p className="text-sm text-muted-foreground">{selectedExercise.nameEn}</p>
-                    </div>
-                    <Button onClick={() => setSelectedExercise(null)} type="button" variant="outline">
-                      Changer
-                    </Button>
-                  </div>
-                </CardHeader>
-              </Card>
-
-              {/* Instructions */}
-              <Card>
-                <CardHeader>
-                  <CardTitle>Instructions</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div>
-                    <Label htmlFor="instructions">Instructions (FR)</Label>
-                    <Textarea
-                      id="instructions"
-                      {...register("instructions")}
-                      placeholder="Instructions spécifiques pour cet exercice dans ce programme..."
-                      rows={3}
-                    />
-                    {errors.instructions && <p className="text-sm text-red-500 mt-1">{errors.instructions.message}</p>}
-                  </div>
-                  <div>
-                    <Label htmlFor="instructionsEn">Instructions (EN)</Label>
-                    <Textarea
-                      id="instructionsEn"
-                      {...register("instructionsEn")}
-                      placeholder="Specific instructions for this exercise in this program..."
-                      rows={3}
-                    />
-                    {errors.instructionsEn && <p className="text-sm text-red-500 mt-1">{errors.instructionsEn.message}</p>}
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Suggested Sets */}
-              <Card>
-                <CardHeader>
-                  <div className="flex items-center justify-between">
-                    <CardTitle>Séries suggérées</CardTitle>
-                    <div className="flex gap-2">
-                      <Button onClick={() => useTemplate("strength")} size="small" type="button" variant="outline">
-                        Musculation
-                      </Button>
-                      <Button onClick={() => useTemplate("bodyweight")} size="small" type="button" variant="outline">
-                        Poids du corps
-                      </Button>
-                      <Button onClick={() => useTemplate("timed")} size="small" type="button" variant="outline">
-                        Chronométré
-                      </Button>
-                      <Button onClick={addSet} size="small" type="button">
-                        <Plus className="h-4 w-4 mr-1" />
-                        Ajouter
-                      </Button>
-                    </div>
-                  </div>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  {suggestedSets.map((set, index) => (
-                    <div className="flex items-center gap-3 p-3 border rounded-lg" key={index}>
-                      <div className="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-semibold">
-                        {index + 1}
-                      </div>
-                      <div className="flex-1 grid grid-cols-4 gap-2">
+              {/* Selected Exercise & Configuration */}
+              {selectedExercise && (
+                <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
+                  {/* Exercise Info */}
+                  <div className="card bg-base-100 shadow-xl">
+                    <div className="card-body">
+                      <div className="flex items-center justify-between">
                         <div>
-                          <Label className="text-xs">Type</Label>
-                          <Select onValueChange={(value) => updateSet(index, "types", [value])} value={set.types?.[0] || ""}>
-                            <SelectTrigger className="h-8">
-                              <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value={WorkoutSetType.WEIGHT}>Poids</SelectItem>
-                              <SelectItem value={WorkoutSetType.REPS}>Répétitions</SelectItem>
-                              <SelectItem value={WorkoutSetType.TIME}>Temps</SelectItem>
-                              <SelectItem value={WorkoutSetType.BODYWEIGHT}>Poids du corps</SelectItem>
-                            </SelectContent>
-                          </Select>
+                          <h2 className="card-title">{selectedExercise.name}</h2>
+                          <p className="text-sm text-base-content/60">{selectedExercise.nameEn}</p>
                         </div>
-                        <div>
-                          <Label className="text-xs">Poids/Reps</Label>
-                          <Input
-                            className="h-8"
-                            onChange={(e) => updateSet(index, "valuesInt", [parseInt(e.target.value) || 0])}
-                            type="number"
-                            value={set.valuesInt?.[0] || ""}
+                        <button onClick={() => setSelectedExercise(null)} type="button" className="btn btn-outline">
+                          Changer
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Instructions */}
+                  <div className="card bg-base-100 shadow-xl">
+                    <div className="card-body">
+                      <h2 className="card-title">Instructions</h2>
+                      <div className="space-y-4">
+                        <div className="form-control">
+                          <label className="label" htmlFor="instructions">
+                            <span className="label-text">Instructions (FR)</span>
+                          </label>
+                          <textarea
+                            id="instructions"
+                            className="textarea textarea-bordered"
+                            {...register("instructions")}
+                            placeholder="Instructions spécifiques pour cet exercice dans ce programme..."
+                            rows={3}
                           />
+                          {errors.instructions && <div className="text-sm text-error mt-1">{errors.instructions.message}</div>}
                         </div>
-                        <div>
-                          <Label className="text-xs">Temps (sec)</Label>
-                          <Input
-                            className="h-8"
-                            onChange={(e) => updateSet(index, "valuesSec", [parseInt(e.target.value) || 0])}
-                            type="number"
-                            value={set.valuesSec?.[0] || ""}
+                        <div className="form-control">
+                          <label className="label" htmlFor="instructionsEn">
+                            <span className="label-text">Instructions (EN)</span>
+                          </label>
+                          <textarea
+                            id="instructionsEn"
+                            className="textarea textarea-bordered"
+                            {...register("instructionsEn")}
+                            placeholder="Specific instructions for this exercise in this program..."
+                            rows={3}
                           />
-                        </div>
-                        <div>
-                          <Label className="text-xs">Unité</Label>
-                          <Select onValueChange={(value) => updateSet(index, "units", [value])} value={set.units?.[0] || ""}>
-                            <SelectTrigger className="h-8">
-                              <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value={WorkoutSetUnit.kg}>kg</SelectItem>
-                              <SelectItem value={WorkoutSetUnit.lbs}>lbs</SelectItem>
-                            </SelectContent>
-                          </Select>
+                          {errors.instructionsEn && <div className="text-sm text-error mt-1">{errors.instructionsEn.message}</div>}
                         </div>
                       </div>
-                      <Button onClick={() => removeSet(index)} size="small" type="button" variant="outline">
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
                     </div>
-                  ))}
+                  </div>
 
-                  {suggestedSets.length === 0 && (
-                    <div className="text-center py-8 border-2 border-dashed border-muted rounded-lg">
-                      <p className="text-muted-foreground mb-3">Aucune série configurée</p>
-                      <Button onClick={addSet} size="small" type="button">
-                        <Plus className="h-4 w-4 mr-1" />
-                        Ajouter la première série
-                      </Button>
+                  {/* Suggested Sets */}
+                  <div className="card bg-base-100 shadow-xl">
+                    <div className="card-body">
+                      <div className="flex items-center justify-between mb-4">
+                        <h2 className="card-title">Séries suggérées</h2>
+                        <div className="flex gap-2">
+                          <button onClick={() => useTemplate("strength")} className="btn btn-sm btn-outline" type="button">
+                            Musculation
+                          </button>
+                          <button onClick={() => useTemplate("bodyweight")} className="btn btn-sm btn-outline" type="button">
+                            Poids du corps
+                          </button>
+                          <button onClick={() => useTemplate("timed")} className="btn btn-sm btn-outline" type="button">
+                            Chronométré
+                          </button>
+                          <button onClick={addSet} className="btn btn-sm btn-primary" type="button">
+                            <Plus className="h-4 w-4 mr-1" />
+                            Ajouter
+                          </button>
+                        </div>
+                      </div>
+                      <div className="space-y-3">
+                        {suggestedSets.map((set, index) => (
+                          <div className="flex items-center gap-3 p-3 border border-base-300 rounded-lg" key={index}>
+                            <div className="w-8 h-8 bg-primary text-primary-content rounded-full flex items-center justify-center text-sm font-semibold">
+                              {index + 1}
+                            </div>
+                            <div className="flex-1 grid grid-cols-4 gap-2">
+                              <div className="form-control">
+                                <label className="label">
+                                  <span className="label-text text-xs">Type</span>
+                                </label>
+                                <select 
+                                  className="select select-bordered select-sm" 
+                                  onChange={(e) => updateSet(index, "types", [e.target.value])} 
+                                  value={set.types?.[0] || ""}
+                                >
+                                  <option value="">Sélectionner</option>
+                                  <option value={WorkoutSetType.WEIGHT}>Poids</option>
+                                  <option value={WorkoutSetType.REPS}>Répétitions</option>
+                                  <option value={WorkoutSetType.TIME}>Temps</option>
+                                  <option value={WorkoutSetType.BODYWEIGHT}>Poids du corps</option>
+                                </select>
+                              </div>
+                              <div className="form-control">
+                                <label className="label">
+                                  <span className="label-text text-xs">Poids/Reps</span>
+                                </label>
+                                <input
+                                  className="input input-bordered input-sm"
+                                  onChange={(e) => updateSet(index, "valuesInt", [parseInt(e.target.value) || 0])}
+                                  type="number"
+                                  value={set.valuesInt?.[0] || ""}
+                                />
+                              </div>
+                              <div className="form-control">
+                                <label className="label">
+                                  <span className="label-text text-xs">Temps (sec)</span>
+                                </label>
+                                <input
+                                  className="input input-bordered input-sm"
+                                  onChange={(e) => updateSet(index, "valuesSec", [parseInt(e.target.value) || 0])}
+                                  type="number"
+                                  value={set.valuesSec?.[0] || ""}
+                                />
+                              </div>
+                              <div className="form-control">
+                                <label className="label">
+                                  <span className="label-text text-xs">Unité</span>
+                                </label>
+                                <select 
+                                  className="select select-bordered select-sm" 
+                                  onChange={(e) => updateSet(index, "units", [e.target.value])} 
+                                  value={set.units?.[0] || ""}
+                                >
+                                  <option value="">Sélectionner</option>
+                                  <option value={WorkoutSetUnit.kg}>kg</option>
+                                  <option value={WorkoutSetUnit.lbs}>lbs</option>
+                                </select>
+                              </div>
+                            </div>
+                            <button onClick={() => removeSet(index)} className="btn btn-sm btn-outline" type="button">
+                              <Trash2 className="h-4 w-4" />
+                            </button>
+                          </div>
+                        ))}
+
+                        {suggestedSets.length === 0 && (
+                          <div className="text-center py-8 border-2 border-dashed border-base-300 rounded-lg">
+                            <p className="text-base-content/60 mb-3">Aucune série configurée</p>
+                            <button onClick={addSet} className="btn btn-sm btn-primary" type="button">
+                              <Plus className="h-4 w-4 mr-1" />
+                              Ajouter la première série
+                            </button>
+                          </div>
+                        )}
+                      </div>
                     </div>
-                  )}
-                </CardContent>
-              </Card>
+                  </div>
 
-              <div className="flex justify-end gap-2 pt-4">
-                <Button onClick={handleClose} type="button" variant="outline">
-                  Annuler
-                </Button>
-                <Button disabled={isLoading} type="submit">
-                  {isLoading ? "Ajout..." : "Ajouter l'exercice"}
-                </Button>
-              </div>
-            </form>
-          )}
+                  <div className="flex justify-end gap-2 pt-4">
+                    <button onClick={handleClose} type="button" className="btn btn-outline">
+                      Annuler
+                    </button>
+                    <button disabled={isLoading} type="submit" className="btn btn-primary">
+                      {isLoading ? "Ajout..." : "Ajouter l'exercice"}
+                    </button>
+                  </div>
+                </form>
+              )}
+            </div>
+          </div>
         </div>
-      </DialogContent>
-    </Dialog>
+      )}
+    </>
   );
 }

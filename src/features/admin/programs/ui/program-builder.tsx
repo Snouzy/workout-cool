@@ -1,10 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Plus, Calendar, Clock, Users, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
@@ -22,17 +18,15 @@ export function ProgramBuilder({ program }: ProgramBuilderProps) {
     <div className="space-y-6">
       {/* Header */}
       <div className="flex items-center gap-4">
-        <Button asChild variant="ghost" size="sm">
-          <Link href="/admin/programs">
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            Retour aux programmes
-          </Link>
-        </Button>
+        <Link href="/admin/programs" className="btn btn-ghost btn-sm">
+          <ArrowLeft className="h-4 w-4 mr-2" />
+          Retour aux programmes
+        </Link>
       </div>
 
       {/* Program Overview */}
-      <Card>
-        <CardHeader>
+      <div className="card bg-base-100 shadow-xl">
+        <div className="card-body">
           <div className="flex items-start justify-between">
             <div className="flex items-start gap-4">
               <div className="relative w-24 h-24 rounded-lg overflow-hidden">
@@ -45,7 +39,7 @@ export function ProgramBuilder({ program }: ProgramBuilderProps) {
               </div>
               <div>
                 <div className="flex items-center gap-2 mb-2">
-                  <CardTitle className="text-2xl">{program.title}</CardTitle>
+                  <h1 className="text-2xl font-bold">{program.title}</h1>
                   {program.emoji && (
                     <Image
                       src={`/images/emojis/${program.emoji}`}
@@ -55,114 +49,116 @@ export function ProgramBuilder({ program }: ProgramBuilderProps) {
                     />
                   )}
                 </div>
-                <p className="text-muted-foreground mb-3">{program.description}</p>
+                <p className="text-base-content/60 mb-3">{program.description}</p>
                 <div className="flex gap-2">
-                  <Badge variant={program.isPremium ? "default" : "secondary"}>
+                  <div className={`badge ${program.isPremium ? "badge-primary" : "badge-secondary"}`}>
                     {program.isPremium ? "Premium" : "Gratuit"}
-                  </Badge>
-                  <Badge variant="outline">{program.level}</Badge>
-                  <Badge variant="outline">{program.category}</Badge>
+                  </div>
+                  <div className="badge badge-outline">{program.level}</div>
+                  <div className="badge badge-outline">{program.category}</div>
                 </div>
               </div>
             </div>
             <div className="text-right">
-              <div className="text-sm text-muted-foreground">Participants</div>
+              <div className="text-sm text-base-content/60">Participants</div>
               <div className="text-2xl font-bold">{program.participantCount}</div>
             </div>
           </div>
-        </CardHeader>
-        <CardContent>
+          <div className="divider"></div>
           <div className="grid grid-cols-4 gap-4 text-sm">
             <div className="flex items-center gap-2">
-              <Calendar className="h-4 w-4 text-muted-foreground" />
+              <Calendar className="h-4 w-4 text-base-content/60" />
               <span>{program.durationWeeks} semaines</span>
             </div>
             <div className="flex items-center gap-2">
-              <Clock className="h-4 w-4 text-muted-foreground" />
+              <Clock className="h-4 w-4 text-base-content/60" />
               <span>{program.sessionDurationMin} min/séance</span>
             </div>
             <div className="flex items-center gap-2">
-              <Users className="h-4 w-4 text-muted-foreground" />
+              <Users className="h-4 w-4 text-base-content/60" />
               <span>{program.sessionsPerWeek} séances/semaine</span>
             </div>
             <div>
-              <span className="text-muted-foreground">Équipement: </span>
+              <span className="text-base-content/60">Équipement: </span>
               <span>{program.equipment.join(", ") || "Aucun"}</span>
             </div>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
       {/* Content Tabs */}
-      <Tabs defaultValue="structure" className="space-y-6">
-        <TabsList>
-          <TabsTrigger value="structure">Structure du programme</TabsTrigger>
-          <TabsTrigger value="settings">Paramètres</TabsTrigger>
-          <TabsTrigger value="analytics">Statistiques</TabsTrigger>
-        </TabsList>
+      <div className="space-y-6">
+        <div className="tabs tabs-boxed">
+          <input type="radio" name="program_tabs" className="tab" id="structure" defaultChecked />
+          <label htmlFor="structure" className="tab">Structure du programme</label>
+          
+          <input type="radio" name="program_tabs" className="tab" id="settings" />
+          <label htmlFor="settings" className="tab">Paramètres</label>
+          
+          <input type="radio" name="program_tabs" className="tab" id="analytics" />
+          <label htmlFor="analytics" className="tab">Statistiques</label>
+        </div>
 
-        <TabsContent value="structure" className="space-y-6">
+        <div className="space-y-6">
           {/* Add Week Button */}
           <div className="flex justify-between items-center">
             <h3 className="text-lg font-semibold">
               Semaines ({program.weeks.length}/{program.durationWeeks})
             </h3>
-            <Button onClick={() => setIsAddWeekModalOpen(true)}>
+            <button className="btn btn-primary" onClick={() => setIsAddWeekModalOpen(true)}>
               <Plus className="h-4 w-4 mr-2" />
               Ajouter une semaine
-            </Button>
+            </button>
           </div>
 
           {/* Weeks List */}
           <div className="space-y-4">
             {program.weeks.length === 0 ? (
-              <Card>
-                <CardContent className="flex flex-col items-center justify-center py-12">
-                  <Calendar className="h-12 w-12 text-muted-foreground mb-4" />
+              <div className="card bg-base-100 shadow-xl">
+                <div className="card-body flex flex-col items-center justify-center py-12">
+                  <Calendar className="h-12 w-12 text-base-content/60 mb-4" />
                   <h4 className="text-lg font-semibold mb-2">Aucune semaine créée</h4>
-                  <p className="text-muted-foreground text-center max-w-md mb-4">
+                  <p className="text-base-content/60 text-center max-w-md mb-4">
                     Commencez par ajouter la première semaine de votre programme.
                   </p>
-                  <Button onClick={() => setIsAddWeekModalOpen(true)}>
+                  <button className="btn btn-primary" onClick={() => setIsAddWeekModalOpen(true)}>
                     <Plus className="h-4 w-4 mr-2" />
                     Ajouter la première semaine
-                  </Button>
-                </CardContent>
-              </Card>
+                  </button>
+                </div>
+              </div>
             ) : (
               program.weeks.map((week: any) => (
                 <WeekCard key={week.id} week={week} programId={program.id} />
               ))
             )}
           </div>
-        </TabsContent>
-
-        <TabsContent value="settings">
-          <Card>
-            <CardHeader>
-              <CardTitle>Paramètres du programme</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground">
+        </div>
+        
+        {/* Settings Tab Content */}
+        <div className="hidden" id="settings-content">
+          <div className="card bg-base-100 shadow-xl">
+            <div className="card-body">
+              <h2 className="card-title">Paramètres du programme</h2>
+              <p className="text-base-content/60">
                 Configuration avancée du programme (à implémenter)
               </p>
-            </CardContent>
-          </Card>
-        </TabsContent>
+            </div>
+          </div>
+        </div>
 
-        <TabsContent value="analytics">
-          <Card>
-            <CardHeader>
-              <CardTitle>Statistiques</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground">
+        {/* Analytics Tab Content */}
+        <div className="hidden" id="analytics-content">
+          <div className="card bg-base-100 shadow-xl">
+            <div className="card-body">
+              <h2 className="card-title">Statistiques</h2>
+              <p className="text-base-content/60">
                 Analytics et métriques du programme (à implémenter)
               </p>
-            </CardContent>
-          </Card>
-        </TabsContent>
-      </Tabs>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* Add Week Modal */}
       <AddWeekModal

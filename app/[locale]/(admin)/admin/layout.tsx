@@ -2,8 +2,8 @@ import { ReactElement } from "react";
 import { redirect } from "next/navigation";
 import { UserRole } from "@prisma/client";
 
-import { AuthenticatedHeader } from "@/features/layout/authenticated-header";
 import { AdminSidebar } from "@/features/admin/layout/admin-sidebar/ui/admin-sidebar";
+import { AdminHeader } from "@/features/admin/layout/admin-sidebar/ui/admin-header";
 import { serverRequiredUser } from "@/entities/user/model/get-server-session-user";
 
 interface AdminLayoutProps {
@@ -19,12 +19,19 @@ export default async function AdminLayout({ children }: AdminLayoutProps) {
   }
 
   return (
-    <div className="main-content">
-      <AuthenticatedHeader />
+    <div className="flex h-screen bg-gray-50 dark:bg-gray-900">
+      {/* Sidebar */}
       <AdminSidebar />
 
-      <div className="mt-[60px] p-4 px-2 transition-all sm:px-4 lg:ml-[260px]" id="main-content">
-        {children}
+      {/* Main content */}
+      <div className="flex flex-1 flex-col overflow-hidden">
+        {/* Header */}
+        <AdminHeader user={user} />
+
+        {/* Page content */}
+        <main className="flex-1 overflow-y-auto bg-white p-6 dark:bg-gray-800">
+          <div className="mx-auto max-w-7xl">{children}</div>
+        </main>
       </div>
     </div>
   );

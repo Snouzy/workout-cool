@@ -1,8 +1,12 @@
 "use client";
 
+import { useState } from "react";
 import { useQueryState, parseAsString, parseAsInteger } from "nuqs";
 import Image from "next/image";
 import { BarChart3, Target, Clock, Calendar, Timer, Dumbbell, Share, Lock, Trophy, Users, Zap } from "lucide-react";
+
+import { WelcomeModal } from "@/features/programs/ui/welcome-modal";
+import { ProgramProgress } from "@/features/programs/ui/program-progress";
 
 interface Program {
   id: string;
@@ -36,11 +40,31 @@ interface Program {
 
 interface ProgramDetailClientProps {
   program: Program;
+  isAuthenticated: boolean;
 }
 
-export function ProgramDetailClient({ program }: ProgramDetailClientProps) {
+export function ProgramDetailClient({ program, isAuthenticated }: ProgramDetailClientProps) {
   const [tab, setTab] = useQueryState("tab", parseAsString.withDefault("about"));
   const [selectedWeek, setSelectedWeek] = useQueryState("week", parseAsInteger.withDefault(1));
+  const [showWelcomeModal, setShowWelcomeModal] = useState(false);
+
+  const handleJoinProgram = async () => {
+    try {
+      const { enrollInProgram } = await import("@/features/programs/actions/enroll-program.action");
+      const { enrollment } = await enrollInProgram(program.id);
+
+      setShowWelcomeModal(false);
+
+      // Navigate to first session
+      const firstSession = program.sessions[0]?.sessions[0];
+      if (firstSession) {
+        window.location.href = `/programs/${program.id}/session/${firstSession.id}`;
+      }
+    } catch (error) {
+      console.error("Failed to join program:", error);
+      // TODO: Show error message
+    }
+  };
 
   return (
     <div className="flex-1 flex flex-col overflow-hidden relative">
@@ -93,6 +117,9 @@ export function ProgramDetailClient({ program }: ProgramDetailClientProps) {
             />
             <div className="tab-content bg-base-100 border-base-300 rounded-md rounded-tl-none p-2 sm:p-6" role="tabpanel">
               <div className="space-y-6">
+                {/* User Progress - Only show if authenticated */}
+                {isAuthenticated && <ProgramProgress programId={program.id} />}
+
                 {/* Gamified Community Stats */}
                 <div className="bg-gradient-to-r from-[#4F8EF7]/10 to-[#25CB78]/10 border-2 border-[#4F8EF7]/20 rounded-xl p-4">
                   <div className="flex items-center justify-between">
@@ -311,11 +338,25 @@ export function ProgramDetailClient({ program }: ProgramDetailClientProps) {
       </div>
 
       {/* Gamified Floating CTA */}
-      <button className="absolute bottom-6 right-0 left-0 max-w-xs mx-auto bg-gradient-to-r from-[#4F8EF7] to-[#25CB78] hover:from-[#4F8EF7]/80 hover:to-[#25CB78]/80 text-white px-8 py-4 rounded-full font-bold border-2 border-white/20 hover:scale-105 transition-all duration-200 ease-in-out z-50 flex items-center justify-center gap-2">
+      <button
+        className="absolute bottom-6 right-0 left-0 max-w-xs mx-auto bg-gradient-to-r from-[#4F8EF7] to-[#25CB78] hover:from-[#4F8EF7]/80 hover:to-[#25CB78]/80 text-white px-8 py-4 rounded-full font-bold border-2 border-white/20 hover:scale-105 transition-all duration-200 ease-in-out z-50 flex items-center justify-center gap-2"
+        onClick={() => setShowWelcomeModal(true)}
+      >
         <Image alt="Rejoindre" className="w-6 h-6 object-contain" height={24} src="/images/emojis/WorkoutCoolSwag.png" width={24} />
         Rejoindre le défi
         <Trophy className="text-white" size={18} />
       </button>
+
+      {/* Welcome Modal */}
+      <WelcomeModal
+        isOpen={showWelcomeModal}
+        onClose={() => setShowWelcomeModal(false)}
+        onJoin={handleJoinProgram}
+        programDuration={program.duration}
+        programFrequency={program.frequency}
+        programLevel={program.level}
+        programTitle={program.title}
+      />
     </div>
   );
 }

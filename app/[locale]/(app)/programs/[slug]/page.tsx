@@ -1,5 +1,8 @@
 import { notFound } from "next/navigation";
+import { headers } from "next/headers";
 import { Metadata } from "next";
+
+import { auth } from "@/features/auth/lib/better-auth";
 
 import { ProgramDetailClient } from "./ProgramDetailClient";
 import { getProgramData } from "./getProgramData";
@@ -48,5 +51,9 @@ export default async function ProgramDetailPage({ params }: ProgramDetailPagePro
     notFound();
   }
 
-  return <ProgramDetailClient program={program} />;
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  return <ProgramDetailClient isAuthenticated={!!session} program={program} />;
 }

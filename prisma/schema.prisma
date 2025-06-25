@@ -37,10 +37,13 @@ model User {
   WorkoutSession WorkoutSession[]
 
   // Subscription fields
-  subscriptions     Subscription[]
-  licenses          License[]
-  isPremium         Boolean? @default(false)
-  premiumUntil      DateTime?
+  subscriptions Subscription[]
+  licenses      License[]
+  isPremium     Boolean?       @default(false)
+  premiumUntil  DateTime?
+
+  // Training programs
+  programEnrollments UserProgramEnrollment[]
 
   @@map("user")
 }
@@ -123,6 +126,7 @@ model Exercise {
   // Relations
   attributes             ExerciseAttribute[]
   WorkoutSessionExercise WorkoutSessionExercise[]
+  ProgramSessionExercise ProgramSessionExercise[]
 
   @@map("exercises")
 }
@@ -282,6 +286,9 @@ model WorkoutSession {
   exercises WorkoutSessionExercise[]
   muscles   ExerciseAttributeValueEnum[] @default([])
 
+  // Program progress tracking
+  userSessionProgress UserSessionProgress?
+
   @@map("workout_sessions")
 }
 
@@ -331,168 +338,168 @@ enum WorkoutSetUnit {
 
 // Configuration globale pour self-hosted
 model AppConfiguration {
-  id                String   @id @default("default")
-  
+  id String @id @default("default")
+
   // Mode de paiement
-  billingMode       BillingMode @default(DISABLED)
-  
+  billingMode BillingMode @default(DISABLED)
+
   // Limites pour le mode gratuit
-  freeUserLimits    Json?    // {"maxWorkouts": 10, "maxExercises": 100}
-  
+  freeUserLimits Json? // {"maxWorkouts": 10, "maxExercises": 100}
+
   // Configuration des processeurs
-  activeProcessor   PaymentProcessor?
-  processorConfig   Json?    // Clés API chiffrées, webhooks secrets, etc.
-  
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  
+  activeProcessor PaymentProcessor?
+  processorConfig Json? // Clés API chiffrées, webhooks secrets, etc.
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   @@map("app_configuration")
 }
 
 // Plans d'abonnement (optionnels en self-hosted)
 model SubscriptionPlan {
-  id                String   @id @default(cuid())
-  name              String
-  description       String?
-  
+  id          String  @id @default(cuid())
+  name        String
+  description String?
+
   // Prix (optionnels en self-hosted)
-  priceMonthly      Decimal? @db.Decimal(10, 2)
-  priceYearly       Decimal? @db.Decimal(10, 2)
-  currency          String?  @default("EUR")
-  
+  priceMonthly Decimal? @db.Decimal(10, 2)
+  priceYearly  Decimal? @db.Decimal(10, 2)
+  currency     String?  @default("EUR")
+
   // IDs externes
   revenueCatProductId String? @unique
   externalProductId   String? // Stripe, LemonSqueezy, etc.
-  
+
   // Features et limites
-  features          Json?    // {"maxWorkouts": 100, "premiumExercises": true, etc.}
-  
+  features Json? // {"maxWorkouts": 100, "premiumExercises": true, etc.}
+
   // Visibilité
-  isActive          Boolean  @default(true)
+  isActive              Boolean @default(true)
   isVisibleInSelfHosted Boolean @default(false)
-  
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  
-  subscriptions     Subscription[]
-  
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  subscriptions Subscription[]
+
   @@map("subscription_plans")
 }
 
 // Abonnements utilisateurs (source de vérité : RevenueCat pour mobile)
 model Subscription {
-  id                    String    @id @default(cuid())
-  userId                String
-  user                  User      @relation(fields: [userId], references: [id])
-  
-  planId                String
-  plan                  SubscriptionPlan @relation(fields: [planId], references: [id])
-  
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  planId String
+  plan   SubscriptionPlan @relation(fields: [planId], references: [id])
+
   // RevenueCat data
   revenueCatUserId      String?
   revenueCatEntitlement String?
-  
+
   // Status
-  status                SubscriptionStatus
-  
+  status SubscriptionStatus
+
   // Dates importantes
-  startedAt             DateTime
-  currentPeriodEnd      DateTime?
-  cancelledAt           DateTime?
-  
+  startedAt        DateTime
+  currentPeriodEnd DateTime?
+  cancelledAt      DateTime?
+
   // Platform info
-  platform              Platform?
-  
-  createdAt             DateTime @default(now())
-  updatedAt             DateTime @updatedAt
-  
+  platform Platform?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   // Historique des paiements
-  payments              Payment[]
-  
+  payments Payment[]
+
   @@unique([userId, platform])
   @@map("subscriptions")
 }
 
 // Paiements - abstrait pour supporter plusieurs processeurs
 model Payment {
-  id                String   @id @default(cuid())
-  subscriptionId    String
-  subscription      Subscription @relation(fields: [subscriptionId], references: [id])
-  
-  amount            Decimal  @db.Decimal(10, 2)
-  currency          String
-  
+  id             String       @id @default(cuid())
+  subscriptionId String
+  subscription   Subscription @relation(fields: [subscriptionId], references: [id])
+
+  amount   Decimal @db.Decimal(10, 2)
+  currency String
+
   // Processeur flexible
-  processor         PaymentProcessor
+  processor          PaymentProcessor
   processorPaymentId String? // ID Stripe, PayPal, LemonSqueezy, etc.
-  
+
   // RevenueCat transaction ID
   revenueCatTransactionId String?
-  
-  status            PaymentStatus
-  
-  paidAt            DateTime?
-  failedAt          DateTime?
-  
-  metadata          Json?    // Données spécifiques au processeur
-  
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  
+
+  status PaymentStatus
+
+  paidAt   DateTime?
+  failedAt DateTime?
+
+  metadata Json? // Données spécifiques au processeur
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   @@index([processorPaymentId])
   @@map("payments")
 }
 
 // Licences pour self-hosted (alternative aux subscriptions)
 model License {
-  id                String   @id @default(cuid())
-  key               String   @unique
-  
+  id  String @id @default(cuid())
+  key String @unique
+
   // Propriétaire
-  userId            String?
-  user              User?    @relation(fields: [userId], references: [id])
-  
+  userId String?
+  user   User?   @relation(fields: [userId], references: [id])
+
   // Validité
-  validFrom         DateTime @default(now())
-  validUntil        DateTime?
-  
+  validFrom  DateTime  @default(now())
+  validUntil DateTime?
+
   // Limites
-  maxUsers          Int?     @default(1)
-  features          Json?
-  
+  maxUsers Int?  @default(1)
+  features Json?
+
   // Activation
-  activatedAt       DateTime?
-  lastCheckedAt     DateTime?
-  
-  createdAt         DateTime @default(now())
-  
+  activatedAt   DateTime?
+  lastCheckedAt DateTime?
+
+  createdAt DateTime @default(now())
+
   @@map("licenses")
 }
 
 // Webhooks - traitement asynchrone et flexible
 model WebhookEvent {
-  id                String   @id @default(cuid())
-  
-  provider          PaymentProcessor  // Le provider qui a envoyé le webhook
-  eventType         String           // Type d'événement selon le provider
-  
-  payload           Json             // Payload brut du webhook
-  headers           Json?            // Headers du webhook (pour signature, etc.)
-  
-  processed         Boolean  @default(false)
-  processedAt       DateTime?
-  retryCount        Int      @default(0)
-  maxRetries        Int      @default(3)
-  
-  error             String?  @db.Text
-  
+  id String @id @default(cuid())
+
+  provider  PaymentProcessor // Le provider qui a envoyé le webhook
+  eventType String // Type d'événement selon le provider
+
+  payload Json // Payload brut du webhook
+  headers Json? // Headers du webhook (pour signature, etc.)
+
+  processed   Boolean   @default(false)
+  processedAt DateTime?
+  retryCount  Int       @default(0)
+  maxRetries  Int       @default(3)
+
+  error String? @db.Text
+
   // Pour traçabilité
-  resultingAction   String?  // Ex: "subscription_created", "payment_failed"
-  relatedUserId     String?  // Pour recherche rapide
-  relatedPaymentId  String?  // Pour lier au paiement si applicable
-  
-  createdAt         DateTime @default(now())
-  
+  resultingAction  String? // Ex: "subscription_created", "payment_failed"
+  relatedUserId    String? // Pour recherche rapide
+  relatedPaymentId String? // Pour lier au paiement si applicable
+
+  createdAt DateTime @default(now())
+
   @@index([provider, processed])
   @@index([relatedUserId])
   @@index([createdAt])
@@ -504,10 +511,10 @@ model WebhookEvent {
 // ========================================
 
 enum BillingMode {
-  DISABLED          // Self-hosted gratuit
-  LICENSE_KEY       // Self-hosted avec licence
-  SUBSCRIPTION      // SaaS avec abonnements
-  FREEMIUM         // Gratuit avec options premium
+  DISABLED // Self-hosted gratuit
+  LICENSE_KEY // Self-hosted avec licence
+  SUBSCRIPTION // SaaS avec abonnements
+  FREEMIUM // Gratuit avec options premium
 }
 
 enum SubscriptionStatus {
@@ -532,7 +539,7 @@ enum PaymentProcessor {
   APPLE_PAY
   GOOGLE_PAY
   REVENUECAT
-  NONE              // Pour self-hosted gratuit
+  NONE // Pour self-hosted gratuit
   OTHER
 }
 
@@ -543,3 +550,187 @@ enum PaymentStatus {
   REFUNDED
 }
 
+// ========================================
+// TRAINING PROGRAMS
+// ========================================
+
+model Program {
+  id                 String                       @id @default(cuid())
+  slug               String                       @unique
+  title              String
+  titleEn            String
+  titleEs            String
+  titlePt            String
+  titleRu            String
+  titleZhCn          String
+  description        String                       @db.Text
+  descriptionEn      String                       @db.Text
+  descriptionEs      String                       @db.Text
+  descriptionPt      String                       @db.Text
+  descriptionRu      String                       @db.Text
+  descriptionZhCn    String                       @db.Text
+  category           String
+  image              String
+  level              ProgramLevel
+  type               ExerciseAttributeValueEnum
+  durationWeeks      Int                          @default(4)
+  sessionsPerWeek    Int                          @default(3)
+  sessionDurationMin Int                          @default(30)
+  equipment          ExerciseAttributeValueEnum[] @default([])
+  isPremium          Boolean                      @default(true)
+  isActive           Boolean                      @default(true)
+  emoji              String?
+  participantCount   Int                          @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  weeks       ProgramWeek[]
+  enrollments UserProgramEnrollment[]
+  coaches     ProgramCoach[]
+
+  @@map("programs")
+}
+
+model ProgramCoach {
+  id        String @id @default(cuid())
+  programId String
+  name      String
+  image     String
+  order     Int    @default(0)
+
+  program Program @relation(fields: [programId], references: [id], onDelete: Cascade)
+
+  @@map("program_coaches")
+}
+
+model ProgramWeek {
+  id              String @id @default(cuid())
+  programId       String
+  weekNumber      Int
+  title           String
+  titleEn         String
+  titleEs         String
+  titlePt         String
+  titleRu         String
+  titleZhCn       String
+  description     String @db.Text
+  descriptionEn   String @db.Text
+  descriptionEs   String @db.Text
+  descriptionPt   String @db.Text
+  descriptionRu   String @db.Text
+  descriptionZhCn String @db.Text
+
+  program  Program          @relation(fields: [programId], references: [id], onDelete: Cascade)
+  sessions ProgramSession[]
+
+  @@unique([programId, weekNumber])
+  @@map("program_weeks")
+}
+
+model ProgramSession {
+  id               String                       @id @default(cuid())
+  weekId           String
+  sessionNumber    Int
+  title            String
+  titleEn          String
+  titleEs          String
+  titlePt          String
+  titleRu          String
+  titleZhCn        String
+  description      String                       @db.Text
+  descriptionEn    String                       @db.Text
+  descriptionEs    String                       @db.Text
+  descriptionPt    String                       @db.Text
+  descriptionRu    String                       @db.Text
+  descriptionZhCn  String                       @db.Text
+  equipment        ExerciseAttributeValueEnum[] @default([])
+  estimatedMinutes Int
+  isPremium        Boolean                      @default(true)
+
+  week         ProgramWeek              @relation(fields: [weekId], references: [id], onDelete: Cascade)
+  exercises    ProgramSessionExercise[]
+  userProgress UserSessionProgress[]
+
+  @@unique([weekId, sessionNumber])
+  @@map("program_sessions")
+}
+
+model ProgramSessionExercise {
+  id               String @id @default(cuid())
+  sessionId        String
+  exerciseId       String
+  order            Int
+  instructions     String @db.Text
+  instructionsEn   String @db.Text
+  instructionsEs   String @db.Text
+  instructionsPt   String @db.Text
+  instructionsRu   String @db.Text
+  instructionsZhCn String @db.Text
+
+  session       ProgramSession        @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  exercise      Exercise              @relation(fields: [exerciseId], references: [id])
+  suggestedSets ProgramSuggestedSet[]
+
+  @@unique([sessionId, order])
+  @@map("program_session_exercises")
+}
+
+model ProgramSuggestedSet {
+  id                       String           @id @default(cuid())
+  programSessionExerciseId String
+  setIndex                 Int
+  types                    WorkoutSetType[] @default([])
+  valuesInt                Int[]            @default([])
+  valuesSec                Int[]            @default([])
+  units                    WorkoutSetUnit[] @default([])
+
+  programSessionExercise ProgramSessionExercise @relation(fields: [programSessionExerciseId], references: [id], onDelete: Cascade)
+
+  @@unique([programSessionExerciseId, setIndex])
+  @@map("program_suggested_sets")
+}
+
+// User enrollment and progress tracking
+model UserProgramEnrollment {
+  id                String    @id @default(cuid())
+  userId            String
+  programId         String
+  enrolledAt        DateTime  @default(now())
+  currentWeek       Int       @default(1)
+  currentSession    Int       @default(1)
+  completedSessions Int       @default(0)
+  isActive          Boolean   @default(true)
+  completedAt       DateTime?
+
+  user            User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  program         Program               @relation(fields: [programId], references: [id])
+  sessionProgress UserSessionProgress[]
+
+  @@unique([userId, programId])
+  @@map("user_program_enrollments")
+}
+
+model UserSessionProgress {
+  id               String    @id @default(cuid())
+  enrollmentId     String
+  sessionId        String
+  startedAt        DateTime  @default(now())
+  completedAt      DateTime?
+  workoutSessionId String?   @unique // Link to actual workout session
+
+  enrollment     UserProgramEnrollment @relation(fields: [enrollmentId], references: [id], onDelete: Cascade)
+  session        ProgramSession        @relation(fields: [sessionId], references: [id])
+  workoutSession WorkoutSession?       @relation(fields: [workoutSessionId], references: [id])
+
+  @@unique([enrollmentId, sessionId])
+  @@map("user_session_progress")
+}
+
+enum ProgramLevel {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+  EXPERT
+}

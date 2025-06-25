@@ -6,7 +6,6 @@ import { Eye, ArrowDown, ArrowUp, AlertTriangle } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 
 import { authClient } from "@/features/auth/lib/auth-client";
-import { PageLink } from "@/features/admin/users/list/ui/page-link";
 import { getUsersAction } from "@/entities/user/model/get-users.actions";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -22,7 +21,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 // Define valid sortable columns
-const sortableColumns = ["createdAt", "email", "elementCount"] as const;
+const sortableColumns = ["createdAt", "email"] as const;
 type SortableColumn = (typeof sortableColumns)[number];
 
 const orderableColumns = ["asc", "desc"] as const;
@@ -61,21 +60,19 @@ export function UsersTable({ initialUsers }: UsersTableProps) {
   const { data, isLoading, isFetching, isError, error } = useQuery({
     queryKey: ["admin-users", pageNumber, searchQuery, sortBy, sortOrder],
     queryFn: async () => {
-      const result = await getUsersAction({
-        page: pageNumber,
-        limit: 100,
-        search: searchQuery || undefined,
-        sortBy: sortBy as SortableColumn,
-        sortOrder: sortOrder as OrderableColumn,
-      });
-      // Ensure the returned users have the elementCount property
-      if (result && result.data) {
-        result.data.users = result.data.users.map((user) => ({
-          ...user,
-          elementCount: user.elementCount || 0, // Default to 0 if undefined
-        }));
+      try {
+        const result = await getUsersAction({
+          page: pageNumber,
+          limit: 100,
+          search: searchQuery || undefined,
+          sortBy: sortBy as SortableColumn,
+          sortOrder: sortOrder as OrderableColumn,
+        });
+        return result;
+      } catch (error) {
+        console.error(error);
+        return null;
       }
-      return result;
     },
     initialData: initialUsers,
   });
@@ -174,12 +171,7 @@ export function UsersTable({ initialUsers }: UsersTableProps) {
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-semibold">Tous les utilisateurs</h2>
-        <Input
-          className="max-w-sm"
-          onChange={handleSearchInputChange}
-          placeholder="Rechercher par ID, email ou slug..."
-          value={inputValue}
-        />
+        <Input className="max-w-sm" onChange={handleSearchInputChange} placeholder="Rechercher par ID ou email..." value={inputValue} />
       </div>
 
       <div className="rounded-md border">
@@ -192,11 +184,7 @@ export function UsersTable({ initialUsers }: UsersTableProps) {
                 Email
                 {renderSortIndicator("email")}
               </TableHead>
-              <TableHead>Slug</TableHead>
-              <TableHead className="hover:bg-muted/50 cursor-pointer" onClick={() => handleSort("elementCount")}>
-                Éléments
-                {renderSortIndicator("elementCount")}
-              </TableHead>
+              <TableHead>Rôle</TableHead>
               <TableHead>Vérifié</TableHead>
               <TableHead className="hover:bg-muted/50 cursor-pointer" onClick={() => handleSort("createdAt")}>
                 Créé le
@@ -209,14 +197,14 @@ export function UsersTable({ initialUsers }: UsersTableProps) {
             {tableIsEffectivelyLoading && usersToDisplay.length === 0 ? ( // Show skeleton rows if loading and no users yet
               Array.from({ length: 5 }).map((_, index) => (
                 <TableRow key={`skeleton-${index}`}>
-                  <TableCell colSpan={8}>
+                  <TableCell colSpan={7}>
                     <Skeleton className="h-6 w-full" />
                   </TableCell>
                 </TableRow>
               ))
             ) : isError && usersToDisplay.length === 0 ? ( // Show specific error in table if fetch failed
               <TableRow>
-                <TableCell className="text-destructive py-4 text-center" colSpan={8}>
+                <TableCell className="text-destructive py-4 text-center" colSpan={7}>
                   <div className="flex items-center justify-center">
                     <AlertTriangle className="mr-2 h-5 w-5" />
                     <span>Erreur lors du chargement des données.</span>
@@ -226,7 +214,7 @@ export function UsersTable({ initialUsers }: UsersTableProps) {
               </TableRow>
             ) : !tableIsEffectivelyLoading && usersToDisplay.length === 0 ? (
               <TableRow>
-                <TableCell className="py-4 text-center" colSpan={8}>
+                <TableCell className="py-4 text-center" colSpan={7}>
                   Aucun utilisateur trouvé.
                 </TableCell>
               </TableRow>
@@ -237,17 +225,16 @@ export function UsersTable({ initialUsers }: UsersTableProps) {
                   <TableCell>{`${user.firstName || ""} ${user.lastName || ""}`.trim() || "-"}</TableCell>
                   <TableCell>{user.email}</TableCell>
                   <TableCell>
-                    {user.pages.length > 0 ? (
-                      <div className="flex flex-col gap-1">
-                        {user.pages.map((page) => (
-                          <PageLink className="text-sm" key={page.id} slug={page.slug} />
-                        ))}
-                      </div>
-                    ) : (
-                      <span className="text-sm text-gray-500">Aucune page</span>
-                    )}
+                    <span
+                      className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ${
+                        user.role === "admin"
+                          ? "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200"
+                          : "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200"
+                      }`}
+                    >
+                      {user.role}
+                    </span>
                   </TableCell>
-                  <TableCell>{user.elementCount}</TableCell>
                   <TableCell>
                     {user.emailVerified ? <span className="text-green-600">✓</span> : <span className="text-red-600">✗</span>}
                   </TableCell>

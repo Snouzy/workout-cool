@@ -20,6 +20,10 @@ const mockPrograms = [
     isNew: true,
     difficulty: "Débutant",
     participants: "75k+",
+    // Layout metadata
+    isFeatured: true, // Grande carte featured
+    displayOrder: 1,
+    section: "new", // "new" ou "discipline"
   },
   {
     id: "warrior-hiit",
@@ -32,6 +36,10 @@ const mockPrograms = [
     isNew: true,
     difficulty: "Intermédiaire",
     participants: "42k+",
+    // Layout metadata
+    isFeatured: false, // Petite carte
+    displayOrder: 2,
+    section: "new",
   },
   {
     id: "alpha-strength",
@@ -44,6 +52,10 @@ const mockPrograms = [
     isNew: false,
     difficulty: "Avancé",
     participants: "28k+",
+    // Layout metadata
+    isFeatured: false,
+    displayOrder: 3,
+    section: "discipline",
   },
   {
     id: "titan-core",
@@ -56,17 +68,83 @@ const mockPrograms = [
     isNew: false,
     difficulty: "Intermédiaire",
     participants: "35k+",
+    // Layout metadata
+    isFeatured: false,
+    displayOrder: 4,
+    section: "discipline",
   },
 ];
 
-export default function ProgrammesPage() {
+// Helper component for program cards
+function ProgramCard({ program }: { program: (typeof mockPrograms)[0] }) {
+  const isFeatured = program.isFeatured;
+  const isNewSection = program.section === "new";
+
   return (
-    <div className="flex-1 flex flex-col overflow-hidden">
+    <div className={isFeatured ? "md:col-span-2" : ""}>
+      <Link
+        className={`relative block rounded-xl overflow-hidden border-2 transition-all  ease-in-out ${
+          isFeatured
+            ? "h-48 border-[#4F8EF7]/20 hover:border-[#4F8EF7] hover:scale-[1.01]"
+            : isNewSection
+              ? "h-48 border-[#25CB78]/20 hover:border-[#25CB78] hover:scale-[1.02]"
+              : "h-36 border-gray-200 dark:border-gray-700 hover:border-[#4F8EF7] hover:scale-[1.02]"
+        }`}
+        href={`/programs/${program.id}`}
+      >
+        <div className={`absolute inset-0 bg-gradient-to-br ${program.gradient}`}></div>
+        <Image alt={program.title} className="absolute inset-0 w-full h-full object-cover mix-blend-overlay" fill src={program.image} />
+        <div className="absolute inset-0 bg-black/40"></div>
+
+        {/* Badges */}
+        <div className={`absolute ${isFeatured ? "top-4 left-4" : "top-3 left-3"} flex flex-wrap gap-2`}>
+          <span className="bg-white/20 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full">{program.difficulty}</span>
+        </div>
+
+        {/* Lock/Emoji */}
+        <div
+          className={`absolute ${isFeatured ? "top-4 right-4 w-10 h-10" : "top-3 right-3 w-8 h-8"} bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center`}
+        >
+          {program.isLocked ? (
+            <Lock className="text-white" size={isFeatured ? 16 : 14} />
+          ) : (
+            <Image
+              alt="Emoji"
+              className={`object-contain ${isFeatured ? "w-6 h-6" : "w-5 h-5"}`}
+              height={isFeatured ? 24 : 20}
+              src={`/images/emojis/${program.emoji}`}
+              width={isFeatured ? 24 : 20}
+            />
+          )}
+        </div>
+
+        {/* Content */}
+        <div className={`absolute bottom-0 left-0 right-0 ${isFeatured ? "p-6" : "p-4"} text-white`}>
+          <div className="flex items-center justify-between">
+            <div>
+              <h4 className={`font-bold leading-tight ${isFeatured ? "text-xl mb-2" : "text-lg mb-1"}`}>{program.title}</h4>
+              <p className={`opacity-90 ${isFeatured ? "text-sm mb-1" : "text-xs"}`}>{program.category}</p>
+              <p className="text-xs opacity-75">{program.participants} participants</p>
+            </div>
+          </div>
+        </div>
+      </Link>
+    </div>
+  );
+}
+
+export default function ProgrammesPage() {
+  // Filter programs by section
+  const newPrograms = mockPrograms.filter((p) => p.section === "new").sort((a, b) => a.displayOrder - b.displayOrder);
+  const disciplinePrograms = mockPrograms.filter((p) => p.section === "discipline").sort((a, b) => a.displayOrder - b.displayOrder);
+
+  return (
+    <div className="flex flex-col ">
       {/* Hero Section with Mascot */}
       <div className="bg-gradient-to-r from-[#4F8EF7] to-[#25CB78] p-6 text-white">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold mb-2">Programmes d'entraînement</h1>
+            <h1 className="text-2xl font-bold mb-2">Programmes d&apos;entraînement</h1>
             <p className="text-white/90 text-sm">Choisis ton défi et deviens plus fort ! 💪</p>
           </div>
           <div className="w-16 h-16 relative">
@@ -81,179 +159,56 @@ export default function ProgrammesPage() {
         </div>
       </div>
 
-      <div className="flex-1 overflow-auto p-4 space-y-6">
+      <div className="overflow-auto p-4 space-y-6">
         {/* Latest Programs Section */}
-        <div>
-          <div className="flex items-center gap-3 mb-4">
-            <TrendingUp className="text-[#4F8EF7]" size={24} />
-            <h3 className="text-xl font-bold text-base-content dark:text-gray-100">Nouveaux programmes</h3>
-            <div className="w-8 h-8 relative">
-              <Image
-                alt="Emoji fire"
-                className="w-full h-full object-contain"
-                height={32}
-                src="/images/emojis/WorkoutCoolSwag.png"
-                width={32}
-              />
+        {newPrograms.length > 0 && (
+          <div>
+            <div className="flex items-center gap-3 mb-4">
+              <TrendingUp className="text-[#4F8EF7]" size={24} />
+              <h3 className="text-xl font-bold text-base-content dark:text-gray-100">Nouveaux programmes</h3>
+              <div className="w-8 h-8 relative">
+                <Image
+                  alt="Emoji fire"
+                  className="w-full h-full object-contain"
+                  height={32}
+                  src="/images/emojis/WorkoutCoolLove.png"
+                  width={32}
+                />
+              </div>
+            </div>
+
+            {/* Dynamic Asymmetric Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {newPrograms.map((program) => (
+                <ProgramCard key={program.id} program={program} />
+              ))}
             </div>
           </div>
-
-          {/* Asymmetric Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {/* Large featured card */}
-            <div className="md:col-span-2">
-              <Link
-                className="relative block h-48 rounded-xl overflow-hidden border-2 border-[#4F8EF7]/20 hover:border-[#4F8EF7] transition-all duration-200 ease-in-out"
-                href={`/programs/${mockPrograms[0].id}`}
-              >
-                <div className={`absolute inset-0 bg-gradient-to-br ${mockPrograms[0].gradient}`}></div>
-                <Image
-                  alt={mockPrograms[0].title}
-                  className="absolute inset-0 w-full h-full object-cover mix-blend-overlay"
-                  fill
-                  src={mockPrograms[0].image}
-                />
-                <div className="absolute inset-0 bg-black/40"></div>
-
-                {/* Badges */}
-                <div className="absolute top-4 left-4 flex flex-wrap gap-2">
-                  <span className="bg-white/20 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full">
-                    {mockPrograms[0].difficulty}
-                  </span>
-                </div>
-
-                {/* Lock/Emoji */}
-                <div className="absolute top-4 right-4 w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
-                  {mockPrograms[0].isLocked ? (
-                    <Lock className="text-white" size={16} />
-                  ) : (
-                    <Image
-                      alt="Emoji"
-                      className="w-6 h-6 object-contain"
-                      height={24}
-                      src={`/images/emojis/${mockPrograms[0].emoji}`}
-                      width={24}
-                    />
-                  )}
-                </div>
-
-                <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h4 className="font-bold text-xl mb-2 leading-tight">{mockPrograms[0].title}</h4>
-                      <p className="text-sm opacity-90 mb-1">{mockPrograms[0].category}</p>
-                      <p className="text-xs opacity-75">{mockPrograms[0].participants} participants</p>
-                    </div>
-                  </div>
-                </div>
-              </Link>
-            </div>
-
-            {/* Smaller card */}
-            <div>
-              <Link
-                className="relative block h-48 rounded-xl overflow-hidden border-2 border-[#25CB78]/20 hover:border-[#25CB78] hover:scale-[1.02] transition-all duration-200 ease-in-out"
-                href={`/programs/${mockPrograms[1].id}`}
-              >
-                <div className={`absolute inset-0 bg-gradient-to-br ${mockPrograms[1].gradient}`}></div>
-                <Image
-                  alt={mockPrograms[1].title}
-                  className="absolute inset-0 w-full h-full object-cover mix-blend-overlay"
-                  fill
-                  src={mockPrograms[1].image}
-                />
-                <div className="absolute inset-0 bg-black/40"></div>
-
-                {/* Badges */}
-                <div className="absolute top-3 left-3 flex flex-col gap-1">
-                  <span className="bg-white/20 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full">
-                    {mockPrograms[1].difficulty}
-                  </span>
-                </div>
-
-                {/* Lock/Emoji */}
-                <div className="absolute top-3 right-3 w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
-                  {mockPrograms[1].isLocked ? (
-                    <Lock className="text-white" size={14} />
-                  ) : (
-                    <Image
-                      alt="Emoji"
-                      className="w-5 h-5 object-contain"
-                      height={20}
-                      src={`/images/emojis/${mockPrograms[1].emoji}`}
-                      width={20}
-                    />
-                  )}
-                </div>
-
-                <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
-                  <h4 className="font-bold text-lg mb-1 leading-tight">{mockPrograms[1].title}</h4>
-                  <p className="text-xs opacity-90">{mockPrograms[1].category}</p>
-                  <p className="text-xs opacity-75 mt-1">{mockPrograms[1].participants}</p>
-                </div>
-              </Link>
-            </div>
-          </div>
-        </div>
+        )}
 
         {/* By Discipline Section */}
-        <div>
-          <div className="flex items-center gap-3 mb-4">
-            <h3 className="text-xl font-bold text-base-content dark:text-gray-100">Par discipline</h3>
-            <div className="w-8 h-8 relative">
-              <Image
-                alt="Mascotte discipline"
-                className="w-full h-full object-contain"
-                height={32}
-                src="/images/emojis/WorkoutCoolTeeths.png"
-                width={32}
-              />
+        {disciplinePrograms.length > 0 && (
+          <div>
+            <div className="flex items-center gap-3 mb-4">
+              <h3 className="text-xl font-bold text-base-content dark:text-gray-100">Par discipline</h3>
+              <div className="w-8 h-8 relative">
+                <Image
+                  alt="Mascotte discipline"
+                  className="w-full h-full object-contain"
+                  height={32}
+                  src="/images/emojis/WorkoutCoolTeeths.png"
+                  width={32}
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {disciplinePrograms.map((program) => (
+                <ProgramCard key={program.id} program={program} />
+              ))}
             </div>
           </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {mockPrograms.slice(2).map((program) => (
-              <Link
-                className="relative block h-36 rounded-xl overflow-hidden border-2 border-gray-200 dark:border-gray-700 hover:border-[#4F8EF7] hover:scale-[1.02] transition-all duration-200 ease-in-out"
-                href={`/programs/${program.id}`}
-                key={program.id}
-              >
-                <div className={`absolute inset-0 bg-gradient-to-br ${program.gradient}`}></div>
-                <Image
-                  alt={program.title}
-                  className="absolute inset-0 w-full h-full object-cover mix-blend-overlay"
-                  fill
-                  src={program.image}
-                />
-                <div className="absolute inset-0 bg-black/40"></div>
-
-                {/* Badges */}
-                <div className="absolute top-3 left-3">
-                  <span className="bg-white/20 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full">{program.difficulty}</span>
-                </div>
-
-                {/* Lock/Emoji */}
-                <div className="absolute top-3 right-3 w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
-                  {program.isLocked ? (
-                    <Lock className="text-white" size={14} />
-                  ) : (
-                    <Image alt="Emoji" className="w-5 h-5 object-contain" height={20} src={`/images/emojis/${program.emoji}`} width={20} />
-                  )}
-                </div>
-
-                <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
-                  <div className="flex items-end justify-between">
-                    <div>
-                      <h4 className="font-bold text-lg mb-1 leading-tight">{program.title}</h4>
-                      <p className="text-xs opacity-90">{program.category}</p>
-                      <p className="text-xs opacity-75 mt-1">{program.participants}</p>
-                    </div>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
+        )}
       </div>
     </div>
   );

@@ -2,7 +2,7 @@
 
 import { useQueryState, parseAsString, parseAsInteger } from "nuqs";
 import Image from "next/image";
-import { BarChart3, Target, Clock, Calendar, Timer, Dumbbell, Share, Lock } from "lucide-react";
+import { BarChart3, Target, Clock, Calendar, Timer, Dumbbell, Share, Lock, Trophy, Users, Zap } from "lucide-react";
 
 interface Program {
   id: string;
@@ -45,18 +45,49 @@ export function ProgramDetailClient({ program }: ProgramDetailClientProps) {
   return (
     <div className="flex-1 flex flex-col overflow-hidden relative">
       <div className="flex-1 overflow-auto pb-20">
-        {/* Hero Image Section */}
-        <div className="relative h-64 bg-gradient-to-br from-gray-800 to-black">
-          <Image alt={program.title} className="absolute inset-0 object-cover" fill src={program.image} />
-          <div className={`absolute inset-0 bg-gradient-to-br ${program.gradient} opacity-60`}></div>
-          <div className="absolute inset-0 bg-black/40"></div>
+        {/* Hero Image Section with Gamification */}
+        <div className="relative h-64 bg-gradient-to-br from-[#4F8EF7] to-[#25CB78]">
+          <Image alt={program.title} className="absolute inset-0 object-cover opacity-30" fill src={program.image} />
+          <div className="absolute inset-0 bg-black/20"></div>
+          
+          {/* Gamification Elements */}
+          <div className="absolute top-4 left-4 flex gap-2">
+            <div className="bg-[#25CB78] text-white px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1">
+              <Trophy size={12} />
+              PROGRAMME
+            </div>
+            {program.isLocked && (
+              <div className="bg-yellow-500 text-white px-3 py-1 rounded-full text-xs font-bold">
+                PREMIUM
+              </div>
+            )}
+          </div>
+          
+          {/* Mascot Emoji */}
+          <div className="absolute top-4 right-4 w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full border-2 border-white/30 flex items-center justify-center">
+            <Image
+              alt="Mascotte programme"
+              className="w-12 h-12 object-contain"
+              height={48}
+              src="/images/emojis/WorkoutCoolSwag.png"
+              width={48}
+            />
+          </div>
+          
           <div className="relative h-full flex items-end p-6">
-            <div className="text-white">
-              <div className="flex items-center gap-2 mb-2">
-                <span className="bg-white/20 backdrop-blur-sm px-2 py-1 rounded text-xs">Force</span>
-                <span className="bg-white/20 backdrop-blur-sm px-2 py-1 rounded text-xs">Performance</span>
+            <div className="text-white flex-1">
+              <div className="flex items-center gap-2 mb-3">
+                <span className="bg-[#4F8EF7] text-white px-3 py-1 rounded-full text-xs font-medium flex items-center gap-1">
+                  <Zap size={12} />
+                  {program.level}
+                </span>
+                <span className="bg-[#25CB78] text-white px-3 py-1 rounded-full text-xs font-medium flex items-center gap-1">
+                  <Users size={12} />
+                  {program.participants}
+                </span>
               </div>
               <h1 className="text-3xl font-bold mb-2">{program.title}</h1>
+              <p className="text-white/90 text-sm">{program.category}</p>
             </div>
           </div>
         </div>
@@ -75,65 +106,109 @@ export function ProgramDetailClient({ program }: ProgramDetailClientProps) {
             />
             <div className="tab-content bg-base-100 border-base-300 rounded-md rounded-tl-none p-6" role="tabpanel">
               <div className="space-y-6">
-                {/* Community Stats */}
-                <div className="flex items-center gap-3">
-                  <div className="flex -space-x-2">
-                    {program.coaches.slice(0, 3).map((coach, index) => (
-                      <Image
-                        alt={coach.name}
-                        className="w-8 h-8 rounded-full border-2 border-white"
-                        height={32}
-                        key={index}
-                        src={coach.image}
-                        width={32}
-                      />
-                    ))}
-                  </div>
-                  <span className="text-sm text-gray-600 dark:text-gray-400">Rejoint par + de {program.participants} warriors</span>
-                  <div className="ml-auto flex gap-2">
-                    <button className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors">
-                      <Share className="text-gray-600 dark:text-gray-400" size={20} />
-                    </button>
+                {/* Gamified Community Stats */}
+                <div className="bg-gradient-to-r from-[#4F8EF7]/10 to-[#25CB78]/10 border-2 border-[#4F8EF7]/20 rounded-xl p-4">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="flex -space-x-2">
+                        {program.coaches.slice(0, 3).map((coach, index) => (
+                          <Image
+                            alt={coach.name}
+                            className="w-10 h-10 rounded-full border-3 border-[#4F8EF7]"
+                            height={40}
+                            key={index}
+                            src={coach.image}
+                            width={40}
+                          />
+                        ))}
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-2 mb-1">
+                          <Image
+                            alt="Communauté"
+                            className="w-6 h-6 object-contain"
+                            height={24}
+                            src="/images/emojis/WorkoutCoolHappy.png"
+                            width={24}
+                          />
+                          <span className="text-sm font-bold text-[#4F8EF7]">Communauté active</span>
+                        </div>
+                        <span className="text-sm text-gray-600 dark:text-gray-400">+ de {program.participants} warriors rejoints</span>
+                      </div>
+                    </div>
+                    <div className="flex gap-2">
+                      <button className="p-3 bg-[#4F8EF7] hover:bg-[#4F8EF7]/80 text-white rounded-xl transition-all duration-200 ease-in-out hover:scale-105">
+                        <Share size={18} />
+                      </button>
+                    </div>
                   </div>
                 </div>
 
-                {/* Program Details */}
-                <div className="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700">
+                {/* Gamified Program Details */}
+                <div className="bg-white dark:bg-gray-800 border-2 border-[#25CB78]/20 rounded-xl p-5">
+                  <div className="flex items-center gap-2 mb-4">
+                    <Image
+                      alt="Détails"
+                      className="w-6 h-6 object-contain"
+                      height={24}
+                      src="/images/emojis/WorkoutCoolTeeths.png"
+                      width={24}
+                    />
+                    <h3 className="font-bold text-lg text-[#4F8EF7]">Caractéristiques</h3>
+                  </div>
                   <div className="grid grid-cols-2 gap-4">
-                    <div className="flex items-center gap-3">
-                      <BarChart3 className="text-primary" size={20} />
+                    <div className="flex items-center gap-3 p-3 bg-[#4F8EF7]/5 rounded-lg border border-[#4F8EF7]/20">
+                      <div className="w-10 h-10 bg-[#4F8EF7] rounded-full flex items-center justify-center">
+                        <BarChart3 className="text-white" size={18} />
+                      </div>
                       <div>
-                        <div className="text-sm font-medium">{program.level}</div>
+                        <div className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Niveau</div>
+                        <div className="text-sm font-bold">{program.level}</div>
                       </div>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <Target className="text-primary" size={20} />
+                    <div className="flex items-center gap-3 p-3 bg-[#25CB78]/5 rounded-lg border border-[#25CB78]/20">
+                      <div className="w-10 h-10 bg-[#25CB78] rounded-full flex items-center justify-center">
+                        <Target className="text-white" size={18} />
+                      </div>
                       <div>
-                        <div className="text-sm font-medium">{program.type}</div>
+                        <div className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Type</div>
+                        <div className="text-sm font-bold">{program.type}</div>
                       </div>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <Clock className="text-primary" size={20} />
+                    <div className="flex items-center gap-3 p-3 bg-[#4F8EF7]/5 rounded-lg border border-[#4F8EF7]/20">
+                      <div className="w-10 h-10 bg-[#4F8EF7] rounded-full flex items-center justify-center">
+                        <Clock className="text-white" size={18} />
+                      </div>
                       <div>
-                        <div className="text-sm font-medium">{program.duration}</div>
+                        <div className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Durée</div>
+                        <div className="text-sm font-bold">{program.duration}</div>
                       </div>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <Calendar className="text-primary" size={20} />
+                    <div className="flex items-center gap-3 p-3 bg-[#25CB78]/5 rounded-lg border border-[#25CB78]/20">
+                      <div className="w-10 h-10 bg-[#25CB78] rounded-full flex items-center justify-center">
+                        <Calendar className="text-white" size={18} />
+                      </div>
                       <div>
-                        <div className="text-sm font-medium">{program.frequency}</div>
+                        <div className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Fréquence</div>
+                        <div className="text-sm font-bold">{program.frequency}</div>
                       </div>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <Timer className="text-primary" size={20} />
+                    <div className="flex items-center gap-3 p-3 bg-[#4F8EF7]/5 rounded-lg border border-[#4F8EF7]/20">
+                      <div className="w-10 h-10 bg-[#4F8EF7] rounded-full flex items-center justify-center">
+                        <Timer className="text-white" size={18} />
+                      </div>
                       <div>
-                        <div className="text-sm font-medium">{program.sessionDuration}</div>
+                        <div className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Séance</div>
+                        <div className="text-sm font-bold">{program.sessionDuration}</div>
                       </div>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <Dumbbell className="text-primary" size={20} />
+                    <div className="flex items-center gap-3 p-3 bg-[#25CB78]/5 rounded-lg border border-[#25CB78]/20">
+                      <div className="w-10 h-10 bg-[#25CB78] rounded-full flex items-center justify-center">
+                        <Dumbbell className="text-white" size={18} />
+                      </div>
                       <div>
-                        <div className="text-sm font-medium">{program.equipment}</div>
+                        <div className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Équipement</div>
+                        <div className="text-sm font-bold">{program.equipment}</div>
                       </div>
                     </div>
                   </div>
@@ -144,14 +219,32 @@ export function ProgramDetailClient({ program }: ProgramDetailClientProps) {
                   <p className="text-gray-700 dark:text-gray-300">{program.description}</p>
                 </div>
 
-                {/* Coaches */}
-                <div>
-                  <h3 className="text-lg font-bold mb-3">Coachs :</h3>
-                  <div className="flex gap-4 overflow-x-auto pb-2">
+                {/* Gamified Coaches Section */}
+                <div className="bg-gradient-to-r from-[#25CB78]/10 to-[#4F8EF7]/10 border-2 border-[#25CB78]/20 rounded-xl p-5">
+                  <div className="flex items-center gap-2 mb-4">
+                    <Image
+                      alt="Coachs"
+                      className="w-6 h-6 object-contain"
+                      height={24}
+                      src="/images/emojis/WorkoutCoolLove.png"
+                      width={24}
+                    />
+                    <h3 className="text-lg font-bold text-[#25CB78]">Tes coachs warriors</h3>
+                    <div className="bg-[#25CB78] text-white px-2 py-1 rounded-full text-xs font-bold">
+                      {program.coaches.length}
+                    </div>
+                  </div>
+                  <div className="flex gap-6 overflow-x-auto pb-2">
                     {program.coaches.map((coach, index) => (
-                      <div className="flex flex-col items-center gap-2 flex-shrink-0" key={index}>
-                        <Image alt={coach.name} className="w-16 h-16 rounded-full" height={64} src={coach.image} width={64} />
-                        <span className="text-sm font-medium">{coach.name}</span>
+                      <div className="flex flex-col items-center gap-3 flex-shrink-0 p-3 bg-white dark:bg-gray-800 rounded-xl border-2 border-[#25CB78]/20 hover:border-[#25CB78] transition-all duration-200 ease-in-out hover:scale-105" key={index}>
+                        <div className="relative">
+                          <Image alt={coach.name} className="w-16 h-16 rounded-full border-3 border-[#25CB78]" height={64} src={coach.image} width={64} />
+                          <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-[#25CB78] rounded-full flex items-center justify-center">
+                            <Trophy className="text-white" size={12} />
+                          </div>
+                        </div>
+                        <span className="text-sm font-bold text-center">{coach.name}</span>
+                        <span className="text-xs text-[#25CB78] font-medium">Expert</span>
                       </div>
                     ))}
                   </div>
@@ -188,28 +281,62 @@ export function ProgramDetailClient({ program }: ProgramDetailClientProps) {
                 {/* Current Week Title */}
                 <h2 className="text-xl font-bold">Semaine {selectedWeek}</h2>
 
-                {/* Sessions List */}
-                <div className="space-y-4">
+                {/* Gamified Sessions List */}
+                <div className="space-y-3">
                   {program.sessions
                     .find((w) => w.week === selectedWeek)
-                    ?.sessions.map((session) => (
+                    ?.sessions.map((session, index) => (
                       <div
-                        className="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700 flex items-center gap-4"
+                        className={`bg-white dark:bg-gray-800 rounded-xl p-4 border-2 ${
+                          session.isLocked 
+                            ? "border-yellow-200 dark:border-yellow-800 bg-yellow-50/50 dark:bg-yellow-900/10" 
+                            : "border-[#25CB78]/20 hover:border-[#25CB78] hover:scale-[1.02]"
+                        } transition-all duration-200 ease-in-out flex items-center gap-4`}
                         key={session.id}
                       >
-                        {/* Lock Icon */}
-                        {session.isLocked && (
-                          <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center flex-shrink-0">
-                            <Lock className="text-white" size={16} />
-                          </div>
-                        )}
+                        {/* Session Number Badge */}
+                        <div className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 font-bold text-white ${
+                          session.isLocked ? "bg-yellow-500" : "bg-[#25CB78]"
+                        }`}>
+                          {session.isLocked ? (
+                            <Lock size={18} />
+                          ) : (
+                            <span className="text-lg">{index + 1}</span>
+                          )}
+                        </div>
 
                         {/* Session Info */}
                         <div className="flex-1">
-                          <h4 className="font-semibold text-gray-900 dark:text-white mb-1">
-                            Séance {session.id} : {session.title}
-                          </h4>
-                          <p className="text-sm text-gray-500 dark:text-gray-400">{session.equipment}</p>
+                          <div className="flex items-center gap-2 mb-1">
+                            <h4 className="font-bold text-gray-900 dark:text-white">
+                              {session.title}
+                            </h4>
+                            {!session.isLocked && (
+                              <div className="bg-[#25CB78] text-white px-2 py-1 rounded-full text-xs font-bold">
+                                LIBRE
+                              </div>
+                            )}
+                            {session.isLocked && (
+                              <div className="bg-yellow-500 text-white px-2 py-1 rounded-full text-xs font-bold">
+                                PREMIUM
+                              </div>
+                            )}
+                          </div>
+                          <p className="text-sm text-gray-500 dark:text-gray-400 flex items-center gap-1">
+                            <Dumbbell size={14} />
+                            {session.equipment}
+                          </p>
+                        </div>
+
+                        {/* Emoji Feedback */}
+                        <div className="w-10 h-10 flex items-center justify-center">
+                          <Image
+                            alt="Status"
+                            className="w-8 h-8 object-contain"
+                            height={32}
+                            src={`/images/emojis/${session.isLocked ? 'WorkoutCoolCry.png' : 'WorkoutCoolHappy.png'}`}
+                            width={32}
+                          />
                         </div>
                       </div>
                     ))}
@@ -220,9 +347,17 @@ export function ProgramDetailClient({ program }: ProgramDetailClientProps) {
         </div>
       </div>
 
-      {/* Floating CTA */}
-      <button className="absolute bottom-6 right-0 left-0 max-w-xs mx-auto bg-primary hover:bg-slate-500 text-white px-6 py-3 rounded-full font-semibold shadow-lg hover:shadow-xl transition-all duration-200 z-50">
-        Rejoindre
+      {/* Gamified Floating CTA */}
+      <button className="absolute bottom-6 right-0 left-0 max-w-xs mx-auto bg-gradient-to-r from-[#4F8EF7] to-[#25CB78] hover:from-[#4F8EF7]/80 hover:to-[#25CB78]/80 text-white px-8 py-4 rounded-full font-bold border-2 border-white/20 hover:scale-105 transition-all duration-200 ease-in-out z-50 flex items-center justify-center gap-2">
+        <Image
+          alt="Rejoindre"
+          className="w-6 h-6 object-contain"
+          height={24}
+          src="/images/emojis/WorkoutCoolSwag.png"
+          width={24}
+        />
+        Rejoindre le défi
+        <Trophy className="text-white" size={18} />
       </button>
     </div>
   );

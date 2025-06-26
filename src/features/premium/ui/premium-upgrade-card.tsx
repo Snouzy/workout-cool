@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { Crown, Zap, Heart, Sparkles, Dumbbell, Check, ArrowRight } from "lucide-react";
+import { Crown, Zap, Heart, Dumbbell, Check, ArrowRight, Sparkles } from "lucide-react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 import { useI18n } from "locales/client";
@@ -18,7 +18,6 @@ export function PremiumUpgradeCard() {
   const isPremium = useIsPremium();
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
 
-  // Fetch available plans
   const { data: plans = [], isLoading: plansLoading } = useQuery({
     queryKey: ["premium-plans"],
     queryFn: async (): Promise<PremiumPlan[]> => {
@@ -28,7 +27,6 @@ export function PremiumUpgradeCard() {
     },
   });
 
-  // Create checkout mutation
   const checkoutMutation = useMutation({
     mutationFn: async (planId: string): Promise<CheckoutResult> => {
       const response = await fetch("/api/premium/checkout", {
@@ -60,9 +58,7 @@ export function PremiumUpgradeCard() {
     return (
       <div className="relative overflow-hidden bg-gradient-to-b from-[#4F8EF7]/5 to-[#25CB78]/5 dark:from-[#4F8EF7]/10 dark:to-[#25CB78]/10 rounded-3xl p-8 border border-[#4F8EF7]/20 dark:border-[#4F8EF7]/30">
         <div className="absolute -top-8 -right-8 w-48 h-48 opacity-10">
-          <div className="relative w-full h-full">
-            <div className="absolute inset-0 bg-gradient-to-br from-[#FFD93D] to-[#FFA500] rounded-full blur-3xl" />
-          </div>
+          <div className="absolute inset-0 bg-gradient-to-br from-[#FFD93D] to-[#FFA500] rounded-full blur-3xl" />
         </div>
         <div className="absolute top-4 right-4">
           <Image alt="Premium mascot" className="drop-shadow-lg" height={80} src="/images/emojis/WorkoutCoolRich.png" width={80} />
@@ -98,26 +94,22 @@ export function PremiumUpgradeCard() {
     );
   }
 
-  if (plansLoading) {
-    return (
-      <div className="rounded-3xl p-8">
-        <div className="animate-pulse">
-          <div className="flex justify-center mb-8">
-            <div className="w-20 h-20 bg-gray-200 dark:bg-gray-800 rounded-full" />
-          </div>
-          <div className="h-10 bg-gray-200 dark:bg-gray-800 rounded-2xl mb-4 w-3/4 mx-auto" />
-          <div className="h-6 bg-gray-200 dark:bg-gray-800 rounded-xl mb-12 w-2/3 mx-auto" />
-          <div className="grid gap-6 md:grid-cols-2 max-w-4xl mx-auto">
-            <div className="h-[400px] bg-gray-100 dark:bg-gray-900 rounded-3xl" />
-            <div className="h-[400px] bg-gray-100 dark:bg-gray-900 rounded-3xl" />
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="relative space-y-8">
+    <div className="relative space-y-16">
+      <div className="text-center space-y-4 max-w-2xl mx-auto mb-12">
+        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">You’re already getting a lot for free...</h2>
+        <p className="text-gray-700 dark:text-gray-400 text-lg leading-relaxed">
+          Workout.cool is a free, open-source fitness app used daily by{" "}
+          <strong className="text-gray-700 dark:text-white">70,000+ users</strong>. It’s built with love (not VC money ^^) and it costs us
+          real time and money to keep it running.
+        </p>
+        <p className="text-gray-600 dark:text-gray-500 text-md">
+          At first, we were running on donations. But as you can imagine, donations weren&apos;t sufficient to cover development and running
+          costs. So we made you a package that will help us keep the lights on — and unlock a few superpowers along the way. <br /> <br />
+          If Workout.cool helps you level up your health, please consider going Premium :D !
+        </p>
+      </div>
+
       <div className="text-center space-y-6 mb-16">
         <div className="relative inline-flex items-center justify-center">
           <div className="absolute inset-0 bg-gradient-to-r from-[#FFD93D]/20 to-[#4F8EF7]/20 blur-3xl" />
@@ -137,16 +129,12 @@ export function PremiumUpgradeCard() {
             </div>
           </div>
         </div>
-        <div className="space-y-3">
-          <h2 className="text-5xl font-bold text-gray-900 dark:text-white">Go Premium</h2>
-          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-xl mx-auto">
-            Unlock advanced features & support open-source fitness.
-          </p>
-          <p className="text-md text-gray-500 dark:text-gray-600 max-w-xl mx-auto !mt-1">
-            <span className="text-gray-700 dark:text-gray-400 text-2xl">“</span>
-            Never skimp on fitness & books — invest in yourself !<span className="text-gray-600 dark:text-gray-400 text-2xl">”</span>
-          </p>
-        </div>
+
+        <p className="text-xl text-gray-700 dark:text-gray-400 max-w-xl mx-auto">Unlock advanced features & support open-source fitness.</p>
+        <p className="text-md text-gray-500 dark:text-gray-600 max-w-xl mx-auto !mt-1">
+          <span className="text-gray-700 dark:text-gray-400 text-2xl">“</span>
+          Never skimp on fitness & books — invest in yourself !<span className="text-gray-600 dark:text-gray-400 text-2xl">”</span>
+        </p>
         <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#25CB78]/10 dark:bg-[#25CB78]/20 rounded-full">
           <Heart className="w-4 h-4 text-[#25CB78]" fill="currentColor" />
           <span className="text-sm font-medium text-[#25CB78]">Support the mission</span>
@@ -213,35 +201,25 @@ export function PremiumUpgradeCard() {
 
               <ul className="space-y-4 mb-8">
                 <li className="flex items-center gap-3">
-                  <div className="w-5 h-5 bg-[#4F8EF7]/10 dark:bg-[#4F8EF7]/20 rounded-full flex items-center justify-center flex-shrink-0">
-                    <Check className="w-3 h-3 text-[#4F8EF7]" strokeWidth={3} />
-                  </div>
-                  <span className="text-gray-700 dark:text-gray-300">All workout programs</span>
+                  <Check className="w-4 h-4 text-[#4F8EF7]" />
+                  All workout programs
                 </li>
                 <li className="flex items-center gap-3">
-                  <div className="w-5 h-5 bg-[#4F8EF7]/10 dark:bg-[#4F8EF7]/20 rounded-full flex items-center justify-center flex-shrink-0">
-                    <Check className="w-3 h-3 text-[#4F8EF7]" strokeWidth={3} />
-                  </div>
-                  <span className="text-gray-700 dark:text-gray-300">Progress tracking</span>
+                  <Check className="w-4 h-4 text-[#4F8EF7]" />
+                  Progress tracking
                 </li>
                 <li className="flex items-center gap-3">
-                  <div className="w-5 h-5 bg-[#4F8EF7]/10 dark:bg-[#4F8EF7]/20 rounded-full flex items-center justify-center flex-shrink-0">
-                    <Check className="w-3 h-3 text-[#4F8EF7]" strokeWidth={3} />
-                  </div>
-                  <span className="text-gray-700 dark:text-gray-300">All future programs & updates</span>
+                  <Check className="w-4 h-4 text-[#4F8EF7]" />
+                  All future programs & updates
                 </li>
                 <li className="flex items-center gap-3">
-                  <div className="w-5 h-5 bg-[#4F8EF7]/10 dark:bg-[#4F8EF7]/20 rounded-full flex items-center justify-center flex-shrink-0">
-                    <Check className="w-3 h-3 text-[#4F8EF7]" strokeWidth={3} />
-                  </div>
-                  <span className="text-gray-700 dark:text-gray-300">Priority support</span>
+                  <Check className="w-4 h-4 text-[#4F8EF7]" />
+                  Priority support
                 </li>
                 {isYearly && (
                   <li className="flex items-center gap-3">
-                    <div className="w-5 h-5 bg-[#25CB78]/10 dark:bg-[#25CB78]/20 rounded-full flex items-center justify-center flex-shrink-0">
-                      <Heart className="w-3 h-3 text-[#25CB78]" fill="currentColor" />
-                    </div>
-                    <span className="text-gray-700 dark:text-gray-300 font-medium">Save 40% yearly</span>
+                    <Heart className="w-4 h-4 text-[#25CB78]" fill="currentColor" />
+                    Save 40% yearly
                   </li>
                 )}
               </ul>
@@ -262,11 +240,14 @@ export function PremiumUpgradeCard() {
                   </div>
                 ) : (
                   <div className="flex items-center justify-center gap-2">
-                    <span>Get Started</span>
+                    <span>{isYearly ? "I want to support + save 40%" : "Let’s unlock my full plan"}</span>
                     <ArrowRight className="w-5 h-5" />
                   </div>
                 )}
               </Button>
+              <p className="mt-2 text-sm text-center text-gray-500 dark:text-gray-400">
+                {isYearly ? "Thank you for supporting." : "No pressure. You can upgrade anytime."}
+              </p>
             </div>
           );
         })}
@@ -281,8 +262,11 @@ export function PremiumUpgradeCard() {
             </div>
           </div>
         </div>
-        <div className="space-y-2">
-          <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Core features always free • Open-source • MIT License</p>
+        <div className="space-y-6">
+          <p className="text-sm font-medium text-gray-600 dark:text-gray-400 px-4 sm:px-10">
+            Still not sure? No worries. Workout.cool will always remain free and open-source. <br />
+            But if you believe in what we’re building and you can afford it, your support will help 💚
+          </p>
           <div className="flex items-center justify-center gap-4 text-xs text-gray-500 dark:text-gray-500">
             <div className="flex items-center gap-1">
               <div className="w-2 h-2 bg-[#25CB78] rounded-full" />
@@ -294,7 +278,7 @@ export function PremiumUpgradeCard() {
             </div>
             <div className="flex items-center gap-1">
               <div className="w-2 h-2 bg-[#FFD93D] rounded-full" />
-              <span>Support</span>
+              <span>MIT License</span>
             </div>
           </div>
         </div>

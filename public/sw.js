@@ -33,6 +33,7 @@ self.addEventListener("fetch", (event) => {
     url.pathname.startsWith("/api/auth") ||
     url.pathname.startsWith("/auth") ||
     url.hostname !== self.location.hostname ||
+    url.pathname.startsWith("/api/stripe") ||
     url.protocol === "chrome-extension:"
   ) {
     return;

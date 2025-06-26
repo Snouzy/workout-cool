@@ -110,11 +110,16 @@ export class StripeProvider implements PaymentProvider {
       switch (event.type) {
         case "checkout.session.completed": {
           // First payment is successful and the subscription is created | or the subscription was canceled so create new one
-
           const session = event.data.object as Stripe.Checkout.Session;
 
           if (session.mode === "subscription" && session.subscription) {
             const subscription = await this.stripe.subscriptions.retrieve(session.subscription as string);
+
+            // Extra: You might want to send a welcome email here
+            // Example: await sendEmail.welcome(user.email, subscription);
+            
+            // Extra: Track conversion in analytics
+            // Example: await analytics.track('subscription_created', { planId, userId });
 
             return {
               success: true,
@@ -135,6 +140,12 @@ export class StripeProvider implements PaymentProvider {
 
           if (invoice.subscription) {
             const subscription = await this.stripe.subscriptions.retrieve(invoice.subscription as string);
+
+            // Extra: Send receipt email
+            // Example: await sendEmail.receipt(user.email, invoice);
+            
+            // Extra: Update user credits/features if your app uses them
+            // Example: await updateUserCredits(userId, plan.credits);
 
             return {
               success: true,
@@ -168,6 +179,12 @@ export class StripeProvider implements PaymentProvider {
           // Sent when subscription is cancelled immediately or when it ends after cancel_at_period_end
           const subscription = event.data.object as Stripe.Subscription;
 
+          // Extra: Send cancellation confirmation email
+          // Example: await sendEmail.cancelled(user.email);
+          
+          // Extra: Revoke premium features immediately or schedule for period end
+          // Example: if (subscription.cancel_at_period_end) { scheduleRevoke(userId, subscription.current_period_end) }
+
           return {
             success: true,
             userId: subscription.metadata?.userId,
@@ -183,6 +200,12 @@ export class StripeProvider implements PaymentProvider {
 
           if (invoice.subscription) {
             const subscription = await this.stripe.subscriptions.retrieve(invoice.subscription as string);
+
+            // Extra: Send payment failed email with update payment link
+            // Example: await sendEmail.paymentFailed(user.email, updatePaymentUrl);
+            
+            // Extra: After X failures, you might want to pause premium features
+            // Example: if (invoice.attempt_count > 3) { await pausePremiumFeatures(userId) }
 
             return {
               success: true,
@@ -201,6 +224,17 @@ export class StripeProvider implements PaymentProvider {
           // Sent when a new customer is created in Stripe
           const customer = event.data.object as Stripe.Customer;
           console.log(`Stripe customer created: ${customer.id}`);
+          return { success: true };
+        }
+
+        case "checkout.session.expired": {
+          // User didn't complete the transaction (abandoned checkout)
+          const session = event.data.object as Stripe.Checkout.Session;
+          
+          // Extra: Send abandoned cart email to recover the sale
+          // Example: await sendEmail.abandonedCart(user.email, checkoutUrl);
+          
+          console.log(`Checkout session expired for user: ${session.metadata?.userId}`);
           return { success: true };
         }
 

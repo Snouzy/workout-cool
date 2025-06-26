@@ -38,6 +38,7 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
   const currentLocale = useCurrentLocale();
   const programTitle = getProgramTitle(program, currentLocale);
   const programDescription = getProgramDescription(program, currentLocale);
+
   // Load completed sessions when component mounts or when authenticated
   useEffect(() => {
     if (isAuthenticated) {

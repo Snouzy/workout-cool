@@ -39,6 +39,12 @@ export default {
     join_cta: "Join the challenge",
     continue: "Continue",
     sessions: "Sessions",
+    auth_required: "Authentication Required",
+    auth_required_description: "You need to sign in to access this workout session.",
+    login_to_continue: "Sign In to Continue",
+    premium_required: "Premium Required",
+    premium_required_description: "This is a premium session. Upgrade to access all premium content.",
+    upgrade_to_premium: "Upgrade to Premium",
   },
   levels: {
     BEGINNER: "Beginner",

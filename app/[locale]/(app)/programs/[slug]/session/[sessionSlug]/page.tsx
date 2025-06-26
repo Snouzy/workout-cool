@@ -79,16 +79,14 @@ export default async function SessionDetailPage({ params }: SessionDetailPagePro
     headers: await headers(),
   });
 
-  // Always allow access to the page, but pass authentication status
+  // Pass authentication and premium status
   const isAuthenticated = !!authSession?.user;
   const isPremium = authSession?.user?.isPremium || false;
-  const canAccessPremiumContent = !response.session.isPremium || (isAuthenticated && isPremium);
 
   return (
     <ProgramSessionClient
-      canAccessContent={canAccessPremiumContent}
       isAuthenticated={isAuthenticated}
-      isPremiumSession={response.session.isPremium}
+      isPremium={isPremium}
       program={response.program}
       session={response.session}
       week={response.week}

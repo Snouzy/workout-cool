@@ -130,7 +130,6 @@ export function PremiumUpgradeCard() {
           const isYearly = plan.priceYearly > 0;
           const price = isYearly ? plan.priceYearly : plan.priceMonthly;
           const period = isYearly ? "year" : "month";
-          const savings = isYearly ? Math.round((1 - plan.priceYearly / 12 / plan.priceMonthly) * 100) : 0;
           const isLoading = checkoutMutation.isPending && selectedPlan === plan.id;
 
           return (

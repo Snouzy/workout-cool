@@ -47,6 +47,10 @@ export default {
     premium_required_description: "Cette séance est premium. Passez à Premium pour accéder à tout le contenu exclusif.",
     upgrade_to_premium: "Passer à Premium",
     program_completed: "Programme Terminé",
+    check_out_program: "Découvre ce programme d'entraînement !",
+    share_success: "Partagé avec succès !",
+    copied_to_clipboard: "Lien copié !",
+    share_failed: "Échec du partage",
   },
   levels: {
     BEGINNER: "Débutant",

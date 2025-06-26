@@ -46,6 +46,10 @@ export default {
     premium_required_description: "This is a premium session. Upgrade to access all premium content.",
     upgrade_to_premium: "Upgrade to Premium",
     program_completed: "Program Completed",
+    check_out_program: "Check out this workout program!",
+    share_success: "Shared successfully!",
+    copied_to_clipboard: "Link copied!",
+    share_failed: "Share failed",
   },
   levels: {
     BEGINNER: "Beginner",

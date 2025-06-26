@@ -45,6 +45,10 @@ export default {
     continue: "Continuar",
     join_cta: "Inscrever-se",
     sessions: "Sessões",
+    check_out_program: "Descubra este programa de treino!",
+    share_success: "Compartido com sucesso!",
+    copied_to_clipboard: "Link copiado!",
+    share_failed: "Erro ao compartilhar",
   },
   levels: {
     BEGINNER: "Iniciante",

@@ -46,6 +46,10 @@ export default {
     join_cta: "Присоединиться к программе",
     continue: "Продолжить",
     sessions: "Сессии",
+    check_out_program: "Откройте эту программу тренировки!",
+    share_success: "Поделиться успешно!",
+    copied_to_clipboard: "Ссылка скопирована!",
+    share_failed: "Ошибка при делении",
   },
   levels: {
     BEGINNER: "Начальный",

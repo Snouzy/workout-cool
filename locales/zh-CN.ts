@@ -45,6 +45,10 @@ export default {
     join_cta: "加入挑战",
     continue: "继续",
     sessions: "课程",
+    check_out_program: "查看这个训练程序！",
+    share_success: "分享成功！",
+    copied_to_clipboard: "链接已复制！",
+    share_failed: "分享失败",
   },
   levels: {
     BEGINNER: "初学者",

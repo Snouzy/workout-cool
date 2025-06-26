@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useQueryState, parseAsString, parseAsInteger } from "nuqs";
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
-import { BarChart3, Target, Clock, Calendar, Timer, Dumbbell, Lock, Trophy, Users, Zap, CheckCircle2, Share2 } from "lucide-react";
+import { BarChart3, Target, Clock, Calendar, Timer, Dumbbell, Lock, Trophy, Users, Zap, CheckCircle2 } from "lucide-react";
 import { ExerciseAttributeValueEnum } from "@prisma/client";
 
 import { useCurrentLocale, useI18n } from "locales/client";
@@ -12,6 +12,7 @@ import { getEquipmentTranslation } from "@/shared/lib/workout-session/equipments
 import { getSlugForLocale } from "@/shared/lib/locale-slug";
 import { getAttributeValueLabel } from "@/shared/lib/attribute-value-translation";
 import { WelcomeModal } from "@/features/programs/ui/welcome-modal";
+import { ShareButton } from "@/features/programs/ui/share-button";
 import { ProgramProgress } from "@/features/programs/ui/program-progress";
 import { getProgramDescription, getProgramTitle } from "@/features/programs/lib/translations-mapper";
 
@@ -231,9 +232,10 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
                     </div>
                     <div className="flex gap-2">
                       <div className="tooltip tooltip-bottom" data-tip={t("commons.share")}>
-                        <button className="p-3 bg-[#4F8EF7] hover:bg-[#4F8EF7]/80 text-white rounded-xl transition-all duration-200 ease-in-out hover:scale-105">
-                          <Share2 size={18} />
-                        </button>
+                        <ShareButton
+                          programDescription={programDescription}
+                          programTitle={programTitle}
+                        />
                       </div>
                     </div>
                   </div>

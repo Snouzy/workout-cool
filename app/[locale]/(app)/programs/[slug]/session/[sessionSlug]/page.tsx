@@ -110,14 +110,8 @@ export default async function SessionDetailPage({ params }: SessionDetailPagePro
       })),
       exercise: {
         ...exercise,
-        slug: exercise.slug,
         createdAt: new Date(), // Mock dates since they're required
         updatedAt: new Date(),
-        fullVideoUrl: exercise.fullVideoUrl,
-        fullVideoImageUrl: exercise.fullVideoImageUrl,
-        introduction: exercise.introduction,
-        introductionEn: exercise.introductionEn,
-        slugEn: exercise.slugEn,
         attributes: exercise.attributes.map((attr) => ({
           id: attr.id,
           exerciseId: exercise.id,
@@ -136,14 +130,15 @@ export default async function SessionDetailPage({ params }: SessionDetailPagePro
   const isAuthenticated = !!authSession?.user;
   const isPremium = authSession?.user?.isPremium || false;
   const canAccessPremiumContent = !session.isPremium || (isAuthenticated && isPremium);
+  console.log("session:", session);
 
   return (
     <ProgramSessionClient
       canAccessContent={canAccessPremiumContent}
       isAuthenticated={isAuthenticated}
       isPremiumSession={session.isPremium}
-      program={program}
-      session={sessionData}
+      program={session.program}
+      session={session}
       week={week}
     />
   );

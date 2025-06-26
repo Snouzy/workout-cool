@@ -32,7 +32,17 @@ export interface SessionDetail {
   program: {
     id: string;
     title: string;
+    titleEn: string;
+    titleEs: string;
+    titlePt: string;
+    titleRu: string;
+    titleZhCn: string;
     slug: string;
+    slugEn: string;
+    slugEs: string;
+    slugPt: string;
+    slugRu: string;
+    slugZhCn: string;
   };
   week: {
     id: string;
@@ -97,7 +107,14 @@ export async function getSessionBySlug(programSlug: string, sessionSlug: string,
         [slugField]: sessionSlug,
         week: {
           program: {
-            slug: programSlug,
+            OR: [
+              { slug: programSlug },
+              { slugEn: programSlug },
+              { slugEs: programSlug },
+              { slugPt: programSlug },
+              { slugRu: programSlug },
+              { slugZhCn: programSlug },
+            ],
             visibility: ProgramVisibility.PUBLISHED,
             isActive: true,
           },
@@ -110,7 +127,17 @@ export async function getSessionBySlug(programSlug: string, sessionSlug: string,
               select: {
                 id: true,
                 title: true,
+                titleEn: true,
+                titleEs: true,
+                titlePt: true,
+                titleRu: true,
+                titleZhCn: true,
                 slug: true,
+                slugEn: true,
+                slugEs: true,
+                slugPt: true,
+                slugRu: true,
+                slugZhCn: true,
               },
             },
           },
@@ -168,7 +195,17 @@ export async function getSessionBySlug(programSlug: string, sessionSlug: string,
       program: {
         id: session.week.program.id,
         title: session.week.program.title,
+        titleEn: session.week.program.titleEn,
+        titleEs: session.week.program.titleEs,
+        titlePt: session.week.program.titlePt,
+        titleRu: session.week.program.titleRu,
+        titleZhCn: session.week.program.titleZhCn,
         slug: session.week.program.slug,
+        slugEn: session.week.program.slugEn,
+        slugEs: session.week.program.slugEs,
+        slugPt: session.week.program.slugPt,
+        slugRu: session.week.program.slugRu,
+        slugZhCn: session.week.program.slugZhCn,
       },
       week: {
         id: session.week.id,

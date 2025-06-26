@@ -3,12 +3,18 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, Play, Clock, Dumbbell, Lock } from "lucide-react";
-import { Exercise, ExerciseAttribute, ExerciseAttributeName, ExerciseAttributeValue } from "@prisma/client";
+import { Exercise, ExerciseAttribute, ExerciseAttributeName, ExerciseAttributeValue, ProgramSession } from "@prisma/client";
 
-import { useI18n } from "locales/client";
+import { useCurrentLocale, useI18n } from "locales/client";
 import { WorkoutSessionSets } from "@/features/workout-session/ui/workout-session-sets";
 import { WorkoutSessionHeader } from "@/features/workout-session/ui/workout-session-header";
 import { useWorkoutSession } from "@/features/workout-session/model/use-workout-session";
+import {
+  getDetailProgramSessionTitle,
+  getSessionProgramTitle,
+  getSessionProgramSlug,
+  getDetailProgramSessionDescription,
+} from "@/features/programs/lib/translations-mapper";
 import { startProgramSession } from "@/features/programs/actions/start-program-session.action";
 import { enrollInProgram } from "@/features/programs/actions/enroll-program.action";
 import { completeProgramSession } from "@/features/programs/actions/complete-program-session.action";
@@ -21,36 +27,43 @@ type ProgramExerciseWithAttributes = Exercise & {
   })[];
 };
 
+export type ProgramSessionDetail = ProgramSession & {
+  exercises: (ProgramExerciseWithAttributes & {
+    suggestedSets: {
+      id: string;
+      setIndex: number;
+      types: string[];
+      valuesInt: number[];
+      valuesSec: number[];
+      units: string[];
+    }[];
+    order: number;
+    exercise: ProgramExerciseWithAttributes;
+  })[];
+};
+
 interface ProgramSessionClientProps {
   program: {
     id: string;
     title: string;
+    titleEn: string;
+    titleEs: string;
+    titlePt: string;
+    titleRu: string;
+    titleZhCn: string;
     slug: string;
+    slugEn: string;
+    slugEs: string;
+    slugPt: string;
+    slugRu: string;
+    slugZhCn: string;
   };
   week: {
     id: string;
     weekNumber: number;
     title: string | null;
   };
-  session: {
-    id: string;
-    sessionNumber: number;
-    title: string;
-    description: string | null;
-    exercises: Array<{
-      id: string;
-      order: number;
-      suggestedSets: Array<{
-        id: string;
-        setIndex: number;
-        types: string[];
-        valuesInt: number[];
-        valuesSec: number[];
-        units: string[];
-      }>;
-      exercise: ProgramExerciseWithAttributes;
-    }>;
-  };
+  session: ProgramSessionDetail;
   isAuthenticated: boolean;
   canAccessContent: boolean;
   isPremiumSession: boolean;
@@ -64,15 +77,24 @@ export function ProgramSessionClient({
   canAccessContent,
   isPremiumSession,
 }: ProgramSessionClientProps) {
+  console.log("program:", program);
+
   const t = useI18n();
+  const locale = useCurrentLocale();
   const router = useRouter();
   const { startWorkout, session: workoutSession, completeWorkout, isWorkoutActive, quitWorkout } = useWorkoutSession();
+  console.log("workoutSession:", workoutSession);
   const [isLoading, setIsLoading] = useState(false);
   const [enrollmentId, setEnrollmentId] = useState<string | null>(null);
   const [sessionProgressId, setSessionProgressId] = useState<string | null>(null);
   const [showCongrats, setShowCongrats] = useState(false);
   const [hasStartedWorkout, setHasStartedWorkout] = useState(false);
+  const programTitle = getSessionProgramTitle(locale, program);
+  const programSessionTitle = getDetailProgramSessionTitle(locale, session);
+  const programSessionDescription = getDetailProgramSessionDescription(locale, session);
 
+  console.log("session:", session);
+  const programSlug = getSessionProgramSlug(locale, program);
   const handleStartWorkout = async () => {
     if (!canAccessContent) return;
 
@@ -124,9 +146,9 @@ export function ProgramSessionClient({
       setShowCongrats(true);
 
       if (isCompleted) {
-        router.push(`/programs/${program.slug}?completed=true&refresh=${Date.now()}`);
+        router.push(`/programs/${programSlug}?completed=true&refresh=${Date.now()}`);
       } else {
-        router.push(`/programs/${program.slug}?week=${nextWeek}&session=${nextSession}&refresh=${Date.now()}`);
+        router.push(`/programs/${programSlug}?week=${nextWeek}&session=${nextSession}&refresh=${Date.now()}`);
       }
     } catch (error) {
       console.error("Failed to complete session:", error);
@@ -157,7 +179,7 @@ export function ProgramSessionClient({
           <div className="flex items-center gap-4 mb-2">
             <Button
               className="text-white hover:bg-white/20"
-              onClick={() => router.push(`/programs/${program.slug}`)}
+              onClick={() => router.push(`/programs/${programSlug}`)}
               size="icon"
               variant="ghost"
             >
@@ -165,9 +187,9 @@ export function ProgramSessionClient({
             </Button>
             <div className="flex-1">
               <p className="text-sm opacity-90">
-                {program.title} - Semaine {week.weekNumber}
+                {programTitle} - {t("programs.week")} {week.weekNumber}
               </p>
-              <h1 className="text-xl font-bold">{session.title}</h1>
+              <h1 className="text-xl font-bold">{programSessionTitle}</h1>
             </div>
           </div>
         </div>
@@ -184,10 +206,10 @@ export function ProgramSessionClient({
                 <p className="text-gray-600 dark:text-gray-400 mb-6">{t("programs.premium_session_description")}</p>
               </div>
 
-              {session.description && (
+              {programSessionDescription && (
                 <div className="mb-6 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
                   <h3 className="font-semibold text-gray-900 dark:text-white mb-2">{t("programs.workout_description")}</h3>
-                  <p className="text-gray-700 dark:text-gray-300">{session.description}</p>
+                  <p className="text-gray-700 dark:text-gray-300">{programSessionDescription}</p>
                 </div>
               )}
 
@@ -196,9 +218,7 @@ export function ProgramSessionClient({
                 <div className="space-y-2">
                   {session.exercises.map((exercise, index) => (
                     <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg" key={exercise.id}>
-                      <span className="font-medium text-gray-900 dark:text-white">
-                        {index + 1}. {exercise.exercise.name}
-                      </span>
+                      <span className="font-medium text-gray-900 dark:text-white">{index + 1}. 👀</span>
                       <span className="text-sm text-gray-500 dark:text-gray-400">
                         {exercise.suggestedSets.length} {t("programs.set", { count: exercise.suggestedSets.length })}
                       </span>
@@ -237,7 +257,7 @@ export function ProgramSessionClient({
         <div className="flex items-center gap-4 mb-2">
           <Button
             className="text-white hover:bg-white/20"
-            onClick={() => router.push(`/programs/${program.slug}`)}
+            onClick={() => router.push(`/programs/${programSlug}`)}
             size="icon"
             variant="ghost"
           >
@@ -245,9 +265,9 @@ export function ProgramSessionClient({
           </Button>
           <div className="flex-1">
             <p className="text-sm opacity-90">
-              {program.title} - Semaine {week.weekNumber}
+              {programTitle} - {t("programs.week")} {week.weekNumber}
             </p>
-            <h1 className="text-xl font-bold">{session.title}</h1>
+            <h1 className="text-xl font-bold">{programSessionTitle}</h1>
           </div>
         </div>
       </div>
@@ -259,7 +279,7 @@ export function ProgramSessionClient({
             {/* Session info */}
             <div className="flex items-center justify-between mb-6">
               <div>
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">{session.title}</h2>
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">{programSessionTitle}</h2>
                 {session.description && <p className="text-gray-600 dark:text-gray-400 mt-2">{session.description}</p>}
               </div>
               <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400">

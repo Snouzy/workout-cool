@@ -3,10 +3,11 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { X, Plus, Minus, Trash2 } from "lucide-react";
+import { ProgramSessionExercise, ProgramSuggestedSet } from "@prisma/client";
 
 import { AVAILABLE_WORKOUT_SET_TYPES, MAX_WORKOUT_SET_COLUMNS, WORKOUT_SET_UNITS_TUPLE } from "@/shared/constants/workout-set-types";
 import { WorkoutSetType, WorkoutSetUnit } from "@/features/workout-session/types/workout-set";
-import { ProgramSessionExercise, ProgramSuggestedSet } from "@prisma/client";
+
 import { updateExerciseSets } from "../actions/update-exercise-sets.action";
 
 interface EditSetsModalProps {
@@ -238,7 +239,7 @@ export function EditSetsModal({ exercise, open, onOpenChange }: EditSetsModalPro
 
         <div className="space-y-6">
           {sets.map((set, setIndex) => (
-            <div key={set.id || setIndex} className="card bg-base-200 shadow-sm">
+            <div className="card bg-base-200 shadow-sm" key={set.id || setIndex}>
               <div className="card-body p-4">
                 <div className="flex items-center justify-between mb-4">
                   <div className="badge badge-primary font-semibold">
@@ -246,8 +247,8 @@ export function EditSetsModal({ exercise, open, onOpenChange }: EditSetsModalPro
                   </div>
                   <button
                     className="btn btn-sm btn-error btn-outline"
-                    onClick={() => removeSet(setIndex)}
                     disabled={sets.length <= 1}
+                    onClick={() => removeSet(setIndex)}
                   >
                     <Trash2 className="h-4 w-4" />
                   </button>
@@ -262,7 +263,7 @@ export function EditSetsModal({ exercise, open, onOpenChange }: EditSetsModalPro
                       );
 
                       return (
-                        <div key={columnIndex} className="space-y-2">
+                        <div className="space-y-2" key={columnIndex}>
                           <div className="flex items-center gap-1">
                             <select
                               className="select select-bordered select-sm font-semibold flex-1"
@@ -314,15 +315,15 @@ export function EditSetsModal({ exercise, open, onOpenChange }: EditSetsModalPro
         <div className="modal-action">
           <button 
             className="btn btn-ghost" 
-            onClick={() => onOpenChange(false)}
             disabled={isSaving}
+            onClick={() => onOpenChange(false)}
           >
             Annuler
           </button>
           <button 
             className="btn btn-primary" 
-            onClick={handleSave}
             disabled={isSaving}
+            onClick={handleSave}
           >
             {isSaving ? (
               <>

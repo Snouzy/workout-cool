@@ -585,7 +585,6 @@ model Program {
   isPremium          Boolean                      @default(true)
   isActive           Boolean                      @default(true)
   visibility         ProgramVisibility            @default(DRAFT)
-  emoji              String?
   participantCount   Int                          @default(0)
 
   createdAt DateTime @default(now())

@@ -13,7 +13,7 @@ import { getSlugForLocale } from "@/shared/lib/locale-slug";
 import { getAttributeValueLabel } from "@/shared/lib/attribute-value-translation";
 import { WelcomeModal } from "@/features/programs/ui/welcome-modal";
 import { ProgramProgress } from "@/features/programs/ui/program-progress";
-import { getDetailProgramDescription, getDetailProgramTitle } from "@/features/programs/lib/translations-mapper";
+import { getProgramDescription, getProgramTitle } from "@/features/programs/lib/translations-mapper";
 
 import { getProgramProgress } from "../actions/get-program-progress.action";
 import { ProgramDetail } from "../actions/get-program-by-slug.action";
@@ -28,7 +28,7 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
   const [selectedWeek, setSelectedWeek] = useQueryState("week", parseAsInteger.withDefault(1));
   const [showWelcomeModal, setShowWelcomeModal] = useState(false);
   const [completedSessions, setCompletedSessions] = useState<Set<string>>(new Set());
-  const [isLoadingProgress, setIsLoadingProgress] = useState(false);
+  const [_isLoadingProgress, setIsLoadingProgress] = useState(false);
   const [hasJoinedProgram, setHasJoinedProgram] = useState(false);
   const [currentWeek, setCurrentWeek] = useState(1);
   const [currentSessionNumber, setCurrentSessionNumber] = useState(1);
@@ -36,8 +36,8 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
   const searchParams = useSearchParams();
 
   const currentLocale = useCurrentLocale();
-  const programTitle = getDetailProgramTitle(currentLocale, program);
-  const programDescription = getDetailProgramDescription(currentLocale, program);
+  const programTitle = getProgramTitle(program, currentLocale);
+  const programDescription = getProgramDescription(program, currentLocale);
   // Load completed sessions when component mounts or when authenticated
   useEffect(() => {
     if (isAuthenticated) {

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Plus } from "lucide-react";
+
 import { CreateProgramModal } from "./create-program-modal";
 
 export function CreateProgramButton() {
@@ -18,8 +19,8 @@ export function CreateProgramButton() {
       </button>
       
       <CreateProgramModal
-        open={isModalOpen}
         onOpenChange={setIsModalOpen}
+        open={isModalOpen}
       />
     </>
   );

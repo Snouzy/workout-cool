@@ -17,9 +17,9 @@ interface SessionDetailPageProps {
 export async function generateMetadata({ params }: SessionDetailPageProps): Promise<Metadata> {
   const { slug, sessionSlug, locale } = await params;
   const t = await getI18n();
-  const session = await getSessionBySlug(slug, sessionSlug, locale);
+  const response = await getSessionBySlug(slug, sessionSlug, locale);
 
-  if (!session) {
+  if (!response) {
     return { title: t("programs.not_found") };
   }
 
@@ -27,31 +27,31 @@ export async function generateMetadata({ params }: SessionDetailPageProps): Prom
   const getLocalizedTitle = () => {
     switch (locale) {
       case "en":
-        return session.titleEn;
+        return response.session.titleEn;
       case "es":
-        return session.titleEs;
+        return response.session.titleEs;
       case "pt":
-        return session.titlePt;
+        return response.session.titlePt;
       case "ru":
-        return session.titleRu;
+        return response.session.titleRu;
       case "zh-CN":
-        return session.titleZhCn;
+        return response.session.titleZhCn;
       default:
-        return session.title;
+        return response.session.title;
     }
   };
 
   const title = getLocalizedTitle();
 
   return {
-    title: `${title} - ${session.program.title}`,
-    description: session.description,
+    title: `${title} - ${response.program.title}`,
+    description: response.session.description,
     openGraph: {
-      title: `${title} - ${session.program.title}`,
-      description: session.description,
+      title: `${title} - ${response.program.title}`,
+      description: response.session.description,
       images: [
         {
-          url: session.exercises[0]?.exercise.image || "/images/default-workout.jpg",
+          url: response.session.exercises[0]?.exercise.fullVideoImageUrl || "/images/default-workout.jpg",
           width: 800,
           height: 600,
           alt: title,
@@ -60,18 +60,18 @@ export async function generateMetadata({ params }: SessionDetailPageProps): Prom
     },
     twitter: {
       card: "summary_large_image",
-      title: `${title} - ${session.program.title}`,
-      description: session.description,
-      images: [session.exercises[0]?.exercise.image || "/images/default-workout.jpg"],
+      title: `${title} - ${response.program.title}`,
+      description: response.session.description,
+      images: [response.session.exercises[0]?.exercise.fullVideoImageUrl || "/images/default-workout.jpg"],
     },
   };
 }
 
 export default async function SessionDetailPage({ params }: SessionDetailPageProps) {
   const { slug, sessionSlug, locale } = await params;
-  const session = await getSessionBySlug(slug, sessionSlug, locale);
+  const response = await getSessionBySlug(slug, sessionSlug, locale);
 
-  if (!session) {
+  if (!response) {
     notFound();
   }
 
@@ -79,67 +79,19 @@ export default async function SessionDetailPage({ params }: SessionDetailPagePro
     headers: await headers(),
   });
 
-  // Transform session data to match the existing ProgramSessionClient interface
-  const program = {
-    id: session.program.id,
-    title: session.program.title,
-    slug: session.program.slug,
-  };
-
-  const week = {
-    id: session.week.id,
-    weekNumber: session.week.weekNumber,
-    title: session.week.title,
-  };
-
-  const sessionData = {
-    id: session.id,
-    sessionNumber: session.sessionNumber,
-    title: session.title,
-    description: session.description,
-    exercises: session.exercises.map(({ exercise, instructions, order, suggestedSets }) => ({
-      id: `session-exercise-${exercise.id}`, // Unique ID for session exercise
-      order,
-      suggestedSets: suggestedSets.map((set) => ({
-        id: set.id,
-        setIndex: set.setIndex,
-        types: set.types,
-        valuesInt: set.valuesInt,
-        valuesSec: set.valuesSec,
-        units: set.units,
-      })),
-      exercise: {
-        ...exercise,
-        createdAt: new Date(), // Mock dates since they're required
-        updatedAt: new Date(),
-        attributes: exercise.attributes.map((attr) => ({
-          id: attr.id,
-          exerciseId: exercise.id,
-          attributeNameId: attr.attributeName.id,
-          attributeValueId: attr.attributeValue.id,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-          attributeName: attr.attributeName,
-          attributeValue: attr.attributeValue,
-        })),
-      },
-    })),
-  };
-
   // Always allow access to the page, but pass authentication status
   const isAuthenticated = !!authSession?.user;
   const isPremium = authSession?.user?.isPremium || false;
-  const canAccessPremiumContent = !session.isPremium || (isAuthenticated && isPremium);
-  console.log("session:", session);
+  const canAccessPremiumContent = !response.session.isPremium || (isAuthenticated && isPremium);
 
   return (
     <ProgramSessionClient
       canAccessContent={canAccessPremiumContent}
       isAuthenticated={isAuthenticated}
-      isPremiumSession={session.isPremium}
-      program={session.program}
-      session={session}
-      week={week}
+      isPremiumSession={response.session.isPremium}
+      program={response.program}
+      session={response.session}
+      week={response.week}
     />
   );
 }

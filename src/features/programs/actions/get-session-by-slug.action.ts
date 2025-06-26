@@ -2,109 +2,29 @@
 
 import { ProgramVisibility } from "@prisma/client";
 
+import { Locale } from "locales/types";
+import { getLocaleSuffix } from "@/shared/types/i18n.types";
 import { prisma } from "@/shared/lib/prisma";
+import { SessionDetailResponse } from "@/entities/program/types/program.types";
 
-export interface SessionDetail {
-  id: string;
-  weekId: string;
-  sessionNumber: number;
-  title: string;
-  titleEn: string;
-  titleEs: string;
-  titlePt: string;
-  titleRu: string;
-  titleZhCn: string;
-  slug: string;
-  slugEn: string;
-  slugEs: string;
-  slugPt: string;
-  slugRu: string;
-  slugZhCn: string;
-  description: string;
-  descriptionEn: string;
-  descriptionEs: string;
-  descriptionPt: string;
-  descriptionRu: string;
-  descriptionZhCn: string;
-  equipment: string[];
-  estimatedMinutes: number;
-  isPremium: boolean;
-  program: {
-    id: string;
-    title: string;
-    titleEn: string;
-    titleEs: string;
-    titlePt: string;
-    titleRu: string;
-    titleZhCn: string;
-    slug: string;
-    slugEn: string;
-    slugEs: string;
-    slugPt: string;
-    slugRu: string;
-    slugZhCn: string;
-  };
-  week: {
-    id: string;
-    weekNumber: number;
-    title: string;
-  };
-  exercises: Array<{
-    id: string;
-    order: number;
-    instructions: string;
-    instructionsEn: string;
-    instructionsEs: string;
-    instructionsPt: string;
-    instructionsRu: string;
-    instructionsZhCn: string;
-    exercise: {
-      id: string;
-      name: string;
-      nameEn: string;
-      nameEs: string;
-      namePt: string;
-      nameRu: string;
-      nameZhCn: string;
-      description: string;
-      descriptionEn: string;
-      descriptionEs: string;
-      descriptionPt: string;
-      descriptionRu: string;
-      descriptionZhCn: string;
-      image: string;
-      videoUrl: string | null;
-      attributes: Array<{
-        id: string;
-        attributeName: {
-          id: string;
-          name: string;
-        };
-        attributeValue: {
-          id: string;
-          value: string;
-        };
-      }>;
-    };
-    suggestedSets: Array<{
-      id: string;
-      setIndex: number;
-      types: string[];
-      valuesInt: number[];
-      valuesSec: number[];
-      units: string[];
-    }>;
-  }>;
-}
-
-export async function getSessionBySlug(programSlug: string, sessionSlug: string, locale: string = "fr"): Promise<SessionDetail | null> {
+/**
+ * Get session details by slug with proper i18n support
+ * Uses locale-specific slug fields for search
+ */
+export async function getSessionBySlug(
+  programSlug: string,
+  sessionSlug: string,
+  locale: Locale = "fr",
+): Promise<SessionDetailResponse | null> {
   try {
-    // Determine which slug field to use based on locale
-    const slugField = getSlugFieldForLocale(locale);
+    // Determine slug field based on locale
+    const suffix = getLocaleSuffix(locale);
+    const sessionSlugField = suffix ? `slug${suffix}` : "slug";
 
+    // Find session with all related data
     const session = await prisma.programSession.findFirst({
       where: {
-        [slugField]: sessionSlug,
+        [sessionSlugField]: sessionSlug,
         week: {
           program: {
             OR: [
@@ -126,6 +46,12 @@ export async function getSessionBySlug(programSlug: string, sessionSlug: string,
             program: {
               select: {
                 id: true,
+                description: true,
+                descriptionEn: true,
+                descriptionEs: true,
+                descriptionPt: true,
+                descriptionRu: true,
+                descriptionZhCn: true,
                 title: true,
                 titleEn: true,
                 titleEs: true,
@@ -167,31 +93,83 @@ export async function getSessionBySlug(programSlug: string, sessionSlug: string,
       return null;
     }
 
+    // adapt to response type
     return {
-      id: session.id,
-      weekId: session.weekId,
-      sessionNumber: session.sessionNumber,
-      title: session.title,
-      titleEn: session.titleEn,
-      titleEs: session.titleEs,
-      titlePt: session.titlePt,
-      titleRu: session.titleRu,
-      titleZhCn: session.titleZhCn,
-      slug: session.slug,
-      slugEn: session.slugEn,
-      slugEs: session.slugEs,
-      slugPt: session.slugPt,
-      slugRu: session.slugRu,
-      slugZhCn: session.slugZhCn,
-      description: session.description,
-      descriptionEn: session.descriptionEn,
-      descriptionEs: session.descriptionEs,
-      descriptionPt: session.descriptionPt,
-      descriptionRu: session.descriptionRu,
-      descriptionZhCn: session.descriptionZhCn,
-      equipment: session.equipment,
-      estimatedMinutes: session.estimatedMinutes,
-      isPremium: session.isPremium,
+      session: {
+        id: session.id,
+        weekId: session.weekId,
+        sessionNumber: session.sessionNumber,
+        title: session.title,
+        titleEn: session.titleEn,
+        titleEs: session.titleEs,
+        titlePt: session.titlePt,
+        titleRu: session.titleRu,
+        titleZhCn: session.titleZhCn,
+        description: session.description,
+        descriptionEn: session.descriptionEn,
+        descriptionEs: session.descriptionEs,
+        descriptionPt: session.descriptionPt,
+        descriptionRu: session.descriptionRu,
+        descriptionZhCn: session.descriptionZhCn,
+        slug: session.slug,
+        slugEn: session.slugEn,
+        slugEs: session.slugEs,
+        slugPt: session.slugPt,
+        slugRu: session.slugRu,
+        slugZhCn: session.slugZhCn,
+        equipment: session.equipment,
+        estimatedMinutes: session.estimatedMinutes,
+        isPremium: session.isPremium,
+        exercises: session.exercises.map((ex) => ({
+          id: ex.id,
+          sessionId: ex.sessionId,
+          exerciseId: ex.exerciseId,
+          order: ex.order,
+          instructions: ex.instructions,
+          instructionsEn: ex.instructionsEn,
+          instructionsEs: ex.instructionsEs,
+          instructionsPt: ex.instructionsPt,
+          instructionsRu: ex.instructionsRu,
+          instructionsZhCn: ex.instructionsZhCn,
+          exercise: {
+            id: ex.exercise.id,
+            name: ex.exercise.name,
+            nameEn: ex.exercise.nameEn || "",
+            nameEs: ex.exercise.nameEn || "", // TODO: Fix when DB has proper values
+            namePt: ex.exercise.nameEn || "",
+            nameRu: ex.exercise.nameEn || "",
+            nameZhCn: ex.exercise.nameEn || "",
+            description: ex.exercise.description || "",
+            descriptionEn: ex.exercise.descriptionEn || "",
+            descriptionEs: ex.exercise.descriptionEn || "", // TODO: Fix when DB has proper values
+            descriptionPt: ex.exercise.descriptionEn || "",
+            descriptionRu: ex.exercise.descriptionEn || "",
+            descriptionZhCn: ex.exercise.descriptionEn || "",
+            fullVideoUrl: ex.exercise.fullVideoUrl,
+            fullVideoImageUrl: ex.exercise.fullVideoImageUrl,
+            createdAt: ex.exercise.createdAt,
+            updatedAt: ex.exercise.updatedAt,
+            attributes: ex.exercise.attributes.map((attr) => ({
+              id: attr.id,
+              exerciseId: attr.exerciseId,
+              attributeNameId: attr.attributeNameId,
+              attributeValueId: attr.attributeValueId,
+              attributeName: attr.attributeName.name,
+              attributeValue: attr.attributeValue.value,
+            })),
+          },
+          suggestedSets: ex.suggestedSets.map((set) => ({
+            id: set.id,
+            programSessionExerciseId: set.programSessionExerciseId,
+            programExerciseId: set.programSessionExerciseId,
+            setIndex: set.setIndex,
+            types: set.types,
+            valuesInt: set.valuesInt,
+            valuesSec: set.valuesSec,
+            units: set.units,
+          })),
+        })),
+      },
       program: {
         id: session.week.program.id,
         title: session.week.program.title,
@@ -200,6 +178,12 @@ export async function getSessionBySlug(programSlug: string, sessionSlug: string,
         titlePt: session.week.program.titlePt,
         titleRu: session.week.program.titleRu,
         titleZhCn: session.week.program.titleZhCn,
+        description: session.week.program.description,
+        descriptionEn: session.week.program.descriptionEn,
+        descriptionEs: session.week.program.descriptionEs,
+        descriptionPt: session.week.program.descriptionPt,
+        descriptionRu: session.week.program.descriptionRu,
+        descriptionZhCn: session.week.program.descriptionZhCn,
         slug: session.week.program.slug,
         slugEn: session.week.program.slugEn,
         slugEs: session.week.program.slugEs,
@@ -211,73 +195,22 @@ export async function getSessionBySlug(programSlug: string, sessionSlug: string,
         id: session.week.id,
         weekNumber: session.week.weekNumber,
         title: session.week.title,
+        titleEn: session.week.titleEn,
+        titleEs: session.week.titleEs,
+        titlePt: session.week.titlePt,
+        titleRu: session.week.titleRu,
+        titleZhCn: session.week.titleZhCn,
+        description: session.week.description,
+        descriptionEn: session.week.descriptionEn,
+        descriptionEs: session.week.descriptionEs,
+        descriptionPt: session.week.descriptionPt,
+        descriptionRu: session.week.descriptionRu,
+        descriptionZhCn: session.week.descriptionZhCn,
+        programId: session.week.programId,
       },
-      exercises: session.exercises.map((exercise) => ({
-        id: exercise.id,
-        order: exercise.order,
-        instructions: exercise.instructions,
-        instructionsEn: exercise.instructionsEn,
-        instructionsEs: exercise.instructionsEs,
-        instructionsPt: exercise.instructionsPt,
-        instructionsRu: exercise.instructionsRu,
-        instructionsZhCn: exercise.instructionsZhCn,
-        exercise: {
-          id: exercise.exercise.id,
-          name: exercise.exercise.name,
-          nameEn: exercise.exercise.nameEn ?? "",
-          nameEs: exercise.exercise.nameEn ?? "",
-          namePt: exercise.exercise.nameEn ?? "",
-          nameRu: exercise.exercise.nameEn ?? "",
-          nameZhCn: exercise.exercise.nameEn ?? "",
-          description: exercise.exercise.description ?? "",
-          descriptionEn: exercise.exercise.descriptionEn ?? "",
-          descriptionEs: exercise.exercise.descriptionEn ?? "",
-          descriptionPt: exercise.exercise.descriptionEn ?? "",
-          descriptionRu: exercise.exercise.descriptionEn ?? "",
-          descriptionZhCn: exercise.exercise.descriptionEn ?? "",
-          image: exercise.exercise.fullVideoImageUrl ?? "",
-          videoUrl: exercise.exercise.fullVideoUrl ?? "",
-          attributes: exercise.exercise.attributes.map((attr) => ({
-            id: attr.id,
-            attributeName: {
-              id: attr.attributeName.id,
-              name: attr.attributeName.name,
-            },
-            attributeValue: {
-              id: attr.attributeValue.id,
-              value: attr.attributeValue.value,
-            },
-          })),
-        },
-        suggestedSets: exercise.suggestedSets.map((set) => ({
-          id: set.id,
-          setIndex: set.setIndex,
-          types: set.types,
-          valuesInt: set.valuesInt,
-          valuesSec: set.valuesSec,
-          units: set.units,
-        })),
-      })),
     };
   } catch (error) {
     console.error("Error fetching session by slug:", error);
     return null;
-  }
-}
-
-function getSlugFieldForLocale(locale: string): string {
-  switch (locale) {
-    case "en":
-      return "slugEn";
-    case "es":
-      return "slugEs";
-    case "pt":
-      return "slugPt";
-    case "ru":
-      return "slugRu";
-    case "zh-CN":
-      return "slugZhCn";
-    default:
-      return "slug"; // French default
   }
 }

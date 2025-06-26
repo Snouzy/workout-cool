@@ -4,7 +4,7 @@ import { Lock, Users, Calendar, Clock } from "lucide-react";
 
 import { Locale } from "locales/types";
 import { getI18n } from "locales/server";
-import { getPublicProgramDescription, getPublicProgramTitle, getPublicProgramSlug } from "@/features/programs/lib/translations-mapper";
+import { getProgramDescription, getProgramSlug, getProgramTitle } from "@/features/programs/lib/translations-mapper";
 
 import { PublicProgram } from "../actions/get-public-programs.action";
 
@@ -18,9 +18,9 @@ interface ProgramCardProps {
 export async function ProgramCard({ program, featured = false, size = "medium", locale }: ProgramCardProps) {
   const isLocked = program.isPremium;
   const t = await getI18n();
-  const title = getPublicProgramTitle(locale, program);
-  const description = getPublicProgramDescription(locale, program);
-  const programSlug = getPublicProgramSlug(locale, program);
+  const title = getProgramTitle(program, locale);
+  const description = getProgramDescription(program, locale);
+  const programSlug = getProgramSlug(program, locale);
 
   const heightClass = {
     small: "h-32",

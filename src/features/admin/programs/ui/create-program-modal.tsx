@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { CheckCircle } from "lucide-react";
+
 import { CreateProgramForm } from "./create-program-form";
 
 interface CreateProgramModalProps {
@@ -60,7 +61,7 @@ export function CreateProgramModal({ open, onOpenChange }: CreateProgramModalPro
             {/* Steps indicator */}
             <div className="flex items-center justify-between mb-6 px-4">
               {STEPS.map((step, index) => (
-                <div key={step.id} className="flex items-center">
+                <div className="flex items-center" key={step.id}>
                   <div className="flex flex-col items-center">
                     <div
                       className={`flex items-center justify-center w-10 h-10 rounded-full border-2 transition-colors ${
@@ -98,9 +99,9 @@ export function CreateProgramModal({ open, onOpenChange }: CreateProgramModalPro
             <div className="flex-1 overflow-y-auto">
               <CreateProgramForm
                 currentStep={currentStep}
+                onCancel={handleClose}
                 onStepComplete={handleStepComplete}
                 onSuccess={handleSuccess}
-                onCancel={handleClose}
               />
             </div>
           </div>

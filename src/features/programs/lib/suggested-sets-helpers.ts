@@ -8,17 +8,6 @@ export interface CreateSuggestedSetData {
   units?: WorkoutSetUnit[];
 }
 
-export function createSuggestedSetsForExercise(programSessionExerciseId: string, sets: CreateSuggestedSetData[]) {
-  return sets.map((set) => ({
-    programSessionExerciseId,
-    setIndex: set.setIndex,
-    types: set.types,
-    valuesInt: set.valuesInt || [],
-    valuesSec: set.valuesSec || [],
-    units: set.units || [],
-  }));
-}
-
 // helpers to create suggested sets
 export const SUGGESTED_SET_TEMPLATES = {
   // 3 sets of 10-12 reps with weight

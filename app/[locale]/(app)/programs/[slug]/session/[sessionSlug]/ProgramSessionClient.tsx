@@ -3,67 +3,24 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, Play, Clock, Dumbbell, Lock } from "lucide-react";
-import { Exercise, ExerciseAttribute, ExerciseAttributeName, ExerciseAttributeValue, ProgramSession } from "@prisma/client";
+import { ExerciseAttributeNameEnum, ProgramWeek } from "@prisma/client";
 
 import { useCurrentLocale, useI18n } from "locales/client";
 import { WorkoutSessionSets } from "@/features/workout-session/ui/workout-session-sets";
 import { WorkoutSessionHeader } from "@/features/workout-session/ui/workout-session-header";
 import { useWorkoutSession } from "@/features/workout-session/model/use-workout-session";
-import {
-  getDetailProgramSessionTitle,
-  getSessionProgramTitle,
-  getSessionProgramSlug,
-  getDetailProgramSessionDescription,
-} from "@/features/programs/lib/translations-mapper";
+import { getSessionDescription, getSessionTitle, getSessionSlug, getProgramTitle } from "@/features/programs/lib/translations-mapper";
 import { startProgramSession } from "@/features/programs/actions/start-program-session.action";
 import { enrollInProgram } from "@/features/programs/actions/enroll-program.action";
 import { completeProgramSession } from "@/features/programs/actions/complete-program-session.action";
+import { ProgramSessionWithExercises } from "@/entities/program-session/types/program-session.types";
+import { ProgramI18nReference } from "@/entities/program/types/program.types";
 import { Button } from "@/components/ui/button";
 
-type ProgramExerciseWithAttributes = Exercise & {
-  attributes: (ExerciseAttribute & {
-    attributeName: ExerciseAttributeName;
-    attributeValue: ExerciseAttributeValue;
-  })[];
-};
-
-export type ProgramSessionDetail = ProgramSession & {
-  exercises: (ProgramExerciseWithAttributes & {
-    suggestedSets: {
-      id: string;
-      setIndex: number;
-      types: string[];
-      valuesInt: number[];
-      valuesSec: number[];
-      units: string[];
-    }[];
-    order: number;
-    exercise: ProgramExerciseWithAttributes;
-  })[];
-};
-
 interface ProgramSessionClientProps {
-  program: {
-    id: string;
-    title: string;
-    titleEn: string;
-    titleEs: string;
-    titlePt: string;
-    titleRu: string;
-    titleZhCn: string;
-    slug: string;
-    slugEn: string;
-    slugEs: string;
-    slugPt: string;
-    slugRu: string;
-    slugZhCn: string;
-  };
-  week: {
-    id: string;
-    weekNumber: number;
-    title: string | null;
-  };
-  session: ProgramSessionDetail;
+  program: ProgramI18nReference;
+  week: ProgramWeek;
+  session: ProgramSessionWithExercises;
   isAuthenticated: boolean;
   canAccessContent: boolean;
   isPremiumSession: boolean;
@@ -75,26 +32,24 @@ export function ProgramSessionClient({
   session,
   isAuthenticated,
   canAccessContent,
-  isPremiumSession,
+  isPremiumSession: _isPremiumSession,
 }: ProgramSessionClientProps) {
-  console.log("program:", program);
-
   const t = useI18n();
   const locale = useCurrentLocale();
   const router = useRouter();
   const { startWorkout, session: workoutSession, completeWorkout, isWorkoutActive, quitWorkout } = useWorkoutSession();
   console.log("workoutSession:", workoutSession);
   const [isLoading, setIsLoading] = useState(false);
-  const [enrollmentId, setEnrollmentId] = useState<string | null>(null);
+  const [_enrollmentId, setEnrollmentId] = useState<string | null>(null);
   const [sessionProgressId, setSessionProgressId] = useState<string | null>(null);
   const [showCongrats, setShowCongrats] = useState(false);
   const [hasStartedWorkout, setHasStartedWorkout] = useState(false);
-  const programTitle = getSessionProgramTitle(locale, program);
-  const programSessionTitle = getDetailProgramSessionTitle(locale, session);
-  const programSessionDescription = getDetailProgramSessionDescription(locale, session);
 
-  console.log("session:", session);
-  const programSlug = getSessionProgramSlug(locale, program);
+  const programTitle = getProgramTitle(program, locale);
+  const programSessionTitle = getSessionTitle(session, locale);
+  const programSessionDescription = getSessionDescription(session, locale);
+  const programSlug = getSessionSlug(program, locale);
+
   const handleStartWorkout = async () => {
     if (!canAccessContent) return;
 
@@ -110,17 +65,63 @@ export function ProgramSessionClient({
 
       // Convert program exercises to workout format
       const exercises = session.exercises.map((ex) => ({
-        ...ex.exercise,
+        id: ex.exercise.id,
+        name: ex.exercise.name,
+        nameEn: ex.exercise.nameEn || null,
+        nameEs: ex.exercise.nameEs || null,
+        namePt: ex.exercise.namePt || null,
+        nameRu: ex.exercise.nameRu || null,
+        nameZhCn: ex.exercise.nameZhCn || null,
+        description: ex.exercise.description || null,
+        descriptionEn: ex.exercise.descriptionEn || null,
+        descriptionEs: ex.exercise.descriptionEs || null,
+        descriptionPt: ex.exercise.descriptionPt || null,
+        descriptionRu: ex.exercise.descriptionRu || null,
+        descriptionZhCn: ex.exercise.descriptionZhCn || null,
+        fullVideoUrl: ex.exercise.fullVideoUrl || null,
+        fullVideoImageUrl: ex.exercise.fullVideoImageUrl || null,
+        introduction: null,
+        introductionEn: null,
+        slug: null,
+        slugEn: null,
+        createdAt: new Date(),
+        updatedAt: new Date(),
         order: ex.order,
+        attributes: ex.exercise.attributes.map((attr) => ({
+          id: attr.id,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          exerciseId: ex.exercise.id,
+          attributeNameId: attr.attributeNameId,
+          attributeValueId: attr.attributeValueId,
+          attributeName: {
+            id: attr.attributeNameId,
+            name: attr.attributeName,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+          },
+          attributeValue: {
+            id: attr.attributeValueId,
+            attributeNameId: attr.attributeNameId,
+            attributeValueId: attr.attributeValueId,
+            value: attr.attributeValue,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+          },
+        })),
       }));
 
       // Extract equipment and muscles from session exercises
       const equipment = session.exercises.flatMap((ex) =>
-        ex.exercise.attributes.filter((attr) => attr.attributeName.name === "EQUIPMENT").map((attr) => attr.attributeValue.value),
+        ex.exercise.attributes
+          .filter((attr) => attr.attributeName === ExerciseAttributeNameEnum.EQUIPMENT)
+          .map((attr) => attr.attributeValue),
       );
 
       const muscles = session.exercises.flatMap((ex) =>
-        ex.exercise.attributes.filter((attr) => attr.attributeName.name === "PRIMARY_MUSCLE").map((attr) => attr.attributeValue.value),
+        ex.exercise.attributes
+          .filter((attr) => attr.attributeName === ExerciseAttributeNameEnum.PRIMARY_MUSCLE)
+          .map((attr) => attr.attributeValue),
       );
 
       startWorkout(exercises, equipment, muscles);
@@ -305,9 +306,6 @@ export function ProgramSessionClient({
                     </div>
                     <div className="flex-1">
                       <h4 className="font-medium text-gray-900 dark:text-white">{exercise.exercise.name}</h4>
-                      {exercise.exercise.description && (
-                        <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">{exercise.exercise.description}</p>
-                      )}
                     </div>
                     <div className="text-right">
                       <span className="text-sm text-gray-500 dark:text-gray-400">{exercise.suggestedSets.length} série(s)</span>

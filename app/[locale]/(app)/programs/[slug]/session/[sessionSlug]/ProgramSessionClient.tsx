@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { ArrowLeft, Play, Clock, Dumbbell, Lock } from "lucide-react";
 import { Exercise, ExerciseAttribute, ExerciseAttributeName, ExerciseAttributeValue } from "@prisma/client";
 
+import { useI18n } from "locales/client";
 import { WorkoutSessionSets } from "@/features/workout-session/ui/workout-session-sets";
 import { WorkoutSessionHeader } from "@/features/workout-session/ui/workout-session-header";
 import { useWorkoutSession } from "@/features/workout-session/model/use-workout-session";
@@ -63,6 +64,7 @@ export function ProgramSessionClient({
   canAccessContent,
   isPremiumSession,
 }: ProgramSessionClientProps) {
+  const t = useI18n();
   const router = useRouter();
   const { startWorkout, session: workoutSession, completeWorkout, isWorkoutActive, quitWorkout } = useWorkoutSession();
   const [isLoading, setIsLoading] = useState(false);
@@ -103,7 +105,7 @@ export function ProgramSessionClient({
       setHasStartedWorkout(true);
     } catch (error) {
       console.error("Failed to start session:", error);
-      alert("Erreur lors du démarrage de la séance");
+      alert(t("programs.error_starting_session"));
     } finally {
       setIsLoading(false);
     }
@@ -178,28 +180,28 @@ export function ProgramSessionClient({
                 <div className="w-16 h-16 bg-yellow-100 dark:bg-yellow-900 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Lock className="w-8 h-8 text-yellow-600 dark:text-yellow-400" />
                 </div>
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Séance Premium</h2>
-                <p className="text-gray-600 dark:text-gray-400 mb-6">
-                  Cette séance fait partie du contenu premium. Vous pouvez voir les détails mais pas effectuer l&apos;entraînement.
-                </p>
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">{t("programs.premium_session")}</h2>
+                <p className="text-gray-600 dark:text-gray-400 mb-6">{t("programs.premium_session_description")}</p>
               </div>
 
               {session.description && (
                 <div className="mb-6 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                  <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Description de la séance</h3>
+                  <h3 className="font-semibold text-gray-900 dark:text-white mb-2">{t("programs.workout_description")}</h3>
                   <p className="text-gray-700 dark:text-gray-300">{session.description}</p>
                 </div>
               )}
 
               <div className="mb-6">
-                <h3 className="font-semibold text-gray-900 dark:text-white mb-4">Exercices inclus</h3>
+                <h3 className="font-semibold text-gray-900 dark:text-white mb-4">{t("programs.premium_session_exercises")}</h3>
                 <div className="space-y-2">
                   {session.exercises.map((exercise, index) => (
                     <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg" key={exercise.id}>
                       <span className="font-medium text-gray-900 dark:text-white">
                         {index + 1}. {exercise.exercise.name}
                       </span>
-                      <span className="text-sm text-gray-500 dark:text-gray-400">{exercise.suggestedSets.length} série(s)</span>
+                      <span className="text-sm text-gray-500 dark:text-gray-400">
+                        {exercise.suggestedSets.length} {t("programs.set", { count: exercise.suggestedSets.length })}
+                      </span>
                     </div>
                   ))}
                 </div>
@@ -208,16 +210,16 @@ export function ProgramSessionClient({
               <div className="space-y-3">
                 {!isAuthenticated && (
                   <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white" onClick={() => router.push("/auth/login")}>
-                    Se connecter pour accéder
+                    {t("programs.connect_to_access")}
                   </Button>
                 )}
                 {isAuthenticated && (
                   <Button className="w-full bg-yellow-600 hover:bg-yellow-700 text-white" onClick={() => router.push("/premium")}>
-                    Devenir Premium
+                    {t("programs.become_premium")}
                   </Button>
                 )}
                 <Button className="w-full" onClick={() => router.push(`/programs/${program.slug}`)} variant="outline">
-                  Retour au programme
+                  {t("programs.back_to_program")}
                 </Button>
               </div>
             </div>

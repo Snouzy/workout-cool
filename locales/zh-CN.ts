@@ -1,5 +1,16 @@
 export default {
   programs: {
+    "set#zero": "组",
+    "set#one": "组",
+    "set#other": "组",
+    error_starting_session: "启动课程时出错",
+    premium_session: "高级课程",
+    premium_session_description: "这个课程是高级课程的一部分。您可以查看细节，但不能进行锻炼。",
+    premium_session_exercises: "包含的练习",
+    workout_description: "课程描述",
+    connect_to_access: "连接以访问",
+    become_premium: "成为高级",
+    back_to_program: "返回程序",
     no_equipment: "没有设备",
     workout_programs_title: "锻炼程序",
     workout_programs: "锻炼程序",

@@ -141,7 +141,7 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
     <div className="flex-1 flex flex-col overflow-hidden relative">
       <div className="flex-1 overflow-auto pb-20">
         {/* Hero Image Section with Gamification */}
-        <div className="relative h-64 bg-gradient-to-br from-[#4F8EF7] to-[#25CB78]">
+        <div className="relative h-40 sm:h-64 bg-gradient-to-br from-[#4F8EF7] to-[#25CB78]">
           <Image alt={programTitle} className="absolute inset-0 object-cover opacity-30" fill src={program.image} />
           <div className="absolute inset-0 bg-black/20"></div>
 
@@ -296,7 +296,7 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
                     <div className="flex gap-6 overflow-x-auto pb-2">
                       {program.coaches.map((coach) => (
                         <div
-                          className="flex flex-col items-center gap-3 flex-shrink-0 p-3 bg-white dark:bg-gray-800 rounded-xl border-2 border-[#25CB78]/20 hover:border-[#25CB78] transition-all duration-200 ease-in-out hover:scale-105"
+                          className="flex flex-col items-center gap-3 flex-shrink-0 p-3 bg-white dark:bg-gray-800 rounded-xl border-2 border-[#25CB78]/20 hover:border-[#25CB78] transition-all duration-200 ease-in-out"
                           key={coach.id}
                         >
                           <div className="relative">
@@ -450,7 +450,7 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
 
       {/* Gamified Floating CTA */}
       <button
-        className="absolute bottom-6 right-0 left-0 max-w-xs mx-auto bg-gradient-to-r from-[#4F8EF7] to-[#25CB78] hover:from-[#4F8EF7]/80 hover:to-[#25CB78]/80 text-white px-8 py-4 rounded-full font-bold border-2 border-white/20 hover:scale-105 transition-all duration-200 ease-in-out z-1 flex items-center justify-center gap-2"
+        className="absolute bottom-2 right-0 left-0 max-w-xs mx-auto bg-gradient-to-r from-[#4F8EF7] to-[#25CB78] hover:from-[#4F8EF7]/80 hover:to-[#25CB78]/80 text-white px-8 py-4 rounded-full font-bold border-2 border-white/20 hover:scale-105 transition-all duration-200 ease-in-out z-1 flex items-center justify-center gap-2"
         onClick={() => setShowWelcomeModal(true)}
       >
         {program.emoji ? (

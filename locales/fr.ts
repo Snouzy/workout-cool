@@ -1,5 +1,17 @@
 export default {
   programs: {
+    "set#zero": "série",
+    "set#one": "série",
+    "set#other": "séries",
+    error_starting_session: "Erreur lors du démarrage de la séance",
+    premium_session: "Séance Premium",
+    premium_session_description:
+      "Cette séance fait partie du contenu premium. Vous pouvez voir les détails mais pas effectuer l'entraînement.",
+    premium_session_exercises: "Exercices inclus",
+    workout_description: "Description de la séance",
+    connect_to_access: "Connectez-vous pour accéder",
+    become_premium: "Devenir Premium",
+    back_to_program: "Retour au programme",
     no_equipment: "Aucun équipement",
     workout_programs_title: "Programmes d'entraînement",
     workout_programs: "Programmes d'entraînement",

@@ -46,7 +46,7 @@ export function BottomNavigation() {
             return (
               <Link
                 className={cn(
-                  "group relative flex flex-col items-center gap-1 px-4 py-2 rounded-2xl transition-all duration-300 ease-out",
+                  "group relative flex flex-col items-center gap-1 px-4 py-1 rounded-2xl transition-all duration-300 ease-out",
                   "hover:scale-105 active:scale-95",
                   isActive
                     ? "bg-gradient-to-br from-[#4F8EF7]/8 to-[#25CB78]/8 border border-[#4F8EF7]/20"
@@ -92,12 +92,12 @@ export function BottomNavigation() {
                   {tab.shortLabel}
                 </span>
 
-                {/* Hover tooltip */}
+                {/* Hover tooltip - only on non-touch devices */}
                 <div
                   className={cn(
                     "absolute -top-10 left-1/2 transform -translate-x-1/2 px-2 py-1 bg-gray-900/90 text-white text-xs rounded-lg opacity-0 pointer-events-none transition-all duration-200 whitespace-nowrap",
-                    "group-hover:opacity-100 group-hover:-translate-y-1",
                     "after:content-[''] after:absolute after:top-full after:left-1/2 after:transform after:-translate-x-1/2 after:border-4 after:border-transparent after:border-t-gray-900/90",
+                    "hidden [@media(hover:hover)]:block [@media(hover:hover)]:group-hover:opacity-100 [@media(hover:hover)]:group-hover:-translate-y-1",
                   )}
                 >
                   {tab.description}

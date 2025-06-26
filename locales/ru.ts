@@ -1,5 +1,17 @@
 export default {
   programs: {
+    "set#zero": "подход",
+    "set#one": "подход",
+    "set#other": "подходов",
+    error_starting_session: "Ошибка при запуске сессии",
+    premium_session: "Премиум сессия",
+    premium_session_description:
+      "Эта сессия является частью премиум-контента. Вы можете посмотреть детали, но не можете выполнить тренировку.",
+    premium_session_exercises: "Включенные упражнения",
+    workout_description: "Описание сессии",
+    connect_to_access: "Подключитесь для доступа",
+    become_premium: "Стань Премиум",
+    back_to_program: "Вернуться к программе",
     no_equipment: "Без оборудования",
     workout_programs_title: "Программы тренировок",
     workout_programs: "Программы тренировок",

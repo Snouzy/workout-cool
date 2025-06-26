@@ -1,4 +1,4 @@
-const CACHE_NAME = "1.2.3";
+const CACHE_NAME = "1.2.4";
 const urlsToCache = [
   "/",
   "/manifest.json",
@@ -7,6 +7,7 @@ const urlsToCache = [
   "/apple-touch-icon.png",
   "/android-chrome-192x192.png",
   "/android-chrome-512x512.png",
+  "/logo.png",
 ];
 
 // Install event - cache resources
@@ -21,27 +22,48 @@ self.addEventListener("install", (event) => {
 
 // Fetch event - network first with cache fallback
 self.addEventListener("fetch", (event) => {
+  // Skip non-GET requests
+  if (event.request.method !== "GET") {
+    return;
+  }
+
+  // Skip OAuth/auth related URLs
+  const url = new URL(event.request.url);
+  if (
+    url.pathname.startsWith("/api/auth") ||
+    url.pathname.startsWith("/auth") ||
+    url.hostname !== self.location.hostname ||
+    url.protocol === "chrome-extension:"
+  ) {
+    return;
+  }
+
   event.respondWith(
     fetch(event.request)
       .then((response) => {
-        // If we get a valid response, clone it and update the cache
-        if (response && response.status === 200) {
-          const responseClone = response.clone();
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put(event.request, responseClone);
-          });
+        // Don't cache non-successful responses
+        if (!response || response.status !== 200 || response.type !== "basic") {
+          return response;
         }
+
+        // Clone the response
+        const responseToCache = response.clone();
+
+        caches.open(CACHE_NAME).then((cache) => {
+          cache.put(event.request, responseToCache);
+        });
+
         return response;
       })
       .catch(() => {
-        // If network fails, try to serve from cache
+        // Network failed, try cache
         return caches.match(event.request).then((cachedResponse) => {
           if (cachedResponse) {
             return cachedResponse;
           }
           // If no cache available, return a custom offline page or error
           if (event.request.destination === "document") {
-            return new Response("Application hors ligne - Veuillez vérifier votre connexion internet", {
+            return new Response("Application offline - Please check your internet connection", {
               status: 503,
               statusText: "Service Unavailable",
               headers: new Headers({

@@ -55,6 +55,13 @@ export class StripeProvider implements PaymentProvider {
           internalPlanId: plan.internalId || plan.id,
           ...options.metadata,
         },
+        subscription_data: {
+          metadata: {
+            userId,
+            planId: plan.id,
+            internalPlanId: plan.internalId || plan.id,
+          },
+        },
         success_url: options.successUrl || `${env.NEXT_PUBLIC_APP_URL}/profile?payment=success`,
         cancel_url: options.cancelUrl || `${env.NEXT_PUBLIC_APP_URL}/profile?payment=cancelled`,
         customer_email: undefined, // Let Stripe collect email
@@ -145,28 +152,69 @@ export class StripeProvider implements PaymentProvider {
 
         case "invoice.payment_succeeded":
           const invoice = event.data.object as Stripe.Invoice;
+          console.log("Invoice payment succeeded:", {
+            invoiceId: invoice.id,
+            amount_paid: invoice.amount_paid,
+            amount_due: invoice.amount_due,
+            customer: invoice.customer,
+            subscription: invoice.subscription,
+            subscription_details: invoice.subscription_details,
+          });
 
-          if (invoice.amount_due > 0 && typeof invoice.customer === "string") {
-            // Find subscription by Stripe customer ID or subscription ID
+          if (invoice.amount_paid > 0 && typeof invoice.customer === "string") {
+            // Find subscription by multiple methods
             let subscription: any = null;
 
+            // Method 1: Direct subscription ID
             if (invoice.subscription) {
               subscription = await this.stripe.subscriptions.retrieve(invoice.subscription as string);
+              console.log("Method 1 - Retrieved subscription by ID:", {
+                id: subscription.id,
+                userId: subscription.metadata?.userId,
+                planId: subscription.metadata?.planId,
+              });
+            }
+            // Method 2: Search by customer
+            else {
+              console.log("Method 2 - Searching subscriptions by customer:", invoice.customer);
+              const subscriptions = await this.stripe.subscriptions.list({
+                customer: invoice.customer as string,
+                status: "all",
+                limit: 1,
+              });
+
+              if (subscriptions.data.length > 0) {
+                subscription = subscriptions.data[0];
+                console.log("Method 2 - Found subscription by customer:", {
+                  id: subscription.id,
+                  userId: subscription.metadata?.userId,
+                  planId: subscription.metadata?.planId,
+                });
+              }
             }
 
             if (subscription && subscription.metadata?.userId) {
               // Update subscription status to active
               await this.updateSubscriptionStatusInDB(subscription.metadata.userId, "ACTIVE");
 
-              // Create payment record
+              console.log("Creating payment record with:", {
+                userId: subscription.metadata.userId,
+                planId: subscription.metadata.planId || subscription.items.data[0]?.price.id,
+                processorPaymentId: invoice.id,
+                amount: (invoice.amount_paid || 0) / 100,
+              });
+
+              // Create payment record - use price ID if planId not in metadata
               const paymentResult = await this.createPaymentRecord({
                 userId: subscription.metadata.userId,
-                planId: subscription.metadata.planId || "unknown",
+                planId: subscription.metadata.planId || subscription.items.data[0]?.price.id || "unknown",
                 processorPaymentId: invoice.id,
                 amount: (invoice.amount_paid || 0) / 100,
                 currency: invoice.currency.toUpperCase(),
                 status: "COMPLETED",
               });
+
+              console.log("Payment record result:", paymentResult);
 
               return {
                 success: true,
@@ -179,7 +227,39 @@ export class StripeProvider implements PaymentProvider {
                 amount: (invoice.amount_paid || 0) / 100,
                 currency: invoice.currency.toUpperCase(),
               };
+            } else {
+              console.warn("No subscription found or missing userId in metadata. Customer:", invoice.customer);
+
+              // Fallback: Try to find user by Stripe customer and create payment record
+              const user = await this.findUserByStripeCustomer(invoice.customer as string);
+              if (user) {
+                console.log("Fallback: Found user by customer ID:", user);
+
+                const paymentResult = await this.createPaymentRecord({
+                  userId: user.id,
+                  planId: "fallback-plan", // We'll handle this in createPaymentRecord
+                  processorPaymentId: invoice.id,
+                  amount: (invoice.amount_paid || 0) / 100,
+                  currency: invoice.currency.toUpperCase(),
+                  status: "COMPLETED",
+                });
+
+                console.log("Fallback payment record result:", paymentResult);
+
+                return {
+                  success: true,
+                  userId: user.id,
+                  planId: "unknown",
+                  platform: "WEB" as const,
+                  action: "payment_succeeded",
+                  paymentId: paymentResult?.id,
+                  amount: (invoice.amount_paid || 0) / 100,
+                  currency: invoice.currency.toUpperCase(),
+                };
+              }
             }
+          } else {
+            console.log("Skipping payment creation: amount_paid =", invoice.amount_paid, "customer =", invoice.customer);
           }
           break;
 
@@ -313,8 +393,10 @@ export class StripeProvider implements PaymentProvider {
     currency: string;
     status: "COMPLETED" | "FAILED";
   }): Promise<{ id: string } | null> {
+    console.log("createPaymentRecord called with:", { userId, planId, processorPaymentId, amount, currency, status });
+
     if (!userId || !planId) {
-      console.warn("Missing userId or planId for payment record creation");
+      console.warn("Missing userId or planId for payment record creation:", { userId, planId });
       return null;
     }
 
@@ -330,17 +412,53 @@ export class StripeProvider implements PaymentProvider {
         include: { plan: true },
       });
 
+      console.log("Plan mapping found:", planMapping);
+
+      // Try to find subscription using either mapped plan ID or original plan ID
       const subscription = await prisma.subscription.findFirst({
         where: {
           userId,
-          planId: planMapping?.planId || planId,
-          status: "ACTIVE",
+          ...(planMapping?.planId ? { planId: planMapping.planId } : {}),
+          status: { in: ["ACTIVE", "TRIAL"] }, // Include TRIAL status
         },
+        orderBy: { createdAt: "desc" }, // Get most recent subscription
       });
 
+      console.log("Subscription found:", subscription);
+
       if (!subscription) {
-        console.warn(`No active subscription found for user ${userId} and plan ${planId}`);
-        return null;
+        // If no subscription found with plan mapping, try to find any active subscription for this user
+        const anyActiveSubscription = await prisma.subscription.findFirst({
+          where: {
+            userId,
+            status: { in: ["ACTIVE", "TRIAL"] },
+          },
+          orderBy: { createdAt: "desc" },
+        });
+
+        console.log("Any active subscription found:", anyActiveSubscription);
+
+        if (!anyActiveSubscription) {
+          console.warn(`No active subscription found for user ${userId}`);
+          return null;
+        }
+
+        // Use the active subscription we found
+        const payment = await prisma.payment.create({
+          data: {
+            subscriptionId: anyActiveSubscription.id,
+            amount,
+            currency,
+            processor: PaymentProcessor.STRIPE,
+            processorPaymentId,
+            status: status === "COMPLETED" ? PaymentStatus.COMPLETED : PaymentStatus.FAILED,
+            paidAt: status === "COMPLETED" ? new Date() : null,
+            failedAt: status === "FAILED" ? new Date() : null,
+          },
+        });
+
+        console.log("Payment created successfully:", payment.id);
+        return { id: payment.id };
       }
 
       const payment = await prisma.payment.create({
@@ -356,6 +474,7 @@ export class StripeProvider implements PaymentProvider {
         },
       });
 
+      console.log("Payment created successfully:", payment.id);
       return { id: payment.id };
     } catch (error) {
       console.error("Error creating payment record:", error);
@@ -483,6 +602,32 @@ export class StripeProvider implements PaymentProvider {
       console.log(`Updated subscription status to ${status} for user ${userId}`);
     } catch (error) {
       console.error("Error updating subscription status:", error);
+    }
+  }
+
+  /**
+   * Find user by Stripe customer ID using email matching
+   */
+  private async findUserByStripeCustomer(stripeCustomerId: string): Promise<{ id: string; email: string } | null> {
+    try {
+      // Get customer from Stripe
+      const customer = await this.stripe.customers.retrieve(stripeCustomerId);
+
+      if (!customer || customer.deleted || !customer.email) {
+        console.warn("Customer not found or no email:", stripeCustomerId);
+        return null;
+      }
+
+      // Find user by email in database
+      const user = await prisma.user.findUnique({
+        where: { email: customer.email },
+        select: { id: true, email: true },
+      });
+
+      return user;
+    } catch (error) {
+      console.error("Error finding user by Stripe customer:", error);
+      return null;
     }
   }
 

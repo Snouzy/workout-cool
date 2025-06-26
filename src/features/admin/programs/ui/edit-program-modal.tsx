@@ -485,7 +485,7 @@ export function EditProgramModal({ program, open, onOpenChange }: EditProgramMod
             </div>
             <div className="space-y-4">
               {formData.coaches.length === 0 ? (
-                <p className="text-base-content/60 text-center py-8">Aucun coach ajouté. Cliquez sur "Ajouter" pour commencer.</p>
+                <p className="text-base-content/60 text-center py-8">Aucun coach ajouté. Cliquez sur &quot;Ajouter&quot; pour commencer.</p>
               ) : (
                 formData.coaches.map((coach, index) => (
                   <div className="flex gap-4 items-end" key={index}>

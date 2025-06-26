@@ -14,6 +14,7 @@
     "lint": "next lint",
     "import:exercises-full": "tsx scripts/import-exercises-with-attributes.ts",
     "db:seed": "pnpm run import:exercises-full ./data/sample-exercises.csv",
+    "db:seed-plans": "tsx scripts/seed-subscription-plans-simple.ts",
     "migrate:prod": "env-cmd -f .env.production prisma migrate deploy"
   },
   "resolutions": {
@@ -87,6 +88,7 @@
     "react-hook-form": "^7.55.0",
     "react-icons": "^5.5.0",
     "sonner": "^2.0.3",
+    "stripe": "^15.7.0",
     "usehooks-ts": "^3.1.1",
     "vaul": "^1.1.2",
     "zod": "^3.24.2",

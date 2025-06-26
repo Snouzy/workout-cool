@@ -336,54 +336,55 @@ enum WorkoutSetUnit {
 // BILLING & SUBSCRIPTION MODELS
 // ========================================
 
-// Configuration globale pour self-hosted
-model AppConfiguration {
-  id String @id @default("default")
 
-  // Mode de paiement
-  billingMode BillingMode @default(DISABLED)
-
-  // Limites pour le mode gratuit
-  freeUserLimits Json? // {"maxWorkouts": 10, "maxExercises": 100}
-
-  // Configuration des processeurs
-  activeProcessor PaymentProcessor?
-  processorConfig Json? // Clés API chiffrées, webhooks secrets, etc.
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@map("app_configuration")
-}
-
-// Plans d'abonnement (optionnels en self-hosted)
+// Plans d'abonnement - provider-agnostic, minimal KISS approach
 model SubscriptionPlan {
-  id          String  @id @default(cuid())
-  name        String
-  description String?
-
-  // Prix (optionnels en self-hosted)
+  id String @id @default(cuid())
+  
+  // Pricing - internal source of truth
   priceMonthly Decimal? @db.Decimal(10, 2)
   priceYearly  Decimal? @db.Decimal(10, 2)
-  currency     String?  @default("EUR")
-
-  // IDs externes
-  revenueCatProductId String? @unique
-  externalProductId   String? // Stripe, LemonSqueezy, etc.
-
-  // Features et limites
-  features Json? // {"maxWorkouts": 100, "premiumExercises": true, etc.}
-
-  // Visibilité
-  isActive              Boolean @default(true)
-  isVisibleInSelfHosted Boolean @default(false)
+  currency     String   @default("EUR")
+  interval     String   @default("month") // month, year
+  
+  // Availability
+  isActive         Boolean  @default(true)
+  availableRegions String[] @default([]) // ["EU", "US", "UK"]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  subscriptions Subscription[]
+  // Relations
+  subscriptions    Subscription[]
+  providerMappings PlanProviderMapping[]
 
   @@map("subscription_plans")
+}
+
+// Provider mapping for external payment systems
+model PlanProviderMapping {
+  id       String           @id @default(cuid())
+  planId   String
+  provider PaymentProcessor
+
+  // External provider IDs
+  externalId String // price_1ABC for Stripe, variant_123 for LemonSqueezy, etc.
+  region     String? // EU, US, UK for regional pricing
+
+  // Provider-specific metadata
+  metadata Json? // Additional provider-specific data
+
+  isActive Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  plan SubscriptionPlan @relation(fields: [planId], references: [id], onDelete: Cascade)
+
+  @@unique([planId, provider, region])
+  @@index([provider, externalId])
+  @@map("plan_provider_mappings")
 }
 
 // Abonnements utilisateurs (source de vérité : RevenueCat pour mobile)
@@ -476,46 +477,11 @@ model License {
   @@map("licenses")
 }
 
-// Webhooks - traitement asynchrone et flexible
-model WebhookEvent {
-  id String @id @default(cuid())
-
-  provider  PaymentProcessor // Le provider qui a envoyé le webhook
-  eventType String // Type d'événement selon le provider
-
-  payload Json // Payload brut du webhook
-  headers Json? // Headers du webhook (pour signature, etc.)
-
-  processed   Boolean   @default(false)
-  processedAt DateTime?
-  retryCount  Int       @default(0)
-  maxRetries  Int       @default(3)
-
-  error String? @db.Text
-
-  // Pour traçabilité
-  resultingAction  String? // Ex: "subscription_created", "payment_failed"
-  relatedUserId    String? // Pour recherche rapide
-  relatedPaymentId String? // Pour lier au paiement si applicable
-
-  createdAt DateTime @default(now())
-
-  @@index([provider, processed])
-  @@index([relatedUserId])
-  @@index([createdAt])
-  @@map("webhook_events")
-}
 
 // ========================================
 // BILLING ENUMS
 // ========================================
 
-enum BillingMode {
-  DISABLED // Self-hosted gratuit
-  LICENSE_KEY // Self-hosted avec licence
-  SUBSCRIPTION // SaaS avec abonnements
-  FREEMIUM // Gratuit avec options premium
-}
 
 enum SubscriptionStatus {
   ACTIVE
@@ -539,7 +505,7 @@ enum PaymentProcessor {
   APPLE_PAY
   GOOGLE_PAY
   REVENUECAT
-  NONE // Pour self-hosted gratuit
+  NONE // self-hosted
   OTHER
 }
 

@@ -1,10 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import { prisma } from "@/shared/lib/prisma";
-import { billingService } from "@/features/billing/model/billing.service";
+import { PremiumService } from "@/shared/lib/premium/premium.service";
 import { auth } from "@/features/auth/lib/better-auth";
-
-import type { BillingStatus } from "@/features/billing/model/billing.types";
 
 export async function GET(request: NextRequest) {
   try {
@@ -22,16 +20,10 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
-    // Récupérer la configuration
-    const config = await billingService.getConfiguration();
+    // Use new premium system
+    const premiumStatus = await PremiumService.checkUserPremiumStatus(userId);
 
-    // Vérifier le statut premium
-    const isPremium = await billingService.canAccessPremiumFeature(userId);
-
-    // Récupérer les limites
-    const limits = await billingService.getUserLimits(userId);
-
-    // Récupérer l'abonnement actif si présent
+    // Get active subscription if present
     const subscription = await prisma.subscription.findFirst({
       where: {
         userId,
@@ -46,7 +38,7 @@ export async function GET(request: NextRequest) {
       },
     });
 
-    // Récupérer la licence si présente
+    // Get license if present (for self-hosted)
     const license = await prisma.license.findFirst({
       where: {
         userId,
@@ -54,15 +46,12 @@ export async function GET(request: NextRequest) {
       },
     });
 
-    // Déterminer si l'utilisateur peut upgrader
-    const canUpgrade = config.billingMode !== "DISABLED" && !isPremium;
-
-    const response: BillingStatus = {
-      isPremium,
+    const response = {
+      isPremium: premiumStatus.isPremium,
+      expiresAt: premiumStatus.expiresAt,
       subscription: subscription || undefined,
       license: license || undefined,
-      limits,
-      canUpgrade,
+      canUpgrade: !premiumStatus.isPremium,
     };
 
     return NextResponse.json(response);

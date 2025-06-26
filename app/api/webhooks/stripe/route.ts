@@ -1,13 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { webhookService } from "@/features/billing/model/webhook.service";
+import { PremiumManager } from "@/shared/lib/premium/premium.manager";
 
-import type { StripeWebhookPayload } from "@/features/billing/model/billing.types";
-
-// Note: Pour Stripe, vous devriez utiliser leur SDK officiel
-// import Stripe from 'stripe';
-// const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
-
+/**
+ * POST /api/webhooks/stripe
+ * 
+ * Handle Stripe webhooks - New Premium System Only
+ * Simple, clean implementation without legacy fallbacks
+ */
 export async function POST(request: NextRequest) {
   try {
     const body = await request.text();
@@ -17,28 +17,14 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Missing signature" }, { status: 401 });
     }
 
-    // Vérifier la signature avec le SDK Stripe
-    // const event = stripe.webhooks.constructEvent(
-    //   body,
-    //   signature,
-    //   process.env.STRIPE_WEBHOOK_SECRET!
-    // );
-
-    // Pour l'exemple, on parse directement
-    const payload: StripeWebhookPayload = JSON.parse(body);
-
-    // Enregistrer le webhook pour traitement asynchrone
-    const webhookEvent = await webhookService.logWebhook(
-      "STRIPE",
-      payload.type,
-      payload,
-      undefined, // headers stockés dans le payload si nécessaire
-    );
-
-    // Traiter immédiatement (ou en background)
-    await webhookService.processWebhook(webhookEvent.id);
-
-    return NextResponse.json({ received: true });
+    const result = await PremiumManager.processWebhook("stripe", body, signature);
+    
+    if (result.success) {
+      return NextResponse.json({ received: true });
+    } else {
+      console.error("Webhook processing failed:", result.error);
+      return NextResponse.json({ error: result.error }, { status: 400 });
+    }
   } catch (error) {
     console.error("Stripe webhook error:", error);
     return NextResponse.json({ error: "Webhook handler failed" }, { status: 400 });

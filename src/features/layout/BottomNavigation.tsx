@@ -5,13 +5,14 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { Dumbbell, Search } from "lucide-react";
 
-import { useI18n } from "locales/client";
+import { useCurrentLocale, useI18n } from "locales/client";
 import { cn } from "@/shared/lib/utils";
 import { paths } from "@/shared/constants/paths";
 
 export function BottomNavigation() {
   const pathname = usePathname();
   const t = useI18n();
+  const locale = useCurrentLocale();
 
   const tabs = [
     {
@@ -22,6 +23,7 @@ export function BottomNavigation() {
       icon: Dumbbell,
       emoji: "WorkoutCoolHappy.png",
       description: t("bottom_navigation.workouts_tooltip"),
+      isActive: pathname === paths.root || pathname === `/${locale}`,
     },
     {
       id: "programs",
@@ -31,6 +33,7 @@ export function BottomNavigation() {
       icon: Search,
       emoji: "WorkoutCoolSwag.png",
       description: t("bottom_navigation.programs_tooltip"),
+      isActive: pathname.includes(paths.programs),
     },
   ];
 
@@ -42,7 +45,7 @@ export function BottomNavigation() {
       <div className="relative px-3 py-2">
         <div className="flex justify-center items-center gap-2 max-w-sm mx-auto">
           {tabs.map((tab) => {
-            const isActive = pathname === tab.href;
+            const isActive = tab.isActive;
             const IconComponent = tab.icon;
 
             return (
@@ -111,4 +114,7 @@ export function BottomNavigation() {
       </div>
     </nav>
   );
+}
+function useLocale() {
+  throw new Error("Function not implemented.");
 }

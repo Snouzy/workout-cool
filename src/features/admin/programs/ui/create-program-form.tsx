@@ -13,8 +13,16 @@ const programSchema = z.object({
   // Step 1: Basic info
   title: z.string().min(1, "Le titre est requis"),
   titleEn: z.string().min(1, "Le titre en anglais est requis"),
+  titleEs: z.string().min(1, "Le titre en espagnol est requis"),
+  titlePt: z.string().min(1, "Le titre en portugais est requis"),
+  titleRu: z.string().min(1, "Le titre en russe est requis"),
+  titleZhCn: z.string().min(1, "Le titre en chinois est requis"),
   description: z.string().min(1, "La description est requise"),
   descriptionEn: z.string().min(1, "La description en anglais est requise"),
+  descriptionEs: z.string().min(1, "La description en espagnol est requise"),
+  descriptionPt: z.string().min(1, "La description en portugais est requise"),
+  descriptionRu: z.string().min(1, "La description en russe est requise"),
+  descriptionZhCn: z.string().min(1, "La description en chinois est requise"),
   category: z.string().min(1, "La catégorie est requise"),
   image: z.string().url("URL d'image invalide"),
   level: z.nativeEnum(ProgramLevel),
@@ -67,6 +75,7 @@ const TYPE_OPTIONS = [
 export function CreateProgramForm({ currentStep, onStepComplete, onSuccess, onCancel }: CreateProgramFormProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedEquipment, setSelectedEquipment] = useState<ExerciseAttributeValueEnum[]>([]);
+  const [activeTab, setActiveTab] = useState("fr");
 
   const {
     register,
@@ -85,6 +94,18 @@ export function CreateProgramForm({ currentStep, onStepComplete, onSuccess, onCa
       isPremium: true,
       equipment: [],
       coaches: [],
+      title: "",
+      titleEn: "",
+      titleEs: "",
+      titlePt: "",
+      titleRu: "",
+      titleZhCn: "",
+      description: "",
+      descriptionEn: "",
+      descriptionEs: "",
+      descriptionPt: "",
+      descriptionRu: "",
+      descriptionZhCn: "",
     },
   });
 
@@ -131,40 +152,149 @@ export function CreateProgramForm({ currentStep, onStepComplete, onSuccess, onCa
     <div className="card bg-base-100 shadow-xl">
       <div className="card-body">
         <h2 className="card-title">Informations générales</h2>
-        <div className="space-y-4">
-          <div className="grid grid-cols-2 gap-4">
-            <div className="form-control">
-              <label className="label" htmlFor="title">
-                <span className="label-text">Titre (FR)</span>
-              </label>
-              <input className="input input-bordered" id="title" {...register("title")} />
-              {errors.title && <div className="text-sm text-error mt-1">{errors.title.message}</div>}
-            </div>
-            <div className="form-control">
-              <label className="label" htmlFor="titleEn">
-                <span className="label-text">Titre (EN)</span>
-              </label>
-              <input className="input input-bordered" id="titleEn" {...register("titleEn")} />
-              {errors.titleEn && <div className="text-sm text-error mt-1">{errors.titleEn.message}</div>}
-            </div>
-          </div>
+        
+        {/* Language Tabs */}
+        <div className="tabs tabs-boxed mb-6">
+          <button className={`tab ${activeTab === "fr" ? "tab-active" : ""}`} onClick={() => setActiveTab("fr")} type="button">
+            🇫🇷 FR
+          </button>
+          <button className={`tab ${activeTab === "en" ? "tab-active" : ""}`} onClick={() => setActiveTab("en")} type="button">
+            🇺🇸 EN
+          </button>
+          <button className={`tab ${activeTab === "es" ? "tab-active" : ""}`} onClick={() => setActiveTab("es")} type="button">
+            🇪🇸 ES
+          </button>
+          <button className={`tab ${activeTab === "pt" ? "tab-active" : ""}`} onClick={() => setActiveTab("pt")} type="button">
+            🇵🇹 PT
+          </button>
+          <button className={`tab ${activeTab === "ru" ? "tab-active" : ""}`} onClick={() => setActiveTab("ru")} type="button">
+            🇷🇺 RU
+          </button>
+          <button className={`tab ${activeTab === "zh" ? "tab-active" : ""}`} onClick={() => setActiveTab("zh")} type="button">
+            🇨🇳 ZH
+          </button>
+        </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div className="form-control">
-              <label className="label" htmlFor="description">
-                <span className="label-text">Description (FR)</span>
-              </label>
-              <textarea className="textarea textarea-bordered" id="description" {...register("description")} />
-              {errors.description && <div className="text-sm text-error mt-1">{errors.description.message}</div>}
+        <div className="space-y-4">
+          {/* French Fields */}
+          {activeTab === "fr" && (
+            <div className="space-y-4">
+              <div className="form-control">
+                <label className="label" htmlFor="title">
+                  <span className="label-text">Titre (Français)</span>
+                </label>
+                <input className="input input-bordered" id="title" {...register("title")} />
+                {errors.title && <div className="text-sm text-error mt-1">{errors.title.message}</div>}
+              </div>
+              <div className="form-control">
+                <label className="label" htmlFor="description">
+                  <span className="label-text">Description (Français)</span>
+                </label>
+                <textarea className="textarea textarea-bordered h-24" id="description" {...register("description")} />
+                {errors.description && <div className="text-sm text-error mt-1">{errors.description.message}</div>}
+              </div>
             </div>
-            <div className="form-control">
-              <label className="label" htmlFor="descriptionEn">
-                <span className="label-text">Description (EN)</span>
-              </label>
-              <textarea className="textarea textarea-bordered" id="descriptionEn" {...register("descriptionEn")} />
-              {errors.descriptionEn && <div className="text-sm text-error mt-1">{errors.descriptionEn.message}</div>}
+          )}
+
+          {/* English Fields */}
+          {activeTab === "en" && (
+            <div className="space-y-4">
+              <div className="form-control">
+                <label className="label" htmlFor="titleEn">
+                  <span className="label-text">Title (English)</span>
+                </label>
+                <input className="input input-bordered" id="titleEn" {...register("titleEn")} />
+                {errors.titleEn && <div className="text-sm text-error mt-1">{errors.titleEn.message}</div>}
+              </div>
+              <div className="form-control">
+                <label className="label" htmlFor="descriptionEn">
+                  <span className="label-text">Description (English)</span>
+                </label>
+                <textarea className="textarea textarea-bordered h-24" id="descriptionEn" {...register("descriptionEn")} />
+                {errors.descriptionEn && <div className="text-sm text-error mt-1">{errors.descriptionEn.message}</div>}
+              </div>
             </div>
-          </div>
+          )}
+
+          {/* Spanish Fields */}
+          {activeTab === "es" && (
+            <div className="space-y-4">
+              <div className="form-control">
+                <label className="label" htmlFor="titleEs">
+                  <span className="label-text">Título (Español)</span>
+                </label>
+                <input className="input input-bordered" id="titleEs" {...register("titleEs")} />
+                {errors.titleEs && <div className="text-sm text-error mt-1">{errors.titleEs.message}</div>}
+              </div>
+              <div className="form-control">
+                <label className="label" htmlFor="descriptionEs">
+                  <span className="label-text">Descripción (Español)</span>
+                </label>
+                <textarea className="textarea textarea-bordered h-24" id="descriptionEs" {...register("descriptionEs")} />
+                {errors.descriptionEs && <div className="text-sm text-error mt-1">{errors.descriptionEs.message}</div>}
+              </div>
+            </div>
+          )}
+
+          {/* Portuguese Fields */}
+          {activeTab === "pt" && (
+            <div className="space-y-4">
+              <div className="form-control">
+                <label className="label" htmlFor="titlePt">
+                  <span className="label-text">Título (Português)</span>
+                </label>
+                <input className="input input-bordered" id="titlePt" {...register("titlePt")} />
+                {errors.titlePt && <div className="text-sm text-error mt-1">{errors.titlePt.message}</div>}
+              </div>
+              <div className="form-control">
+                <label className="label" htmlFor="descriptionPt">
+                  <span className="label-text">Descrição (Português)</span>
+                </label>
+                <textarea className="textarea textarea-bordered h-24" id="descriptionPt" {...register("descriptionPt")} />
+                {errors.descriptionPt && <div className="text-sm text-error mt-1">{errors.descriptionPt.message}</div>}
+              </div>
+            </div>
+          )}
+
+          {/* Russian Fields */}
+          {activeTab === "ru" && (
+            <div className="space-y-4">
+              <div className="form-control">
+                <label className="label" htmlFor="titleRu">
+                  <span className="label-text">Название (Русский)</span>
+                </label>
+                <input className="input input-bordered" id="titleRu" {...register("titleRu")} />
+                {errors.titleRu && <div className="text-sm text-error mt-1">{errors.titleRu.message}</div>}
+              </div>
+              <div className="form-control">
+                <label className="label" htmlFor="descriptionRu">
+                  <span className="label-text">Описание (Русский)</span>
+                </label>
+                <textarea className="textarea textarea-bordered h-24" id="descriptionRu" {...register("descriptionRu")} />
+                {errors.descriptionRu && <div className="text-sm text-error mt-1">{errors.descriptionRu.message}</div>}
+              </div>
+            </div>
+          )}
+
+          {/* Chinese Fields */}
+          {activeTab === "zh" && (
+            <div className="space-y-4">
+              <div className="form-control">
+                <label className="label" htmlFor="titleZhCn">
+                  <span className="label-text">标题 (中文)</span>
+                </label>
+                <input className="input input-bordered" id="titleZhCn" {...register("titleZhCn")} />
+                {errors.titleZhCn && <div className="text-sm text-error mt-1">{errors.titleZhCn.message}</div>}
+              </div>
+              <div className="form-control">
+                <label className="label" htmlFor="descriptionZhCn">
+                  <span className="label-text">描述 (中文)</span>
+                </label>
+                <textarea className="textarea textarea-bordered h-24" id="descriptionZhCn" {...register("descriptionZhCn")} />
+                {errors.descriptionZhCn && <div className="text-sm text-error mt-1">{errors.descriptionZhCn.message}</div>}
+              </div>
+            </div>
+          )}
 
           <div className="grid grid-cols-2 gap-4">
             <div className="form-control">

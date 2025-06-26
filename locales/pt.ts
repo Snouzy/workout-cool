@@ -1,5 +1,9 @@
 export default {
   programs: {
+    workout_programs: "Programas de treino",
+    workout_programs_description: "Escolha o seu desafio e torne-se mais forte! 💪",
+    no_programs_available: "Nenhum programa disponível",
+    no_programs_available_description: "Os programas estarão disponíveis em breve!",
     completed: "Concluído",
     about: "Sobre",
     program: "Programa",

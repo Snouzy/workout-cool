@@ -11,8 +11,16 @@ interface CreateProgramData {
   // Basic info
   title: string;
   titleEn: string;
+  titleEs: string;
+  titlePt: string;
+  titleRu: string;
+  titleZhCn: string;
   description: string;
   descriptionEn: string;
+  descriptionEs: string;
+  descriptionPt: string;
+  descriptionRu: string;
+  descriptionZhCn: string;
   category: string;
   image: string;
   level: ProgramLevel;
@@ -66,16 +74,16 @@ export async function createProgram(data: CreateProgramData) {
       slug,
       title: data.title,
       titleEn: data.titleEn,
-      titleEs: data.titleEn, // Default fallback
-      titlePt: data.titleEn,
-      titleRu: data.titleEn,
-      titleZhCn: data.titleEn,
+      titleEs: data.titleEs,
+      titlePt: data.titlePt,
+      titleRu: data.titleRu,
+      titleZhCn: data.titleZhCn,
       description: data.description,
       descriptionEn: data.descriptionEn,
-      descriptionEs: data.descriptionEn, // Default fallback
-      descriptionPt: data.descriptionEn,
-      descriptionRu: data.descriptionEn,
-      descriptionZhCn: data.descriptionEn,
+      descriptionEs: data.descriptionEs,
+      descriptionPt: data.descriptionPt,
+      descriptionRu: data.descriptionRu,
+      descriptionZhCn: data.descriptionZhCn,
       category: data.category,
       image: data.image,
       level: data.level,

@@ -1,5 +1,9 @@
 export default {
   programs: {
+    workout_programs: "锻炼程序",
+    workout_programs_description: "选择您的挑战并变得更强大！💪",
+    no_programs_available: "没有可用的程序",
+    no_programs_available_description: "程序将在不久后可用！",
     completed: "已完成",
     about: "关于",
     program: "程序",

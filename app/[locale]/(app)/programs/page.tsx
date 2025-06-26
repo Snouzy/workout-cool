@@ -7,6 +7,8 @@ export const metadata: Metadata = {
   description: "Découvrez nos programmes d'entraînement gamifiés pour tous les niveaux - Rejoins la communauté WorkoutCool !",
 };
 
-export default function ProgrammesPage() {
-  return <ProgramsPage />;
+export default async function ProgramsRootPage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+
+  return <ProgramsPage locale={locale} />;
 }

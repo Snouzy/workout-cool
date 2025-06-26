@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { headers } from "next/headers";
 import { Metadata } from "next";
 
+import { Locale } from "locales/types";
 import { getI18n } from "locales/server";
 import { getSessionBySlug } from "@/features/programs/actions/get-session-by-slug.action";
 import { auth } from "@/features/auth/lib/better-auth";
@@ -10,7 +11,7 @@ import { auth } from "@/features/auth/lib/better-auth";
 import { ProgramSessionClient } from "./ProgramSessionClient";
 
 interface SessionDetailPageProps {
-  params: Promise<{ slug: string; sessionSlug: string; locale: string }>;
+  params: Promise<{ slug: string; sessionSlug: string; locale: Locale }>;
 }
 
 export async function generateMetadata({ params }: SessionDetailPageProps): Promise<Metadata> {
@@ -99,7 +100,7 @@ export default async function SessionDetailPage({ params }: SessionDetailPagePro
     exercises: session.exercises.map(({ exercise, instructions, order, suggestedSets }) => ({
       id: `session-exercise-${exercise.id}`, // Unique ID for session exercise
       order,
-      suggestedSets: suggestedSets.map(set => ({
+      suggestedSets: suggestedSets.map((set) => ({
         id: set.id,
         setIndex: set.setIndex,
         types: set.types,

@@ -2,17 +2,22 @@ import Link from "next/link";
 import Image from "next/image";
 import { Lock, Users, Calendar, Clock } from "lucide-react";
 
+import { Locale } from "locales/types";
+import { getPublicProgramDescription, getPublicProgramTitle } from "@/features/programs/lib/translations-mapper";
+
 import { PublicProgram } from "../actions/get-public-programs.action";
 
 interface ProgramCardProps {
   program: PublicProgram;
   featured?: boolean;
   size?: "small" | "medium" | "large";
+  locale: Locale;
 }
 
-export function ProgramCard({ program, featured = false, size = "medium" }: ProgramCardProps) {
+export async function ProgramCard({ program, featured = false, size = "medium", locale }: ProgramCardProps) {
   const isLocked = program.isPremium;
-
+  const title = getPublicProgramTitle(locale, program);
+  const description = getPublicProgramDescription(locale, program);
   const heightClass = {
     small: "h-32",
     medium: "h-40",
@@ -37,7 +42,6 @@ export function ProgramCard({ program, featured = false, size = "medium" }: Prog
     large: featured ? "text-sm mb-1 opacity-90" : "text-sm opacity-90",
   }[size];
 
-  // Gradient basé sur le niveau
   const getGradient = (level: string) => {
     switch (level) {
       case "BEGINNER":
@@ -81,7 +85,7 @@ export function ProgramCard({ program, featured = false, size = "medium" }: Prog
         <div className={`absolute inset-0 bg-gradient-to-br ${getGradient(program.level)}`}></div>
 
         {/* Image overlay */}
-        <Image alt={program.title} className="absolute inset-0 w-full h-full object-cover mix-blend-overlay" fill src={program.image} />
+        <Image alt={title} className="absolute inset-0 w-full h-full object-cover mix-blend-overlay" fill src={program.image} />
 
         {/* Dark overlay */}
         <div className="absolute inset-0 bg-black/40"></div>
@@ -118,8 +122,8 @@ export function ProgramCard({ program, featured = false, size = "medium" }: Prog
         <div className={`absolute bottom-0 left-0 right-0 ${paddingClass} text-white`}>
           <div className="flex items-end justify-between">
             <div className="flex-1 min-w-0">
-              <h4 className={`${titleClass} leading-tight truncate`}>{program.title}</h4>
-              <p className={`${subtitleClass} truncate`}>{program.category}</p>
+              <h4 className={`${titleClass} leading-tight truncate`}>{title}</h4>
+              <p className={`${subtitleClass} truncate`}>{description}</p>
 
               {/* Stats compactes */}
               <div className="flex items-center gap-3 mt-1 text-xs opacity-75">

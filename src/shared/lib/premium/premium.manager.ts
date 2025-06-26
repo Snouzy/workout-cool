@@ -187,6 +187,44 @@ export class PremiumManager {
   }
 
   /**
+   * Create billing portal session for subscription management
+   */
+  static async createBillingPortal(userId: string, provider: string = "stripe", returnUrl?: string): Promise<CheckoutResult> {
+    const paymentProvider = this.providers[provider];
+    if (!paymentProvider) {
+      return {
+        success: false,
+        error: `Provider ${provider} not supported`,
+        provider: provider as any,
+      };
+    }
+
+    // For Stripe, we need to find the customer ID
+    if (provider === "stripe") {
+      const stripeProvider = paymentProvider as StripeProvider;
+      
+      // Get customer by user ID
+      const customer = await stripeProvider.getCustomerByUserId(userId);
+      
+      if (!customer) {
+        return {
+          success: false,
+          error: "No Stripe customer found. Please subscribe first.",
+          provider: "stripe",
+        };
+      }
+      
+      return stripeProvider.createPortalSession(customer.id, returnUrl);
+    }
+
+    return {
+      success: false,
+      error: "Billing portal not implemented for this provider",
+      provider: provider as any,
+    };
+  }
+
+  /**
    * Add new payment provider (for future expansion)
    */
   static addProvider(name: string, provider: PaymentProvider): void {

@@ -1,12 +1,10 @@
-/* eslint-disable no-case-declarations */
+/* eslint-disable no-fallthrough */
 import Stripe from "stripe";
-import { PaymentProcessor, PaymentStatus } from "@prisma/client";
 
-import { prisma } from "@/shared/lib/prisma";
 import { env } from "@/env";
 
 import type { CheckoutResult, PremiumPlan } from "@/shared/types/premium.types";
-import type { PaymentProvider, CheckoutOptions, WebhookResult } from "./base-provider";
+import type { CheckoutOptions, PaymentProvider, WebhookResult } from "./base-provider";
 
 /**
  * Stripe Payment Provider
@@ -24,58 +22,59 @@ export class StripeProvider implements PaymentProvider {
     }
 
     this.stripe = new Stripe(env.STRIPE_SECRET_KEY, {
-      apiVersion: "2024-04-10",
-      typescript: true,
+      apiVersion: "2024-12-18.acacia",
     });
   }
 
-  async createCheckoutSession(userId: string, plan: PremiumPlan, options: CheckoutOptions = {}): Promise<CheckoutResult> {
+  /**
+   * Create checkout session for a plan
+   */
+  async createCheckoutSession(userId: string, plan: PremiumPlan, options?: CheckoutOptions): Promise<CheckoutResult> {
     try {
-      const priceId = plan.id; // External Stripe price ID from provider mapping
-
-      if (!priceId) {
-        return {
-          success: false,
-          error: "Missing Stripe price ID for plan",
-          provider: "stripe",
-        };
-      }
+      // Create or get existing customer
+      const customer = await this.getOrCreateCustomer(userId);
 
       const session = await this.stripe.checkout.sessions.create({
         mode: "subscription",
+        payment_method_types: ["card"],
+        customer: customer.id,
         line_items: [
           {
-            price: priceId,
+            price: plan.id, // Stripe price ID
             quantity: 1,
           },
         ],
         metadata: {
           userId,
-          planId: plan.id,
-          internalPlanId: plan.internalId || plan.id,
-          ...options.metadata,
+          planId: plan.internalId || plan.id,
+          ...options?.metadata,
         },
         subscription_data: {
           metadata: {
             userId,
-            planId: plan.id,
-            internalPlanId: plan.internalId || plan.id,
+            planId: plan.internalId || plan.id,
           },
         },
-        success_url: options.successUrl || `${env.NEXT_PUBLIC_APP_URL}/profile?payment=success`,
-        cancel_url: options.cancelUrl || `${env.NEXT_PUBLIC_APP_URL}/profile?payment=cancelled`,
-        customer_email: undefined, // Let Stripe collect email
+        success_url: options?.successUrl || `${env.NEXT_PUBLIC_APP_URL}/premium?success=true`,
+        cancel_url: options?.cancelUrl || `${env.NEXT_PUBLIC_APP_URL}/premium?cancelled=true`,
         allow_promotion_codes: true,
+        billing_address_collection: "auto",
+        customer_update: {
+          name: "auto",
+          address: "auto",
+        },
+        tax_id_collection: {
+          enabled: true,
+        },
       });
 
       return {
         success: true,
-        checkoutUrl: session.url || undefined,
+        checkoutUrl: session.url!,
         provider: "stripe",
       };
     } catch (error) {
-      console.error("Stripe checkout error:", error);
-
+      console.error("Stripe checkout session creation failed:", error);
       return {
         success: false,
         error: error instanceof Error ? error.message : "Unknown error",
@@ -84,6 +83,9 @@ export class StripeProvider implements PaymentProvider {
     }
   }
 
+  /**
+   * Verify webhook signature
+   */
   verifyWebhookSignature(payload: string, signature: string, secret: string): boolean {
     try {
       this.stripe.webhooks.constructEvent(payload, signature, secret);
@@ -94,280 +96,146 @@ export class StripeProvider implements PaymentProvider {
     }
   }
 
-  async processWebhook(payload: any, signature: string): Promise<WebhookResult> {
+  /**
+   * Process webhook event
+   */
+  async processWebhook(payload: string, signature: string): Promise<WebhookResult> {
     try {
-      const webhookSecret = env.STRIPE_WEBHOOK_SECRET;
-      if (!webhookSecret) {
+      if (!env.STRIPE_WEBHOOK_SECRET) {
         throw new Error("STRIPE_WEBHOOK_SECRET is required");
       }
 
-      const event = this.stripe.webhooks.constructEvent(payload, signature, webhookSecret);
-      console.log(`Processing Stripe event: ${event.type}`);
+      const event = this.stripe.webhooks.constructEvent(payload, signature, env.STRIPE_WEBHOOK_SECRET);
 
       switch (event.type) {
-        case "checkout.session.completed":
+        case "checkout.session.completed": {
+          // First payment is successful and the subscription is created | or the subscription was canceled so create new one
+
           const session = event.data.object as Stripe.Checkout.Session;
-          console.log("Checkout session completed:", session.id);
 
-          if (typeof session.subscription === "string" && session.metadata?.userId) {
-            const subscription = await this.stripe.subscriptions.retrieve(session.subscription);
-
-            const {
-              // eslint-disable-next-line @typescript-eslint/naming-convention
-              current_period_start,
-              // eslint-disable-next-line @typescript-eslint/naming-convention
-              current_period_end,
-              status,
-              id: stripeSubscriptionId,
-              items: {
-                data: [
-                  {
-                    price: { id: stripePriceId },
-                  },
-                ],
-              },
-            } = subscription;
-
-            // Update or create subscription in database
-            await this.updateSubscriptionInDB({
-              userId: session.metadata.userId,
-              stripeSubscriptionId,
-              stripePriceId,
-              status,
-              currentPeriodStart: current_period_start,
-              currentPeriodEnd: current_period_end,
-              internalPlanId: session.metadata.internalPlanId,
-            });
+          if (session.mode === "subscription" && session.subscription) {
+            const subscription = await this.stripe.subscriptions.retrieve(session.subscription as string);
 
             return {
               success: true,
-              userId: session.metadata.userId,
-              planId: stripePriceId,
-              platform: "WEB" as const,
+              userId: session.metadata?.userId,
               action: "subscription_created",
-              expiresAt: new Date(current_period_end * 1000),
+              expiresAt: new Date(subscription.current_period_end * 1000),
+              planId: session.metadata?.planId,
+              platform: "WEB",
             };
           }
           break;
+        }
 
-        case "invoice.payment_succeeded":
+        case "invoice.payment_succeeded": {
+          // Sent each billing interval when payment succeeds (renewal)
+          // Also sent when switching plans if additional payment is needed
           const invoice = event.data.object as Stripe.Invoice;
-          console.log("Invoice payment succeeded:", {
-            invoiceId: invoice.id,
-            amount_paid: invoice.amount_paid,
-            amount_due: invoice.amount_due,
-            customer: invoice.customer,
-            subscription: invoice.subscription,
-            subscription_details: invoice.subscription_details,
-          });
 
-          if (invoice.amount_paid > 0 && typeof invoice.customer === "string") {
-            // Find subscription by multiple methods
-            let subscription: any = null;
-
-            // Method 1: Direct subscription ID
-            if (invoice.subscription) {
-              subscription = await this.stripe.subscriptions.retrieve(invoice.subscription as string);
-              console.log("Method 1 - Retrieved subscription by ID:", {
-                id: subscription.id,
-                userId: subscription.metadata?.userId,
-                planId: subscription.metadata?.planId,
-              });
-            }
-            // Method 2: Search by customer
-            else {
-              console.log("Method 2 - Searching subscriptions by customer:", invoice.customer);
-              const subscriptions = await this.stripe.subscriptions.list({
-                customer: invoice.customer as string,
-                status: "all",
-                limit: 1,
-              });
-
-              if (subscriptions.data.length > 0) {
-                subscription = subscriptions.data[0];
-                console.log("Method 2 - Found subscription by customer:", {
-                  id: subscription.id,
-                  userId: subscription.metadata?.userId,
-                  planId: subscription.metadata?.planId,
-                });
-              }
-            }
-
-            if (subscription && subscription.metadata?.userId) {
-              // Update subscription status to active
-              await this.updateSubscriptionStatusInDB(subscription.metadata.userId, "ACTIVE");
-
-              console.log("Creating payment record with:", {
-                userId: subscription.metadata.userId,
-                planId: subscription.metadata.planId || subscription.items.data[0]?.price.id,
-                processorPaymentId: invoice.id,
-                amount: (invoice.amount_paid || 0) / 100,
-              });
-
-              // Create payment record - use price ID if planId not in metadata
-              const paymentResult = await this.createPaymentRecord({
-                userId: subscription.metadata.userId,
-                planId: subscription.metadata.planId || subscription.items.data[0]?.price.id || "unknown",
-                processorPaymentId: invoice.id,
-                amount: (invoice.amount_paid || 0) / 100,
-                currency: invoice.currency.toUpperCase(),
-                status: "COMPLETED",
-              });
-
-              console.log("Payment record result:", paymentResult);
-
-              return {
-                success: true,
-                userId: subscription.metadata.userId,
-                planId: subscription.metadata.planId,
-                platform: "WEB" as const,
-                action: "payment_succeeded",
-                expiresAt: subscription.current_period_end ? new Date(subscription.current_period_end * 1000) : undefined,
-                paymentId: paymentResult?.id,
-                amount: (invoice.amount_paid || 0) / 100,
-                currency: invoice.currency.toUpperCase(),
-              };
-            } else {
-              console.warn("No subscription found or missing userId in metadata. Customer:", invoice.customer);
-
-              // Fallback: Try to find user by Stripe customer and create payment record
-              const user = await this.findUserByStripeCustomer(invoice.customer as string);
-              if (user) {
-                console.log("Fallback: Found user by customer ID:", user);
-
-                const paymentResult = await this.createPaymentRecord({
-                  userId: user.id,
-                  planId: "fallback-plan", // We'll handle this in createPaymentRecord
-                  processorPaymentId: invoice.id,
-                  amount: (invoice.amount_paid || 0) / 100,
-                  currency: invoice.currency.toUpperCase(),
-                  status: "COMPLETED",
-                });
-
-                console.log("Fallback payment record result:", paymentResult);
-
-                return {
-                  success: true,
-                  userId: user.id,
-                  planId: "unknown",
-                  platform: "WEB" as const,
-                  action: "payment_succeeded",
-                  paymentId: paymentResult?.id,
-                  amount: (invoice.amount_paid || 0) / 100,
-                  currency: invoice.currency.toUpperCase(),
-                };
-              }
-            }
-          } else {
-            console.log("Skipping payment creation: amount_paid =", invoice.amount_paid, "customer =", invoice.customer);
-          }
-          break;
-
-        case "invoice.payment_failed":
-          const invoiceFailed = event.data.object as Stripe.Invoice;
-
-          if (typeof invoiceFailed.customer === "string") {
-            // Find user by customer and update subscription status
-            const subscription = await this.findSubscriptionByCustomer(invoiceFailed.customer);
-            if (subscription) {
-              await this.updateSubscriptionStatusInDB(subscription.userId, "PAUSED");
-            }
-          }
-          break;
-
-        case "customer.subscription.created":
-          const createdSub = event.data.object as Stripe.Subscription;
-
-          if (createdSub.metadata?.userId) {
-            await this.updateSubscriptionInDB({
-              userId: createdSub.metadata.userId,
-              stripeSubscriptionId: createdSub.id,
-              stripePriceId: createdSub.items.data[0]?.price.id,
-              status: createdSub.status,
-              currentPeriodStart: createdSub.current_period_start,
-              currentPeriodEnd: createdSub.current_period_end,
-              internalPlanId: createdSub.metadata.internalPlanId,
-            });
-          }
-
-          return {
-            success: true,
-            userId: createdSub.metadata?.userId,
-            planId: createdSub.metadata?.planId,
-            platform: "WEB" as const,
-            action: "subscription_created",
-            expiresAt: new Date(createdSub.current_period_end * 1000),
-          };
-
-        case "customer.subscription.updated":
-          const updatedSub = event.data.object as Stripe.Subscription;
-
-          if (updatedSub.metadata?.userId) {
-            await this.updateSubscriptionInDB({
-              userId: updatedSub.metadata.userId,
-              stripeSubscriptionId: updatedSub.id,
-              stripePriceId: updatedSub.items.data[0]?.price.id,
-              status: updatedSub.status,
-              currentPeriodStart: updatedSub.current_period_start,
-              currentPeriodEnd: updatedSub.current_period_end,
-              internalPlanId: updatedSub.metadata.internalPlanId,
-            });
-
-            // Check if subscription was cancelled
-            const action = updatedSub.cancel_at_period_end ? "subscription_cancelled" : "subscription_updated";
+          if (invoice.subscription) {
+            const subscription = await this.stripe.subscriptions.retrieve(invoice.subscription as string);
 
             return {
               success: true,
-              userId: updatedSub.metadata.userId,
-              planId: updatedSub.metadata.planId,
-              platform: "WEB" as const,
-              action: action as any,
-              expiresAt: new Date(updatedSub.current_period_end * 1000),
+              userId: subscription.metadata?.userId,
+              action: "payment_succeeded",
+              expiresAt: new Date(subscription.current_period_end * 1000),
+              paymentId: invoice.id,
+              amount: invoice.amount_paid / 100, // Convert from cents
+              currency: invoice.currency.toUpperCase(),
+              platform: "WEB",
             };
           }
           break;
+        }
 
-        case "customer.subscription.deleted":
-          const deletedSub = event.data.object as Stripe.Subscription;
-
-          if (deletedSub.metadata?.userId) {
-            await this.updateSubscriptionStatusInDB(deletedSub.metadata.userId, "CANCELLED");
-          }
+        case "customer.subscription.updated": {
+          // Sent when subscription is changed (plan switch, quantity change, etc.)
+          // Also sent when subscription renews with a new billing period
+          const subscription = event.data.object as Stripe.Subscription;
 
           return {
             success: true,
-            userId: deletedSub.metadata?.userId,
-            planId: deletedSub.metadata?.planId,
-            platform: "WEB" as const,
-            action: "subscription_cancelled",
+            userId: subscription.metadata?.userId,
+            action: "subscription_updated",
+            expiresAt: new Date(subscription.current_period_end * 1000),
+            platform: "WEB",
           };
+        }
 
-        case "customer.subscription.trial_will_end":
-          // Log trial ending - could trigger email notification
-          console.log("Trial will end for subscription:", event.data.object);
+        case "customer.subscription.deleted": {
+          // Sent when subscription is cancelled immediately or when it ends after cancel_at_period_end
+          const subscription = event.data.object as Stripe.Subscription;
+
+          return {
+            success: true,
+            userId: subscription.metadata?.userId,
+            action: "subscription_cancelled",
+            platform: "WEB",
+          };
+        }
+
+        case "invoice.payment_failed": {
+          // Sent when payment fails (card declined, insufficient funds, etc.)
+          // Stripe will retry based on retry settings (3 times by default)
+          const invoice = event.data.object as Stripe.Invoice;
+
+          if (invoice.subscription) {
+            const subscription = await this.stripe.subscriptions.retrieve(invoice.subscription as string);
+
+            return {
+              success: true,
+              userId: subscription.metadata?.userId,
+              action: "payment_failed",
+              paymentId: invoice.id,
+              amount: invoice.amount_due / 100,
+              currency: invoice.currency.toUpperCase(),
+              platform: "WEB",
+            };
+          }
+          break;
+        }
+
+        case "customer.created": {
+          // Sent when a new customer is created in Stripe
+          const customer = event.data.object as Stripe.Customer;
+          console.log(`Stripe customer created: ${customer.id}`);
           return { success: true };
+        }
 
-        // Events we acknowledge but don't need to process
-        case "charge.succeeded":
-        case "customer.created":
+        // Informational events - acknowledge without specific action
         case "customer.updated":
-        case "payment_method.attached":
-        case "payment_intent.succeeded":
+        // Sent when customer details are updated (email, address, etc.)
+        case "customer.subscription.created":
+        // Sent when subscription is first created (we handle via checkout.session.completed)
         case "payment_intent.created":
+        // Sent when payment process starts
+        case "payment_intent.succeeded":
+        // Sent when payment intent succeeds (before invoice.payment_succeeded)
+        case "payment_method.attached":
+        // Sent when payment method is attached to customer
+        case "charge.succeeded":
+        // Sent for successful charges (handled via invoice.payment_succeeded for subscriptions)
         case "invoice.created":
+        // Sent when invoice is first created (draft state)
         case "invoice.finalized":
-        case "invoice.paid":
+        // Sent when invoice is finalized and ready for payment
+        case "invoice.updated":
+        // Sent when invoice is modified
+        case "invoice.paid": {
+          // Sent when invoice is marked as paid (similar to invoice.payment_succeeded)
+          console.log(`Acknowledged Stripe event: ${event.type}`);
           return { success: true };
+        }
 
         default:
-          console.log(`Unhandled Stripe event type: ${event.type}`);
-          return { success: true };
+          console.log(`INFO : Unhandled Stripe event type: ${event.type}`);
       }
 
-      // Default return in case no case matches
-      return { success: true };
+      return { success: false, error: "Event type not handled" };
     } catch (error) {
-      console.error("Stripe webhook processing error:", error);
+      console.error("Stripe webhook processing failed:", error);
       return {
         success: false,
         error: error instanceof Error ? error.message : "Unknown error",
@@ -376,325 +244,104 @@ export class StripeProvider implements PaymentProvider {
   }
 
   /**
-   * Create a Payment record in the database
+   * Create customer portal session
    */
-  private async createPaymentRecord({
-    userId,
-    planId,
-    processorPaymentId,
-    amount,
-    currency,
-    status,
-  }: {
-    userId: string;
-    planId: string;
-    processorPaymentId: string;
-    amount: number;
-    currency: string;
-    status: "COMPLETED" | "FAILED";
-  }): Promise<{ id: string } | null> {
-    console.log("createPaymentRecord called with:", { userId, planId, processorPaymentId, amount, currency, status });
-
-    if (!userId || !planId) {
-      console.warn("Missing userId or planId for payment record creation:", { userId, planId });
-      return null;
-    }
-
+  async createPortalSession(customerId: string, returnUrl?: string): Promise<CheckoutResult> {
     try {
-      // Find the user's active subscription for this plan
-      // First try to find by provider mapping
-      const planMapping = await prisma.planProviderMapping.findFirst({
-        where: {
-          externalId: planId,
-          provider: "STRIPE",
-          isActive: true,
-        },
-        include: { plan: true },
-      });
-
-      console.log("Plan mapping found:", planMapping);
-
-      // Try to find subscription using either mapped plan ID or original plan ID
-      const subscription = await prisma.subscription.findFirst({
-        where: {
-          userId,
-          ...(planMapping?.planId ? { planId: planMapping.planId } : {}),
-          status: { in: ["ACTIVE", "TRIAL"] }, // Include TRIAL status
-        },
-        orderBy: { createdAt: "desc" }, // Get most recent subscription
-      });
-
-      console.log("Subscription found:", subscription);
-
-      if (!subscription) {
-        // If no subscription found with plan mapping, try to find any active subscription for this user
-        const anyActiveSubscription = await prisma.subscription.findFirst({
-          where: {
-            userId,
-            status: { in: ["ACTIVE", "TRIAL"] },
-          },
-          orderBy: { createdAt: "desc" },
-        });
-
-        console.log("Any active subscription found:", anyActiveSubscription);
-
-        if (!anyActiveSubscription) {
-          console.warn(`No active subscription found for user ${userId}`);
-          return null;
-        }
-
-        // Use the active subscription we found
-        const payment = await prisma.payment.create({
-          data: {
-            subscriptionId: anyActiveSubscription.id,
-            amount,
-            currency,
-            processor: PaymentProcessor.STRIPE,
-            processorPaymentId,
-            status: status === "COMPLETED" ? PaymentStatus.COMPLETED : PaymentStatus.FAILED,
-            paidAt: status === "COMPLETED" ? new Date() : null,
-            failedAt: status === "FAILED" ? new Date() : null,
-          },
-        });
-
-        console.log("Payment created successfully:", payment.id);
-        return { id: payment.id };
-      }
-
-      const payment = await prisma.payment.create({
-        data: {
-          subscriptionId: subscription.id,
-          amount,
-          currency,
-          processor: PaymentProcessor.STRIPE,
-          processorPaymentId,
-          status: status === "COMPLETED" ? PaymentStatus.COMPLETED : PaymentStatus.FAILED,
-          paidAt: status === "COMPLETED" ? new Date() : null,
-          failedAt: status === "FAILED" ? new Date() : null,
-        },
-      });
-
-      console.log("Payment created successfully:", payment.id);
-      return { id: payment.id };
-    } catch (error) {
-      console.error("Error creating payment record:", error);
-      return null;
-    }
-  }
-
-  /**
-   * Update subscription in database based on Stripe data
-   */
-  private async updateSubscriptionInDB({
-    userId,
-    stripeSubscriptionId,
-    stripePriceId,
-    status,
-    currentPeriodStart,
-    currentPeriodEnd,
-    internalPlanId,
-  }: {
-    userId: string;
-    stripeSubscriptionId: string;
-    stripePriceId?: string;
-    status: string;
-    currentPeriodStart: number;
-    currentPeriodEnd: number;
-    internalPlanId?: string;
-  }): Promise<void> {
-    try {
-      // Map Stripe status to our SubscriptionStatus enum
-      let dbStatus: "ACTIVE" | "TRIAL" | "CANCELLED" | "EXPIRED" | "PAUSED";
-      switch (status) {
-        case "active":
-          dbStatus = "ACTIVE";
-          break;
-        case "trialing":
-          dbStatus = "TRIAL";
-          break;
-        case "canceled":
-        case "cancelled":
-          dbStatus = "CANCELLED";
-          break;
-        case "past_due":
-        case "unpaid":
-          dbStatus = "PAUSED";
-          break;
-        default:
-          dbStatus = "EXPIRED";
-      }
-
-      // Find the plan ID to use - prefer internal plan ID from metadata
-      let planId = internalPlanId;
-
-      if (!planId && stripePriceId) {
-        // Try to find plan by provider mapping
-        const mapping = await prisma.planProviderMapping.findFirst({
-          where: {
-            externalId: stripePriceId,
-            provider: "STRIPE",
-            isActive: true,
-          },
-        });
-        planId = mapping?.planId;
-      }
-
-      if (!planId) {
-        // Fallback to default plan
-        const defaultPlan = await prisma.subscriptionPlan.findFirst({
-          where: { isActive: true },
-          orderBy: { priceMonthly: "asc" },
-        });
-        planId = defaultPlan?.id;
-      }
-
-      if (!planId) {
-        console.error("No plan found for subscription update");
-        return;
-      }
-
-      // Update or create subscription
-      await prisma.subscription.upsert({
-        where: {
-          userId_platform: {
-            userId,
-            platform: "WEB",
-          },
-        },
-        update: {
-          status: dbStatus,
-          currentPeriodEnd: new Date(currentPeriodEnd * 1000),
-          updatedAt: new Date(),
-        },
-        create: {
-          userId,
-          planId,
-          platform: "WEB",
-          status: dbStatus,
-          startedAt: new Date(currentPeriodStart * 1000),
-          currentPeriodEnd: new Date(currentPeriodEnd * 1000),
-        },
-      });
-
-      console.log(`Updated subscription for user ${userId} with status ${dbStatus}`);
-    } catch (error) {
-      console.error("Error updating subscription in DB:", error);
-    }
-  }
-
-  /**
-   * Update subscription status for a user
-   */
-  private async updateSubscriptionStatusInDB(userId: string, status: "ACTIVE" | "PAUSED" | "CANCELLED"): Promise<void> {
-    try {
-      await prisma.subscription.updateMany({
-        where: {
-          userId,
-          platform: "WEB",
-          status: { in: ["ACTIVE", "TRIAL", "PAUSED"] }, // Only update active subscriptions
-        },
-        data: {
-          status,
-          ...(status === "CANCELLED" && { cancelledAt: new Date() }),
-        },
-      });
-
-      console.log(`Updated subscription status to ${status} for user ${userId}`);
-    } catch (error) {
-      console.error("Error updating subscription status:", error);
-    }
-  }
-
-  /**
-   * Find user by Stripe customer ID using email matching
-   */
-  private async findUserByStripeCustomer(stripeCustomerId: string): Promise<{ id: string; email: string } | null> {
-    try {
-      // Get customer from Stripe
-      const customer = await this.stripe.customers.retrieve(stripeCustomerId);
-
-      if (!customer || customer.deleted || !customer.email) {
-        console.warn("Customer not found or no email:", stripeCustomerId);
-        return null;
-      }
-
-      // Find user by email in database
-      const user = await prisma.user.findUnique({
-        where: { email: customer.email },
-        select: { id: true, email: true },
-      });
-
-      return user;
-    } catch (error) {
-      console.error("Error finding user by Stripe customer:", error);
-      return null;
-    }
-  }
-
-  /**
-   * Find subscription by Stripe customer ID
-   */
-  private async findSubscriptionByCustomer(stripeCustomerId: string): Promise<{ userId: string } | null> {
-    try {
-      // This would require storing Stripe customer ID in your schema
-      // For now, we'll return null since the schema doesn't have this field
-      console.warn(`Cannot find subscription by customer ID ${stripeCustomerId} - customer ID not stored in schema`);
-      return null;
-    } catch (error) {
-      console.error("Error finding subscription by customer:", error);
-      return null;
-    }
-  }
-
-  /**
-   * Create billing portal session for subscription management
-   */
-  async createBillingPortalSession(userId: string, returnUrl: string): Promise<{ success: boolean; url?: string; error?: string }> {
-    try {
-      // First, we need to find or create a Stripe customer for this user
-      // Since customer ID is not in schema, we'll need to create one on-demand
-      const user = await prisma.user.findUnique({
-        where: { id: userId },
-        select: { email: true },
-      });
-
-      if (!user) {
-        return { success: false, error: "User not found" };
-      }
-
-      // Create or retrieve customer
-      const customers = await this.stripe.customers.list({
-        email: user.email,
-        limit: 1,
-      });
-
-      let customerId: string;
-      if (customers.data.length > 0) {
-        customerId = customers.data[0].id;
-      } else {
-        const customer = await this.stripe.customers.create({
-          email: user.email,
-          metadata: { userId },
-        });
-        customerId = customer.id;
-      }
-
-      // Create billing portal session
       const session = await this.stripe.billingPortal.sessions.create({
         customer: customerId,
-        return_url: returnUrl,
+        return_url: returnUrl || `${env.NEXT_PUBLIC_APP_URL}/premium`,
       });
 
       return {
         success: true,
-        url: session.url,
+        checkoutUrl: session.url,
+        provider: "stripe",
       };
     } catch (error) {
-      console.error("Billing portal creation error:", error);
+      console.error("Stripe portal session creation failed:", error);
       return {
         success: false,
         error: error instanceof Error ? error.message : "Unknown error",
+        provider: "stripe",
       };
+    }
+  }
+
+  /**
+   * Get subscription details
+   */
+  async getSubscription(subscriptionId: string): Promise<Stripe.Subscription | null> {
+    try {
+      return await this.stripe.subscriptions.retrieve(subscriptionId);
+    } catch (error) {
+      console.error("Failed to retrieve Stripe subscription:", error);
+      return null;
+    }
+  }
+
+  /**
+   * Cancel subscription
+   */
+  async cancelSubscription(subscriptionId: string, immediately = false): Promise<boolean> {
+    try {
+      if (immediately) {
+        await this.stripe.subscriptions.cancel(subscriptionId);
+      } else {
+        await this.stripe.subscriptions.update(subscriptionId, {
+          cancel_at_period_end: true,
+        });
+      }
+      return true;
+    } catch (error) {
+      console.error("Failed to cancel Stripe subscription:", error);
+      return false;
+    }
+  }
+
+  /**
+   * Get or create Stripe customer for user
+   */
+  private async getOrCreateCustomer(userId: string): Promise<Stripe.Customer> {
+    try {
+      // First, check if we have a customer ID stored in our database
+      // For simplicity, we'll search by email or create a new customer
+      // In production, you'd want to store the customer ID in the database
+
+      // Search for existing customer by metadata
+      const customers = await this.stripe.customers.search({
+        query: `metadata['userId']:'${userId}'`,
+        limit: 1,
+      });
+
+      if (customers.data.length > 0) {
+        return customers.data[0];
+      }
+
+      // Create new customer
+      return await this.stripe.customers.create({
+        metadata: { userId },
+      });
+    } catch (error) {
+      console.error("Failed to get or create Stripe customer:", error);
+      throw error;
+    }
+  }
+
+  /**
+   * Get customer by user ID
+   */
+  async getCustomerByUserId(userId: string): Promise<Stripe.Customer | null> {
+    try {
+      const customers = await this.stripe.customers.search({
+        query: `metadata['userId']:'${userId}'`,
+        limit: 1,
+      });
+
+      return customers.data.length > 0 ? customers.data[0] : null;
+    } catch (error) {
+      console.error("Failed to get Stripe customer:", error);
+      return null;
     }
   }
 }

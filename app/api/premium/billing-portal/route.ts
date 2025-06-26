@@ -1,24 +1,23 @@
 import { NextRequest, NextResponse } from "next/server";
 
+import { PremiumManager } from "@/shared/lib/premium/premium.manager";
 import { serverRequiredUser } from "@/entities/user/model/get-server-session-user";
-import { StripeProvider } from "@/shared/lib/premium/providers/stripe-provider";
 
 /**
  * POST /api/premium/billing-portal
  *
- * Create Stripe billing portal session for subscription management
- * Body: { returnUrl?: string }
+ * Create billing portal session for subscription management
+ * Body: { returnUrl?: string, provider?: string }
  */
 export async function POST(request: NextRequest) {
   try {
     const user = await serverRequiredUser();
-    const { returnUrl = `${process.env.NEXT_PUBLIC_APP_URL}/profile` } = await request.json();
+    const { returnUrl, provider = "stripe" } = await request.json();
 
-    const stripeProvider = new StripeProvider();
-    const result = await stripeProvider.createBillingPortalSession(user.id, returnUrl);
+    const result = await PremiumManager.createBillingPortal(user.id, provider, returnUrl);
 
     if (result.success) {
-      return NextResponse.json({ success: true, url: result.url });
+      return NextResponse.json({ success: true, url: result.checkoutUrl });
     } else {
       return NextResponse.json({ success: false, error: result.error }, { status: 400 });
     }

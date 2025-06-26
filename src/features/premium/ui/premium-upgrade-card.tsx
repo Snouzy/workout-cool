@@ -206,7 +206,7 @@ export function PremiumUpgradeCard() {
                 </li>
                 <li className="flex items-center gap-3">
                   <Check className="w-4 h-4 text-[#4F8EF7]" />
-                  Progress tracking
+                  Progress tracking<span className="text-xs text-gray-500 dark:text-gray-400 -ml-1 italic">(soon)</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <Check className="w-4 h-4 text-[#4F8EF7]" />

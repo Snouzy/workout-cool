@@ -53,16 +53,7 @@ export async function ProgramsPage({ locale }: ProgramsPageProps) {
           <div>
             <div className="flex items-center gap-3 mb-4">
               <Crown className="text-yellow-500" size={24} />
-              <h3 className="text-xl font-bold text-base-content dark:text-gray-100">Premium Programs</h3>
-              <div className="w-8 h-8 relative">
-                <Image
-                  alt="Emoji premium"
-                  className="w-full h-full object-contain"
-                  height={32}
-                  src="/images/emojis/WorkoutCoolLove.png"
-                  width={32}
-                />
-              </div>
+              <h3 className="text-xl font-bold text-base-content dark:text-gray-100">{t("programs.workout_programs_title")}</h3>
             </div>
 
             {/* Premium programs with featured layout */}

@@ -1,5 +1,6 @@
 export default {
   programs: {
+    workout_programs_title: "Programmes d'entraînement",
     workout_programs: "Programmes d'entraînement",
     workout_programs_description: "Choisissez votre défi et devenez plus fort ! 💪",
     no_programs_available: "Aucun programme disponible",
@@ -22,7 +23,7 @@ export default {
     exercises: "exercices",
     min_short: "min",
     premium: "Premium",
-    free: "Libre",
+    free: "Gratuit",
     join_cta: "Rejoindre le défi",
     sessions: "Les séances",
   },
@@ -490,5 +491,7 @@ export default {
     support: "Support",
     change_language: "Changer de langue",
     in_progress: "En cours",
+    premium: "Premium",
+    free: "Gratuit",
   },
 } as const;

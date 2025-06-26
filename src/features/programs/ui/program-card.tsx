@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Lock, Users, Calendar, Clock } from "lucide-react";
 
 import { Locale } from "locales/types";
+import { getI18n } from "locales/server";
 import { getPublicProgramDescription, getPublicProgramTitle } from "@/features/programs/lib/translations-mapper";
 
 import { PublicProgram } from "../actions/get-public-programs.action";
@@ -16,6 +17,7 @@ interface ProgramCardProps {
 
 export async function ProgramCard({ program, featured = false, size = "medium", locale }: ProgramCardProps) {
   const isLocked = program.isPremium;
+  const t = await getI18n();
   const title = getPublicProgramTitle(locale, program);
   const description = getPublicProgramDescription(locale, program);
   const heightClass = {
@@ -55,20 +57,6 @@ export async function ProgramCard({ program, featured = false, size = "medium", 
     }
   };
 
-  // Labels en français
-  const getLevelLabel = (level: string) => {
-    switch (level) {
-      case "BEGINNER":
-        return "Débutant";
-      case "INTERMEDIATE":
-        return "Intermédiaire";
-      case "ADVANCED":
-        return "Avancé";
-      default:
-        return level;
-    }
-  };
-
   return (
     <div className={featured ? "md:col-span-2" : ""}>
       <Link
@@ -92,9 +80,13 @@ export async function ProgramCard({ program, featured = false, size = "medium", 
 
         {/* Badges */}
         <div className={`absolute ${size === "large" ? "top-4 left-4" : "top-3 left-3"} flex flex-wrap gap-2`}>
-          <span className="bg-white/20 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full">{getLevelLabel(program.level)}</span>
+          <span className="bg-white/20 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full">
+            {t(`levels.${program.level}` as keyof typeof t)}
+          </span>
           {program.isPremium && (
-            <span className="bg-yellow-500/80 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full font-semibold">Premium</span>
+            <span className="bg-yellow-500/80 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full font-semibold">
+              {t("programs.premium")}
+            </span>
           )}
         </div>
 
@@ -133,11 +125,17 @@ export async function ProgramCard({ program, featured = false, size = "medium", 
                 </div>
                 <div className="flex items-center gap-1">
                   <Calendar size={12} />
-                  <span>{program.durationWeeks}sem</span>
+                  <span>
+                    {program.durationWeeks}
+                    {t("programs.week_short")}
+                  </span>
                 </div>
                 <div className="flex items-center gap-1">
                   <Clock size={12} />
-                  <span>{program.sessionDurationMin}min</span>
+                  <span>
+                    {program.sessionDurationMin}
+                    {t("programs.min_short")}
+                  </span>
                 </div>
               </div>
             </div>

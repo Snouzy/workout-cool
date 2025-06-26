@@ -1,5 +1,6 @@
 export default {
   programs: {
+    workout_programs_title: "Программы тренировок",
     workout_programs: "Программы тренировок",
     workout_programs_description: "Выберите свой вызов и станьте сильнее! 💪",
     no_programs_available: "Программы не найдены",
@@ -489,5 +490,7 @@ export default {
     support: "Поддержка",
     change_language: "Изменить язык",
     in_progress: "В процессе",
+    premium: "Премиум",
+    free: "Бесплатно",
   },
 } as const;

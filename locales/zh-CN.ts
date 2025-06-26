@@ -1,5 +1,6 @@
 export default {
   programs: {
+    workout_programs_title: "锻炼程序",
     workout_programs: "锻炼程序",
     workout_programs_description: "选择您的挑战并变得更强大！💪",
     no_programs_available: "没有可用的程序",
@@ -484,5 +485,7 @@ export default {
     support: "支持",
     change_language: "更改语言",
     in_progress: "进行中",
+    premium: "高级",
+    free: "免费",
   },
 } as const;

@@ -42,6 +42,7 @@ export function ProgramSessionClient({ program, week, session, isAuthenticated, 
   const programSessionTitle = getSessionTitle(session, locale);
   const programSessionDescription = getSessionDescription(session, locale);
   const programSlug = getSessionSlug(program, locale);
+  const sessionSlug = getSessionSlug(session, locale);
 
   // Access control context
   const accessContext = {
@@ -211,6 +212,7 @@ export function ProgramSessionClient({ program, week, session, isAuthenticated, 
       context={accessContext}
       programSlug={programSlug}
       sessionDescription={programSessionDescription}
+      sessionSlug={sessionSlug}
       sessionTitle={programSessionTitle}
     >
       <div className="flex flex-col h-screen">

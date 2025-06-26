@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useQueryState, parseAsString, parseAsInteger } from "nuqs";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { BarChart3, Target, Clock, Calendar, Timer, Dumbbell, Lock, Trophy, Users, Zap, CheckCircle2 } from "lucide-react";
 import { ExerciseAttributeValueEnum } from "@prisma/client";
@@ -36,7 +36,7 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
   const [isProgramCompleted, setIsProgramCompleted] = useState(false);
   const t = useI18n();
   const searchParams = useSearchParams();
-
+  const router = useRouter();
   const currentLocale = useCurrentLocale();
   const programTitle = getProgramTitle(program, currentLocale);
   const programDescription = getProgramDescription(program, currentLocale);
@@ -92,6 +92,14 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
       setHasJoinedProgram(false);
     } finally {
       setIsLoadingProgress(false);
+    }
+  };
+
+  const handleCTAClick = () => {
+    if (isAuthenticated && hasJoinedProgram) {
+      router.push(`/programs/${program.slug}/?tab=sessions`);
+    } else {
+      setShowWelcomeModal(true);
     }
   };
 
@@ -434,16 +442,12 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
       </div>
 
       {/* Gamified Floating CTA - Only show if program is not completed */}
-      {!isProgramCompleted && (
+      {!isProgramCompleted && tab !== "sessions" && (
         <button
           className="absolute bottom-2 right-0 left-0 max-w-xs mx-auto bg-gradient-to-r from-[#4F8EF7] to-[#25CB78] hover:from-[#4F8EF7]/80 hover:to-[#25CB78]/80 text-white px-8 py-4 rounded-full font-bold border-2 border-white/20 hover:scale-105 transition-all duration-200 ease-in-out z-1 flex items-center justify-center gap-2"
-          onClick={() => setShowWelcomeModal(true)}
+          onClick={handleCTAClick}
         >
-          {program.emoji ? (
-            <Image alt="Rejoindre" className="w-6 h-6 object-contain" height={24} src={`/images/emojis/${program.emoji}`} width={24} />
-          ) : (
-            <Image alt="Rejoindre" className="w-6 h-6 object-contain" height={24} src="/images/emojis/WorkoutCoolSwag.png" width={24} />
-          )}
+          <Image alt="Rejoindre" className="w-6 h-6 object-contain" height={24} src="/images/emojis/WorkoutCoolSwag.png" width={24} />
           {isAuthenticated && hasJoinedProgram ? t("programs.continue") : t("programs.join_cta")}
           <Trophy className="text-white" size={18} />
         </button>

@@ -1,5 +1,6 @@
 export default {
   programs: {
+    completed: "已完成",
     about: "关于",
     program: "程序",
     not_found: "程序未找到",

@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQueryState, parseAsString, parseAsInteger } from "nuqs";
+import { useSearchParams } from "next/navigation";
 import Image from "next/image";
-import { BarChart3, Target, Clock, Calendar, Timer, Dumbbell, Share, Lock, Trophy, Users, Zap } from "lucide-react";
+import { BarChart3, Target, Clock, Calendar, Timer, Dumbbell, Share, Lock, Trophy, Users, Zap, CheckCircle2 } from "lucide-react";
 import { ExerciseAttributeValueEnum } from "@prisma/client";
 
 import { useCurrentLocale, useI18n } from "locales/client";
@@ -13,6 +14,7 @@ import { getAttributeValueLabel } from "@/shared/lib/attribute-value-translation
 import { WelcomeModal } from "@/features/programs/ui/welcome-modal";
 import { ProgramProgress } from "@/features/programs/ui/program-progress";
 
+import { getProgramProgress } from "../actions/get-program-progress.action";
 import { ProgramDetail } from "../actions/get-program-by-slug.action";
 
 interface ProgramDetailPageProps {
@@ -24,18 +26,87 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
   const [tab, setTab] = useQueryState("tab", parseAsString.withDefault("about"));
   const [selectedWeek, setSelectedWeek] = useQueryState("week", parseAsInteger.withDefault(1));
   const [showWelcomeModal, setShowWelcomeModal] = useState(false);
+  const [completedSessions, setCompletedSessions] = useState<Set<string>>(new Set());
+  const [isLoadingProgress, setIsLoadingProgress] = useState(false);
+  const [hasJoinedProgram, setHasJoinedProgram] = useState(false);
+  const [currentWeek, setCurrentWeek] = useState(1);
+  const [currentSessionNumber, setCurrentSessionNumber] = useState(1);
   const t = useI18n();
+  const searchParams = useSearchParams();
 
   const currentLocale = useCurrentLocale();
+
+  // Load completed sessions when component mounts or when authenticated
+  useEffect(() => {
+    if (isAuthenticated) {
+      loadCompletedSessions();
+    }
+  }, [isAuthenticated]);
+
+  // Reload progress when refresh param changes (indicating session completion)
+  useEffect(() => {
+    const refreshParam = searchParams.get("refresh");
+    if (refreshParam && isAuthenticated) {
+      loadCompletedSessions();
+    }
+  }, [searchParams, isAuthenticated]);
+
+  const loadCompletedSessions = async () => {
+    if (!isAuthenticated) return;
+
+    setIsLoadingProgress(true);
+    try {
+      const progress = await getProgramProgress(program.id);
+      if (progress?.enrollment) {
+        setHasJoinedProgram(true);
+        setCurrentWeek(progress.stats.currentWeek);
+        setCurrentSessionNumber(progress.stats.currentSession);
+        if (progress.enrollment.sessionProgress) {
+          const completed = new Set(
+            progress.enrollment.sessionProgress.filter((sp: any) => sp.completedAt !== null).map((sp: any) => sp.session.id),
+          );
+          setCompletedSessions(completed);
+        }
+      } else {
+        setHasJoinedProgram(false);
+        setCompletedSessions(new Set());
+        setCurrentWeek(1);
+        setCurrentSessionNumber(1);
+      }
+    } catch (error) {
+      console.error("Failed to load completed sessions:", error);
+      setHasJoinedProgram(false);
+    } finally {
+      setIsLoadingProgress(false);
+    }
+  };
 
   const handleJoinProgram = async () => {
     setShowWelcomeModal(false);
 
-    // Navigate to first session using slug - no need to enroll here, it will be done on the session page
-    const firstSession = program.weeks[0]?.sessions[0];
-    if (firstSession) {
-      const sessionSlug = getSlugForLocale(firstSession, currentLocale);
-      window.location.href = `/${currentLocale}/programs/${program.slug}/session/${sessionSlug}`;
+    if (hasJoinedProgram) {
+      // Navigate to current session if user has already joined
+      const currentWeekData = program.weeks.find((w) => w.weekNumber === currentWeek);
+      const currentSession = currentWeekData?.sessions.find((s) => s.sessionNumber === currentSessionNumber);
+
+      if (currentSession) {
+        const sessionSlug = getSlugForLocale(currentSession, currentLocale);
+        window.location.href = `/${currentLocale}/programs/${program.slug}/session/${sessionSlug}`;
+      } else {
+        // Fallback to first session if current session not found
+        const firstSession = program.weeks[0]?.sessions[0];
+        if (firstSession) {
+          const sessionSlug = getSlugForLocale(firstSession, currentLocale);
+          window.location.href = `/${currentLocale}/programs/${program.slug}/session/${sessionSlug}`;
+        }
+      }
+    } else {
+      // Navigate to first session for new users - enrollment will be done on the session page
+      const firstSession = program.weeks[0]?.sessions[0];
+      if (firstSession) {
+        const sessionSlug = getSlugForLocale(firstSession, currentLocale);
+        window.location.href = `/${currentLocale}/programs/${program.slug}/session/${sessionSlug}`;
+      }
     }
   };
 
@@ -54,6 +125,7 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
   };
 
   const formatEquipment = (equipment: ExerciseAttributeValueEnum[]) => {
+    console.log("equipment:", equipment);
     return equipment.map((equipment) => getEquipmentTranslation(equipment, t).label).join(", ") || "Aucun équipement";
   };
 
@@ -301,12 +373,15 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
                     .find((w) => w.weekNumber === selectedWeek)
                     ?.sessions.map((session) => {
                       const sessionSlug = getSlugForLocale(session, currentLocale);
+                      const isCompleted = completedSessions.has(session.id);
                       return (
                         <div
                           className={`bg-white dark:bg-gray-800 rounded-xl p-4 border-2 cursor-pointer transition-all duration-200 ease-in-out flex items-center gap-4 ${
-                            session.isPremium
-                              ? "border-yellow-200 dark:border-yellow-800 bg-yellow-50/50 dark:bg-yellow-900/10 hover:border-yellow-300 hover:scale-[1.02]"
-                              : "border-[#25CB78]/20 hover:border-[#25CB78] hover:scale-[1.02]"
+                            isCompleted
+                              ? "border-[#25CB78] bg-[#25CB78]/5"
+                              : session.isPremium
+                                ? "border-yellow-200 dark:border-yellow-800 bg-yellow-50/50 dark:bg-yellow-900/10 hover:border-yellow-300 hover:scale-[1.02]"
+                                : "border-[#25CB78]/20 hover:border-[#25CB78] hover:scale-[1.02]"
                           }`}
                           key={session.id}
                           onClick={() => {
@@ -314,22 +389,43 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
                           }}
                         >
                           {/* Session Number Badge */}
-                          <div
-                            className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 font-bold text-white ${
-                              session.isPremium ? "bg-yellow-500" : "bg-[#25CB78]"
-                            }`}
-                          >
-                            {session.isPremium ? <Lock size={18} /> : <span className="text-lg">{session.sessionNumber}</span>}
+                          <div className="relative">
+                            <div
+                              className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 font-bold text-white ${
+                                isCompleted ? "bg-[#25CB78]" : session.isPremium ? "bg-yellow-500" : "bg-[#25CB78]"
+                              }`}
+                            >
+                              {isCompleted ? (
+                                <CheckCircle2 size={18} />
+                              ) : session.isPremium ? (
+                                <Lock size={18} />
+                              ) : (
+                                <span className="text-lg">{session.sessionNumber}</span>
+                              )}
+                            </div>
+                            {/* Completion checkmark overlay */}
+                            {isCompleted && (
+                              <div className="absolute -top-1 -right-1 w-5 h-5 bg-[#25CB78] rounded-full flex items-center justify-center">
+                                <CheckCircle2 className="text-white" size={12} />
+                              </div>
+                            )}
                           </div>
 
                           {/* Session Info */}
                           <div className="flex-1">
                             <div className="flex items-center gap-2 mb-1">
-                              <h4 className="font-bold text-gray-900 dark:text-white">{session.title}</h4>
-                              {!session.isPremium && (
+                              <h4 className={`font-bold ${isCompleted ? "text-[#25CB78]" : "text-gray-900 dark:text-white"}`}>
+                                {session.title}
+                              </h4>
+                              {isCompleted && (
+                                <div className="bg-[#25CB78] text-white px-2 py-1 rounded-full text-xs font-bold">
+                                  {t("programs.completed")}
+                                </div>
+                              )}
+                              {!isCompleted && !session.isPremium && (
                                 <div className="bg-[#25CB78] text-white px-2 py-1 rounded-full text-xs font-bold">{t("programs.free")}</div>
                               )}
-                              {session.isPremium && (
+                              {!isCompleted && session.isPremium && (
                                 <div className="bg-yellow-500 text-white px-2 py-1 rounded-full text-xs font-bold">
                                   {t("programs.premium")}
                                 </div>
@@ -344,15 +440,19 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
                             </p>
                           </div>
 
-                          {/* Emoji Feedback */}
+                          {/* Status Icon */}
                           <div className="w-10 h-10 flex items-center justify-center">
-                            <Image
-                              alt="Status"
-                              className="w-8 h-8 object-contain"
-                              height={32}
-                              src={`/images/emojis/${session.isPremium ? "WorkoutCoolCry.png" : "WorkoutCoolHappy.png"}`}
-                              width={32}
-                            />
+                            {isCompleted ? (
+                              <CheckCircle2 className="text-[#25CB78]" size={24} />
+                            ) : (
+                              <Image
+                                alt="Status"
+                                className="w-8 h-8 object-contain"
+                                height={32}
+                                src={`/images/emojis/${session.isPremium ? "WorkoutCoolCry.png" : "WorkoutCoolHappy.png"}`}
+                                width={32}
+                              />
+                            )}
                           </div>
                         </div>
                       );
@@ -365,18 +465,20 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
       </div>
 
       {/* Gamified Floating CTA */}
-      <button
-        className="absolute bottom-6 right-0 left-0 max-w-xs mx-auto bg-gradient-to-r from-[#4F8EF7] to-[#25CB78] hover:from-[#4F8EF7]/80 hover:to-[#25CB78]/80 text-white px-8 py-4 rounded-full font-bold border-2 border-white/20 hover:scale-105 transition-all duration-200 ease-in-out z-1 flex items-center justify-center gap-2"
-        onClick={() => setShowWelcomeModal(true)}
-      >
-        {program.emoji ? (
-          <Image alt="Rejoindre" className="w-6 h-6 object-contain" height={24} src={`/images/emojis/${program.emoji}`} width={24} />
-        ) : (
-          <Image alt="Rejoindre" className="w-6 h-6 object-contain" height={24} src="/images/emojis/WorkoutCoolSwag.png" width={24} />
-        )}
-        Commencer
-        <Trophy className="text-white" size={18} />
-      </button>
+      {!hasJoinedProgram && (
+        <button
+          className="absolute bottom-6 right-0 left-0 max-w-xs mx-auto bg-gradient-to-r from-[#4F8EF7] to-[#25CB78] hover:from-[#4F8EF7]/80 hover:to-[#25CB78]/80 text-white px-8 py-4 rounded-full font-bold border-2 border-white/20 hover:scale-105 transition-all duration-200 ease-in-out z-1 flex items-center justify-center gap-2"
+          onClick={() => setShowWelcomeModal(true)}
+        >
+          {program.emoji ? (
+            <Image alt="Rejoindre" className="w-6 h-6 object-contain" height={24} src={`/images/emojis/${program.emoji}`} width={24} />
+          ) : (
+            <Image alt="Rejoindre" className="w-6 h-6 object-contain" height={24} src="/images/emojis/WorkoutCoolSwag.png" width={24} />
+          )}
+          {t("programs.join_cta")}
+          <Trophy className="text-white" size={18} />
+        </button>
+      )}
 
       {/* Welcome Modal */}
       <WelcomeModal

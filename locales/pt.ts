@@ -1,5 +1,6 @@
 export default {
   programs: {
+    completed: "Concluído",
     about: "Sobre",
     program: "Programa",
     not_found: "Programa não encontrado",

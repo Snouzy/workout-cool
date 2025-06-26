@@ -1,5 +1,6 @@
 export default {
   programs: {
+    completed: "Completed",
     program: "Program",
     not_found: "Program not found",
     characteristics: "Characteristics",

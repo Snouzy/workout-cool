@@ -1,11 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, Play, Clock, Dumbbell, Users, Lock } from "lucide-react";
+import { ArrowLeft, Play, Clock, Dumbbell, Lock } from "lucide-react";
 import { Exercise, ExerciseAttribute, ExerciseAttributeName, ExerciseAttributeValue } from "@prisma/client";
 
-import { WorkoutSessionTimer } from "@/features/workout-session/ui/workout-session-timer";
 import { WorkoutSessionSets } from "@/features/workout-session/ui/workout-session-sets";
 import { WorkoutSessionHeader } from "@/features/workout-session/ui/workout-session-header";
 import { useWorkoutSession } from "@/features/workout-session/model/use-workout-session";
@@ -56,7 +55,14 @@ interface ProgramSessionClientProps {
   isPremiumSession: boolean;
 }
 
-export function ProgramSessionClient({ program, week, session, isAuthenticated, canAccessContent, isPremiumSession }: ProgramSessionClientProps) {
+export function ProgramSessionClient({
+  program,
+  week,
+  session,
+  isAuthenticated,
+  canAccessContent,
+  isPremiumSession,
+}: ProgramSessionClientProps) {
   const router = useRouter();
   const { startWorkout, session: workoutSession, completeWorkout, isWorkoutActive, quitWorkout } = useWorkoutSession();
   const [isLoading, setIsLoading] = useState(false);
@@ -67,7 +73,7 @@ export function ProgramSessionClient({ program, week, session, isAuthenticated, 
 
   const handleStartWorkout = async () => {
     if (!canAccessContent) return;
-    
+
     setIsLoading(true);
     try {
       // Ensure user is enrolled
@@ -85,16 +91,12 @@ export function ProgramSessionClient({ program, week, session, isAuthenticated, 
       }));
 
       // Extract equipment and muscles from session exercises
-      const equipment = session.exercises.flatMap(ex => 
-        ex.exercise.attributes
-          .filter(attr => attr.attributeName.name === 'EQUIPMENT')
-          .map(attr => attr.attributeValue.value)
+      const equipment = session.exercises.flatMap((ex) =>
+        ex.exercise.attributes.filter((attr) => attr.attributeName.name === "EQUIPMENT").map((attr) => attr.attributeValue.value),
       );
-      
-      const muscles = session.exercises.flatMap(ex => 
-        ex.exercise.attributes
-          .filter(attr => attr.attributeName.name === 'PRIMARY_MUSCLE')
-          .map(attr => attr.attributeValue.value)
+
+      const muscles = session.exercises.flatMap((ex) =>
+        ex.exercise.attributes.filter((attr) => attr.attributeName.name === "PRIMARY_MUSCLE").map((attr) => attr.attributeValue.value),
       );
 
       startWorkout(exercises, equipment, muscles);
@@ -119,14 +121,11 @@ export function ProgramSessionClient({ program, week, session, isAuthenticated, 
 
       setShowCongrats(true);
 
-      // Navigate after delay
-      setTimeout(() => {
-        if (isCompleted) {
-          router.push(`/programs/${program.slug}?completed=true`);
-        } else {
-          router.push(`/programs/${program.slug}?week=${nextWeek}&session=${nextSession}`);
-        }
-      }, 3000);
+      if (isCompleted) {
+        router.push(`/programs/${program.slug}?completed=true&refresh=${Date.now()}`);
+      } else {
+        router.push(`/programs/${program.slug}?week=${nextWeek}&session=${nextSession}&refresh=${Date.now()}`);
+      }
     } catch (error) {
       console.error("Failed to complete session:", error);
     }
@@ -179,11 +178,9 @@ export function ProgramSessionClient({ program, week, session, isAuthenticated, 
                 <div className="w-16 h-16 bg-yellow-100 dark:bg-yellow-900 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Lock className="w-8 h-8 text-yellow-600 dark:text-yellow-400" />
                 </div>
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-                  Séance Premium
-                </h2>
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Séance Premium</h2>
                 <p className="text-gray-600 dark:text-gray-400 mb-6">
-                  Cette séance fait partie du contenu premium. Vous pouvez voir les détails mais pas effectuer l'entraînement.
+                  Cette séance fait partie du contenu premium. Vous pouvez voir les détails mais pas effectuer l&apos;entraînement.
                 </p>
               </div>
 
@@ -198,13 +195,11 @@ export function ProgramSessionClient({ program, week, session, isAuthenticated, 
                 <h3 className="font-semibold text-gray-900 dark:text-white mb-4">Exercices inclus</h3>
                 <div className="space-y-2">
                   {session.exercises.map((exercise, index) => (
-                    <div key={exercise.id} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                    <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg" key={exercise.id}>
                       <span className="font-medium text-gray-900 dark:text-white">
                         {index + 1}. {exercise.exercise.name}
                       </span>
-                      <span className="text-sm text-gray-500 dark:text-gray-400">
-                        {exercise.suggestedSets.length} série(s)
-                      </span>
+                      <span className="text-sm text-gray-500 dark:text-gray-400">{exercise.suggestedSets.length} série(s)</span>
                     </div>
                   ))}
                 </div>
@@ -212,26 +207,16 @@ export function ProgramSessionClient({ program, week, session, isAuthenticated, 
 
               <div className="space-y-3">
                 {!isAuthenticated && (
-                  <Button 
-                    onClick={() => router.push('/auth/login')}
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white"
-                  >
+                  <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white" onClick={() => router.push("/auth/login")}>
                     Se connecter pour accéder
                   </Button>
                 )}
                 {isAuthenticated && (
-                  <Button 
-                    onClick={() => router.push('/premium')}
-                    className="w-full bg-yellow-600 hover:bg-yellow-700 text-white"
-                  >
+                  <Button className="w-full bg-yellow-600 hover:bg-yellow-700 text-white" onClick={() => router.push("/premium")}>
                     Devenir Premium
                   </Button>
                 )}
-                <Button 
-                  variant="outline" 
-                  onClick={() => router.push(`/programs/${program.slug}`)}
-                  className="w-full"
-                >
+                <Button className="w-full" onClick={() => router.push(`/programs/${program.slug}`)} variant="outline">
                   Retour au programme
                 </Button>
               </div>
@@ -272,14 +257,8 @@ export function ProgramSessionClient({ program, week, session, isAuthenticated, 
             {/* Session info */}
             <div className="flex items-center justify-between mb-6">
               <div>
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-                  {session.title}
-                </h2>
-                {session.description && (
-                  <p className="text-gray-600 dark:text-gray-400 mt-2">
-                    {session.description}
-                  </p>
-                )}
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">{session.title}</h2>
+                {session.description && <p className="text-gray-600 dark:text-gray-400 mt-2">{session.description}</p>}
               </div>
               <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
                 <div className="flex items-center gap-1">
@@ -295,29 +274,21 @@ export function ProgramSessionClient({ program, week, session, isAuthenticated, 
 
             {/* Exercise list */}
             <div className="space-y-4 mb-8">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                Exercices de la séance
-              </h3>
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Exercices de la séance</h3>
               <div className="grid gap-3">
                 {session.exercises.map((exercise, index) => (
-                  <div key={exercise.id} className="flex items-center p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                  <div className="flex items-center p-4 bg-gray-50 dark:bg-gray-700 rounded-lg" key={exercise.id}>
                     <div className="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-bold mr-4">
                       {index + 1}
                     </div>
                     <div className="flex-1">
-                      <h4 className="font-medium text-gray-900 dark:text-white">
-                        {exercise.exercise.name}
-                      </h4>
+                      <h4 className="font-medium text-gray-900 dark:text-white">{exercise.exercise.name}</h4>
                       {exercise.exercise.description && (
-                        <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                          {exercise.exercise.description}
-                        </p>
+                        <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">{exercise.exercise.description}</p>
                       )}
                     </div>
                     <div className="text-right">
-                      <span className="text-sm text-gray-500 dark:text-gray-400">
-                        {exercise.suggestedSets.length} série(s)
-                      </span>
+                      <span className="text-sm text-gray-500 dark:text-gray-400">{exercise.suggestedSets.length} série(s)</span>
                     </div>
                   </div>
                 ))}
@@ -327,9 +298,9 @@ export function ProgramSessionClient({ program, week, session, isAuthenticated, 
             {/* Start workout button */}
             <div className="flex justify-center">
               <Button
-                onClick={handleStartWorkout}
-                disabled={isLoading}
                 className="bg-gradient-to-r from-[#4F8EF7] to-[#25CB78] hover:from-[#4F8EF7]/80 hover:to-[#25CB78]/80 text-white px-8 py-4 text-lg font-bold rounded-xl flex items-center gap-3"
+                disabled={isLoading}
+                onClick={handleStartWorkout}
               >
                 {isLoading ? (
                   <>

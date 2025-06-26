@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { CheckCircle, PlayCircle } from "lucide-react";
 
 import { getProgramProgress } from "@/features/programs/actions/get-program-progress.action";
@@ -12,10 +13,19 @@ interface ProgramProgressProps {
 export function ProgramProgress({ programId }: ProgramProgressProps) {
   const [progress, setProgress] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const searchParams = useSearchParams();
 
   useEffect(() => {
     loadProgress();
   }, [programId]);
+
+  // Reload progress when refresh param changes (indicating session completion)
+  useEffect(() => {
+    const refreshParam = searchParams.get("refresh");
+    if (refreshParam) {
+      loadProgress();
+    }
+  }, [searchParams]);
 
   const loadProgress = async () => {
     try {

@@ -131,7 +131,7 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
 
   return (
     <div className="flex-1 flex flex-col overflow-hidden relative">
-      <div className="flex-1 overflow-auto pb-20">
+      <div className="flex-1 overflow-y-auto overflow-x-hidden pb-20">
         {/* Hero Image Section with Gamification */}
         <div className="relative h-40 sm:h-64 bg-gradient-to-br from-[#4F8EF7] to-[#25CB78]">
           <Image alt={programTitle} className="absolute inset-0 object-cover opacity-30" fill src={program.image} />

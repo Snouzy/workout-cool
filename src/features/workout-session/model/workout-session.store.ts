@@ -33,7 +33,7 @@ interface WorkoutSessionState {
   progressPercent: number;
 
   // Actions
-  startWorkout: (exercises: ExerciseWithAttributes[], equipment: any[], muscles: any[]) => void;
+  startWorkout: (exercises: ExerciseWithAttributes[] | WorkoutSessionExercise[], equipment: any[], muscles: any[]) => void;
   quitWorkout: () => void;
   completeWorkout: () => void;
   toggleTimer: () => void;
@@ -67,21 +67,32 @@ export const useWorkoutSessionStore = create<WorkoutSessionState>((set, get) => 
   progressPercent: 0,
 
   startWorkout: (exercises, _equipment, muscles) => {
-    const sessionExercises: WorkoutSessionExercise[] = exercises.map((ex, idx) => ({
-      ...ex,
-      order: idx,
-      sets: [
-        {
-          id: `${ex.id}-set-1`,
-          setIndex: 0,
-          types: ["REPS", "WEIGHT"],
-          valuesInt: [],
-          valuesSec: [],
-          units: [],
-          completed: false,
-        },
-      ],
-    }));
+    const sessionExercises: WorkoutSessionExercise[] = exercises.map((ex, idx) => {
+      // Check if exercise already has sets (from program)
+      if ("sets" in ex && ex.sets && ex.sets.length > 0) {
+        return {
+          ...ex,
+          order: idx,
+        } as WorkoutSessionExercise;
+      }
+
+      // Default sets for custom workouts
+      return {
+        ...ex,
+        order: idx,
+        sets: [
+          {
+            id: `${ex.id}-set-1`,
+            setIndex: 0,
+            types: ["REPS", "WEIGHT"],
+            valuesInt: [],
+            valuesSec: [],
+            units: [],
+            completed: false,
+          },
+        ],
+      } as WorkoutSessionExercise;
+    });
 
     const newSession: WorkoutSession = {
       id: Date.now().toString(),

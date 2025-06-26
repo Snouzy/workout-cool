@@ -5,7 +5,6 @@ import { useI18n } from "locales/client";
 import { WorkoutSessionList } from "@/features/workout-session/ui/workout-session-list";
 import { WorkoutSessionHeatmap } from "@/features/workout-session/ui/workout-session-heatmap";
 import { useWorkoutSessions } from "@/features/workout-session/model/use-workout-sessions";
-import { PremiumSection } from "@/features/billing/ui/PremiumSection";
 import { useCurrentSession } from "@/entities/user/model/useCurrentSession";
 import { LocalAlert } from "@/components/ui/local-alert";
 import { Button } from "@/components/ui/button";
@@ -35,7 +34,6 @@ export default function ProfilePage() {
           <div>
             <h2 className="text-2xl font-bold">Hello, {session.user?.name} 👋</h2>
           </div>
-          <PremiumSection />
         </div>
       )}
       <div className="mt-4">

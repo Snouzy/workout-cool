@@ -124,7 +124,36 @@ export function ProgramSessionClient({ program, week, session, isAuthenticated, 
           .map((attr) => attr.attributeValue),
       );
 
-      startWorkout(exercises, equipment, muscles);
+      // Convert suggestedSets to workout format
+      const exercisesWithSets = exercises.map((exercise, idx) => {
+        const programExercise = session.exercises[idx];
+        const suggestedSets = programExercise?.suggestedSets || [];
+        
+        const workoutSets = suggestedSets.map((suggestedSet, setIndex) => ({
+          id: `${exercise.id}-set-${setIndex + 1}`,
+          setIndex,
+          types: suggestedSet.types || [],
+          valuesInt: suggestedSet.valuesInt || [],
+          valuesSec: suggestedSet.valuesSec || [],
+          units: suggestedSet.units || [],
+          completed: false,
+        }));
+
+        return {
+          ...exercise,
+          sets: workoutSets.length > 0 ? workoutSets : [{
+            id: `${exercise.id}-set-1`,
+            setIndex: 0,
+            types: ["REPS"],
+            valuesInt: [],
+            valuesSec: [],
+            units: [],
+            completed: false,
+          }]
+        };
+      });
+
+      startWorkout(exercisesWithSets, equipment, muscles);
       setHasStartedWorkout(true);
     } catch (error) {
       console.error("Failed to start session:", error);

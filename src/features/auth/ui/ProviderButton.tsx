@@ -33,9 +33,13 @@ export const ProviderButton = (props: ProviderButtonProps) => {
 
   const signInMutation = useMutation({
     mutationFn: async () => {
+      const redirectUrl = searchParams.get("redirect");
+      const callbackUrl = searchParams.get("callbackUrl");
+      const defaultCallback = `${getServerUrl()}/?signin=true`;
+      
       await authClient.signIn.social({
         provider: "google",
-        callbackURL: searchParams.get("callbackUrl") ?? `${getServerUrl()}/?signin=true`,
+        callbackURL: redirectUrl || callbackUrl || defaultCallback,
       });
     },
   });

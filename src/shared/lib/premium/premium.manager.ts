@@ -45,7 +45,7 @@ export class PremiumManager {
           },
         },
       },
-      orderBy: { priceMonthly: "asc" },
+      orderBy: { priceYearly: "asc" },
     });
 
     // Convert database plans to PremiumPlan format

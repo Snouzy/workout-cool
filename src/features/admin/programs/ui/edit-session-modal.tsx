@@ -15,7 +15,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
-import { addSessionToWeek } from "../actions/add-session.action";
+import { SessionWithExercises } from "../types/program.types";
+import { updateSession } from "../actions/update-session.action";
 
 const sessionSchema = z.object({
   title: z.string().min(1, "Le titre est requis"),
@@ -37,11 +38,10 @@ const sessionSchema = z.object({
 
 type SessionFormData = z.infer<typeof sessionSchema>;
 
-interface AddSessionModalProps {
+interface EditSessionModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  weekId: string;
-  nextSessionNumber: number;
+  session: SessionWithExercises;
 }
 
 const EQUIPMENT_OPTIONS = [
@@ -54,10 +54,10 @@ const EQUIPMENT_OPTIONS = [
   { value: ExerciseAttributeValueEnum.CABLE, label: "Câbles" },
 ];
 
-export function AddSessionModal({ open, onOpenChange, weekId, nextSessionNumber }: AddSessionModalProps) {
+export function EditSessionModal({ open, onOpenChange, session }: EditSessionModalProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [activeTab, setActiveTab] = useState("fr");
-  const [selectedEquipment, setSelectedEquipment] = useState<ExerciseAttributeValueEnum[]>([]);
+  const [selectedEquipment, setSelectedEquipment] = useState<ExerciseAttributeValueEnum[]>(session.equipment);
 
   const {
     register,
@@ -68,21 +68,21 @@ export function AddSessionModal({ open, onOpenChange, weekId, nextSessionNumber 
   } = useForm<SessionFormData>({
     resolver: zodResolver(sessionSchema),
     defaultValues: {
-      title: `Séance ${nextSessionNumber}`,
-      titleEn: `Session ${nextSessionNumber}`,
-      titleEs: `Sesión ${nextSessionNumber}`,
-      titlePt: `Sessão ${nextSessionNumber}`,
-      titleRu: `Сессия ${nextSessionNumber}`,
-      titleZhCn: `第${nextSessionNumber}节`,
-      description: `Description de la séance ${nextSessionNumber}`,
-      descriptionEn: `Description of session ${nextSessionNumber}`,
-      descriptionEs: `Descripción de la sesión ${nextSessionNumber}`,
-      descriptionPt: `Descrição da sessão ${nextSessionNumber}`,
-      descriptionRu: `Описание сессии ${nextSessionNumber}`,
-      descriptionZhCn: `第${nextSessionNumber}节课程描述`,
-      estimatedMinutes: 30,
-      isPremium: true,
-      equipment: [],
+      title: session.title,
+      titleEn: session.titleEn,
+      titleEs: session.titleEs,
+      titlePt: session.titlePt,
+      titleRu: session.titleRu,
+      titleZhCn: session.titleZhCn,
+      description: session.description,
+      descriptionEn: session.descriptionEn,
+      descriptionEs: session.descriptionEs,
+      descriptionPt: session.descriptionPt,
+      descriptionRu: session.descriptionRu,
+      descriptionZhCn: session.descriptionZhCn,
+      estimatedMinutes: session.estimatedMinutes,
+      isPremium: session.isPremium,
+      equipment: session.equipment,
     },
   });
 
@@ -108,20 +108,17 @@ export function AddSessionModal({ open, onOpenChange, weekId, nextSessionNumber 
         titleZhCn: data.titleZhCn,
       });
 
-      await addSessionToWeek({
-        weekId,
-        sessionNumber: nextSessionNumber,
+      await updateSession({
+        sessionId: session.id,
         ...data,
         ...slugs,
       });
 
-      reset();
-      setSelectedEquipment([]);
       onOpenChange(false);
-      window.location.reload(); // Refresh to show new session
+      window.location.reload(); // Refresh to show updated session
     } catch (error) {
-      console.error("Error adding session:", error);
-      alert("Erreur lors de l'ajout de la séance");
+      console.error("Error updating session:", error);
+      alert("Erreur lors de la mise à jour de la séance");
     } finally {
       setIsLoading(false);
     }
@@ -129,7 +126,7 @@ export function AddSessionModal({ open, onOpenChange, weekId, nextSessionNumber 
 
   const handleClose = () => {
     reset();
-    setSelectedEquipment([]);
+    setSelectedEquipment(session.equipment);
     setActiveTab("fr");
     onOpenChange(false);
   };
@@ -138,7 +135,7 @@ export function AddSessionModal({ open, onOpenChange, weekId, nextSessionNumber 
     <Dialog onOpenChange={handleClose} open={open}>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Ajouter une séance</DialogTitle>
+          <DialogTitle>Éditer la séance</DialogTitle>
         </DialogHeader>
 
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
@@ -168,13 +165,13 @@ export function AddSessionModal({ open, onOpenChange, weekId, nextSessionNumber 
           {activeTab === "fr" && (
             <div className="space-y-4">
               <div>
-                <Label htmlFor="title">Titre (Français)</Label>
-                <Input id="title" {...register("title")} placeholder={`Séance ${nextSessionNumber}`} />
+                <Label htmlFor="edit-title">Titre (Français)</Label>
+                <Input id="edit-title" {...register("title")} />
                 {errors.title && <p className="text-sm text-red-500 mt-1">{errors.title.message}</p>}
               </div>
               <div>
-                <Label htmlFor="description">Description (Français)</Label>
-                <Textarea id="description" {...register("description")} placeholder="Description de cette séance..." rows={3} />
+                <Label htmlFor="edit-description">Description (Français)</Label>
+                <Textarea id="edit-description" {...register("description")} rows={3} />
                 {errors.description && <p className="text-sm text-red-500 mt-1">{errors.description.message}</p>}
               </div>
             </div>
@@ -184,13 +181,13 @@ export function AddSessionModal({ open, onOpenChange, weekId, nextSessionNumber 
           {activeTab === "en" && (
             <div className="space-y-4">
               <div>
-                <Label htmlFor="titleEn">Title (English)</Label>
-                <Input id="titleEn" {...register("titleEn")} placeholder={`Session ${nextSessionNumber}`} />
+                <Label htmlFor="edit-titleEn">Title (English)</Label>
+                <Input id="edit-titleEn" {...register("titleEn")} />
                 {errors.titleEn && <p className="text-sm text-red-500 mt-1">{errors.titleEn.message}</p>}
               </div>
               <div>
-                <Label htmlFor="descriptionEn">Description (English)</Label>
-                <Textarea id="descriptionEn" {...register("descriptionEn")} placeholder="Session description..." rows={3} />
+                <Label htmlFor="edit-descriptionEn">Description (English)</Label>
+                <Textarea id="edit-descriptionEn" {...register("descriptionEn")} rows={3} />
                 {errors.descriptionEn && <p className="text-sm text-red-500 mt-1">{errors.descriptionEn.message}</p>}
               </div>
             </div>
@@ -200,13 +197,13 @@ export function AddSessionModal({ open, onOpenChange, weekId, nextSessionNumber 
           {activeTab === "es" && (
             <div className="space-y-4">
               <div>
-                <Label htmlFor="titleEs">Título (Español)</Label>
-                <Input id="titleEs" {...register("titleEs")} placeholder={`Sesión ${nextSessionNumber}`} />
+                <Label htmlFor="edit-titleEs">Título (Español)</Label>
+                <Input id="edit-titleEs" {...register("titleEs")} />
                 {errors.titleEs && <p className="text-sm text-red-500 mt-1">{errors.titleEs.message}</p>}
               </div>
               <div>
-                <Label htmlFor="descriptionEs">Descripción (Español)</Label>
-                <Textarea id="descriptionEs" {...register("descriptionEs")} placeholder="Descripción de la sesión..." rows={3} />
+                <Label htmlFor="edit-descriptionEs">Descripción (Español)</Label>
+                <Textarea id="edit-descriptionEs" {...register("descriptionEs")} rows={3} />
                 {errors.descriptionEs && <p className="text-sm text-red-500 mt-1">{errors.descriptionEs.message}</p>}
               </div>
             </div>
@@ -216,13 +213,13 @@ export function AddSessionModal({ open, onOpenChange, weekId, nextSessionNumber 
           {activeTab === "pt" && (
             <div className="space-y-4">
               <div>
-                <Label htmlFor="titlePt">Título (Português)</Label>
-                <Input id="titlePt" {...register("titlePt")} placeholder={`Sessão ${nextSessionNumber}`} />
+                <Label htmlFor="edit-titlePt">Título (Português)</Label>
+                <Input id="edit-titlePt" {...register("titlePt")} />
                 {errors.titlePt && <p className="text-sm text-red-500 mt-1">{errors.titlePt.message}</p>}
               </div>
               <div>
-                <Label htmlFor="descriptionPt">Descrição (Português)</Label>
-                <Textarea id="descriptionPt" {...register("descriptionPt")} placeholder="Descrição da sessão..." rows={3} />
+                <Label htmlFor="edit-descriptionPt">Descrição (Português)</Label>
+                <Textarea id="edit-descriptionPt" {...register("descriptionPt")} rows={3} />
                 {errors.descriptionPt && <p className="text-sm text-red-500 mt-1">{errors.descriptionPt.message}</p>}
               </div>
             </div>
@@ -232,13 +229,13 @@ export function AddSessionModal({ open, onOpenChange, weekId, nextSessionNumber 
           {activeTab === "ru" && (
             <div className="space-y-4">
               <div>
-                <Label htmlFor="titleRu">Название (Русский)</Label>
-                <Input id="titleRu" {...register("titleRu")} placeholder={`Сессия ${nextSessionNumber}`} />
+                <Label htmlFor="edit-titleRu">Название (Русский)</Label>
+                <Input id="edit-titleRu" {...register("titleRu")} />
                 {errors.titleRu && <p className="text-sm text-red-500 mt-1">{errors.titleRu.message}</p>}
               </div>
               <div>
-                <Label htmlFor="descriptionRu">Описание (Русский)</Label>
-                <Textarea id="descriptionRu" {...register("descriptionRu")} placeholder="Описание сессии..." rows={3} />
+                <Label htmlFor="edit-descriptionRu">Описание (Русский)</Label>
+                <Textarea id="edit-descriptionRu" {...register("descriptionRu")} rows={3} />
                 {errors.descriptionRu && <p className="text-sm text-red-500 mt-1">{errors.descriptionRu.message}</p>}
               </div>
             </div>
@@ -248,13 +245,13 @@ export function AddSessionModal({ open, onOpenChange, weekId, nextSessionNumber 
           {activeTab === "zh" && (
             <div className="space-y-4">
               <div>
-                <Label htmlFor="titleZhCn">标题 (中文)</Label>
-                <Input id="titleZhCn" {...register("titleZhCn")} placeholder={`第${nextSessionNumber}节`} />
+                <Label htmlFor="edit-titleZhCn">标题 (中文)</Label>
+                <Input id="edit-titleZhCn" {...register("titleZhCn")} />
                 {errors.titleZhCn && <p className="text-sm text-red-500 mt-1">{errors.titleZhCn.message}</p>}
               </div>
               <div>
-                <Label htmlFor="descriptionZhCn">描述 (中文)</Label>
-                <Textarea id="descriptionZhCn" {...register("descriptionZhCn")} placeholder="课程描述..." rows={3} />
+                <Label htmlFor="edit-descriptionZhCn">描述 (中文)</Label>
+                <Textarea id="edit-descriptionZhCn" {...register("descriptionZhCn")} rows={3} />
                 {errors.descriptionZhCn && <p className="text-sm text-red-500 mt-1">{errors.descriptionZhCn.message}</p>}
               </div>
             </div>
@@ -262,13 +259,17 @@ export function AddSessionModal({ open, onOpenChange, weekId, nextSessionNumber 
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <Label htmlFor="estimatedMinutes">Durée estimée (minutes)</Label>
-              <Input id="estimatedMinutes" min="5" type="number" {...register("estimatedMinutes", { valueAsNumber: true })} />
+              <Label htmlFor="edit-estimatedMinutes">Durée estimée (minutes)</Label>
+              <Input id="edit-estimatedMinutes" min="5" type="number" {...register("estimatedMinutes", { valueAsNumber: true })} />
               {errors.estimatedMinutes && <p className="text-sm text-red-500 mt-1">{errors.estimatedMinutes.message}</p>}
             </div>
             <div className="flex items-center space-x-2 pt-8">
-              <Switch defaultChecked={true} id="isPremium" onCheckedChange={(checked) => setValue("isPremium", checked)} />
-              <Label htmlFor="isPremium">Séance premium</Label>
+              <Switch
+                defaultChecked={session.isPremium}
+                id="edit-isPremium"
+                onCheckedChange={(checked) => setValue("isPremium", checked)}
+              />
+              <Label htmlFor="edit-isPremium">Séance premium</Label>
             </div>
           </div>
 
@@ -293,7 +294,7 @@ export function AddSessionModal({ open, onOpenChange, weekId, nextSessionNumber 
               Annuler
             </Button>
             <Button disabled={isLoading} type="submit">
-              {isLoading ? "Ajout..." : "Ajouter la séance"}
+              {isLoading ? "Mise à jour..." : "Mettre à jour"}
             </Button>
           </div>
         </form>

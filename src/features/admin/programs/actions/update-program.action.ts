@@ -10,8 +10,16 @@ import { auth } from "@/features/auth/lib/better-auth";
 interface UpdateProgramData {
   title: string;
   titleEn: string;
+  titleEs: string;
+  titlePt: string;
+  titleRu: string;
+  titleZhCn: string;
   description: string;
   descriptionEn: string;
+  descriptionEs: string;
+  descriptionPt: string;
+  descriptionRu: string;
+  descriptionZhCn: string;
   category: string;
   image: string;
   level: ProgramLevel;
@@ -41,16 +49,16 @@ export async function updateProgram(programId: string, data: UpdateProgramData) 
       data: {
         title: data.title,
         titleEn: data.titleEn,
-        titleEs: data.titleEn, // Fallback
-        titlePt: data.titleEn,
-        titleRu: data.titleEn,
-        titleZhCn: data.titleEn,
+        titleEs: data.titleEs,
+        titlePt: data.titlePt,
+        titleRu: data.titleRu,
+        titleZhCn: data.titleZhCn,
         description: data.description,
         descriptionEn: data.descriptionEn,
-        descriptionEs: data.descriptionEn, // Fallback
-        descriptionPt: data.descriptionEn,
-        descriptionRu: data.descriptionEn,
-        descriptionZhCn: data.descriptionEn,
+        descriptionEs: data.descriptionEs,
+        descriptionPt: data.descriptionPt,
+        descriptionRu: data.descriptionRu,
+        descriptionZhCn: data.descriptionZhCn,
         category: data.category,
         image: data.image,
         level: data.level,

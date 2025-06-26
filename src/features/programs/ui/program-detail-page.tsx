@@ -6,8 +6,9 @@ import Image from "next/image";
 import { BarChart3, Target, Clock, Calendar, Timer, Dumbbell, Share, Lock, Trophy, Users, Zap } from "lucide-react";
 import { ExerciseAttributeValueEnum } from "@prisma/client";
 
-import { useI18n } from "locales/client";
+import { useCurrentLocale, useI18n } from "locales/client";
 import { getEquipmentTranslation } from "@/shared/lib/workout-session/equipments";
+import { getSlugForLocale } from "@/shared/lib/locale-slug";
 import { getAttributeValueLabel } from "@/shared/lib/attribute-value-translation";
 import { WelcomeModal } from "@/features/programs/ui/welcome-modal";
 import { ProgramProgress } from "@/features/programs/ui/program-progress";
@@ -25,6 +26,8 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
   const [showWelcomeModal, setShowWelcomeModal] = useState(false);
   const t = useI18n();
 
+  const currentLocale = useCurrentLocale();
+
   const handleJoinProgram = async () => {
     try {
       const { enrollInProgram } = await import("@/features/programs/actions/enroll-program.action");
@@ -32,10 +35,11 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
 
       setShowWelcomeModal(false);
 
-      // Navigate to first session
+      // Navigate to first session using slug
       const firstSession = program.weeks[0]?.sessions[0];
       if (firstSession) {
-        window.location.href = `/programs/${program.slug}/session/${firstSession.id}`;
+        const sessionSlug = getSlugForLocale(firstSession, currentLocale);
+        window.location.href = `/${currentLocale}/programs/${program.slug}/session/${sessionSlug}`;
       }
     } catch (error) {
       console.error("Failed to join program:", error);
@@ -111,16 +115,27 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
 
         <div className="px-0 sm:px-4 py-4">
           <div className="tabs tabs-lift" role="tablist">
-            <input
+            <button
               aria-label="À propos"
-              checked={tab === "about"}
-              className="tab"
-              name="program_tabs"
-              onChange={() => setTab("about")}
-              role="tab"
-              type="radio"
-            />
-            <div className="tab-content bg-base-100 border-base-300 rounded-md rounded-tl-none p-2 sm:p-6" role="tabpanel">
+              className={`tab ${tab === "about" ? "tab-active" : ""}`}
+              onClick={() => setTab("about")}
+              type="button"
+            >
+              {t("programs.about")}
+            </button>
+            <button
+              aria-label={t("programs.sessions")}
+              className={`tab ${tab === "sessions" ? "tab-active" : ""}`}
+              onClick={() => setTab("sessions")}
+              type="button"
+            >
+              {t("programs.sessions")}
+            </button>
+          </div>
+
+          {/* About Tab Content */}
+          {tab === "about" && (
+            <div className="bg-base-100 border-base-300 rounded-md p-2 sm:p-6">
               <div className="space-y-6">
                 {/* User Progress - Only show if authenticated */}
                 {isAuthenticated && <ProgramProgress programId={program.id} />}
@@ -262,17 +277,11 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
                 )}
               </div>
             </div>
+          )}
 
-            <input
-              aria-label={t("programs.sessions")}
-              checked={tab === "sessions"}
-              className="tab"
-              name="program_tabs"
-              onChange={() => setTab("sessions")}
-              role="tab"
-              type="radio"
-            />
-            <div className="tab-content bg-base-100 border-base-300 rounded-box p-6" role="tabpanel">
+          {/* Sessions Tab Content */}
+          {tab === "sessions" && (
+            <div className="bg-base-100 border-base-300 rounded-box p-6">
               <div className="space-y-6">
                 {/* Week Selector with DaisyUI Tabs */}
                 <div className="overflow-x-auto">
@@ -298,62 +307,70 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
                 <div className="space-y-3">
                   {program.weeks
                     .find((w) => w.weekNumber === selectedWeek)
-                    ?.sessions.map((session) => (
-                      <div
-                        className={`bg-white dark:bg-gray-800 rounded-xl p-4 border-2 ${
-                          session.isPremium
-                            ? "border-yellow-200 dark:border-yellow-800 bg-yellow-50/50 dark:bg-yellow-900/10"
-                            : "border-[#25CB78]/20 hover:border-[#25CB78] hover:scale-[1.02]"
-                        } transition-all duration-200 ease-in-out flex items-center gap-4`}
-                        key={session.id}
-                      >
-                        {/* Session Number Badge */}
+                    ?.sessions.map((session) => {
+                      const sessionSlug = getSlugForLocale(session, currentLocale);
+                      return (
                         <div
-                          className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 font-bold text-white ${
-                            session.isPremium ? "bg-yellow-500" : "bg-[#25CB78]"
-                          }`}
+                          className={`bg-white dark:bg-gray-800 rounded-xl p-4 border-2 ${
+                            session.isPremium
+                              ? "border-yellow-200 dark:border-yellow-800 bg-yellow-50/50 dark:bg-yellow-900/10"
+                              : "border-[#25CB78]/20 hover:border-[#25CB78] hover:scale-[1.02] cursor-pointer"
+                          } transition-all duration-200 ease-in-out flex items-center gap-4`}
+                          key={session.id}
+                          onClick={() => {
+                            if (!session.isPremium) {
+                              window.location.href = `/${currentLocale}/programs/${program.slug}/session/${sessionSlug}`;
+                            }
+                          }}
                         >
-                          {session.isPremium ? <Lock size={18} /> : <span className="text-lg">{session.sessionNumber}</span>}
-                        </div>
-
-                        {/* Session Info */}
-                        <div className="flex-1">
-                          <div className="flex items-center gap-2 mb-1">
-                            <h4 className="font-bold text-gray-900 dark:text-white">{session.title}</h4>
-                            {!session.isPremium && (
-                              <div className="bg-[#25CB78] text-white px-2 py-1 rounded-full text-xs font-bold">{t("programs.free")}</div>
-                            )}
-                            {session.isPremium && (
-                              <div className="bg-yellow-500 text-white px-2 py-1 rounded-full text-xs font-bold">
-                                {t("programs.premium")}
-                              </div>
-                            )}
+                          {/* Session Number Badge */}
+                          <div
+                            className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 font-bold text-white ${
+                              session.isPremium ? "bg-yellow-500" : "bg-[#25CB78]"
+                            }`}
+                          >
+                            {session.isPremium ? <Lock size={18} /> : <span className="text-lg">{session.sessionNumber}</span>}
                           </div>
-                          <p className="text-sm text-gray-500 dark:text-gray-400 flex items-center gap-1">
-                            <Dumbbell size={14} />
-                            {formatEquipment(session.equipment)}
-                          </p>
-                          <p className="text-xs text-gray-400 mt-1">
-                            {session.totalExercises} {t("programs.exercises")} • {session.estimatedMinutes} {t("programs.min_short")}
-                          </p>
-                        </div>
 
-                        {/* Emoji Feedback */}
-                        <div className="w-10 h-10 flex items-center justify-center">
-                          <Image
-                            alt="Status"
-                            className="w-8 h-8 object-contain"
-                            height={32}
-                            src={`/images/emojis/${session.isPremium ? "WorkoutCoolCry.png" : "WorkoutCoolHappy.png"}`}
-                            width={32}
-                          />
+                          {/* Session Info */}
+                          <div className="flex-1">
+                            <div className="flex items-center gap-2 mb-1">
+                              <h4 className="font-bold text-gray-900 dark:text-white">{session.title}</h4>
+                              {!session.isPremium && (
+                                <div className="bg-[#25CB78] text-white px-2 py-1 rounded-full text-xs font-bold">{t("programs.free")}</div>
+                              )}
+                              {session.isPremium && (
+                                <div className="bg-yellow-500 text-white px-2 py-1 rounded-full text-xs font-bold">
+                                  {t("programs.premium")}
+                                </div>
+                              )}
+                            </div>
+                            <p className="text-sm text-gray-500 dark:text-gray-400 flex items-center gap-1">
+                              <Dumbbell size={14} />
+                              {formatEquipment(session.equipment)}
+                            </p>
+                            <p className="text-xs text-gray-400 mt-1">
+                              {session.totalExercises} {t("programs.exercises")} • {session.estimatedMinutes} {t("programs.min_short")}
+                            </p>
+                          </div>
+
+                          {/* Emoji Feedback */}
+                          <div className="w-10 h-10 flex items-center justify-center">
+                            <Image
+                              alt="Status"
+                              className="w-8 h-8 object-contain"
+                              height={32}
+                              src={`/images/emojis/${session.isPremium ? "WorkoutCoolCry.png" : "WorkoutCoolHappy.png"}`}
+                              width={32}
+                            />
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                 </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
 

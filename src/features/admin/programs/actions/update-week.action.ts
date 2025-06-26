@@ -9,7 +9,17 @@ import { auth } from "@/features/auth/lib/better-auth";
 
 interface UpdateWeekData {
   title: string;
-  description: string;
+  titleEn: string;
+  titleEs: string;
+  titlePt: string;
+  titleRu: string;
+  titleZhCn: string;
+  description?: string;
+  descriptionEn?: string;
+  descriptionEs?: string;
+  descriptionPt?: string;
+  descriptionRu?: string;
+  descriptionZhCn?: string;
 }
 
 export async function updateWeek(weekId: string, data: UpdateWeekData) {
@@ -28,23 +38,23 @@ export async function updateWeek(weekId: string, data: UpdateWeekData) {
       },
       data: {
         title: data.title,
-        titleEn: data.title, // Pour l'instant, on utilise le même titre
-        titleEs: data.title,
-        titlePt: data.title,
-        titleRu: data.title,
-        titleZhCn: data.title,
-        description: data.description,
-        descriptionEn: data.description, // Pour l'instant, on utilise la même description
-        descriptionEs: data.description,
-        descriptionPt: data.description,
-        descriptionRu: data.description,
-        descriptionZhCn: data.description,
+        titleEn: data.titleEn,
+        titleEs: data.titleEs,
+        titlePt: data.titlePt,
+        titleRu: data.titleRu,
+        titleZhCn: data.titleZhCn,
+        description: data.description || "",
+        descriptionEn: data.descriptionEn || "",
+        descriptionEs: data.descriptionEs || "",
+        descriptionPt: data.descriptionPt || "",
+        descriptionRu: data.descriptionRu || "",
+        descriptionZhCn: data.descriptionZhCn || "",
       },
     });
 
     // Revalider les caches
     revalidatePath("/admin/programs");
-    
+
     return updatedWeek;
   } catch (error) {
     console.error("Error updating week:", error);

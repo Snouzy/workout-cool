@@ -3,12 +3,11 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
+import { Exercise, ExerciseAttribute, ExerciseAttributeName, ExerciseAttributeValue } from "@prisma/client";
 
 import { WorkoutSessionTimer } from "@/features/workout-session/ui/workout-session-timer";
 import { WorkoutSessionSets } from "@/features/workout-session/ui/workout-session-sets";
 import { useWorkoutSession } from "@/features/workout-session/model/use-workout-session";
-import { Exercise, ExerciseAttribute, ExerciseAttributeName, ExerciseAttributeValue } from "@prisma/client";
-
 type ProgramExerciseWithAttributes = Exercise & {
   attributes: (ExerciseAttribute & {
     attributeName: ExerciseAttributeName;
@@ -50,10 +49,9 @@ interface ProgramSessionClientProps {
       exercise: ProgramExerciseWithAttributes;
     }>;
   };
-  userId: string;
 }
 
-export function ProgramSessionClient({ program, week, session, userId }: ProgramSessionClientProps) {
+export function ProgramSessionClient({ program, week, session }: ProgramSessionClientProps) {
   const router = useRouter();
   const { startWorkout, session: workoutSession, completeWorkout } = useWorkoutSession();
   const [isLoading, setIsLoading] = useState(true);

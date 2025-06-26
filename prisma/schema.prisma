@@ -640,6 +640,12 @@ model ProgramSession {
   titlePt          String
   titleRu          String
   titleZhCn        String
+  slug             String
+  slugEn           String
+  slugEs           String
+  slugPt           String
+  slugRu           String
+  slugZhCn         String
   description      String                       @db.Text
   descriptionEn    String                       @db.Text
   descriptionEs    String                       @db.Text
@@ -655,6 +661,12 @@ model ProgramSession {
   userProgress UserSessionProgress[]
 
   @@unique([weekId, sessionNumber])
+  @@unique([weekId, slug])
+  @@unique([weekId, slugEn])
+  @@unique([weekId, slugEs])
+  @@unique([weekId, slugPt])
+  @@unique([weekId, slugRu])
+  @@unique([weekId, slugZhCn])
   @@map("program_sessions")
 }
 

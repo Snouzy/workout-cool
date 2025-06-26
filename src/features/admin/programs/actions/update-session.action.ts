@@ -7,9 +7,8 @@ import { ExerciseAttributeValueEnum, UserRole } from "@prisma/client";
 import { prisma } from "@/shared/lib/prisma";
 import { auth } from "@/features/auth/lib/better-auth";
 
-interface AddSessionData {
-  weekId: string;
-  sessionNumber: number;
+interface UpdateSessionData {
+  sessionId: string;
   title: string;
   titleEn: string;
   titleEs: string;
@@ -33,34 +32,49 @@ interface AddSessionData {
   isPremium: boolean;
 }
 
-export async function addSessionToWeek(data: AddSessionData) {
+export async function updateSession(data: UpdateSessionData) {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
 
   // TODO: middleware or layout
   if (!session || session.user?.role !== UserRole.admin) {
-    throw new Error("Unauthorized");
+    throw new Error("UNAUTHORIZED");
   }
 
-  // Check if session number already exists in this week
-  const existingSession = await prisma.programSession.findUnique({
+  // Get current session to access weekId for slug uniqueness check
+  const currentSession = await prisma.programSession.findUnique({
+    where: { id: data.sessionId },
+    select: { weekId: true },
+  });
+
+  if (!currentSession) {
+    throw new Error("SESSION_NOT_FOUND");
+  }
+
+  // Check if any of the new slugs already exist in the same week (excluding current session)
+  const existingSlugs = await prisma.programSession.findFirst({
     where: {
-      weekId_sessionNumber: {
-        weekId: data.weekId,
-        sessionNumber: data.sessionNumber,
-      },
+      weekId: currentSession.weekId,
+      id: { not: data.sessionId },
+      OR: [
+        { slug: data.slug },
+        { slugEn: data.slugEn },
+        { slugEs: data.slugEs },
+        { slugPt: data.slugPt },
+        { slugRu: data.slugRu },
+        { slugZhCn: data.slugZhCn },
+      ],
     },
   });
 
-  if (existingSession) {
-    throw new Error(`La séance ${data.sessionNumber} existe déjà dans cette semaine`);
+  if (existingSlugs) {
+    throw new Error("SLUG_ALREADY_EXISTS");
   }
 
-  const programSession = await prisma.programSession.create({
+  const updatedSession = await prisma.programSession.update({
+    where: { id: data.sessionId },
     data: {
-      weekId: data.weekId,
-      sessionNumber: data.sessionNumber,
       title: data.title,
       titleEn: data.titleEn,
       titleEs: data.titleEs,
@@ -87,5 +101,5 @@ export async function addSessionToWeek(data: AddSessionData) {
 
   revalidatePath("/admin/programs");
 
-  return programSession;
+  return updatedSession;
 }

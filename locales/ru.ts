@@ -1,5 +1,6 @@
 export default {
   programs: {
+    about: "О программе",
     program: "Программа",
     not_found: "Программа не найдена",
     characteristics: "Характеристики",

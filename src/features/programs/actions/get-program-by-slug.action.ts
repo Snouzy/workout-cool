@@ -39,6 +39,12 @@ export interface ProgramDetail {
       sessionNumber: number;
       title: string;
       description: string;
+      slug: string;
+      slugEn: string;
+      slugEs: string;
+      slugPt: string;
+      slugRu: string;
+      slugZhCn: string;
       equipment: ExerciseAttributeValueEnum[];
       estimatedMinutes: number;
       isPremium: boolean;
@@ -120,6 +126,12 @@ export async function getProgramBySlug(slug: string): Promise<ProgramDetail | nu
           sessionNumber: session.sessionNumber,
           title: session.title,
           description: session.description,
+          slug: session.slug,
+          slugEn: session.slugEn,
+          slugEs: session.slugEs,
+          slugPt: session.slugPt,
+          slugRu: session.slugRu,
+          slugZhCn: session.slugZhCn,
           equipment: session.equipment,
           estimatedMinutes: session.estimatedMinutes,
           isPremium: session.isPremium,

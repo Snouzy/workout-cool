@@ -15,8 +15,16 @@ interface EditProgramModalProps {
     id: string;
     title: string;
     titleEn: string;
+    titleEs: string;
+    titlePt: string;
+    titleRu: string;
+    titleZhCn: string;
     description: string;
     descriptionEn: string;
+    descriptionEs: string;
+    descriptionPt: string;
+    descriptionRu: string;
+    descriptionZhCn: string;
     category: string;
     image: string;
     level: ProgramLevel;
@@ -34,11 +42,20 @@ interface EditProgramModalProps {
 export function EditProgramModal({ program, open, onOpenChange }: EditProgramModalProps) {
   const router = useRouter();
   const t = useI18n();
+  const [activeTab, setActiveTab] = useState("fr");
   const [formData, setFormData] = useState({
     title: program.title,
     titleEn: program.titleEn,
+    titleEs: program.titleEs,
+    titlePt: program.titlePt,
+    titleRu: program.titleRu,
+    titleZhCn: program.titleZhCn,
     description: program.description,
     descriptionEn: program.descriptionEn,
+    descriptionEs: program.descriptionEs,
+    descriptionPt: program.descriptionPt,
+    descriptionRu: program.descriptionRu,
+    descriptionZhCn: program.descriptionZhCn,
     category: program.category,
     image: program.image,
     level: program.level,
@@ -55,6 +72,7 @@ export function EditProgramModal({ program, open, onOpenChange }: EditProgramMod
     setIsSaving(true);
     try {
       await updateProgram(program.id, formData);
+      setActiveTab("fr");
       onOpenChange(false);
       router.refresh();
     } catch (error) {
@@ -63,6 +81,11 @@ export function EditProgramModal({ program, open, onOpenChange }: EditProgramMod
     } finally {
       setIsSaving(false);
     }
+  };
+
+  const handleClose = () => {
+    setActiveTab("fr");
+    onOpenChange(false);
   };
 
   const handleEquipmentChange = (equipment: ExerciseAttributeValueEnum) => {
@@ -79,65 +102,207 @@ export function EditProgramModal({ program, open, onOpenChange }: EditProgramMod
       <div className="modal-box max-w-4xl overflow-y-auto">
         <div className="flex items-center justify-between mb-6">
           <h3 className="font-bold text-lg">Éditer le programme</h3>
-          <button className="btn btn-sm btn-circle btn-ghost" onClick={() => onOpenChange(false)}>
+          <button className="btn btn-sm btn-circle btn-ghost" onClick={handleClose}>
             <X className="h-4 w-4" />
           </button>
         </div>
 
         <div className="space-y-6">
-          {/* Informations de base */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="label">
-                <span className="label-text">Titre (FR)</span>
-              </label>
-              <input
-                className="input input-bordered w-full"
-                disabled={isSaving}
-                onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                type="text"
-                value={formData.title}
-              />
-            </div>
-            <div>
-              <label className="label">
-                <span className="label-text">Titre (EN)</span>
-              </label>
-              <input
-                className="input input-bordered w-full"
-                disabled={isSaving}
-                onChange={(e) => setFormData({ ...formData, titleEn: e.target.value })}
-                type="text"
-                value={formData.titleEn}
-              />
-            </div>
+          {/* Language Tabs */}
+          <div className="tabs tabs-boxed">
+            <button className={`tab ${activeTab === "fr" ? "tab-active" : ""}`} onClick={() => setActiveTab("fr")} type="button">
+              🇫🇷 FR
+            </button>
+            <button className={`tab ${activeTab === "en" ? "tab-active" : ""}`} onClick={() => setActiveTab("en")} type="button">
+              🇺🇸 EN
+            </button>
+            <button className={`tab ${activeTab === "es" ? "tab-active" : ""}`} onClick={() => setActiveTab("es")} type="button">
+              🇪🇸 ES
+            </button>
+            <button className={`tab ${activeTab === "pt" ? "tab-active" : ""}`} onClick={() => setActiveTab("pt")} type="button">
+              🇵🇹 PT
+            </button>
+            <button className={`tab ${activeTab === "ru" ? "tab-active" : ""}`} onClick={() => setActiveTab("ru")} type="button">
+              🇷🇺 RU
+            </button>
+            <button className={`tab ${activeTab === "zh" ? "tab-active" : ""}`} onClick={() => setActiveTab("zh")} type="button">
+              🇨🇳 ZH
+            </button>
           </div>
 
-          {/* Descriptions courtes */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="label">
-                <span className="label-text">Description (FR)</span>
-              </label>
-              <textarea
-                className="textarea textarea-bordered w-full h-24"
-                disabled={isSaving}
-                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                value={formData.description}
-              />
+          {/* French Fields */}
+          {activeTab === "fr" && (
+            <div className="space-y-4">
+              <div>
+                <label className="label">
+                  <span className="label-text">Titre (Français)</span>
+                </label>
+                <input
+                  className="input input-bordered w-full"
+                  disabled={isSaving}
+                  onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                  type="text"
+                  value={formData.title}
+                />
+              </div>
+              <div>
+                <label className="label">
+                  <span className="label-text">Description (Français)</span>
+                </label>
+                <textarea
+                  className="textarea textarea-bordered w-full h-24"
+                  disabled={isSaving}
+                  onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                  value={formData.description}
+                />
+              </div>
             </div>
-            <div>
-              <label className="label">
-                <span className="label-text">Description (EN)</span>
-              </label>
-              <textarea
-                className="textarea textarea-bordered w-full h-24"
-                disabled={isSaving}
-                onChange={(e) => setFormData({ ...formData, descriptionEn: e.target.value })}
-                value={formData.descriptionEn}
-              />
+          )}
+
+          {/* English Fields */}
+          {activeTab === "en" && (
+            <div className="space-y-4">
+              <div>
+                <label className="label">
+                  <span className="label-text">Title (English)</span>
+                </label>
+                <input
+                  className="input input-bordered w-full"
+                  disabled={isSaving}
+                  onChange={(e) => setFormData({ ...formData, titleEn: e.target.value })}
+                  type="text"
+                  value={formData.titleEn}
+                />
+              </div>
+              <div>
+                <label className="label">
+                  <span className="label-text">Description (English)</span>
+                </label>
+                <textarea
+                  className="textarea textarea-bordered w-full h-24"
+                  disabled={isSaving}
+                  onChange={(e) => setFormData({ ...formData, descriptionEn: e.target.value })}
+                  value={formData.descriptionEn}
+                />
+              </div>
             </div>
-          </div>
+          )}
+
+          {/* Spanish Fields */}
+          {activeTab === "es" && (
+            <div className="space-y-4">
+              <div>
+                <label className="label">
+                  <span className="label-text">Título (Español)</span>
+                </label>
+                <input
+                  className="input input-bordered w-full"
+                  disabled={isSaving}
+                  onChange={(e) => setFormData({ ...formData, titleEs: e.target.value })}
+                  type="text"
+                  value={formData.titleEs}
+                />
+              </div>
+              <div>
+                <label className="label">
+                  <span className="label-text">Descripción (Español)</span>
+                </label>
+                <textarea
+                  className="textarea textarea-bordered w-full h-24"
+                  disabled={isSaving}
+                  onChange={(e) => setFormData({ ...formData, descriptionEs: e.target.value })}
+                  value={formData.descriptionEs}
+                />
+              </div>
+            </div>
+          )}
+
+          {/* Portuguese Fields */}
+          {activeTab === "pt" && (
+            <div className="space-y-4">
+              <div>
+                <label className="label">
+                  <span className="label-text">Título (Português)</span>
+                </label>
+                <input
+                  className="input input-bordered w-full"
+                  disabled={isSaving}
+                  onChange={(e) => setFormData({ ...formData, titlePt: e.target.value })}
+                  type="text"
+                  value={formData.titlePt}
+                />
+              </div>
+              <div>
+                <label className="label">
+                  <span className="label-text">Descrição (Português)</span>
+                </label>
+                <textarea
+                  className="textarea textarea-bordered w-full h-24"
+                  disabled={isSaving}
+                  onChange={(e) => setFormData({ ...formData, descriptionPt: e.target.value })}
+                  value={formData.descriptionPt}
+                />
+              </div>
+            </div>
+          )}
+
+          {/* Russian Fields */}
+          {activeTab === "ru" && (
+            <div className="space-y-4">
+              <div>
+                <label className="label">
+                  <span className="label-text">Название (Русский)</span>
+                </label>
+                <input
+                  className="input input-bordered w-full"
+                  disabled={isSaving}
+                  onChange={(e) => setFormData({ ...formData, titleRu: e.target.value })}
+                  type="text"
+                  value={formData.titleRu}
+                />
+              </div>
+              <div>
+                <label className="label">
+                  <span className="label-text">Описание (Русский)</span>
+                </label>
+                <textarea
+                  className="textarea textarea-bordered w-full h-24"
+                  disabled={isSaving}
+                  onChange={(e) => setFormData({ ...formData, descriptionRu: e.target.value })}
+                  value={formData.descriptionRu}
+                />
+              </div>
+            </div>
+          )}
+
+          {/* Chinese Fields */}
+          {activeTab === "zh" && (
+            <div className="space-y-4">
+              <div>
+                <label className="label">
+                  <span className="label-text">标题 (中文)</span>
+                </label>
+                <input
+                  className="input input-bordered w-full"
+                  disabled={isSaving}
+                  onChange={(e) => setFormData({ ...formData, titleZhCn: e.target.value })}
+                  type="text"
+                  value={formData.titleZhCn}
+                />
+              </div>
+              <div>
+                <label className="label">
+                  <span className="label-text">描述 (中文)</span>
+                </label>
+                <textarea
+                  className="textarea textarea-bordered w-full h-24"
+                  disabled={isSaving}
+                  onChange={(e) => setFormData({ ...formData, descriptionZhCn: e.target.value })}
+                  value={formData.descriptionZhCn}
+                />
+              </div>
+            </div>
+          )}
 
           {/* Image et emoji */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -286,7 +451,7 @@ export function EditProgramModal({ program, open, onOpenChange }: EditProgramMod
         </div>
 
         <div className="modal-action">
-          <button className="btn btn-ghost" disabled={isSaving} onClick={() => onOpenChange(false)}>
+          <button className="btn btn-ghost" disabled={isSaving} onClick={handleClose}>
             Annuler
           </button>
           <button className="btn btn-primary" disabled={isSaving} onClick={handleSave}>

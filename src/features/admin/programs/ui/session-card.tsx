@@ -1,10 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { Plus, Clock, Dumbbell, Settings, ChevronDown, ChevronRight } from "lucide-react";
+import { Plus, Clock, Dumbbell, Settings, ChevronDown, ChevronRight, Edit } from "lucide-react";
 
 import { SessionWithExercises } from "../types/program.types";
 import { EditSetsModal } from "./edit-sets-modal";
+import { EditSessionModal } from "./edit-session-modal";
 import { AddExerciseModal } from "./add-exercise-modal";
 
 interface SessionCardProps {
@@ -14,6 +15,7 @@ interface SessionCardProps {
 export function SessionCard({ session }: SessionCardProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isAddExerciseModalOpen, setIsAddExerciseModalOpen] = useState(false);
+  const [isEditSessionModalOpen, setIsEditSessionModalOpen] = useState(false);
   const [selectedExercise, setSelectedExercise] = useState<any>(null);
 
   return (
@@ -55,10 +57,15 @@ export function SessionCard({ session }: SessionCardProps) {
               </div>
             </div>
           </div>
-          <button className="btn btn-sm btn-outline" onClick={() => setIsAddExerciseModalOpen(true)}>
-            <Plus className="h-4 w-4 mr-1" />
-            Exercice
-          </button>
+          <div className="flex gap-2">
+            <button className="btn btn-sm btn-outline" onClick={() => setIsEditSessionModalOpen(true)} title="Éditer la séance">
+              <Edit className="h-4 w-4" />
+            </button>
+            <button className="btn btn-sm btn-outline" onClick={() => setIsAddExerciseModalOpen(true)}>
+              <Plus className="h-4 w-4 mr-1" />
+              Exercice
+            </button>
+          </div>
         </div>
       </div>
 
@@ -110,6 +117,8 @@ export function SessionCard({ session }: SessionCardProps) {
       {selectedExercise && (
         <EditSetsModal exercise={selectedExercise} onOpenChange={(open) => !open && setSelectedExercise(null)} open={!!selectedExercise} />
       )}
+
+      <EditSessionModal onOpenChange={setIsEditSessionModalOpen} open={isEditSessionModalOpen} session={session} />
     </div>
   );
 }

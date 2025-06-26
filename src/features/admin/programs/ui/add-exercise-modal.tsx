@@ -289,59 +289,123 @@ export function AddExerciseModal({ open, onOpenChange, sessionId, nextOrder }: A
                             <div className="w-8 h-8 bg-primary text-primary-content rounded-full flex items-center justify-center text-sm font-semibold">
                               {index + 1}
                             </div>
-                            <div className="flex-1 grid grid-cols-4 gap-2">
+                            <div className="flex-1 grid grid-cols-5 gap-2">
                               <div className="form-control">
                                 <label className="label">
                                   <span className="label-text text-xs">Type</span>
                                 </label>
                                 <select
                                   className="select select-bordered select-sm"
-                                  onChange={(e) => updateSet(index, "types", [e.target.value])}
+                                  onChange={(e) => {
+                                    const type = e.target.value;
+                                    if (type === WorkoutSetType.WEIGHT) {
+                                      updateSet(index, "types", [WorkoutSetType.WEIGHT, WorkoutSetType.REPS]);
+                                    } else {
+                                      updateSet(index, "types", [type]);
+                                    }
+                                  }}
                                   value={set.types?.[0] || ""}
                                 >
                                   <option value="">Sélectionner</option>
-                                  <option value={WorkoutSetType.WEIGHT}>Poids</option>
-                                  <option value={WorkoutSetType.REPS}>Répétitions</option>
+                                  <option value={WorkoutSetType.WEIGHT}>Poids + Reps</option>
+                                  <option value={WorkoutSetType.REPS}>Répétitions seules</option>
                                   <option value={WorkoutSetType.TIME}>Temps</option>
                                   <option value={WorkoutSetType.BODYWEIGHT}>Poids du corps</option>
                                 </select>
                               </div>
-                              <div className="form-control">
-                                <label className="label">
-                                  <span className="label-text text-xs">Poids/Reps</span>
-                                </label>
-                                <input
-                                  className="input input-bordered input-sm"
-                                  onChange={(e) => updateSet(index, "valuesInt", [parseInt(e.target.value) || 0])}
-                                  type="number"
-                                  value={set.valuesInt?.[0] || ""}
-                                />
-                              </div>
-                              <div className="form-control">
-                                <label className="label">
-                                  <span className="label-text text-xs">Temps (sec)</span>
-                                </label>
-                                <input
-                                  className="input input-bordered input-sm"
-                                  onChange={(e) => updateSet(index, "valuesSec", [parseInt(e.target.value) || 0])}
-                                  type="number"
-                                  value={set.valuesSec?.[0] || ""}
-                                />
-                              </div>
-                              <div className="form-control">
-                                <label className="label">
-                                  <span className="label-text text-xs">Unité</span>
-                                </label>
-                                <select
-                                  className="select select-bordered select-sm"
-                                  onChange={(e) => updateSet(index, "units", [e.target.value])}
-                                  value={set.units?.[0] || ""}
-                                >
-                                  <option value="">Sélectionner</option>
-                                  <option value={WorkoutSetUnit.kg}>kg</option>
-                                  <option value={WorkoutSetUnit.lbs}>lbs</option>
-                                </select>
-                              </div>
+                              
+                              {/* Poids field - only show if WEIGHT type is selected */}
+                              {set.types?.includes(WorkoutSetType.WEIGHT) && (
+                                <div className="form-control">
+                                  <label className="label">
+                                    <span className="label-text text-xs">Poids</span>
+                                  </label>
+                                  <input
+                                    className="input input-bordered input-sm"
+                                    onChange={(e) => {
+                                      const weightValue = parseInt(e.target.value) || 0;
+                                      const repsValue = set.valuesInt?.[1] || 10;
+                                      updateSet(index, "valuesInt", [weightValue, repsValue]);
+                                    }}
+                                    placeholder="kg"
+                                    type="number"
+                                    value={set.valuesInt?.[0] || ""}
+                                  />
+                                </div>
+                              )}
+                              
+                              {/* Reps field - show for WEIGHT and REPS types */}
+                              {(set.types?.includes(WorkoutSetType.REPS) || set.types?.includes(WorkoutSetType.WEIGHT)) && (
+                                <div className="form-control">
+                                  <label className="label">
+                                    <span className="label-text text-xs">Répétitions</span>
+                                  </label>
+                                  <input
+                                    className="input input-bordered input-sm"
+                                    onChange={(e) => {
+                                      const repsValue = parseInt(e.target.value) || 0;
+                                      if (set.types?.includes(WorkoutSetType.WEIGHT)) {
+                                        const weightValue = set.valuesInt?.[0] || 20;
+                                        updateSet(index, "valuesInt", [weightValue, repsValue]);
+                                      } else {
+                                        updateSet(index, "valuesInt", [repsValue]);
+                                      }
+                                    }}
+                                    placeholder="reps"
+                                    type="number"
+                                    value={set.types?.includes(WorkoutSetType.WEIGHT) ? set.valuesInt?.[1] || "" : set.valuesInt?.[0] || ""}
+                                  />
+                                </div>
+                              )}
+                              
+                              {/* Bodyweight field - only show if BODYWEIGHT type is selected */}
+                              {set.types?.includes(WorkoutSetType.BODYWEIGHT) && (
+                                <div className="form-control">
+                                  <label className="label">
+                                    <span className="label-text text-xs">Poids du corps</span>
+                                  </label>
+                                  <input
+                                    className="input input-bordered input-sm"
+                                    placeholder="✔"
+                                    readOnly
+                                    value="✔"
+                                  />
+                                </div>
+                              )}
+                              
+                              {/* Time field - only show if TIME type is selected */}
+                              {set.types?.includes(WorkoutSetType.TIME) && (
+                                <div className="form-control">
+                                  <label className="label">
+                                    <span className="label-text text-xs">Temps (sec)</span>
+                                  </label>
+                                  <input
+                                    className="input input-bordered input-sm"
+                                    onChange={(e) => updateSet(index, "valuesSec", [parseInt(e.target.value) || 0])}
+                                    placeholder="secondes"
+                                    type="number"
+                                    value={set.valuesSec?.[0] || ""}
+                                  />
+                                </div>
+                              )}
+                              
+                              {/* Unit field - only show if WEIGHT type is selected */}
+                              {set.types?.includes(WorkoutSetType.WEIGHT) && (
+                                <div className="form-control">
+                                  <label className="label">
+                                    <span className="label-text text-xs">Unité</span>
+                                  </label>
+                                  <select
+                                    className="select select-bordered select-sm"
+                                    onChange={(e) => updateSet(index, "units", [e.target.value])}
+                                    value={set.units?.[0] || ""}
+                                  >
+                                    <option value="">Sélectionner</option>
+                                    <option value={WorkoutSetUnit.kg}>kg</option>
+                                    <option value={WorkoutSetUnit.lbs}>lbs</option>
+                                  </select>
+                                </div>
+                              )}
                             </div>
                             <button className="btn btn-sm btn-outline" onClick={() => removeSet(index)} type="button">
                               <Trash2 className="h-4 w-4" />

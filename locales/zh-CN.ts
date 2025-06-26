@@ -1,5 +1,6 @@
 export default {
   programs: {
+    no_equipment: "没有设备",
     workout_programs_title: "锻炼程序",
     workout_programs: "锻炼程序",
     workout_programs_description: "选择您的挑战并变得更强大！💪",
@@ -25,6 +26,7 @@ export default {
     premium: "高级",
     free: "免费",
     join_cta: "加入挑战",
+    continue: "继续",
     sessions: "课程",
   },
   levels: {

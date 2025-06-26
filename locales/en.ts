@@ -1,11 +1,13 @@
 export default {
   programs: {
+    no_equipment: "No equipment",
     workout_programs_title: "Workout programs",
     workout_programs: "Workout programs",
     workout_programs_description: "Choose your challenge and become stronger! 💪",
     no_programs_available: "No programs available",
     no_programs_available_description: "Programs will be available soon!",
     completed: "Completed",
+    about: "About",
     program: "Program",
     not_found: "Program not found",
     characteristics: "Characteristics",
@@ -24,6 +26,7 @@ export default {
     premium: "Premium",
     free: "Free",
     join_cta: "Join the challenge",
+    continue: "Continue",
     sessions: "Sessions",
   },
   levels: {

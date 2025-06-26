@@ -1,9 +1,8 @@
-import { Program } from "@prisma/client";
-
 import { Locale } from "locales/types";
 import { PublicProgram } from "@/features/programs/actions/get-public-programs.action";
+import { ProgramDetail } from "@/features/programs/actions/get-program-by-slug.action";
 
-const genericTitleMapper = (locale: Locale, program: PublicProgram | Program) => {
+const genericTitleMapper = (locale: Locale, program: PublicProgram | ProgramDetail) => {
   switch (locale) {
     case "en":
       return program.titleEn;
@@ -20,9 +19,7 @@ const genericTitleMapper = (locale: Locale, program: PublicProgram | Program) =>
   }
 };
 
-const genericDescriptionMapper = (locale: Locale, program: PublicProgram | Program) => {
-  console.log("program:", program);
-  console.log("locale:", locale);
+const genericDescriptionMapper = (locale: Locale, program: PublicProgram | ProgramDetail) => {
   switch (locale) {
     case "en":
       return program.descriptionEn;
@@ -39,6 +36,23 @@ const genericDescriptionMapper = (locale: Locale, program: PublicProgram | Progr
   }
 };
 
+const genericSlugMapper = (locale: Locale, program: PublicProgram | ProgramDetail) => {
+  switch (locale) {
+    case "en":
+      return program.slugEn;
+    case "fr":
+      return program.slug;
+    case "es":
+      return program.slugEs;
+    case "zh-CN":
+      return program.slugZhCn;
+    case "ru":
+      return program.slugRu;
+    case "pt":
+      return program.slugPt;
+  }
+};
+
 export const getPublicProgramTitle = (locale: Locale, program: PublicProgram) => {
   return genericTitleMapper(locale, program);
 };
@@ -47,10 +61,18 @@ export const getPublicProgramDescription = (locale: Locale, program: PublicProgr
   return genericDescriptionMapper(locale, program);
 };
 
-export const getDetailProgramTitle = (locale: Locale, program: Program) => {
+export const getDetailProgramTitle = (locale: Locale, program: ProgramDetail) => {
   return genericTitleMapper(locale, program);
 };
 
-export const getDetailProgramDescription = (locale: Locale, program: Program) => {
+export const getDetailProgramDescription = (locale: Locale, program: ProgramDetail) => {
   return genericDescriptionMapper(locale, program);
+};
+
+export const getPublicProgramSlug = (locale: Locale, program: PublicProgram) => {
+  return genericSlugMapper(locale, program);
+};
+
+export const getDetailProgramSlug = (locale: Locale, program: ProgramDetail) => {
+  return genericSlugMapper(locale, program);
 };

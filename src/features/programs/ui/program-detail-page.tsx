@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useQueryState, parseAsString, parseAsInteger } from "nuqs";
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
-import { BarChart3, Target, Clock, Calendar, Timer, Dumbbell, Share, Lock, Trophy, Users, Zap, CheckCircle2 } from "lucide-react";
+import { BarChart3, Target, Clock, Calendar, Timer, Dumbbell, Lock, Trophy, Users, Zap, CheckCircle2, Share2 } from "lucide-react";
 import { ExerciseAttributeValueEnum } from "@prisma/client";
 
 import { useCurrentLocale, useI18n } from "locales/client";
@@ -13,6 +13,7 @@ import { getSlugForLocale } from "@/shared/lib/locale-slug";
 import { getAttributeValueLabel } from "@/shared/lib/attribute-value-translation";
 import { WelcomeModal } from "@/features/programs/ui/welcome-modal";
 import { ProgramProgress } from "@/features/programs/ui/program-progress";
+import { getDetailProgramDescription, getDetailProgramTitle } from "@/features/programs/lib/translations-mapper";
 
 import { getProgramProgress } from "../actions/get-program-progress.action";
 import { ProgramDetail } from "../actions/get-program-by-slug.action";
@@ -35,11 +36,18 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
   const searchParams = useSearchParams();
 
   const currentLocale = useCurrentLocale();
-
+  const programTitle = getDetailProgramTitle(currentLocale, program);
+  const programDescription = getDetailProgramDescription(currentLocale, program);
   // Load completed sessions when component mounts or when authenticated
   useEffect(() => {
     if (isAuthenticated) {
       loadCompletedSessions();
+    } else {
+      // Reset states for non-authenticated users
+      setHasJoinedProgram(false);
+      setCompletedSessions(new Set());
+      setCurrentWeek(1);
+      setCurrentSessionNumber(1);
     }
   }, [isAuthenticated]);
 
@@ -84,7 +92,7 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
   const handleJoinProgram = async () => {
     setShowWelcomeModal(false);
 
-    if (hasJoinedProgram) {
+    if (isAuthenticated && hasJoinedProgram) {
       // Navigate to current session if user has already joined
       const currentWeekData = program.weeks.find((w) => w.weekNumber === currentWeek);
       const currentSession = currentWeekData?.sessions.find((s) => s.sessionNumber === currentSessionNumber);
@@ -101,7 +109,8 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
         }
       }
     } else {
-      // Navigate to first session for new users - enrollment will be done on the session page
+      // Navigate to first session for new users or non-authenticated users
+      // Enrollment and authentication will be handled on the session page
       const firstSession = program.weeks[0]?.sessions[0];
       if (firstSession) {
         const sessionSlug = getSlugForLocale(firstSession, currentLocale);
@@ -125,8 +134,7 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
   };
 
   const formatEquipment = (equipment: ExerciseAttributeValueEnum[]) => {
-    console.log("equipment:", equipment);
-    return equipment.map((equipment) => getEquipmentTranslation(equipment, t).label).join(", ") || "Aucun équipement";
+    return equipment.map((equipment) => getEquipmentTranslation(equipment, t).label).join(", ") || t("programs.no_equipment");
   };
 
   return (
@@ -134,28 +142,18 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
       <div className="flex-1 overflow-auto pb-20">
         {/* Hero Image Section with Gamification */}
         <div className="relative h-64 bg-gradient-to-br from-[#4F8EF7] to-[#25CB78]">
-          <Image alt={program.title} className="absolute inset-0 object-cover opacity-30" fill src={program.image} />
+          <Image alt={programTitle} className="absolute inset-0 object-cover opacity-30" fill src={program.image} />
           <div className="absolute inset-0 bg-black/20"></div>
 
           {/* Mascot Emoji */}
           <div className="absolute top-4 right-4 w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full border-2 border-white/30 flex items-center justify-center">
-            {program.emoji ? (
-              <Image
-                alt="Emoji du programme"
-                className="w-12 h-12 object-contain"
-                height={48}
-                src={`/images/emojis/${program.emoji}`}
-                width={48}
-              />
-            ) : (
-              <Image
-                alt="Mascotte programme"
-                className="w-12 h-12 object-contain"
-                height={48}
-                src="/images/emojis/WorkoutCoolSwag.png"
-                width={48}
-              />
-            )}
+            <Image
+              alt="Mascotte WorkoutCool"
+              className="w-12 h-12 object-contain"
+              height={48}
+              src="/images/emojis/WorkoutCoolSwag.png"
+              width={48}
+            />
           </div>
 
           <div className="relative h-full flex items-end p-6">
@@ -171,7 +169,7 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
                 </span>
                 {program.isPremium && <span className="bg-yellow-500 text-white px-3 py-1 rounded-full text-xs font-medium">Premium</span>}
               </div>
-              <h1 className="text-3xl font-bold mb-2">{program.title}</h1>
+              <h1 className="text-3xl font-bold mb-2">{programTitle}</h1>
               <p className="text-white/90 text-sm">{program.category}</p>
             </div>
           </div>
@@ -209,26 +207,16 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       <div className="flex -space-x-2">
-                        {program.coaches.slice(0, 3).map((coach) => (
-                          <Image
-                            alt={coach.name}
-                            className="w-10 h-10 rounded-full border-3 border-[#4F8EF7]"
-                            height={40}
-                            key={coach.id}
-                            src={coach.image}
-                            width={40}
-                          />
-                        ))}
+                        <Image
+                          alt="Communauté"
+                          className="w-10 h-10 object-contain"
+                          height={40}
+                          src="/images/emojis/WorkoutCoolHappy.png"
+                          width={40}
+                        />
                       </div>
                       <div>
                         <div className="flex items-center gap-2 mb-1">
-                          <Image
-                            alt="Communauté"
-                            className="w-6 h-6 object-contain"
-                            height={24}
-                            src="/images/emojis/WorkoutCoolHappy.png"
-                            width={24}
-                          />
                           <span className="text-sm font-bold text-[#4F8EF7]">{t("programs.community")}</span>
                         </div>
                         <span className="text-sm text-gray-600 dark:text-gray-400">
@@ -237,22 +225,17 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
                       </div>
                     </div>
                     <div className="flex gap-2">
-                      <button className="p-3 bg-[#4F8EF7] hover:bg-[#4F8EF7]/80 text-white rounded-xl transition-all duration-200 ease-in-out hover:scale-105">
-                        <Share size={18} />
-                      </button>
+                      <div className="tooltip tooltip-bottom" data-tip={t("commons.share")}>
+                        <button className="p-3 bg-[#4F8EF7] hover:bg-[#4F8EF7]/80 text-white rounded-xl transition-all duration-200 ease-in-out hover:scale-105">
+                          <Share2 size={18} />
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
 
                 <div className="bg-white dark:bg-gray-800 border-2 border-[#25CB78]/20 rounded-xl p-4">
                   <div className="flex items-center gap-2 mb-4">
-                    <Image
-                      alt="Détails"
-                      className="w-6 h-6 object-contain"
-                      height={24}
-                      src="/images/emojis/WorkoutCoolTeeths.png"
-                      width={24}
-                    />
                     <h3 className="font-bold text-lg text-[#4F8EF7]">{t("programs.characteristics")}</h3>
                   </div>
 
@@ -260,7 +243,9 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
                   <div className="space-y-4 md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-4 md:space-y-0">
                     <div className="flex items-center gap-4">
                       <BarChart3 className="text-[#4F8EF7] flex-shrink-0" size={20} />
-                      <span className="text-base font-medium text-gray-900 dark:text-white">{getLevelLabel(program.level)}</span>
+                      <span className="text-base font-medium text-gray-900 dark:text-white">
+                        {t(`levels.${program.level}` as keyof typeof t)}
+                      </span>
                     </div>
 
                     <div className="flex items-center gap-4">
@@ -298,20 +283,13 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
 
                 {/* Description */}
                 <div className="space-y-4">
-                  <p className="text-gray-700 dark:text-gray-300 text-center">{program.description}</p>
+                  <p className="text-gray-700 dark:text-gray-300 text-center">{programDescription}</p>
                 </div>
 
                 {/* Gamified Coaches Section */}
                 {program.coaches.length > 0 && (
                   <div className="bg-gradient-to-r from-[#25CB78]/10 to-[#4F8EF7]/10 border-2 border-[#25CB78]/20 rounded-xl p-5">
                     <div className="flex items-center gap-2 mb-4">
-                      <Image
-                        alt="Coachs"
-                        className="w-6 h-6 object-contain"
-                        height={24}
-                        src="/images/emojis/WorkoutCoolLove.png"
-                        width={24}
-                      />
                       <h3 className="text-lg font-bold text-[#25CB78]">{t("programs.your_coach", { count: program.coaches.length })}</h3>
                       <div className="bg-[#25CB78] text-white px-2 py-1 rounded-full text-xs font-bold">{program.coaches.length}</div>
                     </div>
@@ -329,8 +307,14 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
                               src={coach.image}
                               width={64}
                             />
-                            <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-[#25CB78] rounded-full flex items-center justify-center">
-                              <Trophy className="text-white" size={12} />
+                            <div className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full flex items-center justify-center">
+                              <Image
+                                alt="Coachs"
+                                className="w-6 h-6 object-contain"
+                                height={24}
+                                src="/images/emojis/WorkoutCoolLove.png"
+                                width={24}
+                              />
                             </div>
                           </div>
                           <span className="text-sm font-bold text-center">{coach.name}</span>
@@ -465,20 +449,18 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
       </div>
 
       {/* Gamified Floating CTA */}
-      {!hasJoinedProgram && (
-        <button
-          className="absolute bottom-6 right-0 left-0 max-w-xs mx-auto bg-gradient-to-r from-[#4F8EF7] to-[#25CB78] hover:from-[#4F8EF7]/80 hover:to-[#25CB78]/80 text-white px-8 py-4 rounded-full font-bold border-2 border-white/20 hover:scale-105 transition-all duration-200 ease-in-out z-1 flex items-center justify-center gap-2"
-          onClick={() => setShowWelcomeModal(true)}
-        >
-          {program.emoji ? (
-            <Image alt="Rejoindre" className="w-6 h-6 object-contain" height={24} src={`/images/emojis/${program.emoji}`} width={24} />
-          ) : (
-            <Image alt="Rejoindre" className="w-6 h-6 object-contain" height={24} src="/images/emojis/WorkoutCoolSwag.png" width={24} />
-          )}
-          {t("programs.join_cta")}
-          <Trophy className="text-white" size={18} />
-        </button>
-      )}
+      <button
+        className="absolute bottom-6 right-0 left-0 max-w-xs mx-auto bg-gradient-to-r from-[#4F8EF7] to-[#25CB78] hover:from-[#4F8EF7]/80 hover:to-[#25CB78]/80 text-white px-8 py-4 rounded-full font-bold border-2 border-white/20 hover:scale-105 transition-all duration-200 ease-in-out z-1 flex items-center justify-center gap-2"
+        onClick={() => setShowWelcomeModal(true)}
+      >
+        {program.emoji ? (
+          <Image alt="Rejoindre" className="w-6 h-6 object-contain" height={24} src={`/images/emojis/${program.emoji}`} width={24} />
+        ) : (
+          <Image alt="Rejoindre" className="w-6 h-6 object-contain" height={24} src="/images/emojis/WorkoutCoolSwag.png" width={24} />
+        )}
+        {isAuthenticated && hasJoinedProgram ? t("programs.continue") : t("programs.join_cta")}
+        <Trophy className="text-white" size={18} />
+      </button>
 
       {/* Welcome Modal */}
       <WelcomeModal
@@ -488,7 +470,7 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
         programDuration={`${program.durationWeeks} semaines`}
         programFrequency={`${program.sessionsPerWeek} séances/semaine`}
         programLevel={t(`levels.${program.level}` as keyof typeof t)}
-        programTitle={program.title}
+        programTitle={programTitle}
       />
     </div>
   );

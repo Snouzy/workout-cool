@@ -1,5 +1,6 @@
 export default {
   programs: {
+    no_equipment: "Ningún equipo",
     workout_programs_title: "Programas de entrenamiento",
     workout_programs: "Programas de entrenamiento",
     workout_programs_description: "Elige tu desafío y hazte más fuerte! 💪",
@@ -24,6 +25,7 @@ export default {
     min_short: "min",
     premium: "Premium",
     free: "Gratis",
+    continue: "Continuar",
     join_cta: "Inscribirse",
     sessions: "Sesiones",
   },

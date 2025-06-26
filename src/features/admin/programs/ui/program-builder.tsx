@@ -85,6 +85,47 @@ export function ProgramBuilder({ program }: ProgramBuilderProps) {
         </div>
       </div>
 
+      {/* Coaches Section */}
+      <div className="card bg-base-100 shadow-xl">
+        <div className="card-body">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-lg font-semibold">Coachs ({program.coaches.length})</h3>
+            <button className="btn btn-sm btn-primary" onClick={() => setIsEditProgramModalOpen(true)} title="Éditer les coachs">
+              <Edit className="h-4 w-4 mr-2" />
+              Éditer les coachs
+            </button>
+          </div>
+
+          {program.coaches.length === 0 ? (
+            <div className="flex flex-col items-center justify-center py-8">
+              <Users className="h-12 w-12 text-base-content/60 mb-4" />
+              <h4 className="text-lg font-semibold mb-2">Aucun coach assigné</h4>
+              <p className="text-base-content/60 text-center max-w-md mb-4">
+                Ajoutez des coachs pour présenter les experts qui accompagneront les utilisateurs.
+              </p>
+              <button className="btn btn-primary btn-sm" onClick={() => setIsEditProgramModalOpen(true)}>
+                <Plus className="h-4 w-4 mr-2" />
+                Ajouter un coach
+              </button>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {program.coaches.map((coach) => (
+                <div className="flex items-center gap-3 p-3 bg-base-200 rounded-lg" key={coach.id}>
+                  <div className="relative w-12 h-12 rounded-full overflow-hidden">
+                    <Image alt={coach.name} className="object-cover" fill src={coach.image} />
+                  </div>
+                  <div className="flex-1">
+                    <h5 className="font-medium">{coach.name}</h5>
+                    <span className="text-xs text-base-content/60">Coach #{coach.order + 1}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+
       {/* Content Tabs */}
       <div className="space-y-6">
         <div className="space-y-6">

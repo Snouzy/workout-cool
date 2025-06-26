@@ -4,7 +4,7 @@ import { Lock, Users, Calendar, Clock } from "lucide-react";
 
 import { Locale } from "locales/types";
 import { getI18n } from "locales/server";
-import { getPublicProgramDescription, getPublicProgramTitle } from "@/features/programs/lib/translations-mapper";
+import { getPublicProgramDescription, getPublicProgramTitle, getPublicProgramSlug } from "@/features/programs/lib/translations-mapper";
 
 import { PublicProgram } from "../actions/get-public-programs.action";
 
@@ -20,6 +20,8 @@ export async function ProgramCard({ program, featured = false, size = "medium", 
   const t = await getI18n();
   const title = getPublicProgramTitle(locale, program);
   const description = getPublicProgramDescription(locale, program);
+  const programSlug = getPublicProgramSlug(locale, program);
+
   const heightClass = {
     small: "h-32",
     medium: "h-40",
@@ -67,7 +69,7 @@ export async function ProgramCard({ program, featured = false, size = "medium", 
               ? "border-[#25CB78]/20 hover:border-[#25CB78] hover:scale-[1.02]"
               : "border-gray-200 dark:border-gray-700 hover:border-[#4F8EF7] hover:scale-[1.02]"
         }`}
-        href={`/programs/${program.slug}`}
+        href={`/programs/${programSlug}`}
       >
         {/* Gradient background */}
         <div className={`absolute inset-0 bg-gradient-to-br ${getGradient(program.level)}`}></div>

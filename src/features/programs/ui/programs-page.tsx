@@ -17,8 +17,8 @@ export async function ProgramsPage({ locale }: ProgramsPageProps) {
 
   if (programs.length === 0) {
     return (
-      <div className="flex flex-col">
-        <div className="flex flex-col items-center justify-center h-screen">
+      <div className="flex flex-col h-full flex-1">
+        <div className="flex flex-col items-center justify-center flex-1">
           <h1 className="text-lg sm:text-xl leading-tight font-bold mb-2">{t("programs.no_programs_available")}</h1>
           <p className="text-base-content/60">{t("programs.no_programs_available_description")}</p>
         </div>
@@ -59,13 +59,7 @@ export async function ProgramsPage({ locale }: ProgramsPageProps) {
             {/* Premium programs with featured layout */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {programs.map((program, index) => (
-                <ProgramCard
-                  featured={index === 0} // Premier programme en featured
-                  key={program.id}
-                  locale={locale}
-                  program={program}
-                  size="large"
-                />
+                <ProgramCard featured={index === 0} key={program.id} locale={locale} program={program} size="large" />
               ))}
             </div>
           </div>

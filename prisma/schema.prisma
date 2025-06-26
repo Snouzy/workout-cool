@@ -557,6 +557,11 @@ enum PaymentStatus {
 model Program {
   id                 String                       @id @default(cuid())
   slug               String                       @unique
+  slugEn             String                       @unique
+  slugEs             String                       @unique
+  slugPt             String                       @unique
+  slugRu             String                       @unique
+  slugZhCn           String                       @unique
   title              String
   titleEn            String
   titleEs            String

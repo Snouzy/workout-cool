@@ -7,10 +7,23 @@ import { prisma } from "@/shared/lib/prisma";
 export interface ProgramDetail {
   id: string;
   slug: string;
+  slugEn: string;
+  slugEs: string;
+  slugPt: string;
+  slugRu: string;
+  slugZhCn: string;
   title: string;
   titleEn: string;
+  titleEs: string;
+  titlePt: string;
+  titleRu: string;
+  titleZhCn: string;
   description: string;
   descriptionEn: string;
+  descriptionEs: string;
+  descriptionPt: string;
+  descriptionRu: string;
+  descriptionZhCn: string;
   category: string;
   image: string;
   level: ProgramLevel;
@@ -55,9 +68,9 @@ export interface ProgramDetail {
 
 export async function getProgramBySlug(slug: string): Promise<ProgramDetail | null> {
   try {
-    const program = await prisma.program.findUnique({
+    const program = await prisma.program.findFirst({
       where: {
-        slug,
+        OR: [{ slug }, { slugEn: slug }, { slugEs: slug }, { slugPt: slug }, { slugRu: slug }, { slugZhCn: slug }],
         visibility: ProgramVisibility.PUBLISHED,
         isActive: true,
       },
@@ -95,10 +108,23 @@ export async function getProgramBySlug(slug: string): Promise<ProgramDetail | nu
     return {
       id: program.id,
       slug: program.slug,
+      slugEn: program.slugEn,
+      slugEs: program.slugEs,
+      slugPt: program.slugPt,
+      slugRu: program.slugRu,
+      slugZhCn: program.slugZhCn,
       title: program.title,
       titleEn: program.titleEn,
+      titleEs: program.titleEs,
+      titlePt: program.titlePt,
+      titleRu: program.titleRu,
+      titleZhCn: program.titleZhCn,
       description: program.description,
       descriptionEn: program.descriptionEn,
+      descriptionEs: program.descriptionEs,
+      descriptionPt: program.descriptionPt,
+      descriptionRu: program.descriptionRu,
+      descriptionZhCn: program.descriptionZhCn,
       category: program.category,
       image: program.image,
       level: program.level,

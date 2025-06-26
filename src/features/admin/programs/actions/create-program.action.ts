@@ -4,6 +4,7 @@ import { headers } from "next/headers";
 import { revalidatePath } from "next/cache";
 import { ProgramLevel, ExerciseAttributeValueEnum, UserRole, ProgramVisibility } from "@prisma/client";
 
+import { generateSlug } from "@/shared/lib/slug";
 import { prisma } from "@/shared/lib/prisma";
 import { auth } from "@/features/auth/lib/better-auth";
 
@@ -52,26 +53,33 @@ export async function createProgram(data: CreateProgramData) {
     throw new Error("Unauthorized");
   }
 
-  // Generate slug from title
-  const slug = data.title
-    .toLowerCase()
-    .replace(/[^a-z0-9\s-]/g, "")
-    .replace(/\s+/g, "-")
-    .replace(/-+/g, "-")
-    .trim();
+  // Generate slugs for all languages
+  const slug = generateSlug(data.title);
+  const slugEn = generateSlug(data.titleEn);
+  const slugEs = generateSlug(data.titleEs);
+  const slugPt = generateSlug(data.titlePt);
+  const slugRu = generateSlug(data.titleRu);
+  const slugZhCn = generateSlug(data.titleZhCn);
 
-  // Check if slug already exists
-  const existingProgram = await prisma.program.findUnique({
-    where: { slug },
+  // Check if any slug already exists
+  const existingProgram = await prisma.program.findFirst({
+    where: {
+      OR: [{ slug }, { slugEn }, { slugEs }, { slugPt }, { slugRu }, { slugZhCn }],
+    },
   });
 
   if (existingProgram) {
-    throw new Error("Un programme avec ce nom existe déjà");
+    throw new Error("Un programme avec ce nom existe déjà dans une des langues");
   }
 
   const program = await prisma.program.create({
     data: {
       slug,
+      slugEn,
+      slugEs,
+      slugPt,
+      slugRu,
+      slugZhCn,
       title: data.title,
       titleEn: data.titleEn,
       titleEs: data.titleEs,

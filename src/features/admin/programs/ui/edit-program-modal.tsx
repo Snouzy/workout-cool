@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { X } from "lucide-react";
+import { X, Plus, Trash2 } from "lucide-react";
 import { ProgramLevel, ExerciseAttributeValueEnum } from "@prisma/client";
 
 import { useI18n } from "locales/client";
@@ -34,6 +34,12 @@ interface EditProgramModalProps {
     sessionDurationMin: number;
     equipment: ExerciseAttributeValueEnum[];
     isPremium: boolean;
+    coaches: Array<{
+      id: string;
+      name: string;
+      image: string;
+      order: number;
+    }>;
   };
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -65,6 +71,7 @@ export function EditProgramModal({ program, open, onOpenChange }: EditProgramMod
     sessionDurationMin: program.sessionDurationMin,
     equipment: program.equipment,
     isPremium: program.isPremium,
+    coaches: program.coaches,
   });
   const [isSaving, setIsSaving] = useState(false);
 
@@ -93,6 +100,22 @@ export function EditProgramModal({ program, open, onOpenChange }: EditProgramMod
       ? formData.equipment.filter((e) => e !== equipment)
       : [...formData.equipment, equipment];
     setFormData({ ...formData, equipment: newEquipment });
+  };
+
+  const addCoach = () => {
+    const newCoaches = [...formData.coaches, { id: `new-${Date.now()}`, name: "", image: "", order: formData.coaches.length }];
+    setFormData({ ...formData, coaches: newCoaches });
+  };
+
+  const removeCoach = (index: number) => {
+    const newCoaches = formData.coaches.filter((_, i) => i !== index);
+    setFormData({ ...formData, coaches: newCoaches });
+  };
+
+  const updateCoach = (index: number, field: string, value: string) => {
+    const newCoaches = [...formData.coaches];
+    newCoaches[index] = { ...newCoaches[index], [field]: value };
+    setFormData({ ...formData, coaches: newCoaches });
   };
 
   if (!open) return null;
@@ -447,6 +470,58 @@ export function EditProgramModal({ program, open, onOpenChange }: EditProgramMod
               />
               <span className="label-text">Programme Premium</span>
             </label>
+          </div>
+
+          {/* Coachs */}
+          <div>
+            <div className="flex items-center justify-between mb-4">
+              <label className="label">
+                <span className="label-text font-medium">Coachs du programme</span>
+              </label>
+              <button className="btn btn-sm btn-primary" disabled={isSaving} onClick={addCoach} type="button">
+                <Plus className="h-4 w-4 mr-1" />
+                Ajouter
+              </button>
+            </div>
+            <div className="space-y-4">
+              {formData.coaches.length === 0 ? (
+                <p className="text-base-content/60 text-center py-8">Aucun coach ajouté. Cliquez sur "Ajouter" pour commencer.</p>
+              ) : (
+                formData.coaches.map((coach, index) => (
+                  <div className="flex gap-4 items-end" key={index}>
+                    <div className="flex-1 form-control">
+                      <label className="label" htmlFor={`coach-name-${index}`}>
+                        <span className="label-text">Nom</span>
+                      </label>
+                      <input
+                        className="input input-bordered"
+                        disabled={isSaving}
+                        id={`coach-name-${index}`}
+                        onChange={(e) => updateCoach(index, "name", e.target.value)}
+                        placeholder="Nom du coach"
+                        value={coach.name}
+                      />
+                    </div>
+                    <div className="flex-1 form-control">
+                      <label className="label" htmlFor={`coach-image-${index}`}>
+                        <span className="label-text">URL de l&apos;image</span>
+                      </label>
+                      <input
+                        className="input input-bordered"
+                        disabled={isSaving}
+                        id={`coach-image-${index}`}
+                        onChange={(e) => updateCoach(index, "image", e.target.value)}
+                        placeholder="https://..."
+                        value={coach.image}
+                      />
+                    </div>
+                    <button className="btn btn-outline btn-sm" disabled={isSaving} onClick={() => removeCoach(index)} type="button">
+                      <Trash2 className="h-4 w-4" />
+                    </button>
+                  </div>
+                ))
+              )}
+            </div>
           </div>
         </div>
 

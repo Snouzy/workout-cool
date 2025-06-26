@@ -46,6 +46,7 @@ export default {
     premium_required: "Premium Requis",
     premium_required_description: "Cette séance est premium. Passez à Premium pour accéder à tout le contenu exclusif.",
     upgrade_to_premium: "Passer à Premium",
+    program_completed: "Programme Terminé",
   },
   levels: {
     BEGINNER: "Débutant",

@@ -32,6 +32,7 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
   const [hasJoinedProgram, setHasJoinedProgram] = useState(false);
   const [currentWeek, setCurrentWeek] = useState(1);
   const [currentSessionNumber, setCurrentSessionNumber] = useState(1);
+  const [isProgramCompleted, setIsProgramCompleted] = useState(false);
   const t = useI18n();
   const searchParams = useSearchParams();
 
@@ -49,6 +50,7 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
       setCompletedSessions(new Set());
       setCurrentWeek(1);
       setCurrentSessionNumber(1);
+      setIsProgramCompleted(false);
     }
   }, [isAuthenticated]);
 
@@ -70,6 +72,7 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
         setHasJoinedProgram(true);
         setCurrentWeek(progress.stats.currentWeek);
         setCurrentSessionNumber(progress.stats.currentSession);
+        setIsProgramCompleted(progress.stats.isProgramCompleted);
         if (progress.enrollment.sessionProgress) {
           const completed = new Set(
             progress.enrollment.sessionProgress.filter((sp: any) => sp.completedAt !== null).map((sp: any) => sp.session.id),
@@ -81,6 +84,7 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
         setCompletedSessions(new Set());
         setCurrentWeek(1);
         setCurrentSessionNumber(1);
+        setIsProgramCompleted(false);
       }
     } catch (error) {
       console.error("Failed to load completed sessions:", error);
@@ -361,6 +365,7 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
                       const isCompleted = completedSessions.has(session.id);
                       return (
                         <div
+                          // eslint-disable-next-line max-len
                           className={`bg-white dark:bg-gray-800 rounded-xl p-4 border-2 cursor-pointer transition-all duration-200 ease-in-out flex items-center gap-4 ${
                             isCompleted
                               ? "border-[#25CB78] bg-[#25CB78]/5"
@@ -449,19 +454,30 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
         </div>
       </div>
 
-      {/* Gamified Floating CTA */}
-      <button
-        className="absolute bottom-2 right-0 left-0 max-w-xs mx-auto bg-gradient-to-r from-[#4F8EF7] to-[#25CB78] hover:from-[#4F8EF7]/80 hover:to-[#25CB78]/80 text-white px-8 py-4 rounded-full font-bold border-2 border-white/20 hover:scale-105 transition-all duration-200 ease-in-out z-1 flex items-center justify-center gap-2"
-        onClick={() => setShowWelcomeModal(true)}
-      >
-        {program.emoji ? (
-          <Image alt="Rejoindre" className="w-6 h-6 object-contain" height={24} src={`/images/emojis/${program.emoji}`} width={24} />
-        ) : (
-          <Image alt="Rejoindre" className="w-6 h-6 object-contain" height={24} src="/images/emojis/WorkoutCoolSwag.png" width={24} />
-        )}
-        {isAuthenticated && hasJoinedProgram ? t("programs.continue") : t("programs.join_cta")}
-        <Trophy className="text-white" size={18} />
-      </button>
+      {/* Gamified Floating CTA - Only show if program is not completed */}
+      {!isProgramCompleted && (
+        <button
+          className="absolute bottom-2 right-0 left-0 max-w-xs mx-auto bg-gradient-to-r from-[#4F8EF7] to-[#25CB78] hover:from-[#4F8EF7]/80 hover:to-[#25CB78]/80 text-white px-8 py-4 rounded-full font-bold border-2 border-white/20 hover:scale-105 transition-all duration-200 ease-in-out z-1 flex items-center justify-center gap-2"
+          onClick={() => setShowWelcomeModal(true)}
+        >
+          {program.emoji ? (
+            <Image alt="Rejoindre" className="w-6 h-6 object-contain" height={24} src={`/images/emojis/${program.emoji}`} width={24} />
+          ) : (
+            <Image alt="Rejoindre" className="w-6 h-6 object-contain" height={24} src="/images/emojis/WorkoutCoolSwag.png" width={24} />
+          )}
+          {isAuthenticated && hasJoinedProgram ? t("programs.continue") : t("programs.join_cta")}
+          <Trophy className="text-white" size={18} />
+        </button>
+      )}
+
+      {/* Program Completed Message */}
+      {isProgramCompleted && (
+        <div className="absolute bottom-2 right-0 left-0 max-w-xs mx-auto bg-gradient-to-r from-[#25CB78] to-[#4F8EF7] text-white px-8 py-4 rounded-full font-bold border-2 border-white/20 z-1 flex items-center justify-center gap-2">
+          <Trophy className="text-white" size={18} />
+          {t("programs.program_completed")}
+          <CheckCircle2 className="text-white" size={18} />
+        </div>
+      )}
 
       {/* Welcome Modal */}
       <WelcomeModal

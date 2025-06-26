@@ -45,6 +45,7 @@ export default {
     premium_required: "Premium Required",
     premium_required_description: "This is a premium session. Upgrade to access all premium content.",
     upgrade_to_premium: "Upgrade to Premium",
+    program_completed: "Program Completed",
   },
   levels: {
     BEGINNER: "Beginner",

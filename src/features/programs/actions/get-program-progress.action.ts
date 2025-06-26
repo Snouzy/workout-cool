@@ -60,6 +60,9 @@ export async function getProgramProgress(programId: string) {
 
   const completionPercentage = totalSessions > 0 ? Math.round((completedSessions / totalSessions) * 100) : 0;
 
+  // Check if program is completed (all sessions are done)
+  const isProgramCompleted = totalSessions > 0 && completedSessions === totalSessions;
+
   return {
     enrollment,
     stats: {
@@ -68,6 +71,7 @@ export async function getProgramProgress(programId: string) {
       completionPercentage,
       currentWeek: enrollment.currentWeek,
       currentSession: enrollment.currentSession,
+      isProgramCompleted,
     },
   };
 }

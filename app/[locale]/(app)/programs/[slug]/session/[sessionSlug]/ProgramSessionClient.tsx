@@ -128,7 +128,7 @@ export function ProgramSessionClient({ program, week, session, isAuthenticated, 
       const exercisesWithSets = exercises.map((exercise, idx) => {
         const programExercise = session.exercises[idx];
         const suggestedSets = programExercise?.suggestedSets || [];
-        
+
         const workoutSets = suggestedSets.map((suggestedSet, setIndex) => ({
           id: `${exercise.id}-set-${setIndex + 1}`,
           setIndex,
@@ -141,15 +141,20 @@ export function ProgramSessionClient({ program, week, session, isAuthenticated, 
 
         return {
           ...exercise,
-          sets: workoutSets.length > 0 ? workoutSets : [{
-            id: `${exercise.id}-set-1`,
-            setIndex: 0,
-            types: ["REPS"],
-            valuesInt: [],
-            valuesSec: [],
-            units: [],
-            completed: false,
-          }]
+          sets:
+            workoutSets.length > 0
+              ? workoutSets
+              : [
+                  {
+                    id: `${exercise.id}-set-1`,
+                    setIndex: 0,
+                    types: ["REPS"],
+                    valuesInt: [],
+                    valuesSec: [],
+                    units: [],
+                    completed: false,
+                  },
+                ],
         };
       });
 

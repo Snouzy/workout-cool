@@ -182,6 +182,8 @@ export default {
     muscles: {
       back: "背部",
       abdominals: "腹肌",
+      adductors: "内收肌",
+      abductors: "外展肌",
       biceps: "肱二头肌",
       triceps: "肱三头肌",
       chest: "胸部",

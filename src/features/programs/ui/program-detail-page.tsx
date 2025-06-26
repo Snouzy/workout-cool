@@ -29,21 +29,13 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
   const currentLocale = useCurrentLocale();
 
   const handleJoinProgram = async () => {
-    try {
-      const { enrollInProgram } = await import("@/features/programs/actions/enroll-program.action");
-      const { enrollment } = await enrollInProgram(program.id);
+    setShowWelcomeModal(false);
 
-      setShowWelcomeModal(false);
-
-      // Navigate to first session using slug
-      const firstSession = program.weeks[0]?.sessions[0];
-      if (firstSession) {
-        const sessionSlug = getSlugForLocale(firstSession, currentLocale);
-        window.location.href = `/${currentLocale}/programs/${program.slug}/session/${sessionSlug}`;
-      }
-    } catch (error) {
-      console.error("Failed to join program:", error);
-      // TODO: Show error message
+    // Navigate to first session using slug - no need to enroll here, it will be done on the session page
+    const firstSession = program.weeks[0]?.sessions[0];
+    if (firstSession) {
+      const sessionSlug = getSlugForLocale(firstSession, currentLocale);
+      window.location.href = `/${currentLocale}/programs/${program.slug}/session/${sessionSlug}`;
     }
   };
 
@@ -311,16 +303,14 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
                       const sessionSlug = getSlugForLocale(session, currentLocale);
                       return (
                         <div
-                          className={`bg-white dark:bg-gray-800 rounded-xl p-4 border-2 ${
+                          className={`bg-white dark:bg-gray-800 rounded-xl p-4 border-2 cursor-pointer transition-all duration-200 ease-in-out flex items-center gap-4 ${
                             session.isPremium
-                              ? "border-yellow-200 dark:border-yellow-800 bg-yellow-50/50 dark:bg-yellow-900/10"
-                              : "border-[#25CB78]/20 hover:border-[#25CB78] hover:scale-[1.02] cursor-pointer"
-                          } transition-all duration-200 ease-in-out flex items-center gap-4`}
+                              ? "border-yellow-200 dark:border-yellow-800 bg-yellow-50/50 dark:bg-yellow-900/10 hover:border-yellow-300 hover:scale-[1.02]"
+                              : "border-[#25CB78]/20 hover:border-[#25CB78] hover:scale-[1.02]"
+                          }`}
                           key={session.id}
                           onClick={() => {
-                            if (!session.isPremium) {
-                              window.location.href = `/${currentLocale}/programs/${program.slug}/session/${sessionSlug}`;
-                            }
+                            window.location.href = `/${currentLocale}/programs/${program.slug}/session/${sessionSlug}`;
                           }}
                         >
                           {/* Session Number Badge */}
@@ -384,7 +374,7 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
         ) : (
           <Image alt="Rejoindre" className="w-6 h-6 object-contain" height={24} src="/images/emojis/WorkoutCoolSwag.png" width={24} />
         )}
-        {t("programs.join_cta")}
+        Commencer
         <Trophy className="text-white" size={18} />
       </button>
 

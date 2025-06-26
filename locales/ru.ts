@@ -187,6 +187,8 @@ export default {
     muscles: {
       back: "Спина",
       abdominals: "Пресс",
+      adductors: "Приводящие",
+      abductors: "Отводящие",
       biceps: "Бицепс",
       triceps: "Трицепс",
       chest: "Грудь",

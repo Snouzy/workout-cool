@@ -21,16 +21,6 @@ export async function enrollInProgram(programId: string) {
     throw new Error("User not found");
   }
 
-  // Check if user is premium
-  const user = await prisma.user.findUnique({
-    where: { id: userId },
-    select: { isPremium: true },
-  });
-
-  if (!user?.isPremium) {
-    throw new Error("Premium subscription required");
-  }
-
   // Check if already enrolled
   const existingEnrollment = await prisma.userProgramEnrollment.findUnique({
     where: {

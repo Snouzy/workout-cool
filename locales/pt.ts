@@ -187,6 +187,8 @@ export default {
     muscles: {
       back: "Costas",
       abdominals: "Abdominais",
+      adductors: "Adutores",
+      abductors: "Abdutores",
       biceps: "Bíceps",
       triceps: "Tríceps",
       chest: "Peito",

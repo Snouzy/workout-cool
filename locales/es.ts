@@ -186,6 +186,8 @@ export default {
     },
     muscles: {
       abdominals: "Abdominales",
+      adductors: "Adductores",
+      abductors: "Abductores",
       back: "Espalda",
       biceps: "Bíceps",
       triceps: "Tríceps",

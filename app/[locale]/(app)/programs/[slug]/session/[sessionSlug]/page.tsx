@@ -97,33 +97,53 @@ export default async function SessionDetailPage({ params }: SessionDetailPagePro
     title: session.title,
     description: session.description,
     exercises: session.exercises.map(({ exercise, instructions, order, suggestedSets }) => ({
-      id: exercise.id,
-      name: exercise.name,
-      description: exercise.description,
-      image: exercise.image,
-      videoUrl: exercise.videoUrl,
+      id: `session-exercise-${exercise.id}`, // Unique ID for session exercise
       order,
-      instructions,
-      attributes: exercise.attributes.map((attr) => ({
-        id: attr.id,
-        attributeName: {
-          id: attr.attributeName.id,
-          name: attr.attributeName.name,
-        },
-        attributeValue: {
-          id: attr.attributeValue.id,
-          value: attr.attributeValue.value,
-        },
+      suggestedSets: suggestedSets.map(set => ({
+        id: set.id,
+        setIndex: set.setIndex,
+        types: set.types,
+        valuesInt: set.valuesInt,
+        valuesSec: set.valuesSec,
+        units: set.units,
       })),
-      slug,
-      suggestedSets,
-      exercise,
+      exercise: {
+        ...exercise,
+        slug: exercise.slug,
+        createdAt: new Date(), // Mock dates since they're required
+        updatedAt: new Date(),
+        fullVideoUrl: exercise.fullVideoUrl,
+        fullVideoImageUrl: exercise.fullVideoImageUrl,
+        introduction: exercise.introduction,
+        introductionEn: exercise.introductionEn,
+        slugEn: exercise.slugEn,
+        attributes: exercise.attributes.map((attr) => ({
+          id: attr.id,
+          exerciseId: exercise.id,
+          attributeNameId: attr.attributeName.id,
+          attributeValueId: attr.attributeValue.id,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          attributeName: attr.attributeName,
+          attributeValue: attr.attributeValue,
+        })),
+      },
     })),
   };
 
-  if (session.isPremium && !authSession?.user) {
-    return <div>TODO: You must be logged in to view this page</div>;
-  }
+  // Always allow access to the page, but pass authentication status
+  const isAuthenticated = !!authSession?.user;
+  const isPremium = authSession?.user?.isPremium || false;
+  const canAccessPremiumContent = !session.isPremium || (isAuthenticated && isPremium);
 
-  return <ProgramSessionClient program={program} session={sessionData} week={week} />;
+  return (
+    <ProgramSessionClient
+      canAccessContent={canAccessPremiumContent}
+      isAuthenticated={isAuthenticated}
+      isPremiumSession={session.isPremium}
+      program={program}
+      session={sessionData}
+      week={week}
+    />
+  );
 }

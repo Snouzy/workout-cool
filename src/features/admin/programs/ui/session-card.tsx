@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { Plus, Clock, Dumbbell, Settings, ChevronDown, ChevronRight, Edit } from "lucide-react";
 
+import { useI18n } from "locales/client";
+
 import { SessionWithExercises } from "../types/program.types";
 import { EditSetsModal } from "./edit-sets-modal";
 import { EditSessionModal } from "./edit-session-modal";
@@ -13,6 +15,7 @@ interface SessionCardProps {
 }
 
 export function SessionCard({ session }: SessionCardProps) {
+  const t = useI18n();
   const [isExpanded, setIsExpanded] = useState(false);
   const [isAddExerciseModalOpen, setIsAddExerciseModalOpen] = useState(false);
   const [isEditSessionModalOpen, setIsEditSessionModalOpen] = useState(false);
@@ -30,7 +33,7 @@ export function SessionCard({ session }: SessionCardProps) {
             <div>
               <div className="flex items-center gap-2 mb-1">
                 <h4 className="font-semibold">
-                  Séance {session.sessionNumber}: {session.title}
+                  {t("programs.session")} {session.sessionNumber}: {session.title}
                 </h4>
                 <div className={`badge badge-sm ${session.isPremium ? "badge-primary" : "badge-outline"}`}>
                   {session.isPremium ? "Premium" : "Gratuit"}

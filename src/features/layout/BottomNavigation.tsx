@@ -5,30 +5,32 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { Dumbbell, Search } from "lucide-react";
 
+import { useI18n } from "locales/client";
 import { cn } from "@/shared/lib/utils";
 import { paths } from "@/shared/constants/paths";
 
 export function BottomNavigation() {
   const pathname = usePathname();
+  const t = useI18n();
 
   const tabs = [
     {
       id: "workout-builder",
-      label: "Créateur",
-      shortLabel: "Create",
+      label: t("bottom_navigation.workouts"),
+      shortLabel: t("bottom_navigation.workouts"),
       href: paths.root,
       icon: Dumbbell,
       emoji: "WorkoutCoolHappy.png",
-      description: "Crée ton workout",
+      description: t("bottom_navigation.workouts_tooltip"),
     },
     {
       id: "programs",
-      label: "Programmes",
-      shortLabel: "Explore",
+      label: t("bottom_navigation.programs"),
+      shortLabel: t("bottom_navigation.programs"),
       href: `${paths.programs}`,
       icon: Search,
       emoji: "WorkoutCoolSwag.png",
-      description: "Explore les défis",
+      description: t("bottom_navigation.programs_tooltip"),
     },
   ];
 

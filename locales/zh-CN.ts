@@ -1,5 +1,13 @@
 export default {
   programs: {
+    exercises_in_session: "课程中的练习",
+    start_session: "开始课程",
+    starting_session: "启动中...",
+    more_than: "超过",
+    my_progress: "我的进度",
+    session: "课程",
+    completed_feminine: "已完成的",
+    completed_sets: "已完成的课程",
     "set#zero": "组",
     "set#one": "组",
     "set#other": "组",
@@ -17,6 +25,7 @@ export default {
     workout_programs_description: "选择您的挑战并变得更强大！💪",
     no_programs_available: "没有可用的程序",
     no_programs_available_description: "程序将在不久后可用！",
+    program_completed: "程序已完成",
     auth_required: "需要认证",
     auth_required_description: "您需要登录以访问此课程。",
     login_to_continue: "登录以继续",
@@ -49,6 +58,12 @@ export default {
     share_success: "分享成功！",
     copied_to_clipboard: "链接已复制！",
     share_failed: "分享失败",
+  },
+  bottom_navigation: {
+    programs: "课程",
+    programs_tooltip: "浏览课程",
+    workouts: "锻炼",
+    workouts_tooltip: "创建您的锻炼",
   },
   levels: {
     BEGINNER: "初学者",

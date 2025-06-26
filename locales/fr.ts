@@ -1,5 +1,13 @@
 export default {
   programs: {
+    exercises_in_session: "Exercices dans la séance",
+    start_session: "Démarrer la séance",
+    starting_session: "Démarrage...",
+    more_than: "+ de",
+    my_progress: "Mon progrès",
+    session: "séance",
+    completed_feminine: "complétées",
+    completed_sets: "séances complétées",
     "set#zero": "série",
     "set#one": "série",
     "set#other": "séries",
@@ -51,6 +59,12 @@ export default {
     share_success: "Partagé avec succès !",
     copied_to_clipboard: "Lien copié !",
     share_failed: "Échec du partage",
+  },
+  bottom_navigation: {
+    programs: "Programmes",
+    programs_tooltip: "Parcourir les programmes",
+    workouts: "Entraînements",
+    workouts_tooltip: "Créer votre propre entraînement",
   },
   levels: {
     BEGINNER: "Débutant",

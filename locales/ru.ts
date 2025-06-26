@@ -1,5 +1,13 @@
 export default {
   programs: {
+    exercises_in_session: "Упражнение в сессии",
+    start_session: "Начать сессию",
+    starting_session: "Запуск...",
+    more_than: "больше",
+    my_progress: "Мой прогресс",
+    session: "сессия",
+    completed_feminine: "завершенных",
+    completed_sets: "завершенных сессий",
     "set#zero": "подход",
     "set#one": "подход",
     "set#other": "подходов",
@@ -48,8 +56,15 @@ export default {
     sessions: "Сессии",
     check_out_program: "Откройте эту программу тренировки!",
     share_success: "Поделиться успешно!",
+    program_completed: "Программа завершена",
     copied_to_clipboard: "Ссылка скопирована!",
     share_failed: "Ошибка при делении",
+  },
+  bottom_navigation: {
+    programs: "Программы",
+    programs_tooltip: "Просмотр программ",
+    workouts: "Тренировки",
+    workouts_tooltip: "Создать свою тренировку",
   },
   levels: {
     BEGINNER: "Начальный",

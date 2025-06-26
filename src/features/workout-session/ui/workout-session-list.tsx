@@ -206,7 +206,7 @@ export function WorkoutSessionList() {
           );
         })}
       </ul>
-      {/* TODO: Ajouter un bouton pour créer une nouvelle séance (redirige vers le builder sans session courante) */}
+      {/* TODO: create a new workout */}
     </div>
   );
 }

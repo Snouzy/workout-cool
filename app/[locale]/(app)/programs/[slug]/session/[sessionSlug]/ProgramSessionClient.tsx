@@ -27,13 +27,7 @@ interface ProgramSessionClientProps {
   isPremium: boolean;
 }
 
-export function ProgramSessionClient({
-  program,
-  week,
-  session,
-  isAuthenticated,
-  isPremium,
-}: ProgramSessionClientProps) {
+export function ProgramSessionClient({ program, week, session, isAuthenticated, isPremium }: ProgramSessionClientProps) {
   const t = useI18n();
   const locale = useCurrentLocale();
   const router = useRouter();
@@ -215,37 +209,46 @@ export function ProgramSessionClient({
               <div className="flex items-center justify-between mb-6">
                 <div>
                   <h2 className="text-2xl font-bold text-gray-900 dark:text-white">{programSessionTitle}</h2>
-                  {session.description && <p className="text-gray-600 dark:text-gray-400 mt-2">{session.description}</p>}
+                  {programSessionDescription && <p className="text-gray-600 dark:text-gray-400 mt-2">{programSessionDescription}</p>}
                 </div>
                 <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
                   <div className="flex items-center gap-1">
                     <Clock size={16} />
-                    <span>~{Math.round(session.exercises.length * 3)} min</span>
+                    <span>
+                      ~{Math.round(session.exercises.length * 3)} {t("programs.min_short")}
+                    </span>
                   </div>
                   <div className="flex items-center gap-1">
                     <Dumbbell size={16} />
-                    <span>{session.exercises.length} exercices</span>
+                    <span>
+                      {session.exercises.length} {t("programs.exercises")}
+                    </span>
                   </div>
                 </div>
               </div>
 
               {/* Exercise list */}
               <div className="space-y-4 mb-8">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Exercices de la séance</h3>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{t("programs.exercises_in_session")}</h3>
                 <div className="grid gap-3">
-                  {session.exercises.map((exercise, index) => (
-                    <div className="flex items-center p-4 bg-gray-50 dark:bg-gray-700 rounded-lg" key={exercise.id}>
-                      <div className="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-bold mr-4">
-                        {index + 1}
+                  {session.exercises.map((exercise, index) => {
+                    const exerciseName = locale === "fr" ? exercise.exercise.name : exercise.exercise.nameEn;
+                    return (
+                      <div className="flex items-center p-4 bg-gray-50 dark:bg-gray-700 rounded-lg" key={exercise.id}>
+                        <div className="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-bold mr-4">
+                          {index + 1}
+                        </div>
+                        <div className="flex-1">
+                          <h4 className="font-medium text-gray-900 dark:text-white">{exerciseName}</h4>
+                        </div>
+                        <div className="text-right">
+                          <span className="text-sm text-gray-500 dark:text-gray-400">
+                            {exercise.suggestedSets.length} {t("programs.set", { count: exercise.suggestedSets.length })}
+                          </span>
+                        </div>
                       </div>
-                      <div className="flex-1">
-                        <h4 className="font-medium text-gray-900 dark:text-white">{exercise.exercise.name}</h4>
-                      </div>
-                      <div className="text-right">
-                        <span className="text-sm text-gray-500 dark:text-gray-400">{exercise.suggestedSets.length} série(s)</span>
-                      </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
 
@@ -259,12 +262,12 @@ export function ProgramSessionClient({
                   {isLoading ? (
                     <>
                       <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                      Démarrage...
+                      {t("programs.starting_session")}
                     </>
                   ) : (
                     <>
                       <Play size={20} />
-                      Démarrer la séance
+                      {t("programs.start_session")}
                     </>
                   )}
                 </Button>

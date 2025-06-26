@@ -125,20 +125,6 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
     }
   };
 
-  // Helpers pour les labels
-  const getLevelLabel = (level: string) => {
-    switch (level) {
-      case "BEGINNER":
-        return "Débutant";
-      case "INTERMEDIATE":
-        return "Intermédiaire";
-      case "ADVANCED":
-        return "Avancé";
-      default:
-        return level;
-    }
-  };
-
   const formatEquipment = (equipment: ExerciseAttributeValueEnum[]) => {
     return equipment.map((equipment) => getEquipmentTranslation(equipment, t).label).join(", ") || t("programs.no_equipment");
   };
@@ -167,7 +153,7 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
               <div className="flex items-center gap-2 mb-3">
                 <span className="bg-[#4F8EF7] text-white px-3 py-1 rounded-full text-xs font-medium flex items-center gap-1">
                   <Zap size={12} />
-                  {getLevelLabel(program.level)}
+                  {t(`levels.${program.level}` as keyof typeof t)}
                 </span>
                 <span className="bg-[#25CB78] text-white px-3 py-1 rounded-full text-xs font-medium flex items-center gap-1">
                   <Users size={12} />
@@ -226,16 +212,13 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
                           <span className="text-sm font-bold text-[#4F8EF7]">{t("programs.community")}</span>
                         </div>
                         <span className="text-sm text-gray-600 dark:text-gray-400">
-                          + de {program.totalEnrollments} {t("programs.community_count")}
+                          +{program.totalEnrollments} {t("programs.community_count")}
                         </span>
                       </div>
                     </div>
                     <div className="flex gap-2">
                       <div className="tooltip tooltip-bottom" data-tip={t("commons.share")}>
-                        <ShareButton
-                          programDescription={programDescription}
-                          programTitle={programTitle}
-                        />
+                        <ShareButton programDescription={programDescription} programTitle={programTitle} />
                       </div>
                     </div>
                   </div>
@@ -395,12 +378,6 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
                                 <span className="text-lg">{session.sessionNumber}</span>
                               )}
                             </div>
-                            {/* Completion checkmark overlay */}
-                            {isCompleted && (
-                              <div className="absolute -top-1 -right-1 w-5 h-5 bg-[#25CB78] rounded-full flex items-center justify-center">
-                                <CheckCircle2 className="text-white" size={12} />
-                              </div>
-                            )}
                           </div>
 
                           {/* Session Info */}
@@ -474,7 +451,7 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
 
       {/* Program Completed Message */}
       {isProgramCompleted && (
-        <div className="absolute bottom-2 right-0 left-0 max-w-xs mx-auto bg-gradient-to-r from-[#25CB78] to-[#4F8EF7] text-white px-8 py-4 rounded-full font-bold border-2 border-white/20 z-1 flex items-center justify-center gap-2">
+        <div className="absolute bottom-2 right-0 left-0 max-w-xs mx-auto bg-gradient-to-r from-[#25CB78] to-[#4F8EF7] text-white px-4 py-3 rounded-full font-bold border-2 border-white/20 z-1 flex items-center justify-center gap-2">
           <Trophy className="text-white" size={18} />
           {t("programs.program_completed")}
           <CheckCircle2 className="text-white" size={18} />
@@ -486,8 +463,8 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
         isOpen={showWelcomeModal}
         onClose={() => setShowWelcomeModal(false)}
         onJoin={handleJoinProgram}
-        programDuration={`${program.durationWeeks} semaines`}
-        programFrequency={`${program.sessionsPerWeek} séances/semaine`}
+        programDuration={`${program.durationWeeks} ${t("programs.weeks")}`}
+        programFrequency={`${program.sessionsPerWeek} ${t("programs.sessions_per_week")}`}
         programLevel={t(`levels.${program.level}` as keyof typeof t)}
         programTitle={programTitle}
       />

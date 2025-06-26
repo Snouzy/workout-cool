@@ -1,5 +1,13 @@
 export default {
   programs: {
+    exercises_in_session: "Exercises in session",
+    start_session: "Start session",
+    starting_session: "Starting...",
+    more_than: "more than",
+    my_progress: "My progress",
+    session: "session",
+    completed_feminine: "completed",
+    completed_sets: "completed sets",
     "set#zero": "set",
     "set#one": "set",
     "set#other": "sets",
@@ -45,11 +53,17 @@ export default {
     premium_required: "Premium Required",
     premium_required_description: "This is a premium session. Upgrade to access all premium content.",
     upgrade_to_premium: "Upgrade to Premium",
-    program_completed: "Program Completed",
+    program_completed: "Program completed",
     check_out_program: "Check out this workout program!",
     share_success: "Shared successfully!",
     copied_to_clipboard: "Link copied!",
     share_failed: "Share failed",
+  },
+  bottom_navigation: {
+    programs: "Programs",
+    programs_tooltip: "Browse programs",
+    workouts: "Workouts",
+    workouts_tooltip: "Create your own workout",
   },
   levels: {
     BEGINNER: "Beginner",

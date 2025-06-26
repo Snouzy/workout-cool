@@ -32,7 +32,6 @@ export function ProgramSessionClient({ program, week, session, isAuthenticated, 
   const locale = useCurrentLocale();
   const router = useRouter();
   const { startWorkout, session: workoutSession, completeWorkout, isWorkoutActive, quitWorkout } = useWorkoutSession();
-  console.log("workoutSession:", workoutSession);
   const [isLoading, setIsLoading] = useState(false);
   const [_enrollmentId, setEnrollmentId] = useState<string | null>(null);
   const [sessionProgressId, setSessionProgressId] = useState<string | null>(null);

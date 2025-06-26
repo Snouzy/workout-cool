@@ -27,8 +27,14 @@ export function WorkoutSessionSet({ set, setIndex, onChange, onFinish, onRemove 
 
   const handleValueIntChange = (columnIndex: number) => (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValuesInt = Array.isArray(set.valuesInt) ? [...set.valuesInt] : [];
-    newValuesInt[columnIndex] = e.target.value ? parseInt(e.target.value, 10) : 0;
-    onChange(setIndex, { valuesInt: newValuesInt });
+    const allowedInt=[1.5,2.5,3.5,4.5,7.5,12.5,17.5,22.5,27.5,32.5,37.5,42.5,47.5,52.5];
+    if(allowedInt.includes(parseFloat(e.target.value))){
+      newValuesInt[columnIndex] = e.target.value ? parseFloat(e.target.value) : 0;
+      onChange(setIndex, { valuesInt: newValuesInt });
+    }else{
+      newValuesInt[columnIndex] = e.target.value ? parseInt(e.target.value, 10) : 0;
+      onChange(setIndex, { valuesInt: newValuesInt });
+    }
   };
 
   const handleValueSecChange = (columnIndex: number) => (e: React.ChangeEvent<HTMLInputElement>) => {

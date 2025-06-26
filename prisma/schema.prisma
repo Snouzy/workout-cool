@@ -40,7 +40,6 @@ model User {
   subscriptions Subscription[]
   licenses      License[]
   isPremium     Boolean?       @default(false)
-  premiumUntil  DateTime?
 
   // Training programs
   programEnrollments UserProgramEnrollment[]
@@ -336,17 +335,16 @@ enum WorkoutSetUnit {
 // BILLING & SUBSCRIPTION MODELS
 // ========================================
 
-
 // Plans d'abonnement - provider-agnostic, minimal KISS approach
 model SubscriptionPlan {
   id String @id @default(cuid())
-  
+
   // Pricing - internal source of truth
   priceMonthly Decimal? @db.Decimal(10, 2)
   priceYearly  Decimal? @db.Decimal(10, 2)
   currency     String   @default("EUR")
   interval     String   @default("month") // month, year
-  
+
   // Availability
   isActive         Boolean  @default(true)
   availableRegions String[] @default([]) // ["EU", "US", "UK"]
@@ -414,41 +412,8 @@ model Subscription {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  // Historique des paiements
-  payments Payment[]
-
   @@unique([userId, platform])
   @@map("subscriptions")
-}
-
-// Paiements - abstrait pour supporter plusieurs processeurs
-model Payment {
-  id             String       @id @default(cuid())
-  subscriptionId String
-  subscription   Subscription @relation(fields: [subscriptionId], references: [id])
-
-  amount   Decimal @db.Decimal(10, 2)
-  currency String
-
-  // Processeur flexible
-  processor          PaymentProcessor
-  processorPaymentId String? // ID Stripe, PayPal, LemonSqueezy, etc.
-
-  // RevenueCat transaction ID
-  revenueCatTransactionId String?
-
-  status PaymentStatus
-
-  paidAt   DateTime?
-  failedAt DateTime?
-
-  metadata Json? // Données spécifiques au processeur
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([processorPaymentId])
-  @@map("payments")
 }
 
 // Licences pour self-hosted (alternative aux subscriptions)
@@ -477,11 +442,9 @@ model License {
   @@map("licenses")
 }
 
-
 // ========================================
 // BILLING ENUMS
 // ========================================
-
 
 enum SubscriptionStatus {
   ACTIVE
@@ -507,13 +470,6 @@ enum PaymentProcessor {
   REVENUECAT
   NONE // self-hosted
   OTHER
-}
-
-enum PaymentStatus {
-  PENDING
-  COMPLETED
-  FAILED
-  REFUNDED
 }
 
 // ========================================

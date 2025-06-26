@@ -20,7 +20,6 @@ export class PremiumService {
       where: { id: userId },
       select: {
         isPremium: true,
-        premiumUntil: true,
         subscriptions: {
           where: { status: "ACTIVE" },
           select: {
@@ -39,10 +38,16 @@ export class PremiumService {
       return { isPremium: false };
     }
 
-    // Check active subscription first (primary source)
+    // Quick check on isPremium flag
+    if (!user.isPremium) {
+      return { isPremium: false };
+    }
+
+    // Verify with active subscription for expiry date
     const activeSubscription = user.subscriptions[0];
     if (activeSubscription?.currentPeriodEnd) {
       const isExpired = activeSubscription.currentPeriodEnd < new Date();
+
       if (!isExpired) {
         return {
           isPremium: true,
@@ -52,17 +57,8 @@ export class PremiumService {
       }
     }
 
-    // Check legacy premium field for backward compatibility
-    if (user.isPremium && user.premiumUntil) {
-      const isExpired = user.premiumUntil < new Date();
-      if (!isExpired) {
-        return {
-          isPremium: true,
-          expiresAt: user.premiumUntil,
-        };
-      }
-    }
-
+    // If isPremium is true but no active subscription, it's inconsistent
+    // Should update isPremium to false (data cleanup)
     return { isPremium: false };
   }
 
@@ -108,16 +104,15 @@ export class PremiumService {
 
     // Transaction to ensure data consistency
     await prisma.$transaction(async (tx) => {
-      // Update user fields for backward compatibility
+      // Update user isPremium flag
       await tx.user.update({
         where: { id: userId },
         data: {
           isPremium: true,
-          premiumUntil: expiresAt,
         },
       });
 
-      // Create or update subscription record if we have a plan
+      // Create or update subscription record
       if (planId) {
         const platform = options?.platform || Platform.WEB;
 
@@ -131,6 +126,7 @@ export class PremiumService {
           update: {
             status: "ACTIVE",
             currentPeriodEnd: expiresAt,
+            planId,
             updatedAt: new Date(),
           },
           create: {
@@ -152,12 +148,11 @@ export class PremiumService {
    */
   static async revokePremiumAccess(userId: string, platform?: Platform): Promise<void> {
     await prisma.$transaction(async (tx) => {
-      // Update user fields for backward compatibility
+      // Update user isPremium flag
       await tx.user.update({
         where: { id: userId },
         data: {
           isPremium: false,
-          premiumUntil: null,
         },
       });
 

@@ -531,6 +531,8 @@ export default {
     change_language: "Alterar idioma",
     in_progress: "Em progresso",
     premium: "Premium",
+    subscription: "Abonamento",
+    manage_subscription: "Gerir abonamento",
     free: "Gratuito",
   },
 } as const;

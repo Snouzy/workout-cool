@@ -140,9 +140,11 @@ export class PremiumManager {
 
       if (result.success && result.userId && result.action) {
         // Update user premium status based on webhook
+
         switch (result.action) {
           case "subscription_created":
           case "payment_succeeded":
+          case "subscription_updated":
             if (result.expiresAt) {
               await PremiumService.grantPremiumAccess(result.userId, result.expiresAt, {
                 planId: result.planId,
@@ -202,10 +204,10 @@ export class PremiumManager {
     // For Stripe, we need to find the customer ID
     if (provider === "stripe") {
       const stripeProvider = paymentProvider as StripeProvider;
-      
+
       // Get customer by user ID
       const customer = await stripeProvider.getCustomerByUserId(userId);
-      
+
       if (!customer) {
         return {
           success: false,
@@ -213,7 +215,7 @@ export class PremiumManager {
           provider: "stripe",
         };
       }
-      
+
       return stripeProvider.createPortalSession(customer.id, returnUrl);
     }
 

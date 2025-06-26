@@ -36,7 +36,6 @@ export const auth = betterAuth({
           banReason: true,
           banExpires: true,
           isPremium: true,
-          premiumUntil: true,
           accounts: {
             select: { providerId: true },
           },

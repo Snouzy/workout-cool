@@ -31,10 +31,6 @@ export async function GET(request: NextRequest) {
       },
       include: {
         plan: true,
-        payments: {
-          orderBy: { createdAt: "desc" },
-          take: 1,
-        },
       },
     });
 

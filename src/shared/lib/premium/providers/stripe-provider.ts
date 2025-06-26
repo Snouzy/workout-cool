@@ -117,7 +117,7 @@ export class StripeProvider implements PaymentProvider {
 
             // Extra: You might want to send a welcome email here
             // Example: await sendEmail.welcome(user.email, subscription);
-            
+
             // Extra: Track conversion in analytics
             // Example: await analytics.track('subscription_created', { planId, userId });
 
@@ -143,7 +143,7 @@ export class StripeProvider implements PaymentProvider {
 
             // Extra: Send receipt email
             // Example: await sendEmail.receipt(user.email, invoice);
-            
+
             // Extra: Update user credits/features if your app uses them
             // Example: await updateUserCredits(userId, plan.credits);
 
@@ -166,11 +166,29 @@ export class StripeProvider implements PaymentProvider {
           // Also sent when subscription renews with a new billing period
           const subscription = event.data.object as Stripe.Subscription;
 
+          // Get the new plan ID from the subscription items
+          const newStripePriceId = subscription.items.data[0]?.price?.id;
+          let planId = subscription.metadata?.planId;
+
+          // If the price changed, we need to map it to our internal plan ID
+          if (newStripePriceId) {
+            // Map Stripe price ID to our internal plan ID
+            if (newStripePriceId === env.NEXT_PUBLIC_STRIPE_PRICE_MONTHLY) {
+              planId = "premium-monthly";
+            } else if (newStripePriceId === env.NEXT_PUBLIC_STRIPE_PRICE_YEARLY) {
+              planId = "premium-yearly";
+            }
+          }
+
+          // Fetch the full subscription object to get all fields
+          const fullSubscription = await this.stripe.subscriptions.retrieve(subscription.id);
+
           return {
             success: true,
-            userId: subscription.metadata?.userId,
+            userId: fullSubscription.metadata?.userId,
             action: "subscription_updated",
-            expiresAt: new Date(subscription.current_period_end * 1000),
+            expiresAt: new Date(fullSubscription.current_period_end * 1000),
+            planId: planId,
             platform: "WEB",
           };
         }
@@ -181,7 +199,7 @@ export class StripeProvider implements PaymentProvider {
 
           // Extra: Send cancellation confirmation email
           // Example: await sendEmail.cancelled(user.email);
-          
+
           // Extra: Revoke premium features immediately or schedule for period end
           // Example: if (subscription.cancel_at_period_end) { scheduleRevoke(userId, subscription.current_period_end) }
 
@@ -203,7 +221,7 @@ export class StripeProvider implements PaymentProvider {
 
             // Extra: Send payment failed email with update payment link
             // Example: await sendEmail.paymentFailed(user.email, updatePaymentUrl);
-            
+
             // Extra: After X failures, you might want to pause premium features
             // Example: if (invoice.attempt_count > 3) { await pausePremiumFeatures(userId) }
 
@@ -230,10 +248,10 @@ export class StripeProvider implements PaymentProvider {
         case "checkout.session.expired": {
           // User didn't complete the transaction (abandoned checkout)
           const session = event.data.object as Stripe.Checkout.Session;
-          
+
           // Extra: Send abandoned cart email to recover the sale
           // Example: await sendEmail.abandonedCart(user.email, checkoutUrl);
-          
+
           console.log(`Checkout session expired for user: ${session.metadata?.userId}`);
           return { success: true };
         }
@@ -257,8 +275,10 @@ export class StripeProvider implements PaymentProvider {
         // Sent when invoice is finalized and ready for payment
         case "invoice.updated":
         // Sent when invoice is modified
-        case "invoice.paid": {
-          // Sent when invoice is marked as paid (similar to invoice.payment_succeeded)
+        case "invoice.paid":
+        case "billing_portal.session.created":
+        case "invoiceitem.created": {
+          // Sent when invoice is marked as paid or portal session created
           console.log(`Acknowledged Stripe event: ${event.type}`);
           return { success: true };
         }

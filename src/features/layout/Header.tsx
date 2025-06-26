@@ -74,7 +74,7 @@ export const Header = () => {
               {userAvatar || <User className="w-4 h-4" />}
             </div>
             {isPremium && (
-              <div className="absolute -top-1 -right-1 w-4 h-4 bg-amber-400 rounded-full flex items-center justify-center">
+              <div className="absolute -top-1 -right-1 w-4 h-4 bg-amber-400 rounded-full !flex items-center justify-center">
                 <Crown className="w-2.5 h-2.5 text-amber-900" />
               </div>
             )}

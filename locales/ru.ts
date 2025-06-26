@@ -530,6 +530,8 @@ export default {
     support: "Поддержка",
     change_language: "Изменить язык",
     in_progress: "В процессе",
+    subscription: "Подписка",
+    manage_subscription: "Управление подпиской",
     premium: "Премиум",
     free: "Бесплатно",
   },

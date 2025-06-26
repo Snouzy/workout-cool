@@ -526,7 +526,7 @@ export default {
     sending: "Envoi...",
     send_me_link: "Envoyer un lien",
     subscription: "Abonnement",
-    manage_subscription: "Gérer l'abonnement",
+    manage_subscription: "Gérer abonnement",
     become_premium: "Devenir Premium",
     extremely_dissatisfied: "Très insatisfait",
     somewhat_dissatisfied: "Insatisfait",

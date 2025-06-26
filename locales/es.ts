@@ -529,6 +529,8 @@ export default {
     satisfied: "Satisfecho",
     support: "Soporte",
     change_language: "Cambiar idioma",
+    subscription: "Suscripción",
+    manage_subscription: "Gestionar suscripción",
     in_progress: "En progreso",
     premium: "Premium",
     free: "Gratis",

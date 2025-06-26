@@ -51,6 +51,7 @@ export default {
     auth_required: "Connexion Requise",
     auth_required_description: "Vous devez vous connecter pour accéder à cette séance d'entraînement.",
     login_to_continue: "Se connecter pour continuer",
+    signup_to_continue: "S'inscrire pour continuer",
     premium_required: "Premium Requis",
     premium_required_description: "Cette séance est premium. Passez à Premium pour accéder à tout le contenu exclusif.",
     upgrade_to_premium: "Passer à Premium",

@@ -29,6 +29,7 @@ export default {
     auth_required: "Требуется аутентификация",
     auth_required_description: "Вы должны войти в систему, чтобы получить доступ к этой тренировке.",
     login_to_continue: "Войти для продолжения",
+    signup_to_continue: "Зарегистрироваться для продолжения",
     premium_required: "Премиум требуется",
     premium_required_description: "Эта сессия является премиум-контентом. Обновитесь, чтобы получить доступ ко всему премиум-контенту.",
     upgrade_to_premium: "Обновить до Премиум",

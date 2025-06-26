@@ -1,5 +1,6 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
 
 import { useI18n } from "locales/client";
@@ -9,6 +10,7 @@ import { brandedToast } from "@/components/ui/toast";
 
 export const useSignUp = () => {
   const t = useI18n();
+  const searchParams = useSearchParams();
 
   const mutation = useMutation({
     mutationFn: async (values: SignUpSchema) => {
@@ -26,7 +28,9 @@ export const useSignUp = () => {
     },
 
     onSuccess: async () => {
-      window.location.href = "/profile";
+      const redirectUrl = searchParams.get("redirect");
+      const destination = redirectUrl || "/profile";
+      window.location.href = destination;
       // router.push(`/${paths.verifyEmail}?signin=true`);
     },
 

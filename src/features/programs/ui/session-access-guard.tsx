@@ -71,6 +71,18 @@ export function SessionAccessGuard({
             >
               {t("programs.login_to_continue")}
             </Button>
+            <Button
+              className="w-full bg-green-600 hover:bg-green-700 text-white"
+              onClick={() => {
+                const redirectUrl = sessionSlug
+                  ? `/${locale}/programs/${programSlug}/session/${sessionSlug}`
+                  : `/${locale}/programs/${programSlug}`;
+                router.push(`/auth/signup?redirect=${encodeURIComponent(redirectUrl)}`);
+              }}
+              size="large"
+            >
+              {t("programs.signup_to_continue")}
+            </Button>
             <Button className="w-full" onClick={() => router.push(`/programs/${programSlug}`)} size="large" variant="outline">
               {t("programs.back_to_program")}
             </Button>
@@ -100,10 +112,10 @@ export function SessionAccessGuard({
           )}
 
           <div className="space-y-3">
-            <Button className="w-full bg-yellow-600 hover:bg-yellow-700 text-white" onClick={() => router.push("/premium")}>
+            <Button className="w-full bg-yellow-600 hover:bg-yellow-700 text-white" onClick={() => router.push("/premium")} size="large">
               {t("programs.upgrade_to_premium")}
             </Button>
-            <Button className="w-full" onClick={() => router.push(`/programs/${programSlug}`)} variant="outline">
+            <Button className="w-full" onClick={() => router.push(`/programs/${programSlug}`)} size="large" variant="outline">
               {t("programs.back_to_program")}
             </Button>
           </div>

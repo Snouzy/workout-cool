@@ -29,6 +29,7 @@ export default {
     auth_required: "需要认证",
     auth_required_description: "您需要登录以访问此课程。",
     login_to_continue: "登录以继续",
+    signup_to_continue: "注册以继续",
     premium_required: "高级要求",
     premium_required_description: "这是一个高级课程。升级以访问所有高级内容。",
     upgrade_to_premium: "Upgrade to Premium",

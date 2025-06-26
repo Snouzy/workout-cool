@@ -28,6 +28,7 @@ export default {
     auth_required: "Autenticação requerida",
     auth_required_description: "Precisa de iniciar sessão para acessar esta sessão de treino.",
     login_to_continue: "Iniciar sessão para continuar",
+    signup_to_continue: "Registar para continuar",
     premium_required: "Premium requerido",
     premium_required_description: "Esta sessão é premium. Atualize para acessar todo o conteúdo premium.",
     upgrade_to_premium: "Atualizar para Premium",

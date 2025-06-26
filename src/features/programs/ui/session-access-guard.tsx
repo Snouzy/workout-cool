@@ -2,7 +2,6 @@
 
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { Lock } from "lucide-react";
 
 import { useCurrentLocale, useI18n } from "locales/client";
 import { getSessionAccess, type AccessControlContext } from "@/shared/lib/access-control";
@@ -97,8 +96,8 @@ export function SessionAccessGuard({
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] px-6">
         <div className="max-w-md mx-auto text-center">
-          <div className="w-16 h-16 bg-yellow-100 dark:bg-yellow-900 rounded-full flex items-center justify-center mx-auto mb-6">
-            <Lock className="w-8 h-8 text-yellow-600 dark:text-yellow-400" />
+          <div className="flex items-center justify-center mx-auto mb-6">
+            <Image alt="Premium" height={128} src="/images/emojis/WorkoutCoolRich.png" width={128} />
           </div>
 
           <h2 className="text-2xl font-bold mb-4">{t("programs.premium_required")}</h2>

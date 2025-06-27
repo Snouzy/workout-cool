@@ -89,3 +89,9 @@ jobs:
           BETTER_AUTH_SECRET: test_secret_key_32_chars_minimum
           OPENPANEL_SECRET_KEY: test_secret
           NEXT_PUBLIC_OPENPANEL_CLIENT_ID: test_client_id
+          NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: test_client_id
+          NEXT_PUBLIC_STRIPE_PRICE_MONTHLY: test_price_monthly
+          NEXT_PUBLIC_STRIPE_PRICE_YEARLY: test_price_yearly
+          NEXT_PUBLIC_APP_URL: http://localhost:3000
+          STRIPE_SECRET_KEY: test_secret_key
+          STRIPE_WEBHOOK_SECRET: test_webhook_secret

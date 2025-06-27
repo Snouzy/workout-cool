@@ -40,7 +40,6 @@ export function ProgramBuilder({ program }: ProgramBuilderProps) {
               <div>
                 <div className="flex items-center gap-2 mb-2">
                   <h1 className="text-2xl font-bold">{program.title}</h1>
-                  {program.emoji && <Image alt="Emoji" height={32} src={`/images/emojis/${program.emoji}`} width={32} />}
                 </div>
                 <p className="text-base-content/60 mb-3">{program.description}</p>
                 <div className="flex gap-2">

@@ -102,7 +102,6 @@ export async function createProgram(data: CreateProgramData) {
       equipment: data.equipment,
       isPremium: data.isPremium,
       visibility: ProgramVisibility.DRAFT, // Always start as draft
-      emoji: data.emoji,
       coaches: {
         create: data.coaches || [],
       },

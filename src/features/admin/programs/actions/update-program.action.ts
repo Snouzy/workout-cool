@@ -107,7 +107,6 @@ export async function updateProgram(programId: string, data: UpdateProgramData) 
           sessionDurationMin: data.sessionDurationMin,
           equipment: data.equipment,
           isPremium: data.isPremium,
-          emoji: data.emoji,
         },
       });
 

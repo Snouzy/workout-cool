@@ -88,16 +88,11 @@ export function PremiumUpgradeCard() {
   return (
     <div className="relative space-y-16">
       <div className="text-center space-y-4 max-w-2xl mx-auto mb-12">
-        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">You’re already getting a lot for free...</h2>
-        <p className="text-gray-700 dark:text-gray-400 text-lg leading-relaxed">
-          Workout.cool is a free, open-source fitness app used daily by{" "}
-          <strong className="text-gray-700 dark:text-white">70,000+ users</strong>. It’s built with love (not VC money ^^) and it costs us
-          real time and money to keep it running.
-        </p>
+        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">{t("premium.free_intro_title")}</h2>
+        <p className="text-gray-700 dark:text-gray-400 text-lg leading-relaxed">{t("premium.free_intro_text")}</p>
         <p className="text-gray-600 dark:text-gray-500 text-md">
-          At first, we were running on donations. But as you can imagine, donations weren&apos;t sufficient to cover development and running
-          costs. So we made you a package that will help us keep the lights on — and unlock a few superpowers along the way. <br /> <br />
-          If Workout.cool helps you level up your health, please consider going Premium :D !
+          {t("premium.donation_story_text")} <br /> <br />
+          {t("premium.health_upgrade_text")}
         </p>
       </div>
 
@@ -121,10 +116,11 @@ export function PremiumUpgradeCard() {
           </div>
         </div>
 
-        <p className="text-xl text-gray-700 dark:text-gray-400 max-w-xl mx-auto">Unlock advanced features & support open-source fitness.</p>
+        <p className="text-xl text-gray-700 dark:text-gray-400 max-w-xl mx-auto">{t("premium.unlock_features_text")}</p>
         <p className="text-md text-gray-500 dark:text-gray-600 max-w-xl mx-auto !mt-1">
           <span className="text-gray-700 dark:text-gray-400 text-2xl">“</span>
-          Never skimp on fitness & books — invest in yourself !<span className="text-gray-600 dark:text-gray-400 text-2xl">”</span>
+          {t("premium.invest_yourself_quote")}
+          <span className="text-gray-600 dark:text-gray-400 text-2xl">”</span>
         </p>
         <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#25CB78]/10 dark:bg-[#25CB78]/20 rounded-full">
           <Heart className="w-4 h-4 text-[#25CB78]" fill="currentColor" />
@@ -141,6 +137,7 @@ export function PremiumUpgradeCard() {
 
           return (
             <div
+              // eslint-disable-next-line max-len
               className={`relative bg-white dark:bg-gray-900 rounded-3xl p-8 border-2 transition-all duration-200 ease-out hover:scale-[1.02] hover:-translate-y-1 ${
                 isYearly
                   ? "border-[#25CB78]/30 dark:border-[#25CB78]/40 shadow-xl shadow-[#25CB78]/10"
@@ -176,7 +173,9 @@ export function PremiumUpgradeCard() {
                 </div>
 
                 <div>
-                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">{isYearly ? t("premium.annual_plan") : t("premium.monthly_plan")}</h3>
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                    {isYearly ? t("premium.annual_plan") : t("premium.monthly_plan")}
+                  </h3>
                   <div className="flex items-baseline justify-center gap-1">
                     <span className="text-5xl font-bold text-gray-900 dark:text-white">€{price}</span>
                     <span className="text-lg text-gray-500 dark:text-gray-400">/{period}</span>
@@ -184,7 +183,10 @@ export function PremiumUpgradeCard() {
                   {isYearly && (
                     <div className="mt-2 inline-flex items-center gap-1.5 px-3 py-1 bg-[#25CB78]/10 dark:bg-[#25CB78]/20 rounded-full">
                       <div className="w-2 h-2 bg-[#25CB78] rounded-full" />
-                      <span className="text-sm font-medium text-[#25CB78]">€{(price / 12).toFixed(2)}{t("premium.per_month")}</span>
+                      <span className="text-sm font-medium text-[#25CB78]">
+                        €{(price / 12).toFixed(2)}
+                        {t("premium.per_month")}
+                      </span>
                     </div>
                   )}
                 </div>
@@ -197,7 +199,8 @@ export function PremiumUpgradeCard() {
                 </li>
                 <li className="flex items-center gap-3">
                   <Check className="w-4 h-4 text-[#4F8EF7]" />
-                  {t("premium.feature_progress_tracking")}<span className="text-xs text-gray-500 dark:text-gray-400 -ml-1 italic">({t("premium.coming_soon")})</span>
+                  {t("premium.feature_progress_tracking")}
+                  <span className="text-xs text-gray-500 dark:text-gray-400 -ml-1 italic">({t("premium.coming_soon")})</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <Check className="w-4 h-4 text-[#4F8EF7]" />
@@ -231,7 +234,7 @@ export function PremiumUpgradeCard() {
                   </div>
                 ) : (
                   <div className="flex items-center justify-center gap-2">
-                    <span>{isYearly ? "I want to support + save 40%" : "Let’s unlock my full plan"}</span>
+                    <span>{isYearly ? t("premium.cta_annual") : t("premium.cta_monthly")}</span>
                     <ArrowRight className="w-5 h-5" />
                   </div>
                 )}
@@ -254,10 +257,7 @@ export function PremiumUpgradeCard() {
           </div>
         </div>
         <div className="space-y-6">
-          <p className="text-sm font-medium text-gray-600 dark:text-gray-400 px-4 sm:px-10">
-            Still not sure? No worries. Workout.cool will always remain free and open-source. <br />
-            But if you believe in what we’re building and you can afford it, your support will help 💚
-          </p>
+          <p className="text-sm font-medium text-gray-600 dark:text-gray-400 px-4 sm:px-10">{t("premium.still_unsure")}</p>
           <div className="flex items-center justify-center gap-4 text-xs text-gray-500 dark:text-gray-500">
             <div className="flex items-center gap-1">
               <div className="w-2 h-2 bg-[#25CB78] rounded-full" />

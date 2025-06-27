@@ -79,7 +79,7 @@ export default {
     premium_active_subtitle: "All features unlocked",
     free_intro_title: "You're already getting a lot for free...",
     free_intro_text:
-      "Workout.cool is a free, open-source fitness app used daily by 70,000+ users. It's built with love (not VC money ^^) and it costs us real time and money to keep it running.",
+      "Workout.cool is a free, open-source fitness app used daily by 60,000+ users. It's built with love (not VC money ^^) and it costs us real time and money to keep it running.",
     donation_story_text:
       "At first, we were running on donations. But as you can imagine, donations weren't sufficient to cover development and running costs. So we made you a package that will help us keep the lights on — and unlock a few superpowers along the way.",
     health_upgrade_text: "If Workout.cool helps you level up your health, please consider going Premium :D !",

@@ -76,7 +76,7 @@ export default {
     premium_active_subtitle: "Todos os recursos desbloqueados",
     free_intro_title: "Já está a receber muito gratuitamente...",
     free_intro_text:
-      "Workout.cool é uma aplicação de fitness gratuita e de código aberto usada diariamente por mais de 70.000 utilizadores. É construída com amor (não com dinheiro de VC ^^) e custa-nos tempo e dinheiro real mantê-la a funcionar.",
+      "Workout.cool é uma aplicação de fitness gratuita e de código aberto usada diariamente por mais de 60.000 utilizadores. É construída com amor (não com dinheiro de VC ^^) e custa-nos tempo e dinheiro real mantê-la a funcionar.",
     donation_story_text:
       "No início, funcionávamos com doações. Mas como pode imaginar, as doações não foram suficientes para cobrir os custos de desenvolvimento e funcionamento. Então criámos um pacote que nos ajudará a manter as luzes acesas — e desbloquear alguns superpoderes pelo caminho.",
     health_upgrade_text: "Se o Workout.cool o ajuda a melhorar a sua saúde, por favor considere tornar-se Premium :D !",

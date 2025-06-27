@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Home, LogIn, UserPlus, LogOut, User, Crown, CreditCard } from "lucide-react";
+import { Home, LogIn, UserPlus, LogOut, User, Crown } from "lucide-react";
 
 import { useI18n } from "locales/client";
 import Logo from "@public/logo.png";
@@ -94,7 +94,7 @@ export const Header = () => {
             {/* Subscription Menu Item */}
             {session.data && (
               <li>
-                <Link
+                {/* <Link
                   className="!no-underline"
                   href={isPremium ? "/api/premium/billing-portal" : "/premium"}
                   size="base"
@@ -129,7 +129,7 @@ export const Header = () => {
                       {t("commons.become_premium")}
                     </>
                   )}
-                </Link>
+                </Link> */}
               </li>
             )}
 

@@ -131,7 +131,7 @@ export function WelcomeModal({
           </div>
 
           {/* Tips */}
-          <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-xl p-4">
+          {/* <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-xl p-4">
             <div className="flex gap-3">
               <Image alt="Tip" className="object-contain" height={32} src="/images/emojis/WorkoutCoolHappy.png" width={32} />
               <div className="text-sm">
@@ -141,16 +141,17 @@ export function WelcomeModal({
                 </p>
               </div>
             </div>
-          </div>
+          </div> */}
 
           {/* Actions */}
           <div className="flex gap-3">
-            <Button className="flex-1" onClick={onClose} variant="outline">
+            <Button className="flex-1" onClick={onClose} size="large" variant="outline">
               Plus tard
             </Button>
             <Button
               className="flex-1 bg-gradient-to-r from-[#4F8EF7] to-[#25CB78] hover:from-[#4F8EF7]/80 hover:to-[#25CB78]/80 text-white border-0"
               onClick={handleJoin}
+              size="large"
             >
               C&apos;est parti !
             </Button>

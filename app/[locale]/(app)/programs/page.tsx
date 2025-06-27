@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 
+import { Locale } from "locales/types";
 import { ProgramsPage } from "@/features/programs/ui/programs-page";
 
 export const metadata: Metadata = {
@@ -8,7 +9,7 @@ export const metadata: Metadata = {
 };
 
 export default async function ProgramsRootPage({ params }: { params: Promise<{ locale: string }> }) {
-  const { locale } = await params;
+  const { locale } = (await params) as { locale: Locale };
 
   return <ProgramsPage locale={locale} />;
 }

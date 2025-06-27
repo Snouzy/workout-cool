@@ -44,6 +44,9 @@ export class StripeProvider implements PaymentProvider {
             quantity: 1,
           },
         ],
+        automatic_tax: {
+          enabled: true,
+        },
         metadata: {
           userId,
           planId: plan.internalId || plan.id,

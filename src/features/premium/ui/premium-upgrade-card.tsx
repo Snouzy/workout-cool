@@ -1,24 +1,20 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Crown, Zap, Heart, Dumbbell, Check, ArrowRight, Sparkles } from "lucide-react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
-import { useI18n } from "locales/client";
 import { useIsPremium } from "@/shared/lib/premium/use-premium";
 import { Button } from "@/components/ui/button";
 
 import type { PremiumPlan, CheckoutResult } from "@/shared/types/premium.types";
 
 export function PremiumUpgradeCard() {
-  const t = useI18n();
-  const router = useRouter();
   const isPremium = useIsPremium();
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
 
-  const { data: plans = [], isLoading: plansLoading } = useQuery({
+  const { data: plans = [] } = useQuery({
     queryKey: ["premium-plans"],
     queryFn: async (): Promise<PremiumPlan[]> => {
       const response = await fetch("/api/premium/plans");
@@ -63,6 +59,7 @@ export function PremiumUpgradeCard() {
         <div className="absolute top-4 right-4">
           <Image alt="Premium mascot" className="drop-shadow-lg" height={80} src="/images/emojis/WorkoutCoolRich.png" width={80} />
         </div>
+        f
         <div className="relative z-10">
           <div className="flex items-center gap-3 mb-3">
             <div className="relative">
@@ -81,14 +78,6 @@ export function PremiumUpgradeCard() {
               </div>
             </div>
           </div>
-          <Button
-            className="mt-6 bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white hover:scale-[1.02] hover:border-[#4F8EF7]/50 dark:hover:border-[#4F8EF7]/50 transition-all duration-200 ease-out rounded-xl h-11 px-6 font-medium"
-            onClick={() => router.push("/profile")}
-            variant="outline"
-          >
-            Manage Subscription
-            <ArrowRight className="ml-2 w-4 h-4" />
-          </Button>
         </div>
       </div>
     );

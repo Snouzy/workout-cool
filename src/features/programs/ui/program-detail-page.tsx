@@ -4,11 +4,26 @@ import { useState, useEffect } from "react";
 import { useQueryState, parseAsString, parseAsInteger } from "nuqs";
 import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
-import { BarChart3, Target, Clock, Calendar, Timer, Dumbbell, Lock, Trophy, Users, Zap, CheckCircle2 } from "lucide-react";
+import {
+  BarChart3,
+  Target,
+  Clock,
+  Calendar,
+  Timer,
+  Dumbbell,
+  Lock,
+  Trophy,
+  Users,
+  Zap,
+  CheckCircle2,
+  Unlock,
+  ArrowRight,
+} from "lucide-react";
 import { ExerciseAttributeValueEnum } from "@prisma/client";
 
 import { useCurrentLocale, useI18n } from "locales/client";
 import { getEquipmentTranslation } from "@/shared/lib/workout-session/equipments";
+import { useIsPremium } from "@/shared/lib/premium/use-premium";
 import { getSlugForLocale } from "@/shared/lib/locale-slug";
 import { getAttributeValueLabel } from "@/shared/lib/attribute-value-translation";
 import { WelcomeModal } from "@/features/programs/ui/welcome-modal";
@@ -38,6 +53,7 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
   const searchParams = useSearchParams();
   const router = useRouter();
   const currentLocale = useCurrentLocale();
+  const isPremium = useIsPremium();
   const programTitle = getProgramTitle(program, currentLocale);
   const programDescription = getProgramDescription(program, currentLocale);
 
@@ -375,13 +391,23 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
                           <div className="relative">
                             <div
                               className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 font-bold text-white ${
-                                isCompleted ? "bg-[#25CB78]" : session.isPremium ? "bg-yellow-500" : "bg-[#25CB78]"
+                                isCompleted
+                                  ? "bg-[#25CB78]"
+                                  : session.isPremium
+                                    ? isPremium
+                                      ? "bg-[#4F8EF7]"
+                                      : "bg-yellow-500"
+                                    : "bg-[#25CB78]"
                               }`}
                             >
                               {isCompleted ? (
                                 <CheckCircle2 size={18} />
                               ) : session.isPremium ? (
-                                <Lock size={18} />
+                                isPremium ? (
+                                  <Unlock size={18} />
+                                ) : (
+                                  <Lock size={18} />
+                                )
                               ) : (
                                 <span className="text-lg">{session.sessionNumber}</span>
                               )}
@@ -408,11 +434,11 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
                                 </div>
                               )}
                             </div>
-                            <p className="text-sm text-gray-500 dark:text-gray-400 flex items-center gap-1">
+                            <p className="text-sm text-gray-600 dark:text-gray-400 flex items-center gap-1">
                               <Dumbbell size={14} />
                               {formatEquipment(session.equipment)}
                             </p>
-                            <p className="text-xs text-gray-400 mt-1">
+                            <p className="text-xs text-gray-600 mt-1">
                               {session.totalExercises} {t("programs.exercises")} • {session.estimatedMinutes} {t("programs.min_short")}
                             </p>
                           </div>
@@ -422,13 +448,7 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
                             {isCompleted ? (
                               <CheckCircle2 className="text-[#25CB78]" size={24} />
                             ) : (
-                              <Image
-                                alt="Status"
-                                className="w-8 h-8 object-contain"
-                                height={32}
-                                src={`/images/emojis/${session.isPremium ? "WorkoutCoolCry.png" : "WorkoutCoolHappy.png"}`}
-                                width={32}
-                              />
+                              <ArrowRight className="text-gray-600 dark:text-gray-400" size={24} />
                             )}
                           </div>
                         </div>

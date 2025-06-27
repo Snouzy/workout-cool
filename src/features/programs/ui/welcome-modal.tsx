@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Trophy, Target, Calendar, Zap, X } from "lucide-react";
 import confetti from "canvas-confetti";
 
+import { useI18n } from "locales/client";
 import { Button } from "@/components/ui/button";
 
 interface WelcomeModalProps {
@@ -27,6 +28,7 @@ export function WelcomeModal({
   programFrequency,
 }: WelcomeModalProps) {
   const [isAnimating, setIsAnimating] = useState(false);
+  const t = useI18n();
 
   useEffect(() => {
     if (isOpen) {
@@ -92,9 +94,9 @@ export function WelcomeModal({
             </div>
 
             <h2 className="text-2xl font-bold mb-2 bg-gradient-to-r from-[#4F8EF7] to-[#25CB78] bg-clip-text text-transparent">
-              Bienvenue dans {programTitle} !
+              {t("programs.welcome_modal.welcome_title", { programTitle })}
             </h2>
-            <p className="text-gray-600 dark:text-gray-400">Prépare-toi à repousser tes limites ! 💪</p>
+            <p className="text-gray-600 dark:text-gray-400">{t("programs.welcome_modal.subtitle")}</p>
           </div>
 
           {/* Program quick info */}
@@ -104,7 +106,7 @@ export function WelcomeModal({
                 <Zap className="text-white" size={16} />
               </div>
               <div>
-                <p className="text-xs text-gray-500 dark:text-gray-400">Niveau</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400">{t("programs.welcome_modal.level_label")}</p>
                 <p className="font-semibold text-gray-900 dark:text-white">{programLevel}</p>
               </div>
             </div>
@@ -114,7 +116,7 @@ export function WelcomeModal({
                 <Calendar className="text-white" size={16} />
               </div>
               <div>
-                <p className="text-xs text-gray-500 dark:text-gray-400">Durée</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400">{t("programs.welcome_modal.duration_label")}</p>
                 <p className="font-semibold text-gray-900 dark:text-white">{programDuration}</p>
               </div>
             </div>
@@ -124,7 +126,7 @@ export function WelcomeModal({
                 <Target className="text-white" size={16} />
               </div>
               <div>
-                <p className="text-xs text-gray-500 dark:text-gray-400">Fréquence</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400">{t("programs.welcome_modal.frequency_label")}</p>
                 <p className="font-semibold text-gray-900 dark:text-white">{programFrequency}</p>
               </div>
             </div>
@@ -146,14 +148,14 @@ export function WelcomeModal({
           {/* Actions */}
           <div className="flex gap-3">
             <Button className="flex-1" onClick={onClose} size="large" variant="outline">
-              Plus tard
+              {t("programs.welcome_modal.later_button")}
             </Button>
             <Button
               className="flex-1 bg-gradient-to-r from-[#4F8EF7] to-[#25CB78] hover:from-[#4F8EF7]/80 hover:to-[#25CB78]/80 text-white border-0"
               onClick={handleJoin}
               size="large"
             >
-              C&apos;est parti !
+              {t("programs.welcome_modal.start_button")}
             </Button>
           </div>
         </div>

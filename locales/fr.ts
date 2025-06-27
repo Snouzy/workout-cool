@@ -61,6 +61,15 @@ export default {
     share_success: "Partagé avec succès !",
     copied_to_clipboard: "Lien copié !",
     share_failed: "Échec du partage",
+    welcome_modal: {
+      welcome_title: "Bienvenue dans {programTitle} !",
+      subtitle: "Prépare-toi à repousser tes limites ! 💪",
+      level_label: "Niveau",
+      duration_label: "Durée",
+      frequency_label: "Fréquence",
+      later_button: "Plus tard",
+      start_button: "C'est parti !",
+    },
   },
   bottom_navigation: {
     programs: "Programmes",

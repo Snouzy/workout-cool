@@ -60,6 +60,15 @@ export default {
     program_completed: "Программа завершена",
     copied_to_clipboard: "Ссылка скопирована!",
     share_failed: "Ошибка при делении",
+    welcome_modal: {
+      welcome_title: "Добро пожаловать в {programTitle}!",
+      subtitle: "Приготовьтесь преодолевать свои пределы! 💪",
+      level_label: "Уровень",
+      duration_label: "Продолжительность",
+      frequency_label: "Частота",
+      later_button: "Позже",
+      start_button: "Поехали!",
+    },
   },
   bottom_navigation: {
     programs: "Программы",

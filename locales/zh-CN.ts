@@ -59,6 +59,15 @@ export default {
     share_success: "分享成功！",
     copied_to_clipboard: "链接已复制！",
     share_failed: "分享失败",
+    welcome_modal: {
+      welcome_title: "欢迎来到 {programTitle}！",
+      subtitle: "准备挑战你的极限！💪",
+      level_label: "级别",
+      duration_label: "持续时间",
+      frequency_label: "频率",
+      later_button: "稍后",
+      start_button: "开始吧！",
+    },
   },
   bottom_navigation: {
     programs: "课程",

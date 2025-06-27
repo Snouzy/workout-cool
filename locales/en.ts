@@ -58,6 +58,15 @@ export default {
     share_success: "Shared successfully!",
     copied_to_clipboard: "Link copied!",
     share_failed: "Share failed",
+    welcome_modal: {
+      welcome_title: "Welcome to {programTitle}!",
+      subtitle: "Get ready to push your limits! 💪",
+      level_label: "Level",
+      duration_label: "Duration",
+      frequency_label: "Frequency",
+      later_button: "Later",
+      start_button: "Let's go!",
+    },
   },
   premium: {
     premium_required_description: "This is a premium access. Upgrade to access all premium content.",

@@ -5,12 +5,14 @@ import Image from "next/image";
 import { Crown, Zap, Heart, Dumbbell, Check, ArrowRight, Sparkles } from "lucide-react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
+import { useI18n } from "locales/client";
 import { useIsPremium } from "@/shared/lib/premium/use-premium";
 import { Button } from "@/components/ui/button";
 
 import type { PremiumPlan, CheckoutResult } from "@/shared/types/premium.types";
 
 export function PremiumUpgradeCard() {
+  const t = useI18n();
   const isPremium = useIsPremium();
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
 
@@ -41,7 +43,7 @@ export function PremiumUpgradeCard() {
     },
     onError: (error) => {
       console.error("Checkout error:", error);
-      alert("Failed to create checkout. Please try again.");
+      alert(t("premium.checkout_error"));
     },
   });
 
@@ -71,10 +73,10 @@ export function PremiumUpgradeCard() {
               </div>
             </div>
             <div>
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-white">Premium Active</h3>
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white">{t("premium.premium_active_title")}</h3>
               <div className="flex items-center gap-2 text-sm text-[#25CB78] font-medium">
                 <div className="w-2 h-2 bg-[#25CB78] rounded-full animate-pulse" />
-                All features unlocked
+                {t("premium.premium_active_subtitle")}
               </div>
             </div>
           </div>
@@ -126,7 +128,7 @@ export function PremiumUpgradeCard() {
         </p>
         <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#25CB78]/10 dark:bg-[#25CB78]/20 rounded-full">
           <Heart className="w-4 h-4 text-[#25CB78]" fill="currentColor" />
-          <span className="text-sm font-medium text-[#25CB78]">Support the mission</span>
+          <span className="text-sm font-medium text-[#25CB78]">{t("premium.support_mission")}</span>
         </div>
       </div>
 
@@ -134,7 +136,7 @@ export function PremiumUpgradeCard() {
         {plans.map((plan) => {
           const isYearly = plan.priceYearly > 0;
           const price = isYearly ? plan.priceYearly : plan.priceMonthly;
-          const period = isYearly ? "year" : "month";
+          const period = isYearly ? t("premium.pricing_year") : t("premium.pricing_month");
           const isLoading = checkoutMutation.isPending && selectedPlan === plan.id;
 
           return (
@@ -150,7 +152,7 @@ export function PremiumUpgradeCard() {
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2">
                   <div className="bg-gradient-to-r from-[#25CB78] to-[#4F8EF7] text-white text-sm font-bold px-4 py-1.5 rounded-full flex items-center gap-1.5">
                     <Zap className="w-4 h-4" />
-                    BEST VALUE
+                    {t("premium.best_value_badge")}
                   </div>
                 </div>
               )}
@@ -163,7 +165,7 @@ export function PremiumUpgradeCard() {
                         <Crown className="w-8 h-8 text-white" strokeWidth={2.5} />
                       </div>
                       <div className="absolute -bottom-4 -right-4 w-10 h-10 bg-[#FFD93D] rounded-xl flex items-center justify-center rotate-12">
-                        <span className="text-xs font-bold text-gray-900">40% off</span>
+                        <span className="text-xs font-bold text-gray-900">{t("premium.discount_badge")}</span>
                       </div>
                     </div>
                   ) : (
@@ -174,7 +176,7 @@ export function PremiumUpgradeCard() {
                 </div>
 
                 <div>
-                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">{isYearly ? "Annual" : "Monthly"}</h3>
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">{isYearly ? t("premium.annual_plan") : t("premium.monthly_plan")}</h3>
                   <div className="flex items-baseline justify-center gap-1">
                     <span className="text-5xl font-bold text-gray-900 dark:text-white">€{price}</span>
                     <span className="text-lg text-gray-500 dark:text-gray-400">/{period}</span>
@@ -182,7 +184,7 @@ export function PremiumUpgradeCard() {
                   {isYearly && (
                     <div className="mt-2 inline-flex items-center gap-1.5 px-3 py-1 bg-[#25CB78]/10 dark:bg-[#25CB78]/20 rounded-full">
                       <div className="w-2 h-2 bg-[#25CB78] rounded-full" />
-                      <span className="text-sm font-medium text-[#25CB78]">€{(price / 12).toFixed(2)}/month</span>
+                      <span className="text-sm font-medium text-[#25CB78]">€{(price / 12).toFixed(2)}{t("premium.per_month")}</span>
                     </div>
                   )}
                 </div>
@@ -191,24 +193,24 @@ export function PremiumUpgradeCard() {
               <ul className="space-y-4 mb-8">
                 <li className="flex items-center gap-3">
                   <Check className="w-4 h-4 text-[#4F8EF7]" />
-                  All workout programs
+                  {t("premium.feature_all_programs")}
                 </li>
                 <li className="flex items-center gap-3">
                   <Check className="w-4 h-4 text-[#4F8EF7]" />
-                  Progress tracking<span className="text-xs text-gray-500 dark:text-gray-400 -ml-1 italic">(soon)</span>
+                  {t("premium.feature_progress_tracking")}<span className="text-xs text-gray-500 dark:text-gray-400 -ml-1 italic">({t("premium.coming_soon")})</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <Check className="w-4 h-4 text-[#4F8EF7]" />
-                  All future programs & updates
+                  {t("premium.feature_future_updates")}
                 </li>
                 <li className="flex items-center gap-3">
                   <Check className="w-4 h-4 text-[#4F8EF7]" />
-                  Priority support
+                  {t("premium.feature_priority_support")}
                 </li>
                 {isYearly && (
                   <li className="flex items-center gap-3">
                     <Heart className="w-4 h-4 text-[#25CB78]" fill="currentColor" />
-                    Save 40% yearly
+                    {t("premium.save_yearly")}
                   </li>
                 )}
               </ul>
@@ -225,7 +227,7 @@ export function PremiumUpgradeCard() {
                 {isLoading ? (
                   <div className="flex items-center justify-center gap-2">
                     <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                    <span>Processing...</span>
+                    <span>{t("premium.processing")}</span>
                   </div>
                 ) : (
                   <div className="flex items-center justify-center gap-2">
@@ -235,7 +237,7 @@ export function PremiumUpgradeCard() {
                 )}
               </Button>
               <p className="mt-2 text-sm text-center text-gray-500 dark:text-gray-400">
-                {isYearly ? "Thank you for supporting." : "No pressure. You can upgrade anytime."}
+                {isYearly ? t("premium.thank_supporting") : t("premium.no_pressure")}
               </p>
             </div>
           );
@@ -247,7 +249,7 @@ export function PremiumUpgradeCard() {
           <Image alt="Happy mascot" className="mx-auto" height={60} src="/images/emojis/WorkoutCoolBiceps.png" width={60} />
           <div className="absolute -top-2 left-1/2 -translate-x-[15%] rotate-2">
             <div className="w-max px-2 h-6 bg-[#4F8EF7] rounded-full flex items-center justify-center">
-              <span className="text-sm font-bold text-white">keep pushing ! huhu</span>
+              <span className="text-sm font-bold text-white">{t("premium.keep_pushing")}</span>
             </div>
           </div>
         </div>
@@ -259,15 +261,15 @@ export function PremiumUpgradeCard() {
           <div className="flex items-center justify-center gap-4 text-xs text-gray-500 dark:text-gray-500">
             <div className="flex items-center gap-1">
               <div className="w-2 h-2 bg-[#25CB78] rounded-full" />
-              <span>Self-hosting</span>
+              <span>{t("premium.self_hosting")}</span>
             </div>
             <div className="flex items-center gap-1">
               <div className="w-2 h-2 bg-[#4F8EF7] rounded-full" />
-              <span>Community</span>
+              <span>{t("premium.community")}</span>
             </div>
             <div className="flex items-center gap-1">
               <div className="w-2 h-2 bg-[#FFD93D] rounded-full" />
-              <span>MIT License</span>
+              <span>{t("premium.mit_license")}</span>
             </div>
           </div>
         </div>

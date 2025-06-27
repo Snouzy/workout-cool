@@ -115,6 +115,3 @@ export function BottomNavigation() {
     </nav>
   );
 }
-function useLocale() {
-  throw new Error("Function not implemented.");
-}

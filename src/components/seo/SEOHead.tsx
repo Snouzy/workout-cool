@@ -16,10 +16,19 @@ interface SEOHeadProps {
   ogType?: "website" | "article";
   noIndex?: boolean;
   structuredData?: {
-    type: "Article" | "SoftwareApplication";
+    type: "Article" | "SoftwareApplication" | "Calculator";
     author?: string;
     datePublished?: string;
     dateModified?: string;
+    calculatorData?: {
+      calculatorType: "calorie" | "macro" | "bmi" | "heart-rate" | "one-rep-max" | "rest-timer";
+      inputFields: string[];
+      outputFields: string[];
+      formula?: string;
+      accuracy?: string;
+      targetAudience?: string[];
+      relatedCalculators?: string[];
+    };
   };
 }
 
@@ -135,6 +144,7 @@ export function SEOScripts({ title, description, locale = "en", canonical, ogIma
       author: structuredData.author,
       datePublished: structuredData.datePublished,
       dateModified: structuredData.dateModified,
+      calculatorData: structuredData.calculatorData,
     });
   }
 

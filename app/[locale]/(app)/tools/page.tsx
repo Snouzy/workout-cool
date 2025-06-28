@@ -114,8 +114,8 @@ export default async function ToolsPage() {
                   </div>
                 </div>
 
-                <h3 className="text-xl sm:text-2xl font-bold mb-2 text-base-content">{t(`tools.${tool.id}.title`)}</h3>
-                <p className="text-base-content/70 text-sm sm:text-base">{t(`tools.${tool.id}.description`)}</p>
+                <h3 className="text-xl sm:text-2xl font-bold mb-2 text-base-content">{t(`tools.${tool.id}.title` as keyof typeof t)}</h3>
+                <p className="text-base-content/70 text-sm sm:text-base">{t(`tools.${tool.id}.description` as keyof typeof t)}</p>
 
                 <div className="mt-4 flex items-center gap-2 text-primary">
                   <span className="text-sm font-medium">{t("tools.tryNow")}</span>

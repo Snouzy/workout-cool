@@ -119,12 +119,12 @@ async function importProgram() {
     await prisma.programWeek.deleteMany({});
     await prisma.program.deleteMany({
       where: {
-        slug: "eveil-corporel", // Supprimer seulement ce programme
+        slug: "programme-fessiers-sculptés", // Supprimer seulement ce programme
       },
     });
     console.log("✅ Nettoyage terminé");
 
-    const csvPath = path.join(__dirname, "data", "eveil-corporel-2.csv");
+    const csvPath = path.join(__dirname, "data", "programme-fessiers-sculptés.csv");
     const csvContent = fs.readFileSync(csvPath, "utf-8");
 
     // Séparer les sections du CSV

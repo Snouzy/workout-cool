@@ -1,0 +1,166 @@
+# PROGRAM CSV
+slug,slugEn,slugEs,slugPt,slugRu,slugZhCn,title,titleEn,titleEs,titlePt,titleRu,titleZhCn,description,descriptionEn,descriptionEs,descriptionPt,descriptionRu,descriptionZhCn,category,image,level,type,durationWeeks,sessionsPerWeek,sessionDurationMin,equipment,isPremium,isActive,participantCount,visibility
+fessiers-sculptes,sculpted-glutes,gluteos-esculpidos,gluteos-esculpidos,skul-ptirovannye-yagodicy,diaoke-tunbu,Fessiers Sculptés,Sculpted Glutes,Glúteos Esculpidos,Glúteos Esculpidos,Скульптированные Ягодицы,雕刻臀部,Forge des fessiers puissants et galbés qui transforment ta silhouette. Chaque mouvement cible et active tes muscles pour un résultat visible. 'La beauté naît de la force et la force de la persévérance.',Forge powerful and shapely glutes that transform your silhouette. Every movement targets and activates your muscles for visible results. 'Beauty is born from strength and strength from perseverance.',Forja glúteos poderosos y torneados que transforman tu silueta. Cada movimiento apunta y activa tus músculos para resultados visibles. 'La belleza nace de la fuerza y la fuerza de la perseverancia.',Forja glúteos poderosos e torneados que transformam a tua silhueta. Cada movimento visa e ativa os músculos para resultados visíveis. 'A beleza nasce da força e a força da perseverança.',Создавай мощные и рельефные ягодицы которые трансформируют твой силуэт. Каждое движение нацелено на активацию мышц для видимых результатов. 'Красота рождается из силы а сила из упорства.',打造强大而有型的臀部，改变你的轮廓。每个动作都针对并激活肌肉以获得可见效果。'美丽源于力量，力量源于坚持。',STRENGTH,,INTERMEDIATE,STRENGTH,2,3,40,"{BODY_ONLY,DUMBBELL,KETTLEBELLS}",false,true,0,PUBLISHED
+
+# WEEKS CSV
+weekNumber,title,titleEn,titleEs,titlePt,titleRu,titleZhCn,description,descriptionEn,descriptionEs,descriptionPt,descriptionRu,descriptionZhCn
+1,Activation Profonde,Deep Activation,Activación Profunda,Ativação Profunda,Глубокая Активация,深度激活,Tu réveilles tes fessiers endormis et apprends à les recruter parfaitement. Chaque contraction compte pour sculpter ton futur. 'Rome ne s'est pas construite en un jour mais chaque pierre avait sa place.',You awaken your dormant glutes and learn to recruit them perfectly. Every contraction counts to sculpt your future. 'Rome wasn't built in a day but every stone had its place.',Despiertas tus glúteos dormidos y aprendes a reclutarlos perfectamente. Cada contracción cuenta para esculpir tu futuro. 'Roma no se construyó en un día pero cada piedra tenía su lugar.',Despertas os glúteos adormecidos e aprendes a recrutá-los perfeitamente. Cada contração conta para esculpir o teu futuro. 'Roma não se construiu num dia mas cada pedra tinha o seu lugar.',Ты пробуждаешь спящие ягодицы и учишься их идеально активировать. Каждое сокращение важно для лепки твоего будущего. 'Рим строился не за день но каждый камень имел свое место.',你唤醒沉睡的臀部，学会完美地激活它们。每次收缩都对塑造你的未来很重要。'罗马不是一天建成的，但每块石头都有其位置。'
+2,Sculpture Intensive,Intensive Sculpting,Escultura Intensiva,Escultura Intensiva,Интенсивная Скульптура,密集雕塑,L'intensité monte et tes fessiers se transforment sous l'effort. Tu sens la puissance grandir à chaque série explosive. 'Le diamant se forme sous pression.',The intensity rises and your glutes transform under effort. You feel power growing with each explosive set. 'Diamonds form under pressure.',La intensidad aumenta y tus glúteos se transforman bajo el esfuerzo. Sientes el poder crecer con cada serie explosiva. 'Los diamantes se forman bajo presión.',A intensidade aumenta e os glúteos transformam-se sob esforço. Sentes o poder crescer a cada série explosiva. 'Os diamantes formam-se sob pressão.',Интенсивность возрастает и ягодицы трансформируются под нагрузкой. Ты чувствуешь как растет мощь с каждым взрывным подходом. 'Алмазы формируются под давлением.',强度上升，你的臀部在努力下发生转变。你感受到每一组爆发性训练中力量的增长。'钻石在压力下形成。'
+
+# SESSIONS CSV
+weekNumber,sessionNumber,title,titleEn,titleEs,titlePt,titleRu,titleZhCn,slug,slugEn,slugEs,slugPt,slugRu,slugZhCn,description,descriptionEn,descriptionEs,descriptionPt,descriptionRu,descriptionZhCn,equipment,estimatedMinutes,exercises
+1,1,Éveil des Fessiers,Glute Awakening,Despertar de Glúteos,Despertar dos Glúteos,Пробуждение Ягодиц,臀部觉醒,eveil-fessiers,glute-awakening,despertar-gluteos,despertar-gluteos,probuzhdenie-yagodic,tunbu-juexing,Premier contact avec la zone de puissance. Tu apprends à sentir et contrôler chaque fibre musculaire.,First contact with the power zone. You learn to feel and control every muscle fiber.,Primer contacto con la zona de poder. Aprendes a sentir y controlar cada fibra muscular.,Primeiro contacto com a zona de poder. Aprendes a sentir e controlar cada fibra muscular.,Первый контакт с зоной силы. Ты учишься чувствовать и контролировать каждое мышечное волокно.,与力量区域的第一次接触。你学会感受和控制每一根肌肉纤维。,"{BODY_ONLY}",35,cmbw9oq5201kf9kv16wvnp3ws|cmbw9nsqz018k9kv1wubiexso|cmbw9ljuc00fq9kv1s0ncwqhz|cmbw9tgtj03809kv16fj1yldr
+1,2,Activation Ciblée,Targeted Activation,Activación Dirigida,Ativação Direcionada,Целевая Активация,定向激活,activation-ciblee,targeted-activation,activacion-dirigida,ativacao-direcionada,celevaya-aktivaciya,dingxiang-jihuo,Les mouvements se précisent et tes fessiers s'enflamment. Chaque répétition forge ta nouvelle silhouette.,The movements become precise and your glutes ignite. Each repetition forges your new silhouette.,Los movimientos se vuelven precisos y tus glúteos se encienden. Cada repetición forja tu nueva silueta.,Os movimentos tornam-se precisos e os glúteos inflamam-se. Cada repetição forja a nova silhueta.,Движения становятся точными и ягодицы воспламеняются. Каждое повторение куёт твой новый силуэт.,动作变得精确，你的臀部燃烧起来。每次重复都在塑造你的新轮廓。,"{BODY_ONLY,DUMBBELL}",38,cmbw9lib400f79kv19q8hmfpg|cmbw9qk2l027o9kv133bquw4d|cmbw9netc013u9kv1nzfrwc6w|cmbw9sjwx02wj9kv1gg4y2hin
+1,3,Construction Solide,Solid Building,Construcción Sólida,Construção Sólida,Прочное Строительство,坚实构建,construction-solide,solid-building,construccion-solida,construcao-solida,prochnoe-stroitelstvo,jianshi-goujian,Les fondations se renforcent et ta force grandit. Tu bâtis la base de ton futur succès.,The foundations strengthen and your strength grows. You build the base of your future success.,Los cimientos se fortalecen y tu fuerza crece. Construyes la base de tu futuro éxito.,Os alicerces fortalecem-se e a força cresce. Constróis a base do teu futuro sucesso.,Фундамент укрепляется и твоя сила растет. Ты строишь основу своего будущего успеха.,基础得到加强，你的力量增长。你为未来的成功奠定基础。,"{BODY_ONLY,KETTLEBELLS}",40,cmbw9n91u011q9kv1szpbirhq|cmbw9oc3f01fq9kv14h8v0g91|cmbw9w58u045q9kv1tfkfc2ra|cmbw9qtsv02b99kv157dzfbfb
+2,1,Intensification Focalisée,Focused Intensification,Intensificación Enfocada,Intensificação Focada,Сфокусированная Интенсификация,专注强化,intensification-focalisee,focused-intensification,intensificacion-enfocada,intensificacao-focada,sfokusirovannaya-intensifikaciya,zhuanzhu-qianghua,Le niveau monte et tes fessiers répondent avec puissance. Chaque mouvement devient plus intense et efficace.,The level rises and your glutes respond with power. Every movement becomes more intense and effective.,El nivel sube y tus glúteos responden con poder. Cada movimiento se vuelve más intenso y efectivo.,O nível sobe e os glúteos respondem com poder. Cada movimento torna-se mais intenso e eficaz.,Уровень повышается и ягодицы отвечают силой. Каждое движение становится более интенсивным и эффективным.,水平上升，你的臀部以力量回应。每个动作都变得更加强烈和有效。,"{BODY_ONLY,DUMBBELL,KETTLEBELLS}",42,cmbw9lib400f79kv19q8hmfpg|cmbw9netc013u9kv1nzfrwc6w|cmbw9n91u011q9kv1szpbirhq|cmbw9sjwx02wj9kv1gg4y2hin|cmbw9p16801o49kv1lln5s1zz
+2,2,Explosion Contrôlée,Controlled Explosion,Explosión Controlada,Explosão Controlada,Контролируемый Взрыв,受控爆发,explosion-controlee,controlled-explosion,explosion-controlada,explosao-controlada,kontroliruemyy-vzryv,shoukong-baofa,La puissance explose dans chaque fibre. Tu maîtrises parfaitement la coordination et la force.,Power explodes in every fiber. You master coordination and strength perfectly.,La potencia explota en cada fibra. Dominas perfectamente la coordinación y la fuerza.,A potência explode em cada fibra. Dominas perfeitamente a coordenação e a força.,Мощность взрывается в каждом волокне. Ты в совершенстве овладеваешь координацией и силой.,力量在每根纤维中爆发。你完美地掌握了协调性和力量。,"{DUMBBELL,KETTLEBELLS}",45,cmbw9qywx02d09kv1hqo4vzb6|cmbw9mgny00r69kv1ey75rw3t|cmbw9w58u045q9kv1tfkfc2ra|cmbw9oq5201kf9kv16wvnp3ws|cmbw9qk2l027o9kv133bquw4d
+2,3,Perfection Finale,Final Perfection,Perfección Final,Perfeição Final,Финальное Совершенство,最终完美,perfection-finale,final-perfection,perfeccion-final,perfeicao-final,finalnoe-sovershenstvo,zuizhong-wanmei,Le grand final qui couronne ton travail. Tes fessiers atteignent leur potentiel maximum dans cette dernière bataille.,The grand finale that crowns your work. Your glutes reach their maximum potential in this final battle.,El gran final que corona tu trabajo. Tus glúteos alcanzan su máximo potencial en esta batalla final.,O grande final que coroa o teu trabalho. Os glúteos atingem o máximo potencial nesta batalha final.,Грандиозный финал который венчает твою работу. Ягодицы достигают максимального потенциала в этой финальной битве.,加冕你工作的宏大结局。你的臀部在这场最后的战斗中达到最大潜力。,"{BODY_ONLY,DUMBBELL,KETTLEBELLS}",48,cmbw9lib400f79kv19q8hmfpg|cmbw9oc3f01fq9kv14h8v0g91|cmbw9netc013u9kv1nzfrwc6w|cmbw9n91u011q9kv1szpbirhq|cmbw9qywx02d09kv1hqo4vzb6|cmbw9qtsv02b99kv157dzfbfb
+
+# EXERCISES WITH SETS
+# Session 1 - Week 1: Éveil des Fessiers
+# Ponts au poids du corps (cmbw9oq5201kf9kv16wvnp3ws)
+cmbw9oq5201kf9kv16wvnp3ws,1,REPS,15,BODYWEIGHT,NULL
+cmbw9oq5201kf9kv16wvnp3ws,2,REPS,15,BODYWEIGHT,NULL
+cmbw9oq5201kf9kv16wvnp3ws,3,REPS,12,BODYWEIGHT,NULL
+
+# Hip thrust unilatéral au poids du corps (cmbw9nsqz018k9kv1wubiexso)
+cmbw9nsqz018k9kv1wubiexso,1,REPS,8,BODYWEIGHT,NULL
+cmbw9nsqz018k9kv1wubiexso,2,REPS,8,BODYWEIGHT,NULL
+cmbw9nsqz018k9kv1wubiexso,3,REPS,6,BODYWEIGHT,NULL
+
+# Kickback - Extension des fessiers sur banc (cmbw9ljuc00fq9kv1s0ncwqhz)
+cmbw9ljuc00fq9kv1s0ncwqhz,1,REPS,10,BODYWEIGHT,NULL
+cmbw9ljuc00fq9kv1s0ncwqhz,2,REPS,10,BODYWEIGHT,NULL
+cmbw9ljuc00fq9kv1s0ncwqhz,3,REPS,8,BODYWEIGHT,NULL
+
+# Squats au poids du corps (cmbw9tgtj03809kv16fj1yldr)
+cmbw9tgtj03809kv16fj1yldr,1,REPS,12,BODYWEIGHT,NULL
+cmbw9tgtj03809kv16fj1yldr,2,REPS,12,BODYWEIGHT,NULL
+cmbw9tgtj03809kv16fj1yldr,3,REPS,10,BODYWEIGHT,NULL
+
+# Session 2 - Week 1: Activation Ciblée
+# Hip thrust - Relevé de bassin à la barre (cmbw9lib400f79kv19q8hmfpg)
+cmbw9lib400f79kv19q8hmfpg,1,REPS,12,WEIGHT,20
+cmbw9lib400f79kv19q8hmfpg,2,REPS,12,WEIGHT,20
+cmbw9lib400f79kv19q8hmfpg,3,REPS,10,WEIGHT,20
+
+# Fentes alternées au poids du corps (cmbw9qk2l027o9kv133bquw4d)
+cmbw9qk2l027o9kv133bquw4d,1,REPS,10,BODYWEIGHT,NULL
+cmbw9qk2l027o9kv133bquw4d,2,REPS,10,BODYWEIGHT,NULL
+cmbw9qk2l027o9kv133bquw4d,3,REPS,8,BODYWEIGHT,NULL
+
+# Squats sumo avec haltères (cmbw9netc013u9kv1nzfrwc6w)
+cmbw9netc013u9kv1nzfrwc6w,1,REPS,10,WEIGHT,8
+cmbw9netc013u9kv1nzfrwc6w,2,REPS,10,WEIGHT,8
+cmbw9netc013u9kv1nzfrwc6w,3,REPS,8,WEIGHT,8
+
+# Kickback - Extension des fessiers au poids du corps (cmbw9sjwx02wj9kv1gg4y2hin)
+cmbw9sjwx02wj9kv1gg4y2hin,1,REPS,12,BODYWEIGHT,NULL
+cmbw9sjwx02wj9kv1gg4y2hin,2,REPS,12,BODYWEIGHT,NULL
+cmbw9sjwx02wj9kv1gg4y2hin,3,REPS,10,BODYWEIGHT,NULL
+
+# Session 3 - Week 1: Construction Solide
+# Swing avec kettlebell (cmbw9n91u011q9kv1szpbirhq)
+cmbw9n91u011q9kv1szpbirhq,1,REPS,15,WEIGHT,8
+cmbw9n91u011q9kv1szpbirhq,2,REPS,15,WEIGHT,8
+cmbw9n91u011q9kv1szpbirhq,3,REPS,12,WEIGHT,8
+
+# Goblet Squat avec kettlebell (cmbw9oc3f01fq9kv14h8v0g91)
+cmbw9oc3f01fq9kv14h8v0g91,1,REPS,10,WEIGHT,8
+cmbw9oc3f01fq9kv14h8v0g91,2,REPS,10,WEIGHT,8
+cmbw9oc3f01fq9kv14h8v0g91,3,REPS,8,WEIGHT,8
+
+# Squat sumo avec kettlebell (cmbw9w58u045q9kv1tfkfc2ra)
+cmbw9w58u045q9kv1tfkfc2ra,1,REPS,10,WEIGHT,8
+cmbw9w58u045q9kv1tfkfc2ra,2,REPS,10,WEIGHT,8
+cmbw9w58u045q9kv1tfkfc2ra,3,REPS,8,WEIGHT,8
+
+# Superman (cmbw9qtsv02b99kv157dzfbfb)
+cmbw9qtsv02b99kv157dzfbfb,1,REPS,12,BODYWEIGHT,NULL
+cmbw9qtsv02b99kv157dzfbfb,2,REPS,12,BODYWEIGHT,NULL
+cmbw9qtsv02b99kv157dzfbfb,3,REPS,10,BODYWEIGHT,NULL
+
+# Session 1 - Week 2: Intensification Focalisée
+# Hip thrust - Relevé de bassin à la barre (cmbw9lib400f79kv19q8hmfpg)
+cmbw9lib400f79kv19q8hmfpg,1,REPS,15,WEIGHT,25
+cmbw9lib400f79kv19q8hmfpg,2,REPS,15,WEIGHT,25
+cmbw9lib400f79kv19q8hmfpg,3,REPS,12,WEIGHT,25
+cmbw9lib400f79kv19q8hmfpg,4,REPS,10,WEIGHT,25
+
+# Squats sumo avec haltères (cmbw9netc013u9kv1nzfrwc6w)
+cmbw9netc013u9kv1nzfrwc6w,1,REPS,12,WEIGHT,10
+cmbw9netc013u9kv1nzfrwc6w,2,REPS,12,WEIGHT,10
+cmbw9netc013u9kv1nzfrwc6w,3,REPS,10,WEIGHT,10
+
+# Swing avec kettlebell (cmbw9n91u011q9kv1szpbirhq)
+cmbw9n91u011q9kv1szpbirhq,1,REPS,18,WEIGHT,10
+cmbw9n91u011q9kv1szpbirhq,2,REPS,18,WEIGHT,10
+cmbw9n91u011q9kv1szpbirhq,3,REPS,15,WEIGHT,10
+
+# Kickback - Extension des fessiers au poids du corps (cmbw9sjwx02wj9kv1gg4y2hin)
+cmbw9sjwx02wj9kv1gg4y2hin,1,REPS,15,BODYWEIGHT,NULL
+cmbw9sjwx02wj9kv1gg4y2hin,2,REPS,15,BODYWEIGHT,NULL
+cmbw9sjwx02wj9kv1gg4y2hin,3,REPS,12,BODYWEIGHT,NULL
+
+# Step up (cmbw9p16801o49kv1lln5s1zz)
+cmbw9p16801o49kv1lln5s1zz,1,REPS,10,BODYWEIGHT,NULL
+cmbw9p16801o49kv1lln5s1zz,2,REPS,10,BODYWEIGHT,NULL
+cmbw9p16801o49kv1lln5s1zz,3,REPS,8,BODYWEIGHT,NULL
+
+# Session 2 - Week 2: Explosion Contrôlée
+# Clean & Jerk unilatéral au kettlebell (cmbw9qywx02d09kv1hqo4vzb6)
+cmbw9qywx02d09kv1hqo4vzb6,1,REPS,6,WEIGHT,8
+cmbw9qywx02d09kv1hqo4vzb6,2,REPS,6,WEIGHT,8
+cmbw9qywx02d09kv1hqo4vzb6,3,REPS,5,WEIGHT,8
+
+# Rowing alterné aux haltères (cmbw9mgny00r69kv1ey75rw3t)
+cmbw9mgny00r69kv1ey75rw3t,1,REPS,10,WEIGHT,8
+cmbw9mgny00r69kv1ey75rw3t,2,REPS,10,WEIGHT,8
+cmbw9mgny00r69kv1ey75rw3t,3,REPS,8,WEIGHT,8
+
+# Squat sumo avec kettlebell (cmbw9w58u045q9kv1tfkfc2ra)
+cmbw9w58u045q9kv1tfkfc2ra,1,REPS,12,WEIGHT,10
+cmbw9w58u045q9kv1tfkfc2ra,2,REPS,12,WEIGHT,10
+cmbw9w58u045q9kv1tfkfc2ra,3,REPS,10,WEIGHT,10
+
+# Ponts au poids du corps (cmbw9oq5201kf9kv16wvnp3ws)
+cmbw9oq5201kf9kv16wvnp3ws,1,REPS,18,BODYWEIGHT,NULL
+cmbw9oq5201kf9kv16wvnp3ws,2,REPS,18,BODYWEIGHT,NULL
+cmbw9oq5201kf9kv16wvnp3ws,3,REPS,15,BODYWEIGHT,NULL
+
+# Fentes alternées au poids du corps (cmbw9qk2l027o9kv133bquw4d)
+cmbw9qk2l027o9kv133bquw4d,1,REPS,12,BODYWEIGHT,NULL
+cmbw9qk2l027o9kv133bquw4d,2,REPS,12,BODYWEIGHT,NULL
+cmbw9qk2l027o9kv133bquw4d,3,REPS,10,BODYWEIGHT,NULL
+
+# Session 3 - Week 2: Perfection Finale
+# Hip thrust - Relevé de bassin à la barre (cmbw9lib400f79kv19q8hmfpg)
+cmbw9lib400f79kv19q8hmfpg,1,REPS,18,WEIGHT,30
+cmbw9lib400f79kv19q8hmfpg,2,REPS,15,WEIGHT,30
+cmbw9lib400f79kv19q8hmfpg,3,REPS,12,WEIGHT,30
+cmbw9lib400f79kv19q8hmfpg,4,REPS,10,WEIGHT,30
+
+# Goblet Squat avec kettlebell (cmbw9oc3f01fq9kv14h8v0g91)
+cmbw9oc3f01fq9kv14h8v0g91,1,REPS,12,WEIGHT,12
+cmbw9oc3f01fq9kv14h8v0g91,2,REPS,12,WEIGHT,12
+cmbw9oc3f01fq9kv14h8v0g91,3,REPS,10,WEIGHT,12
+
+# Squats sumo avec haltères (cmbw9netc013u9kv1nzfrwc6w)
+cmbw9netc013u9kv1nzfrwc6w,1,REPS,15,WEIGHT,12
+cmbw9netc013u9kv1nzfrwc6w,2,REPS,15,WEIGHT,12
+cmbw9netc013u9kv1nzfrwc6w,3,REPS,12,WEIGHT,12
+
+# Swing avec kettlebell (cmbw9n91u011q9kv1szpbirhq)
+cmbw9n91u011q9kv1szpbirhq,1,REPS,20,WEIGHT,12
+cmbw9n91u011q9kv1szpbirhq,2,REPS,20,WEIGHT,12
+cmbw9n91u011q9kv1szpbirhq,3,REPS,18,WEIGHT,12
+
+# Clean & Jerk unilatéral au kettlebell (cmbw9qywx02d09kv1hqo4vzb6)
+cmbw9qywx02d09kv1hqo4vzb6,1,REPS,8,WEIGHT,10
+cmbw9qywx02d09kv1hqo4vzb6,2,REPS,8,WEIGHT,10
+cmbw9qywx02d09kv1hqo4vzb6,3,REPS,6,WEIGHT,10
+
+# Superman (cmbw9qtsv02b99kv157dzfbfb)
+cmbw9qtsv02b99kv157dzfbfb,1,REPS,15,BODYWEIGHT,NULL
+cmbw9qtsv02b99kv157dzfbfb,2,REPS,15,BODYWEIGHT,NULL
+cmbw9qtsv02b99kv157dzfbfb,3,REPS,12,BODYWEIGHT,NULL

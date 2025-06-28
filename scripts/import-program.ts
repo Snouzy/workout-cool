@@ -113,18 +113,83 @@ async function importProgram() {
 
     // NETTOYAGE DE LA BASE (optionnel - décommenter si besoin)
     console.log("🧹 Nettoyage des données existantes...");
-    await prisma.programSuggestedSet.deleteMany({});
-    await prisma.programSessionExercise.deleteMany({});
-    await prisma.programSession.deleteMany({});
-    await prisma.programWeek.deleteMany({});
-    await prisma.program.deleteMany({
-      where: {
-        slug: "programme-fessiers-sculptés", // Supprimer seulement ce programme
-      },
+
+    // Vérifier si le programme existe
+    const existingProgram = await prisma.program.findUnique({
+      where: { slug: "force-fonctionnelle-debutant" },
     });
+
+    if (existingProgram) {
+      console.log(`🗑️ Suppression du programme existant: ${existingProgram.title}`);
+      // Supprimer dans l'ordre pour éviter les problèmes de contrainte
+
+      // 1. Supprimer d'abord les progressions utilisateur liées aux sessions de ce programme
+      await prisma.userSessionProgress.deleteMany({
+        where: {
+          session: {
+            week: {
+              programId: existingProgram.id,
+            },
+          },
+        },
+      });
+
+      // 2. Supprimer les inscriptions utilisateur à ce programme
+      await prisma.userProgramEnrollment.deleteMany({
+        where: {
+          programId: existingProgram.id,
+        },
+      });
+
+      // 3. Supprimer les séries suggérées
+      await prisma.programSuggestedSet.deleteMany({
+        where: {
+          programSessionExercise: {
+            session: {
+              week: {
+                programId: existingProgram.id,
+              },
+            },
+          },
+        },
+      });
+
+      // 4. Supprimer les exercices de session
+      await prisma.programSessionExercise.deleteMany({
+        where: {
+          session: {
+            week: {
+              programId: existingProgram.id,
+            },
+          },
+        },
+      });
+
+      // 5. Supprimer les sessions
+      await prisma.programSession.deleteMany({
+        where: {
+          week: {
+            programId: existingProgram.id,
+          },
+        },
+      });
+
+      // 6. Supprimer les semaines
+      await prisma.programWeek.deleteMany({
+        where: {
+          programId: existingProgram.id,
+        },
+      });
+
+      // 7. Enfin supprimer le programme
+      await prisma.program.delete({
+        where: { id: existingProgram.id },
+      });
+    }
+
     console.log("✅ Nettoyage terminé");
 
-    const csvPath = path.join(__dirname, "data", "programme-fessiers-sculptés.csv");
+    const csvPath = path.join(__dirname, "data", "programme-debutant-force-fonctionnelle.csv");
     const csvContent = fs.readFileSync(csvPath, "utf-8");
 
     // Séparer les sections du CSV
@@ -191,7 +256,7 @@ async function importProgram() {
     const weeksLines = weeksSection.split("\n").filter((line) => line && !line.startsWith("#") && !line.startsWith("WEEKS CSV"));
     const weeksData = Papa.parse(weeksLines.join("\n"), { header: true }).data as WeekData[];
 
-    const createdWeeks = [];
+    const createdWeeks: any[] = [];
     for (const weekData of weeksData) {
       if (!weekData.weekNumber) continue;
 
@@ -225,7 +290,7 @@ async function importProgram() {
     const sessionsLines = sessionsSection.split("\n").filter((line) => line && !line.startsWith("#") && !line.startsWith("SESSIONS CSV"));
     const sessionsData = Papa.parse(sessionsLines.join("\n"), { header: true }).data as SessionData[];
 
-    const createdSessions = [];
+    const createdSessions: any[] = [];
     const sessionExerciseMap = new Map<string, string>(); // exerciseId -> sessionExerciseId
 
     for (const sessionData of sessionsData) {
@@ -389,6 +454,7 @@ async function importProgram() {
     const csvLines = csvContent.split("\n");
     const exerciseSetLines = [];
     let inExerciseSection = false;
+    let currentSessionInfo = null;
 
     for (const line of csvLines) {
       if (line.includes("# EXERCISES WITH SETS") || line.includes("# Format: exerciseId,setIndex")) {
@@ -397,20 +463,36 @@ async function importProgram() {
       }
 
       if (inExerciseSection && line.trim() && !line.startsWith("#")) {
+        // Détecter les commentaires de session
+        if (line.includes("# Session") && line.includes("Week")) {
+          // Extraire les infos de session du commentaire
+          const sessionMatch = line.match(/# Session (\d+) - Week (\d+):/);
+          if (sessionMatch) {
+            currentSessionInfo = {
+              sessionNumber: parseInt(sessionMatch[1]),
+              weekNumber: parseInt(sessionMatch[2]),
+            };
+          }
+          continue;
+        }
+
         // Ligne qui ressemble à: cmbw9snf902xr9kv1z2cr4yw7,1,REPS,8,TIME,30,BODYWEIGHT,NULL
         if (line.includes("cmbw") && line.split(",").length >= 4) {
-          exerciseSetLines.push(line.trim());
+          exerciseSetLines.push({
+            line: line.trim(),
+            sessionInfo: currentSessionInfo,
+          });
         }
       }
     }
 
     console.log(`📊 Trouvé ${exerciseSetLines.length} lignes de séries à importer`);
 
-    // Grouper les séries par exercice
+    // Grouper les séries par exercice ET session
     const exerciseSets = new Map<string, any[]>();
 
-    for (const line of exerciseSetLines) {
-      const parts = line.split(",");
+    for (const lineData of exerciseSetLines) {
+      const parts = lineData.line.split(",");
       if (parts.length >= 4) {
         const rawExerciseId = parts[0].trim();
         // Nettoyer l'ID de l'exercice comme on l'a fait pour les exercices
@@ -425,8 +507,15 @@ async function importProgram() {
         const type4 = parts[8]?.trim();
         const value4 = parts[9]?.trim();
 
-        if (!exerciseSets.has(exerciseId)) {
-          exerciseSets.set(exerciseId, []);
+        // Créer une clé unique pour exercice + session
+        const sessionInfo = lineData.sessionInfo;
+        let exerciseKey = exerciseId;
+        if (sessionInfo) {
+          exerciseKey = `${exerciseId}_w${sessionInfo.weekNumber}_s${sessionInfo.sessionNumber}`;
+        }
+
+        if (!exerciseSets.has(exerciseKey)) {
+          exerciseSets.set(exerciseKey, []);
         }
 
         const types = [];
@@ -483,12 +572,12 @@ async function importProgram() {
           }
         }
 
-        const existingSets = exerciseSets.get(exerciseId)!;
+        const existingSets = exerciseSets.get(exerciseKey)!;
         // Vérifier si ce setIndex existe déjà pour cet exercice
         const existingSet = existingSets.find((s) => s.setIndex === setIndex);
 
         if (existingSet) {
-          console.log(`⚠️  Set ${setIndex} déjà existant pour l'exercice ${exerciseId}, remplacement...`);
+          console.log(`⚠️  Set ${setIndex} déjà existant pour l'exercice ${exerciseKey}, remplacement...`);
           // Remplacer l'existant
           Object.assign(existingSet, {
             types,
@@ -509,9 +598,30 @@ async function importProgram() {
 
     // Créer les séries en base
     let totalSetsCreated = 0;
-    for (const [exerciseId, sets] of exerciseSets) {
-      // Utiliser la map pour trouver le sessionExerciseId
-      const sessionExerciseId = sessionExerciseMap.get(exerciseId);
+    for (const [exerciseKey, sets] of exerciseSets) {
+      // Extraire l'exerciceId de la clé composée pour retrouver le sessionExerciseId
+      let sessionExerciseId;
+
+      if (exerciseKey.includes("_w") && exerciseKey.includes("_s")) {
+        // Clé composée: exerciceId_wWeekNumber_sSessionNumber
+        const parts = exerciseKey.split("_");
+        const baseExerciseId = parts[0];
+        const weekNum = parseInt(parts[1].substring(1)); // enlever le "w"
+        const sessionNum = parseInt(parts[2].substring(1)); // enlever le "s"
+
+        // Trouver la session correspondante
+        const targetSession = createdSessions.find((s) => {
+          const week = createdWeeks.find((w) => w.id === s.weekId);
+          return week && week.weekNumber === weekNum && s.sessionNumber === sessionNum;
+        });
+
+        if (targetSession) {
+          sessionExerciseId = sessionExerciseMap.get(`${targetSession.id}_${baseExerciseId}`);
+        }
+      } else {
+        // Clé simple: juste l'exerciceId (fallback)
+        sessionExerciseId = sessionExerciseMap.get(exerciseKey);
+      }
 
       if (sessionExerciseId) {
         // Supprimer les séries existantes pour cet exercice de session
@@ -522,7 +632,7 @@ async function importProgram() {
         });
 
         for (const set of sets) {
-          const suggestedSet = await prisma.programSuggestedSet.create({
+          await prisma.programSuggestedSet.create({
             data: {
               programSessionExerciseId: sessionExerciseId, // Utilise l'ID généré
               setIndex: set.setIndex,
@@ -534,9 +644,9 @@ async function importProgram() {
           });
           totalSetsCreated++;
         }
-        console.log(`  ✅ ${sets.length} séries créées pour l'exercice ${exerciseId}`);
+        console.log(`  ✅ ${sets.length} séries créées pour l'exercice ${exerciseKey}`);
       } else {
-        console.log(`  ⚠️  Exercice de session non trouvé pour ${exerciseId}`);
+        console.log(`  ⚠️  Exercice de session non trouvé pour ${exerciseKey}`);
       }
     }
 

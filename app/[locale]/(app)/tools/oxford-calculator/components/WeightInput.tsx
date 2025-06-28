@@ -1,7 +1,9 @@
 "use client";
 
 import React from "react";
+
 import { useI18n } from "locales/client";
+
 import type { UnitSystem } from "../calorie-calculator.utils";
 
 interface WeightInputProps {
@@ -23,14 +25,14 @@ export function WeightInput({ value, unit, onChange }: WeightInputProps) {
       </label>
       <div className="relative">
         <input
-          type="number"
-          min={min}
-          max={max}
-          step="0.1"
-          value={value}
-          onChange={(e) => onChange(Number(e.target.value))}
           className="w-full px-4 py-3 pr-12 rounded-xl border-2 border-base-content/15 dark:border-base-content/10 bg-base-100 dark:bg-base-200/30 text-base-content focus:border-primary focus:outline-none transition-all duration-300 hover:border-primary/30 font-semibold"
+          max={max}
+          min={min}
+          onChange={(e) => onChange(Number(e.target.value))}
           placeholder={t("tools.calorie-calculator.weight_placeholder")}
+          step="0.1"
+          type="number"
+          value={value}
         />
         <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-base-content/60 dark:text-base-content/50 font-medium">
           {unitLabel}

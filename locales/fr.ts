@@ -144,7 +144,6 @@ export default {
   tools: {
     title: "Outils Fitness",
     subtitle: "Calculateurs essentiels pour optimiser votre entraînement et nutrition",
-    tryNow: "Essayer maintenant",
     moreComingSoon: "Plus d'outils bientôt disponibles",
     meta: {
       title: "Outils Fitness - Calculateurs pour Entraînement & Nutrition | Workout.cool",
@@ -270,17 +269,21 @@ export default {
     back_to_calculators: "Retour aux calculateurs",
     body_fat_percentage: "Pourcentage de Graisse Corporelle",
     body_fat_info_title: "Qu'est-ce que le Pourcentage de Graisse Corporelle ?",
-    body_fat_info_content: "Le pourcentage de graisse corporelle est essentiel pour les formules Katch-McArdle et Cunningham car elles calculent basé sur la masse maigre. Si vous ne connaissez pas votre % de graisse exact, utilisez des guides visuels en ligne ou des scans DEXA pour plus de précision.",
+    body_fat_info_content:
+      "Le pourcentage de graisse corporelle est essentiel pour les formules Katch-McArdle et Cunningham car elles calculent basé sur la masse maigre. Si vous ne connaissez pas votre % de graisse exact, utilisez des guides visuels en ligne ou des scans DEXA pour plus de précision.",
     "calorie-calculator-hub": {
       title: "Formules de Calculateur de Calories",
       subtitle: "Choisissez la meilleure formule pour vos besoins et obtenez des calculs caloriques précis",
       meta: {
         title: "Formules de Calculateur de Calories - Calculateurs BMR & TDEE | Workout.cool",
-        description: "Comparez différentes formules BMR : Mifflin-St Jeor, Harris-Benedict, Katch-McArdle, Cunningham et Oxford. Choisissez le meilleur calculateur de calories pour vos besoins.",
-        keywords: "formules BMR, comparaison calculateur calories, Mifflin-St Jeor, Harris-Benedict, Katch-McArdle, Cunningham, Oxford, calculateur TDEE",
+        description:
+          "Comparez différentes formules BMR : Mifflin-St Jeor, Harris-Benedict, Katch-McArdle, Cunningham et Oxford. Choisissez le meilleur calculateur de calories pour vos besoins.",
+        keywords:
+          "formules BMR, comparaison calculateur calories, Mifflin-St Jeor, Harris-Benedict, Katch-McArdle, Cunningham, Oxford, calculateur TDEE",
       },
       which_formula: "Quelle Formule Dois-je Choisir ?",
-      formula_explanation: "Différentes formules fonctionnent mieux pour différentes personnes. Voici un guide rapide pour vous aider à choisir :",
+      formula_explanation:
+        "Différentes formules fonctionnent mieux pour différentes personnes. Voici un guide rapide pour vous aider à choisir :",
       recommendation_general: "Meilleure formule globale, plus précise pour la population générale",
       recommendation_traditional: "Formule classique, largement utilisée mais légèrement moins précise",
       recommendation_bodyfat: "Plus précise si vous connaissez votre pourcentage de graisse corporelle",
@@ -298,30 +301,34 @@ export default {
       best_for_bodybuilders: "Culturistes",
       best_for_european: "Population européenne",
       best_for_comparison: "Comparer tout",
-      try_now: "Essayer maintenant",
       "mifflin-st-jeor": {
         title: "Mifflin-St Jeor (Recommandé)",
-        description: "Formule la plus précise pour la population générale, développée en 1990. Actuellement l'étalon-or pour les calculs BMR.",
+        description:
+          "Formule la plus précise pour la population générale, développée en 1990. Actuellement l'étalon-or pour les calculs BMR.",
       },
       "harris-benedict": {
         title: "Harris-Benedict (Classique)",
-        description: "Version révisée 1984 de la formule classique. Largement utilisée mais tend à surestimer les calories pour certaines personnes.",
+        description:
+          "Version révisée 1984 de la formule classique. Largement utilisée mais tend à surestimer les calories pour certaines personnes.",
       },
       "katch-mcardle": {
         title: "Katch-McArdle (Athlètes)",
-        description: "Basée sur la masse maigre. Plus précise pour les personnes qui connaissent leur pourcentage de graisse corporelle et sont physiquement actives.",
+        description:
+          "Basée sur la masse maigre. Plus précise pour les personnes qui connaissent leur pourcentage de graisse corporelle et sont physiquement actives.",
       },
-      "cunningham": {
+      cunningham: {
         title: "Cunningham (Culturistes)",
-        description: "Conçue pour les athlètes très maigres et les culturistes avec peu de graisse corporelle. Utilise le calcul de masse maigre.",
+        description:
+          "Conçue pour les athlètes très maigres et les culturistes avec peu de graisse corporelle. Utilise le calcul de masse maigre.",
       },
-      "oxford": {
+      oxford: {
         title: "Oxford (Européenne)",
         description: "Formule plus récente (2005) basée sur les populations européennes. Prend en compte les tranches d'âge.",
       },
-      "comparison": {
+      comparison: {
         title: "Comparer Toutes les Formules",
-        description: "Comparez les résultats de toutes les formules côte à côte pour voir les différences et choisir ce qui fonctionne le mieux pour vous.",
+        description:
+          "Comparez les résultats de toutes les formules côte à côte pour voir les différences et choisir ce qui fonctionne le mieux pour vous.",
       },
     },
     "mifflin-st-jeor": {
@@ -329,55 +336,91 @@ export default {
       subtitle: "L'étalon-or pour le calcul BMR - le plus précis pour la population générale",
       meta: {
         title: "Calculateur Mifflin-St Jeor - BMR & TDEE les Plus Précis | Workout.cool",
-        description: "Calculez votre BMR et TDEE en utilisant l'équation Mifflin-St Jeor - la formule la plus précise pour la population générale. Obtenez des recommandations caloriques personnalisées.",
-        keywords: "calculateur Mifflin-St Jeor, calculateur BMR, calculateur TDEE, calculateur calories le plus précis, calculateur métabolisme",
+        description:
+          "Calculez votre BMR et TDEE en utilisant l'équation Mifflin-St Jeor - la formule la plus précise pour la population générale. Obtenez des recommandations caloriques personnalisées.",
+        keywords:
+          "calculateur Mifflin-St Jeor, calculateur BMR, calculateur TDEE, calculateur calories le plus précis, calculateur métabolisme",
       },
       how_it_works: "Comment Fonctionne la Formule Mifflin-St Jeor",
-      how_it_works_description: "Développée en 1990, cette formule est considérée comme la plus précise pour calculer le Taux Métabolique de Base (BMR) chez les adultes en bonne santé. Elle est plus précise que l'équation Harris-Benedict et est largement recommandée par les nutritionnistes et professionnels du fitness.",
+      how_it_works_description:
+        "Développée en 1990, cette formule est considérée comme la plus précise pour calculer le Taux Métabolique de Base (BMR) chez les adultes en bonne santé. Elle est plus précise que l'équation Harris-Benedict et est largement recommandée par les nutritionnistes et professionnels du fitness.",
     },
     "harris-benedict": {
       title: "Calculateur Harris-Benedict",
       subtitle: "Formule BMR classique - l'approche traditionnelle du calcul des calories",
       meta: {
         title: "Calculateur Harris-Benedict - Formule BMR & TDEE Classique | Workout.cool",
-        description: "Calculez votre BMR et TDEE en utilisant l'équation Harris-Benedict révisée (1984). La formule classique qui a initié les calculs caloriques modernes.",
+        description:
+          "Calculez votre BMR et TDEE en utilisant l'équation Harris-Benedict révisée (1984). La formule classique qui a initié les calculs caloriques modernes.",
         keywords: "calculateur Harris-Benedict, calculateur BMR classique, calculateur TDEE traditionnel, formule Harris-Benedict révisée",
       },
       how_it_works: "Comment Fonctionne la Formule Harris-Benedict",
-      how_it_works_description: "Développée à l'origine en 1919 et révisée en 1984, l'équation Harris-Benedict était l'une des premières formules pour calculer le BMR. Bien que légèrement moins précise que les formules plus récentes, elle reste largement utilisée et fournit de bonnes estimations pour la plupart des gens.",
+      how_it_works_description:
+        "Développée à l'origine en 1919 et révisée en 1984, l'équation Harris-Benedict était l'une des premières formules pour calculer le BMR. Bien que légèrement moins précise que les formules plus récentes, elle reste largement utilisée et fournit de bonnes estimations pour la plupart des gens.",
     },
     "katch-mcardle": {
       title: "Calculateur Katch-McArdle",
       subtitle: "Calcul BMR précis basé sur la masse maigre - idéal pour les athlètes",
       meta: {
         title: "Calculateur Katch-McArdle - BMR & TDEE Masse Maigre | Workout.cool",
-        description: "Calculez votre BMR et TDEE en utilisant la formule Katch-McArdle basée sur la masse maigre. Le plus précis pour les personnes qui connaissent leur pourcentage de graisse corporelle.",
-        keywords: "calculateur Katch-McArdle, BMR masse maigre, calculateur pourcentage graisse corporelle, calculateur BMR athlète, TDEE précis",
+        description:
+          "Calculez votre BMR et TDEE en utilisant la formule Katch-McArdle basée sur la masse maigre. Le plus précis pour les personnes qui connaissent leur pourcentage de graisse corporelle.",
+        keywords:
+          "calculateur Katch-McArdle, BMR masse maigre, calculateur pourcentage graisse corporelle, calculateur BMR athlète, TDEE précis",
       },
       how_it_works: "Comment Fonctionne la Formule Katch-McArdle",
-      how_it_works_description: "Cette formule calcule le BMR basé sur la masse maigre plutôt que sur le poids corporel total, la rendant plus précise pour les personnes qui connaissent leur pourcentage de graisse corporelle. Elle est particulièrement utile pour les athlètes et les individus physiquement actifs.",
+      how_it_works_description:
+        "Cette formule calcule le BMR basé sur la masse maigre plutôt que sur le poids corporel total, la rendant plus précise pour les personnes qui connaissent leur pourcentage de graisse corporelle. Elle est particulièrement utile pour les athlètes et les individus physiquement actifs.",
     },
-    "cunningham": {
+    cunningham: {
       title: "Calculateur Cunningham",
       subtitle: "Formule BMR conçue pour les athlètes très maigres et les culturistes",
       meta: {
         title: "Calculateur Cunningham - BMR pour Athlètes Maigres & Culturistes | Workout.cool",
-        description: "Calculez votre BMR et TDEE en utilisant la formule Cunningham, spécialement conçue pour les athlètes très maigres et les culturistes avec peu de graisse corporelle.",
-        keywords: "calculateur Cunningham, calculateur BMR culturiste, BMR athlète maigre, calculateur BMR faible graisse corporelle, calculateur préparation compétition",
+        description:
+          "Calculez votre BMR et TDEE en utilisant la formule Cunningham, spécialement conçue pour les athlètes très maigres et les culturistes avec peu de graisse corporelle.",
+        keywords:
+          "calculateur Cunningham, calculateur BMR culturiste, BMR athlète maigre, calculateur BMR faible graisse corporelle, calculateur préparation compétition",
       },
       how_it_works: "Comment Fonctionne la Formule Cunningham",
-      how_it_works_description: "Développée spécifiquement pour les individus très maigres avec de faibles pourcentages de graisse corporelle, cette formule fournit des estimations BMR plus élevées que les autres équations. Elle est plus précise pour les athlètes de compétition et les culturistes en préparation de concours.",
+      how_it_works_description:
+        "Développée spécifiquement pour les individus très maigres avec de faibles pourcentages de graisse corporelle, cette formule fournit des estimations BMR plus élevées que les autres équations. Elle est plus précise pour les athlètes de compétition et les culturistes en préparation de concours.",
     },
-    "oxford": {
+    oxford: {
       title: "Calculateur Oxford",
       subtitle: "Formule BMR moderne basée sur les populations européennes avec considérations d'âge",
       meta: {
         title: "Calculateur Oxford - Formule BMR & TDEE Moderne | Workout.cool",
-        description: "Calculez votre BMR et TDEE en utilisant l'équation Oxford (2005), une formule moderne basée sur les populations européennes avec des calculs spécifiques à l'âge.",
+        description:
+          "Calculez votre BMR et TDEE en utilisant l'équation Oxford (2005), une formule moderne basée sur les populations européennes avec des calculs spécifiques à l'âge.",
         keywords: "calculateur Oxford, calculateur BMR moderne, formule BMR européenne, calculateur BMR spécifique âge, équation BMR 2005",
       },
       how_it_works: "Comment Fonctionne la Formule Oxford",
-      how_it_works_description: "Publiée en 2005, c'est l'une des formules BMR les plus récentes. Elle a été développée en utilisant des données de populations européennes et prend en compte les tranches d'âge, fournissant différentes équations pour les personnes de moins et plus de 30 ans.",
+      how_it_works_description:
+        "Publiée en 2005, c'est l'une des formules BMR les plus récentes. Elle a été développée en utilisant des données de populations européennes et prend en compte les tranches d'âge, fournissant différentes équations pour les personnes de moins et plus de 30 ans.",
+    },
+    "calorie-calculator-comparison": {
+      title: "Comparer toutes les formules BMR",
+      subtitle: "Voyez comment différentes formules BMR calculent vos besoins caloriques côte à côte",
+      meta: {
+        title: "Comparaison des formules BMR - Comparer tous les calculateurs de calories | Workout.cool",
+        description:
+          "Comparez les formules Mifflin-St Jeor, Harris-Benedict, Katch-McArdle, Cunningham et Oxford BMR côte à côte. Voyez quelle formule fonctionne le mieux pour vous.",
+        keywords:
+          "comparaison formule BMR, comparaison calculateur calories, Mifflin vs Harris-Benedict, meilleur calculateur BMR, comparer formules calories",
+      },
+      how_it_works: "Comment fonctionne cette comparaison",
+      how_it_works_description:
+        "Entrez vos détails une fois et voyez comment toutes les principales formules BMR calculent vos besoins caloriques quotidiens. Cela vous aide à comprendre les différences et à choisir la formule la plus adaptée à vos objectifs.",
+      input_details: "Vos détails",
+      compare: "Comparer",
+      results_comparison: "Résultats de la comparaison des formules",
+      vs_mifflin: "vs Mifflin-St Jeor",
+      summary: "Résumé et recommandations",
+      summary_explanation:
+        "Différentes formules peuvent donner des résultats variables. Généralement, des différences de ±100-200 calories sont normales et attendues.",
+      recommendation:
+        "Pour la plupart des gens, Mifflin-St Jeor fournit la base la plus précise. Les athlètes devraient considérer Katch-McArdle s'ils connaissent leur pourcentage de graisse corporelle.",
     },
   },
   levels: {

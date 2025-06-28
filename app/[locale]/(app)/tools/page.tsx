@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -116,18 +117,6 @@ export default async function ToolsPage() {
 
                 <h3 className="text-xl sm:text-2xl font-bold mb-2 text-base-content">{t(`tools.${tool.id}.title` as keyof typeof t)}</h3>
                 <p className="text-base-content/70 text-sm sm:text-base">{t(`tools.${tool.id}.description` as keyof typeof t)}</p>
-
-                <div className="mt-4 flex items-center gap-2 text-primary">
-                  <span className="text-sm font-medium">{t("tools.tryNow")}</span>
-                  <svg
-                    className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M9 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} />
-                  </svg>
-                </div>
               </div>
             </Link>
           ))}

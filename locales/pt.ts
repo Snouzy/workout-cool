@@ -139,7 +139,6 @@ export default {
   tools: {
     title: "Ferramentas de Fitness",
     subtitle: "Calculadoras essenciais para otimizar o seu treino e nutrição",
-    tryNow: "Experimentar agora",
     moreComingSoon: "Mais ferramentas em breve",
     meta: {
       title: "Ferramentas de Fitness - Calculadoras para Treino e Nutrição | Workout.cool",
@@ -265,17 +264,21 @@ export default {
     back_to_calculators: "Voltar às calculadoras",
     body_fat_percentage: "Percentagem de Gordura Corporal",
     body_fat_info_title: "O que é a Percentagem de Gordura Corporal?",
-    body_fat_info_content: "A percentagem de gordura corporal é essencial para as fórmulas de Katch-McArdle e Cunningham pois calculam baseadas na massa magra corporal. Se não conhece a sua % de gordura corporal exata, use guias visuais online ou scans DEXA para precisão.",
+    body_fat_info_content:
+      "A percentagem de gordura corporal é essencial para as fórmulas de Katch-McArdle e Cunningham pois calculam baseadas na massa magra corporal. Se não conhece a sua % de gordura corporal exata, use guias visuais online ou scans DEXA para precisão.",
     "calorie-calculator-hub": {
       title: "Fórmulas da Calculadora de Calorias",
       subtitle: "Escolha a melhor fórmula para as suas necessidades e obtenha cálculos de calorias precisos",
       meta: {
         title: "Fórmulas da Calculadora de Calorias - Calculadoras TMB e TDEE | Workout.cool",
-        description: "Compare diferentes fórmulas de TMB: Mifflin-St Jeor, Harris-Benedict, Katch-McArdle, Cunningham e Oxford. Escolha a melhor calculadora de calorias para as suas necessidades.",
-        keywords: "fórmulas TMB, comparação calculadora calorias, Mifflin-St Jeor, Harris-Benedict, Katch-McArdle, Cunningham, Oxford, calculadora TDEE",
+        description:
+          "Compare diferentes fórmulas de TMB: Mifflin-St Jeor, Harris-Benedict, Katch-McArdle, Cunningham e Oxford. Escolha a melhor calculadora de calorias para as suas necessidades.",
+        keywords:
+          "fórmulas TMB, comparação calculadora calorias, Mifflin-St Jeor, Harris-Benedict, Katch-McArdle, Cunningham, Oxford, calculadora TDEE",
       },
       which_formula: "Que Fórmula Devo Escolher?",
-      formula_explanation: "Diferentes fórmulas funcionam melhor para diferentes pessoas. Aqui está um guia rápido para o ajudar a escolher:",
+      formula_explanation:
+        "Diferentes fórmulas funcionam melhor para diferentes pessoas. Aqui está um guia rápido para o ajudar a escolher:",
       recommendation_general: "Melhor fórmula geral, mais precisa para a população geral",
       recommendation_traditional: "Fórmula clássica, amplamente usada mas ligeiramente menos precisa",
       recommendation_bodyfat: "Mais precisa se conhecer a sua percentagem de gordura corporal",
@@ -290,10 +293,9 @@ export default {
       best_for_general: "Uso geral",
       best_for_traditional: "Tradicional",
       best_for_athletes: "Atletas",
-      best_for_bodybuilders: "Fisiculturistas", 
+      best_for_bodybuilders: "Fisiculturistas",
       best_for_european: "População europeia",
       best_for_comparison: "Comparar todas",
-      try_now: "Experimentar agora",
       "mifflin-st-jeor": {
         title: "Mifflin-St Jeor (Recomendada)",
         description: "Fórmula mais precisa para a população geral, desenvolvida em 1990. Atualmente o padrão ouro para cálculos de TMB.",
@@ -304,17 +306,19 @@ export default {
       },
       "katch-mcardle": {
         title: "Katch-McArdle (Atletas)",
-        description: "Baseada na massa magra corporal. Mais precisa para pessoas que conhecem a sua percentagem de gordura corporal e são fisicamente ativas.",
+        description:
+          "Baseada na massa magra corporal. Mais precisa para pessoas que conhecem a sua percentagem de gordura corporal e são fisicamente ativas.",
       },
-      "cunningham": {
+      cunningham: {
         title: "Cunningham (Fisiculturistas)",
-        description: "Projetada para atletas muito magros e fisiculturistas com baixa gordura corporal. Usa cálculo da massa magra corporal.",
+        description:
+          "Projetada para atletas muito magros e fisiculturistas com baixa gordura corporal. Usa cálculo da massa magra corporal.",
       },
-      "oxford": {
+      oxford: {
         title: "Oxford (Europeia)",
         description: "Fórmula mais recente (2005) baseada em populações europeias. Tem em conta faixas etárias.",
       },
-      "comparison": {
+      comparison: {
         title: "Comparar Todas as Fórmulas",
         description: "Compare resultados de todas as fórmulas lado a lado para ver as diferenças e escolher o que funciona melhor para si.",
       },
@@ -324,55 +328,91 @@ export default {
       subtitle: "O padrão ouro para cálculo de TMB - mais precisa para a população geral",
       meta: {
         title: "Calculadora Mifflin-St Jeor - TMB e TDEE Mais Precisos | Workout.cool",
-        description: "Calcule a sua TMB e TDEE usando a equação Mifflin-St Jeor - a fórmula mais precisa para a população geral. Obtenha recomendações calóricas personalizadas.",
-        keywords: "calculadora Mifflin-St Jeor, calculadora TMB, calculadora TDEE, calculadora calorias mais precisa, calculadora metabolismo",
+        description:
+          "Calcule a sua TMB e TDEE usando a equação Mifflin-St Jeor - a fórmula mais precisa para a população geral. Obtenha recomendações calóricas personalizadas.",
+        keywords:
+          "calculadora Mifflin-St Jeor, calculadora TMB, calculadora TDEE, calculadora calorias mais precisa, calculadora metabolismo",
       },
       how_it_works: "Como Funciona a Fórmula Mifflin-St Jeor",
-      how_it_works_description: "Desenvolvida em 1990, esta fórmula é considerada a mais precisa para calcular a Taxa Metabólica Basal (TMB) em adultos saudáveis. É mais precisa que a equação Harris-Benedict e é amplamente recomendada por nutricionistas e profissionais de fitness.",
+      how_it_works_description:
+        "Desenvolvida em 1990, esta fórmula é considerada a mais precisa para calcular a Taxa Metabólica Basal (TMB) em adultos saudáveis. É mais precisa que a equação Harris-Benedict e é amplamente recomendada por nutricionistas e profissionais de fitness.",
     },
     "harris-benedict": {
-      title: "Calculadora Harris-Benedict", 
+      title: "Calculadora Harris-Benedict",
       subtitle: "Fórmula clássica de TMB - a abordagem tradicional para cálculo de calorias",
       meta: {
         title: "Calculadora Harris-Benedict - Fórmula Clássica TMB e TDEE | Workout.cool",
-        description: "Calcule a sua TMB e TDEE usando a equação Harris-Benedict revista (1984). A fórmula clássica que iniciou os cálculos modernos de calorias.",
+        description:
+          "Calcule a sua TMB e TDEE usando a equação Harris-Benedict revista (1984). A fórmula clássica que iniciou os cálculos modernos de calorias.",
         keywords: "calculadora Harris-Benedict, calculadora TMB clássica, calculadora TDEE tradicional, fórmula Harris-Benedict revista",
       },
       how_it_works: "Como Funciona a Fórmula Harris-Benedict",
-      how_it_works_description: "Originalmente desenvolvida em 1919 e revista em 1984, a equação Harris-Benedict foi uma das primeiras fórmulas para calcular TMB. Embora ligeiramente menos precisa que fórmulas mais recentes, continua amplamente usada e fornece boas estimativas para a maioria das pessoas.",
+      how_it_works_description:
+        "Originalmente desenvolvida em 1919 e revista em 1984, a equação Harris-Benedict foi uma das primeiras fórmulas para calcular TMB. Embora ligeiramente menos precisa que fórmulas mais recentes, continua amplamente usada e fornece boas estimativas para a maioria das pessoas.",
     },
     "katch-mcardle": {
       title: "Calculadora Katch-McArdle",
       subtitle: "Cálculo preciso de TMB baseado na massa magra corporal - ideal para atletas",
       meta: {
-        title: "Calculadora Katch-McArdle - TMB e TDEE da Massa Magra | Workout.cool", 
-        description: "Calcule a sua TMB e TDEE usando a fórmula Katch-McArdle baseada na massa magra corporal. Mais precisa para pessoas que conhecem a sua percentagem de gordura corporal.",
-        keywords: "calculadora Katch-McArdle, TMB massa magra, calculadora percentagem gordura corporal, calculadora TMB atleta, TDEE preciso",
+        title: "Calculadora Katch-McArdle - TMB e TDEE da Massa Magra | Workout.cool",
+        description:
+          "Calcule a sua TMB e TDEE usando a fórmula Katch-McArdle baseada na massa magra corporal. Mais precisa para pessoas que conhecem a sua percentagem de gordura corporal.",
+        keywords:
+          "calculadora Katch-McArdle, TMB massa magra, calculadora percentagem gordura corporal, calculadora TMB atleta, TDEE preciso",
       },
       how_it_works: "Como Funciona a Fórmula Katch-McArdle",
-      how_it_works_description: "Esta fórmula calcula TMB baseada na massa magra corporal em vez do peso corporal total, tornando-a mais precisa para pessoas que conhecem a sua percentagem de gordura corporal. É particularmente útil para atletas e indivíduos fisicamente ativos.",
+      how_it_works_description:
+        "Esta fórmula calcula TMB baseada na massa magra corporal em vez do peso corporal total, tornando-a mais precisa para pessoas que conhecem a sua percentagem de gordura corporal. É particularmente útil para atletas e indivíduos fisicamente ativos.",
     },
-    "cunningham": {
+    cunningham: {
       title: "Calculadora Cunningham",
       subtitle: "Fórmula de TMB projetada para atletas muito magros e fisiculturistas",
       meta: {
         title: "Calculadora Cunningham - TMB para Atletas Magros e Fisiculturistas | Workout.cool",
-        description: "Calcule a sua TMB e TDEE usando a fórmula Cunningham, especificamente projetada para atletas muito magros e fisiculturistas com baixa gordura corporal.",
-        keywords: "calculadora Cunningham, calculadora TMB fisiculturista, TMB atleta magro, calculadora baixa gordura corporal, calculadora preparação competição",
+        description:
+          "Calcule a sua TMB e TDEE usando a fórmula Cunningham, especificamente projetada para atletas muito magros e fisiculturistas com baixa gordura corporal.",
+        keywords:
+          "calculadora Cunningham, calculadora TMB fisiculturista, TMB atleta magro, calculadora baixa gordura corporal, calculadora preparação competição",
       },
       how_it_works: "Como Funciona a Fórmula Cunningham",
-      how_it_works_description: "Desenvolvida especificamente para indivíduos muito magros com baixas percentagens de gordura corporal, esta fórmula fornece estimativas de TMB mais altas que outras equações. É mais precisa para atletas competitivos e fisiculturistas em preparação para competições.",
+      how_it_works_description:
+        "Desenvolvida especificamente para indivíduos muito magros com baixas percentagens de gordura corporal, esta fórmula fornece estimativas de TMB mais altas que outras equações. É mais precisa para atletas competitivos e fisiculturistas em preparação para competições.",
     },
-    "oxford": {
+    oxford: {
       title: "Calculadora Oxford",
       subtitle: "Fórmula moderna de TMB baseada em populações europeias com considerações de idade",
       meta: {
         title: "Calculadora Oxford - Fórmula Moderna TMB e TDEE | Workout.cool",
-        description: "Calcule a sua TMB e TDEE usando a equação Oxford (2005), uma fórmula moderna baseada em populações europeias com cálculos específicos por idade.",
+        description:
+          "Calcule a sua TMB e TDEE usando a equação Oxford (2005), uma fórmula moderna baseada em populações europeias com cálculos específicos por idade.",
         keywords: "calculadora Oxford, calculadora TMB moderna, fórmula TMB europeia, calculadora TMB específica idade, equação TMB 2005",
       },
-      how_it_works: "Como Funciona a Fórmula Oxford", 
-      how_it_works_description: "Publicada em 2005, esta é uma das fórmulas de TMB mais recentes. Foi desenvolvida usando dados de populações europeias e tem em conta faixas etárias, fornecendo equações diferentes para pessoas com menos e mais de 30 anos.",
+      how_it_works: "Como Funciona a Fórmula Oxford",
+      how_it_works_description:
+        "Publicada em 2005, esta é uma das fórmulas de TMB mais recentes. Foi desenvolvida usando dados de populações europeias e tem em conta faixas etárias, fornecendo equações diferentes para pessoas com menos e mais de 30 anos.",
+    },
+    "calorie-calculator-comparison": {
+      title: "Comparar todas as fórmulas BMR",
+      subtitle: "Veja como diferentes fórmulas BMR calculam as suas necessidades calóricas lado a lado",
+      meta: {
+        title: "Comparação de fórmulas BMR - Comparar todos os calculadores de calorias | Workout.cool",
+        description:
+          "Compare as fórmulas Mifflin-St Jeor, Harris-Benedict, Katch-McArdle, Cunningham e Oxford BMR lado a lado. Veja qual fórmula funciona melhor para si.",
+        keywords:
+          "comparação fórmula BMR, comparação calculador calorias, Mifflin vs Harris-Benedict, melhor calculador BMR, comparar fórmulas calorias",
+      },
+      how_it_works: "Como funciona esta comparação",
+      how_it_works_description:
+        "Insira os seus detalhes uma vez e veja como todas as principais fórmulas BMR calculam as suas necessidades calóricas diárias. Isto ajuda-o a compreender as diferenças e escolher a fórmula mais adequada para os seus objetivos.",
+      input_details: "Os seus detalhes",
+      compare: "Comparar",
+      results_comparison: "Resultados da comparação de fórmulas",
+      vs_mifflin: "vs Mifflin-St Jeor",
+      summary: "Resumo e recomendações",
+      summary_explanation:
+        "Diferentes fórmulas podem dar resultados variáveis. Geralmente, diferenças de ±100-200 calorias são normais e esperadas.",
+      recommendation:
+        "Para a maioria das pessoas, Mifflin-St Jeor fornece a base mais precisa. Os atletas devem considerar Katch-McArdle se conhecerem a sua percentagem de gordura corporal.",
     },
   },
   levels: {

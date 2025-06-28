@@ -603,29 +603,23 @@ export default {
   tools: {
     title: "健身工具",
     subtitle: "优化训练和营养的必备计算器",
-    tryNow: "立即试用",
     moreComingSoon: "更多工具即将推出",
     meta: {
       title: "健身工具 - 训练与营养计算器 | Workout.cool",
-      description:
-        "免费健身计算器：TDEE、宏量营养素、BMI、心率区间、1RM等。使用我们的必备工具优化您的训练和营养。",
-      keywords:
-        "健身计算器, 卡路里计算器, 宏量营养素计算器, BMI计算器, TDEE计算器, 心率区间, 单次最大重量, 健身工具",
+      description: "免费健身计算器：TDEE、宏量营养素、BMI、心率区间、1RM等。使用我们的必备工具优化您的训练和营养。",
+      keywords: "健身计算器, 卡路里计算器, 宏量营养素计算器, BMI计算器, TDEE计算器, 心率区间, 单次最大重量, 健身工具",
     },
     "calorie-calculator": {
       title: "卡路里计算器",
       description: "根据您的活动水平和目标计算每日卡路里需求 (TDEE)",
       meta: {
         title: "卡路里计算器 - TDEE与每日卡路里需求 | Workout.cool",
-        description:
-          "计算您的总每日能量消耗 (TDEE) 和每日卡路里需求。获得减重、维持或增肌的个性化建议。",
-        keywords:
-          "卡路里计算器, TDEE计算器, 每日卡路里, 减重计算器, 卡路里需求, BMR计算器, 新陈代谢计算器",
+        description: "计算您的总每日能量消耗 (TDEE) 和每日卡路里需求。获得减重、维持或增肌的个性化建议。",
+        keywords: "卡路里计算器, TDEE计算器, 每日卡路里, 减重计算器, 卡路里需求, BMR计算器, 新陈代谢计算器",
       },
       subtitle: "基于Mifflin-St Jeor方程计算您的每日卡路里需求",
       how_it_works: "这个计算器如何工作？",
-      how_it_works_description:
-        "该计算器使用科学验证的公式，根据您的个人特征和生活方式估算您的每日卡路里需求。",
+      how_it_works_description: "该计算器使用科学验证的公式，根据您的个人特征和生活方式估算您的每日卡路里需求。",
       how_it_works_step1: "我们计算您的基础代谢率（静息时燃烧的卡路里）",
       how_it_works_step2: "我们根据您的活动水平进行调整",
       how_it_works_step3: "我们根据您的目标（减重、维持或增重）进行个性化调整",
@@ -682,8 +676,7 @@ export default {
         bmr_explanation:
           "基础代谢率 (BMR) 是您的身体在完全静息状态下燃烧的卡路里数，仅用于维持呼吸、循环和细胞产生等基本功能。这是您的身体生存所需的最低能量。",
         tdee: "总每日能量消耗",
-        tdee_explanation:
-          "总每日能量消耗 (TDEE) 是您的BMR加上通过日常活动和运动燃烧的卡路里。这是您根据活动水平一天燃烧的总卡路里数。",
+        tdee_explanation: "总每日能量消耗 (TDEE) 是您的BMR加上通过日常活动和运动燃烧的卡路里。这是您根据活动水平一天燃烧的总卡路里数。",
         target: "目标卡路里",
         macros: "推荐宏量营养素",
         macros_explanation:
@@ -691,8 +684,7 @@ export default {
         protein: "蛋白质",
         carbs: "碳水化合物",
         fat: "脂肪",
-        disclaimer:
-          "这些计算是基于平均公式的估算。实际卡路里需求可能因个体因素而异。请咨询医疗专业人员或注册营养师获取个性化建议。",
+        disclaimer: "这些计算是基于平均公式的估算。实际卡路里需求可能因个体因素而异。请咨询医疗专业人员或注册营养师获取个性化建议。",
       },
       faq: {
         title: "常见问题",
@@ -729,13 +721,15 @@ export default {
     back_to_calculators: "返回计算器",
     body_fat_percentage: "体脂百分比",
     body_fat_info_title: "什么是体脂百分比？",
-    body_fat_info_content: "体脂百分比对Katch-McArdle和Cunningham公式至关重要，因为它们基于瘦体重进行计算。如果您不知道确切的体脂百分比，请使用在线视觉指南或DEXA扫描以获得准确性。",
+    body_fat_info_content:
+      "体脂百分比对Katch-McArdle和Cunningham公式至关重要，因为它们基于瘦体重进行计算。如果您不知道确切的体脂百分比，请使用在线视觉指南或DEXA扫描以获得准确性。",
     "calorie-calculator-hub": {
       title: "卡路里计算器公式",
       subtitle: "选择最适合您需求的公式，获得准确的卡路里计算",
       meta: {
         title: "卡路里计算器公式 - BMR与TDEE计算器 | Workout.cool",
-        description: "比较不同的BMR公式：Mifflin-St Jeor、Harris-Benedict、Katch-McArdle、Cunningham和Oxford。选择最适合您需求的卡路里计算器。",
+        description:
+          "比较不同的BMR公式：Mifflin-St Jeor、Harris-Benedict、Katch-McArdle、Cunningham和Oxford。选择最适合您需求的卡路里计算器。",
         keywords: "BMR公式, 卡路里计算器比较, Mifflin-St Jeor, Harris-Benedict, Katch-McArdle, Cunningham, Oxford, TDEE计算器",
       },
       which_formula: "我应该选择哪个公式？",
@@ -754,10 +748,9 @@ export default {
       best_for_general: "一般使用",
       best_for_traditional: "传统",
       best_for_athletes: "运动员",
-      best_for_bodybuilders: "健美运动员", 
+      best_for_bodybuilders: "健美运动员",
       best_for_european: "欧洲人群",
       best_for_comparison: "比较所有",
-      try_now: "立即试用",
       "mifflin-st-jeor": {
         title: "Mifflin-St Jeor（推荐）",
         description: "对一般人群最准确的公式，1990年开发。目前BMR计算的黄金标准。",
@@ -770,15 +763,15 @@ export default {
         title: "Katch-McArdle（运动员）",
         description: "基于瘦体重。对于知道体脂百分比且身体活跃的人最准确。",
       },
-      "cunningham": {
+      cunningham: {
         title: "Cunningham（健美运动员）",
         description: "专为低体脂的精瘦运动员和健美运动员设计。使用瘦体重计算。",
       },
-      "oxford": {
+      oxford: {
         title: "Oxford（欧洲）",
         description: "较新的公式（2005年），基于欧洲人群。考虑年龄段。",
       },
-      "comparison": {
+      comparison: {
         title: "比较所有公式",
         description: "并排比较所有公式的结果，看看差异并选择最适合您的。",
       },
@@ -792,10 +785,11 @@ export default {
         keywords: "Mifflin-St Jeor计算器, BMR计算器, TDEE计算器, 最准确的卡路里计算器, 新陈代谢计算器",
       },
       how_it_works: "Mifflin-St Jeor公式如何工作",
-      how_it_works_description: "1990年开发，该公式被认为是计算健康成人基础代谢率 (BMR) 最准确的。它比Harris-Benedict方程更精确，被营养师和健身专业人员广泛推荐。",
+      how_it_works_description:
+        "1990年开发，该公式被认为是计算健康成人基础代谢率 (BMR) 最准确的。它比Harris-Benedict方程更精确，被营养师和健身专业人员广泛推荐。",
     },
     "harris-benedict": {
-      title: "Harris-Benedict计算器", 
+      title: "Harris-Benedict计算器",
       subtitle: "经典BMR公式 - 卡路里计算的传统方法",
       meta: {
         title: "Harris-Benedict计算器 - 经典BMR与TDEE公式 | Workout.cool",
@@ -803,20 +797,21 @@ export default {
         keywords: "Harris-Benedict计算器, 经典BMR计算器, 传统TDEE计算器, 修订Harris-Benedict公式",
       },
       how_it_works: "Harris-Benedict公式如何工作",
-      how_it_works_description: "最初于1919年开发，1984年修订，Harris-Benedict方程是第一批计算BMR的公式之一。虽然比新公式准确性稍低，但仍被广泛使用，对大多数人提供良好的估算。",
+      how_it_works_description:
+        "最初于1919年开发，1984年修订，Harris-Benedict方程是第一批计算BMR的公式之一。虽然比新公式准确性稍低，但仍被广泛使用，对大多数人提供良好的估算。",
     },
     "katch-mcardle": {
       title: "Katch-McArdle计算器",
       subtitle: "基于瘦体重的精确BMR计算 - 适合运动员",
       meta: {
-        title: "Katch-McArdle计算器 - 瘦体重BMR与TDEE | Workout.cool", 
+        title: "Katch-McArdle计算器 - 瘦体重BMR与TDEE | Workout.cool",
         description: "使用基于瘦体重的Katch-McArdle公式计算您的BMR和TDEE。对于知道体脂百分比的人最准确。",
         keywords: "Katch-McArdle计算器, 瘦体重BMR, 体脂百分比计算器, 运动员BMR计算器, 精确TDEE",
       },
       how_it_works: "Katch-McArdle公式如何工作",
       how_it_works_description: "该公式基于瘦体重而非总体重计算BMR，对于知道体脂百分比的人更准确。对运动员和身体活跃的个体特别有用。",
     },
-    "cunningham": {
+    cunningham: {
       title: "Cunningham计算器",
       subtitle: "专为精瘦运动员和健美运动员设计的BMR公式",
       meta: {
@@ -825,9 +820,10 @@ export default {
         keywords: "Cunningham计算器, 健美运动员BMR计算器, 精瘦运动员BMR, 低体脂BMR计算器, 比赛准备计算器",
       },
       how_it_works: "Cunningham公式如何工作",
-      how_it_works_description: "专为低体脂百分比的精瘦个体开发，该公式提供比其他方程更高的BMR估算。对于竞技运动员和备赛期健美运动员最准确。",
+      how_it_works_description:
+        "专为低体脂百分比的精瘦个体开发，该公式提供比其他方程更高的BMR估算。对于竞技运动员和备赛期健美运动员最准确。",
     },
-    "oxford": {
+    oxford: {
       title: "Oxford计算器",
       subtitle: "基于欧洲人群的现代BMR公式，考虑年龄因素",
       meta: {
@@ -835,8 +831,28 @@ export default {
         description: "使用Oxford方程（2005年）计算您的BMR和TDEE，基于欧洲人群的现代公式，采用年龄特定计算。",
         keywords: "Oxford计算器, 现代BMR计算器, 欧洲BMR公式, 年龄特定BMR计算器, 2005年BMR方程",
       },
-      how_it_works: "Oxford公式如何工作", 
-      how_it_works_description: "2005年发布，这是较新的BMR公式之一。它基于欧洲人群数据开发，考虑年龄段，为30岁以下和30岁以上的人提供不同的方程。",
+      how_it_works: "Oxford公式如何工作",
+      how_it_works_description:
+        "2005年发布，这是较新的BMR公式之一。它基于欧洲人群数据开发，考虑年龄段，为30岁以下和30岁以上的人提供不同的方程。",
+    },
+    "calorie-calculator-comparison": {
+      title: "比较所有BMR公式",
+      subtitle: "查看不同BMR公式如何并排计算您的卡路里需求",
+      meta: {
+        title: "BMR公式比较 - 比较所有卡路里计算器 | Workout.cool",
+        description: "并排比较Mifflin-St Jeor、Harris-Benedict、Katch-McArdle、Cunningham和Oxford BMR公式。看看哪个公式最适合您。",
+        keywords: "BMR公式比较, 卡路里计算器比较, Mifflin vs Harris-Benedict, 最佳BMR计算器, 比较卡路里公式",
+      },
+      how_it_works: "此比较如何工作",
+      how_it_works_description:
+        "输入您的详细信息一次，即可查看所有主要BMR公式如何计算您的每日卡路里需求。这有助于您了解差异并选择最适合您目标的公式。",
+      input_details: "您的详细信息",
+      compare: "比较",
+      results_comparison: "公式比较结果",
+      vs_mifflin: "vs Mifflin-St Jeor",
+      summary: "总结与建议",
+      summary_explanation: "不同的公式可能给出不同的结果。通常，±100-200卡路里的差异是正常和预期的。",
+      recommendation: "对于大多数人来说，Mifflin-St Jeor提供最准确的基准。如果运动员知道他们的体脂百分比，应该考虑Katch-McArdle。",
     },
   },
 } as const;

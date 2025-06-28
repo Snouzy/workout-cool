@@ -23,10 +23,10 @@ export default async function OxfordCalculatorPage() {
 
   return (
     <div className="min-h-screen light:bg-white dark:bg-base-200/20">
-      <div className="container mx-auto px-2 sm:px-4 py-8 sm:py-12 max-w-4xl">
+      <div className="container mx-auto px-2 sm:px-4 py-4 sm:py-8 sm:py-12 max-w-4xl">
         {/* Back to hub */}
-        <Link 
-          href="/tools/calorie-calculator" 
+        <Link
+          href="/tools/calorie-calculator"
           className="inline-flex items-center gap-2 text-sm text-base-content/60 hover:text-primary transition-colors mb-6"
         >
           <ChevronLeftIcon className="w-4 h-4" />
@@ -50,14 +50,13 @@ export default async function OxfordCalculatorPage() {
           className="mb-8 bg-gradient-to-br from-[#25CB78]/5 to-[#22C55E]/5 dark:from-[#25CB78]/10 dark:to-[#22C55E]/10 rounded-2xl border border-[#25CB78]/20 dark:border-[#25CB78]/30 p-6 animate-fadeIn"
           style={{ animationDelay: "0.2s" }}
         >
-          <h2 className="text-xl font-bold mb-3 text-base-content dark:text-base-content/90">
-            {t("tools.harris-benedict.how_it_works")}
-          </h2>
+          <h2 className="text-xl font-bold mb-3 text-base-content dark:text-base-content/90">{t("tools.harris-benedict.how_it_works")}</h2>
           <div className="space-y-2 text-base-content/70 dark:text-base-content/60">
             <p className="text-sm leading-relaxed">{t("tools.harris-benedict.how_it_works_description")}</p>
             <div className="mt-4 p-3 bg-base-100/50 dark:bg-base-100/20 rounded-lg">
               <p className="text-xs font-mono text-base-content/70">
-                <strong>Men:</strong> BMR = 88.362 + (13.397 × weight) + (4.799 × height) - (5.677 × age)<br/>
+                <strong>Men:</strong> BMR = 88.362 + (13.397 × weight) + (4.799 × height) - (5.677 × age)
+                <br />
                 <strong>Women:</strong> BMR = 447.593 + (9.247 × weight) + (3.098 × height) - (4.330 × age)
               </p>
             </div>

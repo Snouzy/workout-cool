@@ -145,7 +145,6 @@ export default {
   tools: {
     title: "Fitness Tools",
     subtitle: "Essential calculators to optimize your training and nutrition",
-    tryNow: "Try now",
     moreComingSoon: "More tools coming soon",
     meta: {
       title: "Fitness Tools - Calculators for Training & Nutrition | Workout.cool",
@@ -155,6 +154,9 @@ export default {
         "fitness calculator, calorie calculator, macro calculator, BMI calculator, TDEE calculator, heart rate zones, one rep max, fitness tools",
     },
     "calorie-calculator": {
+      body_fat_percentage: "Body Fat Percentage",
+      body_fat_info_title:
+        "Body fat percentage is essential for Katch-McArdle and Cunningham formulas as they calculate based on lean body mass. If you don't know your exact body fat %, use online visual guides or DEXA scans for accuracy.",
       title: "Calorie Calculator",
       description: "Calculate your daily caloric needs (TDEE) based on your activity level and goals",
       meta: {
@@ -271,14 +273,17 @@ export default {
     back_to_calculators: "Back to calculators",
     body_fat_percentage: "Body Fat Percentage",
     body_fat_info_title: "What is Body Fat Percentage?",
-    body_fat_info_content: "Body fat percentage is essential for Katch-McArdle and Cunningham formulas as they calculate based on lean body mass. If you don't know your exact body fat %, use online visual guides or DEXA scans for accuracy.",
+    body_fat_info_content:
+      "Body fat percentage is essential for Katch-McArdle and Cunningham formulas as they calculate based on lean body mass. If you don't know your exact body fat %, use online visual guides or DEXA scans for accuracy.",
     "calorie-calculator-hub": {
       title: "Calorie Calculator Formulas",
       subtitle: "Choose the best formula for your needs and get accurate calorie calculations",
       meta: {
         title: "Calorie Calculator Formulas - BMR & TDEE Calculators | Workout.cool",
-        description: "Compare different BMR formulas: Mifflin-St Jeor, Harris-Benedict, Katch-McArdle, Cunningham, and Oxford. Choose the best calorie calculator for your needs.",
-        keywords: "BMR formulas, calorie calculator comparison, Mifflin-St Jeor, Harris-Benedict, Katch-McArdle, Cunningham, Oxford, TDEE calculator",
+        description:
+          "Compare different BMR formulas: Mifflin-St Jeor, Harris-Benedict, Katch-McArdle, Cunningham, and Oxford. Choose the best calorie calculator for your needs.",
+        keywords:
+          "BMR formulas, calorie calculator comparison, Mifflin-St Jeor, Harris-Benedict, Katch-McArdle, Cunningham, Oxford, TDEE calculator",
       },
       which_formula: "Which Formula Should I Choose?",
       formula_explanation: "Different formulas work better for different people. Here's a quick guide to help you choose:",
@@ -296,10 +301,9 @@ export default {
       best_for_general: "General use",
       best_for_traditional: "Traditional",
       best_for_athletes: "Athletes",
-      best_for_bodybuilders: "Bodybuilders", 
+      best_for_bodybuilders: "Bodybuilders",
       best_for_european: "European population",
       best_for_comparison: "Compare all",
-      try_now: "Try now",
       "mifflin-st-jeor": {
         title: "Mifflin-St Jeor (Recommended)",
         description: "Most accurate formula for general population, developed in 1990. Currently the gold standard for BMR calculations.",
@@ -312,15 +316,15 @@ export default {
         title: "Katch-McArdle (Athletes)",
         description: "Based on lean body mass. Most accurate for people who know their body fat percentage and are physically active.",
       },
-      "cunningham": {
+      cunningham: {
         title: "Cunningham (Bodybuilders)",
         description: "Designed for very lean athletes and bodybuilders with low body fat. Uses lean body mass calculation.",
       },
-      "oxford": {
+      oxford: {
         title: "Oxford (European)",
         description: "More recent formula (2005) based on European populations. Takes age brackets into account.",
       },
-      "comparison": {
+      comparison: {
         title: "Compare All Formulas",
         description: "Compare results from all formulas side by side to see the differences and choose what works best for you.",
       },
@@ -330,55 +334,89 @@ export default {
       subtitle: "The gold standard for BMR calculation - most accurate for general population",
       meta: {
         title: "Mifflin-St Jeor Calculator - Most Accurate BMR & TDEE | Workout.cool",
-        description: "Calculate your BMR and TDEE using the Mifflin-St Jeor equation - the most accurate formula for general population. Get personalized calorie recommendations.",
+        description:
+          "Calculate your BMR and TDEE using the Mifflin-St Jeor equation - the most accurate formula for general population. Get personalized calorie recommendations.",
         keywords: "Mifflin-St Jeor calculator, BMR calculator, TDEE calculator, most accurate calorie calculator, metabolism calculator",
       },
       how_it_works: "How the Mifflin-St Jeor Formula Works",
-      how_it_works_description: "Developed in 1990, this formula is considered the most accurate for calculating Basal Metabolic Rate (BMR) in healthy adults. It's more precise than the Harris-Benedict equation and is widely recommended by nutritionists and fitness professionals.",
+      how_it_works_description:
+        "Developed in 1990, this formula is considered the most accurate for calculating Basal Metabolic Rate (BMR) in healthy adults. It's more precise than the Harris-Benedict equation and is widely recommended by nutritionists and fitness professionals.",
     },
     "harris-benedict": {
-      title: "Harris-Benedict Calculator", 
+      title: "Harris-Benedict Calculator",
       subtitle: "Classic BMR formula - the traditional approach to calorie calculation",
       meta: {
         title: "Harris-Benedict Calculator - Classic BMR & TDEE Formula | Workout.cool",
-        description: "Calculate your BMR and TDEE using the revised Harris-Benedict equation (1984). The classic formula that started modern calorie calculations.",
+        description:
+          "Calculate your BMR and TDEE using the revised Harris-Benedict equation (1984). The classic formula that started modern calorie calculations.",
         keywords: "Harris-Benedict calculator, classic BMR calculator, traditional TDEE calculator, revised Harris-Benedict formula",
       },
       how_it_works: "How the Harris-Benedict Formula Works",
-      how_it_works_description: "Originally developed in 1919 and revised in 1984, the Harris-Benedict equation was one of the first formulas to calculate BMR. While slightly less accurate than newer formulas, it remains widely used and provides good estimates for most people.",
+      how_it_works_description:
+        "Originally developed in 1919 and revised in 1984, the Harris-Benedict equation was one of the first formulas to calculate BMR. While slightly less accurate than newer formulas, it remains widely used and provides good estimates for most people.",
     },
     "katch-mcardle": {
       title: "Katch-McArdle Calculator",
       subtitle: "Precise BMR calculation based on lean body mass - ideal for athletes",
       meta: {
-        title: "Katch-McArdle Calculator - Lean Body Mass BMR & TDEE | Workout.cool", 
-        description: "Calculate your BMR and TDEE using the Katch-McArdle formula based on lean body mass. Most accurate for people who know their body fat percentage.",
+        title: "Katch-McArdle Calculator - Lean Body Mass BMR & TDEE | Workout.cool",
+        description:
+          "Calculate your BMR and TDEE using the Katch-McArdle formula based on lean body mass. Most accurate for people who know their body fat percentage.",
         keywords: "Katch-McArdle calculator, lean body mass BMR, body fat percentage calculator, athlete BMR calculator, precise TDEE",
       },
       how_it_works: "How the Katch-McArdle Formula Works",
-      how_it_works_description: "This formula calculates BMR based on lean body mass rather than total body weight, making it more accurate for people who know their body fat percentage. It's particularly useful for athletes and physically active individuals.",
+      how_it_works_description:
+        "This formula calculates BMR based on lean body mass rather than total body weight, making it more accurate for people who know their body fat percentage. It's particularly useful for athletes and physically active individuals.",
     },
-    "cunningham": {
+    cunningham: {
       title: "Cunningham Calculator",
       subtitle: "BMR formula designed for very lean athletes and bodybuilders",
       meta: {
         title: "Cunningham Calculator - BMR for Lean Athletes & Bodybuilders | Workout.cool",
-        description: "Calculate your BMR and TDEE using the Cunningham formula, specifically designed for very lean athletes and bodybuilders with low body fat.",
-        keywords: "Cunningham calculator, bodybuilder BMR calculator, lean athlete BMR, low body fat BMR calculator, competition prep calculator",
+        description:
+          "Calculate your BMR and TDEE using the Cunningham formula, specifically designed for very lean athletes and bodybuilders with low body fat.",
+        keywords:
+          "Cunningham calculator, bodybuilder BMR calculator, lean athlete BMR, low body fat BMR calculator, competition prep calculator",
       },
       how_it_works: "How the Cunningham Formula Works",
-      how_it_works_description: "Developed specifically for very lean individuals with low body fat percentages, this formula provides higher BMR estimates than other equations. It's most accurate for competitive athletes and bodybuilders in contest preparation.",
+      how_it_works_description:
+        "Developed specifically for very lean individuals with low body fat percentages, this formula provides higher BMR estimates than other equations. It's most accurate for competitive athletes and bodybuilders in contest preparation.",
     },
-    "oxford": {
+    oxford: {
       title: "Oxford Calculator",
       subtitle: "Modern BMR formula based on European populations with age considerations",
       meta: {
         title: "Oxford Calculator - Modern BMR & TDEE Formula | Workout.cool",
-        description: "Calculate your BMR and TDEE using the Oxford equation (2005), a modern formula based on European populations with age-specific calculations.",
+        description:
+          "Calculate your BMR and TDEE using the Oxford equation (2005), a modern formula based on European populations with age-specific calculations.",
         keywords: "Oxford calculator, modern BMR calculator, European BMR formula, age-specific BMR calculator, 2005 BMR equation",
       },
-      how_it_works: "How the Oxford Formula Works", 
-      how_it_works_description: "Published in 2005, this is one of the more recent BMR formulas. It was developed using data from European populations and takes age brackets into account, providing different equations for people under and over 30 years old.",
+      how_it_works: "How the Oxford Formula Works",
+      how_it_works_description:
+        "Published in 2005, this is one of the more recent BMR formulas. It was developed using data from European populations and takes age brackets into account, providing different equations for people under and over 30 years old.",
+    },
+    "calorie-calculator-comparison": {
+      title: "Compare All BMR Formulas",
+      subtitle: "See how different BMR formulas calculate your calorie needs side by side",
+      meta: {
+        title: "BMR Formula Comparison - Compare All Calorie Calculators | Workout.cool",
+        description:
+          "Compare Mifflin-St Jeor, Harris-Benedict, Katch-McArdle, Cunningham, and Oxford BMR formulas side by side. See which formula works best for you.",
+        keywords:
+          "BMR formula comparison, calorie calculator comparison, Mifflin vs Harris-Benedict, best BMR calculator, compare calorie formulas",
+      },
+      how_it_works: "How This Comparison Works",
+      how_it_works_description:
+        "Enter your details once and see how all major BMR formulas calculate your daily calorie needs. This helps you understand the differences and choose the most suitable formula for your goals.",
+      input_details: "Your Details",
+      compare: "Compare",
+      results_comparison: "Formula Comparison Results",
+      vs_mifflin: "vs Mifflin-St Jeor",
+      summary: "Summary & Recommendations",
+      summary_explanation:
+        "Different formulas can give varying results. Generally, differences of ±100-200 calories are normal and expected.",
+      recommendation:
+        "For most people, Mifflin-St Jeor provides the most accurate baseline. Athletes should consider Katch-McArdle if they know their body fat percentage.",
     },
   },
   levels: {

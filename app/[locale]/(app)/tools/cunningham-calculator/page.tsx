@@ -23,10 +23,10 @@ export default async function CunninghamCalculatorPage() {
 
   return (
     <div className="min-h-screen light:bg-white dark:bg-base-200/20">
-      <div className="container mx-auto px-2 sm:px-4 py-8 sm:py-12 max-w-4xl">
+      <div className="container mx-auto px-2 sm:px-4 py-4 sm:py-8 sm:py-12 max-w-4xl">
         {/* Back to hub */}
-        <Link 
-          href="/tools/calorie-calculator" 
+        <Link
+          href="/tools/calorie-calculator"
           className="inline-flex items-center gap-2 text-sm text-base-content/60 hover:text-primary transition-colors mb-6"
         >
           <ChevronLeftIcon className="w-4 h-4" />
@@ -50,14 +50,13 @@ export default async function CunninghamCalculatorPage() {
           className="mb-8 bg-gradient-to-br from-[#8B5CF6]/5 to-[#7C3AED]/5 dark:from-[#8B5CF6]/10 dark:to-[#7C3AED]/10 rounded-2xl border border-[#8B5CF6]/20 dark:border-[#8B5CF6]/30 p-6 animate-fadeIn"
           style={{ animationDelay: "0.2s" }}
         >
-          <h2 className="text-xl font-bold mb-3 text-base-content dark:text-base-content/90">
-            {t("tools.cunningham.how_it_works")}
-          </h2>
+          <h2 className="text-xl font-bold mb-3 text-base-content dark:text-base-content/90">{t("tools.cunningham.how_it_works")}</h2>
           <div className="space-y-2 text-base-content/70 dark:text-base-content/60">
             <p className="text-sm leading-relaxed">{t("tools.cunningham.how_it_works_description")}</p>
             <div className="mt-4 p-3 bg-base-100/50 dark:bg-base-100/20 rounded-lg">
               <p className="text-xs font-mono text-base-content/70">
-                <strong>Cunningham:</strong> BMR = 500 + (22 × lean body mass)<br/>
+                <strong>Cunningham:</strong> BMR = 500 + (22 × lean body mass)
+                <br />
                 <strong>Lean Body Mass:</strong> Weight(kg) × (1 - body fat %/100)
               </p>
             </div>

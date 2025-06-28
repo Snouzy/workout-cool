@@ -116,7 +116,7 @@ async function importProgram() {
 
     // Vérifier si le programme existe
     const existingProgram = await prisma.program.findUnique({
-      where: { slug: "force-fonctionnelle-debutant" },
+      where: { slug: "hiit-abdos-intermediaire" },
     });
 
     if (existingProgram) {
@@ -189,7 +189,7 @@ async function importProgram() {
 
     console.log("✅ Nettoyage terminé");
 
-    const csvPath = path.join(__dirname, "data", "programme-debutant-force-fonctionnelle.csv");
+    const csvPath = path.join(__dirname, "data", "programme-hiit-abdos-intermediaire.csv");
     const csvContent = fs.readFileSync(csvPath, "utf-8");
 
     // Séparer les sections du CSV
@@ -242,7 +242,7 @@ async function importProgram() {
           isPremium: programData.isPremium === "true",
           isActive: programData.isActive === "true",
           participantCount: parseInt(programData.participantCount),
-          visibility: programData.visibility,
+          visibility: "DRAFT",
         },
       });
       console.log(`✅ Programme créé: ${program.title} (ID: ${program.id})`);

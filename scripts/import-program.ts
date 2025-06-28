@@ -472,7 +472,9 @@ async function importProgram() {
               sessionNumber: parseInt(sessionMatch[1]),
               weekNumber: parseInt(sessionMatch[2]),
             };
-            console.log(`📍 Contexte de session détecté: Session ${currentSessionInfo.sessionNumber}, Semaine ${currentSessionInfo.weekNumber}`);
+            console.log(
+              `📍 Contexte de session détecté: Session ${currentSessionInfo.sessionNumber}, Semaine ${currentSessionInfo.weekNumber}`,
+            );
           }
           continue;
         }
@@ -533,9 +535,10 @@ async function importProgram() {
           if (value1 && value1 !== "NULL") {
             if (type1 === "TIME") {
               valuesSec.push(parseInt(value1));
-            } else if (type1 === "REPS") {
+            } else if (type1 === "REPS" || type1 === "WEIGHT") {
               valuesInt.push(parseInt(value1));
             }
+            // BODYWEIGHT n'a pas de valeur numérique
           }
         }
 
@@ -545,9 +548,10 @@ async function importProgram() {
           if (value2 && value2 !== "NULL") {
             if (type2 === "TIME") {
               valuesSec.push(parseInt(value2));
-            } else if (type2 === "REPS") {
+            } else if (type2 === "REPS" || type2 === "WEIGHT") {
               valuesInt.push(parseInt(value2));
             }
+            // BODYWEIGHT n'a pas de valeur numérique
           }
         }
 
@@ -558,9 +562,10 @@ async function importProgram() {
           if (value3 && value3 !== "NULL") {
             if (type3 === "TIME") {
               valuesSec.push(parseInt(value3));
-            } else if (type3 === "REPS") {
+            } else if (type3 === "REPS" || type3 === "WEIGHT") {
               valuesInt.push(parseInt(value3));
             }
+            // BODYWEIGHT n'a pas de valeur numérique
           }
         }
 
@@ -571,9 +576,10 @@ async function importProgram() {
           if (value4 && value4 !== "NULL") {
             if (type4 === "TIME") {
               valuesSec.push(parseInt(value4));
-            } else if (type4 === "REPS") {
+            } else if (type4 === "REPS" || type4 === "WEIGHT") {
               valuesInt.push(parseInt(value4));
             }
+            // BODYWEIGHT n'a pas de valeur numérique
           }
         }
 

@@ -80,7 +80,7 @@ export default async function ToolsPage() {
   const t = await getI18n();
 
   return (
-    <div className="min-h-screen bg-base-100">
+    <div className="min-h-screen bg-white dark:bg-base-200/20">
       <div className="container mx-auto px-4 py-8 sm:py-12">
         <div className="mb-8 sm:mb-12 text-center">
           <h1 className="text-4xl sm:text-5xl font-bold mb-4 bg-gradient-to-r from-[#4F8EF7] to-[#25CB78] bg-clip-text text-transparent">
@@ -92,7 +92,7 @@ export default async function ToolsPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {fitnessTools.map((tool) => (
             <Link
-              className="group relative overflow-hidden rounded-2xl border border-base-content/10 bg-base-200/50 backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:border-primary/50"
+              className="group relative overflow-hidden rounded-2xl border border-base-content/10 bg-base-200/50 backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:border-primary/50 dark:border-base-content/10 dark:bg-base-200/50"
               href={tool.href}
               key={tool.id}
             >

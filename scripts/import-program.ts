@@ -360,7 +360,7 @@ async function importProgram() {
           descriptionZhCn: sessionData.descriptionZhCn,
           equipment: parseEquipment(sessionData.equipment) as any[],
           estimatedMinutes: parseInt(sessionData.estimatedMinutes),
-          isPremium: false,
+          isPremium: true,
         },
       });
       createdSessions.push(session);

@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import { BeefIcon, WheatIcon, DropletIcon } from "lucide-react";
+import { BeefIcon, WheatIcon, DropletIcon, InfoIcon, FlameIcon, ActivityIcon } from "lucide-react";
 
 import { useI18n } from "locales/client";
 
@@ -32,9 +32,20 @@ export function ResultsDisplay({ results }: ResultsDisplayProps) {
 
       {/* Main Results */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
-        <div className="bg-base-100/70 dark:bg-base-100/30 backdrop-blur-sm rounded-xl p-4 text-center border border-base-content/10 transition-all duration-300 hover:scale-105">
-          <div className="text-sm text-base-content/60 dark:text-base-content/50 mb-1 font-medium">
-            {t("tools.calorie-calculator.results.bmr")}
+        <div className="group bg-base-100/70 dark:bg-base-100/30 backdrop-blur-sm rounded-xl p-4 text-center border border-base-content/10 transition-all duration-300 hover:scale-105 relative">
+          <div className="flex items-center justify-center gap-2 mb-1">
+            <FlameIcon className="w-4 h-4 text-orange-500" />
+            <div className="text-sm text-base-content/60 dark:text-base-content/50 font-medium">
+              {t("tools.calorie-calculator.results.bmr")}
+            </div>
+            <div className="relative">
+              <InfoIcon className="w-4 h-4 text-base-content/40 cursor-help" />
+              <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 p-3 bg-base-100 dark:bg-base-200 rounded-lg shadow-lg border border-base-content/10 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-10">
+                <p className="text-xs text-base-content/80 dark:text-base-content/70 text-left">
+                  {t("tools.calorie-calculator.results.bmr_explanation")}
+                </p>
+              </div>
+            </div>
           </div>
           <div className="text-2xl font-bold text-base-content dark:text-base-content/90">
             {results.bmr.toLocaleString()}
@@ -42,9 +53,20 @@ export function ResultsDisplay({ results }: ResultsDisplayProps) {
           <div className="text-sm text-base-content/60 dark:text-base-content/50 font-medium">kcal</div>
         </div>
 
-        <div className="bg-base-100/70 dark:bg-base-100/30 backdrop-blur-sm rounded-xl p-4 text-center border border-base-content/10 transition-all duration-300 hover:scale-105">
-          <div className="text-sm text-base-content/60 dark:text-base-content/50 mb-1 font-medium">
-            {t("tools.calorie-calculator.results.tdee")}
+        <div className="group bg-base-100/70 dark:bg-base-100/30 backdrop-blur-sm rounded-xl p-4 text-center border border-base-content/10 transition-all duration-300 hover:scale-105 relative">
+          <div className="flex items-center justify-center gap-2 mb-1">
+            <ActivityIcon className="w-4 h-4 text-green-500" />
+            <div className="text-sm text-base-content/60 dark:text-base-content/50 font-medium">
+              {t("tools.calorie-calculator.results.tdee")}
+            </div>
+            <div className="relative">
+              <InfoIcon className="w-4 h-4 text-base-content/40 cursor-help" />
+              <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 p-3 bg-base-100 dark:bg-base-200 rounded-lg shadow-lg border border-base-content/10 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-10">
+                <p className="text-xs text-base-content/80 dark:text-base-content/70 text-left">
+                  {t("tools.calorie-calculator.results.tdee_explanation")}
+                </p>
+              </div>
+            </div>
           </div>
           <div className="text-2xl font-bold text-base-content dark:text-base-content/90">
             {results.tdee.toLocaleString()}
@@ -65,11 +87,21 @@ export function ResultsDisplay({ results }: ResultsDisplayProps) {
 
       {/* Macros */}
       <div>
-        <h3 className="text-lg font-bold mb-4 text-base-content dark:text-base-content/90">
-          {t("tools.calorie-calculator.results.macros")}
-        </h3>
+        <div className="flex items-center gap-2 mb-4">
+          <h3 className="text-lg font-bold text-base-content dark:text-base-content/90">
+            {t("tools.calorie-calculator.results.macros")}
+          </h3>
+          <div className="group relative">
+            <InfoIcon className="w-4 h-4 text-base-content/40 cursor-help" />
+            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-72 p-3 bg-base-100 dark:bg-base-200 rounded-lg shadow-lg border border-base-content/10 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-10">
+              <p className="text-xs text-base-content/80 dark:text-base-content/70">
+                {t("tools.calorie-calculator.results.macros_explanation")}
+              </p>
+            </div>
+          </div>
+        </div>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <div className="bg-base-100/70 dark:bg-base-100/30 backdrop-blur-sm rounded-xl p-4 border border-base-content/10 transition-all duration-300 hover:scale-105 hover:border-red-500/30">
+          <div className="group bg-base-100/70 dark:bg-base-100/30 backdrop-blur-sm rounded-xl p-4 border border-base-content/10 transition-all duration-300 hover:scale-105 hover:border-red-500/30 relative">
             <div className="flex items-center gap-3 mb-2">
               <div className="p-2 rounded-lg bg-gradient-to-br from-red-500/20 to-red-600/10 dark:from-red-500/15 dark:to-red-600/5">
                 <BeefIcon className="w-5 h-5 text-red-500 dark:text-red-400" />
@@ -80,9 +112,14 @@ export function ResultsDisplay({ results }: ResultsDisplayProps) {
             </div>
             <div className="text-xl font-bold text-base-content dark:text-base-content/90">{results.proteinGrams}g</div>
             <div className="text-xs text-base-content/60 dark:text-base-content/50 mt-1">{results.proteinGrams * 4} kcal</div>
+            <div className="absolute -top-1 -right-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
+              <div className="bg-red-500 text-white text-xs px-2 py-1 rounded-lg font-medium">
+                30%
+              </div>
+            </div>
           </div>
 
-          <div className="bg-base-100/70 dark:bg-base-100/30 backdrop-blur-sm rounded-xl p-4 border border-base-content/10 transition-all duration-300 hover:scale-105 hover:border-yellow-500/30">
+          <div className="group bg-base-100/70 dark:bg-base-100/30 backdrop-blur-sm rounded-xl p-4 border border-base-content/10 transition-all duration-300 hover:scale-105 hover:border-yellow-500/30 relative">
             <div className="flex items-center gap-3 mb-2">
               <div className="p-2 rounded-lg bg-gradient-to-br from-yellow-500/20 to-yellow-600/10 dark:from-yellow-500/15 dark:to-yellow-600/5">
                 <WheatIcon className="w-5 h-5 text-yellow-500 dark:text-yellow-400" />
@@ -93,9 +130,14 @@ export function ResultsDisplay({ results }: ResultsDisplayProps) {
             </div>
             <div className="text-xl font-bold text-base-content dark:text-base-content/90">{results.carbsGrams}g</div>
             <div className="text-xs text-base-content/60 dark:text-base-content/50 mt-1">{results.carbsGrams * 4} kcal</div>
+            <div className="absolute -top-1 -right-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
+              <div className="bg-yellow-500 text-white text-xs px-2 py-1 rounded-lg font-medium">
+                40%
+              </div>
+            </div>
           </div>
 
-          <div className="bg-base-100/70 dark:bg-base-100/30 backdrop-blur-sm rounded-xl p-4 border border-base-content/10 transition-all duration-300 hover:scale-105 hover:border-blue-500/30">
+          <div className="group bg-base-100/70 dark:bg-base-100/30 backdrop-blur-sm rounded-xl p-4 border border-base-content/10 transition-all duration-300 hover:scale-105 hover:border-blue-500/30 relative">
             <div className="flex items-center gap-3 mb-2">
               <div className="p-2 rounded-lg bg-gradient-to-br from-blue-500/20 to-blue-600/10 dark:from-blue-500/15 dark:to-blue-600/5">
                 <DropletIcon className="w-5 h-5 text-blue-500 dark:text-blue-400" />
@@ -106,6 +148,11 @@ export function ResultsDisplay({ results }: ResultsDisplayProps) {
             </div>
             <div className="text-xl font-bold text-base-content dark:text-base-content/90">{results.fatGrams}g</div>
             <div className="text-xs text-base-content/60 dark:text-base-content/50 mt-1">{results.fatGrams * 9} kcal</div>
+            <div className="absolute -top-1 -right-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
+              <div className="bg-blue-500 text-white text-xs px-2 py-1 rounded-lg font-medium">
+                30%
+              </div>
+            </div>
           </div>
         </div>
       </div>

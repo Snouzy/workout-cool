@@ -10,6 +10,7 @@ import { ResultsDisplay } from "./components/ResultsDisplay";
 import { HeightInput } from "./components/HeightInput";
 import { GoalSelector } from "./components/GoalSelector";
 import { GenderSelector } from "./components/GenderSelector";
+import { FAQSection } from "./components/FAQSection";
 import { AgeInput } from "./components/AgeInput";
 import { ActivityLevelSelector } from "./components/ActivityLevelSelector";
 import { calculateTDEE, type CalorieCalculatorInputs, type CalorieResults } from "./calorie-calculator.utils";
@@ -47,7 +48,7 @@ export function CalorieCalculatorClient() {
 
   return (
     <div className="space-y-8">
-      <div className="bg-white dark:bg-base-200/20 backdrop-blur-sm rounded-2xl border border-base-content/10 dark:border-base-content/5 p-6 sm:p-8 transition-all duration-300">
+      <div className="light:bg-white dark:bg-base-200/20 backdrop-blur-sm rounded-2xl border border-base-content/10 dark:border-base-content/5 p-6 sm:p-8 transition-all duration-300">
         <div className="space-y-6">
           {/* Gender Selection */}
           <GenderSelector onChange={(gender) => updateInput("gender", gender)} value={inputs.gender} />
@@ -99,6 +100,9 @@ export function CalorieCalculatorClient() {
 
       {/* Results */}
       {results && <ResultsDisplay results={results} />}
+
+      {/* FAQ Section */}
+      <FAQSection />
     </div>
   );
 }

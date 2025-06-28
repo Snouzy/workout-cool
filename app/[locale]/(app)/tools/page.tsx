@@ -90,10 +90,10 @@ export default async function ToolsPage() {
           <p className="text-lg sm:text-xl text-base-content/70 max-w-2xl mx-auto">{t("tools.subtitle")}</p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           {fitnessTools.map((tool) => (
             <Link
-              className="group relative overflow-hidden rounded-2xl border border-base-content/10 bg-base-200/50 backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:border-primary/50 dark:border-base-content/10 dark:bg-base-200/50"
+              className="group relative overflow-hidden rounded-2xl border border-base-content bg-base-200/50 backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:border-primary/50 dark:border-base-content/10 dark:bg-base-200/50"
               href={tool.href}
               key={tool.id}
             >

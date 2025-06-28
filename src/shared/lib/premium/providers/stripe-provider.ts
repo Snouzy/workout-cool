@@ -1,6 +1,7 @@
 /* eslint-disable no-fallthrough */
 import Stripe from "stripe";
 
+import { prisma } from "@/shared/lib/prisma";
 import { env } from "@/env";
 
 import type { CheckoutResult, PremiumPlan } from "@/shared/types/premium.types";
@@ -371,13 +372,25 @@ export class StripeProvider implements PaymentProvider {
         limit: 1,
       });
 
+      const dbUser = await prisma.user.findUniqueOrThrow({
+        where: {
+          id: userId,
+        },
+      });
+
       if (customers.data.length > 0) {
         return customers.data[0];
       }
 
       // Create new customer
       return await this.stripe.customers.create({
-        metadata: { userId },
+        email: dbUser.email,
+        name: `${dbUser.firstName || "unknown"} ${dbUser.lastName || "unknown"}`,
+        metadata: {
+          userId,
+          first_name: dbUser.firstName,
+          last_name: dbUser.lastName,
+        },
       });
     } catch (error) {
       console.error("Failed to get or create Stripe customer:", error);

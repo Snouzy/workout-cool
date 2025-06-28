@@ -92,46 +92,44 @@ export const Header = () => {
             </li>
 
             {/* Subscription Menu Item */}
-            {session.data && (
-              <li>
-                <Link
-                  className="!no-underline"
-                  href={isPremium ? "/api/premium/billing-portal" : "/premium"}
-                  size="base"
-                  variant="nav"
-                  {...(isPremium && {
-                    onClick: async (e) => {
-                      e.preventDefault();
-                      try {
-                        const response = await fetch("/api/premium/billing-portal", {
-                          method: "POST",
-                          headers: { "Content-Type": "application/json" },
-                          body: JSON.stringify({ returnUrl: window.location.origin + "/profile" }),
-                        });
-                        const data = await response.json();
-                        if (data.success && data.url) {
-                          window.location.href = data.url;
-                        }
-                      } catch (error) {
-                        console.error("Error opening billing portal:", error);
+            <li>
+              <Link
+                className="!no-underline"
+                href={isPremium ? "/api/premium/billing-portal" : "/premium"}
+                size="base"
+                variant="nav"
+                {...(isPremium && {
+                  onClick: async (e) => {
+                    e.preventDefault();
+                    try {
+                      const response = await fetch("/api/premium/billing-portal", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ returnUrl: window.location.origin + "/profile" }),
+                      });
+                      const data = await response.json();
+                      if (data.success && data.url) {
+                        window.location.href = data.url;
                       }
-                    },
-                  })}
-                >
-                  {isPremium ? (
-                    <>
-                      <Crown className="w-4 h-4 text-amber-500" />
-                      {t("commons.manage_subscription")}
-                    </>
-                  ) : (
-                    <>
-                      <CreditCard className="w-4 h-4 text-blue-500" />
-                      {t("commons.become_premium")}
-                    </>
-                  )}
-                </Link>
-              </li>
-            )}
+                    } catch (error) {
+                      console.error("Error opening billing portal:", error);
+                    }
+                  },
+                })}
+              >
+                {isPremium ? (
+                  <>
+                    <Crown className="w-4 h-4 text-amber-500" />
+                    {t("commons.manage_subscription")}
+                  </>
+                ) : (
+                  <>
+                    <CreditCard className="w-4 h-4 text-blue-500" />
+                    {t("commons.become_premium")}
+                  </>
+                )}
+              </Link>
+            </li>
 
             <hr className="my-1 border-slate-200 dark:border-gray-800" />
 

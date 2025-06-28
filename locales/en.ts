@@ -122,6 +122,9 @@ export default {
     mit_license: "MIT License",
     pricing_year: "year",
     pricing_month: "month",
+    conversion_flow_title: "Redirecting...",
+    conversion_flow_message: "Successfully signed in! Redirecting to checkout...",
+    redirecting_to_checkout: "Redirecting to checkout",
   },
   bottom_navigation: {
     programs: "Programs",

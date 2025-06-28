@@ -111,7 +111,17 @@ export function SessionAccessGuard({
           )}
 
           <div className="space-y-3">
-            <Button className="w-full bg-yellow-600 hover:bg-yellow-700 text-white" onClick={() => router.push("/premium")} size="large">
+            <Button
+              className="w-full bg-yellow-600 hover:bg-yellow-700 text-white"
+              onClick={() => {
+                // Redirect to premium page with the current session as return URL
+                const returnUrl = sessionSlug
+                  ? `/${locale}/programs/${programSlug}/session/${sessionSlug}`
+                  : `/${locale}/programs/${programSlug}`;
+                router.push(`/${locale}/premium?return=${encodeURIComponent(returnUrl)}`);
+              }}
+              size="large"
+            >
               {t("programs.upgrade_to_premium")}
             </Button>
             <Button className="w-full" onClick={() => router.push(`/programs/${programSlug}`)} size="large" variant="outline">

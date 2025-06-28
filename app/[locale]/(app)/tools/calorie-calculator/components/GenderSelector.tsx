@@ -21,10 +21,10 @@ export function GenderSelector({ value, onChange }: GenderSelectorProps) {
       <div className="grid grid-cols-2 gap-3">
         <button
           onClick={() => onChange("male")}
-          className={`group flex items-center justify-center gap-3 py-4 px-4 rounded-2xl border-2 transition-all duration-300 ${
+          className={`group flex items-center justify-center gap-2 sm:gap-3 py-3 sm:py-4 px-3 sm:px-4 rounded-2xl border-2 transition-all duration-300 touch-manipulation ${
             value === "male"
               ? "border-[#4F8EF7] bg-gradient-to-br from-[#4F8EF7]/20 to-[#238BE6]/10 text-[#4F8EF7] dark:from-[#4F8EF7]/15 dark:to-[#238BE6]/5 scale-[1.02]"
-              : "border-base-content/15 dark:border-base-content/10 hover:border-[#4F8EF7]/50 bg-base-100 dark:bg-base-200/30 hover:bg-base-200/50"
+              : "border-base-content/15 dark:border-base-content/10 hover:border-[#4F8EF7]/50 bg-base-100 dark:bg-base-200/30 hover:bg-base-200/50 active:bg-base-200/70"
           }`}
         >
           <div className={`p-2 rounded-lg transition-all duration-300 ${
@@ -45,10 +45,10 @@ export function GenderSelector({ value, onChange }: GenderSelectorProps) {
         
         <button
           onClick={() => onChange("female")}
-          className={`group flex items-center justify-center gap-3 py-4 px-4 rounded-2xl border-2 transition-all duration-300 ${
+          className={`group flex items-center justify-center gap-2 sm:gap-3 py-3 sm:py-4 px-3 sm:px-4 rounded-2xl border-2 transition-all duration-300 touch-manipulation ${
             value === "female"
               ? "border-[#FF5722] bg-gradient-to-br from-[#FF5722]/20 to-[#F44336]/10 text-[#FF5722] dark:from-[#FF5722]/15 dark:to-[#F44336]/5 scale-[1.02]"
-              : "border-base-content/15 dark:border-base-content/10 hover:border-[#FF5722]/50 bg-base-100 dark:bg-base-200/30 hover:bg-base-200/50"
+              : "border-base-content/15 dark:border-base-content/10 hover:border-[#FF5722]/50 bg-base-100 dark:bg-base-200/30 hover:bg-base-200/50 active:bg-base-200/70"
           }`}
         >
           <div className={`p-2 rounded-lg transition-all duration-300 ${

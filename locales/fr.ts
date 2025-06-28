@@ -172,6 +172,7 @@ export default {
       how_it_works_step3: "Nous personnalisons selon votre objectif (perdre, maintenir ou prendre du poids)",
       calculate: "Calculer",
       calculating: "Calcul en cours...",
+      tap_info_icons: "Appuyez sur les icônes ℹ️ pour plus d'informations",
       gender: "Sexe",
       male: "Homme",
       female: "Femme",

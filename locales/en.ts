@@ -173,6 +173,7 @@ export default {
       how_it_works_step3: "We personalize according to your goal (lose, maintain, or gain weight)",
       calculate: "Calculate",
       calculating: "Calculating...",
+      tap_info_icons: "Tap the ℹ️ icons for more information",
       gender: "Gender",
       male: "Male",
       female: "Female",

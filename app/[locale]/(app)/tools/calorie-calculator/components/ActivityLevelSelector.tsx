@@ -45,15 +45,15 @@ export function ActivityLevelSelector({ value, onChange }: ActivityLevelSelector
 
           return (
             <button
-              className={`group w-full text-left p-4 rounded-2xl border-2 transition-all duration-300 ${
+              className={`group w-full text-left p-3 sm:p-4 rounded-2xl border-2 transition-all duration-300 touch-manipulation ${
                 isSelected
                   ? `${colors.border} bg-gradient-to-br ${colors.bg} scale-[1.02] dark:${colors.bg.replace("/20", "/15").replace("/10", "/5")}`
-                  : "border-base-content/15 dark:border-base-content/10 hover:border-base-content/30 bg-base-100 dark:bg-base-200/30 hover:bg-base-200/50"
+                  : "border-base-content/15 dark:border-base-content/10 hover:border-base-content/30 bg-base-100 dark:bg-base-200/30 hover:bg-base-200/50 active:bg-base-200/70 active:scale-[0.98]"
               }`}
               key={level}
               onClick={() => onChange(level)}
             >
-              <div className="flex items-start gap-4">
+              <div className="flex items-start gap-3 sm:gap-4">
                 <div
                   className={`p-2 rounded-lg transition-all duration-300 ${
                     isSelected

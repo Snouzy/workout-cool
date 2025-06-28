@@ -20,8 +20,8 @@ export default async function CalorieCalculatorPage() {
   const t = await getI18n();
 
   return (
-    <div className="min-h-screen bg-base-100 dark:bg-base-200/20">
-      <div className="container mx-auto px-4 py-8 sm:py-12 max-w-4xl">
+    <div className="min-h-screen light:bg-white dark:bg-base-200/20">
+      <div className="container mx-auto px-2 sm:px-4 py-8 sm:py-12 max-w-4xl">
         <div className="mb-8 text-center">
           <h1 className="text-4xl sm:text-5xl font-bold mb-4 bg-gradient-to-r from-[#4F8EF7] to-[#238BE6] bg-clip-text text-transparent animate-fadeIn">
             {t("tools.calorie-calculator.title")}

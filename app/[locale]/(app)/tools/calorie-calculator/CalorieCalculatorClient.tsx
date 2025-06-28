@@ -48,7 +48,7 @@ export function CalorieCalculatorClient() {
 
   return (
     <div className="space-y-8">
-      <div className="light:bg-white dark:bg-base-200/20 backdrop-blur-sm rounded-2xl border border-base-content/10 dark:border-base-content/5 p-6 sm:p-8 transition-all duration-300">
+      <div className="light:bg-white dark:bg-base-200/20 backdrop-blur-sm rounded-2xl border border-base-content/10 dark:border-base-content/5 p-2 sm:p-8 transition-all duration-300">
         <div className="space-y-6">
           {/* Gender Selection */}
           <GenderSelector onChange={(gender) => updateInput("gender", gender)} value={inputs.gender} />
@@ -73,7 +73,8 @@ export function CalorieCalculatorClient() {
 
           {/* Calculate Button */}
           <button
-            className={`w-full py-4 px-6 rounded-xl bg-gradient-to-r from-[#4F8EF7] to-[#238BE6] text-white font-bold text-lg transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-primary/25 active:scale-[0.98] ${
+            aria-label={t("tools.calorie-calculator.calculate")}
+            className={`w-full py-4 px-6 rounded-xl bg-gradient-to-r from-[#4F8EF7] to-[#238BE6] text-white font-bold text-lg transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-primary/25 active:scale-[0.98] touch-manipulation ${
               isCalculating ? "animate-pulse" : ""
             }`}
             disabled={isCalculating}
@@ -99,7 +100,15 @@ export function CalorieCalculatorClient() {
       </div>
 
       {/* Results */}
-      {results && <ResultsDisplay results={results} />}
+      {results && (
+        <>
+          <ResultsDisplay results={results} />
+          {/* Mobile hint */}
+          <div className="sm:hidden text-center text-xs text-base-content/50 dark:text-base-content/40 mt-2">
+            {t("tools.calorie-calculator.tap_info_icons")}
+          </div>
+        </>
+      )}
 
       {/* FAQ Section */}
       <FAQSection />

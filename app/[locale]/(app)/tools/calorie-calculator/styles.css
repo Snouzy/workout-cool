@@ -75,3 +75,49 @@ input[type="range"]::-moz-range-thumb:hover {
     background: #4F8EF7;
   }
 }
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  /* Larger touch targets */
+  .touch-manipulation {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  /* Remove hover effects on mobile */
+  @media (hover: none) and (pointer: coarse) {
+    .hover\:scale-105:hover {
+      transform: none;
+    }
+    
+    .hover\:border-primary\/30:hover {
+      border-color: inherit;
+    }
+  }
+  
+  /* Active states for better feedback */
+  button:active {
+    transform: scale(0.98);
+  }
+  
+  /* Larger slider thumb for mobile */
+  input[type="range"]::-webkit-slider-thumb {
+    height: 28px;
+    width: 28px;
+  }
+  
+  input[type="range"]::-moz-range-thumb {
+    height: 28px;
+    width: 28px;
+  }
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Prevent layout shift on modal open */
+body.modal-open {
+  padding-right: 0 !important;
+}

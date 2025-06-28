@@ -474,11 +474,11 @@ async function importProgram() {
         if (type4 && type4 !== "NA" && type4 !== "NULL") {
           types.push(type4);
 
-          if (value3 && value3 !== "NULL") {
+          if (value4 && value4 !== "NULL") {
             if (type4 === "TIME") {
-              valuesSec.push(parseInt(value3));
+              valuesSec.push(parseInt(value4));
             } else if (type4 === "REPS") {
-              valuesInt.push(parseInt(value3));
+              valuesInt.push(parseInt(value4));
             }
           }
         }

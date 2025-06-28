@@ -606,8 +606,10 @@ export default {
     premium: "Premium",
     free: "Gratis",
     new: "Nuevo",
+    coming_soon: "Próximamente",
   },
   tools: {
+    try_now: "Probar ahora",
     title: "Herramientas de Fitness",
     subtitle: "Calculadoras esenciales para optimizar tu entrenamiento y nutrición",
     moreComingSoon: "Más herramientas próximamente",

@@ -137,6 +137,7 @@ export default {
     profile_tooltip: "Ver o seu perfil",
   },
   tools: {
+    try_now: "Experimentar agora",
     title: "Ferramentas de Fitness",
     subtitle: "Calculadoras essenciais para otimizar o seu treino e nutrição",
     moreComingSoon: "Mais ferramentas em breve",
@@ -883,6 +884,7 @@ export default {
     subscription: "Abonamento",
     manage_subscription: "Gerir abonamento",
     become_premium: "Torne-se Premium",
+    coming_soon: "Em breve",
     free: "Gratuito",
     new: "Novo",
   },

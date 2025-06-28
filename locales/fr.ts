@@ -142,6 +142,7 @@ export default {
     profile_tooltip: "Voir votre profil",
   },
   tools: {
+    try_now: "Essayer maintenant",
     title: "Outils Fitness",
     subtitle: "Calculateurs essentiels pour optimiser votre entraînement et nutrition",
     moreComingSoon: "Plus d'outils bientôt disponibles",
@@ -883,6 +884,7 @@ export default {
     subscription: "Abonnement",
     manage_subscription: "Gérer abonnement",
     become_premium: "Devenir Premium",
+    coming_soon: "Bientôt disponible",
     extremely_dissatisfied: "Très insatisfait",
     somewhat_dissatisfied: "Insatisfait",
     neutral: "Neutre",

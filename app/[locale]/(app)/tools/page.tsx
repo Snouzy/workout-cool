@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -14,6 +13,7 @@ interface FitnessTool {
   gradientFrom: string;
   gradientTo: string;
   href: string;
+  coming_soon?: boolean;
 }
 
 const fitnessTools: FitnessTool[] = [
@@ -32,6 +32,7 @@ const fitnessTools: FitnessTool[] = [
     gradientFrom: "from-[#25CB78]",
     gradientTo: "to-[#22C55E]",
     href: "/tools/macro-calculator",
+    coming_soon: true,
   },
   {
     id: "bmi-calculator",
@@ -40,6 +41,7 @@ const fitnessTools: FitnessTool[] = [
     gradientFrom: "from-[#FF5722]",
     gradientTo: "to-[#EF4444]",
     href: "/tools/bmi-calculator",
+    coming_soon: true,
   },
   {
     id: "heart-rate-calculator",
@@ -48,6 +50,7 @@ const fitnessTools: FitnessTool[] = [
     gradientFrom: "from-[#8B5CF6]",
     gradientTo: "to-[#7C3AED]",
     href: "/tools/heart-rate-calculator",
+    coming_soon: true,
   },
   {
     id: "one-rep-max",
@@ -56,6 +59,7 @@ const fitnessTools: FitnessTool[] = [
     gradientFrom: "from-[#F59E0B]",
     gradientTo: "to-[#EF4444]",
     href: "/tools/one-rep-max",
+    coming_soon: true,
   },
   {
     id: "rest-timer",
@@ -64,6 +68,7 @@ const fitnessTools: FitnessTool[] = [
     gradientFrom: "from-[#06B6D4]",
     gradientTo: "to-[#3B82F6]",
     href: "/tools/rest-timer",
+    coming_soon: true,
   },
 ];
 
@@ -91,35 +96,80 @@ export default async function ToolsPage() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          {fitnessTools.map((tool) => (
-            <Link
-              className="group relative overflow-hidden rounded-2xl border border-base-content bg-base-200/50 backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:border-primary/50 dark:border-base-content/10 dark:bg-base-200/50"
-              href={tool.href}
-              key={tool.id}
-            >
-              <div
-                className={`absolute inset-0 bg-gradient-to-br ${tool.gradientFrom} ${tool.gradientTo} opacity-0 transition-opacity duration-300 group-hover:opacity-10`}
-              />
+          {fitnessTools.map((tool) => {
+            const ToolWrapper = tool.coming_soon ? "div" : Link;
+            const wrapperProps = tool.coming_soon ? {} : { href: tool.href };
 
-              <div className="relative p-6 sm:p-8">
-                <div className="flex items-start justify-between mb-4">
-                  <div className={`p-3 rounded-xl bg-gradient-to-br ${tool.gradientFrom} ${tool.gradientTo} text-white`}>{tool.icon}</div>
-                  <div className="relative w-12 h-12 opacity-80 group-hover:opacity-100 transition-opacity">
-                    <Image
-                      alt="Workout Cool Emoji"
-                      className="object-contain"
-                      height={48}
-                      src={`/images/emojis/${tool.emoji}`}
-                      width={48}
-                    />
+            return (
+              <ToolWrapper
+                {...wrapperProps}
+                className={`group relative overflow-hidden rounded-2xl border backdrop-blur-sm transition-all duration-300 ${
+                  tool.coming_soon
+                    ? "border-base-content/20 bg-base-200/30 cursor-not-allowed opacity-60 dark:border-base-content/10 dark:bg-base-200/20"
+                    : "border-base-content bg-base-200/50 hover:scale-[1.02] hover:border-primary/50 dark:border-base-content/10 dark:bg-base-200/50"
+                }`}
+                key={tool.id}
+              >
+                <div
+                  className={`absolute inset-0 bg-gradient-to-br ${tool.gradientFrom} ${tool.gradientTo} ${
+                    tool.coming_soon ? "opacity-5" : "opacity-0 transition-opacity duration-300 group-hover:opacity-10"
+                  }`}
+                />
+
+                <div className="relative p-6 sm:p-8">
+                  <div className="flex items-start justify-between mb-4">
+                    <div
+                      className={`p-3 rounded-xl bg-gradient-to-br ${tool.gradientFrom} ${tool.gradientTo} text-white ${
+                        tool.coming_soon ? "opacity-50" : ""
+                      }`}
+                    >
+                      {tool.icon}
+                    </div>
+                    <div
+                      className={`relative w-12 h-12 transition-opacity ${
+                        tool.coming_soon ? "opacity-30" : "opacity-80 group-hover:opacity-100"
+                      }`}
+                    >
+                      <Image
+                        alt="Workout Cool Emoji"
+                        className="object-contain"
+                        height={48}
+                        src={`/images/emojis/${tool.emoji}`}
+                        width={48}
+                      />
+                    </div>
                   </div>
-                </div>
 
-                <h3 className="text-xl sm:text-2xl font-bold mb-2 text-base-content">{t(`tools.${tool.id}.title` as keyof typeof t)}</h3>
-                <p className="text-base-content/70 text-sm sm:text-base">{t(`tools.${tool.id}.description` as keyof typeof t)}</p>
-              </div>
-            </Link>
-          ))}
+                  <h3 className={`text-xl sm:text-2xl font-bold mb-2 ${tool.coming_soon ? "text-base-content/50" : "text-base-content"}`}>
+                    {t(`tools.${tool.id}.title` as keyof typeof t)}
+                  </h3>
+                  <p className={`text-sm sm:text-base ${tool.coming_soon ? "text-base-content/40" : "text-base-content/70"}`}>
+                    {t(`tools.${tool.id}.description` as keyof typeof t)}
+                  </p>
+
+                  {tool.coming_soon && (
+                    <div className="mt-4 inline-flex items-center px-3 py-1 rounded-full bg-base-content/10 text-xs font-medium text-base-content/60">
+                      {t("commons.coming_soon")}
+                    </div>
+                  )}
+
+                  {!tool.coming_soon && (
+                    <div className="mt-4 flex items-center gap-2 text-primary">
+                      <span className="text-sm font-medium">{t("tools.try_now")}</span>
+                      <svg
+                        className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M9 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} />
+                      </svg>
+                    </div>
+                  )}
+                </div>
+              </ToolWrapper>
+            );
+          })}
         </div>
 
         <div className="mt-12 text-center">

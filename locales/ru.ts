@@ -135,6 +135,7 @@ export default {
     profile_tooltip: "Просмотр профиля",
   },
   tools: {
+    try_now: "Попробовать сейчас",
     title: "Фитнес-инструменты",
     subtitle: "Основные калькуляторы для оптимизации тренировок и питания",
     moreComingSoon: "Больше инструментов скоро",
@@ -884,6 +885,7 @@ export default {
     subscription: "Подписка",
     manage_subscription: "Управление подпиской",
     become_premium: "Стань Премиум",
+    coming_soon: "Скоро",
     premium: "Премиум",
     free: "Бесплатно",
     new: "Новый",

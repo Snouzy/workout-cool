@@ -143,6 +143,7 @@ export default {
     profile_tooltip: "View your profile",
   },
   tools: {
+    try_now: "Try now",
     title: "Fitness Tools",
     subtitle: "Essential calculators to optimize your training and nutrition",
     moreComingSoon: "More tools coming soon",
@@ -887,5 +888,6 @@ export default {
     premium: "Premium",
     free: "Free",
     new: "New",
+    coming_soon: "Coming soon",
   },
 } as const;

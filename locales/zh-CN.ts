@@ -716,10 +716,6 @@ export default {
       title: "1RM计算器",
       description: "估算您的单次最大重量并规划力量训练百分比",
     },
-    "rest-timer": {
-      title: "休息计时器",
-      description: "智能计时器，优化组间休息时间",
-    },
     back_to_calculators: "返回计算器",
     body_fat_percentage: "体脂百分比",
     body_fat_info_title: "什么是体脂百分比？",

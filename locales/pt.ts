@@ -258,10 +258,6 @@ export default {
       title: "Calculadora 1RM",
       description: "Estime a sua repetição máxima e planeie as percentagens do seu treino de força",
     },
-    "rest-timer": {
-      title: "Cronómetro de Descanso",
-      description: "Cronómetro inteligente para otimizar os seus períodos de descanso entre séries",
-    },
     back_to_calculators: "Voltar às calculadoras",
     body_fat_percentage: "Percentagem de Gordura Corporal",
     body_fat_info_title: "O que é a Percentagem de Gordura Corporal?",

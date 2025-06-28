@@ -267,10 +267,6 @@ export default {
       title: "1RM Calculator",
       description: "Estimate your one rep max and plan your strength training percentages",
     },
-    "rest-timer": {
-      title: "Rest Timer",
-      description: "Smart timer to optimize your rest periods between sets",
-    },
     back_to_calculators: "Back to calculators",
     body_fat_percentage: "Body Fat Percentage",
     body_fat_info_title: "What is Body Fat Percentage?",

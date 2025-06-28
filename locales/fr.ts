@@ -154,12 +154,12 @@ export default {
         "calculateur fitness, calculateur calories, calculateur macros, calculateur IMC, calculateur TDEE, zones fréquence cardiaque, one rep max, outils fitness",
     },
     "calorie-calculator": {
-      title: "Calculateur de Calories",
+      title: "Calculateur de calories",
       description: "Calculez vos besoins caloriques quotidiens (TDEE) selon votre activité et vos objectifs",
       meta: {
-        title: "Calculateur de Calories - TDEE & Besoins Caloriques | Workout.cool",
+        title: "Calculateur de calories - TDEE & Besoins caloriques | Workout.cool",
         description:
-          "Calculez votre Dépense Énergétique Journalière Totale (TDEE) et vos besoins caloriques. Obtenez des recommandations personnalisées pour la perte de poids, le maintien ou la prise de muscle.",
+          "Calculez votre dépense énergétique journalière totale (TDEE) et vos besoins caloriques. Obtenez des recommandations personnalisées pour la perte de poids, le maintien ou la prise de muscle.",
         keywords:
           "calculateur calories, calculateur TDEE, calories quotidiennes, calculateur perte de poids, besoins caloriques, calculateur métabolisme de base",
       },
@@ -248,7 +248,7 @@ export default {
       },
     },
     "macro-calculator": {
-      title: "Calculateur de Macros",
+      title: "Calculateur de macros",
       description: "Trouvez votre répartition optimale en protéines, glucides et lipides pour vos objectifs",
     },
     "bmi-calculator": {
@@ -256,16 +256,12 @@ export default {
       description: "Calculez votre Indice de Masse Corporelle et comprenez votre catégorie de poids",
     },
     "heart-rate-calculator": {
-      title: "Zones de Fréquence Cardiaque",
+      title: "Zones de fréquence cardiaque",
       description: "Découvrez vos zones d'entraînement optimales pour brûler des graisses et performer",
     },
     "one-rep-max": {
       title: "Calculateur 1RM",
       description: "Estimez votre max sur une répétition et planifiez vos pourcentages d'entraînement",
-    },
-    "rest-timer": {
-      title: "Chronomètre de Repos",
-      description: "Chronomètre intelligent pour optimiser vos temps de repos entre les séries",
     },
     back_to_calculators: "Retour aux calculateurs",
     body_fat_percentage: "Pourcentage de Graisse Corporelle",
@@ -273,10 +269,10 @@ export default {
     body_fat_info_content:
       "Le pourcentage de graisse corporelle est essentiel pour les formules Katch-McArdle et Cunningham car elles calculent basé sur la masse maigre. Si vous ne connaissez pas votre % de graisse exact, utilisez des guides visuels en ligne ou des scans DEXA pour plus de précision.",
     "calorie-calculator-hub": {
-      title: "Formules de Calculateur de Calories",
+      title: "Formules de Calculateur de calories",
       subtitle: "Choisissez la meilleure formule pour vos besoins et obtenez des calculs caloriques précis",
       meta: {
-        title: "Formules de Calculateur de Calories - Calculateurs BMR & TDEE | Workout.cool",
+        title: "Formules de Calculateur de calories - Calculateurs BMR & TDEE | Workout.cool",
         description:
           "Comparez différentes formules BMR : Mifflin-St Jeor, Harris-Benedict, Katch-McArdle, Cunningham et Oxford. Choisissez le meilleur calculateur de calories pour vos besoins.",
         keywords:

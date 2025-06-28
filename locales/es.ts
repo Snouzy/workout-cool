@@ -660,10 +660,6 @@ export default {
       inches: "pulgadas",
       activity_level: "Nivel de Actividad",
     },
-    "rest-timer": {
-      title: "Temporizador de Descanso",
-      description: "Temporizador inteligente para optimizar tus períodos de descanso entre series",
-    },
     back_to_calculators: "Volver a las calculadoras",
     body_fat_percentage: "Porcentaje de Grasa Corporal",
     body_fat_info_title: "¿Qué es el Porcentaje de Grasa Corporal?",

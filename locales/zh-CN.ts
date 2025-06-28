@@ -130,6 +130,10 @@ export default {
     workouts_tooltip: "创建您的锻炼",
     premium: "高级",
     premium_tooltip: "成为高级",
+    tools: "工具",
+    tools_tooltip: "浏览工具",
+    profile: "个人资料",
+    profile_tooltip: "查看您的个人资料",
   },
   levels: {
     BEGINNER: "初学者",

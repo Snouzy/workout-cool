@@ -136,6 +136,10 @@ export default {
     workouts_tooltip: "Créer votre propre entraînement",
     premium: "Premium",
     premium_tooltip: "Passer à Premium",
+    tools: "Outils",
+    tools_tooltip: "Parcourir les outils",
+    profile: "Profil",
+    profile_tooltip: "Voir votre profil",
   },
   levels: {
     BEGINNER: "Débutant",

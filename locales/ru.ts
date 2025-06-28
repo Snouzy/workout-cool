@@ -129,6 +129,10 @@ export default {
     workouts_tooltip: "Создать свою тренировку",
     premium: "Премиум",
     premium_tooltip: "Стань Премиум",
+    tools: "Инструменты",
+    tools_tooltip: "Просмотр инструментов",
+    profile: "Профиль",
+    profile_tooltip: "Просмотр профиля",
   },
   levels: {
     BEGINNER: "Начальный",

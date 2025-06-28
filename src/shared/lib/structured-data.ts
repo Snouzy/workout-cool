@@ -387,18 +387,33 @@ export function generateStructuredData({
         },
         genre: "Fitness",
         keywords: [
-          locale === "en" ? "workout session" : 
-          locale === "es" ? "sesión de entrenamiento" :
-          locale === "pt" ? "sessão de treino" :
-          locale === "ru" ? "тренировочная сессия" :
-          locale === "zh-CN" ? "训练课程" : "séance d'entraînement",
-          "fitness", "exercise", "training"
+          locale === "en"
+            ? "workout session"
+            : locale === "es"
+              ? "sesión de entrenamiento"
+              : locale === "pt"
+                ? "sessão de treino"
+                : locale === "ru"
+                  ? "тренировочная сессия"
+                  : locale === "zh-CN"
+                    ? "训练课程"
+                    : "séance d'entraînement",
+          "fitness",
+          "exercise",
+          "training",
         ].join(", "),
-        inLanguage: locale === "en" ? "en-US" : 
-                   locale === "es" ? "es-ES" :
-                   locale === "pt" ? "pt-PT" :
-                   locale === "ru" ? "ru-RU" :
-                   locale === "zh-CN" ? "zh-CN" : "fr-FR",
+        inLanguage:
+          locale === "en"
+            ? "en-US"
+            : locale === "es"
+              ? "es-ES"
+              : locale === "pt"
+                ? "pt-PT"
+                : locale === "ru"
+                  ? "ru-RU"
+                  : locale === "zh-CN"
+                    ? "zh-CN"
+                    : "fr-FR",
         embedUrl: url,
         interactionStatistic: {
           "@type": "InteractionCounter",

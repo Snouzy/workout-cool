@@ -141,6 +141,41 @@ export default {
     profile: "Profil",
     profile_tooltip: "Voir votre profil",
   },
+  tools: {
+    title: "Outils Fitness",
+    subtitle: "Calculateurs essentiels pour optimiser votre entraînement et nutrition",
+    tryNow: "Essayer maintenant",
+    moreComingSoon: "Plus d'outils bientôt disponibles",
+    meta: {
+      title: "Outils Fitness - Calculateurs pour Entraînement & Nutrition | Workout.cool",
+      description: "Calculateurs fitness gratuits : TDEE, macros, IMC, zones de fréquence cardiaque, 1RM et plus. Optimisez votre entraînement et nutrition avec nos outils essentiels.",
+      keywords: "calculateur fitness, calculateur calories, calculateur macros, calculateur IMC, calculateur TDEE, zones fréquence cardiaque, one rep max, outils fitness",
+    },
+    "calorie-calculator": {
+      title: "Calculateur de Calories",
+      description: "Calculez vos besoins caloriques quotidiens (TDEE) selon votre activité et vos objectifs",
+    },
+    "macro-calculator": {
+      title: "Calculateur de Macros",
+      description: "Trouvez votre répartition optimale en protéines, glucides et lipides pour vos objectifs",
+    },
+    "bmi-calculator": {
+      title: "Calculateur d'IMC",
+      description: "Calculez votre Indice de Masse Corporelle et comprenez votre catégorie de poids",
+    },
+    "heart-rate-calculator": {
+      title: "Zones de Fréquence Cardiaque",
+      description: "Découvrez vos zones d'entraînement optimales pour brûler des graisses et performer",
+    },
+    "one-rep-max": {
+      title: "Calculateur 1RM",
+      description: "Estimez votre max sur une répétition et planifiez vos pourcentages d'entraînement",
+    },
+    "rest-timer": {
+      title: "Chronomètre de Repos",
+      description: "Chronomètre intelligent pour optimiser vos temps de repos entre les séries",
+    },
+  },
   levels: {
     BEGINNER: "Débutant",
     INTERMEDIATE: "Intermédiaire",

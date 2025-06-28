@@ -142,6 +142,41 @@ export default {
     profile: "Profile",
     profile_tooltip: "View your profile",
   },
+  tools: {
+    title: "Fitness Tools",
+    subtitle: "Essential calculators to optimize your training and nutrition",
+    tryNow: "Try now",
+    moreComingSoon: "More tools coming soon",
+    meta: {
+      title: "Fitness Tools - Calculators for Training & Nutrition | Workout.cool",
+      description: "Free fitness calculators: TDEE, macros, BMI, heart rate zones, 1RM and more. Optimize your training and nutrition with our essential tools.",
+      keywords: "fitness calculator, calorie calculator, macro calculator, BMI calculator, TDEE calculator, heart rate zones, one rep max, fitness tools",
+    },
+    "calorie-calculator": {
+      title: "Calorie Calculator",
+      description: "Calculate your daily caloric needs (TDEE) based on your activity level and goals",
+    },
+    "macro-calculator": {
+      title: "Macro Calculator",
+      description: "Find your optimal protein, carbs and fat distribution for your fitness goals",
+    },
+    "bmi-calculator": {
+      title: "BMI Calculator",
+      description: "Calculate your Body Mass Index and understand your weight category",
+    },
+    "heart-rate-calculator": {
+      title: "Heart Rate Zones",
+      description: "Discover your optimal training zones for fat burning and performance",
+    },
+    "one-rep-max": {
+      title: "1RM Calculator",
+      description: "Estimate your one rep max and plan your strength training percentages",
+    },
+    "rest-timer": {
+      title: "Rest Timer",
+      description: "Smart timer to optimize your rest periods between sets",
+    },
+  },
   levels: {
     BEGINNER: "Beginner",
     INTERMEDIATE: "Intermediate",

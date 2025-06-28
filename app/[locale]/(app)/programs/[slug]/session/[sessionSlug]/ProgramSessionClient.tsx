@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, Play, Clock, Dumbbell } from "lucide-react";
+import { ArrowLeft, Play } from "lucide-react";
 import { ExerciseAttributeNameEnum, ProgramWeek } from "@prisma/client";
 
 import { useCurrentLocale, useI18n } from "locales/client";
@@ -18,6 +18,7 @@ import { completeProgramSession } from "@/features/programs/actions/complete-pro
 import { ProgramSessionWithExercises } from "@/entities/program-session/types/program-session.types";
 import { ProgramI18nReference } from "@/entities/program/types/program.types";
 import { Button } from "@/components/ui/button";
+import { SessionRichSnippets } from "@/components/seo/session-rich-snippets";
 
 interface ProgramSessionClientProps {
   program: ProgramI18nReference;
@@ -237,34 +238,25 @@ export function ProgramSessionClient({ program, week, session, isAuthenticated, 
         </div>
 
         {/* Session preview content */}
-        <div className="flex-1 bg-gray-50 dark:bg-gray-900 p-6">
+        <main className="flex-1 bg-gray-50 dark:bg-gray-900 p-2 md:p-6">
           <div className="max-w-4xl mx-auto">
-            <div className="bg-white dark:bg-gray-800 rounded-lg p-6 mb-6">
+            <article className="bg-white dark:bg-gray-800 rounded-lg p-2 sm:p-6 mb-6">
               {/* Session info */}
-              <div className="flex items-center justify-between mb-6 flex-col-reverse sm:flex-row">
+              <header className="flex items-center justify-between mb-6 flex-col-reverse sm:flex-row">
                 <div className="mt-5 sm:mt-0">
-                  <h2 className="text-2xl font-bold text-gray-900 dark:text-white">{programSessionTitle}</h2>
+                  <h1 className="text-2xl font-bold text-gray-900 dark:text-white">{programSessionTitle}</h1>
                   {programSessionDescription && <p className="text-gray-600 dark:text-gray-400 mt-2">{programSessionDescription}</p>}
                 </div>
-                <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
-                  <div className="flex items-center gap-1">
-                    <Clock size={16} />
-                    <span>
-                      ~{Math.round(session.exercises.length * 3)} {t("programs.min_short")}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <Dumbbell size={16} />
-                    <span>
-                      {session.exercises.length} {t("programs.exercises")}
-                    </span>
-                  </div>
-                </div>
-              </div>
+                <SessionRichSnippets
+                  duration={Math.round(session.exercises.length * 3)}
+                  exerciseCount={session.exercises.length}
+                  totalSets={session.exercises.reduce((total, ex) => total + ex.suggestedSets.length, 0)}
+                />
+              </header>
 
               {/* Exercise list */}
-              <div className="space-y-4 mb-8">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{t("programs.exercises_in_session")}</h3>
+              <section className="space-y-4 mb-8">
+                <h2 className="text-lg font-semibold text-gray-900 dark:text-white">{t("programs.exercises_in_session")}</h2>
                 <div className="grid gap-3">
                   {session.exercises.map((exercise, index) => {
                     const exerciseName = locale === "fr" ? exercise.exercise.name : exercise.exercise.nameEn;
@@ -274,7 +266,7 @@ export function ProgramSessionClient({ program, week, session, isAuthenticated, 
                           {index + 1}
                         </div>
                         <div className="flex-1">
-                          <h4 className="font-medium text-gray-900 dark:text-white">{exerciseName}</h4>
+                          <h3 className="font-medium text-gray-900 dark:text-white">{exerciseName}</h3>
                         </div>
                         <div className="text-right">
                           <span className="text-sm text-gray-500 dark:text-gray-400">
@@ -285,10 +277,10 @@ export function ProgramSessionClient({ program, week, session, isAuthenticated, 
                     );
                   })}
                 </div>
-              </div>
+              </section>
 
               {/* Start workout button */}
-              <div className="flex justify-center">
+              <footer className="flex justify-center">
                 <Button
                   className="bg-gradient-to-r from-[#4F8EF7] to-[#25CB78] hover:from-[#4F8EF7]/80 hover:to-[#25CB78]/80 text-white px-8 py-4 text-lg font-bold rounded-xl flex items-center gap-3"
                   disabled={isLoading}
@@ -306,10 +298,10 @@ export function ProgramSessionClient({ program, week, session, isAuthenticated, 
                     </>
                   )}
                 </Button>
-              </div>
-            </div>
+              </footer>
+            </article>
           </div>
-        </div>
+        </main>
       </div>
     </SessionAccessGuard>
   );

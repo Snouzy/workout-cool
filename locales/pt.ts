@@ -1,5 +1,6 @@
 export default {
   programs: {
+    available_programs: "Programas disponíveis",
     exercises_in_session: "Exercícios na sessão",
     start_session: "Iniciar sessão",
     starting_session: "Iniciando...",
@@ -61,11 +62,11 @@ export default {
     share_failed: "Erro ao compartilhar",
     important_info: "Informações importantes",
     donation_teaser:
-      "No início, funcionávamos com doações. Mas como pode imaginar, as doações não foram suficientes para cobrir os custos de desenvolvimento e funcionamento. Então criámos um pacote que nos ajudará a manter as luzes acesas — e desbloquear alguns superpoderes pelo caminho.",
+      "No início, funcionávamos com doações. Mas como pode imaginar, as doações não foram suficientes para cobrir os custos de desenvolvimento e funcionamento. Então criámos um pacote que nos ajudará a manter as luzes acesas e desbloquear alguns superpoderes pelo caminho.",
     new: "NOVO",
     more_programs_coming_title: "Mais programas em breve!",
     more_programs_coming_description:
-      "Estamos a trabalhar duro para criar novos programas. Ao passar a premium agora, terá todos eles automaticamente. Obrigado pelo seu apoio. 🚀",
+      "Estamos a trabalhar duro para criar novos programas. Ao passar a premium agora, terá eles automaticamente. Obrigado pelo seu apoio. 🚀",
     coming_strength: "Força & Músculo",
     coming_cardio: "Cardio HIIT",
     coming_yoga: "Yoga & Mobilidade",
@@ -88,11 +89,11 @@ export default {
     premium_active_subtitle: "Todos os recursos desbloqueados",
     free_intro_title: "Já está a receber muito gratuitamente...",
     free_intro_text:
-      "Workout.cool é uma aplicação de fitness gratuita e de código aberto usada diariamente por mais de 60.000 utilizadores. É construída com amor (não com dinheiro de VC ^^) e custa-nos tempo e dinheiro real mantê-la a funcionar.",
+      "Workout.cool é uma aplicação de fitness gratuita e open source usada diariamente por mais de 60.000 utilizadores. É construída com amor (não com dinheiro de VC ^^) e custa-nos tempo e dinheiro real mantê-la a funcionar.",
     donation_story_text:
-      "No início, funcionávamos com doações. Mas como pode imaginar, as doações não foram suficientes para cobrir os custos de desenvolvimento e funcionamento. Então criámos um pacote que nos ajudará a manter as luzes acesas — e desbloquear alguns superpoderes pelo caminho.",
+      "No início, funcionávamos com doações. Mas como pode imaginar, as doações não foram suficientes para cobrir os custos de desenvolvimento e funcionamento. Então criámos um pacote que nos ajudará a manter as luzes acesas e desbloquear alguns superpoderes pelo caminho.",
     health_upgrade_text: "Se o Workout.cool o ajuda a melhorar a sua saúde, por favor considere tornar-se Premium :D !",
-    unlock_features_text: "Desbloqueie recursos avançados e apoie o fitness de código aberto.",
+    unlock_features_text: "Desbloqueie recursos avançados e apoie o fitness open source",
     invest_yourself_quote: "Nunca poupe em fitness e livros — invista em si mesmo!",
     support_mission: "Apoiar a missão",
     best_value_badge: "MELHOR VALOR",
@@ -108,17 +109,20 @@ export default {
     save_yearly: "Poupe 40% anualmente",
     processing: "A processar...",
     cta_annual: "Quero apoiar + poupar 40%",
-    cta_monthly: "Desbloquear o meu plano completo",
+    cta_monthly: "Desbloquear plano completo",
     thank_supporting: "Obrigado pelo seu apoio.",
     no_pressure: "Sem pressão. Pode fazer upgrade a qualquer momento.",
     keep_pushing: "continue a esforçar-se! huhu",
-    still_unsure: "Ainda não tem certeza? Sem problemas. O Workout.cool permanecerá sempre gratuito e de código aberto.",
+    still_unsure: "Ainda não tem certeza? Sem problemas. O Workout.cool permanecerá sempre gratuito e open source.",
     support_helps: "Mas se acredita no que estamos a construir e pode pagar, o seu apoio ajudará 💚",
     self_hosting: "Auto-hospedagem",
     community: "Comunidade",
     mit_license: "Licença MIT",
     pricing_year: "ano",
     pricing_month: "mês",
+  },
+  breadcrumbs: {
+    home: "Início",
   },
   bottom_navigation: {
     programs: "Programas",
@@ -243,7 +247,7 @@ export default {
       "Actualmente, as doações nem sequer cobrem os custos básicos: servidores, autenticação, infraestrutura, base de dados, etc.",
     open_source_title: "100% Open Source",
     open_source_description:
-      "Esta app é completamente gratuita e de código aberto. Não há lucro - é um projeto de paixão para ajudar a comunidade e ajudar as pessoas a fazer exercício.",
+      "Esta app é completamente gratuita e de open source. Não há lucro - é um projeto de paixão para ajudar a comunidade e ajudar as pessoas a fazer exercício.",
     no_ads: "Sem publicidade",
     no_tracking: "Sem rastreamento",
     impact_title: "O seu impacto",

@@ -51,6 +51,7 @@ export function ExerciseCard({ exercise, muscle, onShuffle, onPick, onDelete }: 
                   alt={exercise.name}
                   className="object-cover transition-transform group-hover:scale-105"
                   fill
+                  loading="lazy"
                   onError={() => setImageError(true)}
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   src={exercise.fullVideoImageUrl}

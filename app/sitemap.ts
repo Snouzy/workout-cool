@@ -7,26 +7,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const currentDate = new Date().toISOString();
 
   // Static routes with locale support
+  const locales = ["fr", "en", "es", "pt", "ru", "zh-cn"];
+  
   const staticRoutes = [
-    // Home pages
+    // Home page (root)
     {
       url: baseUrl,
       lastModified: currentDate,
       changeFrequency: "daily" as const,
       priority: 1.0,
     },
-    {
-      url: `${baseUrl}/fr`,
+    // Home pages for all locales
+    ...locales.map(locale => ({
+      url: `${baseUrl}/${locale}`,
       lastModified: currentDate,
       changeFrequency: "daily" as const,
       priority: 1.0,
-    },
-    {
-      url: `${baseUrl}/en`,
-      lastModified: currentDate,
-      changeFrequency: "daily" as const,
-      priority: 1.0,
-    },
+    })),
     // Auth pages (lower priority as they're functional pages)
     {
       url: `${baseUrl}/auth/signin`,
@@ -40,25 +37,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "monthly" as const,
       priority: 0.3,
     },
-    // About pages
+    // About pages for all locales
     {
       url: `${baseUrl}/about`,
       lastModified: currentDate,
       changeFrequency: "monthly" as const,
       priority: 0.7,
     },
-    {
-      url: `${baseUrl}/fr/about`,
+    ...locales.map(locale => ({
+      url: `${baseUrl}/${locale}/about`,
       lastModified: currentDate,
       changeFrequency: "monthly" as const,
       priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/en/about`,
-      lastModified: currentDate,
-      changeFrequency: "monthly" as const,
-      priority: 0.7,
-    },
+    })),
     // Legal pages
     {
       url: `${baseUrl}/legal/privacy`,
@@ -78,42 +69,27 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "yearly" as const,
       priority: 0.2,
     },
-    {
-      url: `${baseUrl}/fr/legal/privacy`,
-      lastModified: currentDate,
-      changeFrequency: "yearly" as const,
-      priority: 0.2,
-    },
-    {
-      url: `${baseUrl}/fr/legal/terms`,
-      lastModified: currentDate,
-      changeFrequency: "yearly" as const,
-      priority: 0.2,
-    },
-    {
-      url: `${baseUrl}/fr/legal/sales-terms`,
-      lastModified: currentDate,
-      changeFrequency: "yearly" as const,
-      priority: 0.2,
-    },
-    {
-      url: `${baseUrl}/en/legal/privacy`,
-      lastModified: currentDate,
-      changeFrequency: "yearly" as const,
-      priority: 0.2,
-    },
-    {
-      url: `${baseUrl}/en/legal/terms`,
-      lastModified: currentDate,
-      changeFrequency: "yearly" as const,
-      priority: 0.2,
-    },
-    {
-      url: `${baseUrl}/en/legal/sales-terms`,
-      lastModified: currentDate,
-      changeFrequency: "yearly" as const,
-      priority: 0.2,
-    },
+    // Legal pages for all locales
+    ...locales.flatMap(locale => [
+      {
+        url: `${baseUrl}/${locale}/legal/privacy`,
+        lastModified: currentDate,
+        changeFrequency: "yearly" as const,
+        priority: 0.2,
+      },
+      {
+        url: `${baseUrl}/${locale}/legal/terms`,
+        lastModified: currentDate,
+        changeFrequency: "yearly" as const,
+        priority: 0.2,
+      },
+      {
+        url: `${baseUrl}/${locale}/legal/sales-terms`,
+        lastModified: currentDate,
+        changeFrequency: "yearly" as const,
+        priority: 0.2,
+      },
+    ]),
   ];
 
   // Get dynamic program data for sitemap
@@ -123,7 +99,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const dynamicRoutes: MetadataRoute.Sitemap = [];
 
   // Add programs index pages for each locale
-  const locales = ["fr", "en", "es", "pt", "ru", "zh-cn"];
   locales.forEach((locale) => {
     dynamicRoutes.push({
       url: `${baseUrl}/${locale}/programs`,

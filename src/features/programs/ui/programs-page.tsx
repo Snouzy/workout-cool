@@ -27,9 +27,9 @@ export async function ProgramsPage({ locale }: ProgramsPageProps) {
   }
 
   return (
-    <div className="flex flex-col">
+    <main className="flex flex-col">
       {/* Hero Section */}
-      <div className="bg-gradient-to-r from-[#4F8EF7] to-[#25CB78] p-4 sm:p-6 text-white relative">
+      <header className="bg-gradient-to-r from-[#4F8EF7] to-[#25CB78] p-4 sm:p-6 text-white relative">
         <div className="flex items-center justify-between">
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-2">
@@ -43,6 +43,7 @@ export async function ProgramsPage({ locale }: ProgramsPageProps) {
               alt="Mascotte WorkoutCool"
               className="object-contain h-14 w-14 sm:h-16 sm:w-16"
               height={64}
+              priority
               src="/images/emojis/WorkoutCoolHappy.png"
               width={64}
             />
@@ -51,26 +52,27 @@ export async function ProgramsPage({ locale }: ProgramsPageProps) {
             </div>
           </div>
         </div>
-      </div>
+      </header>
 
-      <div className="overflow-auto p-4 space-y-6">
+      <section className="overflow-auto p-4 space-y-6">
         {/* Premium Programs Section */}
         {programs.length > 0 && (
           <div>
+            <h2 className="sr-only">{t("programs.available_programs")}</h2>
             {/* Premium programs with featured layout */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div aria-label={t("programs.workout_programs")} className="grid grid-cols-1 md:grid-cols-3 gap-4" role="list">
               {programs.map((program, index) => (
-                <div className="relative" key={program.id}>
+                <article className="relative" key={program.id} role="listitem">
                   <ProgramCard featured={index === 0} locale={locale} program={program} size="large" />
-                </div>
+                </article>
               ))}
             </div>
 
             {/* Coming Soon Teaser */}
-            <div className="mt-6 bg-gray-50 dark:bg-gray-800 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl p-6 text-center">
+            <aside className="mt-6 bg-gray-50 dark:bg-gray-800 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl p-6 text-center">
               <div className="flex items-center justify-center gap-2 mb-2">
-                <TrendingUp className="text-[#4F8EF7]" size={20} />
-                <h4 className="font-bold text-gray-900 dark:text-white">{t("programs.more_programs_coming_title")}</h4>
+                <TrendingUp aria-hidden="true" className="text-[#4F8EF7]" size={20} />
+                <h3 className="font-bold text-gray-900 dark:text-white">{t("programs.more_programs_coming_title")}</h3>
               </div>
               <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">{t("programs.more_programs_coming_description")}</p>
               <div className="flex items-center justify-center gap-2 text-xs text-gray-500 dark:text-gray-400">
@@ -80,10 +82,10 @@ export async function ProgramsPage({ locale }: ProgramsPageProps) {
                   {t("programs.coming_yoga")}
                 </span>
               </div>
-            </div>
+            </aside>
           </div>
         )}
-      </div>
-    </div>
+      </section>
+    </main>
   );
 }

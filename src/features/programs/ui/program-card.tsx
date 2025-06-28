@@ -1,10 +1,11 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Lock, Users, Calendar, Clock } from "lucide-react";
+import { Lock } from "lucide-react";
 
 import { Locale } from "locales/types";
 import { getI18n } from "locales/server";
 import { getProgramDescription, getProgramSlug, getProgramTitle } from "@/features/programs/lib/translations-mapper";
+import { DurationBadge } from "@/components/seo/duration-badge";
 
 import { PublicProgram } from "../actions/get-public-programs.action";
 
@@ -62,6 +63,7 @@ export async function ProgramCard({ program, featured = false, size = "medium", 
   return (
     <div className={featured ? "md:col-span-2" : ""}>
       <Link
+        aria-label={`${title} - ${t(`levels.${program.level}` as keyof typeof t)} program`}
         className={`relative block rounded-xl overflow-hidden border-2 transition-all ease-in-out ${heightClass} ${
           featured
             ? "border-[#4F8EF7]/20 hover:border-[#4F8EF7] hover:scale-[1.01]"
@@ -70,12 +72,20 @@ export async function ProgramCard({ program, featured = false, size = "medium", 
               : "border-gray-200 dark:border-gray-700 hover:border-[#4F8EF7] hover:scale-[1.02]"
         }`}
         href={`/programs/${programSlug}`}
+        itemScope
+        itemType="https://schema.org/Course"
       >
         {/* Gradient background */}
         <div className={`absolute inset-0 bg-gradient-to-br ${getGradient(program.level)}`}></div>
 
         {/* Image overlay */}
-        <Image alt={title} className="absolute inset-0 w-full h-full object-cover mix-blend-overlay" fill src={program.image} />
+        <Image
+          alt={title}
+          className="absolute inset-0 w-full h-full object-cover mix-blend-overlay"
+          fill
+          loading="lazy"
+          src={program.image}
+        />
 
         {/* Dark overlay */}
         <div className="absolute inset-0 bg-black/40"></div>
@@ -100,6 +110,7 @@ export async function ProgramCard({ program, featured = false, size = "medium", 
                 alt="Emoji"
                 className={`object-contain ${size === "large" ? "w-6 h-6" : "w-5 h-5"}`}
                 height={size === "large" ? 24 : 20}
+                loading="lazy"
                 src="/images/emojis/WorkoutCoolHappy.png"
                 width={size === "large" ? 24 : 20}
               />
@@ -111,29 +122,27 @@ export async function ProgramCard({ program, featured = false, size = "medium", 
         <div className={`absolute bottom-0 left-0 right-0 ${paddingClass} text-white`}>
           <div className="flex items-end justify-between">
             <div className="flex-1 min-w-0">
-              <h4 className={`${titleClass} leading-tight truncate`}>{title}</h4>
-              <p className={`${subtitleClass} truncate`}>{description}</p>
+              <h4 className={`${titleClass} leading-tight truncate`} itemProp="name">
+                {title}
+              </h4>
+              <p className={`${subtitleClass} truncate`} itemProp="description">
+                {description}
+              </p>
 
-              {/* Stats compactes */}
-              <div className="flex items-center gap-3 mt-1 text-xs opacity-75">
-                <div className="flex items-center gap-1">
-                  <Users size={12} />
-                  <span>{program.totalEnrollments}</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <Calendar size={12} />
-                  <span>
-                    {program.durationWeeks}
-                    {t("programs.week_short")}
-                  </span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <Clock size={12} />
-                  <span>
-                    {program.sessionDurationMin}
-                    {t("programs.min_short")}
-                  </span>
-                </div>
+              {/* Rich Snippets */}
+              <div className="space-y-1 mt-2">
+                {/* <RichSnippetRating
+                  className="text-xs opacity-90"
+                  rating={4.7}
+                  reviewCount={Math.max(Math.floor(program.participantCount / 7), 1)} // TODO: add rating
+                /> */}
+                <DurationBadge
+                  className="text-xs opacity-75"
+                  durationWeeks={program.durationWeeks}
+                  locale={locale}
+                  sessionDurationMin={program.sessionDurationMin}
+                  sessionsPerWeek={program.sessionsPerWeek}
+                />
               </div>
             </div>
           </div>

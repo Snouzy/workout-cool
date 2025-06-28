@@ -1,5 +1,6 @@
 export default {
   programs: {
+    available_programs: "Available programs",
     exercises_in_session: "Exercises in session",
     start_session: "Start session",
     starting_session: "Starting...",
@@ -61,7 +62,7 @@ export default {
     premium_required_description: "This is a premium access. Upgrade to access all premium content.",
     important_info: "Important information",
     donation_teaser:
-      "At first, we were running on donations. But as you can imagine, donations weren't sufficient to cover development and running costs. So we made you a package that will help us keep the lights on — and unlock a few superpowers along the way.",
+      "At first, we were running on donations. But as you can imagine, donations weren't sufficient to cover development and running costs. So we made you a package that will help us keep the lights on and unlock a few superpowers along the way.",
     new: "NEW",
     more_programs_coming_title: "More programs coming soon!",
     more_programs_coming_description:
@@ -93,7 +94,7 @@ export default {
     free_intro_text:
       "Workout.cool is a free, open-source fitness app used daily by 60,000+ users. It's built with love (not VC money ^^) and it costs us real time and money to keep it running.",
     donation_story_text:
-      "At first, we were running on donations. But as you can imagine, donations weren't sufficient to cover development and running costs. So we made you a package that will help us keep the lights on — and unlock a few superpowers along the way.",
+      "At first, we were running on donations. But as you can imagine, donations weren't sufficient to cover development and running costs. So we made you a package that will help us keep the lights on and unlock a few superpowers along the way.",
     health_upgrade_text: "If Workout.cool helps you level up your health, please consider going Premium :D !",
     unlock_features_text: "Unlock advanced features & support open-source fitness.",
     invest_yourself_quote: "Never skimp on fitness & books — invest in yourself !",
@@ -125,6 +126,9 @@ export default {
     conversion_flow_title: "Redirecting...",
     conversion_flow_message: "Successfully signed in! Redirecting to checkout...",
     redirecting_to_checkout: "Redirecting to checkout",
+  },
+  breadcrumbs: {
+    home: "Home",
   },
   bottom_navigation: {
     programs: "Programs",

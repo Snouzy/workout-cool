@@ -40,6 +40,7 @@ export const Header = () => {
               alt="workout cool logo"
               className="h-10 w-10 sm:h-8 sm:w-8 transition-transform duration-200 group-hover:rotate-[20deg] group-hover:scale-110"
               height={32}
+              priority
               src={Logo}
               width={32}
             />

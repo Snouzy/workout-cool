@@ -1,5 +1,7 @@
 export default {
   programs: {
+    available_programs: "可用的课程",
+    workout_programs: "锻炼程序",
     exercises_in_session: "课程中的练习",
     start_session: "开始课程",
     starting_session: "启动中...",
@@ -21,7 +23,6 @@ export default {
     back_to_program: "返回程序",
     no_equipment: "没有设备",
     workout_programs_title: "锻炼程序 (+ 正在创建中)",
-    workout_programs: "锻炼程序",
     workout_programs_description: "选择您的挑战并变得更强大！💪",
     no_programs_available: "没有可用的程序",
     no_programs_available_description: "程序将在不久后可用！",
@@ -118,6 +119,9 @@ export default {
     mit_license: "MIT 许可证",
     pricing_year: "年",
     pricing_month: "月",
+  },
+  breadcrumbs: {
+    home: "首页",
   },
   bottom_navigation: {
     programs: "课程",

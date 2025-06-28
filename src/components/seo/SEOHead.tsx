@@ -27,7 +27,7 @@ export function generateSEOMetadata({
   title,
   description,
   keywords = [],
-  locale = "fr",
+  locale = "en",
   canonical,
   ogImage,
   ogType = "website",
@@ -37,7 +37,7 @@ export function generateSEOMetadata({
   const fullTitle = title ? `${title} | ${SiteConfig.title}` : SiteConfig.title;
   const finalDescription = description || SiteConfig.description;
   const finalCanonical = canonical || baseUrl;
-  const finalOgImage = ogImage || `${baseUrl}/images/default-og-image_${locale}.jpg`;
+  const finalOgImage = ogImage || `${baseUrl}/images/default-og-image_${locale === "zh-CN" ? "zh" : locale}.jpg`;
   const allKeywords = [...SiteConfig.keywords, ...keywords];
 
   return {
@@ -65,6 +65,10 @@ export function generateSEOMetadata({
       languages: {
         "fr-FR": `${baseUrl}/fr`,
         "en-US": `${baseUrl}/en`,
+        "es-ES": `${baseUrl}/es`,
+        "pt-PT": `${baseUrl}/pt`,
+        "ru-RU": `${baseUrl}/ru`,
+        "zh-CN": `${baseUrl}/zh-CN`,
         "x-default": baseUrl,
       },
     },
@@ -73,6 +77,15 @@ export function generateSEOMetadata({
       description: finalDescription,
       url: finalCanonical,
       siteName: SiteConfig.title,
+      locale: locale === "en" ? "en_US" : locale === "es" ? "es_ES" : locale === "pt" ? "pt_PT" : locale === "ru" ? "ru_RU" : locale === "zh-CN" ? "zh_CN" : "fr_FR",
+      alternateLocale: [
+        "fr_FR", "fr_CA", "fr_CH", "fr_BE",
+        "en_US", "en_GB", "en_CA", "en_AU", 
+        "es_ES", "es_MX", "es_AR", "es_CL",
+        "pt_PT", "pt_BR",
+        "ru_RU", "ru_BY", "ru_KZ",
+        "zh_CN", "zh_TW", "zh_HK"
+      ].filter(alt => alt !== (locale === "en" ? "en_US" : locale === "es" ? "es_ES" : locale === "pt" ? "pt_PT" : locale === "ru" ? "ru_RU" : locale === "zh-CN" ? "zh_CN" : "fr_FR")),
       images: [
         {
           url: finalOgImage,
@@ -81,7 +94,6 @@ export function generateSEOMetadata({
           alt: title || SiteConfig.title,
         },
       ],
-      locale: locale === "en" ? "en_US" : "fr_FR",
       type: ogType,
     },
     twitter: {
@@ -106,10 +118,10 @@ interface SEOScriptsProps extends SEOHeadProps {
   children?: React.ReactNode;
 }
 
-export function SEOScripts({ title, description, locale = "fr", canonical, ogImage, structuredData, children }: SEOScriptsProps) {
+export function SEOScripts({ title, description, locale = "en", canonical, ogImage, structuredData, children }: SEOScriptsProps) {
   const baseUrl = getServerUrl();
   const finalCanonical = canonical || baseUrl;
-  const finalOgImage = ogImage || `${baseUrl}/images/default-og-image_${locale}.jpg`;
+  const finalOgImage = ogImage || `${baseUrl}/images/default-og-image_${locale === "zh-CN" ? "zh" : locale}.jpg`;
 
   let structuredDataObj;
   if (structuredData) {

@@ -186,7 +186,7 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
                 </span>
                 <span className="bg-[#25CB78] text-white px-3 py-1 rounded-full text-xs font-medium flex items-center gap-1">
                   <Users size={12} />
-                  {program.totalEnrollments}+
+                  {program.participantCount}+
                 </span>
                 {/* eslint-disable-next-line max-len */}
                 {/* {program.isPremium && <span className="bg-yellow-500 text-white px-3 py-1 rounded-full text-xs font-medium">Premium</span>} */}

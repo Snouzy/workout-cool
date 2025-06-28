@@ -462,7 +462,7 @@ async function importProgram() {
         continue;
       }
 
-      if (inExerciseSection && line.trim() && !line.startsWith("#")) {
+      if (inExerciseSection && line.trim()) {
         // Détecter les commentaires de session
         if (line.includes("# Session") && line.includes("Week")) {
           // Extraire les infos de session du commentaire
@@ -472,12 +472,13 @@ async function importProgram() {
               sessionNumber: parseInt(sessionMatch[1]),
               weekNumber: parseInt(sessionMatch[2]),
             };
+            console.log(`📍 Contexte de session détecté: Session ${currentSessionInfo.sessionNumber}, Semaine ${currentSessionInfo.weekNumber}`);
           }
           continue;
         }
 
         // Ligne qui ressemble à: cmbw9snf902xr9kv1z2cr4yw7,1,REPS,8,TIME,30,BODYWEIGHT,NULL
-        if (line.includes("cmbw") && line.split(",").length >= 4) {
+        if (!line.startsWith("#") && line.includes("cmbw") && line.split(",").length >= 4) {
           exerciseSetLines.push({
             line: line.trim(),
             sessionInfo: currentSessionInfo,
@@ -509,9 +510,13 @@ async function importProgram() {
 
         // Créer une clé unique pour exercice + session
         const sessionInfo = lineData.sessionInfo;
-        let exerciseKey = exerciseId;
+        let exerciseKey;
         if (sessionInfo) {
           exerciseKey = `${exerciseId}_w${sessionInfo.weekNumber}_s${sessionInfo.sessionNumber}`;
+        } else {
+          // Si on n'a pas d'info de session, on ne peut pas traiter correctement cette ligne
+          console.log(`⚠️  Ligne d'exercice sans contexte de session ignorée: ${rawExerciseId}`);
+          continue;
         }
 
         if (!exerciseSets.has(exerciseKey)) {

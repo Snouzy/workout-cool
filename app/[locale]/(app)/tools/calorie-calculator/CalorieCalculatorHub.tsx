@@ -3,7 +3,6 @@
 
 import React from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { TrendingUpIcon, AwardIcon, TargetIcon, BrainIcon, GlobeIcon, ChartBarIcon } from "lucide-react";
 
 import { useI18n } from "locales/client";
@@ -12,7 +11,6 @@ interface CalculatorFormula {
   id: string;
   href: string;
   icon: React.ReactNode;
-  emoji: string;
   year: string;
   popularity: number; // 1-5
   accuracy: "high" | "medium" | "good";
@@ -28,7 +26,6 @@ const calculatorFormulas: CalculatorFormula[] = [
     id: "mifflin-st-jeor",
     href: "/tools/mifflin-st-jeor-calculator",
     icon: <AwardIcon className="w-6 h-6" />,
-    emoji: "WorkoutCoolHappy.png",
     year: "1990",
     popularity: 5,
     accuracy: "high",
@@ -42,7 +39,6 @@ const calculatorFormulas: CalculatorFormula[] = [
     id: "harris-benedict",
     href: "/tools/harris-benedict-calculator",
     icon: <TrendingUpIcon className="w-6 h-6" />,
-    emoji: "WorkoutCoolSwag.png",
     year: "1984",
     popularity: 5,
     accuracy: "good",
@@ -56,7 +52,6 @@ const calculatorFormulas: CalculatorFormula[] = [
     id: "katch-mcardle",
     href: "/tools/katch-mcardle-calculator",
     icon: <TargetIcon className="w-6 h-6" />,
-    emoji: "WorkoutCoolBiceps.png",
     year: "1996",
     popularity: 3,
     accuracy: "high",
@@ -70,7 +65,6 @@ const calculatorFormulas: CalculatorFormula[] = [
     id: "cunningham",
     href: "/tools/cunningham-calculator",
     icon: <BrainIcon className="w-6 h-6" />,
-    emoji: "WorkoutCoolRich.png",
     year: "1980",
     popularity: 2,
     accuracy: "high",
@@ -84,7 +78,6 @@ const calculatorFormulas: CalculatorFormula[] = [
     id: "oxford",
     href: "/tools/oxford-calculator",
     icon: <GlobeIcon className="w-6 h-6" />,
-    emoji: "WorkoutCoolTeeths.png",
     year: "2005",
     popularity: 3,
     accuracy: "good",
@@ -98,7 +91,6 @@ const calculatorFormulas: CalculatorFormula[] = [
     id: "comparison",
     href: "/tools/calorie-calculator-comparison",
     icon: <ChartBarIcon className="w-6 h-6" />,
-    emoji: "WorkoutCoolWooow.png",
     year: "all",
     popularity: 4,
     accuracy: "high",
@@ -160,13 +152,6 @@ export function CalorieCalculatorHub() {
                 <div className={`p-3 rounded-xl bg-gradient-to-br ${formula.gradient.from} ${formula.gradient.to} text-white`}>
                   {formula.icon}
                 </div>
-                <Image
-                  alt="Calculator mascot"
-                  className="opacity-80 group-hover:opacity-100 transition-opacity"
-                  height={48}
-                  src={`/images/emojis/${formula.emoji}`}
-                  width={48}
-                />
               </div>
 
               {/* Title */}

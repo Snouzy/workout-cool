@@ -19,13 +19,11 @@ import {
   Unlock,
   ArrowRight,
 } from "lucide-react";
-import { ExerciseAttributeValueEnum } from "@prisma/client";
 
 import { useCurrentLocale, useI18n } from "locales/client";
-import { getEquipmentTranslation } from "@/shared/lib/workout-session/equipments";
 import { useIsPremium } from "@/shared/lib/premium/use-premium";
 import { getSlugForLocale } from "@/shared/lib/locale-slug";
-import { getAttributeValueLabel } from "@/shared/lib/attribute-value-translation";
+import { ATTRIBUTE_VALUE_TRANSLATION_KEYS, getAttributeValueLabel } from "@/shared/lib/attribute-value-translation";
 import { WelcomeModal } from "@/features/programs/ui/welcome-modal";
 import { ShareButton } from "@/features/programs/ui/share-button";
 import { ProgramProgress } from "@/features/programs/ui/program-progress";
@@ -158,10 +156,6 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
     //     window.location.href = `/${currentLocale}/programs/${program.slug}/session/${sessionSlug}`;
     //   }
     // }
-  };
-
-  const formatEquipment = (equipment: ExerciseAttributeValueEnum[]) => {
-    return equipment.map((equipment) => getEquipmentTranslation(equipment, t).label).join(", ") || t("programs.no_equipment");
   };
 
   return (
@@ -329,7 +323,14 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
 
                     <div className="flex items-center gap-4">
                       <Dumbbell className="text-[#25CB78] flex-shrink-0" size={20} />
-                      <span className="text-base font-medium text-gray-900 dark:text-white">{formatEquipment(program.equipment)}</span>
+                      <span className="text-base font-medium text-gray-900 dark:text-white">
+                        {program.equipment.map((equipment, index) => {
+                          const isFirst = index === 0;
+                          const label = t(ATTRIBUTE_VALUE_TRANSLATION_KEYS[equipment] as keyof typeof t);
+
+                          return <span key={equipment}>{isFirst ? label : `, ${label.toLocaleLowerCase()}`}</span>;
+                        })}
+                      </span>
                     </div>
                   </div>
                 </div>

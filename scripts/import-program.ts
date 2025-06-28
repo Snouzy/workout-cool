@@ -99,7 +99,7 @@ function parseEquipment(equipmentStr: string): string[] {
     return ["BODY_ONLY"];
   }
 
-  // Parse equipment array format: "{BODY_ONLY,BANDS}" -> ["BODY_ONLY", "BANDS"]
+  // Parse equipment array format: "{BODY_ONLY, WEIGHT}" -> ["BODY_ONLY", "WEIGHT"]
   const cleaned = equipmentStr.replace(/[{}'"]/g, "");
   return cleaned
     .split(",")
@@ -116,7 +116,7 @@ async function importProgram() {
 
     // Vérifier si le programme existe
     const existingProgram = await prisma.program.findUnique({
-      where: { slug: "hiit-abdos-intermediaire" },
+      where: { slug: "fessiers-sculpt-intermediaire" },
     });
 
     if (existingProgram) {
@@ -189,7 +189,7 @@ async function importProgram() {
 
     console.log("✅ Nettoyage terminé");
 
-    const csvPath = path.join(__dirname, "data", "programme-hiit-abdos-intermediaire.csv");
+    const csvPath = path.join(__dirname, "data", "programme-fessiers-intermediaire.csv");
     const csvContent = fs.readFileSync(csvPath, "utf-8");
 
     // Séparer les sections du CSV

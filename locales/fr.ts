@@ -130,6 +130,8 @@ export default {
     programs_tooltip: "Parcourir les programmes",
     workouts: "Entraînements",
     workouts_tooltip: "Créer votre propre entraînement",
+    premium: "Premium",
+    premium_tooltip: "Passer à Premium",
   },
   levels: {
     BEGINNER: "Débutant",

@@ -126,6 +126,8 @@ export default {
     programs_tooltip: "Просмотр программ",
     workouts: "Тренировки",
     workouts_tooltip: "Создать свою тренировку",
+    premium: "Премиум",
+    premium_tooltip: "Стань Премиум",
   },
   levels: {
     BEGINNER: "Начальный",

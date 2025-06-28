@@ -78,18 +78,18 @@ export function calculateMacros(targetCalories: number): {
 export function calculateMifflinStJeor(inputs: CalorieCalculatorInputs): number {
   const { weight, height } = convertToMetric(inputs);
   const baseBMR = 10 * weight + 6.25 * height - 5 * inputs.age;
-  
+
   return inputs.gender === "male" ? baseBMR + 5 : baseBMR - 161;
 }
 
 // Harris-Benedict Revised Formula (1984)
 export function calculateHarrisBenedict(inputs: CalorieCalculatorInputs): number {
   const { weight, height } = convertToMetric(inputs);
-  
+
   if (inputs.gender === "male") {
-    return 88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * inputs.age);
+    return 88.362 + 13.397 * weight + 4.799 * height - 5.677 * inputs.age;
   } else {
-    return 447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * inputs.age);
+    return 447.593 + 9.247 * weight + 3.098 * height - 4.33 * inputs.age;
   }
 }
 
@@ -98,11 +98,11 @@ export function calculateKatchMcArdle(inputs: CalorieCalculatorInputs): number {
   if (!inputs.bodyFatPercentage) {
     throw new Error("Body fat percentage is required for Katch-McArdle formula");
   }
-  
+
   const { weight } = convertToMetric(inputs);
   const leanBodyMass = weight * (1 - inputs.bodyFatPercentage / 100);
-  
-  return 370 + (21.6 * leanBodyMass);
+
+  return 370 + 21.6 * leanBodyMass;
 }
 
 // Cunningham Formula (for athletes with very low body fat)
@@ -110,35 +110,31 @@ export function calculateCunningham(inputs: CalorieCalculatorInputs): number {
   if (!inputs.bodyFatPercentage) {
     throw new Error("Body fat percentage is required for Cunningham formula");
   }
-  
+
   const { weight } = convertToMetric(inputs);
   const leanBodyMass = weight * (1 - inputs.bodyFatPercentage / 100);
-  
-  return 500 + (22 * leanBodyMass);
+
+  return 500 + 22 * leanBodyMass;
 }
 
 // Oxford Formula (2005)
 export function calculateOxford(inputs: CalorieCalculatorInputs): number {
   const { weight } = convertToMetric(inputs);
-  
+
   if (inputs.gender === "male") {
-    return inputs.age < 30 
-      ? 16.6 * weight + 77 * inputs.height / 100 + 572
-      : 14.4 * weight + 313 * inputs.height / 100 + 113;
+    return inputs.age < 30 ? 16.6 * weight + (77 * inputs.height) / 100 + 572 : 14.4 * weight + (313 * inputs.height) / 100 + 113;
   } else {
-    return inputs.age < 30
-      ? 13.1 * weight + 558 * inputs.height / 100 + 184
-      : 13.4 * weight + 346 * inputs.height / 100 + 247;
+    return inputs.age < 30 ? 13.1 * weight + (558 * inputs.height) / 100 + 184 : 13.4 * weight + (346 * inputs.height) / 100 + 247;
   }
 }
 
 // Main calculation function
 export function calculateCalories(
-  inputs: CalorieCalculatorInputs, 
-  formula: "mifflin" | "harris" | "katch" | "cunningham" | "oxford" = "mifflin"
+  inputs: CalorieCalculatorInputs,
+  formula: "mifflin" | "harris" | "katch" | "cunningham" | "oxford" = "mifflin",
 ): CalorieResults {
   let bmr: number;
-  
+
   switch (formula) {
     case "harris":
       bmr = calculateHarrisBenedict(inputs);

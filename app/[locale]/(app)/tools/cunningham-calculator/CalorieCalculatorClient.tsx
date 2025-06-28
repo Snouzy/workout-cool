@@ -11,9 +11,9 @@ import { HeightInput } from "./components/HeightInput";
 import { GoalSelector } from "./components/GoalSelector";
 import { GenderSelector } from "./components/GenderSelector";
 import { FAQSection } from "./components/FAQSection";
+import { BodyFatInput } from "./components/BodyFatInput";
 import { AgeInput } from "./components/AgeInput";
 import { ActivityLevelSelector } from "./components/ActivityLevelSelector";
-import { BodyFatInput } from "./components/BodyFatInput";
 import { calculateCalories, type CalorieCalculatorInputs, type CalorieResults } from "../shared/calorie-formulas.utils";
 
 export function CalorieCalculatorClient() {

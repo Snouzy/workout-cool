@@ -1,6 +1,6 @@
 import React from "react";
-import { Metadata } from "next";
 import Link from "next/link";
+import { Metadata } from "next";
 import { ChevronLeftIcon } from "lucide-react";
 
 import { getI18n } from "locales/server";
@@ -26,8 +26,8 @@ export default async function KatchMcArdleCalculatorPage() {
       <div className="container mx-auto px-2 sm:px-4 py-4 sm:py-8 sm:py-12 max-w-4xl">
         {/* Back to hub */}
         <Link
-          href="/tools/calorie-calculator"
           className="inline-flex items-center gap-2 text-sm text-base-content/60 hover:text-primary transition-colors mb-6"
+          href="/tools/calorie-calculator"
         >
           <ChevronLeftIcon className="w-4 h-4" />
           {t("tools.back_to_calculators")}

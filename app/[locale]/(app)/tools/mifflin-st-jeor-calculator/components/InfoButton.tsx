@@ -2,6 +2,7 @@
 
 import React from "react";
 import { InfoIcon } from "lucide-react";
+
 import { useIsMobile } from "../hooks/useIsMobile";
 
 interface InfoButtonProps {
@@ -14,17 +15,11 @@ export function InfoButton({ onClick, tooltip }: InfoButtonProps) {
 
   return (
     <div className="relative">
-      <button
-        onClick={onClick}
-        className="touch-manipulation p-1 -m-1"
-        aria-label="More information"
-      >
-        <InfoIcon 
+      <button aria-label="More information" className="touch-manipulation p-1 -m-1" onClick={onClick}>
+        <InfoIcon
           className={`w-4 h-4 cursor-help transition-colors ${
-            isMobile 
-              ? 'text-primary animate-pulse' 
-              : 'text-base-content/40 hover:text-primary'
-          }`} 
+            isMobile ? "text-primary animate-pulse" : "text-base-content/40 hover:text-primary"
+          }`}
         />
       </button>
       {!isMobile && tooltip && (

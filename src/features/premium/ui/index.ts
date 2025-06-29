@@ -7,6 +7,5 @@ export { PricingHeroSection } from "./pricing-hero-section";
 export { FeatureComparisonTable } from "./feature-comparison-table";
 export { PricingFAQ } from "./pricing-faq";
 export { PricingTestimonials } from "./pricing-testimonials";
-export { MobileStickyCard } from "./mobile-sticky-cta";
 
 // Note: Add other premium components exports here as needed

@@ -26,12 +26,14 @@ export function WorkoutSessionSet({ set, setIndex, onChange, onFinish, onRemove 
   };
 
   const handleValueIntChange = (columnIndex: number) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.target.value = e.target.value === "" ? "" : e.target.value.replace(/^0+(?=\d)/, "") || "0";
     const newValuesInt = Array.isArray(set.valuesInt) ? [...set.valuesInt] : [];
     newValuesInt[columnIndex] = e.target.value ? parseInt(e.target.value, 10) : 0;
     onChange(setIndex, { valuesInt: newValuesInt });
   };
 
   const handleValueSecChange = (columnIndex: number) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.target.value = e.target.value === "" ? "" : e.target.value.replace(/^0+(?=\d)/, "") || "0";
     const newValuesSec = Array.isArray(set.valuesSec) ? [...set.valuesSec] : [];
     newValuesSec[columnIndex] = e.target.value ? parseInt(e.target.value, 10) : 0;
     onChange(setIndex, { valuesSec: newValuesSec });

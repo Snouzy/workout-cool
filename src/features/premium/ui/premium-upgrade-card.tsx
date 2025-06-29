@@ -3,8 +3,8 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { Crown, Zap, Heart, Check, ArrowRight, LogIn, Github, Users } from "lucide-react";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { Crown, Zap, Heart, Check, ArrowRight, LogIn, Github, Users, RefreshCw, Lock, ShieldCheck, GiftIcon } from "lucide-react";
+import { useMutation } from "@tanstack/react-query";
 
 import { useI18n, useCurrentLocale } from "locales/client";
 import { usePremiumRedirect } from "@/shared/lib/premium/use-premium-redirect";
@@ -18,7 +18,7 @@ import { PricingFAQ } from "./pricing-faq";
 import { FeatureComparisonTable } from "./feature-comparison-table";
 import { ConversionFlowNotification } from "./conversion-flow-notification";
 
-import type { PremiumPlan, CheckoutResult } from "@/shared/types/premium.types";
+import type { CheckoutResult } from "@/shared/types/premium.types";
 
 export function PremiumUpgradeCard() {
   const t = useI18n();
@@ -34,15 +34,6 @@ export function PremiumUpgradeCard() {
 
   // Handle premium redirects after successful upgrade
   usePremiumRedirect();
-
-  const { data: plans = [] } = useQuery({
-    queryKey: ["premium-plans"],
-    queryFn: async (): Promise<PremiumPlan[]> => {
-      const response = await fetch("/api/premium/plans");
-      if (!response.ok) throw new Error("Failed to fetch plans");
-      return response.json();
-    },
-  });
 
   // Check for pending checkout after authentication
   useEffect(() => {
@@ -84,6 +75,8 @@ export function PremiumUpgradeCard() {
   };
 
   const handleUpgrade = (planId: string) => {
+    console.log("planId:", planId);
+
     // Check if user is authenticated
     if (!isAuthenticated) {
       // Store the selected plan for after authentication
@@ -105,7 +98,6 @@ export function PremiumUpgradeCard() {
   const currentPrice = isYearly ? yearlyPrice : monthlyPrice;
   const currentPeriod = isYearly ? "year" : "month";
   const currentPlanId = isYearly ? "premium-yearly" : "premium-monthly";
-  const monthlyEquivalent = yearlyPrice / 12;
 
   if (isPremium) {
     return (
@@ -149,7 +141,7 @@ export function PremiumUpgradeCard() {
       {/* Mission-Driven Urgency Banner */}
       <section className="bg-gradient-to-r from-[#FF6B35]/10 to-[#00D4AA]/10 border-y border-[#FF6B35]/20 dark:border-[#FF6B35]/30">
         <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-center gap-6 text-sm">
+          <div className="flex items-center justify-center gap-3 text-sm flex-col sm:flex-row">
             <div className="flex items-center gap-2">
               <Heart className="w-4 h-4 text-[#22C55E]" fill="currentColor" />
               <span className="text-gray-700 dark:text-gray-300">
@@ -222,18 +214,15 @@ export function PremiumUpgradeCard() {
               <ul className="space-y-3 mb-8">
                 <li className="flex items-center gap-3 text-sm">
                   <Check className="w-4 h-4 text-[#22C55E] flex-shrink-0" />
-                  Stepper 3 steps (Equipment → Muscles → Exercises)
-                </li>
-                <li className="flex items-center gap-3 text-sm">
-                  <Check className="w-4 h-4 text-[#22C55E] flex-shrink-0" />8 equipment types (Bodyweight, Dumbbells, Barbell...)
+                  Workout generator
                 </li>
                 <li className="flex items-center gap-3 text-sm">
                   <Check className="w-4 h-4 text-[#22C55E] flex-shrink-0" />
-                  Exercise generation with videos
+                  All equipment types
                 </li>
                 <li className="flex items-center gap-3 text-sm">
                   <Check className="w-4 h-4 text-[#22C55E] flex-shrink-0" />
-                  Session tracking (sets/reps/weight/time)
+                  Exercises with instructions and videos
                 </li>
                 <li className="flex items-center gap-3 text-sm">
                   <Check className="w-4 h-4 text-[#22C55E] flex-shrink-0" />
@@ -241,7 +230,7 @@ export function PremiumUpgradeCard() {
                 </li>
                 <li className="flex items-center gap-3 text-sm">
                   <Check className="w-4 h-4 text-[#22C55E] flex-shrink-0" />
-                  Share and replay sessions
+                  Share and replay sessions (soon)
                 </li>
                 <li className="flex items-center gap-3 text-sm">
                   <Check className="w-4 h-4 text-[#22C55E] flex-shrink-0" />
@@ -277,7 +266,7 @@ export function PremiumUpgradeCard() {
                     <Crown className="w-8 h-8 text-white" strokeWidth={2.5} />
                   </div>
                   {isYearly && (
-                    <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-[#F59E0B] rounded-xl flex items-center justify-center rotate-12">
+                    <div className="absolute -bottom-2 -right-2 px-2 py-1 bg-[#F59E0B] rounded-xl flex items-center justify-center rotate-12">
                       <span className="text-xs font-bold text-white">-48%</span>
                     </div>
                   )}
@@ -304,7 +293,7 @@ export function PremiumUpgradeCard() {
               <ul className="space-y-3 mb-8">
                 <li className="flex items-center gap-3 text-sm">
                   <Check className="w-4 h-4 text-[#00D4AA] flex-shrink-0" />
-                  Everything from Free plan
+                  ...Everything from free plan
                 </li>
                 <li className="flex items-center gap-3 text-sm">
                   <Check className="w-4 h-4 text-[#00D4AA] flex-shrink-0" />
@@ -312,19 +301,11 @@ export function PremiumUpgradeCard() {
                 </li>
                 <li className="flex items-center gap-3 text-sm">
                   <Check className="w-4 h-4 text-[#00D4AA] flex-shrink-0" />
-                  Pre-designed workout programs
+                  Access to every programs
                 </li>
                 <li className="flex items-center gap-3 text-sm">
                   <Check className="w-4 h-4 text-[#00D4AA] flex-shrink-0" />
-                  Unlimited history + data export
-                </li>
-                <li className="flex items-center gap-3 text-sm">
-                  <Check className="w-4 h-4 text-[#00D4AA] flex-shrink-0" />
-                  AI coaching personalized suggestions
-                </li>
-                <li className="flex items-center gap-3 text-sm">
-                  <Check className="w-4 h-4 text-[#00D4AA] flex-shrink-0" />
-                  Custom exercises with videos
+                  Unlimited history
                 </li>
                 <li className="flex items-center gap-3 text-sm">
                   <Check className="w-4 h-4 text-[#00D4AA] flex-shrink-0" />
@@ -332,7 +313,7 @@ export function PremiumUpgradeCard() {
                 </li>
                 <li className="flex items-center gap-3 text-sm">
                   <Check className="w-4 h-4 text-[#00D4AA] flex-shrink-0" />
-                  API access + early features
+                  Early features
                 </li>
               </ul>
 
@@ -368,20 +349,21 @@ export function PremiumUpgradeCard() {
           <div className="mt-16 text-center">
             <div className="items-center justify-items-center gap-6 flex-wrap text-sm text-gray-600 dark:text-gray-400 grid grid-cols-1 sm:grid-cols-2">
               <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-[#22C55E] rounded-full" />
+                <Lock className="w-4 h-4 text-[#FF6B35]" />
+                <span>100% GDPR compliant</span>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <GiftIcon className="w-4 h-4 text-[#F59E0B]" />
                 <span>30-day money back guarantee</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-[#0EA5E9] rounded-full" />
-                <span>Cancel in 1 clic,no commitment</span>
+                <RefreshCw className="w-4 h-4 text-[#0EA5E9]" />
+                <span>1 click to cancel, no commitment</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-[#F59E0B] rounded-full" />
-                <span>Secure payment via Stripe</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-[#FF6B35] rounded-full" />
-                <span>GDPR compliant & open-source</span>
+                <ShieldCheck className="w-4 h-4 text-[#22C55E]" />
+                <span>100% secure payment via Stripe</span>
               </div>
             </div>
           </div>

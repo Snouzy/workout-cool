@@ -1,4 +1,4 @@
-import { PaymentProcessor } from "@prisma/client";
+import { PaymentProcessor, PlanProviderMapping } from "@prisma/client";
 
 import { prisma } from "@/shared/lib/prisma";
 import { env } from "@/env";
@@ -117,7 +117,7 @@ export class PremiumManager {
             "Notifications push",
             "Historique illimité (vs 6 mois gratuit)",
             "Support prioritaire",
-            'Badge "Supporter" dans la communauté',
+            "Badge 'Supporter' dans la communauté",
           ],
         },
         {
@@ -220,6 +220,28 @@ export class PremiumManager {
         error: error instanceof Error ? error.message : "Unknown error",
       };
     }
+  }
+
+  /**
+   * Get plan by external ID across all providers
+   */
+  static async getPlanByInternalId(internalId: string, provider: string): Promise<PlanProviderMapping> {
+    const mapping = await prisma.planProviderMapping.findFirst({
+      where: {
+        planId: internalId,
+        provider: provider.toUpperCase() as any,
+        isActive: true,
+      },
+      include: {
+        plan: true,
+      },
+    });
+
+    if (!mapping) {
+      throw new Error(`Plan ${internalId} not found for provider ${provider}`);
+    }
+
+    return mapping;
   }
 
   /**

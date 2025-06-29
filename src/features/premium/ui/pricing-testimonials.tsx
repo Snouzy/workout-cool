@@ -120,7 +120,7 @@ export function PricingTestimonials() {
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">Real Results from Real Athletes</h2>
           <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            Join thousands of fitness enthusiasts who've transformed their training with Workout.cool
+            Join thousands of fitness enthusiasts who&apos;ve transformed their training with Workout.cool
           </p>
 
           {/* Rating */}
@@ -162,7 +162,9 @@ export function PricingTestimonials() {
                 </div>
               </div>
 
-              <blockquote className="text-gray-700 dark:text-gray-300 leading-relaxed">"{testimonials[currentIndex].quote}"</blockquote>
+              <blockquote className="text-gray-700 dark:text-gray-300 leading-relaxed">
+                &quot;{testimonials[currentIndex].quote}&quot;
+              </blockquote>
             </div>
           </div>
 
@@ -197,7 +199,9 @@ export function PricingTestimonials() {
                   </div>
                 </div>
 
-                <blockquote className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">"{testimonial.quote}"</blockquote>
+                <blockquote className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+                  &quot;{testimonial.quote}&quot;
+                </blockquote>
 
                 {testimonial.metric && (
                   <div className="mt-4 flex items-center gap-2">

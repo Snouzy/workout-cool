@@ -72,7 +72,7 @@ export function PricingFAQ() {
 
   return (
     <section className="py-16">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-2 sm:px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">Frequently Asked Questions</h2>
           <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
@@ -88,10 +88,10 @@ export function PricingFAQ() {
                 key={index}
               >
                 <button
-                  className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors duration-200"
+                  className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-400 dark:hover:bg-gray-800 transition-colors duration-200"
                   onClick={() => toggleFAQ(index)}
                 >
-                  <span className="text-lg font-semibold text-gray-900 dark:text-white pr-4">{item.question}</span>
+                  <span className="text-lg sm:text-xl leading-tight font-semibold text-gray-900 dark:text-white pr-4">{item.question}</span>
                   {openIndex === index ? (
                     <ChevronUp className="w-5 h-5 text-gray-500 flex-shrink-0" />
                   ) : (
@@ -102,7 +102,7 @@ export function PricingFAQ() {
                 {openIndex === index && (
                   <div className="px-6 pb-4">
                     <div className="border-t border-gray-200 dark:border-gray-700 pt-4">
-                      <p className="text-gray-600 dark:text-gray-400 leading-relaxed">{item.answer}</p>
+                      <p className="text-gray-700 dark:text-gray-400 leading-relaxed">{item.answer}</p>
                     </div>
                   </div>
                 )}
@@ -114,17 +114,17 @@ export function PricingFAQ() {
           <div className="mt-12 text-center">
             <div className="bg-gradient-to-r from-[#FF6B35]/10 to-[#00D4AA]/10 rounded-2xl p-6">
               <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">Still have questions?</h3>
-              <p className="text-gray-600 dark:text-gray-400 mb-4">Our fitness-focused community is here to help you succeed</p>
-              <div className="flex items-start sm:items-center justify-center gap-4 text-sm text-gray-500 flex-col">
-                <div className="flex items-center gap-1">
+              <p className="text-gray-700 dark:text-gray-400 mb-4">Our fitness-focused community is here to help you succeed</p>
+              <div className="flex items-start sm:items-center justify-center gap-4 text-sm text-gray-600 flex-col">
+                <div className="flex items-center gap-2">
                   <div className="w-2 h-2 bg-[#22C55E] rounded-full" />
                   <span className="block text-left sm:flex">Community support (discord or hello@workout.cool)</span>
                 </div>
-                <div className="flex items-center gap-1">
+                <div className="flex items-center gap-2">
                   <div className="w-2 h-2 bg-[#FF6B35] rounded-full" />
                   <span className="block text-left sm:flex">Open discussions (github/discord)</span>
                 </div>
-                <div className="flex items-center gap-1">
+                <div className="flex items-center gap-2">
                   <div className="w-2 h-2 bg-[#00D4AA] rounded-full" />
                   <span className="block text-left sm:flex">Transparent roadmap (github)</span>
                 </div>

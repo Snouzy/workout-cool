@@ -9,7 +9,7 @@ export function PricingHeroSection() {
   const t = useI18n();
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-[#FF6B35]/5 to-[#00D4AA]/5 dark:from-[#FF6B35]/10 dark:to-[#00D4AA]/10 py-16 md:py-24">
+    <section className="relative overflow-hidden bg-gradient-to-b from-[#FF6B35]/5 to-[#00D4AA]/5 dark:from-[#FF6B35]/10 dark:to-[#00D4AA]/10 pt-6 pb-16 md:pt-10 md:pb-24">
       <div className="container mx-auto px-4 text-center">
         {/* Main Hero Content */}
         <div className="max-w-4xl mx-auto space-y-8">
@@ -20,13 +20,13 @@ export function PricingHeroSection() {
           </div>
 
           {/* Main Title */}
-          <h1 className="text-4xl md:text-6xl font-black text-gray-900 dark:text-white leading-tight">
+          <h1 className="text-3xl md:text-6xl font-black text-gray-900 dark:text-white leading-tight">
             Train freely, support the mission
             <span className="inline-block ml-2">💪</span>
           </h1>
 
           {/* Subtitle */}
-          <p className="text-xl md:text-2xl text-gray-700 dark:text-gray-300 leading-relaxed max-w-3xl mx-auto">
+          <p className="text-lg md:text-2xl text-gray-700 dark:text-gray-300 sm:leading-relaxed leading-tight max-w-3xl mx-auto">
             For fitness enthusiasts who believe in open-source and training freedom 🔥
           </p>
 

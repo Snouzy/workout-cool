@@ -30,6 +30,7 @@ export function PremiumUpgradeCard() {
 
   const { storePendingCheckout, getPendingCheckout, clearPendingCheckout } = usePendingCheckout();
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
+  const [isYearly, setIsYearly] = useState(false);
 
   // Handle premium redirects after successful upgrade
   usePremiumRedirect();
@@ -98,6 +99,14 @@ export function PremiumUpgradeCard() {
     handleCheckout(planId);
   };
 
+  // Get current pricing based on toggle
+  const monthlyPrice = 7.9;
+  const yearlyPrice = 49.0;
+  const currentPrice = isYearly ? yearlyPrice : monthlyPrice;
+  const currentPeriod = isYearly ? "year" : "month";
+  const currentPlanId = isYearly ? "premium-yearly" : "premium-monthly";
+  const monthlyEquivalent = yearlyPrice / 12;
+
   if (isPremium) {
     return (
       <div className="relative overflow-hidden bg-gradient-to-b from-[#FF6B35]/5 to-[#00D4AA]/5 dark:from-[#FF6B35]/10 dark:to-[#00D4AA]/10 rounded-3xl p-8 border border-[#FF6B35]/20 dark:border-[#FF6B35]/30">
@@ -158,91 +167,99 @@ export function PremiumUpgradeCard() {
       </section>
 
       {/* Plans Section */}
-      <section className="py-16">
+      <section className="py-16" data-section="plans">
         <div className="container mx-auto px-4">
-          {/* Plans Grid */}
-          <div className="grid gap-8 md:grid-cols-2 max-w-6xl mx-auto">
-            {/* FREE PLAN */}
+          {/* Pricing Toggle */}
+          <div className="flex items-center justify-center mb-12">
+            <div className="bg-gray-100 dark:bg-gray-800 rounded-full p-1 flex items-center">
+              <button
+                className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+                  !isYearly
+                    ? "bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm"
+                    : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+                }`}
+                onClick={() => setIsYearly(false)}
+              >
+                Monthly
+              </button>
+              <button
+                className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-200 relative ${
+                  isYearly
+                    ? "bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm"
+                    : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+                }`}
+                onClick={() => setIsYearly(true)}
+              >
+                Yearly
+                <span className="absolute -top-2 -right-2 bg-[#22C55E] text-white text-xs px-1.5 py-0.5 rounded-full">-48%</span>
+              </button>
+            </div>
+          </div>
 
-            {/* SUPPORTER PLAN */}
-            <div className="relative bg-white dark:bg-gray-900 rounded-3xl p-6 md:p-8 border-2 border-[#FF6B35]/30 dark:border-[#FF6B35]/40 transition-all duration-200 ease-out hover:scale-[1.02] hover:-translate-y-1">
+          {/* Plans Grid */}
+          <div className="grid gap-16 sm:gap-8 md:grid-cols-2 max-w-5xl mx-auto">
+            {/* FREE PLAN */}
+            <div className="relative bg-white dark:bg-gray-900 rounded-3xl p-6 md:p-8 border-2 border-gray-200 dark:border-gray-800 transition-all duration-200 ease-out hover:scale-[1.02] hover:-translate-y-1 hover:border-[#22C55E]/30">
               <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-max">
-                <div className="bg-[#FF6B35] text-white text-sm font-bold px-4 py-1.5 rounded-full">Support the Mission</div>
+                <div className="bg-[#22C55E] text-white text-sm font-bold px-4 py-1.5 rounded-full">Open-Source • Always Free</div>
               </div>
 
               <div className="text-center space-y-6 mb-8 mt-4">
-                <div className="w-16 h-16 bg-gradient-to-br from-[#FF6B35] to-[#EA580C] rounded-2xl flex items-center justify-center mx-auto">
-                  <Heart className="w-8 h-8 text-white" fill="currentColor" strokeWidth={2.5} />
+                <div className="w-16 h-16 bg-gradient-to-br from-[#22C55E] to-[#16A34A] rounded-2xl flex items-center justify-center mx-auto">
+                  <Github className="w-8 h-8 text-white" strokeWidth={2.5} />
                 </div>
 
                 <div>
-                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">SUPPORTER</h3>
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">FREE</h3>
                   <div className="flex items-baseline justify-center gap-1">
-                    <span className="text-5xl font-bold text-gray-900 dark:text-white">€4.99</span>
-                    <span className="text-lg text-gray-500 dark:text-gray-400">/month</span>
+                    <span className="text-5xl font-bold text-gray-900 dark:text-white">€0</span>
+                    <span className="text-lg text-gray-600 dark:text-gray-400">/forever</span>
                   </div>
-                  <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">Help pay servers + bonus features</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">All essential functions for training</p>
                 </div>
               </div>
 
               <ul className="space-y-3 mb-8">
                 <li className="flex items-center gap-3 text-sm">
-                  <Check className="w-4 h-4 text-[#FF6B35] flex-shrink-0" />
-                  Everything from Free plan
+                  <Check className="w-4 h-4 text-[#22C55E] flex-shrink-0" />
+                  Stepper 3 steps (Equipment → Muscles → Exercises)
                 </li>
                 <li className="flex items-center gap-3 text-sm">
-                  <Check className="w-4 h-4 text-[#FF6B35] flex-shrink-0" />
-                  Advanced statistics (volume, progression, PR)
+                  <Check className="w-4 h-4 text-[#22C55E] flex-shrink-0" />8 equipment types (Bodyweight, Dumbbells, Barbell...)
                 </li>
                 <li className="flex items-center gap-3 text-sm">
-                  <Check className="w-4 h-4 text-[#FF6B35] flex-shrink-0" />
-                  Pre-designed workout programs
+                  <Check className="w-4 h-4 text-[#22C55E] flex-shrink-0" />
+                  Exercise generation with videos
                 </li>
                 <li className="flex items-center gap-3 text-sm">
-                  <Check className="w-4 h-4 text-[#FF6B35] flex-shrink-0" />
-                  Data export (PDF, CSV)
+                  <Check className="w-4 h-4 text-[#22C55E] flex-shrink-0" />
+                  Session tracking (sets/reps/weight/time)
                 </li>
                 <li className="flex items-center gap-3 text-sm">
-                  <Check className="w-4 h-4 text-[#FF6B35] flex-shrink-0" />
-                  Custom themes
+                  <Check className="w-4 h-4 text-[#22C55E] flex-shrink-0" />
+                  GitHub-style workout history (6 months)
                 </li>
                 <li className="flex items-center gap-3 text-sm">
-                  <Check className="w-4 h-4 text-[#FF6B35] flex-shrink-0" />
-                  Unlimited history (vs 6 months free)
+                  <Check className="w-4 h-4 text-[#22C55E] flex-shrink-0" />
+                  Share and replay sessions
                 </li>
                 <li className="flex items-center gap-3 text-sm">
-                  <Check className="w-4 h-4 text-[#FF6B35] flex-shrink-0" />
-                  Priority support
+                  <Check className="w-4 h-4 text-[#22C55E] flex-shrink-0" />
+                  Self-hosting capability
                 </li>
                 <li className="flex items-center gap-3 text-sm">
-                  <Check className="w-4 h-4 text-[#FF6B35] flex-shrink-0" />
-                  &quot;Supporter&quot; badge in community
+                  <Check className="w-4 h-4 text-[#22C55E] flex-shrink-0" />
+                  Open source code access
                 </li>
               </ul>
 
               <Button
-                className="w-full h-12 text-base font-semibold bg-[#FF6B35] hover:bg-[#EA580C] text-white transition-all duration-200 rounded-xl hover:scale-[1.02] active:scale-[0.98]"
-                disabled={checkoutMutation.isPending && selectedPlan === "supporter"}
-                onClick={() => handleUpgrade("supporter")}
+                className="w-full h-12 text-base font-semibold bg-white text-[#22C55E] border-2 border-[#22C55E] hover:bg-[#22C55E] hover:text-white transition-all duration-200 rounded-xl"
+                disabled
               >
-                {checkoutMutation.isPending && selectedPlan === "supporter" ? (
-                  <div className="flex items-center justify-center gap-2">
-                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                    <span>Processing...</span>
-                  </div>
-                ) : !isAuthenticated ? (
-                  <div className="flex items-center justify-center gap-2">
-                    <LogIn className="w-5 h-5" />
-                    <span>Support for €4.99</span>
-                  </div>
-                ) : (
-                  <div className="flex items-center justify-center gap-2">
-                    <span>Support for €4.99</span>
-                    <ArrowRight className="w-5 h-5" />
-                  </div>
-                )}
+                Your actual plan
               </Button>
-              <p className="mt-2 text-sm text-center text-gray-500 dark:text-gray-400">Thank you for supporting! 🙏</p>
+              <p className="mt-2 text-xs text-center text-gray-600 dark:text-gray-400">No signup required • Full access forever</p>
             </div>
 
             {/* PREMIUM PLAN */}
@@ -259,17 +276,27 @@ export function PremiumUpgradeCard() {
                   <div className="w-16 h-16 bg-gradient-to-br from-[#00D4AA] to-[#0EA5E9] rounded-2xl flex items-center justify-center mx-auto">
                     <Crown className="w-8 h-8 text-white" strokeWidth={2.5} />
                   </div>
-                  <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-[#F59E0B] rounded-xl flex items-center justify-center rotate-12">
-                    <span className="text-xs font-bold text-white">PRO</span>
-                  </div>
+                  {isYearly && (
+                    <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-[#F59E0B] rounded-xl flex items-center justify-center rotate-12">
+                      <span className="text-xs font-bold text-white">-48%</span>
+                    </div>
+                  )}
                 </div>
 
                 <div>
                   <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">PREMIUM ⭐</h3>
                   <div className="flex items-baseline justify-center gap-1">
-                    <span className="text-5xl font-bold text-gray-900 dark:text-white">€9.99</span>
-                    <span className="text-lg text-gray-500 dark:text-gray-400">/month</span>
+                    <span className="text-5xl font-bold text-gray-900 dark:text-white">
+                      €{isYearly ? Math.round(currentPrice) : currentPrice}
+                    </span>
+                    <span className="text-lg text-gray-600 dark:text-gray-400">/{currentPeriod}</span>
                   </div>
+                  {isYearly && (
+                    <div className="mt-2 inline-flex items-center gap-1.5 px-3 py-1 bg-[#22C55E]/10 dark:bg-[#22C55E]/20 rounded-full">
+                      <div className="w-2 h-2 bg-[#22C55E] rounded-full" />
+                      <span className="text-sm font-medium text-[#22C55E]">€{(currentPrice / 12).toFixed(2)}/month</span>
+                    </div>
+                  )}
                   <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">All features + early access</p>
                 </div>
               </div>
@@ -277,7 +304,19 @@ export function PremiumUpgradeCard() {
               <ul className="space-y-3 mb-8">
                 <li className="flex items-center gap-3 text-sm">
                   <Check className="w-4 h-4 text-[#00D4AA] flex-shrink-0" />
-                  Everything from Supporter plan
+                  Everything from Free plan
+                </li>
+                <li className="flex items-center gap-3 text-sm">
+                  <Check className="w-4 h-4 text-[#00D4AA] flex-shrink-0" />
+                  Advanced statistics (volume, progression, PR)
+                </li>
+                <li className="flex items-center gap-3 text-sm">
+                  <Check className="w-4 h-4 text-[#00D4AA] flex-shrink-0" />
+                  Pre-designed workout programs
+                </li>
+                <li className="flex items-center gap-3 text-sm">
+                  <Check className="w-4 h-4 text-[#00D4AA] flex-shrink-0" />
+                  Unlimited history + data export
                 </li>
                 <li className="flex items-center gap-3 text-sm">
                   <Check className="w-4 h-4 text-[#00D4AA] flex-shrink-0" />
@@ -285,19 +324,7 @@ export function PremiumUpgradeCard() {
                 </li>
                 <li className="flex items-center gap-3 text-sm">
                   <Check className="w-4 h-4 text-[#00D4AA] flex-shrink-0" />
-                  Advanced biomechanical analysis
-                </li>
-                <li className="flex items-center gap-3 text-sm">
-                  <Check className="w-4 h-4 text-[#00D4AA] flex-shrink-0" />
                   Custom exercises with videos
-                </li>
-                <li className="flex items-center gap-3 text-sm">
-                  <Check className="w-4 h-4 text-[#00D4AA] flex-shrink-0" />
-                  API access for developers
-                </li>
-                <li className="flex items-center gap-3 text-sm">
-                  <Check className="w-4 h-4 text-[#00D4AA] flex-shrink-0" />
-                  Early access to new features
                 </li>
                 <li className="flex items-center gap-3 text-sm">
                   <Check className="w-4 h-4 text-[#00D4AA] flex-shrink-0" />
@@ -305,16 +332,16 @@ export function PremiumUpgradeCard() {
                 </li>
                 <li className="flex items-center gap-3 text-sm">
                   <Check className="w-4 h-4 text-[#00D4AA] flex-shrink-0" />
-                  Pro templates (Powerlifting, Bodybuilding)
+                  API access + early features
                 </li>
               </ul>
 
               <Button
                 className="w-full h-12 text-base font-semibold bg-gradient-to-r from-[#00D4AA] to-[#0EA5E9] hover:from-[#00D4AA]/90 hover:to-[#0EA5E9]/90 text-white shadow-lg shadow-[#00D4AA]/20 transition-all duration-200 rounded-xl hover:scale-[1.02] active:scale-[0.98]"
-                disabled={checkoutMutation.isPending && selectedPlan === "premium"}
-                onClick={() => handleUpgrade(plans.find((p) => p.type === "premium")?.id || "premium")}
+                disabled={checkoutMutation.isPending && selectedPlan === currentPlanId}
+                onClick={() => handleUpgrade(currentPlanId)}
               >
-                {checkoutMutation.isPending && selectedPlan === "premium" ? (
+                {checkoutMutation.isPending && selectedPlan === currentPlanId ? (
                   <div className="flex items-center justify-center gap-2">
                     <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                     <span>Processing...</span>
@@ -322,22 +349,24 @@ export function PremiumUpgradeCard() {
                 ) : !isAuthenticated ? (
                   <div className="flex items-center justify-center gap-2">
                     <LogIn className="w-5 h-5" />
-                    <span>Go Premium €9.99</span>
+                    <span>Go Premium €{isYearly ? Math.round(currentPrice) : currentPrice}</span>
                   </div>
                 ) : (
                   <div className="flex items-center justify-center gap-2">
-                    <span>Go Premium €9.99</span>
+                    <span>Go Premium €{isYearly ? Math.round(currentPrice) : currentPrice}</span>
                     <ArrowRight className="w-5 h-5" />
                   </div>
                 )}
               </Button>
-              <p className="mt-2 text-sm text-center text-gray-500 dark:text-gray-400">Join the passionate community! 🔥</p>
+              <p className="mt-2 text-sm text-center text-gray-600 dark:text-gray-400">
+                {isYearly ? "Thank you for the yearly support! 🙏" : "Join the passionate community! 🔥"}
+              </p>
             </div>
           </div>
 
           {/* Trust Elements */}
           <div className="mt-16 text-center">
-            <div className="flex items-center justify-center gap-6 flex-wrap text-sm text-gray-500 dark:text-gray-400">
+            <div className="items-center justify-items-center gap-6 flex-wrap text-sm text-gray-600 dark:text-gray-400 grid grid-cols-1 sm:grid-cols-2">
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-[#22C55E] rounded-full" />
                 <span>30-day money back guarantee</span>
@@ -361,9 +390,6 @@ export function PremiumUpgradeCard() {
 
       {/* Feature Comparison Table */}
       <FeatureComparisonTable />
-
-      {/* Testimonials */}
-      {/* <PricingTestimonials /> */}
 
       {/* FAQ */}
       <PricingFAQ />
@@ -410,16 +436,16 @@ export function PremiumUpgradeCard() {
                   <Heart className="w-6 h-6 text-[#00D4AA]" fill="currentColor" />
                 </div>
                 <h3 className="font-semibold text-gray-900 dark:text-white">Labor of Love</h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400">15 years of passion, not for profit</p>
+                <p className="text-sm text-gray-600 dark:text-gray-400">15 years of passion !</p>
               </div>
             </div>
 
             <div className="bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm rounded-2xl p-6">
               <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
-                "We believe fitness tools should be accessible to everyone. Your support helps us maintain this vision while continuing to
-                innovate."
+                &quot;We believe fitness tools should be accessible to everyone. Your support helps us maintain this vision while continuing
+                to innovate.&quot;
               </p>
-              <p className="text-xs text-gray-500 dark:text-gray-500">— The Workout.cool Team</p>
+              <p className="text-xs text-gray-600 dark:text-gray-600">— The Workout.cool Team</p>
             </div>
           </div>
         </div>

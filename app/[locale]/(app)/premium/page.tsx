@@ -1,7 +1,6 @@
 import { Metadata } from "next";
 
 import { PremiumUpgradeCard } from "@/features/premium/ui/premium-upgrade-card";
-import { MobileStickyCard } from "@/features/premium/ui/mobile-sticky-cta";
 
 export const metadata: Metadata = {
   title: "Premium Plans - Train freely, support the mission | Workout.cool",
@@ -29,7 +28,7 @@ export default function PremiumPage() {
       </div>
 
       {/* Mobile Sticky CTA */}
-      <MobileStickyCard />
+      {/* <MobileStickyCard /> */}
     </div>
   );
 }

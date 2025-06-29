@@ -18,7 +18,7 @@ export function PricingFAQ() {
     {
       question: "Why pay if it's open-source?",
       answer:
-        "Excellent question! The code will always remain free, but maintaining servers, the exercise database, videos, and infrastructure costs money. Your contribution helps us keep the tool free for everyone. It's a win-win model: you get premium features, the community keeps free access!",
+        "Excellent question! The code will always remain free, but maintaining servers, database and infrastructure costs money. Your contribution helps us keep the tool free for everyone. It's a win-win model: you get premium features, the community keeps free access!",
     },
     {
       question: "Can I self-host Workout.cool?",
@@ -38,32 +38,31 @@ export function PricingFAQ() {
     {
       question: "Are there exercises for beginners?",
       answer:
-        "Definitely! Our exercise library covers all fitness levels from complete beginners to advanced athletes. The 3-step stepper (Equipment → Muscles → Exercises) helps beginners find appropriate exercises, and our video tutorials show proper form.",
+        "Definitely! Our exercise library covers all fitness levels from complete beginners to advanced athletes. Videos and instructions help beginners find appropriate exercises, and our video tutorials show proper form.",
     },
     {
       question: "How does progress tracking work?",
       answer:
-        "Every set, rep, weight, and time is automatically logged. You get a GitHub-style workout history showing your consistency, plus detailed analytics on volume, progression, and personal records. Premium users get advanced biomechanical analysis and AI insights.",
+        "Every set, rep, weight, and time is automatically logged. You get a GitHub-style workout history showing your consistency, plus detailed analytics on volume, progression, and personal records. Premium users get advanced charts and insights.",
     },
     {
       question: "Can I import data from other apps?",
       answer:
-        "We support CSV imports for basic data, and Premium users get API access for advanced integrations. If you're switching from another fitness app, our support team can help migrate your workout history.",
+        "Soon. We will support CSV imports for basic data (reps & weight). If you're switching from another fitness app, our support team can help migrate your workout history.",
     },
     {
       question: "Does the app work offline?",
       answer:
-        "The core workout tracking works offline - you can log sets and reps without internet. Exercise videos and cloud sync require internet connection. All your offline data syncs automatically when you're back online.",
+        "The core workout tracking works offline. You can log sets and reps without internet connection for 10 workouts. Exercise videos and cloud sync require internet connection. All your offline data syncs automatically when you're back online.",
     },
     {
       question: "Are there programs for women?",
       answer:
-        "Absolutely! Fitness principles are universal, and our exercise library includes programs suitable for everyone. Supporter and Premium plans include specialized programs for different goals: strength, toning, powerlifting, bodybuilding, and more.",
+        "Absolutely! And there will be more programs in the future. We are working on it. Supporter and Premium plans will include all the future specialized programs for different goals: strength, toning, powerlifting, bodybuilding, and more !",
     },
     {
-      question: "Can I create my own exercises?",
-      answer:
-        "Supporter users get limited custom exercise creation, while Premium users can create unlimited custom exercises with their own videos and detailed instructions. Perfect for specialized movements or unique training styles.",
+      question: "Can I create my own programs?",
+      answer: "Unfortunately, no. We are working on it !",
     },
   ];
 
@@ -84,7 +83,10 @@ export function PricingFAQ() {
         <div className="max-w-4xl mx-auto">
           <div className="space-y-4">
             {faqItems.map((item, index) => (
-              <div className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden" key={index}>
+              <div
+                className="bg-slate-100 dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden"
+                key={index}
+              >
                 <button
                   className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors duration-200"
                   onClick={() => toggleFAQ(index)}
@@ -113,18 +115,18 @@ export function PricingFAQ() {
             <div className="bg-gradient-to-r from-[#FF6B35]/10 to-[#00D4AA]/10 rounded-2xl p-6">
               <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">Still have questions?</h3>
               <p className="text-gray-600 dark:text-gray-400 mb-4">Our fitness-focused community is here to help you succeed</p>
-              <div className="flex items-center justify-center gap-4 text-sm text-gray-500 flex-col">
+              <div className="flex items-start sm:items-center justify-center gap-4 text-sm text-gray-500 flex-col">
                 <div className="flex items-center gap-1">
                   <div className="w-2 h-2 bg-[#22C55E] rounded-full" />
-                  <span>Community support (discord or hello@workout.cool)</span>
+                  <span className="block text-left sm:flex">Community support (discord or hello@workout.cool)</span>
                 </div>
                 <div className="flex items-center gap-1">
                   <div className="w-2 h-2 bg-[#FF6B35] rounded-full" />
-                  <span>Open discussions (github/discord)</span>
+                  <span className="block text-left sm:flex">Open discussions (github/discord)</span>
                 </div>
                 <div className="flex items-center gap-1">
                   <div className="w-2 h-2 bg-[#00D4AA] rounded-full" />
-                  <span>Transparent roadmap (github)</span>
+                  <span className="block text-left sm:flex">Transparent roadmap (github)</span>
                 </div>
               </div>
             </div>

@@ -83,7 +83,7 @@ src/features/premium/ui/
 
 ```tsx
 "12.4K+ Active athletes";
-"1.2M+ Series recorded";
+"1.2M+ Visits / mo";
 "4.9/5 Community rating";
 "+23% Average progression";
 ```

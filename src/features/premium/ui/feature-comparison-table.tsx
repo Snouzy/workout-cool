@@ -1,13 +1,12 @@
 "use client";
 
-import { Check, X, Star, Target, InfinityIcon } from "lucide-react";
+import { Check, X, Star, Target } from "lucide-react";
 
 import { useI18n } from "locales/client";
 
 interface Feature {
   name: string;
   free: boolean | string;
-  supporter: boolean | string;
   premium: boolean | string;
 }
 
@@ -24,28 +23,19 @@ export function FeatureComparisonTable() {
       name: "Equipment & Exercises",
       features: [
         {
-          name: "Exercise library access",
+          name: "Exercise library",
           free: "Basic",
-          supporter: "Extended",
           premium: "Complete",
         },
         {
-          name: "Custom exercise creation",
+          name: "Custom exercise",
           free: false,
-          supporter: "Limited",
           premium: "Unlimited",
         },
         {
           name: "Video tutorials",
           free: "Basic",
-          supporter: "HD Quality",
           premium: "4K + Slow-mo",
-        },
-        {
-          name: "Professional templates",
-          free: false,
-          supporter: "5 templates",
-          premium: "All templates",
         },
       ],
     },
@@ -55,31 +45,21 @@ export function FeatureComparisonTable() {
         {
           name: "Workout history",
           free: "6 months",
-          supporter: "Unlimited",
           premium: "Unlimited",
         },
         {
           name: "Progress statistics",
-          free: "Basic",
-          supporter: "Advanced",
+          free: false,
           premium: "Professional",
         },
         {
           name: "Personal records tracking",
           free: false,
-          supporter: true,
           premium: true,
         },
         {
           name: "Volume & progression analytics",
           free: false,
-          supporter: true,
-          premium: true,
-        },
-        {
-          name: "Biomechanical analysis",
-          free: false,
-          supporter: false,
           premium: true,
         },
       ],
@@ -89,27 +69,18 @@ export function FeatureComparisonTable() {
       features: [
         {
           name: "Pre-designed programs",
-          free: false,
-          supporter: "Basic programs",
+          free: "Limited",
           premium: "All programs",
-        },
-        {
-          name: "AI coaching suggestions",
-          free: false,
-          supporter: false,
-          premium: true,
         },
         {
           name: "Personalized recommendations",
           free: false,
-          supporter: "Basic",
-          premium: "Advanced AI",
+          premium: true,
         },
         {
-          name: "Pro templates (Powerlifting, Bodybuilding)",
+          name: "Pro templates (Powerlifting, bodybuilding, etc.)",
           free: false,
-          supporter: false,
-          premium: true,
+          premium: "Soon",
         },
       ],
     },
@@ -119,83 +90,41 @@ export function FeatureComparisonTable() {
         {
           name: "Community access",
           free: "Public",
-          supporter: "Supporter badge",
           premium: "VIP access",
         },
         {
           name: "Discord community",
           free: "Basic",
-          supporter: "Priority",
           premium: "Private channels",
         },
         {
-          name: "Monthly coaching sessions",
+          name: "Private 1:1 chat with coach",
           free: false,
-          supporter: false,
-          premium: true,
-        },
-        {
-          name: "Exclusive achievements",
-          free: false,
-          supporter: "Some",
-          premium: "All",
-        },
-      ],
-    },
-    {
-      name: "Data & Export",
-      features: [
-        {
-          name: "Data export",
-          free: "Basic CSV",
-          supporter: "PDF + CSV",
-          premium: "All formats",
-        },
-        {
-          name: "API access",
-          free: false,
-          supporter: false,
-          premium: true,
-        },
-        {
-          name: "Custom themes",
-          free: false,
-          supporter: "5 themes",
-          premium: "Unlimited",
-        },
-        {
-          name: "Push notifications",
-          free: false,
-          supporter: true,
           premium: true,
         },
       ],
     },
     {
-      name: "Support & Early Access",
+      name: "Support & Project",
       features: [
         {
           name: "Community support",
           free: true,
-          supporter: true,
           premium: true,
         },
         {
           name: "Priority support",
           free: false,
-          supporter: true,
           premium: true,
         },
         {
           name: "Early access to features",
           free: false,
-          supporter: false,
           premium: true,
         },
         {
           name: "Beta testing access",
           free: false,
-          supporter: false,
           premium: true,
         },
       ],
@@ -212,8 +141,7 @@ export function FeatureComparisonTable() {
     if (value === "Unlimited") {
       return (
         <div className="flex items-center justify-center gap-1">
-          <InfinityIcon className="w-4 h-4 text-[#00D4AA]" />
-          <span className="text-xs font-medium text-[#00D4AA]">Unlimited</span>
+          <span className="text-xs font-medium text-[#00D4AA]">∞ Unlimited</span>
         </div>
       );
     }
@@ -238,7 +166,7 @@ export function FeatureComparisonTable() {
 
   return (
     <section className="py-16 bg-gray-50 dark:bg-gray-900/50">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-2 sm:px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">Detailed Feature Comparison</h2>
           <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
@@ -246,23 +174,19 @@ export function FeatureComparisonTable() {
           </p>
         </div>
 
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-4xl mx-auto">
           <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-xl overflow-hidden">
             {/* Sticky Header */}
             <div className="sticky top-0 z-10 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
-              <div className="grid grid-cols-4 gap-4 p-6">
+              <div className="grid grid-cols-3 gap-4 p-6">
                 <div className="font-semibold text-gray-900 dark:text-white">Features</div>
                 <div className="text-center">
                   <div className="font-bold text-gray-900 dark:text-white">Free</div>
-                  <div className="text-sm text-gray-500">€0/month</div>
-                </div>
-                <div className="text-center">
-                  <div className="font-bold text-[#FF6B35]">Supporter</div>
-                  <div className="text-sm text-gray-500">€4.99/month</div>
+                  <div className="text-sm text-gray-500">€0/forever</div>
                 </div>
                 <div className="text-center">
                   <div className="font-bold text-[#00D4AA]">Premium</div>
-                  <div className="text-sm text-gray-500">€9.99/month</div>
+                  <div className="text-sm text-gray-500">€7.90/month or €49/year</div>
                 </div>
               </div>
             </div>
@@ -270,18 +194,14 @@ export function FeatureComparisonTable() {
             {/* Categories */}
             <div className="divide-y divide-gray-200 dark:divide-gray-700">
               {categories.map((category, categoryIndex) => (
-                <div className="p-6" key={categoryIndex}>
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                    {category.name === "Core Functions (Always Free)" && <div className="w-2 h-2 bg-[#22C55E] rounded-full" />}
-                    {category.name}
-                  </h3>
+                <div className="p-3 sm:p-6" key={categoryIndex}>
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">{category.name}</h3>
 
                   <div className="space-y-3">
                     {category.features.map((feature, featureIndex) => (
-                      <div className="grid grid-cols-4 gap-4 items-center py-2" key={featureIndex}>
-                        <div className="text-sm text-gray-700 dark:text-gray-300">{feature.name}</div>
+                      <div className="grid grid-cols-3 gap-4 items-center py-2" key={featureIndex}>
+                        <div className="text-xs sm:text-sm text-gray-700 dark:text-gray-300">{feature.name}</div>
                         <div className="text-center">{renderFeatureValue(feature.free)}</div>
-                        <div className="text-center">{renderFeatureValue(feature.supporter)}</div>
                         <div className="text-center">{renderFeatureValue(feature.premium)}</div>
                       </div>
                     ))}

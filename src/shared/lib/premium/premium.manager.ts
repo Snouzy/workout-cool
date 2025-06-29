@@ -22,7 +22,7 @@ export class PremiumManager {
 
   /**
    * Get available premium plans with provider mappings
-   * Falls back to hardcoded plans if database is empty
+   * Returns 3 plans: Free, Supporter, Premium - fitness focused
    */
   static async getAvailablePlans(provider?: string, region?: string): Promise<PremiumPlan[]> {
     // Try to get plans from database first
@@ -45,12 +45,37 @@ export class PremiumManager {
           },
         },
       },
-      orderBy: { priceYearly: "asc" },
+      orderBy: { priceMonthly: "asc" },
     });
 
-    // Convert database plans to PremiumPlan format
+    // Always include the free plan as first option
+    const freePlan: PremiumPlan = {
+      id: "free",
+      name: "Free",
+      type: "free",
+      priceMonthly: 0,
+      priceYearly: 0,
+      currency: "EUR",
+      description: "Toutes les fonctions essentielles pour s'entraîner",
+      badge: "Open-Source • Toujours gratuit",
+      features: [
+        "Stepper 3 étapes (Équipement → Muscles → Exercices)",
+        "8 types d'équipements (Poids du corps, Haltères, Barre...)",
+        "Sélection muscles ciblés (Pectoraux, Biceps, Trapèzes...)",
+        "Génération exercices avec vidéos",
+        "Suivi séances avec séries/reps/poids/temps",
+        "Historique type GitHub de tes séances",
+        "Partage et reprise de séances",
+        "Auto-hébergement possible",
+        "Code source disponible",
+      ],
+    };
+
+    // Convert database plans to PremiumPlan format or use fallback
+    let paidPlans: PremiumPlan[] = [];
+
     if (dbPlans.length > 0) {
-      return dbPlans.map((plan) => {
+      paidPlans = dbPlans.map((plan) => {
         // Get the appropriate provider mapping
         const mapping = plan.providerMappings.find(
           (m) => (!provider || m.provider === provider.toUpperCase()) && (!region || m.region === region || !m.region),
@@ -63,40 +88,67 @@ export class PremiumManager {
         return {
           id: mapping?.externalId || plan.id,
           internalId: plan.id, // Keep internal ID for database operations
-          name: `Premium ${planType.charAt(0).toUpperCase() + planType.slice(1)}`, // Fallback name
+          name: `Premium ${planType.charAt(0).toUpperCase() + planType.slice(1)}`,
+          type: "premium", // Database plans are premium by default
           priceMonthly: plan.priceMonthly?.toNumber() || 0,
           priceYearly: plan.priceYearly?.toNumber() || 0,
           currency: (plan.currency || "EUR") as "EUR" | "USD",
           features: [], // Features handled client-side
         };
       });
+    } else {
+      // Fallback to the new 3-plan structure
+      paidPlans = [
+        {
+          id: "supporter",
+          name: "Supporter",
+          type: "supporter",
+          priceMonthly: 4.99,
+          priceYearly: 0,
+          currency: "EUR",
+          description: "Aide à payer les serveurs + fonctions bonus",
+          badge: "Soutenir la mission",
+          features: [
+            "Tout du plan Gratuit",
+            "Statistiques avancées (volume, progression, PR)",
+            "Programmes d'entraînement pré-conçus",
+            "Export de données (PDF, CSV)",
+            "Thèmes personnalisés",
+            "Notifications push",
+            "Historique illimité (vs 6 mois gratuit)",
+            "Support prioritaire",
+            'Badge "Supporter" dans la communauté',
+          ],
+        },
+        {
+          id: env.NEXT_PUBLIC_STRIPE_PRICE_YEARLY || "premium",
+          name: "Premium",
+          type: "premium",
+          priceMonthly: 9.99,
+          priceYearly: 0,
+          currency: "EUR",
+          description: "Toutes les fonctions + accès anticipé",
+          badge: "PLUS POPULAIRE • Pour les passionnés",
+          isPopular: true,
+          isRecommended: true,
+          features: [
+            "Tout du plan Supporter",
+            "IA coaching personnalisé (suggestions exercices)",
+            "Analyses biomécanique avancées",
+            "Création exercices personnalisés avec vidéos",
+            "API access pour développeurs",
+            "Accès anticipé aux nouvelles features",
+            "Badges exclusifs et achievements",
+            "Communauté privée Discord",
+            "Sessions coaching vidéo mensuelles",
+            "Templates séances pros (powerlifting, bodybuilding...)",
+          ],
+        },
+      ];
     }
 
-    // Fallback to hardcoded plans if no plans in database
-    return [
-      {
-        id: env.NEXT_PUBLIC_STRIPE_PRICE_MONTHLY || "price_monthly",
-        name: "Premium Monthly",
-        priceMonthly: 7.9,
-        priceYearly: 0,
-        currency: "EUR",
-        features: ["Access to all premium programs", "Advanced workout tracking", "Personalized recommendations", "Priority support"],
-      },
-      {
-        id: env.NEXT_PUBLIC_STRIPE_PRICE_YEARLY || "price_yearly",
-        name: "Premium Yearly",
-        priceMonthly: 0,
-        priceYearly: 49.0,
-        currency: "EUR",
-        features: [
-          "Access to all premium programs",
-          "Advanced workout tracking",
-          "Personalized recommendations",
-          "Priority support",
-          "Save 50% vs monthly",
-        ],
-      },
-    ];
+    // Return all 3 plans: Free + Paid plans
+    return [freePlan, ...paidPlans];
   }
 
   /**

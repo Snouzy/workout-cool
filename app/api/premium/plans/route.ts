@@ -13,7 +13,9 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const provider = searchParams.get("provider") || undefined;
+    console.log("provider:", provider);
     const region = searchParams.get("region") || undefined;
+    console.log("region:", region);
 
     const plans = await PremiumManager.getAvailablePlans(provider, region);
     return NextResponse.json(plans);

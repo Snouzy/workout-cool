@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { Crown, Zap, Heart, Dumbbell, Check, ArrowRight, Sparkles, LogIn } from "lucide-react";
+import { Crown, Zap, Heart, Check, ArrowRight, LogIn, Github, Users } from "lucide-react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 import { useI18n, useCurrentLocale } from "locales/client";
@@ -13,6 +13,9 @@ import { usePendingCheckout } from "@/shared/lib/premium/use-pending-checkout";
 import { useSession } from "@/features/auth/lib/auth-client";
 import { Button } from "@/components/ui/button";
 
+import { PricingHeroSection } from "./pricing-hero-section";
+import { PricingFAQ } from "./pricing-faq";
+import { FeatureComparisonTable } from "./feature-comparison-table";
 import { ConversionFlowNotification } from "./conversion-flow-notification";
 
 import type { PremiumPlan, CheckoutResult } from "@/shared/types/premium.types";
@@ -23,10 +26,7 @@ export function PremiumUpgradeCard() {
   const router = useRouter();
   const isPremium = useIsPremium();
   const { data: session, isPending: isAuthLoading } = useSession();
-  console.log("session:", session);
   const isAuthenticated = !!session?.user;
-  console.log("session?.user:", session?.user);
-  console.log("isAuthenticated:", isAuthenticated);
 
   const { storePendingCheckout, getPendingCheckout, clearPendingCheckout } = usePendingCheckout();
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
@@ -100,9 +100,9 @@ export function PremiumUpgradeCard() {
 
   if (isPremium) {
     return (
-      <div className="relative overflow-hidden bg-gradient-to-b from-[#4F8EF7]/5 to-[#25CB78]/5 dark:from-[#4F8EF7]/10 dark:to-[#25CB78]/10 rounded-3xl p-8 border border-[#4F8EF7]/20 dark:border-[#4F8EF7]/30">
+      <div className="relative overflow-hidden bg-gradient-to-b from-[#FF6B35]/5 to-[#00D4AA]/5 dark:from-[#FF6B35]/10 dark:to-[#00D4AA]/10 rounded-3xl p-8 border border-[#FF6B35]/20 dark:border-[#FF6B35]/30">
         <div className="absolute -top-8 -right-8 w-48 h-48 opacity-10">
-          <div className="absolute inset-0 bg-gradient-to-br from-[#FFD93D] to-[#FFA500] rounded-full blur-3xl" />
+          <div className="absolute inset-0 bg-gradient-to-br from-[#FF6B35] to-[#00D4AA] rounded-full blur-3xl" />
         </div>
         <div className="absolute top-4 right-4">
           <Image alt="Premium mascot" className="drop-shadow-lg" height={80} src="/images/emojis/WorkoutCoolLove.png" width={80} />
@@ -110,18 +110,18 @@ export function PremiumUpgradeCard() {
         <div className="relative z-10">
           <div className="flex items-center gap-3 mb-3">
             <div className="relative">
-              <div className="w-14 h-14 bg-gradient-to-br from-[#FFD93D] to-[#FFA500] rounded-2xl flex items-center justify-center">
+              <div className="w-14 h-14 bg-gradient-to-br from-[#FF6B35] to-[#00D4AA] rounded-2xl flex items-center justify-center">
                 <Crown className="w-7 h-7 text-white" strokeWidth={2.5} />
               </div>
-              <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-[#25CB78] rounded-full flex items-center justify-center">
+              <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-[#22C55E] rounded-full flex items-center justify-center">
                 <Check className="w-3 h-3 text-white" strokeWidth={3} />
               </div>
             </div>
             <div>
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-white">{t("premium.premium_active_title")}</h3>
-              <div className="flex items-center gap-2 text-sm text-[#25CB78] font-medium">
-                <div className="w-2 h-2 bg-[#25CB78] rounded-full animate-pulse" />
-                {t("premium.premium_active_subtitle")}
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white">Premium Active! 💪</h3>
+              <div className="flex items-center gap-2 text-sm text-[#22C55E] font-medium">
+                <div className="w-2 h-2 bg-[#22C55E] rounded-full animate-pulse" />
+                Supporting the mission
               </div>
             </div>
           </div>
@@ -133,205 +133,297 @@ export function PremiumUpgradeCard() {
   return (
     <>
       <ConversionFlowNotification />
-      <div className="relative space-y-16">
-        <div className="text-center space-y-4 max-w-2xl mx-auto mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">{t("premium.free_intro_title")}</h2>
-          <p className="text-gray-700 dark:text-gray-400 text-lg leading-relaxed">{t("premium.free_intro_text")}</p>
-          <p className="text-gray-600 dark:text-gray-500 text-md">
-            {t("premium.donation_story_text")} <br /> <br />
-            {t("premium.health_upgrade_text")}
-          </p>
-        </div>
 
-        <div className="text-center space-y-6 mb-16">
-          <div className="relative inline-flex items-center justify-center">
-            <div className="absolute inset-0 bg-gradient-to-r from-[#FFD93D]/20 to-[#4F8EF7]/20 blur-3xl" />
-            <Image
-              alt="Support mascot"
-              className="relative z-10 drop-shadow-2xl"
-              height={100}
-              src="/images/emojis/WorkoutCoolLove.png"
-              width={100}
-            />
-            <div className="absolute -top-3 -right-3">
-              <div className="relative">
-                <Sparkles className="w-8 h-8 text-[#FFD93D]" />
-                <div className="absolute inset-0 animate-ping">
-                  <Sparkles className="w-8 h-8 text-[#FFD93D] opacity-40" />
-                </div>
-              </div>
+      {/* Hero Section */}
+      <PricingHeroSection />
+
+      {/* Mission-Driven Urgency Banner */}
+      <section className="bg-gradient-to-r from-[#FF6B35]/10 to-[#00D4AA]/10 border-y border-[#FF6B35]/20 dark:border-[#FF6B35]/30">
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex items-center justify-center gap-6 text-sm">
+            <div className="flex items-center gap-2">
+              <Heart className="w-4 h-4 text-[#22C55E]" fill="currentColor" />
+              <span className="text-gray-700 dark:text-gray-300">
+                <strong className="text-[#22C55E]">234</strong> supporters helping the mission
+              </span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Zap className="w-4 h-4 text-[#F59E0B]" />
+              <span className="text-gray-700 dark:text-gray-300">
+                <strong className="text-[#F59E0B]">Limited</strong> early access spots
+              </span>
             </div>
           </div>
-
-          <p className="text-xl text-gray-700 dark:text-gray-400 max-w-xl mx-auto">{t("premium.unlock_features_text")}</p>
-          <p className="text-md text-gray-500 dark:text-gray-600 max-w-xl mx-auto !mt-1">
-            <span className="text-gray-700 dark:text-gray-400 text-2xl">“</span>
-            {t("premium.invest_yourself_quote")}
-            <span className="text-gray-600 dark:text-gray-400 text-2xl">”</span>
-          </p>
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#25CB78]/10 dark:bg-[#25CB78]/20 rounded-full">
-            <Heart className="w-4 h-4 text-[#25CB78]" fill="currentColor" />
-            <span className="text-sm font-medium text-[#25CB78]">{t("premium.support_mission")}</span>
-          </div>
         </div>
+      </section>
 
-        <div className="grid gap-6 md:grid-cols-2 max-w-4xl mx-auto">
-          {plans.map((plan) => {
-            const isYearly = plan.priceYearly > 0;
-            const price = isYearly ? plan.priceYearly : plan.priceMonthly;
-            const period = isYearly ? t("premium.pricing_year") : t("premium.pricing_month");
-            const isLoading = checkoutMutation.isPending && selectedPlan === plan.id;
+      {/* Plans Section */}
+      <section className="py-16">
+        <div className="container mx-auto px-4">
+          {/* Plans Grid */}
+          <div className="grid gap-8 md:grid-cols-2 max-w-6xl mx-auto">
+            {/* FREE PLAN */}
 
-            return (
-              <div
-                // eslint-disable-next-line max-len
-                className={`relative bg-white dark:bg-gray-900 rounded-3xl px-4 py-8 sm:p-8 border-2 transition-all duration-200 ease-out hover:scale-[1.02] hover:-translate-y-1 ${
-                  isYearly
-                    ? "border-[#25CB78]/30 dark:border-[#25CB78]/40 shadow-xl shadow-[#25CB78]/10"
-                    : "border-gray-200 dark:border-gray-800 hover:border-[#4F8EF7]/30 dark:hover:border-[#4F8EF7]/40"
-                }`}
-                key={plan.id}
+            {/* SUPPORTER PLAN */}
+            <div className="relative bg-white dark:bg-gray-900 rounded-3xl p-6 md:p-8 border-2 border-[#FF6B35]/30 dark:border-[#FF6B35]/40 transition-all duration-200 ease-out hover:scale-[1.02] hover:-translate-y-1">
+              <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-max">
+                <div className="bg-[#FF6B35] text-white text-sm font-bold px-4 py-1.5 rounded-full">Support the Mission</div>
+              </div>
+
+              <div className="text-center space-y-6 mb-8 mt-4">
+                <div className="w-16 h-16 bg-gradient-to-br from-[#FF6B35] to-[#EA580C] rounded-2xl flex items-center justify-center mx-auto">
+                  <Heart className="w-8 h-8 text-white" fill="currentColor" strokeWidth={2.5} />
+                </div>
+
+                <div>
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">SUPPORTER</h3>
+                  <div className="flex items-baseline justify-center gap-1">
+                    <span className="text-5xl font-bold text-gray-900 dark:text-white">€4.99</span>
+                    <span className="text-lg text-gray-500 dark:text-gray-400">/month</span>
+                  </div>
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">Help pay servers + bonus features</p>
+                </div>
+              </div>
+
+              <ul className="space-y-3 mb-8">
+                <li className="flex items-center gap-3 text-sm">
+                  <Check className="w-4 h-4 text-[#FF6B35] flex-shrink-0" />
+                  Everything from Free plan
+                </li>
+                <li className="flex items-center gap-3 text-sm">
+                  <Check className="w-4 h-4 text-[#FF6B35] flex-shrink-0" />
+                  Advanced statistics (volume, progression, PR)
+                </li>
+                <li className="flex items-center gap-3 text-sm">
+                  <Check className="w-4 h-4 text-[#FF6B35] flex-shrink-0" />
+                  Pre-designed workout programs
+                </li>
+                <li className="flex items-center gap-3 text-sm">
+                  <Check className="w-4 h-4 text-[#FF6B35] flex-shrink-0" />
+                  Data export (PDF, CSV)
+                </li>
+                <li className="flex items-center gap-3 text-sm">
+                  <Check className="w-4 h-4 text-[#FF6B35] flex-shrink-0" />
+                  Custom themes
+                </li>
+                <li className="flex items-center gap-3 text-sm">
+                  <Check className="w-4 h-4 text-[#FF6B35] flex-shrink-0" />
+                  Unlimited history (vs 6 months free)
+                </li>
+                <li className="flex items-center gap-3 text-sm">
+                  <Check className="w-4 h-4 text-[#FF6B35] flex-shrink-0" />
+                  Priority support
+                </li>
+                <li className="flex items-center gap-3 text-sm">
+                  <Check className="w-4 h-4 text-[#FF6B35] flex-shrink-0" />
+                  &quot;Supporter&quot; badge in community
+                </li>
+              </ul>
+
+              <Button
+                className="w-full h-12 text-base font-semibold bg-[#FF6B35] hover:bg-[#EA580C] text-white transition-all duration-200 rounded-xl hover:scale-[1.02] active:scale-[0.98]"
+                disabled={checkoutMutation.isPending && selectedPlan === "supporter"}
+                onClick={() => handleUpgrade("supporter")}
               >
-                {isYearly && (
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-max">
-                    <div className="bg-gradient-to-r from-[#25CB78] to-[#4F8EF7] text-white text-sm font-bold px-4 py-1.5 rounded-full flex items-center gap-1.5">
-                      <Zap className="w-4 h-4" />
-                      {t("premium.best_value_badge")}
-                    </div>
+                {checkoutMutation.isPending && selectedPlan === "supporter" ? (
+                  <div className="flex items-center justify-center gap-2">
+                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    <span>Processing...</span>
+                  </div>
+                ) : !isAuthenticated ? (
+                  <div className="flex items-center justify-center gap-2">
+                    <LogIn className="w-5 h-5" />
+                    <span>Support for €4.99</span>
+                  </div>
+                ) : (
+                  <div className="flex items-center justify-center gap-2">
+                    <span>Support for €4.99</span>
+                    <ArrowRight className="w-5 h-5" />
                   </div>
                 )}
+              </Button>
+              <p className="mt-2 text-sm text-center text-gray-500 dark:text-gray-400">Thank you for supporting! 🙏</p>
+            </div>
 
-                <div className="text-center space-y-6 mb-8">
-                  <div className="inline-flex items-center justify-center">
-                    {isYearly ? (
-                      <div className="relative">
-                        <div className="w-16 h-16 bg-gradient-to-br from-[#25CB78] to-[#4F8EF7] rounded-2xl flex items-center justify-center">
-                          <Crown className="w-8 h-8 text-white" strokeWidth={2.5} />
-                        </div>
-                        <div className="absolute -bottom-4 -right-4 w-10 h-10 bg-[#FFD93D] rounded-xl flex items-center justify-center rotate-12">
-                          <span className="text-xs font-bold text-gray-900">{t("premium.discount_badge")}</span>
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="w-16 h-16 bg-gradient-to-br from-[#4F8EF7] to-[#4F8EF7]/80 rounded-2xl flex items-center justify-center">
-                        <Dumbbell className="w-8 h-8 text-white" strokeWidth={2.5} />
-                      </div>
-                    )}
+            {/* PREMIUM PLAN */}
+            <div className="relative bg-white dark:bg-gray-900 rounded-3xl p-6 md:p-8 border-2 border-[#00D4AA]/30 dark:border-[#00D4AA]/40 shadow-xl shadow-[#00D4AA]/10 transform scale-105 transition-all duration-200 ease-out hover:scale-[1.07] hover:-translate-y-1">
+              <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-max">
+                <div className="bg-gradient-to-r from-[#00D4AA] to-[#0EA5E9] text-white text-sm font-bold px-4 py-1.5 rounded-full flex items-center gap-1.5">
+                  <Zap className="w-4 h-4" />
+                  MOST POPULAR • For enthusiasts
+                </div>
+              </div>
+
+              <div className="text-center space-y-6 mb-8 mt-4">
+                <div className="relative">
+                  <div className="w-16 h-16 bg-gradient-to-br from-[#00D4AA] to-[#0EA5E9] rounded-2xl flex items-center justify-center mx-auto">
+                    <Crown className="w-8 h-8 text-white" strokeWidth={2.5} />
                   </div>
-
-                  <div>
-                    <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-                      {isYearly ? t("premium.annual_plan") : t("premium.monthly_plan")}
-                    </h3>
-                    <div className="flex items-baseline justify-center gap-1">
-                      <span className="text-5xl font-bold text-gray-900 dark:text-white">€{price}</span>
-                      <span className="text-lg text-gray-500 dark:text-gray-400">/{period}</span>
-                    </div>
-                    {isYearly && (
-                      <div className="mt-2 inline-flex items-center gap-1.5 px-3 py-1 bg-[#25CB78]/10 dark:bg-[#25CB78]/20 rounded-full">
-                        <div className="w-2 h-2 bg-[#25CB78] rounded-full" />
-                        <span className="text-sm font-medium text-[#25CB78]">
-                          €{(price / 12).toFixed(2)}
-                          {t("premium.per_month")}
-                        </span>
-                      </div>
-                    )}
+                  <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-[#F59E0B] rounded-xl flex items-center justify-center rotate-12">
+                    <span className="text-xs font-bold text-white">PRO</span>
                   </div>
                 </div>
 
-                <ul className="space-y-4 mb-8">
-                  <li className="flex items-center gap-3">
-                    <Check className="w-4 h-4 text-[#4F8EF7]" />
-                    {t("premium.feature_all_programs")}
-                  </li>
-                  <li className="flex items-center gap-3">
-                    <Check className="w-4 h-4 text-[#4F8EF7]" />
-                    {t("premium.feature_progress_tracking")}
-                    <span className="text-xs text-gray-500 dark:text-gray-400 -ml-1 italic">({t("premium.coming_soon")})</span>
-                  </li>
-                  <li className="flex items-center gap-3">
-                    <Check className="w-4 h-4 text-[#4F8EF7]" />
-                    {t("premium.feature_future_updates")}
-                  </li>
-                  <li className="flex items-center gap-3">
-                    <Check className="w-4 h-4 text-[#4F8EF7]" />
-                    {t("premium.feature_priority_support")}
-                  </li>
-                  {isYearly && (
-                    <li className="flex items-center gap-3">
-                      <Heart className="w-4 h-4 text-[#25CB78]" fill="currentColor" />
-                      {t("premium.save_yearly")}
-                    </li>
-                  )}
-                </ul>
-
-                <Button
-                  className={`w-full h-12 text-base font-semibold transition-all duration-200 ease-out rounded-xl ${
-                    isYearly
-                      ? "bg-gradient-to-r from-[#25CB78] to-[#4F8EF7] hover:from-[#25CB78]/90 hover:to-[#4F8EF7]/90 text-white shadow-lg shadow-[#25CB78]/20"
-                      : "bg-[#4F8EF7] hover:bg-[#4F8EF7]/90 text-white"
-                  } hover:scale-[1.02] active:scale-[0.98]`}
-                  disabled={isLoading || isAuthLoading}
-                  onClick={() => handleUpgrade(plan.id)}
-                >
-                  {isLoading ? (
-                    <div className="flex items-center justify-center gap-2">
-                      <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                      <span>{t("premium.processing")}</span>
-                    </div>
-                  ) : isAuthLoading ? (
-                    <div className="flex items-center justify-center gap-2">
-                      <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                      <span>{t("commons.loading")}</span>
-                    </div>
-                  ) : !isAuthenticated ? (
-                    <div className="flex items-center justify-center gap-2">
-                      <LogIn className="w-5 h-5" />
-                      <span>{isYearly ? t("premium.cta_annual") : t("premium.cta_monthly")}</span>
-                    </div>
-                  ) : (
-                    <div className="flex items-center justify-center gap-2">
-                      <span>{isYearly ? t("premium.cta_annual") : t("premium.cta_monthly")}</span>
-                      <ArrowRight className="w-5 h-5" />
-                    </div>
-                  )}
-                </Button>
-                <p className="mt-2 text-sm text-center text-gray-500 dark:text-gray-400">
-                  {isYearly ? t("premium.thank_supporting") : t("premium.no_pressure")}
-                </p>
+                <div>
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">PREMIUM ⭐</h3>
+                  <div className="flex items-baseline justify-center gap-1">
+                    <span className="text-5xl font-bold text-gray-900 dark:text-white">€9.99</span>
+                    <span className="text-lg text-gray-500 dark:text-gray-400">/month</span>
+                  </div>
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">All features + early access</p>
+                </div>
               </div>
-            );
-          })}
-        </div>
 
-        <div className="text-center !mt-24 space-y-6">
-          <div className="relative inline-block">
-            <Image alt="Happy mascot" className="mx-auto" height={60} src="/images/emojis/WorkoutCoolBiceps.png" width={60} />
-            <div className="absolute -top-2 left-1/2 -translate-x-[15%] rotate-2">
-              <div className="w-max px-2 h-6 bg-[#4F8EF7] rounded-full flex items-center justify-center">
-                <span className="text-sm font-bold text-white">{t("premium.keep_pushing")}</span>
+              <ul className="space-y-3 mb-8">
+                <li className="flex items-center gap-3 text-sm">
+                  <Check className="w-4 h-4 text-[#00D4AA] flex-shrink-0" />
+                  Everything from Supporter plan
+                </li>
+                <li className="flex items-center gap-3 text-sm">
+                  <Check className="w-4 h-4 text-[#00D4AA] flex-shrink-0" />
+                  AI coaching personalized suggestions
+                </li>
+                <li className="flex items-center gap-3 text-sm">
+                  <Check className="w-4 h-4 text-[#00D4AA] flex-shrink-0" />
+                  Advanced biomechanical analysis
+                </li>
+                <li className="flex items-center gap-3 text-sm">
+                  <Check className="w-4 h-4 text-[#00D4AA] flex-shrink-0" />
+                  Custom exercises with videos
+                </li>
+                <li className="flex items-center gap-3 text-sm">
+                  <Check className="w-4 h-4 text-[#00D4AA] flex-shrink-0" />
+                  API access for developers
+                </li>
+                <li className="flex items-center gap-3 text-sm">
+                  <Check className="w-4 h-4 text-[#00D4AA] flex-shrink-0" />
+                  Early access to new features
+                </li>
+                <li className="flex items-center gap-3 text-sm">
+                  <Check className="w-4 h-4 text-[#00D4AA] flex-shrink-0" />
+                  Private Discord community
+                </li>
+                <li className="flex items-center gap-3 text-sm">
+                  <Check className="w-4 h-4 text-[#00D4AA] flex-shrink-0" />
+                  Pro templates (Powerlifting, Bodybuilding)
+                </li>
+              </ul>
+
+              <Button
+                className="w-full h-12 text-base font-semibold bg-gradient-to-r from-[#00D4AA] to-[#0EA5E9] hover:from-[#00D4AA]/90 hover:to-[#0EA5E9]/90 text-white shadow-lg shadow-[#00D4AA]/20 transition-all duration-200 rounded-xl hover:scale-[1.02] active:scale-[0.98]"
+                disabled={checkoutMutation.isPending && selectedPlan === "premium"}
+                onClick={() => handleUpgrade(plans.find((p) => p.type === "premium")?.id || "premium")}
+              >
+                {checkoutMutation.isPending && selectedPlan === "premium" ? (
+                  <div className="flex items-center justify-center gap-2">
+                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    <span>Processing...</span>
+                  </div>
+                ) : !isAuthenticated ? (
+                  <div className="flex items-center justify-center gap-2">
+                    <LogIn className="w-5 h-5" />
+                    <span>Go Premium €9.99</span>
+                  </div>
+                ) : (
+                  <div className="flex items-center justify-center gap-2">
+                    <span>Go Premium €9.99</span>
+                    <ArrowRight className="w-5 h-5" />
+                  </div>
+                )}
+              </Button>
+              <p className="mt-2 text-sm text-center text-gray-500 dark:text-gray-400">Join the passionate community! 🔥</p>
+            </div>
+          </div>
+
+          {/* Trust Elements */}
+          <div className="mt-16 text-center">
+            <div className="flex items-center justify-center gap-6 flex-wrap text-sm text-gray-500 dark:text-gray-400">
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-[#22C55E] rounded-full" />
+                <span>30-day money back guarantee</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-[#0EA5E9] rounded-full" />
+                <span>Cancel in 1 clic,no commitment</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-[#F59E0B] rounded-full" />
+                <span>Secure payment via Stripe</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-[#FF6B35] rounded-full" />
+                <span>GDPR compliant & open-source</span>
               </div>
             </div>
           </div>
-          <div className="space-y-6">
-            <p className="text-sm font-medium text-gray-600 dark:text-gray-400 px-4 sm:px-10">{t("premium.still_unsure")}</p>
-            <div className="flex items-center justify-center gap-4 text-xs text-gray-500 dark:text-gray-500">
-              <div className="flex items-center gap-1">
-                <div className="w-2 h-2 bg-[#25CB78] rounded-full" />
-                <span>{t("premium.self_hosting")}</span>
+        </div>
+      </section>
+
+      {/* Feature Comparison Table */}
+      <FeatureComparisonTable />
+
+      {/* Testimonials */}
+      {/* <PricingTestimonials /> */}
+
+      {/* FAQ */}
+      <PricingFAQ />
+
+      {/* Final CTA Section */}
+      <section className="py-16 bg-gradient-to-b from-[#FF6B35]/5 to-[#00D4AA]/5 dark:from-[#FF6B35]/10 dark:to-[#00D4AA]/10">
+        <div className="container mx-auto px-4 text-center">
+          <div className="max-w-3xl mx-auto space-y-8">
+            <div className="relative inline-block">
+              <Image alt="Happy mascot" className="mx-auto" height={80} src="/images/emojis/WorkoutCoolBiceps.png" width={80} />
+              <div className="absolute -top-2 left-1/2 -translate-x-[15%] rotate-2">
+                <div className="w-max px-3 h-7 bg-[#FF6B35] rounded-full flex items-center justify-center">
+                  <span className="text-sm font-bold text-white">Keep pushing! 💪</span>
+                </div>
               </div>
-              <div className="flex items-center gap-1">
-                <div className="w-2 h-2 bg-[#4F8EF7] rounded-full" />
-                <span>{t("premium.community")}</span>
+            </div>
+
+            <div className="space-y-4">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">Ready to Support the Mission?</h2>
+              <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                Join thousands of fitness enthusiasts who believe in open-source training freedom
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="text-center space-y-2">
+                <div className="w-12 h-12 bg-[#22C55E]/10 rounded-xl flex items-center justify-center mx-auto">
+                  <Users className="w-6 h-6 text-[#22C55E]" />
+                </div>
+                <h3 className="font-semibold text-gray-900 dark:text-white">Community First</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400">Built by and for the fitness community</p>
               </div>
-              <div className="flex items-center gap-1">
-                <div className="w-2 h-2 bg-[#FFD93D] rounded-full" />
-                <span>{t("premium.mit_license")}</span>
+
+              <div className="text-center space-y-2">
+                <div className="w-12 h-12 bg-[#FF6B35]/10 rounded-xl flex items-center justify-center mx-auto">
+                  <Github className="w-6 h-6 text-[#FF6B35]" />
+                </div>
+                <h3 className="font-semibold text-gray-900 dark:text-white">Always Transparent</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400">Open-source code, transparent funding</p>
               </div>
+
+              <div className="text-center space-y-2">
+                <div className="w-12 h-12 bg-[#00D4AA]/10 rounded-xl flex items-center justify-center mx-auto">
+                  <Heart className="w-6 h-6 text-[#00D4AA]" fill="currentColor" />
+                </div>
+                <h3 className="font-semibold text-gray-900 dark:text-white">Labor of Love</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400">15 years of passion, not for profit</p>
+              </div>
+            </div>
+
+            <div className="bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm rounded-2xl p-6">
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                "We believe fitness tools should be accessible to everyone. Your support helps us maintain this vision while continuing to
+                innovate."
+              </p>
+              <p className="text-xs text-gray-500 dark:text-gray-500">— The Workout.cool Team</p>
             </div>
           </div>
         </div>
-      </div>
+      </section>
     </>
   );
 }

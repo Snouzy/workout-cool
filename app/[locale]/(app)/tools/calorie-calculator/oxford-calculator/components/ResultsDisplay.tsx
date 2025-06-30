@@ -68,7 +68,7 @@ export function ResultsDisplay({ results }: ResultsDisplayProps) {
           <div className="text-sm text-base-content/60 dark:text-base-content/50 font-medium">kcal</div>
         </div>
 
-        <div className="bg-gradient-to-br from-[#4F8EF7]/30 to-[#238BE6]/20 dark:from-[#4F8EF7]/20 dark:to-[#238BE6]/10 rounded-xl p-4 text-center border-2 border-[#4F8EF7]/40 dark:border-[#4F8EF7]/30 transition-all duration-300 hover:scale-105 animate-pulse">
+        <div className="bg-gradient-to-br from-[#4F8EF7]/30 to-[#238BE6]/20 dark:from-[#4F8EF7]/20 dark:to-[#238BE6]/10 rounded-xl p-4 text-center border-2 border-[#4F8EF7]/40 dark:border-[#4F8EF7]/30 transition-all duration-300 hover:scale-105">
           <div className="text-sm text-[#4F8EF7] dark:text-[#4F8EF7]/90 mb-1 font-bold uppercase tracking-wider">
             {t("tools.calorie-calculator.results.target")}
           </div>

@@ -79,9 +79,7 @@ export function CalorieCalculatorClient() {
           {/* Calculate Button */}
           <button
             aria-label={t("tools.calorie-calculator.calculate")}
-            className={`w-full py-4 px-6 rounded-xl bg-gradient-to-r from-[#8B5CF6] to-[#7C3AED] text-white font-bold text-lg transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-primary/25 active:scale-[0.98] touch-manipulation ${
-              isCalculating ? "animate-pulse" : ""
-            }`}
+            className={`w-full py-4 px-6 rounded-xl bg-gradient-to-r from-[#8B5CF6] to-[#7C3AED] text-white font-bold text-lg transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-primary/25 active:scale-[0.98] touch-manipulation`}
             disabled={isCalculating}
             onClick={handleCalculate}
           >

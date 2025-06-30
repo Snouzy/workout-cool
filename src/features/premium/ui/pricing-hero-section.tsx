@@ -16,18 +16,18 @@ export function PricingHeroSection() {
           {/* Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#00D4AA]/10 dark:bg-[#00D4AA]/20 rounded-full">
             <Github className="w-4 h-4 text-[#00D4AA]" />
-            <span className="text-sm font-medium text-[#00D4AA]">Open-Source & Auto-hébergement TOUJOURS gratuits</span>
+            <span className="text-sm font-medium text-[#00D4AA]">{t("premium.hero.badge")}</span>
           </div>
 
           {/* Main Title */}
           <h1 className="text-3xl md:text-6xl font-black text-gray-900 dark:text-white leading-tight">
-            Train freely, support the mission
+            {t("premium.hero.title")}
             <span className="inline-block ml-2">💪</span>
           </h1>
 
           {/* Subtitle */}
           <p className="text-lg md:text-2xl text-gray-700 dark:text-gray-300 sm:leading-relaxed leading-tight max-w-3xl mx-auto">
-            For fitness enthusiasts who believe in open-source and training freedom 🔥
+            {t("premium.hero.subtitle")}
           </p>
 
           {/* Social Proof */}
@@ -50,33 +50,33 @@ export function PricingHeroSection() {
                 <div className="space-y-1">
                   <div className="flex items-center justify-center gap-1">
                     <Users className="w-4 h-4 text-[#FF6B35]" />
-                    <span className="text-2xl font-bold text-gray-900 dark:text-white">12.4K+</span>
+                    <span className="text-2xl font-bold text-gray-900 dark:text-white">{t("premium.hero.stats.athletes.count")}</span>
                   </div>
-                  <p className="text-xs text-gray-600 dark:text-gray-400">Active athletes</p>
+                  <p className="text-xs text-gray-600 dark:text-gray-400">{t("premium.hero.stats.athletes.label")}</p>
                 </div>
 
                 <div className="space-y-1">
                   <div className="flex items-center justify-center gap-1">
                     <TrendingUp className="w-4 h-4 text-[#00D4AA]" />
-                    <span className="text-2xl font-bold text-gray-900 dark:text-white">1.2M+</span>
+                    <span className="text-2xl font-bold text-gray-900 dark:text-white">{t("premium.hero.stats.series.count")}</span>
                   </div>
-                  <p className="text-xs text-gray-600 dark:text-gray-400">Series recorded</p>
+                  <p className="text-xs text-gray-600 dark:text-gray-400">{t("premium.hero.stats.series.label")}</p>
                 </div>
 
                 <div className="space-y-1">
                   <div className="flex items-center justify-center gap-1">
                     <Heart className="w-4 h-4 text-[#22C55E]" fill="currentColor" />
-                    <span className="text-2xl font-bold text-gray-900 dark:text-white">4.9/5</span>
+                    <span className="text-2xl font-bold text-gray-900 dark:text-white">{t("premium.hero.stats.rating.count")}</span>
                   </div>
-                  <p className="text-xs text-gray-600 dark:text-gray-400">Community rating</p>
+                  <p className="text-xs text-gray-600 dark:text-gray-400">{t("premium.hero.stats.rating.label")}</p>
                 </div>
 
                 <div className="space-y-1">
                   <div className="flex items-center justify-center gap-1">
                     <Zap className="w-4 h-4 text-[#F59E0B]" />
-                    <span className="text-2xl font-bold text-gray-900 dark:text-white">+23%</span>
+                    <span className="text-2xl font-bold text-gray-900 dark:text-white">{t("premium.hero.stats.progression.count")}</span>
                   </div>
-                  <p className="text-xs text-gray-600 dark:text-gray-400">Average progression</p>
+                  <p className="text-xs text-gray-600 dark:text-gray-400">{t("premium.hero.stats.progression.label")}</p>
                 </div>
               </div>
             </div>

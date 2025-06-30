@@ -5,64 +5,50 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 
 import { useI18n } from "locales/client";
 
-interface FAQItem {
-  question: string;
-  answer: string;
-}
-
 export function PricingFAQ() {
   const t = useI18n();
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
-  const faqItems: FAQItem[] = [
+  const faqItems = [
     {
-      question: "Why pay if it's open-source?",
-      answer:
-        "Excellent question! The code will always remain free, but maintaining servers, database and infrastructure costs money. Your contribution helps us keep the tool free for everyone. It's a win-win model: you get premium features, the community keeps free access!",
+      question: t("premium.faq.items.0.question"),
+      answer: t("premium.faq.items.0.answer"),
     },
     {
-      question: "Can I self-host Workout.cool?",
-      answer:
-        "Absolutely! The entire codebase is available on GitHub under MIT license. You can deploy it on your own servers, customize it however you want, and use it completely free. Self-hosting gives you full control over your data and workout privacy.",
+      question: t("premium.faq.items.1.question"),
+      answer: t("premium.faq.items.1.answer"),
     },
     {
-      question: "Are my workout data secure?",
-      answer:
-        "Yes! We're GDPR compliant, use encrypted connections, and store your data securely. Plus, since we're open-source, you can audit our security practices. You can also export your data anytime or self-host for complete control.",
+      question: t("premium.faq.items.2.question"),
+      answer: t("premium.faq.items.2.answer"),
     },
     {
-      question: "Can I cancel my subscription anytime?",
-      answer:
-        "Of course! No contracts, no commitments. Cancel with one click anytime. You'll keep access until your current billing period ends, and you can always restart later. Your workout data remains accessible even if you downgrade to free.",
+      question: t("premium.faq.items.3.question"),
+      answer: t("premium.faq.items.3.answer"),
     },
     {
-      question: "Are there exercises for beginners?",
-      answer:
-        "Definitely! Our exercise library covers all fitness levels from complete beginners to advanced athletes. Videos and instructions help beginners find appropriate exercises, and our video tutorials show proper form.",
+      question: t("premium.faq.items.4.question"),
+      answer: t("premium.faq.items.4.answer"),
     },
     {
-      question: "How does progress tracking work?",
-      answer:
-        "Every set, rep, weight, and time is automatically logged. You get a GitHub-style workout history showing your consistency, plus detailed analytics on volume, progression, and personal records. Premium users get advanced charts and insights.",
+      question: t("premium.faq.items.5.question"),
+      answer: t("premium.faq.items.5.answer"),
     },
     {
-      question: "Can I import data from other apps?",
-      answer:
-        "Soon. We will support CSV imports for basic data (reps & weight). If you're switching from another fitness app, our support team can help migrate your workout history.",
+      question: t("premium.faq.items.6.question"),
+      answer: t("premium.faq.items.6.answer"),
     },
     {
-      question: "Does the app work offline?",
-      answer:
-        "The core workout tracking works offline. You can log sets and reps without internet connection for 10 workouts. Exercise videos and cloud sync require internet connection. All your offline data syncs automatically when you're back online.",
+      question: t("premium.faq.items.7.question"),
+      answer: t("premium.faq.items.7.answer"),
     },
     {
-      question: "Are there programs for women?",
-      answer:
-        "Absolutely! And there will be more programs in the future. We are working on it. Supporter and Premium plans will include all the future specialized programs for different goals: strength, toning, powerlifting, bodybuilding, and more !",
+      question: t("premium.faq.items.8.question"),
+      answer: t("premium.faq.items.8.answer"),
     },
     {
-      question: "Can I create my own programs?",
-      answer: "Unfortunately, no. We are working on it !",
+      question: t("premium.faq.items.9.question"),
+      answer: t("premium.faq.items.9.answer"),
     },
   ];
 
@@ -74,10 +60,8 @@ export function PricingFAQ() {
     <section className="py-16">
       <div className="container mx-auto px-2 sm:px-4">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">Frequently Asked Questions</h2>
-          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            Everything you need to know about Workout.cool and our mission
-          </p>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">{t("premium.faq.title")}</h2>
+          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">{t("premium.faq.subtitle")}</p>
         </div>
 
         <div className="max-w-4xl mx-auto">
@@ -113,20 +97,20 @@ export function PricingFAQ() {
           {/* Additional Support */}
           <div className="mt-12 text-center">
             <div className="bg-gradient-to-r from-[#FF6B35]/10 to-[#00D4AA]/10 rounded-2xl p-6">
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">Still have questions?</h3>
-              <p className="text-gray-700 dark:text-gray-400 mb-4">Our fitness-focused community is here to help you succeed</p>
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">{t("premium.faq.additional_support.title")}</h3>
+              <p className="text-gray-700 dark:text-gray-400 mb-4">{t("premium.faq.additional_support.description")}</p>
               <div className="flex items-start sm:items-center justify-center gap-4 text-sm text-gray-600 flex-col">
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 bg-[#22C55E] rounded-full" />
-                  <span className="block text-left sm:flex">Community support (discord or hello@workout.cool)</span>
+                  <span className="block text-left sm:flex">{t("premium.faq.additional_support.community")}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 bg-[#FF6B35] rounded-full" />
-                  <span className="block text-left sm:flex">Open discussions (github/discord)</span>
+                  <span className="block text-left sm:flex">{t("premium.faq.additional_support.discussions")}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 bg-[#00D4AA] rounded-full" />
-                  <span className="block text-left sm:flex">Transparent roadmap (github)</span>
+                  <span className="block text-left sm:flex">{t("premium.faq.additional_support.roadmap")}</span>
                 </div>
               </div>
             </div>

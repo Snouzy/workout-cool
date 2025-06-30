@@ -65,7 +65,7 @@ export function PremiumUpgradeCard() {
     },
     onError: (error) => {
       console.error("Checkout error:", error);
-      alert(t("premium.checkout_error"));
+      alert(t("premium.errors.checkout_failed"));
     },
   });
 
@@ -96,7 +96,7 @@ export function PremiumUpgradeCard() {
   const monthlyPrice = 7.9;
   const yearlyPrice = 49.0;
   const currentPrice = isYearly ? yearlyPrice : monthlyPrice;
-  const currentPeriod = isYearly ? "year" : "month";
+  const currentPeriod = isYearly ? t("premium.pricing.year") : t("premium.pricing.month");
   const currentPlanId = isYearly ? "premium-yearly" : "premium-monthly";
 
   if (isPremium) {
@@ -119,10 +119,10 @@ export function PremiumUpgradeCard() {
               </div>
             </div>
             <div>
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-white">Premium Active! 💪</h3>
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white">{t("premium.premium_active.title")}</h3>
               <div className="flex items-center gap-2 text-sm text-[#22C55E] font-medium">
                 <div className="w-2 h-2 bg-[#22C55E] rounded-full animate-pulse" />
-                Supporting the mission
+                {t("premium.premium_active.supporting")}
               </div>
             </div>
           </div>
@@ -145,13 +145,13 @@ export function PremiumUpgradeCard() {
             <div className="flex items-center gap-2">
               <Heart className="w-4 h-4 text-[#22C55E]" fill="currentColor" />
               <span className="text-gray-700 dark:text-gray-300">
-                <strong className="text-[#22C55E]">234</strong> supporters helping the mission
+                <strong className="text-[#22C55E]">{t("premium.mission.supporters_count")}</strong> {t("premium.mission.supporters_text")}
               </span>
             </div>
             <div className="flex items-center gap-2">
               <Zap className="w-4 h-4 text-[#F59E0B]" />
               <span className="text-gray-700 dark:text-gray-300">
-                <strong className="text-[#F59E0B]">Limited</strong> early access spots
+                <strong className="text-[#F59E0B]">{t("premium.mission.limited")}</strong> {t("premium.mission.early_access")}
               </span>
             </div>
           </div>
@@ -172,7 +172,7 @@ export function PremiumUpgradeCard() {
                 }`}
                 onClick={() => setIsYearly(false)}
               >
-                Monthly
+                {t("premium.pricing.monthly")}
               </button>
               <button
                 className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-200 relative ${
@@ -182,8 +182,10 @@ export function PremiumUpgradeCard() {
                 }`}
                 onClick={() => setIsYearly(true)}
               >
-                Yearly
-                <span className="absolute -top-2 -right-2 bg-[#22C55E] text-white text-xs px-1.5 py-0.5 rounded-full">-48%</span>
+                {t("premium.pricing.yearly")}
+                <span className="absolute -top-2 -right-2 bg-[#22C55E] text-white text-xs px-1.5 py-0.5 rounded-full">
+                  {t("premium.pricing.discount")}
+                </span>
               </button>
             </div>
           </div>
@@ -193,7 +195,7 @@ export function PremiumUpgradeCard() {
             {/* FREE PLAN */}
             <div className="relative bg-white dark:bg-gray-900 rounded-3xl p-6 md:p-8 border-2 border-gray-200 dark:border-gray-800 transition-all duration-200 ease-out hover:scale-[1.02] hover:-translate-y-1 hover:border-[#22C55E]/30">
               <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-max">
-                <div className="bg-[#22C55E] text-white text-sm font-bold px-4 py-1.5 rounded-full">Open-Source • Always Free</div>
+                <div className="bg-[#22C55E] text-white text-sm font-bold px-4 py-1.5 rounded-full">{t("premium.plans.free.badge")}</div>
               </div>
 
               <div className="text-center space-y-6 mb-8 mt-4">
@@ -202,43 +204,43 @@ export function PremiumUpgradeCard() {
                 </div>
 
                 <div>
-                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">FREE</h3>
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">{t("premium.plans.free.name")}</h3>
                   <div className="flex items-baseline justify-center gap-1">
                     <span className="text-5xl font-bold text-gray-900 dark:text-white">€0</span>
-                    <span className="text-lg text-gray-600 dark:text-gray-400">/forever</span>
+                    <span className="text-lg text-gray-600 dark:text-gray-400">{t("premium.plans.free.period")}</span>
                   </div>
-                  <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">All essential functions for training</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">{t("premium.plans.free.description")}</p>
                 </div>
               </div>
 
               <ul className="space-y-3 mb-8">
                 <li className="flex items-center gap-3 text-sm">
                   <Check className="w-4 h-4 text-[#22C55E] flex-shrink-0" />
-                  Workout generator
+                  {t("premium.plans.free.features.0")}
                 </li>
                 <li className="flex items-center gap-3 text-sm">
                   <Check className="w-4 h-4 text-[#22C55E] flex-shrink-0" />
-                  All equipment types
+                  {t("premium.plans.free.features.1")}
                 </li>
                 <li className="flex items-center gap-3 text-sm">
                   <Check className="w-4 h-4 text-[#22C55E] flex-shrink-0" />
-                  Exercises with instructions and videos
+                  {t("premium.plans.free.features.2")}
                 </li>
                 <li className="flex items-center gap-3 text-sm">
                   <Check className="w-4 h-4 text-[#22C55E] flex-shrink-0" />
-                  GitHub-style workout history (6 months)
+                  {t("premium.plans.free.features.3")}
                 </li>
                 <li className="flex items-center gap-3 text-sm">
                   <Check className="w-4 h-4 text-[#22C55E] flex-shrink-0" />
-                  Share and replay sessions (soon)
+                  {t("premium.plans.free.features.4")}
                 </li>
                 <li className="flex items-center gap-3 text-sm">
                   <Check className="w-4 h-4 text-[#22C55E] flex-shrink-0" />
-                  Self-hosting capability
+                  {t("premium.plans.free.features.5")}
                 </li>
                 <li className="flex items-center gap-3 text-sm">
                   <Check className="w-4 h-4 text-[#22C55E] flex-shrink-0" />
-                  Open source code access
+                  {t("premium.plans.free.features.6")}
                 </li>
               </ul>
 
@@ -246,9 +248,9 @@ export function PremiumUpgradeCard() {
                 className="w-full h-12 text-base font-semibold bg-white text-[#22C55E] border-2 border-[#22C55E] hover:bg-[#22C55E] hover:text-white transition-all duration-200 rounded-xl"
                 disabled
               >
-                Your actual plan
+                {t("premium.actions.current_plan")}
               </Button>
-              <p className="mt-2 text-xs text-center text-gray-600 dark:text-gray-400">No signup required • Full access forever</p>
+              <p className="mt-2 text-xs text-center text-gray-600 dark:text-gray-400">{t("premium.plans.free.footer_note")}</p>
             </div>
 
             {/* PREMIUM PLAN */}
@@ -256,7 +258,7 @@ export function PremiumUpgradeCard() {
               <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-max">
                 <div className="bg-gradient-to-r from-[#00D4AA] to-[#0EA5E9] text-white text-sm font-bold px-4 py-1.5 rounded-full flex items-center gap-1.5">
                   <Zap className="w-4 h-4" />
-                  MOST POPULAR • For enthusiasts
+                  {t("premium.plans.premium.badge")}
                 </div>
               </div>
 
@@ -267,13 +269,13 @@ export function PremiumUpgradeCard() {
                   </div>
                   {isYearly && (
                     <div className="absolute -bottom-2 -right-2 px-2 py-1 bg-[#F59E0B] rounded-xl flex items-center justify-center rotate-12">
-                      <span className="text-xs font-bold text-white">-48%</span>
+                      <span className="text-xs font-bold text-white">{t("premium.pricing.discount")}</span>
                     </div>
                   )}
                 </div>
 
                 <div>
-                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">PREMIUM ⭐</h3>
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">{t("premium.plans.premium.name")}</h3>
                   <div className="flex items-baseline justify-center gap-1">
                     <span className="text-5xl font-bold text-gray-900 dark:text-white">
                       €{isYearly ? Math.round(currentPrice) : currentPrice}
@@ -283,37 +285,39 @@ export function PremiumUpgradeCard() {
                   {isYearly && (
                     <div className="mt-2 inline-flex items-center gap-1.5 px-3 py-1 bg-[#22C55E]/10 dark:bg-[#22C55E]/20 rounded-full">
                       <div className="w-2 h-2 bg-[#22C55E] rounded-full" />
-                      <span className="text-sm font-medium text-[#22C55E]">€{(currentPrice / 12).toFixed(2)}/month</span>
+                      <span className="text-sm font-medium text-[#22C55E]">
+                        €{(currentPrice / 12).toFixed(2)}/{t("premium.pricing.month")}
+                      </span>
                     </div>
                   )}
-                  <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">All features + early access</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">{t("premium.plans.premium.description")}</p>
                 </div>
               </div>
 
               <ul className="space-y-3 mb-8">
                 <li className="flex items-center gap-3 text-sm">
                   <Check className="w-4 h-4 text-[#00D4AA] flex-shrink-0" />
-                  ...Everything from free plan
+                  {t("premium.plans.premium.features.0")}
                 </li>
                 <li className="flex items-center gap-3 text-sm">
                   <Check className="w-4 h-4 text-[#00D4AA] flex-shrink-0" />
-                  Advanced statistics (volume, progression, PR)
+                  {t("premium.plans.premium.features.1")}
                 </li>
                 <li className="flex items-center gap-3 text-sm">
                   <Check className="w-4 h-4 text-[#00D4AA] flex-shrink-0" />
-                  Access to every programs
+                  {t("premium.plans.premium.features.2")}
                 </li>
                 <li className="flex items-center gap-3 text-sm">
                   <Check className="w-4 h-4 text-[#00D4AA] flex-shrink-0" />
-                  Unlimited history
+                  {t("premium.plans.premium.features.3")}
                 </li>
                 <li className="flex items-center gap-3 text-sm">
                   <Check className="w-4 h-4 text-[#00D4AA] flex-shrink-0" />
-                  Private Discord community
+                  {t("premium.plans.premium.features.4")}
                 </li>
                 <li className="flex items-center gap-3 text-sm">
                   <Check className="w-4 h-4 text-[#00D4AA] flex-shrink-0" />
-                  Early features
+                  {t("premium.plans.premium.features.5")}
                 </li>
               </ul>
 
@@ -325,22 +329,26 @@ export function PremiumUpgradeCard() {
                 {checkoutMutation.isPending && selectedPlan === currentPlanId ? (
                   <div className="flex items-center justify-center gap-2">
                     <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                    <span>Processing...</span>
+                    <span>{t("premium.actions.processing")}</span>
                   </div>
                 ) : !isAuthenticated ? (
                   <div className="flex items-center justify-center gap-2">
                     <LogIn className="w-5 h-5" />
-                    <span>Go Premium €{isYearly ? Math.round(currentPrice) : currentPrice}</span>
+                    <span>
+                      {t("premium.actions.go_premium")} €{isYearly ? Math.round(currentPrice) : currentPrice}
+                    </span>
                   </div>
                 ) : (
                   <div className="flex items-center justify-center gap-2">
-                    <span>Go Premium €{isYearly ? Math.round(currentPrice) : currentPrice}</span>
+                    <span>
+                      {t("premium.actions.go_premium")} €{isYearly ? Math.round(currentPrice) : currentPrice}
+                    </span>
                     <ArrowRight className="w-5 h-5" />
                   </div>
                 )}
               </Button>
               <p className="mt-2 text-sm text-center text-gray-600 dark:text-gray-400">
-                {isYearly ? "Thank you for the yearly support! 🙏" : "Join the passionate community! 🔥"}
+                {isYearly ? t("premium.plans.premium.footer_yearly") : t("premium.plans.premium.footer_monthly")}
               </p>
             </div>
           </div>
@@ -350,20 +358,20 @@ export function PremiumUpgradeCard() {
             <div className="items-center justify-items-center gap-6 flex-wrap text-sm text-gray-600 dark:text-gray-400 grid grid-cols-1 sm:grid-cols-2">
               <div className="flex items-center gap-2">
                 <Lock className="w-4 h-4 text-[#FF6B35]" />
-                <span>100% GDPR compliant</span>
+                <span>{t("premium.trust.gdpr_compliant")}</span>
               </div>
 
               <div className="flex items-center gap-2">
                 <GiftIcon className="w-4 h-4 text-[#F59E0B]" />
-                <span>30-day money back guarantee</span>
+                <span>{t("premium.trust.money_back")}</span>
               </div>
               <div className="flex items-center gap-2">
                 <RefreshCw className="w-4 h-4 text-[#0EA5E9]" />
-                <span>1 click to cancel, no commitment</span>
+                <span>{t("premium.trust.cancel_anytime")}</span>
               </div>
               <div className="flex items-center gap-2">
                 <ShieldCheck className="w-4 h-4 text-[#22C55E]" />
-                <span>100% secure payment via Stripe</span>
+                <span>{t("premium.trust.secure_payment")}</span>
               </div>
             </div>
           </div>
@@ -384,16 +392,14 @@ export function PremiumUpgradeCard() {
               <Image alt="Happy mascot" className="mx-auto" height={80} src="/images/emojis/WorkoutCoolBiceps.png" width={80} />
               <div className="absolute -top-2 left-1/2 -translate-x-[15%] rotate-2">
                 <div className="w-max px-3 h-7 bg-[#FF6B35] rounded-full flex items-center justify-center">
-                  <span className="text-sm font-bold text-white">Keep pushing! 💪</span>
+                  <span className="text-sm font-bold text-white">{t("premium.final_cta.motivation")}</span>
                 </div>
               </div>
             </div>
 
             <div className="space-y-4">
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">Ready to Support the Mission?</h2>
-              <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-                Join thousands of fitness enthusiasts who believe in open-source training freedom
-              </p>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">{t("premium.final_cta.title")}</h2>
+              <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">{t("premium.final_cta.subtitle")}</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -401,33 +407,30 @@ export function PremiumUpgradeCard() {
                 <div className="w-12 h-12 bg-[#22C55E]/10 rounded-xl flex items-center justify-center mx-auto">
                   <Users className="w-6 h-6 text-[#22C55E]" />
                 </div>
-                <h3 className="font-semibold text-gray-900 dark:text-white">Community First</h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400">Built by and for the fitness community</p>
+                <h3 className="font-semibold text-gray-900 dark:text-white">{t("premium.final_cta.values.0.title")}</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400">{t("premium.final_cta.values.0.description")}</p>
               </div>
 
               <div className="text-center space-y-2">
                 <div className="w-12 h-12 bg-[#FF6B35]/10 rounded-xl flex items-center justify-center mx-auto">
                   <Github className="w-6 h-6 text-[#FF6B35]" />
                 </div>
-                <h3 className="font-semibold text-gray-900 dark:text-white">Always Transparent</h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400">Open-source code, transparent funding</p>
+                <h3 className="font-semibold text-gray-900 dark:text-white">{t("premium.final_cta.values.1.title")}</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400">{t("premium.final_cta.values.1.description")}</p>
               </div>
 
               <div className="text-center space-y-2">
                 <div className="w-12 h-12 bg-[#00D4AA]/10 rounded-xl flex items-center justify-center mx-auto">
                   <Heart className="w-6 h-6 text-[#00D4AA]" fill="currentColor" />
                 </div>
-                <h3 className="font-semibold text-gray-900 dark:text-white">Labor of Love</h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400">15 years of passion !</p>
+                <h3 className="font-semibold text-gray-900 dark:text-white">{t("premium.final_cta.values.2.title")}</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400">{t("premium.final_cta.values.2.description")}</p>
               </div>
             </div>
 
             <div className="bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm rounded-2xl p-6">
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
-                &quot;We believe fitness tools should be accessible to everyone. Your support helps us maintain this vision while continuing
-                to innovate.&quot;
-              </p>
-              <p className="text-xs text-gray-600 dark:text-gray-600">— The Workout.cool Team</p>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">&quot;{t("premium.final_cta.quote.text")}&quot;</p>
+              <p className="text-xs text-gray-600 dark:text-gray-600">{t("premium.final_cta.quote.author")}</p>
             </div>
           </div>
         </div>

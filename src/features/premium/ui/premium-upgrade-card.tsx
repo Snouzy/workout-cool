@@ -234,14 +234,6 @@ export function PremiumUpgradeCard() {
                   <Check className="w-4 h-4 text-[#22C55E] flex-shrink-0" />
                   {t("premium.plans.free.features.4")}
                 </li>
-                <li className="flex items-center gap-3 text-sm">
-                  <Check className="w-4 h-4 text-[#22C55E] flex-shrink-0" />
-                  {t("premium.plans.free.features.5")}
-                </li>
-                <li className="flex items-center gap-3 text-sm">
-                  <Check className="w-4 h-4 text-[#22C55E] flex-shrink-0" />
-                  {t("premium.plans.free.features.6")}
-                </li>
               </ul>
 
               <Button

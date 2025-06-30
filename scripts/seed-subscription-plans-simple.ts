@@ -65,7 +65,7 @@ async function seedSubscriptionPlans() {
       create: {
         planId: monthlyPlan.id,
         provider: PaymentProcessor.STRIPE,
-        externalId: env.NEXT_PUBLIC_STRIPE_PRICE_MONTHLY || "price_monthly_fallback",
+        externalId: env.NEXT_PUBLIC_STRIPE_PRICE_MONTHLY_EU || "price_monthly_fallback",
         region: "EU",
         metadata: {
           description: "Stripe monthly subscription for EU region",
@@ -87,7 +87,7 @@ async function seedSubscriptionPlans() {
       create: {
         planId: yearlyPlan.id,
         provider: PaymentProcessor.STRIPE,
-        externalId: env.NEXT_PUBLIC_STRIPE_PRICE_YEARLY || "price_yearly_fallback",
+        externalId: env.NEXT_PUBLIC_STRIPE_PRICE_YEARLY_EU || "price_yearly_fallback",
         region: "EU",
         metadata: {
           description: "Stripe yearly subscription for EU region",

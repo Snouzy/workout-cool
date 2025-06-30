@@ -336,7 +336,7 @@ export default {
     // Premium Active State
     premium_active: {
       title: "Premium Ativo! 💪",
-      subtitle: "Apoiando a missão",
+      supporting: "Apoiando a missão",
     },
 
     // Legacy translations (keeping for compatibility)

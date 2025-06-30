@@ -90,11 +90,6 @@ export default {
     premium_required_subtitle: "Ceci est un accès premium. Passez Premium pour accéder à tout le contenu premium.",
     premium_required_button: "Passer Premium",
 
-    // Errors
-    errors: {
-      checkout_failed: "Erreur lors de la commande",
-    },
-
     // Checkout
     checkout: {
       processing: "Traitement...",
@@ -349,7 +344,7 @@ export default {
     // Premium Active State
     premium_active: {
       title: "Premium Actif ! 💪",
-      supporting: "Soutenir la mission",
+      supporting: "Mission soutenue 💚",
     },
 
     // Legacy translations (keeping for compatibility)

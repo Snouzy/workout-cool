@@ -87,11 +87,6 @@ export default {
     premium_required_subtitle: "这是一个高级访问。升级以访问所有高级内容。",
     premium_required_button: "升级到高级",
 
-    // Errors
-    errors: {
-      checkout_failed: "结账时出错",
-    },
-
     // Checkout
     checkout: {
       processing: "处理中...",

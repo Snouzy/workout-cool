@@ -19,10 +19,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: false, error: "Plan ID is required" }, { status: 400 });
     }
 
-    const plan = await PremiumManager.getPlanByInternalId(planId, provider);
-    console.log("plan:", plan);
-
-    const result = await PremiumManager.createCheckout(user.id, plan.externalId, provider);
+    const result = await PremiumManager.createCheckout(user.id, planId, provider);
 
     return NextResponse.json(result);
   } catch (error) {

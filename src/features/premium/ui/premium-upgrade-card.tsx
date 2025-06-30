@@ -10,6 +10,7 @@ import { useI18n, useCurrentLocale } from "locales/client";
 import { usePremiumRedirect } from "@/shared/lib/premium/use-premium-redirect";
 import { useIsPremium } from "@/shared/lib/premium/use-premium";
 import { usePendingCheckout } from "@/shared/lib/premium/use-pending-checkout";
+import { usePremiumPlans } from "@/shared/hooks/use-premium-plans";
 import { useSession } from "@/features/auth/lib/auth-client";
 import { Button } from "@/components/ui/button";
 
@@ -31,6 +32,10 @@ export function PremiumUpgradeCard() {
   const { storePendingCheckout, getPendingCheckout, clearPendingCheckout } = usePendingCheckout();
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
   const [isYearly, setIsYearly] = useState(false);
+
+  // Fetch dynamic pricing
+  const { data: plansData, isLoading: plansLoading } = usePremiumPlans();
+  console.log("plansData:", plansData);
 
   // Handle premium redirects after successful upgrade
   usePremiumRedirect();
@@ -65,7 +70,7 @@ export function PremiumUpgradeCard() {
     },
     onError: (error) => {
       console.error("Checkout error:", error);
-      alert(t("premium.errors.checkout_failed"));
+      alert(t("premium.checkout_error"));
     },
   });
 
@@ -92,24 +97,47 @@ export function PremiumUpgradeCard() {
     handleCheckout(planId);
   };
 
-  // Get current pricing based on toggle
-  const monthlyPrice = 7.9;
-  const yearlyPrice = 49.0;
+  // Get current pricing based on toggle and API data
+  const monthlyPlan = plansData?.plans.find((p) => p.internalId.startsWith("premium-monthly"));
+  const yearlyPlan = plansData?.plans.find((p) => p.internalId.startsWith("premium-yearly"));
+
+  const monthlyPrice = monthlyPlan?.priceMonthly || 7.9;
+  console.log("monthlyPrice:", monthlyPrice);
+  const yearlyPrice = yearlyPlan?.priceYearly || 49.0;
+  console.log("yearlyPrice:", yearlyPrice);
+  const currency = monthlyPlan?.currency || "EUR";
+  console.log("currency:", currency);
+
   const currentPrice = isYearly ? yearlyPrice : monthlyPrice;
   const currentPeriod = isYearly ? t("premium.pricing.year") : t("premium.pricing.month");
-  const currentPlanId = isYearly ? "premium-yearly" : "premium-monthly";
+  const currentPlanId = isYearly ? yearlyPlan?.id || "premium-yearly" : monthlyPlan?.id || "premium-monthly";
+
+  // Format price based on locale and currency
+  const formatPrice = (price: number, currency: string) => {
+    return new Intl.NumberFormat(locale === "zh-CN" ? "zh-CN" : locale, {
+      style: "currency",
+      currency: currency,
+      minimumFractionDigits: currency === "EUR" ? 2 : 0,
+      maximumFractionDigits: 2,
+    }).format(price);
+  };
+
+  // Log debug info in development
+  useEffect(() => {
+    if (plansData && process.env.NODE_ENV === "development") {
+      console.log("📊 Plans data:", plansData);
+      console.log("🌍 Detected region:", plansData.detectedRegion);
+      if (plansData.debug) {
+        console.log("🔍 Debug headers:", plansData.debug.headers);
+      }
+    }
+  }, [plansData]);
 
   if (isPremium) {
     return (
-      <div className="relative overflow-hidden bg-gradient-to-b from-[#FF6B35]/5 to-[#00D4AA]/5 dark:from-[#FF6B35]/10 dark:to-[#00D4AA]/10 rounded-3xl p-8 border border-[#FF6B35]/20 dark:border-[#FF6B35]/30">
-        <div className="absolute -top-8 -right-8 w-48 h-48 opacity-10">
-          <div className="absolute inset-0 bg-gradient-to-br from-[#FF6B35] to-[#00D4AA] rounded-full blur-3xl" />
-        </div>
-        <div className="absolute top-4 right-4">
-          <Image alt="Premium mascot" className="drop-shadow-lg" height={80} src="/images/emojis/WorkoutCoolLove.png" width={80} />
-        </div>
+      <div className="m-3 relative overflow-hidden bg-gradient-to-b from-[#FF6B35]/5 to-[#00D4AA]/5 dark:from-[#FF6B35]/10 dark:to-[#00D4AA]/10 rounded-3xl p-8 border border-[#FF6B35]/20 dark:border-[#FF6B35]/30">
         <div className="relative z-10">
-          <div className="flex items-center gap-3 mb-3">
+          <div className="flex items-center gap-3">
             <div className="relative">
               <div className="w-14 h-14 bg-gradient-to-br from-[#FF6B35] to-[#00D4AA] rounded-2xl flex items-center justify-center">
                 <Crown className="w-7 h-7 text-white" strokeWidth={2.5} />
@@ -206,7 +234,7 @@ export function PremiumUpgradeCard() {
                 <div>
                   <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">{t("premium.plans.free.name")}</h3>
                   <div className="flex items-baseline justify-center gap-1">
-                    <span className="text-5xl font-bold text-gray-900 dark:text-white">€0</span>
+                    <span className="text-5xl font-bold text-gray-900 dark:text-white">{formatPrice(0, currency)}</span>
                     <span className="text-lg text-gray-600 dark:text-gray-400">{t("premium.plans.free.period")}</span>
                   </div>
                   <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">{t("premium.plans.free.description")}</p>
@@ -270,15 +298,15 @@ export function PremiumUpgradeCard() {
                   <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">{t("premium.plans.premium.name")}</h3>
                   <div className="flex items-baseline justify-center gap-1">
                     <span className="text-5xl font-bold text-gray-900 dark:text-white">
-                      €{isYearly ? Math.round(currentPrice) : currentPrice}
+                      {plansLoading ? "..." : formatPrice(currentPrice, currency)}
                     </span>
                     <span className="text-lg text-gray-600 dark:text-gray-400">/{currentPeriod}</span>
                   </div>
-                  {isYearly && (
+                  {isYearly && !plansLoading && (
                     <div className="mt-2 inline-flex items-center gap-1.5 px-3 py-1 bg-[#22C55E]/10 dark:bg-[#22C55E]/20 rounded-full">
                       <div className="w-2 h-2 bg-[#22C55E] rounded-full" />
                       <span className="text-sm font-medium text-[#22C55E]">
-                        €{(currentPrice / 12).toFixed(2)}/{t("premium.pricing.month")}
+                        {formatPrice(currentPrice / 12, currency)}/{t("premium.pricing.month")}
                       </span>
                     </div>
                   )}
@@ -327,13 +355,13 @@ export function PremiumUpgradeCard() {
                   <div className="flex items-center justify-center gap-2">
                     <LogIn className="w-5 h-5" />
                     <span>
-                      {t("premium.actions.go_premium")} €{isYearly ? Math.round(currentPrice) : currentPrice}
+                      {t("premium.actions.go_premium")} {formatPrice(currentPrice, currency)}
                     </span>
                   </div>
                 ) : (
                   <div className="flex items-center justify-center gap-2">
                     <span>
-                      {t("premium.actions.go_premium")} €{isYearly ? Math.round(currentPrice) : currentPrice}
+                      {t("premium.actions.go_premium")} {formatPrice(currentPrice, currency)}
                     </span>
                     <ArrowRight className="w-5 h-5" />
                   </div>

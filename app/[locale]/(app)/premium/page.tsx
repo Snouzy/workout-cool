@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 
 export default function PremiumPage() {
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-950">
+    <div className="bg-white dark:bg-gray-950">
       {/* Main Content */}
       <div className="relative" data-section="pricing">
         <PremiumUpgradeCard />

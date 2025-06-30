@@ -16,6 +16,7 @@ interface Testimonial {
   metric?: string;
 }
 
+// TODO: Add testimonials
 export function PricingTestimonials() {
   const t = useI18n();
   const [currentIndex, setCurrentIndex] = useState(0);

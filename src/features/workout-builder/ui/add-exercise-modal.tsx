@@ -122,13 +122,16 @@ export const AddExerciseModal = ({ isOpen, onClose, selectedEquipment }: AddExer
                           onClick={() => handleAddExercise(exercise, group.muscle)}
                         >
                           {exercise.fullVideoImageUrl && (
-                            <Image
-                              alt={exercise.nameEn}
-                              className="object-cover rounded"
-                              height={64}
-                              src={exercise.fullVideoImageUrl}
-                              width={64}
-                            />
+                            <div className="relative h-10 w-10 rounded overflow-hidden shrink-0 bg-slate-200 dark:bg-slate-800 border border-slate-200 dark:border-slate-700/50">
+                              <Image
+                                alt={exercise.nameEn}
+                                className="w-full h-full object-cover scale-[1.5]"
+                                height={32}
+                                loading="lazy"
+                                src={exercise.fullVideoImageUrl}
+                                width={32}
+                              />
+                            </div>
                           )}
                           <div className="flex-1">
                             <p className="font-medium">

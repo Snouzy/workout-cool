@@ -181,6 +181,9 @@ export default {
       loading_exercises: "加载练习时出错",
     },
     no_exercises_found: "未找到练习。请尝试更改您的设备或肌肉选择。",
+    addExercise: "添加练习",
+    exerciseAdded: "{name} 已添加到锻炼",
+    exercises: "练习",
     equipment: {
       bodyweight: {
         label: "自重",
@@ -450,5 +453,6 @@ export default {
     support: "支持",
     change_language: "更改语言",
     in_progress: "进行中",
+    close: "关闭",
   },
 } as const;

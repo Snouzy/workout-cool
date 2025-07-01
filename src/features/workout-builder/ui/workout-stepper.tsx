@@ -8,6 +8,7 @@ import { ExerciseAttributeValueEnum } from "@prisma/client";
 
 import { useI18n } from "locales/client";
 import Trophy from "@public/images/trophy.png";
+import useBoolean from "@/hooks/useBoolean";
 import { WorkoutSessionSets } from "@/features/workout-session/ui/workout-session-sets";
 import { WorkoutSessionHeader } from "@/features/workout-session/ui/workout-session-header";
 import { DonationModal } from "@/features/workout-session/ui/donation-modal";
@@ -108,10 +109,10 @@ export function WorkoutStepper() {
     deleteExercise(exerciseId);
   };
 
-  const [showAddExerciseModal, setShowAddExerciseModal] = useState(false);
+  const addExerciseModal = useBoolean();
 
   const handleAddExercise = () => {
-    setShowAddExerciseModal(true);
+    addExerciseModal.setTrue();
   };
 
   const orderedExercises = exercisesOrder.length
@@ -265,8 +266,8 @@ export function WorkoutStepper() {
       />
       
       <AddExerciseModal
-        isOpen={showAddExerciseModal}
-        onClose={() => setShowAddExerciseModal(false)}
+        isOpen={addExerciseModal.value}
+        onClose={addExerciseModal.setFalse}
         selectedEquipment={selectedEquipment}
       />
     </div>

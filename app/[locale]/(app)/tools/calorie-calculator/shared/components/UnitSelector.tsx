@@ -4,8 +4,7 @@ import React from "react";
 import { RulerIcon, GlobeIcon } from "lucide-react";
 
 import { useI18n } from "locales/client";
-
-import type { UnitSystem } from "../types";
+import { UnitSystem } from "app/[locale]/(app)/tools/calorie-calculator/calorie-calculator.utils";
 
 interface UnitSelectorProps {
   value: UnitSystem;

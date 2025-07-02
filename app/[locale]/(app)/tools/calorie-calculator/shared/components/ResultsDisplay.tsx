@@ -5,11 +5,10 @@ import Image from "next/image";
 import { BeefIcon, WheatIcon, DropletIcon, FlameIcon, ActivityIcon } from "lucide-react";
 
 import { useI18n } from "locales/client";
+import { CalorieResults } from "app/[locale]/(app)/tools/calorie-calculator/calorie-calculator.utils";
 
 import { InfoModal } from "./InfoModal";
 import { InfoButton } from "./InfoButton";
-
-import type { CalorieResults } from "../types";
 
 interface ResultsDisplayProps {
   results: CalorieResults;

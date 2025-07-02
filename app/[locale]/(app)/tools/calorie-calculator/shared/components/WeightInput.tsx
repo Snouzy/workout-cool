@@ -3,8 +3,7 @@
 import React from "react";
 
 import { useI18n } from "locales/client";
-
-import type { UnitSystem } from "../types";
+import { UnitSystem } from "app/[locale]/(app)/tools/calorie-calculator/calorie-calculator.utils";
 
 interface WeightInputProps {
   value: number;

@@ -1,12 +1,10 @@
-/* eslint-disable max-len */
 "use client";
 
 import React from "react";
 import { UserIcon, UsersIcon } from "lucide-react";
 
 import { useI18n } from "locales/client";
-
-import type { Gender } from "../types";
+import { Gender } from "app/[locale]/(app)/tools/calorie-calculator/calorie-calculator.utils";
 
 interface GenderSelectorProps {
   value: Gender;

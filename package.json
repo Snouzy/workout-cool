@@ -72,6 +72,7 @@
     "framer-motion": "^12.7.2",
     "geist": "^1.3.1",
     "lucide-react": "^0.487.0",
+    "mathjax-react": "^2.0.1",
     "next": "15.2.3",
     "next-international": "^1.3.1",
     "next-mdx-remote": "^5.0.0",

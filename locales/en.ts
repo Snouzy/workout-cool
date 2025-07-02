@@ -738,7 +738,7 @@ export default {
     ponderal_index: "Ponderal Index",
     bmi_category: "BMI Category",
     health_risk: "Health Risk",
-    recommendations: "Recommendations",
+    recommendations_label: "Recommendations",
     units: "Units",
     metric: "Metric (kg/cm)",
     imperial: "Imperial (lbs/ft)",
@@ -781,6 +781,174 @@ export default {
     limitations_text: "BMI doesn't distinguish between muscle and fat mass. Athletes and very muscular individuals may have high BMI despite being healthy. Age, sex, ethnicity, and body composition also affect interpretation.",
     
     disclaimer: "BMI is a screening tool and may not reflect body composition. Consult healthcare professionals for personalized advice.",
+    
+    // Recommendations
+    recommendations: {
+      severe_thinness: {
+        medical_consultation: "Immediate medical consultation strongly recommended",
+        nutritional_assessment: "Comprehensive nutritional assessment needed",
+        weight_gain_program: "May require supervised weight gain program",
+        screen_conditions: "Screen for underlying medical conditions",
+        psychological_evaluation: "Consider psychological evaluation if eating disorder suspected",
+      },
+      moderate_thinness: {
+        healthcare_provider: "Consult with healthcare provider for evaluation",
+        nutrient_dense_foods: "Focus on nutrient-dense, calorie-rich foods",
+        registered_dietitian: "Consider working with a registered dietitian",
+        monitor_malnutrition: "Monitor for signs of malnutrition",
+        gradual_weight_gain: "Gradual, healthy weight gain recommended",
+      },
+      mild_thinness: {
+        consider_healthcare: "Consider consulting with a healthcare provider",
+        nutrient_dense_foods: "Focus on nutrient-dense foods to gain healthy weight",
+        strength_training: "Include strength training to build muscle mass",
+        monitor_health: "Monitor your health regularly",
+        gradual_weight_gain: "Aim for gradual weight gain (1-2 lbs per week)",
+      },
+      normal: {
+        maintain_weight: "Maintain your current healthy weight",
+        physical_activity: "Continue regular physical activity (150+ minutes per week)",
+        balanced_diet: "Eat a balanced, nutritious diet",
+        health_checkups: "Regular health check-ups",
+        overall_wellness: "Focus on overall wellness and body composition",
+      },
+      overweight: {
+        gradual_weight_loss: "Aim for gradual weight loss (1-2 lbs per week)",
+        increase_activity: "Increase physical activity to 150+ minutes per week",
+        portion_control: "Focus on portion control and balanced nutrition",
+        healthcare_provider: "Consider consulting with a healthcare provider",
+        lifestyle_goals: "Set realistic, sustainable lifestyle goals",
+      },
+      obese_class_1: {
+        healthcare_provider: "Consult with a healthcare provider for a weight management plan",
+        weight_loss_target: "Aim for 5-10% weight loss initially",
+        diet_exercise: "Combine diet and exercise interventions",
+        nutritional_counseling: "Consider professional nutritional counseling",
+        screen_conditions: "Screen for weight-related health conditions",
+      },
+      obese_class_2: {
+        medical_supervision: "Seek medical supervision for weight management",
+        lifestyle_programs: "Consider comprehensive lifestyle intervention programs",
+        evaluate_conditions: "Evaluate for weight-related health conditions",
+        medical_treatments: "May benefit from medical weight loss treatments",
+        bariatric_surgery: "Consider bariatric surgery evaluation if appropriate",
+      },
+      obese_class_3: {
+        medical_consultation: "Immediate medical consultation recommended",
+        bariatric_surgery: "Consider bariatric surgery evaluation",
+        weight_management: "Comprehensive medical weight management program",
+        health_complications: "Address weight-related health complications",
+        multidisciplinary: "Multidisciplinary approach with medical team",
+      },
+    },
+    
+    // Health Risks
+    health_risks: {
+      overweight: {
+        high_blood_pressure: "High blood pressure",
+        ldl_cholesterol: "Higher levels of LDL cholesterol (bad cholesterol)",
+        hdl_cholesterol: "Lower levels of HDL cholesterol (good cholesterol)",
+        triglycerides: "High levels of triglycerides",
+        type_2_diabetes: "Type II diabetes",
+        coronary_heart_disease: "Coronary heart disease",
+        stroke: "Stroke",
+        gallbladder_disease: "Gallbladder disease",
+        osteoarthritis: "Osteoarthritis",
+        sleep_apnea: "Sleep apnea and breathing problems",
+        certain_cancers: "Certain cancers (endometrial, breast, colon, kidney, gallbladder, liver)",
+        low_quality_life: "Low quality of life",
+        mental_illnesses: "Mental illnesses such as clinical depression and anxiety",
+        body_pains: "Body pains and difficulty with physical functions",
+        increased_mortality: "Generally increased risk of mortality",
+      },
+      underweight: {
+        malnutrition: "Malnutrition and vitamin deficiencies",
+        anemia: "Anemia (lowered ability to carry oxygen in blood)",
+        osteoporosis: "Osteoporosis (increased risk of bone fractures)",
+        immune_function: "Decreased immune function",
+        growth_development: "Growth and development issues (especially in children)",
+        reproductive_issues: "Reproductive issues for women due to hormonal imbalances",
+        miscarriage_risk: "Higher chance of miscarriage in first trimester",
+        surgery_complications: "Potential complications during surgery",
+        increased_mortality: "Generally increased risk of mortality",
+        underlying_conditions: "May indicate underlying medical conditions",
+      },
+    },
+    
+    // Educational Content
+    educational: {
+      introduction_title: "BMI Introduction",
+      introduction_text: "BMI is a measurement of a person's leanness or corpulence based on their height and weight, and is intended to quantify tissue mass. It is widely used as a general indicator of whether a person has a healthy body weight for their height.",
+      introduction_usage: "Specifically, the value obtained from the calculation of BMI is used to categorize whether a person is underweight, normal weight, overweight, or obese depending on what range the value falls between. These ranges of BMI vary based on factors such as region and age, and are sometimes further divided into subcategories such as severely underweight or very severely obese.",
+      
+      adult_table_title: "BMI Table for Adults",
+      adult_table_description: "This is the World Health Organization's (WHO) recommended body weight based on BMI values for adults. It is used for both men and women, age 20 or older.",
+      
+      children_table_title: "BMI Table for Children and Teens, Age 2-20",
+      children_table_description: "The Centers for Disease Control and Prevention (CDC) recommends BMI categorization for children and teens between age 2 and 20.",
+      
+      classification: "Classification",
+      bmi_range: "BMI Range - kg/m²",
+      category: "Category",
+      percentile_range: "Percentile Range",
+      underweight: "Underweight",
+      healthy_weight: "Healthy Weight",
+      at_risk_overweight: "At Risk of Overweight",
+      overweight: "Overweight",
+      
+      overweight_risks_title: "Risks Associated with Being Overweight",
+      overweight_risks_intro: "Being overweight increases the risk of a number of serious diseases and health conditions. Below is a list of said risks, according to the Centers for Disease Control and Prevention (CDC):",
+      
+      cardiovascular_risks: "Cardiovascular Risks",
+      high_blood_pressure: "High blood pressure",
+      cholesterol_issues: "Higher levels of LDL cholesterol, lower levels of HDL cholesterol, and high levels of triglycerides",
+      coronary_heart_disease: "Coronary heart disease",
+      stroke: "Stroke",
+      
+      metabolic_risks: "Metabolic Risks",
+      type_2_diabetes: "Type II diabetes",
+      gallbladder_disease: "Gallbladder disease",
+      sleep_apnea: "Sleep apnea and breathing problems",
+      osteoarthritis: "Osteoarthritis, a type of joint disease caused by breakdown of joint cartilage",
+      
+      other_risks: "Other Health Risks",
+      certain_cancers: "Certain cancers (endometrial, breast, colon, kidney, gallbladder, liver)",
+      mental_health_issues: "Mental illnesses such as clinical depression, anxiety, and others",
+      reduced_quality_life: "Low quality of life and body pains",
+      increased_mortality: "Generally, an increased risk of mortality compared to those with a healthy BMI",
+      
+      underweight_risks_title: "Risks Associated with Being Underweight",
+      underweight_risks_intro: "Being underweight has its own associated risks, listed below:",
+      malnutrition: "Malnutrition, vitamin deficiencies, anemia (lowered ability to carry blood vessels)",
+      osteoporosis: "Osteoporosis, a disease that causes bone weakness, increasing the risk of breaking a bone",
+      immune_function_decrease: "A decrease in immune function",
+      growth_development_issues: "Growth and development issues, particularly in children and teenagers",
+      reproductive_issues: "Possible reproductive issues for women due to hormonal imbalances",
+      surgery_complications: "Potential complications as a result of surgery",
+      increased_mortality_underweight: "Generally, an increased risk of mortality compared to those with a healthy BMI",
+      
+      adults_limitations: "In Adults",
+      older_adults_fat: "Older adults tend to have more body fat than younger adults with the same BMI",
+      women_fat_difference: "Women tend to have more body fat than men for an equivalent BMI",
+      athletes_muscle_mass: "Muscular individuals and highly trained athletes may have higher BMIs due to large muscle mass",
+      
+      children_limitations: "In Children and Adolescents",
+      height_maturation_influence: "Height and level of sexual maturation can influence BMI and body fat among children",
+      fat_free_mass_difference: "BMI could be a result of increased levels of either fat or fat-free mass",
+      population_accuracy: "BMI is fairly indicative of body fat for 90-95% of the population",
+      
+      formulas_title: "BMI Formula",
+      metric_formula: "Metric Formula",
+      imperial_formula: "Imperial Formula",
+      example: "Example",
+      
+      bmi_prime_formula: "BMI Prime Formula",
+      
+      ponderal_index_title: "Ponderal Index",
+      ponderal_index_explanation: "The Ponderal Index (PI) is similar to BMI in that it measures the leanness or corpulence of a person based on their height and weight. The main difference between the PI and BMI is the cubing rather than squaring of the height in the formula. While BMI can be a useful tool when considering large populations, it is not reliable for determining leanness or corpulence in individuals.",
+      
+      medical_disclaimer_title: "Medical Disclaimer",
+    },
   },
   levels: {
     BEGINNER: "Beginner",

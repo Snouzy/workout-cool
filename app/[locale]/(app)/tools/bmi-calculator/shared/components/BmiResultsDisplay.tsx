@@ -252,7 +252,7 @@ export function BmiResultsDisplay({ result }: BmiResultsDisplayProps) {
       {/* Recommendations */}
       <div className="bg-base-100 dark:bg-base-200/30 rounded-2xl p-6 border border-base-content/10">
         <h3 className="text-lg font-semibold mb-4 text-base-content dark:text-base-content/90">
-          {t("bmi-calculator.recommendations")}
+          {t("bmi-calculator.recommendations_label")}
         </h3>
         <ul className="space-y-2">
           {result.recommendations.map((recommendation, index) => (

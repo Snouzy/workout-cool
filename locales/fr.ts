@@ -749,7 +749,7 @@ export default {
     ponderal_index: "Indice Pondéral",
     bmi_category: "Catégorie IMC",
     health_risk: "Risque Santé",
-    recommendations: "Recommandations",
+    recommendations_label: "Recommandations",
     units: "Unités",
     metric: "Métrique (kg/cm)",
     imperial: "Impérial (lbs/pi)",
@@ -795,6 +795,174 @@ export default {
 
     disclaimer:
       "L'IMC est un outil de dépistage et peut ne pas refléter la composition corporelle. Consultez des professionnels de santé pour des conseils personnalisés.",
+    
+    // Recommendations
+    recommendations: {
+      severe_thinness: {
+        medical_consultation: "Consultation médicale immédiate fortement recommandée",
+        nutritional_assessment: "Évaluation nutritionnelle complète nécessaire",
+        weight_gain_program: "Peut nécessiter un programme de prise de poids supervisé",
+        screen_conditions: "Dépistage des conditions médicales sous-jacentes",
+        psychological_evaluation: "Envisager une évaluation psychologique si trouble alimentaire suspecté",
+      },
+      moderate_thinness: {
+        healthcare_provider: "Consulter un professionnel de santé pour évaluation",
+        nutrient_dense_foods: "Se concentrer sur des aliments riches en nutriments et calories",
+        registered_dietitian: "Envisager de travailler avec un diététicien agréé",
+        monitor_malnutrition: "Surveiller les signes de malnutrition",
+        gradual_weight_gain: "Prise de poids graduelle et saine recommandée",
+      },
+      mild_thinness: {
+        consider_healthcare: "Envisager de consulter un professionnel de santé",
+        nutrient_dense_foods: "Se concentrer sur des aliments riches en nutriments pour prendre du poids sainement",
+        strength_training: "Inclure l'entraînement en force pour développer la masse musculaire",
+        monitor_health: "Surveiller votre santé régulièrement",
+        gradual_weight_gain: "Viser une prise de poids graduelle (0,5-1 kg par semaine)",
+      },
+      normal: {
+        maintain_weight: "Maintenir votre poids santé actuel",
+        physical_activity: "Continuer l'activité physique régulière (150+ minutes par semaine)",
+        balanced_diet: "Adopter une alimentation équilibrée et nutritive",
+        health_checkups: "Bilans de santé réguliers",
+        overall_wellness: "Se concentrer sur le bien-être général et la composition corporelle",
+      },
+      overweight: {
+        gradual_weight_loss: "Viser une perte de poids graduelle (0,5-1 kg par semaine)",
+        increase_activity: "Augmenter l'activité physique à 150+ minutes par semaine",
+        portion_control: "Se concentrer sur le contrôle des portions et une nutrition équilibrée",
+        healthcare_provider: "Envisager de consulter un professionnel de santé",
+        lifestyle_goals: "Fixer des objectifs de mode de vie réalistes et durables",
+      },
+      obese_class_1: {
+        healthcare_provider: "Consulter un professionnel de santé pour un plan de gestion du poids",
+        weight_loss_target: "Viser une perte de poids de 5-10% initialement",
+        diet_exercise: "Combiner interventions alimentaires et exercice",
+        nutritional_counseling: "Envisager un conseil nutritionnel professionnel",
+        screen_conditions: "Dépistage des conditions de santé liées au poids",
+      },
+      obese_class_2: {
+        medical_supervision: "Rechercher une supervision médicale pour la gestion du poids",
+        lifestyle_programs: "Envisager des programmes d'intervention de mode de vie complets",
+        evaluate_conditions: "Évaluer les conditions de santé liées au poids",
+        medical_treatments: "Peut bénéficier de traitements médicaux de perte de poids",
+        bariatric_surgery: "Envisager une évaluation de chirurgie bariatrique si approprié",
+      },
+      obese_class_3: {
+        medical_consultation: "Consultation médicale immédiate recommandée",
+        bariatric_surgery: "Envisager une évaluation de chirurgie bariatrique",
+        weight_management: "Programme médical complet de gestion du poids",
+        health_complications: "Traiter les complications de santé liées au poids",
+        multidisciplinary: "Approche multidisciplinaire avec équipe médicale",
+      },
+    },
+    
+    // Health Risks
+    health_risks: {
+      overweight: {
+        high_blood_pressure: "Hypertension artérielle",
+        ldl_cholesterol: "Niveaux élevés de cholestérol LDL (mauvais cholestérol)",
+        hdl_cholesterol: "Niveaux faibles de cholestérol HDL (bon cholestérol)",
+        triglycerides: "Niveaux élevés de triglycérides",
+        type_2_diabetes: "Diabète de type II",
+        coronary_heart_disease: "Maladie coronarienne",
+        stroke: "Accident vasculaire cérébral",
+        gallbladder_disease: "Maladie de la vésicule biliaire",
+        osteoarthritis: "Arthrose",
+        sleep_apnea: "Apnée du sommeil et problèmes respiratoires",
+        certain_cancers: "Certains cancers (endomètre, sein, côlon, rein, vésicule biliaire, foie)",
+        low_quality_life: "Faible qualité de vie",
+        mental_illnesses: "Maladies mentales comme la dépression clinique et l'anxiété",
+        body_pains: "Douleurs corporelles et difficultés avec les fonctions physiques",
+        increased_mortality: "Risque généralement accru de mortalité",
+      },
+      underweight: {
+        malnutrition: "Malnutrition et carences vitaminiques",
+        anemia: "Anémie (capacité réduite à transporter l'oxygène dans le sang)",
+        osteoporosis: "Ostéoporose (risque accru de fractures osseuses)",
+        immune_function: "Fonction immunitaire diminuée",
+        growth_development: "Problèmes de croissance et de développement (surtout chez les enfants)",
+        reproductive_issues: "Problèmes reproductifs chez les femmes dus aux déséquilibres hormonaux",
+        miscarriage_risk: "Risque plus élevé de fausse couche au premier trimestre",
+        surgery_complications: "Complications potentielles lors de chirurgies",
+        increased_mortality: "Risque généralement accru de mortalité",
+        underlying_conditions: "Peut indiquer des conditions médicales sous-jacentes",
+      },
+    },
+    
+    // Educational Content
+    educational: {
+      introduction_title: "Introduction à l'IMC",
+      introduction_text: "L'IMC est une mesure de la maigreur ou de la corpulence d'une personne basée sur sa taille et son poids, et vise à quantifier la masse tissulaire. Il est largement utilisé comme indicateur général pour déterminer si une personne a un poids santé par rapport à sa taille.",
+      introduction_usage: "Spécifiquement, la valeur obtenue du calcul de l'IMC est utilisée pour catégoriser si une personne est en insuffisance pondérale, poids normal, surpoids ou obèse selon la plage dans laquelle la valeur se situe. Ces plages d'IMC varient selon des facteurs comme la région et l'âge, et sont parfois subdivisées en sous-catégories comme insuffisance pondérale sévère ou obésité très sévère.",
+      
+      adult_table_title: "Tableau IMC pour Adultes",
+      adult_table_description: "Voici les recommandations de l'Organisation Mondiale de la Santé (OMS) pour le poids corporel basé sur les valeurs d'IMC pour les adultes. Il est utilisé pour les hommes et les femmes, âgés de 20 ans ou plus.",
+      
+      children_table_title: "Tableau IMC pour Enfants et Adolescents, Âge 2-20",
+      children_table_description: "Les Centres de Contrôle et de Prévention des Maladies (CDC) recommandent la catégorisation IMC pour les enfants et adolescents entre 2 et 20 ans.",
+      
+      classification: "Classification",
+      bmi_range: "Plage IMC - kg/m²",
+      category: "Catégorie",
+      percentile_range: "Plage de Percentile",
+      underweight: "Insuffisance pondérale",
+      healthy_weight: "Poids Santé",
+      at_risk_overweight: "À Risque de Surpoids",
+      overweight: "Surpoids",
+      
+      overweight_risks_title: "Risques Associés au Surpoids",
+      overweight_risks_intro: "Le surpoids augmente le risque de nombreuses maladies graves et conditions de santé. Voici une liste de ces risques, selon les Centres de Contrôle et de Prévention des Maladies (CDC) :",
+      
+      cardiovascular_risks: "Risques Cardiovasculaires",
+      high_blood_pressure: "Hypertension artérielle",
+      cholesterol_issues: "Niveaux élevés de cholestérol LDL, niveaux faibles de cholestérol HDL, et niveaux élevés de triglycérides",
+      coronary_heart_disease: "Maladie coronarienne",
+      stroke: "Accident vasculaire cérébral",
+      
+      metabolic_risks: "Risques Métaboliques",
+      type_2_diabetes: "Diabète de type II",
+      gallbladder_disease: "Maladie de la vésicule biliaire",
+      sleep_apnea: "Apnée du sommeil et problèmes respiratoires",
+      osteoarthritis: "Arthrose, un type de maladie articulaire causée par la dégradation du cartilage articulaire",
+      
+      other_risks: "Autres Risques de Santé",
+      certain_cancers: "Certains cancers (endomètre, sein, côlon, rein, vésicule biliaire, foie)",
+      mental_health_issues: "Maladies mentales comme la dépression clinique, l'anxiété et autres",
+      reduced_quality_life: "Qualité de vie réduite et douleurs corporelles",
+      increased_mortality: "Généralement, un risque accru de mortalité comparé à ceux avec un IMC sain",
+      
+      underweight_risks_title: "Risques Associés à l'Insuffisance Pondérale",
+      underweight_risks_intro: "L'insuffisance pondérale a ses propres risques associés, listés ci-dessous :",
+      malnutrition: "Malnutrition, carences vitaminiques, anémie (capacité réduite de transport sanguin)",
+      osteoporosis: "Ostéoporose, une maladie qui cause la faiblesse osseuse, augmentant le risque de fracture",
+      immune_function_decrease: "Diminution de la fonction immunitaire",
+      growth_development_issues: "Problèmes de croissance et développement, particulièrement chez les enfants et adolescents",
+      reproductive_issues: "Problèmes reproductifs possibles pour les femmes dus aux déséquilibres hormonaux",
+      surgery_complications: "Complications potentielles résultant de chirurgie",
+      increased_mortality_underweight: "Généralement, un risque accru de mortalité comparé à ceux avec un IMC sain",
+      
+      adults_limitations: "Chez les Adultes",
+      older_adults_fat: "Les adultes âgés ont tendance à avoir plus de graisse corporelle que les jeunes adultes avec le même IMC",
+      women_fat_difference: "Les femmes ont tendance à avoir plus de graisse corporelle que les hommes pour un IMC équivalent",
+      athletes_muscle_mass: "Les individus musclés et athlètes très entraînés peuvent avoir des IMC plus élevés dus à une grande masse musculaire",
+      
+      children_limitations: "Chez les Enfants et Adolescents",
+      height_maturation_influence: "La taille et le niveau de maturation sexuelle peuvent influencer l'IMC et la graisse corporelle chez les enfants",
+      fat_free_mass_difference: "L'IMC pourrait résulter de niveaux accrus soit de graisse soit de masse maigre",
+      population_accuracy: "L'IMC est assez indicatif de la graisse corporelle pour 90-95% de la population",
+      
+      formulas_title: "Formule IMC",
+      metric_formula: "Formule Métrique",
+      imperial_formula: "Formule Impériale",
+      example: "Exemple",
+      
+      bmi_prime_formula: "Formule IMC Prime",
+      
+      ponderal_index_title: "Indice Pondéral",
+      ponderal_index_explanation: "L'Indice Pondéral (IP) est similaire à l'IMC en ce qu'il mesure la maigreur ou la corpulence d'une personne basée sur sa taille et son poids. La principale différence entre l'IP et l'IMC est l'élévation au cube plutôt qu'au carré de la taille dans la formule. Bien que l'IMC puisse être un outil utile pour considérer de grandes populations, il n'est pas fiable pour déterminer la maigreur ou la corpulence chez les individus.",
+      
+      medical_disclaimer_title: "Avertissement Médical",
+    },
   },
   levels: {
     BEGINNER: "Débutant",

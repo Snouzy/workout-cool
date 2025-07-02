@@ -81,6 +81,7 @@ export default {
       start_button: "开始吧！",
     },
   },
+
   premium: {
     checkout_error: "结账时出错",
     premium_required_title: "需要高级",
@@ -127,8 +128,42 @@ export default {
           label: "平均进展",
         },
       },
+
+      // Health Risks
+      health_risks: {
+        overweight: {
+          high_blood_pressure: "高血压",
+          ldl_cholesterol: "低密度脂蛋白胆固醇（坏胆固醇）水平升高",
+          hdl_cholesterol: "高密度脂蛋白胆固醇（好胆固醇）水平降低",
+          triglycerides: "甘油三酯水平升高",
+          type_2_diabetes: "2型糖尿病",
+          coronary_heart_disease: "冠心病",
+          stroke: "中风",
+          gallbladder_disease: "胆囊疾病",
+          osteoarthritis: "骨关节炎",
+          sleep_apnea: "睡眠呼吸暂停和呼吸问题",
+          certain_cancers: "某些癌症（子宫内膜癌、乳腺癌、结肠癌、肾癌、胆囊癌、肝癌）",
+          low_quality_life: "生活质量低下",
+          mental_illnesses: "精神疾病，如临床抑郁症和焦虑症",
+          body_pains: "身体疼痛和身体功能困难",
+          increased_mortality: "总体死亡风险增加",
+        },
+        underweight: {
+          malnutrition: "营养不良和维生素缺乏",
+          anemia: "贫血（血液携氧能力降低）",
+          osteoporosis: "骨质疏松症（骨折风险增加）",
+          immune_function: "免疫功能下降",
+          growth_development: "生长发育问题（特别是儿童）",
+          reproductive_issues: "女性因荷尔蒙失衡导致的生殖问题",
+          miscarriage_risk: "妊娠早期流产风险较高",
+          surgery_complications: "手术期间潜在并发症",
+          increased_mortality: "总体死亡风险增加",
+          underlying_conditions: "可能表明潜在的医疗状况",
+        },
+      },
     },
 
+    // Educational Content
     // Mission Banner
     mission: {
       supporters_count: "234",
@@ -1123,8 +1158,7 @@ export default {
       subtitle: "使用不同方法计算您的身体质量指数，获得个性化健康见解",
       meta: {
         title: "BMI计算器 - 身体质量指数工具和健康评估",
-        description:
-          "使用我们的综合工具计算您的BMI。标准BMI、运动员调整版、儿童BMI和比较工具。获得健康见解和建议。",
+        description: "使用我们的综合工具计算您的BMI。标准BMI、运动员调整版、儿童BMI和比较工具。获得健康见解和建议。",
         keywords: "BMI计算器, 身体质量指数, 健康评估, 体重状态, BMI工具, 儿童BMI, 运动员BMI",
       },
       understanding_bmi: "了解BMI",
@@ -1164,6 +1198,82 @@ export default {
     },
   },
   "bmi-calculator": {
+    educational: {
+      introduction_title: "BMI介绍",
+      introduction_text: "BMI是基于身高和体重测量人的瘦弱或肥胖程度，旨在量化组织质量。它被广泛用作判断一个人的体重是否健康的一般指标。",
+      introduction_usage:
+        "具体来说，BMI计算得出的数值用于根据数值所在的范围来分类一个人是体重不足、正常体重、超重还是肥胖。这些BMI范围因地区和年龄等因素而异，有时进一步细分为严重体重不足或极度肥胖等子类别。",
+
+      adult_table_title: "成人BMI表",
+      adult_table_description: "这是世界卫生组织（WHO）基于成人BMI值推荐的体重标准。适用于20岁或以上的男性和女性。",
+
+      children_table_title: "儿童和青少年BMI表，年龄2-20岁",
+      children_table_description: "美国疾病控制与预防中心（CDC）建议对2至20岁的儿童和青少年进行BMI分类。",
+
+      classification: "分类",
+      bmi_range: "BMI范围 - kg/m²",
+      category: "类别",
+      percentile_range: "百分位数范围",
+      underweight: "体重不足",
+      healthy_weight: "健康体重",
+      at_risk_overweight: "超重风险",
+      overweight: "超重",
+
+      overweight_risks_title: "超重相关风险",
+      overweight_risks_intro: "超重会增加多种严重疾病和健康状况的风险。根据美国疾病控制与预防中心（CDC），以下是这些风险的列表：",
+
+      cardiovascular_risks: "心血管风险",
+      high_blood_pressure: "高血压",
+      cholesterol_issues: "低密度脂蛋白胆固醇水平较高，高密度脂蛋白胆固醇水平较低，甘油三酯水平较高",
+      coronary_heart_disease: "冠心病",
+      stroke: "中风",
+
+      metabolic_risks: "代谢风险",
+      type_2_diabetes: "2型糖尿病",
+      gallbladder_disease: "胆囊疾病",
+      sleep_apnea: "睡眠呼吸暂停和呼吸问题",
+      osteoarthritis: "骨关节炎，一种由关节软骨破坏引起的关节疾病",
+
+      other_risks: "其他健康风险",
+      certain_cancers: "某些癌症（子宫内膜癌、乳腺癌、结肠癌、肾癌、胆囊癌、肝癌）",
+      mental_health_issues: "精神疾病，如临床抑郁症、焦虑症等",
+      reduced_quality_life: "生活质量低下和身体疼痛",
+      increased_mortality: "总体而言，与BMI健康的人相比，死亡风险增加",
+
+      underweight_risks_title: "体重不足相关风险",
+      underweight_risks_intro: "体重不足有其自身的相关风险，列举如下：",
+      malnutrition: "营养不良、维生素缺乏、贫血（血液携氧能力降低）",
+      osteoporosis: "骨质疏松症，一种导致骨骼脆弱、增加骨折风险的疾病",
+      immune_function_decrease: "免疫功能下降",
+      growth_development_issues: "生长发育问题，特别是在儿童和青少年中",
+      reproductive_issues: "女性因荷尔蒙失衡可能出现的生殖问题",
+      surgery_complications: "手术可能出现的并发症",
+      increased_mortality_underweight: "总体而言，与BMI健康的人相比，死亡风险增加",
+
+      adults_limitations: "成人方面",
+      older_adults_fat: "老年人往往比相同BMI的年轻成人有更多体脂",
+      women_fat_difference: "在相同BMI下，女性往往比男性有更多体脂",
+      athletes_muscle_mass: "肌肉发达的个体和高度训练的运动员可能因肌肉量大而BMI较高",
+
+      children_limitations: "儿童和青少年方面",
+      height_maturation_influence: "身高和性成熟水平可能影响儿童的BMI和体脂",
+      fat_free_mass_difference: "BMI可能是脂肪或无脂质量增加的结果",
+      population_accuracy: "BMI对90-95%的人群来说是体脂的相当好的指标",
+
+      formulas_title: "BMI公式",
+      metric_formula: "公制公式",
+      imperial_formula: "英制公式",
+      example: "示例",
+
+      bmi_prime_formula: "BMI Prime公式",
+
+      ponderal_index_title: "体重指数",
+      ponderal_index_explanation:
+        "体重指数（PI）与BMI相似，都是基于身高和体重测量人的瘦弱或肥胖程度。PI和BMI的主要区别在于公式中身高是立方而不是平方。虽然BMI在考虑大人群时可能是有用的工具，但对于确定个体的瘦弱或肥胖程度并不可靠。",
+
+      medical_disclaimer_title: "医疗免责声明",
+    },
+
     height: "身高",
     weight: "体重",
     feet: "英尺",
@@ -1179,21 +1289,21 @@ export default {
     ponderal_index: "体重指数",
     bmi_category: "BMI类别",
     health_risk: "健康风险",
-    recommendations: "建议",
+    recommendations_label: "建议",
     units: "单位",
     metric: "公制 (公斤/厘米)",
     imperial: "英制 (磅/英尺)",
-    
+
     // Detailed BMI Categories (WHO)
     category_severe_thinness: "重度消瘦",
-    category_moderate_thinness: "中度消瘦", 
+    category_moderate_thinness: "中度消瘦",
     category_mild_thinness: "轻度消瘦",
     category_normal: "正常体重",
     category_overweight: "超重",
     category_obese_class_1: "肥胖I级",
     category_obese_class_2: "肥胖II级",
     category_obese_class_3: "肥胖III级",
-    
+
     // Health Risks
     risk_low: "低",
     risk_normal: "正常",
@@ -1201,26 +1311,86 @@ export default {
     risk_high: "高",
     risk_very_high: "很高",
     risk_extremely_high: "极高",
-    
+
     // Additional Information
     bmi_range: "BMI范围",
     ideal_weight: "理想体重范围",
     weight_to_lose: "需要减重",
     weight_to_gain: "需要增重",
     normal_range: "正常BMI范围：18.5 - 24.9",
-    
+
     // BMI Prime
     about_bmi_prime: "关于BMI Prime",
     bmi_prime_explanation: "BMI Prime是您的BMI与正常BMI上限(25)的比值。值为1.0表示您处于正常体重的上限。",
     underweight: "体重不足",
     normal: "正常",
-    overweight: "超重", 
+    overweight: "超重",
     obese: "肥胖",
-    
+
     // Limitations
     limitations_title: "BMI的局限性",
     limitations_text: "BMI无法区分肌肉和脂肪质量。运动员和肌肉发达的人可能BMI较高但仍然健康。年龄、性别、种族和身体成分也会影响解释。",
-    
+
     disclaimer: "BMI是筛查工具，可能无法反映身体成分。请咨询医疗专业人员获得个性化建议。",
+
+    // Recommendations
+    recommendations: {
+      severe_thinness: {
+        medical_consultation: "强烈建议立即就医咨询",
+        nutritional_assessment: "需要全面的营养评估",
+        weight_gain_program: "可能需要监督下的增重计划",
+        screen_conditions: "筛查潜在疾病",
+        psychological_evaluation: "如怀疑饮食失调，考虑心理评估",
+      },
+      moderate_thinness: {
+        healthcare_provider: "咨询医疗专业人员进行评估",
+        nutrient_dense_foods: "专注于营养丰富、高热量的食物",
+        registered_dietitian: "考虑与注册营养师合作",
+        monitor_malnutrition: "监测营养不良迹象",
+        gradual_weight_gain: "建议逐步健康增重",
+      },
+      mild_thinness: {
+        consider_healthcare: "考虑咨询医疗专业人员",
+        nutrient_dense_foods: "专注于营养丰富的食物以健康增重",
+        strength_training: "包括力量训练以增加肌肉量",
+        monitor_health: "定期监测健康状况",
+        gradual_weight_gain: "目标是逐步增重（每周0.5-1公斤）",
+      },
+      normal: {
+        maintain_weight: "保持当前健康体重",
+        physical_activity: "继续定期体育活动（每周150+分钟）",
+        balanced_diet: "保持均衡营养的饮食",
+        health_checkups: "定期健康检查",
+        overall_wellness: "专注于整体健康和身体成分",
+      },
+      overweight: {
+        gradual_weight_loss: "目标是逐步减重（每周0.5-1公斤）",
+        increase_activity: "增加体育活动至每周150+分钟",
+        portion_control: "专注于控制分量和均衡营养",
+        healthcare_provider: "考虑咨询医疗专业人员",
+        lifestyle_goals: "设定现实可持续的生活方式目标",
+      },
+      obese_class_1: {
+        healthcare_provider: "咨询医疗专业人员制定体重管理计划",
+        weight_loss_target: "初期目标减重5-10%",
+        diet_exercise: "结合饮食和运动干预",
+        nutritional_counseling: "考虑专业营养咨询",
+        screen_conditions: "筛查与体重相关的健康状况",
+      },
+      obese_class_2: {
+        medical_supervision: "寻求医疗监督进行体重管理",
+        lifestyle_programs: "考虑综合生活方式干预计划",
+        evaluate_conditions: "评估与体重相关的健康状况",
+        medical_treatments: "可能受益于医疗减重治疗",
+        bariatric_surgery: "如适当，考虑减重手术评估",
+      },
+      obese_class_3: {
+        medical_consultation: "建议立即就医咨询",
+        bariatric_surgery: "考虑减重手术评估",
+        weight_management: "综合医疗体重管理计划",
+        health_complications: "处理与体重相关的健康并发症",
+        multidisciplinary: "与医疗团队采用多学科方法",
+      },
+    },
   },
 } as const;

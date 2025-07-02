@@ -2,6 +2,7 @@ import React from "react";
 import { Metadata } from "next";
 
 import { getI18n } from "locales/server";
+import { BmiEducationalContent } from "app/[locale]/(app)/tools/bmi-calculator/shared/components/BmiEducationalContent";
 import { BmiCalculatorClient } from "app/[locale]/(app)/tools/bmi-calculator/shared/BmiCalculatorClient";
 import { getServerUrl } from "@/shared/lib/server-url";
 import { generateSEOMetadata, SEOScripts } from "@/components/seo/SEOHead";
@@ -13,7 +14,24 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   return generateSEOMetadata({
     title: t("tools.bmi-calculator-hub.meta.title"),
     description: t("tools.bmi-calculator-hub.meta.description"),
-    keywords: t("tools.bmi-calculator-hub.meta.keywords").split(", "),
+    keywords: [
+      ...t("tools.bmi-calculator-hub.meta.keywords").split(", "),
+      "BMI formula",
+      "BMI prime",
+      "ponderal index",
+      "WHO BMI classification",
+      "CDC BMI percentiles",
+      "BMI health risks",
+      "BMI limitations",
+      "body mass index calculator",
+      "BMI chart",
+      "BMI table",
+      "overweight risks",
+      "underweight risks",
+      "BMI for adults",
+      "BMI for children",
+      "BMI accuracy",
+    ],
     locale,
     canonical: `${getServerUrl()}/${locale}/tools/bmi-calculator`,
     structuredData: {
@@ -21,10 +39,25 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       calculatorData: {
         calculatorType: "bmi",
         inputFields: ["height", "weight", "age", "gender"],
-        outputFields: ["BMI", "BMI category", "health recommendations"],
+        outputFields: [
+          "BMI",
+          "BMI Prime",
+          "Ponderal Index",
+          "BMI category",
+          "health risk assessment",
+          "ideal weight range",
+          "health recommendations",
+        ],
         formula: "BMI = weight (kg) / height (m)²",
-        accuracy: "Standard WHO classification",
-        targetAudience: ["health conscious individuals", "fitness enthusiasts", "medical professionals", "general public"],
+        accuracy: "Standard WHO classification with detailed health risk assessment",
+        targetAudience: [
+          "health conscious individuals",
+          "fitness enthusiasts",
+          "medical professionals",
+          "general public",
+          "parents",
+          "athletes",
+        ],
         relatedCalculators: ["standard-calculator", "adjusted-calculator", "pediatric-calculator", "bmi-comparison"],
       },
     },
@@ -68,6 +101,11 @@ export default async function BmiCalculatorPage({ params }: { params: Promise<{ 
 
           {/* Calculator */}
           <BmiCalculatorClient />
+
+          {/* Educational Content */}
+          <div className="mt-16">
+            <BmiEducationalContent />
+          </div>
         </div>
       </div>
     </>

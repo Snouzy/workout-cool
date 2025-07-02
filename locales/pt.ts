@@ -122,6 +122,39 @@ export default {
           label: "Progressão média",
         },
       },
+
+      // Health Risks
+      health_risks: {
+        overweight: {
+          high_blood_pressure: "Pressão arterial alta",
+          ldl_cholesterol: "Níveis elevados de colesterol LDL (colesterol mau)",
+          hdl_cholesterol: "Níveis baixos de colesterol HDL (colesterol bom)",
+          triglycerides: "Níveis elevados de triglicéridos",
+          type_2_diabetes: "Diabetes tipo II",
+          coronary_heart_disease: "Doença coronária",
+          stroke: "Acidente vascular cerebral",
+          gallbladder_disease: "Doença da vesícula biliar",
+          osteoarthritis: "Osteoartrite",
+          sleep_apnea: "Apneia do sono e problemas respiratórios",
+          certain_cancers: "Certos cancros (endometrial, mama, cólon, rim, vesícula biliar, fígado)",
+          low_quality_life: "Baixa qualidade de vida",
+          mental_illnesses: "Doenças mentais como depressão clínica e ansiedade",
+          body_pains: "Dores corporais e dificuldade com funções físicas",
+          increased_mortality: "Risco geralmente aumentado de mortalidade",
+        },
+        underweight: {
+          malnutrition: "Desnutrição e deficiências vitamínicas",
+          anemia: "Anemia (capacidade reduzida para transportar oxigénio no sangue)",
+          osteoporosis: "Osteoporose (risco aumentado de fraturas ósseas)",
+          immune_function: "Função imunitária diminuída",
+          growth_development: "Problemas de crescimento e desenvolvimento (especialmente em crianças)",
+          reproductive_issues: "Problemas reprodutivos em mulheres devido a desequilíbrios hormonais",
+          miscarriage_risk: "Maior probabilidade de aborto espontâneo no primeiro trimestre",
+          surgery_complications: "Complicações potenciais durante cirurgias",
+          increased_mortality: "Risco geralmente aumentado de mortalidade",
+          underlying_conditions: "Pode indicar condições médicas subjacentes",
+        },
+      },
     },
 
     // Mission Banner
@@ -683,7 +716,8 @@ export default {
         keywords: "calculadora IMC, índice massa corporal, avaliação saúde, estado peso, ferramentas IMC, IMC pediátrico, IMC atleta",
       },
       understanding_bmi: "Compreender o IMC",
-      bmi_explanation: "O IMC é uma ferramenta de rastreio que ajuda a avaliar se tem um peso saudável para a sua altura. Escolha a calculadora certa para as suas necessidades:",
+      bmi_explanation:
+        "O IMC é uma ferramenta de rastreio que ajuda a avaliar se tem um peso saudável para a sua altura. Escolha a calculadora certa para as suas necessidades:",
       recommendation_standard: "Melhor para a população geral e rastreio inicial de saúde",
       recommendation_adjusted: "Mais preciso para atletas e indivíduos musculosos",
       recommendation_pediatric: "Especializado para crianças e adolescentes com percentis específicos por idade",
@@ -706,19 +740,101 @@ export default {
       },
       adjusted: {
         title: "Calculadora IMC Ajustada",
-        description: "Cálculo IMC melhorado que considera a massa muscular e composição corporal para resultados mais precisos em indivíduos atléticos.",
+        description:
+          "Cálculo IMC melhorado que considera a massa muscular e composição corporal para resultados mais precisos em indivíduos atléticos.",
       },
       pediatric: {
         title: "Calculadora IMC Pediátrica",
-        description: "Calculadora IMC especializada para crianças e adolescentes usando percentis específicos por idade e sexo e gráficos de crescimento.",
+        description:
+          "Calculadora IMC especializada para crianças e adolescentes usando percentis específicos por idade e sexo e gráficos de crescimento.",
       },
       comparison: {
         title: "Ferramenta de Comparação IMC",
-        description: "Compare diferentes métodos de cálculo IMC lado a lado para compreender como vários fatores afetam os seus resultados.",
+        description:
+          "Compare diferentes métodos de cálculo IMC lado a lado para compreender como vários fatores afetam os seus resultados.",
       },
     },
   },
   "bmi-calculator": {
+    educational: {
+      introduction_title: "Introdução ao IMC",
+      introduction_text:
+        "O IMC é uma medida da magreza ou corpulência de uma pessoa baseada na sua altura e peso, e destina-se a quantificar a massa tecidual. É amplamente utilizado como indicador geral de se uma pessoa tem um peso corporal saudável para a sua altura.",
+      introduction_usage:
+        "Especificamente, o valor obtido do cálculo do IMC é usado para categorizar se uma pessoa tem baixo peso, peso normal, excesso de peso ou obesidade dependendo da faixa em que o valor se enquadra. Estas faixas de IMC variam com base em fatores como região e idade, e são por vezes subdivididas em subcategorias como baixo peso severo ou obesidade muito severa.",
+
+      adult_table_title: "Tabela de IMC para Adultos",
+      adult_table_description:
+        "Esta é a recomendação de peso corporal da Organização Mundial de Saúde (OMS) baseada em valores de IMC para adultos. É utilizada tanto para homens como mulheres, com 20 anos ou mais.",
+
+      children_table_title: "Tabela de IMC para Crianças e Adolescentes, Idade 2-20",
+      children_table_description:
+        "Os Centros de Controlo e Prevenção de Doenças (CDC) recomendam a categorização do IMC para crianças e adolescentes entre os 2 e 20 anos.",
+
+      classification: "Classificação",
+      bmi_range: "Faixa de IMC - kg/m²",
+      category: "Categoria",
+      percentile_range: "Faixa de Percentil",
+      underweight: "Baixo peso",
+      healthy_weight: "Peso Saudável",
+      at_risk_overweight: "Em Risco de Excesso de Peso",
+      overweight: "Excesso de Peso",
+
+      overweight_risks_title: "Riscos Associados ao Excesso de Peso",
+      overweight_risks_intro:
+        "O excesso de peso aumenta o risco de várias doenças graves e condições de saúde. Abaixo está uma lista de tais riscos, segundo os Centros de Controlo e Prevenção de Doenças (CDC):",
+
+      cardiovascular_risks: "Riscos Cardiovasculares",
+      high_blood_pressure: "Pressão arterial alta",
+      cholesterol_issues: "Níveis mais altos de colesterol LDL, níveis mais baixos de colesterol HDL e níveis altos de triglicéridos",
+      coronary_heart_disease: "Doença coronária",
+      stroke: "Acidente vascular cerebral",
+
+      metabolic_risks: "Riscos Metabólicos",
+      type_2_diabetes: "Diabetes tipo II",
+      gallbladder_disease: "Doença da vesícula biliar",
+      sleep_apnea: "Apneia do sono e problemas respiratórios",
+      osteoarthritis: "Osteoartrite, um tipo de doença articular causada pela degradação da cartilagem articular",
+
+      other_risks: "Outros Riscos de Saúde",
+      certain_cancers: "Certos cancros (endometrial, mama, cólon, rim, vesícula biliar, fígado)",
+      mental_health_issues: "Doenças mentais como depressão clínica, ansiedade e outras",
+      reduced_quality_life: "Baixa qualidade de vida e dores corporais",
+      increased_mortality: "Geralmente, um risco aumentado de mortalidade comparado com aqueles com um IMC saudável",
+
+      underweight_risks_title: "Riscos Associados ao Baixo Peso",
+      underweight_risks_intro: "O baixo peso tem os seus próprios riscos associados, listados abaixo:",
+      malnutrition: "Desnutrição, deficiências vitamínicas, anemia (capacidade reduzida para transportar oxigénio no sangue)",
+      osteoporosis: "Osteoporose, uma doença que causa fraqueza óssea, aumentando o risco de fractura de ossos",
+      immune_function_decrease: "Uma diminuição na função imunitária",
+      growth_development_issues: "Problemas de crescimento e desenvolvimento, particularmente em crianças e adolescentes",
+      reproductive_issues: "Possíveis problemas reprodutivos para mulheres devido a desequilíbrios hormonais",
+      surgery_complications: "Complicações potenciais como resultado de cirurgia",
+      increased_mortality_underweight: "Geralmente, um risco aumentado de mortalidade comparado com aqueles com um IMC saudável",
+
+      adults_limitations: "Em Adultos",
+      older_adults_fat: "Adultos mais velhos tendem a ter mais gordura corporal que adultos mais jovens com o mesmo IMC",
+      women_fat_difference: "Mulheres tendem a ter mais gordura corporal que homens para um IMC equivalente",
+      athletes_muscle_mass: "Indivíduos musculosos e atletas altamente treinados podem ter IMCs mais altos devido a grande massa muscular",
+
+      children_limitations: "Em Crianças e Adolescentes",
+      height_maturation_influence: "Altura e nível de maturação sexual podem influenciar o IMC e gordura corporal entre crianças",
+      fat_free_mass_difference: "O IMC pode ser resultado de níveis aumentados de gordura ou massa livre de gordura",
+      population_accuracy: "O IMC é bastante indicativo de gordura corporal para 90-95% da população",
+
+      formulas_title: "Fórmula do IMC",
+      metric_formula: "Fórmula Métrica",
+      imperial_formula: "Fórmula Imperial",
+      example: "Exemplo",
+
+      bmi_prime_formula: "Fórmula do IMC Prime",
+
+      ponderal_index_title: "Índice Ponderal",
+      ponderal_index_explanation:
+        "O Índice Ponderal (IP) é similar ao IMC em que mede a magreza ou corpulência de uma pessoa baseada na sua altura e peso. A principal diferença entre o IP e o IMC é o cubo em vez do quadrado da altura na fórmula. Enquanto o IMC pode ser uma ferramenta útil ao considerar grandes populações, não é confiável para determinar magreza ou corpulência em indivíduos.",
+
+      medical_disclaimer_title: "Aviso Médico",
+    },
     height: "Altura",
     weight: "Peso",
     feet: "pés",
@@ -734,21 +850,21 @@ export default {
     ponderal_index: "Índice Ponderal",
     bmi_category: "Categoria IMC",
     health_risk: "Risco de Saúde",
-    recommendations: "Recomendações",
+    recommendations_label: "Recomendações",
     units: "Unidades",
     metric: "Métrico (kg/cm)",
     imperial: "Imperial (lbs/pés)",
-    
+
     // Detailed BMI Categories (WHO)
     category_severe_thinness: "Magreza Severa",
-    category_moderate_thinness: "Magreza Moderada", 
+    category_moderate_thinness: "Magreza Moderada",
     category_mild_thinness: "Magreza Ligeira",
     category_normal: "Peso Normal",
     category_overweight: "Excesso de Peso",
     category_obese_class_1: "Obesidade Classe I",
     category_obese_class_2: "Obesidade Classe II",
     category_obese_class_3: "Obesidade Classe III",
-    
+
     // Health Risks
     risk_low: "Baixo",
     risk_normal: "Normal",
@@ -756,27 +872,90 @@ export default {
     risk_high: "Alto",
     risk_very_high: "Muito Alto",
     risk_extremely_high: "Extremamente Alto",
-    
+
     // Additional Information
     bmi_range: "Intervalo IMC",
     ideal_weight: "Intervalo de Peso Ideal",
     weight_to_lose: "Peso a Perder",
     weight_to_gain: "Peso a Ganhar",
     normal_range: "Intervalo IMC normal: 18,5 - 24,9",
-    
+
     // BMI Prime
     about_bmi_prime: "Sobre o IMC Prime",
-    bmi_prime_explanation: "O IMC Prime é a relação entre o seu IMC e o limite superior do IMC normal (25). Um valor de 1,0 significa que está no limite superior do peso normal.",
+    bmi_prime_explanation:
+      "O IMC Prime é a relação entre o seu IMC e o limite superior do IMC normal (25). Um valor de 1,0 significa que está no limite superior do peso normal.",
     underweight: "Baixo peso",
     normal: "Normal",
-    overweight: "Excesso de peso", 
+    overweight: "Excesso de peso",
     obese: "Obeso",
-    
+
     // Limitations
     limitations_title: "Limitações do IMC",
-    limitations_text: "O IMC não distingue entre massa muscular e massa gorda. Atletas e pessoas muito musculosas podem ter um IMC alto apesar de estarem saudáveis. A idade, sexo, etnia e composição corporal também afetam a interpretação.",
-    
-    disclaimer: "O IMC é uma ferramenta de rastreio e pode não refletir a composição corporal. Consulte profissionais de saúde para conselhos personalizados.",
+    limitations_text:
+      "O IMC não distingue entre massa muscular e massa gorda. Atletas e pessoas muito musculosas podem ter um IMC alto apesar de estarem saudáveis. A idade, sexo, etnia e composição corporal também afetam a interpretação.",
+
+    disclaimer:
+      "O IMC é uma ferramenta de rastreio e pode não refletir a composição corporal. Consulte profissionais de saúde para conselhos personalizados.",
+
+    // Recommendations
+    recommendations: {
+      severe_thinness: {
+        medical_consultation: "Consulta médica imediata fortemente recomendada",
+        nutritional_assessment: "Avaliação nutricional abrangente necessária",
+        weight_gain_program: "Pode necessitar de programa supervisionado de ganho de peso",
+        screen_conditions: "Rastreio de condições médicas subjacentes",
+        psychological_evaluation: "Considerar avaliação psicológica se suspeita de distúrbio alimentar",
+      },
+      moderate_thinness: {
+        healthcare_provider: "Consultar profissional de saúde para avaliação",
+        nutrient_dense_foods: "Focar em alimentos ricos em nutrientes e calorias",
+        registered_dietitian: "Considerar trabalhar com nutricionista registado",
+        monitor_malnutrition: "Monitorizar sinais de desnutrição",
+        gradual_weight_gain: "Ganho de peso gradual e saudável recomendado",
+      },
+      mild_thinness: {
+        consider_healthcare: "Considerar consultar profissional de saúde",
+        nutrient_dense_foods: "Focar em alimentos ricos em nutrientes para ganhar peso saudavelmente",
+        strength_training: "Incluir treino de força para desenvolver massa muscular",
+        monitor_health: "Monitorizar a sua saúde regularmente",
+        gradual_weight_gain: "Visar ganho de peso gradual (0,5-1 kg por semana)",
+      },
+      normal: {
+        maintain_weight: "Manter o seu peso saudável atual",
+        physical_activity: "Continuar atividade física regular (150+ minutos por semana)",
+        balanced_diet: "Seguir dieta equilibrada e nutritiva",
+        health_checkups: "Check-ups de saúde regulares",
+        overall_wellness: "Focar no bem-estar geral e composição corporal",
+      },
+      overweight: {
+        gradual_weight_loss: "Visar perda de peso gradual (0,5-1 kg por semana)",
+        increase_activity: "Aumentar atividade física para 150+ minutos por semana",
+        portion_control: "Focar no controlo de porções e nutrição equilibrada",
+        healthcare_provider: "Considerar consultar profissional de saúde",
+        lifestyle_goals: "Estabelecer objetivos de estilo de vida realistas e sustentáveis",
+      },
+      obese_class_1: {
+        healthcare_provider: "Consultar profissional de saúde para plano de gestão de peso",
+        weight_loss_target: "Visar perda de peso de 5-10% inicialmente",
+        diet_exercise: "Combinar intervenções de dieta e exercício",
+        nutritional_counseling: "Considerar aconselhamento nutricional profissional",
+        screen_conditions: "Rastreio de condições de saúde relacionadas com o peso",
+      },
+      obese_class_2: {
+        medical_supervision: "Procurar supervisão médica para gestão de peso",
+        lifestyle_programs: "Considerar programas abrangentes de intervenção de estilo de vida",
+        evaluate_conditions: "Avaliar condições de saúde relacionadas com o peso",
+        medical_treatments: "Pode beneficiar de tratamentos médicos para perda de peso",
+        bariatric_surgery: "Considerar avaliação de cirurgia bariátrica se apropriado",
+      },
+      obese_class_3: {
+        medical_consultation: "Consulta médica imediata recomendada",
+        bariatric_surgery: "Considerar avaliação de cirurgia bariátrica",
+        weight_management: "Programa médico abrangente de gestão de peso",
+        health_complications: "Abordar complicações de saúde relacionadas com o peso",
+        multidisciplinary: "Abordagem multidisciplinar com equipa médica",
+      },
+    },
   },
   levels: {
     BEGINNER: "Iniciante",

@@ -47,7 +47,7 @@ export function BmiCalculatorClient() {
   useEffect(() => {
     if (height > 0 && weight > 0) {
       const bmiData: BmiData = { height, weight, unit };
-      const bmiResult = calculateBmi(bmiData);
+      const bmiResult = calculateBmi(bmiData, t);
       setResult(bmiResult);
     } else {
       setResult(null);

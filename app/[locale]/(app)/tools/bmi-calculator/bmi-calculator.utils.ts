@@ -1,3 +1,5 @@
+import { TFunction } from "locales/client";
+
 export type UnitSystem = "metric" | "imperial";
 
 export interface BmiData {
@@ -33,8 +35,10 @@ export type BmiCategory =
 
 export type HealthRisk = "low" | "normal" | "increased" | "high" | "very_high" | "extremely_high";
 
-export function calculateBmi(data: BmiData): BmiResult {
-  let { height, weight, unit } = data;
+export function calculateBmi(data: BmiData, t: TFunction): BmiResult {
+  const { height: initialHeight, weight: initialWeight, unit } = data;
+  let height = initialHeight;
+  let weight = initialWeight;
 
   // Convert to metric if needed
   if (unit === "imperial") {
@@ -57,7 +61,7 @@ export function calculateBmi(data: BmiData): BmiResult {
   // Determine category and health risk
   const category = getBmiCategory(bmi);
   const healthRisk = getHealthRisk(category);
-  const recommendations = getRecommendations(category);
+  const recommendations = getRecommendations(category, t);
 
   // Calculate detailed info
   const bmiRange = getBmiRange(category);
@@ -119,71 +123,71 @@ export function getHealthRisk(category: BmiCategory): HealthRisk {
   }
 }
 
-export function getRecommendations(category: BmiCategory): string[] {
+export function getRecommendations(category: BmiCategory, t: TFunction): string[] {
   switch (category) {
     case "severe_thinness":
       return [
-        "Immediate medical consultation strongly recommended",
-        "Comprehensive nutritional assessment needed",
-        "May require supervised weight gain program",
-        "Screen for underlying medical conditions",
-        "Consider psychological evaluation if eating disorder suspected",
+        t("bmi-calculator.recommendations.severe_thinness.medical_consultation"),
+        t("bmi-calculator.recommendations.severe_thinness.nutritional_assessment"),
+        t("bmi-calculator.recommendations.severe_thinness.weight_gain_program"),
+        t("bmi-calculator.recommendations.severe_thinness.screen_conditions"),
+        t("bmi-calculator.recommendations.severe_thinness.psychological_evaluation"),
       ];
     case "moderate_thinness":
       return [
-        "Consult with healthcare provider for evaluation",
-        "Focus on nutrient-dense, calorie-rich foods",
-        "Consider working with a registered dietitian",
-        "Monitor for signs of malnutrition",
-        "Gradual, healthy weight gain recommended",
+        t("bmi-calculator.recommendations.moderate_thinness.healthcare_provider"),
+        t("bmi-calculator.recommendations.moderate_thinness.nutrient_dense_foods"),
+        t("bmi-calculator.recommendations.moderate_thinness.registered_dietitian"),
+        t("bmi-calculator.recommendations.moderate_thinness.monitor_malnutrition"),
+        t("bmi-calculator.recommendations.moderate_thinness.gradual_weight_gain"),
       ];
     case "mild_thinness":
       return [
-        "Consider consulting with a healthcare provider",
-        "Focus on nutrient-dense foods to gain healthy weight",
-        "Include strength training to build muscle mass",
-        "Monitor your health regularly",
-        "Aim for gradual weight gain (1-2 lbs per week)",
+        t("bmi-calculator.recommendations.mild_thinness.consider_healthcare"),
+        t("bmi-calculator.recommendations.mild_thinness.nutrient_dense_foods"),
+        t("bmi-calculator.recommendations.mild_thinness.strength_training"),
+        t("bmi-calculator.recommendations.mild_thinness.monitor_health"),
+        t("bmi-calculator.recommendations.mild_thinness.gradual_weight_gain"),
       ];
     case "normal":
       return [
-        "Maintain your current healthy weight",
-        "Continue regular physical activity (150+ minutes per week)",
-        "Eat a balanced, nutritious diet",
-        "Regular health check-ups",
-        "Focus on overall wellness and body composition",
+        t("bmi-calculator.recommendations.normal.maintain_weight"),
+        t("bmi-calculator.recommendations.normal.physical_activity"),
+        t("bmi-calculator.recommendations.normal.balanced_diet"),
+        t("bmi-calculator.recommendations.normal.health_checkups"),
+        t("bmi-calculator.recommendations.normal.overall_wellness"),
       ];
     case "overweight":
       return [
-        "Aim for gradual weight loss (1-2 lbs per week)",
-        "Increase physical activity to 150+ minutes per week",
-        "Focus on portion control and balanced nutrition",
-        "Consider consulting with a healthcare provider",
-        "Set realistic, sustainable lifestyle goals",
+        t("bmi-calculator.recommendations.overweight.gradual_weight_loss"),
+        t("bmi-calculator.recommendations.overweight.increase_activity"),
+        t("bmi-calculator.recommendations.overweight.portion_control"),
+        t("bmi-calculator.recommendations.overweight.healthcare_provider"),
+        t("bmi-calculator.recommendations.overweight.lifestyle_goals"),
       ];
     case "obese_class_1":
       return [
-        "Consult with a healthcare provider for a weight management plan",
-        "Aim for 5-10% weight loss initially",
-        "Combine diet and exercise interventions",
-        "Consider professional nutritional counseling",
-        "Screen for weight-related health conditions",
+        t("bmi-calculator.recommendations.obese_class_1.healthcare_provider"),
+        t("bmi-calculator.recommendations.obese_class_1.weight_loss_target"),
+        t("bmi-calculator.recommendations.obese_class_1.diet_exercise"),
+        t("bmi-calculator.recommendations.obese_class_1.nutritional_counseling"),
+        t("bmi-calculator.recommendations.obese_class_1.screen_conditions"),
       ];
     case "obese_class_2":
       return [
-        "Seek medical supervision for weight management",
-        "Consider comprehensive lifestyle intervention programs",
-        "Evaluate for weight-related health conditions",
-        "May benefit from medical weight loss treatments",
-        "Consider bariatric surgery evaluation if appropriate",
+        t("bmi-calculator.recommendations.obese_class_2.medical_supervision"),
+        t("bmi-calculator.recommendations.obese_class_2.lifestyle_programs"),
+        t("bmi-calculator.recommendations.obese_class_2.evaluate_conditions"),
+        t("bmi-calculator.recommendations.obese_class_2.medical_treatments"),
+        t("bmi-calculator.recommendations.obese_class_2.bariatric_surgery"),
       ];
     case "obese_class_3":
       return [
-        "Immediate medical consultation recommended",
-        "Consider bariatric surgery evaluation",
-        "Comprehensive medical weight management program",
-        "Address weight-related health complications",
-        "Multidisciplinary approach with medical team",
+        t("bmi-calculator.recommendations.obese_class_3.medical_consultation"),
+        t("bmi-calculator.recommendations.obese_class_3.bariatric_surgery"),
+        t("bmi-calculator.recommendations.obese_class_3.weight_management"),
+        t("bmi-calculator.recommendations.obese_class_3.health_complications"),
+        t("bmi-calculator.recommendations.obese_class_3.multidisciplinary"),
       ];
     default:
       return [];
@@ -264,36 +268,36 @@ export function getPonderalIndexCategory(pi: number): string {
   return "high";
 }
 
-export function getHealthRisks(category: BmiCategory): { overweight: string[]; underweight: string[] } {
+export function getHealthRisks(_category: BmiCategory, t: TFunction): { overweight: string[]; underweight: string[] } {
   const overweightRisks = [
-    "High blood pressure",
-    "Higher levels of LDL cholesterol (bad cholesterol)",
-    "Lower levels of HDL cholesterol (good cholesterol)",
-    "High levels of triglycerides",
-    "Type II diabetes",
-    "Coronary heart disease",
-    "Stroke",
-    "Gallbladder disease",
-    "Osteoarthritis",
-    "Sleep apnea and breathing problems",
-    "Certain cancers (endometrial, breast, colon, kidney, gallbladder, liver)",
-    "Low quality of life",
-    "Mental illnesses such as clinical depression and anxiety",
-    "Body pains and difficulty with physical functions",
-    "Generally increased risk of mortality",
+    t("bmi-calculator.health_risks.overweight.high_blood_pressure"),
+    t("bmi-calculator.health_risks.overweight.ldl_cholesterol"),
+    t("bmi-calculator.health_risks.overweight.hdl_cholesterol"),
+    t("bmi-calculator.health_risks.overweight.triglycerides"),
+    t("bmi-calculator.health_risks.overweight.type_2_diabetes"),
+    t("bmi-calculator.health_risks.overweight.coronary_heart_disease"),
+    t("bmi-calculator.health_risks.overweight.stroke"),
+    t("bmi-calculator.health_risks.overweight.gallbladder_disease"),
+    t("bmi-calculator.health_risks.overweight.osteoarthritis"),
+    t("bmi-calculator.health_risks.overweight.sleep_apnea"),
+    t("bmi-calculator.health_risks.overweight.certain_cancers"),
+    t("bmi-calculator.health_risks.overweight.low_quality_life"),
+    t("bmi-calculator.health_risks.overweight.mental_illnesses"),
+    t("bmi-calculator.health_risks.overweight.body_pains"),
+    t("bmi-calculator.health_risks.overweight.increased_mortality"),
   ];
 
   const underweightRisks = [
-    "Malnutrition and vitamin deficiencies",
-    "Anemia (lowered ability to carry oxygen in blood)",
-    "Osteoporosis (increased risk of bone fractures)",
-    "Decreased immune function",
-    "Growth and development issues (especially in children)",
-    "Reproductive issues for women due to hormonal imbalances",
-    "Higher chance of miscarriage in first trimester",
-    "Potential complications during surgery",
-    "Generally increased risk of mortality",
-    "May indicate underlying medical conditions",
+    t("bmi-calculator.health_risks.underweight.malnutrition"),
+    t("bmi-calculator.health_risks.underweight.anemia"),
+    t("bmi-calculator.health_risks.underweight.osteoporosis"),
+    t("bmi-calculator.health_risks.underweight.immune_function"),
+    t("bmi-calculator.health_risks.underweight.growth_development"),
+    t("bmi-calculator.health_risks.underweight.reproductive_issues"),
+    t("bmi-calculator.health_risks.underweight.miscarriage_risk"),
+    t("bmi-calculator.health_risks.underweight.surgery_complications"),
+    t("bmi-calculator.health_risks.underweight.increased_mortality"),
+    t("bmi-calculator.health_risks.underweight.underlying_conditions"),
   ];
 
   return { overweight: overweightRisks, underweight: underweightRisks };

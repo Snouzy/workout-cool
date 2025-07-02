@@ -694,7 +694,8 @@ export default {
         keywords: "calculateur IMC, indice masse corporelle, évaluation santé, statut poids, outils IMC, IMC pédiatrique, IMC athlète",
       },
       understanding_bmi: "Comprendre l'IMC",
-      bmi_explanation: "L'IMC est un outil de dépistage qui aide à évaluer si vous avez un poids santé par rapport à votre taille. Choisissez le bon calculateur pour vos besoins :",
+      bmi_explanation:
+        "L'IMC est un outil de dépistage qui aide à évaluer si vous avez un poids santé par rapport à votre taille. Choisissez le bon calculateur pour vos besoins :",
       recommendation_standard: "Idéal pour la population générale et le dépistage initial",
       recommendation_adjusted: "Plus précis pour les athlètes et personnes musclées",
       recommendation_pediatric: "Spécialisé pour les enfants et adolescents avec percentiles spécifiques à l'âge",
@@ -717,15 +718,18 @@ export default {
       },
       adjusted: {
         title: "Calculateur IMC Ajusté",
-        description: "Calcul IMC amélioré qui considère la masse musculaire et la composition corporelle pour des résultats plus précis chez les individus athlétiques.",
+        description:
+          "Calcul IMC amélioré qui considère la masse musculaire et la composition corporelle pour des résultats plus précis chez les individus athlétiques.",
       },
       pediatric: {
         title: "Calculateur IMC Pédiatrique",
-        description: "Calculateur IMC spécialisé pour enfants et adolescents utilisant des percentiles spécifiques à l'âge et au sexe et des courbes de croissance.",
+        description:
+          "Calculateur IMC spécialisé pour enfants et adolescents utilisant des percentiles spécifiques à l'âge et au sexe et des courbes de croissance.",
       },
       comparison: {
         title: "Outil de Comparaison IMC",
-        description: "Comparez différentes méthodes de calcul IMC côte à côte pour comprendre comment divers facteurs affectent vos résultats.",
+        description:
+          "Comparez différentes méthodes de calcul IMC côte à côte pour comprendre comment divers facteurs affectent vos résultats.",
       },
     },
   },
@@ -741,27 +745,56 @@ export default {
     weight_placeholder: "Entrez le poids",
     calculate: "Calculer l'IMC",
     your_bmi: "Votre IMC",
+    bmi_prime: "IMC Prime",
+    ponderal_index: "Indice Pondéral",
     bmi_category: "Catégorie IMC",
     health_risk: "Risque Santé",
     recommendations: "Recommandations",
     units: "Unités",
     metric: "Métrique (kg/cm)",
     imperial: "Impérial (lbs/pi)",
-    category_underweight: "Insuffisance pondérale",
-    category_normal: "Poids normal",
+
+    // Detailed BMI Categories (WHO)
+    category_severe_thinness: "Maigreur Sévère",
+    category_moderate_thinness: "Maigreur Modérée",
+    category_mild_thinness: "Maigreur Légère",
+    category_normal: "Poids Normal",
     category_overweight: "Surpoids",
     category_obese_class_1: "Obésité Classe I",
     category_obese_class_2: "Obésité Classe II",
     category_obese_class_3: "Obésité Classe III",
+
+    // Health Risks
     risk_low: "Faible",
     risk_normal: "Normal",
     risk_increased: "Augmenté",
     risk_high: "Élevé",
-    risk_very_high: "Très élevé",
-    risk_extremely_high: "Extrêmement élevé",
+    risk_very_high: "Très Élevé",
+    risk_extremely_high: "Extrêmement Élevé",
+
+    // Additional Information
     bmi_range: "Plage IMC",
+    ideal_weight: "Plage de Poids Idéal",
+    weight_to_lose: "Poids à Perdre",
+    weight_to_gain: "Poids à Prendre",
     normal_range: "Plage IMC normale : 18,5 - 24,9",
-    disclaimer: "L'IMC est un outil de dépistage et peut ne pas refléter la composition corporelle. Consultez des professionnels de santé pour des conseils personnalisés.",
+
+    // BMI Prime
+    about_bmi_prime: "À Propos de l'IMC Prime",
+    bmi_prime_explanation:
+      "L'IMC Prime est le rapport entre votre IMC et la limite supérieure de l'IMC normal (25). Une valeur de 1,0 signifie que vous êtes à la limite supérieure du poids normal.",
+    underweight: "Insuffisant",
+    normal: "Normal",
+    overweight: "Surpoids",
+    obese: "Obèse",
+
+    // Limitations
+    limitations_title: "Limites de l'IMC",
+    limitations_text:
+      "L'IMC ne fait pas la distinction entre la masse musculaire et la masse graisseuse. Les athlètes et les personnes très musclées peuvent avoir un IMC élevé tout en étant en bonne santé. L'âge, le sexe, l'origine ethnique et la composition corporelle affectent également l'interprétation.",
+
+    disclaimer:
+      "L'IMC est un outil de dépistage et peut ne pas refléter la composition corporelle. Consultez des professionnels de santé pour des conseils personnalisés.",
   },
   levels: {
     BEGINNER: "Débutant",

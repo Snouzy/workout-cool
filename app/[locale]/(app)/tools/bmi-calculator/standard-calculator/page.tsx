@@ -72,7 +72,7 @@ export default async function StandardBmiCalculatorPage({ params }: { params: Pr
           <BmiCalculatorClient />
 
           {/* Information Section */}
-          <div className="mt-12 bg-gradient-to-br from-primary/5 to-primary/10 dark:from-primary/10 dark:to-primary/5 rounded-2xl p-6 sm:p-8 border border-primary/20">
+          <div className="mt-12 bg-gradient-to-br from-primary/5 to-primary/10 dark:from-primary/10 dark:to-primary/5 rounded-2xl p-4 sm:p-8 border border-primary/20">
             <h2 className="text-2xl font-bold mb-4 text-base-content dark:text-base-content/90">About BMI</h2>
             <div className="prose prose-sm dark:prose-invert max-w-none">
               <p className="text-base-content/70 dark:text-base-content/60 mb-4">

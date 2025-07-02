@@ -729,26 +729,52 @@ export default {
     weight_placeholder: "Введите вес",
     calculate: "Рассчитать ИМТ",
     your_bmi: "Ваш ИМТ",
+    bmi_prime: "ИМТ Прайм",
+    ponderal_index: "Пондеральный Индекс",
     bmi_category: "Категория ИМТ",
     health_risk: "Риск для Здоровья",
     recommendations: "Рекомендации",
     units: "Единицы",
     metric: "Метрическая (кг/см)",
     imperial: "Имперская (фунт/фут)",
-    category_underweight: "Недостаточный вес",
-    category_normal: "Нормальный вес",
-    category_overweight: "Избыточный вес",
-    category_obese_class_1: "Ожирение I степени",
-    category_obese_class_2: "Ожирение II степени",
-    category_obese_class_3: "Ожирение III степени",
+    
+    // Detailed BMI Categories (WHO)
+    category_severe_thinness: "Выраженный Дефицит Массы",
+    category_moderate_thinness: "Умеренный Дефицит Массы", 
+    category_mild_thinness: "Легкий Дефицит Массы",
+    category_normal: "Нормальная Масса",
+    category_overweight: "Избыточная Масса",
+    category_obese_class_1: "Ожирение I Степени",
+    category_obese_class_2: "Ожирение II Степени",
+    category_obese_class_3: "Ожирение III Степени",
+    
+    // Health Risks
     risk_low: "Низкий",
     risk_normal: "Нормальный",
     risk_increased: "Повышенный",
     risk_high: "Высокий",
-    risk_very_high: "Очень высокий",
-    risk_extremely_high: "Крайне высокий",
+    risk_very_high: "Очень Высокий",
+    risk_extremely_high: "Крайне Высокий",
+    
+    // Additional Information
     bmi_range: "Диапазон ИМТ",
+    ideal_weight: "Идеальный Диапазон Веса",
+    weight_to_lose: "Вес для Снижения",
+    weight_to_gain: "Вес для Набора",
     normal_range: "Нормальный диапазон ИМТ: 18,5 - 24,9",
+    
+    // BMI Prime
+    about_bmi_prime: "О ИМТ Прайм",
+    bmi_prime_explanation: "ИМТ Прайм - это отношение вашего ИМТ к верхней границе нормального ИМТ (25). Значение 1,0 означает, что вы находитесь на верхней границе нормального веса.",
+    underweight: "Недостаточный вес",
+    normal: "Нормальный",
+    overweight: "Избыточный вес", 
+    obese: "Ожирение",
+    
+    // Limitations
+    limitations_title: "Ограничения ИМТ",
+    limitations_text: "ИМТ не различает мышечную и жировую массу. Спортсмены и очень мускулистые люди могут иметь высокий ИМТ, оставаясь здоровыми. Возраст, пол, этническая принадлежность и состав тела также влияют на интерпретацию.",
+    
     disclaimer: "ИМТ является инструментом скрининга и может не отражать состав тела. Обратитесь к медицинским специалистам за персонализированными советами.",
   },
   levels: {

@@ -51,7 +51,7 @@ export function BmiCalculatorClient() {
   return (
     <div className="space-y-8">
       {/* Input Form */}
-      <div className="bg-base-100 dark:bg-base-200/30 rounded-2xl p-6 sm:p-8 border border-base-content/10">
+      <div className="bg-base-100 dark:bg-base-200/30 rounded-2xl p-4 sm:p-8 border border-base-content/10">
         <div className="space-y-6">
           {/* Unit Selector */}
           <BmiUnitSelector onChange={setUnit} value={unit} />
@@ -66,7 +66,7 @@ export function BmiCalculatorClient() {
 
       {/* Results */}
       {result && (
-        <div className="bg-base-100 dark:bg-base-200/30 rounded-2xl p-6 sm:p-8 border border-base-content/10">
+        <div className="bg-base-100 dark:bg-base-200/30 rounded-2xl p-4 sm:p-8 border border-base-content/10">
           <BmiResultsDisplay result={result} />
         </div>
       )}

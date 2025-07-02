@@ -734,26 +734,52 @@ export default {
     weight_placeholder: "Enter weight",
     calculate: "Calculate BMI",
     your_bmi: "Your BMI",
+    bmi_prime: "BMI Prime",
+    ponderal_index: "Ponderal Index",
     bmi_category: "BMI Category",
     health_risk: "Health Risk",
     recommendations: "Recommendations",
     units: "Units",
     metric: "Metric (kg/cm)",
     imperial: "Imperial (lbs/ft)",
-    category_underweight: "Underweight",
+    
+    // Detailed BMI Categories (WHO)
+    category_severe_thinness: "Severe Thinness",
+    category_moderate_thinness: "Moderate Thinness", 
+    category_mild_thinness: "Mild Thinness",
     category_normal: "Normal Weight",
     category_overweight: "Overweight",
     category_obese_class_1: "Obesity Class I",
     category_obese_class_2: "Obesity Class II",
     category_obese_class_3: "Obesity Class III",
+    
+    // Health Risks
     risk_low: "Low",
     risk_normal: "Normal",
     risk_increased: "Increased",
     risk_high: "High",
     risk_very_high: "Very High",
     risk_extremely_high: "Extremely High",
+    
+    // Additional Information
     bmi_range: "BMI Range",
+    ideal_weight: "Ideal Weight Range",
+    weight_to_lose: "Weight to Lose",
+    weight_to_gain: "Weight to Gain",
     normal_range: "Normal BMI range: 18.5 - 24.9",
+    
+    // BMI Prime
+    about_bmi_prime: "About BMI Prime",
+    bmi_prime_explanation: "BMI Prime is the ratio of your BMI to the upper limit of normal BMI (25). A value of 1.0 means you're at the upper limit of normal weight.",
+    underweight: "Underweight",
+    normal: "Normal",
+    overweight: "Overweight", 
+    obese: "Obese",
+    
+    // Limitations
+    limitations_title: "BMI Limitations",
+    limitations_text: "BMI doesn't distinguish between muscle and fat mass. Athletes and very muscular individuals may have high BMI despite being healthy. Age, sex, ethnicity, and body composition also affect interpretation.",
+    
     disclaimer: "BMI is a screening tool and may not reflect body composition. Consult healthcare professionals for personalized advice.",
   },
   levels: {

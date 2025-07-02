@@ -730,26 +730,52 @@ export default {
     weight_placeholder: "Insira o peso",
     calculate: "Calcular IMC",
     your_bmi: "O seu IMC",
+    bmi_prime: "IMC Prime",
+    ponderal_index: "Índice Ponderal",
     bmi_category: "Categoria IMC",
     health_risk: "Risco de Saúde",
     recommendations: "Recomendações",
     units: "Unidades",
     metric: "Métrico (kg/cm)",
     imperial: "Imperial (lbs/pés)",
-    category_underweight: "Baixo peso",
-    category_normal: "Peso normal",
-    category_overweight: "Excesso de peso",
+    
+    // Detailed BMI Categories (WHO)
+    category_severe_thinness: "Magreza Severa",
+    category_moderate_thinness: "Magreza Moderada", 
+    category_mild_thinness: "Magreza Ligeira",
+    category_normal: "Peso Normal",
+    category_overweight: "Excesso de Peso",
     category_obese_class_1: "Obesidade Classe I",
     category_obese_class_2: "Obesidade Classe II",
     category_obese_class_3: "Obesidade Classe III",
+    
+    // Health Risks
     risk_low: "Baixo",
     risk_normal: "Normal",
     risk_increased: "Aumentado",
     risk_high: "Alto",
-    risk_very_high: "Muito alto",
-    risk_extremely_high: "Extremamente alto",
+    risk_very_high: "Muito Alto",
+    risk_extremely_high: "Extremamente Alto",
+    
+    // Additional Information
     bmi_range: "Intervalo IMC",
+    ideal_weight: "Intervalo de Peso Ideal",
+    weight_to_lose: "Peso a Perder",
+    weight_to_gain: "Peso a Ganhar",
     normal_range: "Intervalo IMC normal: 18,5 - 24,9",
+    
+    // BMI Prime
+    about_bmi_prime: "Sobre o IMC Prime",
+    bmi_prime_explanation: "O IMC Prime é a relação entre o seu IMC e o limite superior do IMC normal (25). Um valor de 1,0 significa que está no limite superior do peso normal.",
+    underweight: "Baixo peso",
+    normal: "Normal",
+    overweight: "Excesso de peso", 
+    obese: "Obeso",
+    
+    // Limitations
+    limitations_title: "Limitações do IMC",
+    limitations_text: "O IMC não distingue entre massa muscular e massa gorda. Atletas e pessoas muito musculosas podem ter um IMC alto apesar de estarem saudáveis. A idade, sexo, etnia e composição corporal também afetam a interpretação.",
+    
     disclaimer: "O IMC é uma ferramenta de rastreio e pode não refletir a composição corporal. Consulte profissionais de saúde para conselhos personalizados.",
   },
   levels: {

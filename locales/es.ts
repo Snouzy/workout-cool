@@ -1208,26 +1208,52 @@ export default {
     weight_placeholder: "Ingresa el peso",
     calculate: "Calcular IMC",
     your_bmi: "Tu IMC",
+    bmi_prime: "IMC Prime",
+    ponderal_index: "Índice Ponderal",
     bmi_category: "Categoría IMC",
     health_risk: "Riesgo de Salud",
     recommendations: "Recomendaciones",
     units: "Unidades",
     metric: "Métrico (kg/cm)",
     imperial: "Imperial (lbs/pies)",
-    category_underweight: "Bajo peso",
-    category_normal: "Peso normal",
+    
+    // Detailed BMI Categories (WHO)
+    category_severe_thinness: "Delgadez Severa",
+    category_moderate_thinness: "Delgadez Moderada", 
+    category_mild_thinness: "Delgadez Leve",
+    category_normal: "Peso Normal",
     category_overweight: "Sobrepeso",
     category_obese_class_1: "Obesidad Clase I",
     category_obese_class_2: "Obesidad Clase II",
     category_obese_class_3: "Obesidad Clase III",
+    
+    // Health Risks
     risk_low: "Bajo",
     risk_normal: "Normal",
     risk_increased: "Aumentado",
     risk_high: "Alto",
-    risk_very_high: "Muy alto",
-    risk_extremely_high: "Extremadamente alto",
+    risk_very_high: "Muy Alto",
+    risk_extremely_high: "Extremadamente Alto",
+    
+    // Additional Information
     bmi_range: "Rango IMC",
+    ideal_weight: "Rango de Peso Ideal",
+    weight_to_lose: "Peso a Perder",
+    weight_to_gain: "Peso a Ganar",
     normal_range: "Rango IMC normal: 18,5 - 24,9",
+    
+    // BMI Prime
+    about_bmi_prime: "Acerca del IMC Prime",
+    bmi_prime_explanation: "El IMC Prime es la relación entre tu IMC y el límite superior del IMC normal (25). Un valor de 1,0 significa que estás en el límite superior del peso normal.",
+    underweight: "Bajo peso",
+    normal: "Normal",
+    overweight: "Sobrepeso", 
+    obese: "Obeso",
+    
+    // Limitations
+    limitations_title: "Limitaciones del IMC",
+    limitations_text: "El IMC no distingue entre masa muscular y masa grasa. Los atletas y personas muy musculosas pueden tener un IMC alto a pesar de estar saludables. La edad, sexo, etnia y composición corporal también afectan la interpretación.",
+    
     disclaimer: "El IMC es una herramienta de detección y puede no reflejar la composición corporal. Consulta profesionales de la salud para consejos personalizados.",
   },
 } as const;

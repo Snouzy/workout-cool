@@ -1175,26 +1175,52 @@ export default {
     weight_placeholder: "输入体重",
     calculate: "计算BMI",
     your_bmi: "您的BMI",
+    bmi_prime: "BMI Prime",
+    ponderal_index: "体重指数",
     bmi_category: "BMI类别",
     health_risk: "健康风险",
     recommendations: "建议",
     units: "单位",
     metric: "公制 (公斤/厘米)",
     imperial: "英制 (磅/英尺)",
-    category_underweight: "体重不足",
+    
+    // Detailed BMI Categories (WHO)
+    category_severe_thinness: "重度消瘦",
+    category_moderate_thinness: "中度消瘦", 
+    category_mild_thinness: "轻度消瘦",
     category_normal: "正常体重",
     category_overweight: "超重",
     category_obese_class_1: "肥胖I级",
     category_obese_class_2: "肥胖II级",
     category_obese_class_3: "肥胖III级",
+    
+    // Health Risks
     risk_low: "低",
     risk_normal: "正常",
     risk_increased: "增加",
     risk_high: "高",
     risk_very_high: "很高",
     risk_extremely_high: "极高",
+    
+    // Additional Information
     bmi_range: "BMI范围",
+    ideal_weight: "理想体重范围",
+    weight_to_lose: "需要减重",
+    weight_to_gain: "需要增重",
     normal_range: "正常BMI范围：18.5 - 24.9",
+    
+    // BMI Prime
+    about_bmi_prime: "关于BMI Prime",
+    bmi_prime_explanation: "BMI Prime是您的BMI与正常BMI上限(25)的比值。值为1.0表示您处于正常体重的上限。",
+    underweight: "体重不足",
+    normal: "正常",
+    overweight: "超重", 
+    obese: "肥胖",
+    
+    // Limitations
+    limitations_title: "BMI的局限性",
+    limitations_text: "BMI无法区分肌肉和脂肪质量。运动员和肌肉发达的人可能BMI较高但仍然健康。年龄、性别、种族和身体成分也会影响解释。",
+    
     disclaimer: "BMI是筛查工具，可能无法反映身体成分。请咨询医疗专业人员获得个性化建议。",
   },
 } as const;

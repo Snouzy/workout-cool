@@ -35,7 +35,6 @@ export function usePremiumPlans() {
         throw new Error("Failed to fetch plans");
       }
       const data = await response.json();
-      console.log("data:", data);
       return data;
     },
     staleTime: 1000 * 60 * 30, // 30 minutes

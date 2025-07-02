@@ -4,6 +4,7 @@ import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-ki
 import { DndContext, closestCenter, PointerSensor, useSensor, useSensors, DragEndEvent, MouseSensor } from "@dnd-kit/core";
 
 import { useI18n } from "locales/client";
+import { env } from "@/env";
 import { HorizontalBottomBanner } from "@/components/ads";
 
 import { useWorkoutStepper } from "../model/use-workout-stepper";
@@ -147,7 +148,9 @@ export const ExercisesSelection = ({
         </div>
       )}
 
-      <HorizontalBottomBanner adSlot="6939184490" />
+      {env.NEXT_PUBLIC_EXERCISE_SELECTION_BANNER_AD_SLOT && (
+        <HorizontalBottomBanner adSlot={env.NEXT_PUBLIC_EXERCISE_SELECTION_BANNER_AD_SLOT} />
+      )}
     </div>
   );
 };

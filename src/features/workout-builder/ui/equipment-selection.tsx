@@ -5,6 +5,7 @@ import { ExerciseAttributeValueEnum } from "@prisma/client";
 import { useI18n } from "locales/client";
 import { getEquipmentTranslation } from "@/shared/lib/workout-session/equipments";
 import { cn } from "@/shared/lib/utils";
+import { env } from "@/env";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { HorizontalBottomBanner } from "@/components/ads";
@@ -201,7 +202,10 @@ export function EquipmentSelection({ onToggleEquipment, selectedEquipment }: Equ
           </div>
         ))}
       </div>
-      <HorizontalBottomBanner adSlot="9024074746" />
+
+      {env.NEXT_PUBLIC_EQUIPMENT_SELECTION_BANNER_AD_SLOT && (
+        <HorizontalBottomBanner adSlot={env.NEXT_PUBLIC_EQUIPMENT_SELECTION_BANNER_AD_SLOT} />
+      )}
       {/* <ActionBar onClearEquipment={onClearEquipment} selectedCount={selectedEquipment.length} /> */}
     </div>
   );

@@ -10,6 +10,7 @@ import { SiteConfig } from "@/shared/config/site-config";
 import { getLocalizedMetadata } from "@/shared/config/localized-metadata";
 import { WorkoutSessionsSynchronizer } from "@/features/workout-session/ui/workout-sessions-synchronizer";
 import { ThemeSynchronizer } from "@/features/theme/ui/ThemeSynchronizer";
+import { env } from "@/env";
 import { Version } from "@/components/version";
 import { TailwindIndicator } from "@/components/utils/TailwindIndicator";
 import { NextTopLoader } from "@/components/ui/next-top-loader";
@@ -244,12 +245,12 @@ export default async function RootLayout({ params, children }: RootLayoutProps) 
         <head>
           <meta charSet="UTF-8" />
           <meta content="width=device-width, initial-scale=1, maximum-scale=1 viewport-fit=cover" name="viewport" />
-          <meta content="ca-pub-3437447245301146" name="google-adsense-account" />
+          <meta content={env.NEXT_PUBLIC_AD_CLIENT} name="google-adsense-account" />
 
           <script
             async
             crossOrigin="anonymous"
-            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3437447245301146"
+            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${env.NEXT_PUBLIC_AD_CLIENT}`}
           />
 
           {/* PWA Meta Tags */}

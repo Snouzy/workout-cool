@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Crown, TrendingUp, Sparkles } from "lucide-react";
+import { Crown, TrendingUp } from "lucide-react";
 
 import { Locale } from "locales/types";
 import { getI18n } from "locales/server";
@@ -39,7 +39,7 @@ export async function ProgramsPage({ locale }: ProgramsPageProps) {
   }
 
   return (
-    <main className="flex flex-col min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
+    <main className="flex flex-col bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
       {/* Hero Section - Style Apple moderne */}
       <header className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-[#4F8EF7] via-[#4F8EF7] to-[#25CB78]" />
@@ -54,7 +54,7 @@ export async function ProgramsPage({ locale }: ProgramsPageProps) {
         </div>
 
         <div className="relative p-6 sm:p-8">
-          <div className="flex items-start justify-between mb-6">
+          <div className="flex items-start justify-between">
             <div className="flex-1">
               <div className="flex items-center gap-3 mb-3">
                 <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">{t("programs.workout_programs")}</h1>
@@ -81,16 +81,6 @@ export async function ProgramsPage({ locale }: ProgramsPageProps) {
                 </div>
               </div>
             </div>
-          </div>
-
-          {/* Stats rapides */}
-          <div className="flex items-center gap-4 text-white/80 text-sm">
-            <div className="flex items-center gap-1">
-              <Sparkles className="w-4 h-4" />
-              <span>{programs.length} programmes</span>
-            </div>
-            <div className="w-1 h-1 bg-white/40 rounded-full" />
-            <span>Débutant friendly</span>
           </div>
         </div>
       </header>
@@ -119,12 +109,12 @@ export async function ProgramsPage({ locale }: ProgramsPageProps) {
             </div>
 
             {/* Coming Soon Section - Style plus moderne */}
-            <aside className="mt-12 relative overflow-hidden">
-              <div className="bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-900 border-2 border-dashed border-slate-300 dark:border-slate-600 rounded-2xl p-8 text-center relative">
-                <div className="absolute top-4 right-4">
+            <aside className="mt-12 relative">
+              <div className="bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-900 border-2 border-dashed border-slate-300 dark:border-slate-600 rounded-2xl p-3 sm:p-8 text-center relative">
+                <div className="absolute -top-2 -right-2 sm:top-4 sm:right-4">
                   <Image
                     alt="Mascotte WorkoutCool excitée"
-                    className="object-contain w-12 h-12 opacity-60"
+                    className="object-contain w-10 h-10 sm:w-12 sm:h-12 opacity-60"
                     height={48}
                     src="/images/emojis/WorkoutCoolWooow.png"
                     width={48}

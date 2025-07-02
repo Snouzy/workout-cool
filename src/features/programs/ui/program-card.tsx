@@ -1,9 +1,11 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Lock, Star, Clock, Calendar } from "lucide-react";
+import { Lock, Star, Clock, Calendar, Dumbbell } from "lucide-react";
+import { ExerciseAttributeValueEnum } from "@prisma/client";
 
 import { Locale } from "locales/types";
 import { getI18n } from "locales/server";
+import { getAttributeValueLabel } from "@/shared/lib/attribute-value-translation";
 import { getProgramDescription, getProgramSlug, getProgramTitle } from "@/features/programs/lib/translations-mapper";
 
 import { PublicProgram } from "../actions/get-public-programs.action";
@@ -187,6 +189,26 @@ export async function ProgramCard({ program, featured = false, size = "medium", 
               </span>
             </div>
           </div>
+
+          {/* Equipment */}
+          {program.equipment && program.equipment.length > 0 && (
+            <div className="flex items-start gap-2">
+              <Dumbbell className="w-3 h-3 mt-0.5 text-slate-400 dark:text-slate-500 flex-shrink-0" />
+              <div className="flex flex-wrap gap-1 text-xs text-slate-500 dark:text-slate-400">
+                {program.equipment.slice(0, 3).map((equipment, index) => (
+                  <span className="inline-flex items-center" key={equipment}>
+                    {getAttributeValueLabel(equipment as ExerciseAttributeValueEnum, t)}
+                    {index < Math.min(program.equipment.length, 3) - 1 && (
+                      <span className="text-slate-300 dark:text-slate-600 ml-1">•</span>
+                    )}
+                  </span>
+                ))}
+                {program.equipment.length > 3 && (
+                  <span className="text-slate-400 dark:text-slate-500">+{program.equipment.length - 3}</span>
+                )}
+              </div>
+            </div>
+          )}
         </div>
       </Link>
     </div>

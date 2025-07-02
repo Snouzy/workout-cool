@@ -28,6 +28,8 @@ export function generateProgramSEOKeywords(program: ProgramDetail, locale: Local
             ? "программа тренировок"
             : locale === "zh-CN"
               ? "训练计划"
-              : "programme d'entraînement",
+              : locale === "ko"
+                ? "운동 프로그램"
+                : "programme d'entraînement",
   ];
 }

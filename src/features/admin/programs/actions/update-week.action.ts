@@ -14,12 +14,14 @@ interface UpdateWeekData {
   titlePt: string;
   titleRu: string;
   titleZhCn: string;
+  titleKo: string;
   description?: string;
   descriptionEn?: string;
   descriptionEs?: string;
   descriptionPt?: string;
   descriptionRu?: string;
   descriptionZhCn?: string;
+  descriptionKo?: string;
 }
 
 export async function updateWeek(weekId: string, data: UpdateWeekData) {
@@ -43,12 +45,14 @@ export async function updateWeek(weekId: string, data: UpdateWeekData) {
         titlePt: data.titlePt,
         titleRu: data.titleRu,
         titleZhCn: data.titleZhCn,
+        titleKo: data.titleZhCn,
         description: data.description || "",
         descriptionEn: data.descriptionEn || "",
         descriptionEs: data.descriptionEs || "",
         descriptionPt: data.descriptionPt || "",
         descriptionRu: data.descriptionRu || "",
         descriptionZhCn: data.descriptionZhCn || "",
+        descriptionKo: data.descriptionKo || "",
       },
     });
 

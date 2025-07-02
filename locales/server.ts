@@ -7,5 +7,5 @@ export const { getI18n, getScopedI18n, getStaticParams } = createI18nServer({
   "zh-CN": () => import("./zh-CN"),
   ru: () => import("./ru"),
   pt: () => import("./pt"),
-  kr: () => import("./kr"),
+  ko: () => import("./ko"),
 });

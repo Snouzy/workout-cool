@@ -17,12 +17,14 @@ const programSchema = z.object({
   titlePt: z.string().min(1, "Le titre en portugais est requis"),
   titleRu: z.string().min(1, "Le titre en russe est requis"),
   titleZhCn: z.string().min(1, "Le titre en chinois est requis"),
+  titleKo: z.string().min(1, "Le titre en chinois est requis"),
   description: z.string().min(1, "La description est requise"),
   descriptionEn: z.string().min(1, "La description en anglais est requise"),
   descriptionEs: z.string().min(1, "La description en espagnol est requise"),
   descriptionPt: z.string().min(1, "La description en portugais est requise"),
   descriptionRu: z.string().min(1, "La description en russe est requise"),
   descriptionZhCn: z.string().min(1, "La description en chinois est requise"),
+  descriptionKo: z.string().min(1, "La description en chinois est requise"),
   category: z.string().min(1, "La catégorie est requise"),
   image: z.string().url("URL d'image invalide"),
   level: z.nativeEnum(ProgramLevel),
@@ -100,12 +102,14 @@ export function CreateProgramForm({ currentStep, onStepComplete, onSuccess, onCa
       titlePt: "",
       titleRu: "",
       titleZhCn: "",
+      titleKo: "",
       description: "",
       descriptionEn: "",
       descriptionEs: "",
       descriptionPt: "",
       descriptionRu: "",
       descriptionZhCn: "",
+      descriptionKo: "",
     },
   });
 
@@ -152,7 +156,7 @@ export function CreateProgramForm({ currentStep, onStepComplete, onSuccess, onCa
     <div className="card bg-base-100 shadow-xl">
       <div className="card-body">
         <h2 className="card-title">Informations générales</h2>
-        
+
         {/* Language Tabs */}
         <div className="tabs tabs-boxed mb-6">
           <button className={`tab ${activeTab === "fr" ? "tab-active" : ""}`} onClick={() => setActiveTab("fr")} type="button">
@@ -172,6 +176,9 @@ export function CreateProgramForm({ currentStep, onStepComplete, onSuccess, onCa
           </button>
           <button className={`tab ${activeTab === "zh" ? "tab-active" : ""}`} onClick={() => setActiveTab("zh")} type="button">
             🇨🇳 ZH
+          </button>
+          <button className={`tab ${activeTab === "ko" ? "tab-active" : ""}`} onClick={() => setActiveTab("ko")} type="button">
+            🇰🇷 KO
           </button>
         </div>
 
@@ -292,6 +299,26 @@ export function CreateProgramForm({ currentStep, onStepComplete, onSuccess, onCa
                 </label>
                 <textarea className="textarea textarea-bordered h-24" id="descriptionZhCn" {...register("descriptionZhCn")} />
                 {errors.descriptionZhCn && <div className="text-sm text-error mt-1">{errors.descriptionZhCn.message}</div>}
+              </div>
+            </div>
+          )}
+
+          {/* Korean Fields */}
+          {activeTab === "ko" && (
+            <div className="space-y-4">
+              <div className="form-control">
+                <label className="label" htmlFor="titleKo">
+                  <span className="label-text">제목 (한국어)</span>
+                </label>
+                <input className="input input-bordered" id="titleKo" {...register("titleKo")} />
+                {errors.titleKo && <div className="text-sm text-error mt-1">{errors.titleKo.message}</div>}
+              </div>
+              <div className="form-control">
+                <label className="label" htmlFor="descriptionKo">
+                  <span className="label-text">설명 (한국어)</span>
+                </label>
+                <textarea className="textarea textarea-bordered h-24" id="descriptionKo" {...register("descriptionKo")} />
+                {errors.descriptionKo && <div className="text-sm text-error mt-1">{errors.descriptionKo.message}</div>}
               </div>
             </div>
           )}

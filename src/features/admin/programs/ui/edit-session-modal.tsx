@@ -25,12 +25,14 @@ const sessionSchema = z.object({
   titlePt: z.string().min(1, "Le titre en portugais est requis"),
   titleRu: z.string().min(1, "Le titre en russe est requis"),
   titleZhCn: z.string().min(1, "Le titre en chinois est requis"),
+  titleKo: z.string().min(1, "Le titre en chinois est requis"),
   description: z.string().min(1, "La description est requise"),
   descriptionEn: z.string().min(1, "La description en anglais est requise"),
   descriptionEs: z.string().min(1, "La description en espagnol est requise"),
   descriptionPt: z.string().min(1, "La description en portugais est requise"),
   descriptionRu: z.string().min(1, "La description en russe est requise"),
   descriptionZhCn: z.string().min(1, "La description en chinois est requise"),
+  descriptionKo: z.string().min(1, "La description en chinois est requise"),
   estimatedMinutes: z.number().min(5, "Au moins 5 minutes"),
   isPremium: z.boolean(),
   equipment: z.array(z.nativeEnum(ExerciseAttributeValueEnum)),
@@ -75,12 +77,14 @@ export function EditSessionModal({ open, onOpenChange, session }: EditSessionMod
       titlePt: session.titlePt,
       titleRu: session.titleRu,
       titleZhCn: session.titleZhCn,
+      titleKo: session.titleKo,
       description: session.description,
       descriptionEn: session.descriptionEn,
       descriptionEs: session.descriptionEs,
       descriptionPt: session.descriptionPt,
       descriptionRu: session.descriptionRu,
       descriptionZhCn: session.descriptionZhCn,
+      descriptionKo: session.descriptionKo,
       estimatedMinutes: session.estimatedMinutes,
       isPremium: session.isPremium,
       equipment: session.equipment,
@@ -107,6 +111,7 @@ export function EditSessionModal({ open, onOpenChange, session }: EditSessionMod
         titlePt: data.titlePt,
         titleRu: data.titleRu,
         titleZhCn: data.titleZhCn,
+        titleKo: data.titleKo,
       });
 
       await updateSession({
@@ -159,6 +164,9 @@ export function EditSessionModal({ open, onOpenChange, session }: EditSessionMod
             </button>
             <button className={`tab ${activeTab === "zh" ? "tab-active" : ""}`} onClick={() => setActiveTab("zh")} type="button">
               🇨🇳 ZH
+            </button>
+            <button className={`tab ${activeTab === "ko" ? "tab-active" : ""}`} onClick={() => setActiveTab("ko")} type="button">
+              🇰🇷 KO
             </button>
           </div>
 
@@ -254,6 +262,22 @@ export function EditSessionModal({ open, onOpenChange, session }: EditSessionMod
                 <Label htmlFor="edit-descriptionZhCn">描述 (中文)</Label>
                 <Textarea id="edit-descriptionZhCn" {...register("descriptionZhCn")} rows={3} />
                 {errors.descriptionZhCn && <p className="text-sm text-red-500 mt-1">{errors.descriptionZhCn.message}</p>}
+              </div>
+            </div>
+          )}
+
+          {/* Korean Fields */}
+          {activeTab === "ko" && (
+            <div className="space-y-4">
+              <div>
+                <Label htmlFor="edit-titleKoKr">제목 (한국어)</Label>
+                <Input id="edit-titleKoKr" {...register("titleKo")} />
+                {errors.titleKo && <p className="text-sm text-red-500 mt-1">{errors.titleKo.message}</p>}
+              </div>
+              <div>
+                <Label htmlFor="edit-descriptionKoKr">설명 (한국어)</Label>
+                <Textarea id="edit-descriptionKoKr" {...register("descriptionKo")} rows={3} />
+                {errors.descriptionKo && <p className="text-sm text-red-500 mt-1">{errors.descriptionKo.message}</p>}
               </div>
             </div>
           )}

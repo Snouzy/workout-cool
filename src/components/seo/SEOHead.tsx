@@ -78,6 +78,7 @@ export function generateSEOMetadata({
         "pt-PT": `${baseUrl}/pt`,
         "ru-RU": `${baseUrl}/ru`,
         "zh-CN": `${baseUrl}/zh-CN`,
+        "ko-KR": `${baseUrl}/ko`,
         "x-default": baseUrl,
       },
     },
@@ -86,15 +87,59 @@ export function generateSEOMetadata({
       description: finalDescription,
       url: finalCanonical,
       siteName: SiteConfig.title,
-      locale: locale === "en" ? "en_US" : locale === "es" ? "es_ES" : locale === "pt" ? "pt_PT" : locale === "ru" ? "ru_RU" : locale === "zh-CN" ? "zh_CN" : "fr_FR",
+      locale:
+        locale === "en"
+          ? "en_US"
+          : locale === "es"
+            ? "es_ES"
+            : locale === "pt"
+              ? "pt_PT"
+              : locale === "ru"
+                ? "ru_RU"
+                : locale === "zh-CN"
+                  ? "zh_CN"
+                  : locale === "ko"
+                    ? "ko_KR"
+                    : "fr_FR",
       alternateLocale: [
-        "fr_FR", "fr_CA", "fr_CH", "fr_BE",
-        "en_US", "en_GB", "en_CA", "en_AU", 
-        "es_ES", "es_MX", "es_AR", "es_CL",
-        "pt_PT", "pt_BR",
-        "ru_RU", "ru_BY", "ru_KZ",
-        "zh_CN", "zh_TW", "zh_HK"
-      ].filter(alt => alt !== (locale === "en" ? "en_US" : locale === "es" ? "es_ES" : locale === "pt" ? "pt_PT" : locale === "ru" ? "ru_RU" : locale === "zh-CN" ? "zh_CN" : "fr_FR")),
+        "fr_FR",
+        "fr_CA",
+        "fr_CH",
+        "fr_BE",
+        "en_US",
+        "en_GB",
+        "en_CA",
+        "en_AU",
+        "es_ES",
+        "es_MX",
+        "es_AR",
+        "es_CL",
+        "pt_PT",
+        "pt_BR",
+        "ru_RU",
+        "ru_BY",
+        "ru_KZ",
+        "zh_CN",
+        "zh_TW",
+        "zh_HK",
+        "ko_KR",
+      ].filter(
+        (alt) =>
+          alt !==
+          (locale === "en"
+            ? "en_US"
+            : locale === "es"
+              ? "es_ES"
+              : locale === "pt"
+                ? "pt_PT"
+                : locale === "ru"
+                  ? "ru_RU"
+                  : locale === "zh-CN"
+                    ? "zh_CN"
+                    : locale === "ko"
+                      ? "ko_KR"
+                      : "fr_FR"),
+      ),
       images: [
         {
           url: finalOgImage,

@@ -23,6 +23,8 @@ export function generateSessionSEOKeywords(session: ProgramSessionWithExercises,
         return ex.exercise.nameRu || ex.exercise.nameEn;
       case "zh-CN":
         return ex.exercise.nameZhCn || ex.exercise.nameEn;
+      case "ko":
+        return ex.exercise.nameKo || ex.exercise.nameKo;
       default:
         return ex.exercise.name;
     }
@@ -39,7 +41,9 @@ export function generateSessionSEOKeywords(session: ProgramSessionWithExercises,
             ? "тренировочная сессия"
             : locale === "zh-CN"
               ? "训练课程"
-              : "séance d'entraînement";
+              : locale === "ko"
+                ? "운동 세션"
+                : "séance d'entraînement";
 
   return [
     ...baseData.keywords,
@@ -73,7 +77,9 @@ export function generateSessionMetadata(session: ProgramSessionWithExercises, pr
             ? `Тренировочная сессия ${sessionTitle} из программы ${programTitle}. ${session.exercises.length} упражнений, ~${Math.round(session.exercises.length * 3)} минут.`
             : locale === "zh-CN"
               ? `${programTitle}计划中的${sessionTitle}训练课程。${session.exercises.length}个练习，约${Math.round(session.exercises.length * 3)}分钟。`
-              : `Séance d'entraînement ${sessionTitle} du programme ${programTitle}. ${session.exercises.length} exercices, ~${Math.round(session.exercises.length * 3)} minutes.`);
+              : locale === "ko"
+                ? `${programTitle} 프로그램의 ${sessionTitle} 운동 세션입니다. ${session.exercises.length}가지 운동, 약 ${Math.round(session.exercises.length * 3)}분 소요.`
+                : `Séance d'entraînement ${sessionTitle} du programme ${programTitle}. ${session.exercises.length} exercices, ~${Math.round(session.exercises.length * 3)} minutes.`);
 
   return {
     title,

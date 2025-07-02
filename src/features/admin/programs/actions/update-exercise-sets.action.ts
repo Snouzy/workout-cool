@@ -54,7 +54,7 @@ export async function updateExerciseSets(exerciseId: string, sets: SetData[]) {
 
     // Revalider les caches
     revalidatePath("/admin/programs");
-    
+
     return { success: true };
   } catch (error) {
     console.error("Error updating exercise sets:", error);

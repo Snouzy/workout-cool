@@ -8,13 +8,7 @@ interface DurationBadgeProps {
   className?: string;
 }
 
-export function DurationBadge({ 
-  durationWeeks, 
-  sessionsPerWeek, 
-  sessionDurationMin, 
-  locale,
-  className = "" 
-}: DurationBadgeProps) {
+export function DurationBadge({ durationWeeks, sessionsPerWeek, sessionDurationMin, locale, className = "" }: DurationBadgeProps) {
   const totalMinutes = durationWeeks * sessionsPerWeek * sessionDurationMin;
   const totalHours = Math.round(totalMinutes / 60);
 
@@ -29,6 +23,8 @@ export function DurationBadge({
       return `${durationWeeks} недель • ${totalHours}ч всего`;
     } else if (locale === "zh-CN") {
       return `${durationWeeks} 周 • 总共${totalHours}小时`;
+    } else if (locale === "ko") {
+      return `${durationWeeks}주 • 총 ${totalHours}시간`;
     } else {
       return `${durationWeeks} semaines • ${totalHours}h total`;
     }
@@ -38,7 +34,7 @@ export function DurationBadge({
     <div className={`inline-flex items-center space-x-1 text-sm text-gray-600 dark:text-gray-400 ${className}`}>
       <Clock className="h-4 w-4" />
       <span>{formatDuration()}</span>
-      
+
       {/* Hidden structured data for SEO */}
       <div className="sr-only">
         <span itemProp="timeRequired">PT{totalMinutes}M</span>

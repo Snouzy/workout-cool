@@ -3,16 +3,17 @@
 import React, { useState } from "react";
 
 import { useI18n } from "locales/client";
-
-import { WeightInput } from "../mifflin-st-jeor-calculator/components/WeightInput";
-import { UnitSelector } from "../mifflin-st-jeor-calculator/components/UnitSelector";
-import { HeightInput } from "../mifflin-st-jeor-calculator/components/HeightInput";
-import { GoalSelector } from "../mifflin-st-jeor-calculator/components/GoalSelector";
-import { GenderSelector } from "../mifflin-st-jeor-calculator/components/GenderSelector";
-import { AgeInput } from "../mifflin-st-jeor-calculator/components/AgeInput";
-import { ActivityLevelSelector } from "../mifflin-st-jeor-calculator/components/ActivityLevelSelector";
-import { BodyFatInput } from "../katch-mcardle-calculator/components/BodyFatInput";
-import { calculateCalories, type CalorieCalculatorInputs, type CalorieResults } from "../../shared/calorie-formulas.utils";
+import { calculateCalories, CalorieCalculatorInputs, CalorieResults } from "app/[locale]/(app)/tools/shared/calorie-formulas.utils";
+import { BodyFatInput } from "app/[locale]/(app)/tools/calorie-calculator/shared/components/BodyFatInput";
+import {
+  ActivityLevelSelector,
+  AgeInput,
+  GenderSelector,
+  GoalSelector,
+  HeightInput,
+  UnitSelector,
+  WeightInput,
+} from "app/[locale]/(app)/tools/calorie-calculator/shared/components";
 
 interface FormulaResult {
   name: string;
@@ -143,7 +144,9 @@ export function CalorieCalculatorComparison() {
           {/* Calculate Button */}
           <button
             aria-label={t("tools.calorie-calculator.calculate")}
-            className={`w-full py-4 px-6 rounded-xl bg-gradient-to-r from-[#06B6D4] to-[#3B82F6] text-white font-bold text-lg transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-primary/25 active:scale-[0.98] touch-manipulation`}
+            className={
+              "w-full py-4 px-6 rounded-xl bg-gradient-to-r from-[#06B6D4] to-[#3B82F6] text-white font-bold text-lg transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-primary/25 active:scale-[0.98] touch-manipulation"
+            }
             disabled={isCalculating}
             onClick={handleCalculate}
           >

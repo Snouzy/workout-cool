@@ -69,9 +69,9 @@ function convertToMetric(inputs: CalorieCalculatorInputs): {
  */
 function calculateBMR(inputs: CalorieCalculatorInputs): number {
   const { weight, height } = convertToMetric(inputs);
-  
+
   const baseBMR = 10 * weight + 6.25 * height - 5 * inputs.age;
-  
+
   if (inputs.gender === "male") {
     return baseBMR + 5;
   } else {
@@ -107,10 +107,10 @@ export function calculateTDEE(inputs: CalorieCalculatorInputs): CalorieResults {
   const bmr = calculateBMR(inputs);
   const tdee = bmr * ACTIVITY_MULTIPLIERS[inputs.activityLevel];
   const targetCalories = tdee + GOAL_ADJUSTMENTS[inputs.goal];
-  
+
   // Ensure minimum calories (never go below 1200 for safety)
   const safeTargetCalories = Math.max(1200, targetCalories);
-  
+
   const macros = calculateMacros(safeTargetCalories);
 
   return {

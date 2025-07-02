@@ -4,11 +4,12 @@ import { Metadata } from "next";
 import { ChevronLeftIcon } from "lucide-react";
 
 import { getI18n } from "locales/server";
+import { CalorieCalculatorClient } from "app/[locale]/(app)/tools/calorie-calculator/shared/CalorieCalculatorClient";
+import { calculatorConfigs } from "app/[locale]/(app)/tools/calorie-calculator/shared/calculator-configs";
 import { getServerUrl } from "@/shared/lib/server-url";
 import { generateSEOMetadata, SEOScripts } from "@/components/seo/SEOHead";
 
-import { CalorieCalculatorClient } from "./CalorieCalculatorClient";
-import "./styles.css";
+import "../styles.css";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
@@ -112,7 +113,7 @@ export default async function OxfordCalculatorPage({ params }: { params: Promise
             </div>
           </div>
 
-          <CalorieCalculatorClient />
+          <CalorieCalculatorClient config={calculatorConfigs.oxford} />
         </div>
       </div>
     </>

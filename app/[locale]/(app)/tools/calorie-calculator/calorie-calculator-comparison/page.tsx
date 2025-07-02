@@ -72,7 +72,7 @@ export default async function CalorieCalculatorComparisonPage({ params }: { para
         }}
         title={t("tools.calorie-calculator-comparison.meta.title")}
       />
-      <div className="min-h-screen light:bg-white dark:bg-base-200/20">
+      <div className="light:bg-white dark:bg-base-200/20">
         <div className="container mx-auto px-2 sm:px-4 py-8 sm:py-12 max-w-6xl">
           {/* Back to hub */}
           <Link

@@ -72,7 +72,7 @@ export default async function CunninghamCalculatorPage({ params }: { params: Pro
         }}
         title={t("tools.cunningham.meta.title")}
       />
-      <div className="min-h-screen light:bg-white dark:bg-base-200/20">
+      <div className="light:bg-white dark:bg-base-200/20">
         <div className="container mx-auto px-2 sm:px-4 py-4 sm:py-8  max-w-4xl">
           {/* Back to hub */}
           <Link

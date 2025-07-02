@@ -77,7 +77,7 @@ export default async function ToolsPage() {
   const t = await getI18n();
 
   return (
-    <div className="min-h-screen light:bg-white dark:bg-base-200">
+    <div className="light:bg-white dark:bg-base-200">
       <div className="container mx-auto px-4 py-8 sm:py-12">
         <div className="mb-8 sm:mb-12 text-center">
           <h1 className="text-4xl sm:text-5xl font-bold mb-4 bg-gradient-to-r from-[#4F8EF7] to-[#25CB78] bg-clip-text text-transparent">

@@ -11,7 +11,6 @@ import { getProgramDescription, getProgramTitle } from "@/features/programs/lib/
 import { generateProgramSEOKeywords } from "@/features/programs/lib/program-metadata";
 import { getProgramBySlug } from "@/features/programs/actions/get-program-by-slug.action";
 import { auth } from "@/features/auth/lib/better-auth";
-import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 
 interface ProgramDetailPageProps {
   params: Promise<{ slug: string; locale: Locale }>;
@@ -98,25 +97,10 @@ export default async function ProgramDetailPageRoute({ params }: ProgramDetailPa
   });
 
   // Breadcrumbs
-  const breadcrumbItems = [
-    {
-      label: t("breadcrumbs.home"),
-      href: `/${locale}`,
-    },
-    {
-      label: t("programs.workout_programs"),
-      href: `/${locale}/programs`,
-    },
-    {
-      label: localizedTitle,
-      current: true,
-    },
-  ];
 
   return (
     <>
       <StructuredDataScript data={courseStructuredData} />
-      <Breadcrumbs items={breadcrumbItems} />
       <ProgramDetailPage isAuthenticated={!!session} program={program} />
     </>
   );

@@ -35,6 +35,7 @@ import {
   getWeekDescription,
   getWeekTitle,
 } from "@/features/programs/lib/translations-mapper";
+import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 
 import { getProgramProgress } from "../actions/get-program-progress.action";
 import { ProgramDetail } from "../actions/get-program-by-slug.action";
@@ -63,6 +64,23 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
   const currentWeekFull = program.weeks.find((w) => w.weekNumber === selectedWeek);
   const currentWeekTitle = currentWeekFull ? getWeekTitle(currentWeekFull, currentLocale) : "";
   const currentWeekDescription = currentWeekFull ? getWeekDescription(currentWeekFull, currentLocale) : "";
+
+  const localizedTitle = getProgramTitle(program, currentLocale);
+
+  const breadcrumbItems = [
+    {
+      label: t("breadcrumbs.home"),
+      href: `/${currentLocale}`,
+    },
+    {
+      label: t("programs.workout_programs"),
+      href: `/${currentLocale}/programs`,
+    },
+    {
+      label: localizedTitle,
+      current: true,
+    },
+  ];
 
   // Load completed sessions when component mounts or when authenticated
   useEffect(() => {
@@ -161,6 +179,7 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
   return (
     <div className="flex-1 flex flex-col overflow-hidden relative">
       <div className="flex-1 overflow-y-auto overflow-x-hidden pb-20">
+        <Breadcrumbs items={breadcrumbItems} />
         {/* Hero Image Section with Gamification */}
         <div className="relative h-40 sm:h-64 bg-gradient-to-br from-[#4F8EF7] to-[#25CB78]">
           <Image alt={programTitle} className="absolute inset-0 object-cover opacity-30" fill src={program.image} />

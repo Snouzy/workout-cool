@@ -16,7 +16,6 @@ interface ProgramCardProps {
 }
 
 export async function ProgramCard({ program, featured = false, size = "medium", locale }: ProgramCardProps) {
-  console.log("program:", program);
   const isLocked = program.isPremium;
   const t = await getI18n();
   const title = getProgramTitle(program, locale);

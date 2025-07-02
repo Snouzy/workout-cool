@@ -34,7 +34,7 @@ export function BmiHeightInput({ value, unit, onChange }: BmiHeightInputProps) {
         <div className="mt-2 grid grid-cols-2 gap-2">
           <div>
             <input
-              className="w-full px-4 py-3 rounded-xl border-2 border-base-content/15 dark:border-base-content/10 bg-white dark:bg-base-200/30 text-base-content focus:border-primary focus:outline-none transition-all duration-300 hover:border-primary/30 text-center font-semibold"
+              className="w-full px-4 py-3 rounded-xl border-2 border-base-content/15 dark:border-base-content/10 light:bg-white dark:bg-base-200/30 text-base-content focus:border-primary focus:outline-none transition-all duration-300 hover:border-primary/30 text-center font-semibold"
               max="7"
               min="4"
               onChange={(e) => handleFeetChange(Number(e.target.value))}
@@ -47,7 +47,7 @@ export function BmiHeightInput({ value, unit, onChange }: BmiHeightInputProps) {
           </div>
           <div>
             <input
-              className="w-full px-4 py-3 rounded-xl border-2 border-base-content/15 dark:border-base-content/10 bg-white dark:bg-base-200/30 text-base-content focus:border-primary focus:outline-none transition-all duration-300 hover:border-primary/30 text-center font-semibold"
+              className="w-full px-4 py-3 rounded-xl border-2 border-base-content/15 dark:border-base-content/10 light:bg-white dark:bg-base-200/30 text-base-content focus:border-primary focus:outline-none transition-all duration-300 hover:border-primary/30 text-center font-semibold"
               max="11"
               min="0"
               onChange={(e) => handleInchesChange(Number(e.target.value))}
@@ -72,7 +72,7 @@ export function BmiHeightInput({ value, unit, onChange }: BmiHeightInputProps) {
       <div className="mt-2">
         <div className="relative">
           <input
-            className="w-full px-4 py-3 pr-12 rounded-xl border-2 border-base-content/15 dark:border-base-content/10 bg-white dark:bg-base-200/30 text-base-content focus:border-primary focus:outline-none transition-all duration-300 hover:border-primary/30 font-semibold"
+            className="w-full px-4 py-3 pr-12 rounded-xl border-2 border-base-content/15 dark:border-base-content/10 light:bg-white dark:bg-base-200/30 text-base-content focus:border-primary focus:outline-none transition-all duration-300 hover:border-primary/30 font-semibold"
             max="250"
             min="100"
             onChange={(e) => onChange(Number(e.target.value))}

@@ -24,7 +24,7 @@ export function BmiWeightInput({ value, unit, onChange }: BmiWeightInputProps) {
       </label>
       <div className="relative">
         <input
-          className="w-full px-4 py-3 pr-12 rounded-xl border-2 border-base-content/15 dark:border-base-content/10 bg-white dark:bg-base-200/30 text-base-content focus:border-primary focus:outline-none transition-all duration-300 hover:border-primary/30 font-semibold"
+          className="w-full px-4 py-3 pr-12 rounded-xl border-2 border-base-content/15 dark:border-base-content/10 light:bg-white dark:bg-base-200/30 text-base-content focus:border-primary focus:outline-none transition-all duration-300 hover:border-primary/30 font-semibold"
           max={max}
           min={min}
           onChange={(e) => onChange(Number(e.target.value))}

@@ -23,7 +23,7 @@ export function BmiUnitSelector({ value, onChange }: BmiUnitSelectorProps) {
           className={`group flex items-center justify-center gap-2 sm:gap-3 py-3 sm:py-4 px-3 sm:px-4 rounded-2xl border-2 transition-all duration-300 touch-manipulation ${
             value === "metric"
               ? "border-[#4F8EF7] bg-gradient-to-br from-[#4F8EF7]/20 to-[#238BE6]/10 text-[#4F8EF7] dark:from-[#4F8EF7]/15 dark:to-[#238BE6]/5 scale-[1.02]"
-              : "border-base-content/15 dark:border-base-content/10 hover:border-[#4F8EF7]/50 bg-white dark:bg-base-200/30 hover:bg-base-200/50 active:bg-base-200/70"
+              : "border-base-content/15 dark:border-base-content/10 hover:border-[#4F8EF7]/50 light:bg-white dark:bg-base-200/30 hover:bg-base-200/50 active:bg-base-200/70"
           }`}
           onClick={() => onChange("metric")}
         >
@@ -33,7 +33,7 @@ export function BmiUnitSelector({ value, onChange }: BmiUnitSelectorProps) {
           className={`group flex items-center justify-center gap-2 sm:gap-3 py-3 sm:py-4 px-3 sm:px-4 rounded-2xl border-2 transition-all duration-300 touch-manipulation ${
             value === "imperial"
               ? "border-[#4F8EF7] bg-gradient-to-br from-[#4F8EF7]/20 to-[#238BE6]/10 text-[#4F8EF7] dark:from-[#4F8EF7]/15 dark:to-[#238BE6]/5 scale-[1.02]"
-              : "border-base-content/15 dark:border-base-content/10 hover:border-[#4F8EF7]/50 bg-white dark:bg-base-200/30 hover:bg-base-200/50 active:bg-base-200/70"
+              : "border-base-content/15 dark:border-base-content/10 hover:border-[#4F8EF7]/50 light:bg-white dark:bg-base-200/30 hover:bg-base-200/50 active:bg-base-200/70"
           }`}
           onClick={() => onChange("imperial")}
         >

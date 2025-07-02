@@ -3,7 +3,13 @@ name: Publish Docker GHCR Image
 on:
   release:
     types: [published]
-
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version tag for the Docker image"
+        required: true
+        default: "1.2.5"
+        type: string
 permissions:
   contents: read
   packages: write
@@ -23,11 +29,18 @@ jobs:
 
       - name: Set image tag
         id: vars
-        run: echo "tag=${{ github.event.release.tag_name }}" >> $GITHUB_OUTPUT
+        run: |
+          if [ "${{ github.event_name }}" = "release" ]; then
+            # Remove 'v' prefix if present for Docker tag
+            tag="${github.event.release.tag_name#v}"
+            echo "tag=$tag" >> $GITHUB_OUTPUT
+          else
+            echo "tag=${{ github.event.inputs.version }}" >> $GITHUB_OUTPUT
+          fi
 
       - name: Build Docker image
         run: |
-          docker build . \
+          docker build --no-cache . \
                     --tag ghcr.io/snouzy/workout-cool:${{ steps.vars.outputs.tag }} \
                     --tag ghcr.io/snouzy/workout-cool:latest
 

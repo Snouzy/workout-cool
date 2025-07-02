@@ -90,8 +90,18 @@ jobs:
           OPENPANEL_SECRET_KEY: test_secret
           NEXT_PUBLIC_OPENPANEL_CLIENT_ID: test_client_id
           NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: test_client_id
-          NEXT_PUBLIC_STRIPE_PRICE_MONTHLY: test_price_monthly
-          NEXT_PUBLIC_STRIPE_PRICE_YEARLY: test_price_yearly
+          NEXT_PUBLIC_STRIPE_PRICE_MONTHLY_EU: test_price_monthly
+          NEXT_PUBLIC_STRIPE_PRICE_YEARLY_EU: test_price_yearly
+          NEXT_PUBLIC_STRIPE_PRICE_MONTHLY_US: test_price_monthly
+          NEXT_PUBLIC_STRIPE_PRICE_YEARLY_US: test_price_yearly
+          NEXT_PUBLIC_STRIPE_PRICE_MONTHLY_LATAM: test_price_monthly
+          NEXT_PUBLIC_STRIPE_PRICE_YEARLY_LATAM: test_price_yearly
+          NEXT_PUBLIC_STRIPE_PRICE_MONTHLY_BR: test_price_monthly
+          NEXT_PUBLIC_STRIPE_PRICE_YEARLY_BR: test_price_yearly
+          NEXT_PUBLIC_STRIPE_PRICE_MONTHLY_RU: test_price_monthly
+          NEXT_PUBLIC_STRIPE_PRICE_YEARLY_RU: test_price_yearly
+          NEXT_PUBLIC_STRIPE_PRICE_MONTHLY_CN: test_price_monthly
+          NEXT_PUBLIC_STRIPE_PRICE_YEARLY_CN: test_price_yearly
           NEXT_PUBLIC_APP_URL: http://localhost:3000
           STRIPE_SECRET_KEY: test_secret_key
           STRIPE_WEBHOOK_SECRET: test_webhook_secret

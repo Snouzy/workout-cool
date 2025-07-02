@@ -1,7 +1,6 @@
-import { PaymentProcessor } from "@prisma/client";
+import { PaymentProcessor, PlanProviderMapping } from "@prisma/client";
 
 import { prisma } from "@/shared/lib/prisma";
-import { env } from "@/env";
 
 import { StripeProvider } from "./providers/stripe-provider";
 import { PremiumService } from "./premium.service";
@@ -22,7 +21,7 @@ export class PremiumManager {
 
   /**
    * Get available premium plans with provider mappings
-   * Falls back to hardcoded plans if database is empty
+   * Returns 3 plans: Free, Supporter, Premium - fitness focused
    */
   static async getAvailablePlans(provider?: string, region?: string): Promise<PremiumPlan[]> {
     // Try to get plans from database first
@@ -45,12 +44,14 @@ export class PremiumManager {
           },
         },
       },
-      orderBy: { priceYearly: "asc" },
+      orderBy: { priceMonthly: "asc" },
     });
 
     // Convert database plans to PremiumPlan format
+    let paidPlans: PremiumPlan[] = [];
+
     if (dbPlans.length > 0) {
-      return dbPlans.map((plan) => {
+      paidPlans = dbPlans.map((plan) => {
         // Get the appropriate provider mapping
         const mapping = plan.providerMappings.find(
           (m) => (!provider || m.provider === provider.toUpperCase()) && (!region || m.region === region || !m.region),
@@ -63,7 +64,8 @@ export class PremiumManager {
         return {
           id: mapping?.externalId || plan.id,
           internalId: plan.id, // Keep internal ID for database operations
-          name: `Premium ${planType.charAt(0).toUpperCase() + planType.slice(1)}`, // Fallback name
+          name: `Premium ${planType.charAt(0).toUpperCase() + planType.slice(1)}`,
+          type: "premium", // Database plans are premium by default
           priceMonthly: plan.priceMonthly?.toNumber() || 0,
           priceYearly: plan.priceYearly?.toNumber() || 0,
           currency: (plan.currency || "EUR") as "EUR" | "USD",
@@ -72,31 +74,7 @@ export class PremiumManager {
       });
     }
 
-    // Fallback to hardcoded plans if no plans in database
-    return [
-      {
-        id: env.NEXT_PUBLIC_STRIPE_PRICE_MONTHLY || "price_monthly",
-        name: "Premium Monthly",
-        priceMonthly: 7.9,
-        priceYearly: 0,
-        currency: "EUR",
-        features: ["Access to all premium programs", "Advanced workout tracking", "Personalized recommendations", "Priority support"],
-      },
-      {
-        id: env.NEXT_PUBLIC_STRIPE_PRICE_YEARLY || "price_yearly",
-        name: "Premium Yearly",
-        priceMonthly: 0,
-        priceYearly: 49.0,
-        currency: "EUR",
-        features: [
-          "Access to all premium programs",
-          "Advanced workout tracking",
-          "Personalized recommendations",
-          "Priority support",
-          "Save 50% vs monthly",
-        ],
-      },
-    ];
+    return paidPlans;
   }
 
   /**
@@ -168,6 +146,28 @@ export class PremiumManager {
         error: error instanceof Error ? error.message : "Unknown error",
       };
     }
+  }
+
+  /**
+   * Get plan by external ID across all providers
+   */
+  static async getPlanByInternalId(internalId: string, provider: string): Promise<PlanProviderMapping> {
+    const mapping = await prisma.planProviderMapping.findFirst({
+      where: {
+        planId: internalId,
+        provider: provider.toUpperCase() as any,
+        isActive: true,
+      },
+      include: {
+        plan: true,
+      },
+    });
+
+    if (!mapping) {
+      throw new Error(`Plan ${internalId} not found for provider ${provider}`);
+    }
+
+    return mapping;
   }
 
   /**

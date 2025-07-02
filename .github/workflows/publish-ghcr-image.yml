@@ -1,0 +1,38 @@
+name: Publish Docker GHCR Image
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build_and_publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set image tag
+        id: vars
+        run: echo "tag=${{ github.event.release.tag_name }}" >> $GITHUB_OUTPUT
+
+      - name: Build Docker image
+        run: |
+          docker build . \
+                    --tag ghcr.io/snouzy/workout-cool:${{ steps.vars.outputs.tag }} \
+                    --tag ghcr.io/snouzy/workout-cool:latest
+
+      - name: Push Docker image (release tag)
+        run: docker push ghcr.io/snouzy/workout-cool:${{ steps.vars.outputs.tag }}
+
+      - name: Push Docker image (latest tag)
+        run: docker push ghcr.io/snouzy/workout-cool:latest

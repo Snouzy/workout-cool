@@ -4,6 +4,7 @@ import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-ki
 import { DndContext, closestCenter, PointerSensor, useSensor, useSensors, DragEndEvent, MouseSensor } from "@dnd-kit/core";
 
 import { useI18n } from "locales/client";
+import { HorizontalBottomBanner } from "@/components/ads";
 
 import { useWorkoutStepper } from "../model/use-workout-stepper";
 import { ExerciseListItem } from "./exercise-list-item";
@@ -145,6 +146,8 @@ export const ExercisesSelection = ({
           <p className="text-slate-600 dark:text-slate-400">{t("workout_builder.no_exercises_found")}</p>
         </div>
       )}
+
+      <HorizontalBottomBanner adSlot="6939184490" />
     </div>
   );
 };

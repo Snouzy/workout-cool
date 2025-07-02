@@ -32,7 +32,7 @@
 - [Project Architecture](#project-architecture)
 - [Roadmap](#roadmap)
 - [Contributing](#contributing)
-- [Deployment / Self-hosting](#deployment)
+- [Self-hosting](#deployment--self-hosting)
 - [Resources](#resources)
 - [License](#license)
 - [Sponsor This Project](#-sponsor-this-project)

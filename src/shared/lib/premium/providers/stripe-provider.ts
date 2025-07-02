@@ -37,7 +37,7 @@ export class StripeProvider implements PaymentProvider {
 
       const session = await this.stripe.checkout.sessions.create({
         mode: "subscription",
-        payment_method_types: ["card"],
+        // payment_method_types: ["card", "paypal", "apple_pay", "google_pay", "revolut_pay", "samsung_pay", "link", "klarna"],
         customer: customer.id,
         line_items: [
           {
@@ -173,14 +173,21 @@ export class StripeProvider implements PaymentProvider {
           // Get the new plan ID from the subscription items
           const newStripePriceId = subscription.items.data[0]?.price?.id;
           let planId = subscription.metadata?.planId;
+          console.log("planId:", planId);
+          console.log("newStripePriceId:", newStripePriceId);
 
           // If the price changed, we need to map it to our internal plan ID
           if (newStripePriceId) {
-            // Map Stripe price ID to our internal plan ID
-            if (newStripePriceId === env.NEXT_PUBLIC_STRIPE_PRICE_MONTHLY) {
-              planId = "premium-monthly";
-            } else if (newStripePriceId === env.NEXT_PUBLIC_STRIPE_PRICE_YEARLY) {
-              planId = "premium-yearly";
+            try {
+              // Use the PremiumManager to map Stripe price ID to our internal plan ID
+              const { PremiumManager } = await import("@/shared/lib/premium/premium.manager");
+              const plan = await PremiumManager.getPlanByExternalId(newStripePriceId, "stripe");
+              if (plan) {
+                planId = plan.id;
+              }
+            } catch (error) {
+              console.error("Failed to map Stripe price ID to internal plan ID:", error);
+              // Fallback to metadata planId if mapping fails
             }
           }
 

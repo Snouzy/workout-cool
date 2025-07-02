@@ -83,8 +83,267 @@ export default {
     },
   },
   premium: {
-    // PremiumUpgradeCard translations
     checkout_error: "Erro ao processar o pagamento",
+    premium_required_title: "Premium Obrigatório",
+    premium_required_subtitle: "Este é um acesso premium. Atualize para Premium para aceder a todo o conteúdo premium.",
+    premium_required_button: "Atualizar para Premium",
+    already_premium: "Está a desfrutar do Workout.cool Premium",
+    no_ads: "Sem anúncios",
+    upgrade: "Atualizar",
+
+    pricing: {
+      month: "month",
+      year: "year",
+      monthly: "Monthly",
+      yearly: "Yearly",
+      discount: "-48%",
+    },
+
+    // Hero Section
+    hero: {
+      badge: "Open-Source & Auto-hospedagem SEMPRE gratuitos",
+      title: "Treine livremente, apoie a missão",
+      subtitle: "Para aqueles que acreditam no projeto e querem (re)acreditar em si mesmos com power boosters !",
+      stats: {
+        athletes: {
+          count: "12.4K+",
+          label: "Atletas ativos",
+        },
+        series: {
+          count: "1.2M+",
+          label: "Séries registadas",
+        },
+        rating: {
+          count: "4.9/5",
+          label: "Avaliação da comunidade",
+        },
+        progression: {
+          count: "+23%",
+          label: "Progressão média",
+        },
+      },
+    },
+
+    // Mission Banner
+    mission: {
+      supporters_count: "234",
+      supporters_text: "suportadores a ajudar a missão",
+      limited: "Limitado",
+      early_access: "lugares de acesso antecipado",
+    },
+
+    // Plans
+    plans: {
+      monthly: "Mensal",
+      yearly: "Anual",
+      yearly_discount: "-48%",
+      per_month: "/mês",
+      per_year: "/ano",
+
+      free: {
+        name: "GRATUITO",
+        price: "€0",
+        period: "/para sempre",
+        price_label: "€0/para sempre",
+        badge: "Open-Source • Sempre Gratuito",
+        description: "Todas as funções essenciais para treinar",
+        features: [
+          "Gerador de exercícios com vídeos",
+          "Histórico de treinos tipo GitHub (6 meses)",
+          "Partilhar e repetir sessões (em breve)",
+          "Auto-hospedagem possível",
+          "Código fonte disponível",
+        ],
+        button: "O seu plano atual",
+        footer_note: "Não é necessário registo • Acesso completo para sempre",
+      },
+
+      premium: {
+        name: "PREMIUM ⭐",
+        price_label: "€7.90/mês ou €49/ano",
+        badge: "MAIS POPULAR • Para entusiastas",
+        description: "Todas as funcionalidades + acesso antecipado",
+        footer_monthly: "Junte-se à comunidade apaixonada! 🔥",
+        footer_yearly: "Obrigado pelo apoio anual! 🙏",
+        yearly_price_note: "/mês",
+        features: [
+          "...todo do plano Gratuito",
+          "Sem publicidade",
+          "Histórico ilimitado (vs 6 meses gratuito)",
+          "Acompanhamento de progresso com estatísticas avançadas (volume, progressão, PR)",
+          "Programas de treino pré-concebidos",
+          "Chat privado com um coach 1:1",
+          "Acesso antecipado a novas funcionalidades",
+        ],
+      },
+    },
+
+    // Buttons and Actions
+    actions: {
+      processing: "A processar...",
+      go_premium: "Tornar-se Premium",
+      sign_in_continue: "Tornar-se Premium",
+      upgrade_now: "Atualizar agora",
+      current_plan: "O seu plano atual",
+    },
+
+    // Trust Elements
+    trust: {
+      gdpr_compliant: "100% conforme com o RGPD",
+      money_back: "30 dias de garantia de devolução de dinheiro",
+      cancel_anytime: "1 clique para cancelar, sem compromisso",
+      secure_payment: "Pagamento seguro via Stripe",
+    },
+
+    // Feature Comparison
+    comparison: {
+      title: "Comparação de funcionalidades detalhada",
+      subtitle: "Tudo o que precisa de saber sobre o que está incluído em cada plano",
+      features_label: "Funcionalidades",
+      headers: {
+        features: "Funcionalidades",
+        free: "Gratuito",
+        premium: "Premium",
+      },
+      categories: {
+        equipment: "Equipamento & Exercícios",
+        tracking: "Acompanhamento & Análises",
+        programs: "Programas & IA",
+        community: "Comunidade & Compartilhamento",
+        support: "Suporte & Projeto",
+      },
+      features: {
+        exercise_library: "Biblioteca de exercícios",
+        custom_exercise: "Exercício personalizado",
+        video_tutorials: "Tutoriais em vídeo",
+        workout_history: "Histórico de treinos",
+        progress_statistics: "Estatísticas de progresso",
+        personal_records: "Acompanhamento de recordes pessoais",
+        volume_analytics: "Análises de volume & progresso",
+        predesigned_programs: "Programas pré-designados",
+        personalized_recommendations: "Recomendações personalizadas",
+        pro_templates: "Modelos profissionais (Powerlifting, bodybuilding, etc.)",
+        community_access: "Acesso à comunidade",
+        discord_community: "Comunidade Discord",
+        private_chat: "Chat privado 1:1 com o coach",
+        community_support: "Suporte comunitário",
+        priority_support: "Suporte prioritário",
+        early_access: "Acesso antecipado a funcionalidades",
+        beta_testing: "Teste beta",
+      },
+      values: {
+        basic: "Básico",
+        complete: "Completo",
+        unlimited: "Ilimitado",
+        professional: "Profissional",
+        six_months: "6 meses",
+        limited: "Limitado",
+        all_programs: "Todos os programas",
+        public: "Público",
+        vip_access: "Acesso VIP",
+        private_channels: "Canais privados",
+        soon: "Em breve",
+        hd_slowmo: "4K + Slow-mo",
+        early_access: "Acesso antecipado",
+      },
+    },
+
+    // FAQ
+    faq: {
+      title: "Perguntas frequentes",
+      subtitle: "Tudo o que precisa de saber sobre Workout.cool e a nossa missão",
+      items: [
+        {
+          question: "Porque pagar se é open-source?",
+          answer:
+            "Excelente pergunta! O código sempre permanecerá gratuito, mas manter servidores, base de dados e infraestrutura custa dinheiro. A sua contribuição ajuda-nos a manter a ferramenta gratuita para todos. É um modelo vantajoso: você obtém funcionalidades premium, a comunidade mantém acesso gratuito!",
+        },
+        {
+          question: "Posso auto-hospedar o Workout.cool?",
+          answer:
+            "Absolutamente! Todo o código está disponível no GitHub sob licença MIT. Pode implantá-lo em seus próprios servidores, personalizá-lo como quiser e usá-lo completamente gratuitamente. Auto-hospedagem dá-lhe controlo total sobre os seus dados e privacidade do treino.",
+        },
+        {
+          question: "As minhas dados de treino estão seguros?",
+          answer:
+            "Sim! Somos conformes com o RGPD, usamos conexões encriptadas e armazenamos os seus dados com segurança. Além disso, como somos open-source, pode auditar as nossas práticas de segurança. Também pode exportar os seus dados a qualquer momento ou auto-hospedar para ter controlo total.",
+        },
+        {
+          question: "Posso cancelar a minha subscrição a qualquer momento?",
+          answer:
+            "Claro! Sem contratos, sem compromissos. Pode cancelar com um clique a qualquer momento. Manterá acesso até o fim do seu período de faturação atual, e pode sempre reiniciar mais tarde. Os seus dados de treino permanecem acessíveis mesmo se downgrade para gratuito.",
+        },
+        {
+          question: "Existem exercícios para iniciantes?",
+          answer:
+            "Claro! A nossa biblioteca de exercícios cobre todos os níveis de aptidão desde os mais iniciantes até aos atletas avançados. Vídeos e instruções ajudam os iniciantes a encontrar exercícios apropriados, e os nossos tutoriais em vídeo mostram a forma correta.",
+        },
+        {
+          question: "Como funciona o acompanhamento do progresso?",
+          answer:
+            "Cada série, repetição, peso e tempo é automaticamente registado. Obtém um histórico de treinos estilo GitHub que mostra a sua consistência, mais análises detalhadas sobre volume, progressão e recordes pessoais. Os utilizadores Premium obtêm gráficos avançados e insights.",
+        },
+        {
+          question: "Can I import data from other apps?",
+          answer:
+            "Em breve. Vamos suportar a importação de dados em CSV para dados básicos (reps & peso). Se está a mudar de outra aplicação de fitness, a nossa equipa de suporte pode ajudar a migrar o seu histórico de treinos.",
+        },
+        {
+          question: "Does the app work offline?",
+          answer:
+            "O acompanhamento do treino funciona offline. Pode registar séries e repetições sem ligação à internet para 10 treinos. Vídeos de exercícios e sincronização na nuvem requerem ligação à internet. Todos os seus dados offline sincronizam automaticamente quando volta online.",
+        },
+        {
+          question: "Are there programs for women?",
+          answer:
+            "Claro! E haverá mais programas no futuro. Estamos a trabalhar nisso. Os planos Suporte e Premium incluirão todos os programas especializados futuros para diferentes objetivos: força, tonificação, levantamento de peso, musculação e mais!",
+        },
+        {
+          question: "Can I create my own programs?",
+          answer: "Infelizmente, não. Estamos a trabalhar nisso!",
+        },
+      ],
+      additional_support: {
+        title: "Ainda tem perguntas?",
+        description: "A nossa comunidade focada no fitness está aqui para ajudar-lhe a ter sucesso",
+        community: "Suporte comunitário (discord ou hello@workout.cool)",
+        discussions: "Discussões abertas (github/discord)",
+        roadmap: "Roadmap transparente (github)",
+      },
+    },
+
+    // Final CTA
+    final_cta: {
+      motivation: "Continue a esforçar-se! 💪",
+      title: "Pronto para apoiar a missão?",
+      subtitle: "Junte-se a milhares de entusiastas do fitness que acreditam na liberdade de treino open-source",
+      values: [
+        {
+          title: "Comunidade primeiro",
+          description: "Construído por e para a comunidade fitness",
+        },
+        {
+          title: "Sempre transparente",
+          description: "Código open-source, financiamento transparente",
+        },
+        {
+          title: "Projeto de amor",
+          description: "15 anos de paixão!",
+        },
+      ],
+      quote: {
+        text: "Acreditamos que as ferramentas de fitness devem ser acessíveis a todos. O seu apoio ajuda-nos a manter esta visão enquanto continuamos a inovar.",
+        author: "— A equipa Workout.cool",
+      },
+    },
+
+    // Premium Active State
+    premium_active: {
+      title: "Premium Ativo! 💪",
+      supporting: "Apoiando a missão",
+    },
+
+    // Legacy translations (keeping for compatibility)
     premium_active_title: "Premium Ativo",
     premium_active_subtitle: "Todos os recursos desbloqueados",
     free_intro_title: "Já está a receber muito gratuitamente...",
@@ -120,6 +379,9 @@ export default {
     mit_license: "Licença MIT",
     pricing_year: "ano",
     pricing_month: "mês",
+    conversion_flow_title: "A redirecionar...",
+    conversion_flow_message: "Sessão iniciada com sucesso! A redirecionar para o checkout...",
+    redirecting_to_checkout: "A redirecionar para o checkout",
   },
   breadcrumbs: {
     home: "Início",
@@ -131,6 +393,286 @@ export default {
     workouts_tooltip: "Criar o seu próprio treino",
     premium: "Premium",
     premium_tooltip: "Torne-se Premium",
+    tools: "Ferramentas",
+    tools_tooltip: "Explorar ferramentas",
+    profile: "Perfil",
+    profile_tooltip: "Ver o seu perfil",
+  },
+  tools: {
+    try_now: "Experimentar agora",
+    title: "Ferramentas de Fitness",
+    subtitle: "Calculadoras essenciais para otimizar o seu treino e nutrição",
+    moreComingSoon: "Mais ferramentas em breve",
+    meta: {
+      title: "Ferramentas de Fitness - Calculadoras para Treino e Nutrição | Workout.cool",
+      description:
+        "Calculadoras gratuitas de fitness: TDEE, macros, IMC, zonas de frequência cardíaca, 1RM e mais. Otimize o seu treino e nutrição com as nossas ferramentas essenciais.",
+      keywords:
+        "calculadora fitness, calculadora calorias, calculadora macros, calculadora IMC, calculadora TDEE, zonas frequência cardíaca, repetição máxima, ferramentas fitness",
+    },
+    "calorie-calculator": {
+      title: "Calculadora de Calorias",
+      description: "Calcule as suas necessidades calóricas diárias (TDEE) baseadas no seu nível de atividade e objetivos",
+      meta: {
+        title: "Calculadora de Calorias - TDEE e Necessidades Calóricas Diárias | Workout.cool",
+        description:
+          "Calcule o seu Gasto Energético Total Diário (TDEE) e necessidades calóricas diárias. Obtenha recomendações personalizadas para perda de peso, manutenção ou ganho muscular.",
+        keywords:
+          "calculadora calorias, calculadora TDEE, calorias diárias, calculadora perda peso, necessidades calóricas, calculadora TMB, calculadora metabolismo",
+      },
+      subtitle: "Calcule as suas necessidades calóricas diárias baseadas na equação de Mifflin-St Jeor",
+      how_it_works: "Como funciona esta calculadora?",
+      how_it_works_description:
+        "Esta calculadora usa fórmulas cientificamente comprovadas para estimar as suas necessidades calóricas diárias baseadas nas suas características pessoais e estilo de vida.",
+      how_it_works_step1: "Calculamos o seu metabolismo basal (calorias queimadas em repouso)",
+      how_it_works_step2: "Ajustamos baseado no seu nível de atividade",
+      how_it_works_step3: "Personalizamos de acordo com o seu objetivo (perder, manter ou ganhar peso)",
+      calculate: "Calcular",
+      calculating: "A calcular...",
+      tap_info_icons: "Toque nos ícones ℹ️ para mais informações",
+      gender: "Género",
+      male: "Masculino",
+      female: "Feminino",
+      units: "Unidades",
+      metric: "Métrico",
+      imperial: "Imperial",
+      age: "Idade",
+      age_placeholder: "Insira a sua idade",
+      years: "anos",
+      height: "Altura",
+      height_placeholder: "Insira a sua altura",
+      weight: "Peso",
+      weight_placeholder: "Insira o seu peso",
+      cm: "cm",
+      kg: "kg",
+      lbs: "lbs",
+      feet: "pés",
+      inches: "polegadas",
+      activity_level: "Nível de Atividade",
+      activity: {
+        sedentary: "Sedentário",
+        sedentary_desc: "Pouco ou nenhum exercício, trabalho de secretária, caminhada mínima",
+        light: "Ligeiramente Ativo",
+        light_desc: "Exercício leve 1-3 dias/semana, ou caminhada diária",
+        moderate: "Moderadamente Ativo",
+        moderate_desc: "Exercício moderado 3-5 dias/semana, estilo de vida ativo",
+        active: "Muito Ativo",
+        active_desc: "Exercício intenso 6-7 dias/semana, trabalho muito ativo",
+        very_active: "Extremamente Ativo",
+        very_active_desc: "Atleta, trabalho físico + treino diário",
+      },
+      goal: "Objetivo",
+      goals: {
+        lose_fast: "Perder Peso Rapidamente",
+        lose_fast_desc: "Perder 2 lbs (1 kg) por semana - Agressivo mas eficaz",
+        lose_slow: "Perder Peso",
+        lose_slow_desc: "Perder 1 lb (0,5 kg) por semana - Sustentável e saudável",
+        maintain: "Manter Peso",
+        maintain_desc: "Manter o peso atual - Perfeito para manter a forma",
+        gain_slow: "Ganhar Peso",
+        gain_slow_desc: "Ganhar 1 lb (0,5 kg) por semana - Construção muscular limpa",
+        gain_fast: "Ganhar Peso Rapidamente",
+        gain_fast_desc: "Ganhar 2 lbs (1 kg) por semana - Crescimento muscular máximo",
+      },
+      results: {
+        title: "Os Seus Resultados",
+        bmr: "TMB",
+        bmr_explanation:
+          "Taxa Metabólica Basal (TMB) é o número de calorias que o seu corpo queima em repouso completo, apenas para manter funções básicas como respiração, circulação e produção celular. Esta é a energia mínima que o seu corpo precisa para sobreviver.",
+        tdee: "TDEE",
+        tdee_explanation:
+          "Gasto Energético Total Diário (TDEE) é a sua TMB mais as calorias queimadas através de atividades diárias e exercícios. Este é o número total de calorias que queima num dia baseado no seu nível de atividade.",
+        target: "Calorias Alvo",
+        macros: "Macros Recomendados",
+        macros_explanation:
+          "Macronutrientes (macros) são os três principais grupos de nutrientes que o seu corpo precisa: Proteínas (para construção e reparação muscular), Hidratos de Carbono (para energia) e Gorduras (para hormonas e absorção de vitaminas). As percentagens mostradas são uma distribuição equilibrada adequada para a maioria dos objetivos de fitness.",
+        protein: "Proteína",
+        carbs: "Hidratos de Carbono",
+        fat: "Gordura",
+        disclaimer:
+          "Estes cálculos são estimativas baseadas em fórmulas médias. As necessidades calóricas reais podem variar baseadas em fatores individuais. Consulte um profissional de saúde ou nutricionista registado para conselhos personalizados.",
+      },
+      faq: {
+        title: "Perguntas Frequentes",
+        q1: "Porque é que o meu alvo calórico é diferente de outras calculadoras?",
+        a1: "Diferentes calculadoras podem usar diferentes fórmulas ou multiplicadores de atividade. Nós usamos a equação de Mifflin-St Jeor, que é considerada uma das mais precisas para a maioria das pessoas. No entanto, o metabolismo individual pode variar 10-20% destas estimativas.",
+        q2: "Devo comer exatamente estas calorias todos os dias?",
+        a2: "Estes são alvos médios diários. É normal comer ligeiramente mais alguns dias e menos noutros. Foque-se na sua média semanal em vez de ser exato todos os dias. Ouça os sinais de fome e saciedade do seu corpo.",
+        q3: "E se não estiver a ver resultados após seguir estas recomendações?",
+        a3: "Se não estiver a ver resultados após 2-3 semanas, pode precisar de ajustar. O seu metabolismo real pode ser mais alto ou baixo que o calculado. Tente ajustar em 100-200 calorias e monitore por mais 2 semanas. Também certifique-se de que está a registar a sua comida com precisão.",
+        q4: "As recomendações de macros são adequadas para todos?",
+        a4: "A divisão 30/40/30 (proteína/hidratos/gordura) é uma abordagem equilibrada adequada para a maioria das pessoas. No entanto, atletas, pessoas com condições médicas, ou aqueles que seguem dietas específicas (keto, vegana, etc.) podem precisar de rácios diferentes. Consulte um nutricionista para recomendações personalizadas.",
+      },
+    },
+    "macro-calculator": {
+      title: "Calculadora de Macros",
+      description: "Encontre a distribuição ótima de proteínas, hidratos de carbono e gorduras para os seus objetivos de fitness",
+    },
+    "bmi-calculator": {
+      title: "Calculadora de IMC",
+      description: "Calcule o seu Índice de Massa Corporal e compreenda a sua categoria de peso",
+    },
+    "heart-rate-calculator": {
+      title: "Zonas de Frequência Cardíaca",
+      description: "Descubra as suas zonas de treino ótimas para queima de gordura e performance",
+    },
+    "one-rep-max": {
+      title: "Calculadora 1RM",
+      description: "Estime a sua repetição máxima e planeie as percentagens do seu treino de força",
+    },
+    back_to_calculators: "Voltar às calculadoras",
+    body_fat_percentage: "Percentagem de Gordura Corporal",
+    body_fat_info_title: "O que é a Percentagem de Gordura Corporal?",
+    body_fat_info_content:
+      "A percentagem de gordura corporal é essencial para as fórmulas de Katch-McArdle e Cunningham pois calculam baseadas na massa magra corporal. Se não conhece a sua % de gordura corporal exata, use guias visuais online ou scans DEXA para precisão.",
+    "calorie-calculator-hub": {
+      title: "Fórmulas da Calculadora de Calorias",
+      subtitle: "Escolha a melhor fórmula para as suas necessidades e obtenha cálculos de calorias precisos",
+      meta: {
+        title: "Fórmulas da Calculadora de Calorias - Calculadoras TMB e TDEE | Workout.cool",
+        description:
+          "Compare diferentes fórmulas de TMB: Mifflin-St Jeor, Harris-Benedict, Katch-McArdle, Cunningham e Oxford. Escolha a melhor calculadora de calorias para as suas necessidades.",
+        keywords:
+          "fórmulas TMB, comparação calculadora calorias, Mifflin-St Jeor, Harris-Benedict, Katch-McArdle, Cunningham, Oxford, calculadora TDEE",
+      },
+      which_formula: "Que Fórmula Devo Escolher?",
+      formula_explanation:
+        "Diferentes fórmulas funcionam melhor para diferentes pessoas. Aqui está um guia rápido para o ajudar a escolher:",
+      recommendation_general: "Melhor fórmula geral, mais precisa para a população geral",
+      recommendation_traditional: "Fórmula clássica, amplamente usada mas ligeiramente menos precisa",
+      recommendation_bodyfat: "Mais precisa se conhecer a sua percentagem de gordura corporal",
+      since: "Desde",
+      all_formulas: "Todas as fórmulas",
+      popularity: "Popularidade",
+      accuracy: "Precisão",
+      accuracy_high: "Alta",
+      accuracy_good: "Boa",
+      accuracy_medium: "Média",
+      best_for: "Melhor para",
+      best_for_general: "Uso geral",
+      best_for_traditional: "Tradicional",
+      best_for_athletes: "Atletas",
+      best_for_bodybuilders: "Fisiculturistas",
+      best_for_european: "População europeia",
+      best_for_comparison: "Comparar todas",
+      "mifflin-st-jeor": {
+        title: "Mifflin-St Jeor (Recomendada)",
+        description: "Fórmula mais precisa para a população geral, desenvolvida em 1990. Atualmente o padrão ouro para cálculos de TMB.",
+      },
+      "harris-benedict": {
+        title: "Harris-Benedict (Clássica)",
+        description: "Versão revista de 1984 da fórmula clássica. Amplamente usada mas tende a sobrestimar calorias para algumas pessoas.",
+      },
+      "katch-mcardle": {
+        title: "Katch-McArdle (Atletas)",
+        description:
+          "Baseada na massa magra corporal. Mais precisa para pessoas que conhecem a sua percentagem de gordura corporal e são fisicamente ativas.",
+      },
+      cunningham: {
+        title: "Cunningham (Fisiculturistas)",
+        description:
+          "Projetada para atletas muito magros e fisiculturistas com baixa gordura corporal. Usa cálculo da massa magra corporal.",
+      },
+      oxford: {
+        title: "Oxford (Europeia)",
+        description: "Fórmula mais recente (2005) baseada em populações europeias. Tem em conta faixas etárias.",
+      },
+      comparison: {
+        title: "Comparar Todas as Fórmulas",
+        description: "Compare resultados de todas as fórmulas lado a lado para ver as diferenças e escolher o que funciona melhor para si.",
+      },
+    },
+    "mifflin-st-jeor": {
+      title: "Calculadora Mifflin-St Jeor",
+      subtitle: "O padrão ouro para cálculo de TMB - mais precisa para a população geral",
+      meta: {
+        title: "Calculadora Mifflin-St Jeor - TMB e TDEE Mais Precisos | Workout.cool",
+        description:
+          "Calcule a sua TMB e TDEE usando a equação Mifflin-St Jeor - a fórmula mais precisa para a população geral. Obtenha recomendações calóricas personalizadas.",
+        keywords:
+          "calculadora Mifflin-St Jeor, calculadora TMB, calculadora TDEE, calculadora calorias mais precisa, calculadora metabolismo",
+      },
+      how_it_works: "Como Funciona a Fórmula Mifflin-St Jeor",
+      how_it_works_description:
+        "Desenvolvida em 1990, esta fórmula é considerada a mais precisa para calcular a Taxa Metabólica Basal (TMB) em adultos saudáveis. É mais precisa que a equação Harris-Benedict e é amplamente recomendada por nutricionistas e profissionais de fitness.",
+    },
+    "harris-benedict": {
+      title: "Calculadora Harris-Benedict",
+      subtitle: "Fórmula clássica de TMB - a abordagem tradicional para cálculo de calorias",
+      meta: {
+        title: "Calculadora Harris-Benedict - Fórmula Clássica TMB e TDEE | Workout.cool",
+        description:
+          "Calcule a sua TMB e TDEE usando a equação Harris-Benedict revista (1984). A fórmula clássica que iniciou os cálculos modernos de calorias.",
+        keywords: "calculadora Harris-Benedict, calculadora TMB clássica, calculadora TDEE tradicional, fórmula Harris-Benedict revista",
+      },
+      how_it_works: "Como Funciona a Fórmula Harris-Benedict",
+      how_it_works_description:
+        "Originalmente desenvolvida em 1919 e revista em 1984, a equação Harris-Benedict foi uma das primeiras fórmulas para calcular TMB. Embora ligeiramente menos precisa que fórmulas mais recentes, continua amplamente usada e fornece boas estimativas para a maioria das pessoas.",
+    },
+    "katch-mcardle": {
+      title: "Calculadora Katch-McArdle",
+      subtitle: "Cálculo preciso de TMB baseado na massa magra corporal - ideal para atletas",
+      meta: {
+        title: "Calculadora Katch-McArdle - TMB e TDEE da Massa Magra | Workout.cool",
+        description:
+          "Calcule a sua TMB e TDEE usando a fórmula Katch-McArdle baseada na massa magra corporal. Mais precisa para pessoas que conhecem a sua percentagem de gordura corporal.",
+        keywords:
+          "calculadora Katch-McArdle, TMB massa magra, calculadora percentagem gordura corporal, calculadora TMB atleta, TDEE preciso",
+      },
+      how_it_works: "Como Funciona a Fórmula Katch-McArdle",
+      how_it_works_description:
+        "Esta fórmula calcula TMB baseada na massa magra corporal em vez do peso corporal total, tornando-a mais precisa para pessoas que conhecem a sua percentagem de gordura corporal. É particularmente útil para atletas e indivíduos fisicamente ativos.",
+    },
+    cunningham: {
+      title: "Calculadora Cunningham",
+      subtitle: "Fórmula de TMB projetada para atletas muito magros e fisiculturistas",
+      meta: {
+        title: "Calculadora Cunningham - TMB para Atletas Magros e Fisiculturistas | Workout.cool",
+        description:
+          "Calcule a sua TMB e TDEE usando a fórmula Cunningham, especificamente projetada para atletas muito magros e fisiculturistas com baixa gordura corporal.",
+        keywords:
+          "calculadora Cunningham, calculadora TMB fisiculturista, TMB atleta magro, calculadora baixa gordura corporal, calculadora preparação competição",
+      },
+      how_it_works: "Como Funciona a Fórmula Cunningham",
+      how_it_works_description:
+        "Desenvolvida especificamente para indivíduos muito magros com baixas percentagens de gordura corporal, esta fórmula fornece estimativas de TMB mais altas que outras equações. É mais precisa para atletas competitivos e fisiculturistas em preparação para competições.",
+    },
+    oxford: {
+      title: "Calculadora Oxford",
+      subtitle: "Fórmula moderna de TMB baseada em populações europeias com considerações de idade",
+      meta: {
+        title: "Calculadora Oxford - Fórmula Moderna TMB e TDEE | Workout.cool",
+        description:
+          "Calcule a sua TMB e TDEE usando a equação Oxford (2005), uma fórmula moderna baseada em populações europeias com cálculos específicos por idade.",
+        keywords: "calculadora Oxford, calculadora TMB moderna, fórmula TMB europeia, calculadora TMB específica idade, equação TMB 2005",
+      },
+      how_it_works: "Como Funciona a Fórmula Oxford",
+      how_it_works_description:
+        "Publicada em 2005, esta é uma das fórmulas de TMB mais recentes. Foi desenvolvida usando dados de populações europeias e tem em conta faixas etárias, fornecendo equações diferentes para pessoas com menos e mais de 30 anos.",
+    },
+    "calorie-calculator-comparison": {
+      title: "Comparar todas as fórmulas BMR",
+      subtitle: "Veja como diferentes fórmulas BMR calculam as suas necessidades calóricas lado a lado",
+      meta: {
+        title: "Comparação de fórmulas BMR - Comparar todos os calculadores de calorias | Workout.cool",
+        description:
+          "Compare as fórmulas Mifflin-St Jeor, Harris-Benedict, Katch-McArdle, Cunningham e Oxford BMR lado a lado. Veja qual fórmula funciona melhor para si.",
+        keywords:
+          "comparação fórmula BMR, comparação calculador calorias, Mifflin vs Harris-Benedict, melhor calculador BMR, comparar fórmulas calorias",
+      },
+      how_it_works: "Como funciona esta comparação",
+      how_it_works_description:
+        "Insira os seus detalhes uma vez e veja como todas as principais fórmulas BMR calculam as suas necessidades calóricas diárias. Isto ajuda-o a compreender as diferenças e escolher a fórmula mais adequada para os seus objetivos.",
+      input_details: "Os seus detalhes",
+      compare: "Comparar",
+      results_comparison: "Resultados da comparação de fórmulas",
+      vs_mifflin: "vs Mifflin-St Jeor",
+      summary: "Resumo e recomendações",
+      summary_explanation:
+        "Diferentes fórmulas podem dar resultados variáveis. Geralmente, diferenças de ±100-200 calorias são normais e esperadas.",
+      recommendation:
+        "Para a maioria das pessoas, Mifflin-St Jeor fornece a base mais precisa. Os atletas devem considerar Katch-McArdle se conhecerem a sua percentagem de gordura corporal.",
+    },
   },
   levels: {
     BEGINNER: "Iniciante",
@@ -230,9 +772,9 @@ export default {
     },
   },
 
-  // Donation Alert
+  // Premium Upsell Alert
   donation_alert: {
-    title: "Mantém Workout.cool gratuito. Apoia-nos via",
+    title: "Desbloqueie funcionalidades avançadas com Workout.cool Premium",
     or: "ou",
   },
 
@@ -600,6 +1142,7 @@ export default {
     subscription: "Abonamento",
     manage_subscription: "Gerir abonamento",
     become_premium: "Torne-se Premium",
+    coming_soon: "Em breve",
     free: "Gratuito",
     new: "Novo",
   },

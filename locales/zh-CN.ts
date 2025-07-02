@@ -82,43 +82,305 @@ export default {
     },
   },
   premium: {
-    // PremiumUpgradeCard translations
-    checkout_error: "支付过程中出错",
-    premium_active_title: "高级版已激活",
-    premium_active_subtitle: "所有功能已解锁",
-    free_intro_title: "您已经免费获得了很多...",
+    checkout_error: "结账时出错",
+    premium_required_title: "需要高级",
+    premium_required_subtitle: "这是一个高级访问。升级以访问所有高级内容。",
+    premium_required_button: "升级到高级",
+    already_premium: "您正在享受 Workout.cool Premium",
+    no_ads: "无广告",
+    upgrade: "升级",
+
+    // Checkout
+    checkout: {
+      processing: "处理中...",
+    },
+
+    // Pricing
+    pricing: {
+      month: "月",
+      year: "年",
+      monthly: "每月",
+      yearly: "每年",
+      discount: "-48%",
+    },
+
+    // Hero Section
+    hero: {
+      badge: "开源 & 自托管 始终免费",
+      title: "自由训练，支持使命",
+      subtitle: "对于那些相信这个项目并希望通过力量提升器来（重新）相信自己的人！",
+      stats: {
+        athletes: {
+          count: "12.4K+",
+          label: "活跃运动员",
+        },
+        series: {
+          count: "1.2M+",
+          label: "系列记录",
+        },
+        rating: {
+          count: "4.9/5",
+          label: "社区评分",
+        },
+        progression: {
+          count: "+23%",
+          label: "平均进展",
+        },
+      },
+    },
+
+    // Mission Banner
+    mission: {
+      supporters_count: "234",
+      supporters_text: "支持者帮助使命",
+      limited: "有限",
+      early_access: "早期访问",
+    },
+
+    // Plans
+    plans: {
+      monthly: "每月",
+      yearly: "每年",
+      yearly_discount: "-48%",
+      per_month: "/月",
+      per_year: "/year",
+
+      free: {
+        name: "免费",
+        price: "€0",
+        period: "/forever",
+        price_label: "€0/forever 永久",
+        badge: "开源 • 始终免费",
+        description: "所有基本功能",
+        features: ["生成带有视频的练习", "GitHub 风格的训练历史（6 个月）", "分享和重复训练（即将推出）", "自托管可能", "代码源可用"],
+        button: "您的实际计划",
+        footer_note: "无需注册 • 永久访问",
+      },
+
+      premium: {
+        name: "PREMIUM ⭐",
+        price_label: "€7.90/月或€49/年",
+        badge: "最受欢迎 • 给爱好者",
+        description: "所有功能 + 早期访问",
+        footer_monthly: "加入热情的社区！🔥",
+        footer_yearly: "感谢您的年度支持！🙏",
+        yearly_price_note: "/月",
+        features: [
+          "...所有免费计划",
+          "无广告",
+          "无限历史（与 6 个月免费相比）",
+          "跟踪进度，包括高级统计（体积、进展、PR）",
+          "预设计训练程序",
+          "私人 1:1 聊天与教练",
+          "早期访问新功能",
+        ],
+      },
+    },
+
+    // Buttons and Actions
+    actions: {
+      processing: "处理中...",
+      go_premium: "升级到高级",
+      sign_in_continue: "升级到高级",
+      upgrade_now: "立即升级",
+      current_plan: "您的实际计划",
+    },
+
+    // Trust Elements
+    trust: {
+      gdpr_compliant: "100% GDPR 合规",
+      money_back: "30天退款保证",
+      cancel_anytime: "1 点击取消，无承诺",
+      secure_payment: "100% 安全支付 via Stripe",
+    },
+
+    // Feature Comparison
+    comparison: {
+      title: "详细功能比较",
+      subtitle: "了解每个计划中包含的内容",
+      features_label: "功能",
+      headers: {
+        features: "功能",
+        free: "免费",
+        premium: "高级",
+      },
+      categories: {
+        equipment: "设备 & 练习",
+        tracking: "跟踪 & 分析",
+        programs: "程序 & AI",
+        community: "社区 & 分享",
+        support: "支持 & 项目",
+      },
+      features: {
+        exercise_library: "练习库",
+        custom_exercise: "自定义练习",
+        video_tutorials: "视频教程",
+        workout_history: "锻炼历史",
+        progress_statistics: "进展统计",
+        personal_records: "个人记录跟踪",
+        volume_analytics: "体积 & 进展分析",
+        predesigned_programs: "预设计程序",
+        personalized_recommendations: "个性化推荐",
+        pro_templates: "专业模板（举重、健美、等）",
+        community_access: "社区访问",
+        discord_community: "Discord 社区",
+        private_chat: "私人 1:1 聊天与教练",
+        community_support: "社区支持",
+        priority_support: "优先支持",
+        early_access: "早期访问功能",
+        beta_testing: "Beta 测试访问",
+      },
+      values: {
+        basic: "基本",
+        complete: "完整",
+        unlimited: "无限",
+        professional: "专业",
+        six_months: "6 个月",
+        limited: "有限",
+        all_programs: "所有程序",
+        public: "公开",
+        vip_access: "VIP 访问",
+        private_channels: "私人频道",
+        soon: "即将推出",
+        hd_slowmo: "4K + 慢动作",
+        early_access: "早期访问",
+      },
+    },
+
+    // FAQ
+    faq: {
+      title: "常见问题",
+      subtitle: "关于 Workout.cool 和我们的使命",
+      items: [
+        {
+          question: "为什么开源还要付费？",
+          answer:
+            "这是一个很好的问题！代码将始终保持免费，但维护服务器、数据库和基础设施需要成本。您的贡献帮助我们让工具免费提供给每个人。这是一个双赢的模式：您获得高级功能，社区保持免费访问！",
+        },
+        {
+          question: "我可以自托管 Workout.cool 吗？",
+          answer:
+            "当然可以！整个代码库在 MIT 许可证下可在 GitHub 上获得。您可以在自己的服务器上部署它，根据需要进行定制，并完全免费使用。自托管为您提供对数据和锻炼隐私的完全控制。",
+        },
+        {
+          question: "我的锻炼数据安全吗？",
+          answer:
+            "是的！我们符合 GDPR，使用加密连接，并安全存储您的数据。此外，由于我们是开源的，您可以审计我们的安全实践。您还可以随时导出数据或自托管以完全控制。",
+        },
+        {
+          question: "我可以随时取消订阅吗？",
+          answer:
+            "当然可以！没有合同，没有承诺。随时点击取消。您将保持访问权限，直到当前计费期结束，并且您可以随时稍后重新开始。即使您降级到免费，您的锻炼数据仍可访问。",
+        },
+        {
+          question: "有针对初学者的练习吗？",
+          answer:
+            "当然有！我们的练习库涵盖从完全初学者到高级运动员的所有健身水平。视频和说明帮助初学者找到合适的练习，我们的视频教程展示正确的形式。",
+        },
+        {
+          question: "进展跟踪如何工作？",
+          answer:
+            "每个组、重复、重量和时间都会自动记录。您会得到一个 GitHub 风格的锻炼历史，显示您的连贯性，以及详细的分析，包括体积、进展和个人记录。高级用户会得到高级图表和见解。",
+        },
+        {
+          question: "我可以从其他应用程序导入数据吗？",
+          answer:
+            "很快。我们将支持 CSV 导入基本数据（重复和重量）。如果您从另一个健身应用程序切换，我们的支持团队可以帮助迁移您的锻炼历史。",
+        },
+        {
+          question: "应用程序可以在离线状态下工作吗？",
+          answer:
+            "核心锻炼跟踪可以在离线状态下工作。您可以在没有互联网连接的情况下记录 10 次锻炼的组和重复。练习视频和云同步需要互联网连接。所有离线数据都会自动同步，当您再次在线时。",
+        },
+        {
+          question: "有针对女性的程序吗？",
+          answer:
+            "当然有！而且将来会有更多程序。我们正在努力。支持者和高级计划将包括所有未来的专门程序，用于不同的目标：力量、塑形、举重、健美等！",
+        },
+        {
+          question: "我可以创建自己的程序吗？",
+          answer: "不幸的是，不能。我们正在努力！",
+        },
+      ],
+      additional_support: {
+        title: "还有问题吗？",
+        description: "我们的健身社区在这里帮助您成功",
+        community: "社区支持（Discord 或 hello@workout.cool）",
+        discussions: "开放讨论（github/discord）",
+        roadmap: "透明路线图（github）",
+      },
+    },
+
+    // Final CTA
+    final_cta: {
+      motivation: "继续努力！💪",
+      title: "准备好支持使命吗？",
+      subtitle: "加入数千名相信开源训练自由的健身爱好者",
+      values: [
+        {
+          title: "社区优先",
+          description: "由健身社区构建和为健身社区构建",
+        },
+        {
+          title: "始终透明",
+          description: "开源代码，透明资金",
+        },
+        {
+          title: "爱的劳动",
+          description: "15 年的激情！",
+        },
+      ],
+      quote: {
+        text: "我们相信健身工具应该对每个人都是可访问的。您的支持帮助我们继续创新，同时保持这一愿景。",
+        author: "— Workout.cool 团队",
+      },
+    },
+
+    // Premium Active State
+    premium_active: {
+      title: "高级活跃！💪",
+      supporting: "支持使命",
+    },
+
+    // Legacy translations (keeping for compatibility)
+    premium_active_title: "高级活跃",
+    premium_active_subtitle: "所有功能解锁",
+    free_intro_title: "您已经免费获得很多了...",
     free_intro_text:
-      "Workout.cool 是一款免费的开源健身应用，每天有超过 60,000 名用户在使用。它是用爱心构建的（而不是风投资金 ^^），维持运营需要我们投入真实的时间和金钱。",
+      "Workout.cool 是一个免费、开源的健身应用，每天有 60,000+ 用户使用。它是由爱（不是 VC 资金 ^^）构建的，并且为我们保持运行需要真实的时间和金钱。",
     donation_story_text:
-      "起初，我们依靠捐赠运营。但正如您所想，捐赠不足以支付开发和运营成本。因此，我们为您制作了一个套餐，这将帮助我们维持运营 — 并在此过程中解锁一些超能力。",
-    health_upgrade_text: "如果 Workout.cool 帮助您提升健康水平，请考虑升级到高级版 :D ！",
-    unlock_features_text: "解锁高级功能并支持开源健身。",
-    invest_yourself_quote: "永远不要在健身和书籍上吝啬 — 投资自己！",
+      "起初，我们依靠捐赠运行。但正如您所想，捐赠不足以支付开发和运行成本。所以我们为您制作了一个包，将帮助我们保持灯光，并在路上解锁一些超级能力。",
+    health_upgrade_text: "如果 Workout.cool 帮助您提升健康，请考虑升级到高级：D ！",
+    unlock_features_text: "解锁高级功能 & 支持开源健身。",
+    invest_yourself_quote: "不要在健身和书籍上吝啬 — 投资于自己！",
     support_mission: "支持使命",
-    best_value_badge: "最超值",
-    annual_plan: "年度计划",
-    monthly_plan: "月度计划",
-    discount_badge: "优惠 40%",
+    best_value_badge: "最佳价值",
+    annual_plan: "年度",
+    monthly_plan: "每月",
+    discount_badge: "40% 折扣",
     per_month: "/月",
-    feature_all_programs: "所有锻炼计划",
-    feature_progress_tracking: "进度跟踪",
-    coming_soon: "（即将推出）",
-    feature_future_updates: "所有未来的计划和更新",
+    feature_all_programs: "所有锻炼程序",
+    feature_progress_tracking: "进展跟踪",
+    coming_soon: "(即将推出)",
+    feature_future_updates: "所有未来程序 & 更新",
     feature_priority_support: "优先支持",
     save_yearly: "每年节省 40%",
     processing: "处理中...",
     cta_annual: "我想支持 + 节省 40%",
-    cta_monthly: "解锁我的完整计划",
+    cta_monthly: "让我们解锁我的完整计划",
     thank_supporting: "感谢您的支持。",
     no_pressure: "没有压力。您可以随时升级。",
-    keep_pushing: "继续加油！huhu",
+    keep_pushing: "继续努力！huhu",
     still_unsure: "还不确定？没关系。Workout.cool 将始终保持免费和开源。",
-    support_helps: "但如果您相信我们正在构建的东西，并且您负担得起，您的支持将会有所帮助 💚",
+    support_helps: "但如果你相信我们在构建的东西，并且你负担得起，你的支持将帮助 💚",
     self_hosting: "自托管",
     community: "社区",
     mit_license: "MIT 许可证",
     pricing_year: "年",
     pricing_month: "月",
+    conversion_flow_title: "重定向...",
+    conversion_flow_message: "成功登录！重定向到结账...",
+    redirecting_to_checkout: "重定向到结账",
   },
   breadcrumbs: {
     home: "首页",
@@ -130,6 +392,10 @@ export default {
     workouts_tooltip: "创建您的锻炼",
     premium: "高级",
     premium_tooltip: "成为高级",
+    tools: "工具",
+    tools_tooltip: "浏览工具",
+    profile: "个人资料",
+    profile_tooltip: "查看您的个人资料",
   },
   levels: {
     BEGINNER: "初学者",
@@ -226,9 +492,9 @@ export default {
     },
   },
 
-  // Donation Alert
+  // Premium Upsell Alert
   donation_alert: {
-    title: "保持 Workout.cool 免费。支持我们通过",
+    title: "使用 Workout.cool Premium 解锁高级功能",
     or: "或",
   },
 
@@ -591,9 +857,262 @@ export default {
     subscription: "订阅",
     manage_subscription: "管理订阅",
     become_premium: "成为高级",
+    coming_soon: "即将推出",
     in_progress: "进行中",
     premium: "高级",
     free: "免费",
     new: "新",
+  },
+  tools: {
+    try_now: "立即试用",
+    title: "健身工具",
+    subtitle: "优化训练和营养的必备计算器",
+    moreComingSoon: "更多工具即将推出",
+    meta: {
+      title: "健身工具 - 训练与营养计算器 | Workout.cool",
+      description: "免费健身计算器：TDEE、宏量营养素、BMI、心率区间、1RM等。使用我们的必备工具优化您的训练和营养。",
+      keywords: "健身计算器, 卡路里计算器, 宏量营养素计算器, BMI计算器, TDEE计算器, 心率区间, 单次最大重量, 健身工具",
+    },
+    "calorie-calculator": {
+      title: "卡路里计算器",
+      description: "根据您的活动水平和目标计算每日卡路里需求 (TDEE)",
+      meta: {
+        title: "卡路里计算器 - TDEE与每日卡路里需求 | Workout.cool",
+        description: "计算您的总每日能量消耗 (TDEE) 和每日卡路里需求。获得减重、维持或增肌的个性化建议。",
+        keywords: "卡路里计算器, TDEE计算器, 每日卡路里, 减重计算器, 卡路里需求, BMR计算器, 新陈代谢计算器",
+      },
+      subtitle: "基于Mifflin-St Jeor方程计算您的每日卡路里需求",
+      how_it_works: "这个计算器如何工作？",
+      how_it_works_description: "该计算器使用科学验证的公式，根据您的个人特征和生活方式估算您的每日卡路里需求。",
+      how_it_works_step1: "我们计算您的基础代谢率（静息时燃烧的卡路里）",
+      how_it_works_step2: "我们根据您的活动水平进行调整",
+      how_it_works_step3: "我们根据您的目标（减重、维持或增重）进行个性化调整",
+      calculate: "计算",
+      calculating: "计算中...",
+      tap_info_icons: "点击 ℹ️ 图标获取更多信息",
+      gender: "性别",
+      male: "男性",
+      female: "女性",
+      units: "单位",
+      metric: "公制",
+      imperial: "英制",
+      age: "年龄",
+      age_placeholder: "输入您的年龄",
+      years: "岁",
+      height: "身高",
+      height_placeholder: "输入您的身高",
+      weight: "体重",
+      weight_placeholder: "输入您的体重",
+      cm: "厘米",
+      kg: "公斤",
+      lbs: "磅",
+      feet: "英尺",
+      inches: "英寸",
+      activity_level: "活动水平",
+      activity: {
+        sedentary: "久坐",
+        sedentary_desc: "很少或不运动，办公室工作，很少步行",
+        light: "轻度活跃",
+        light_desc: "每周轻度运动1-3天，或每日步行",
+        moderate: "中度活跃",
+        moderate_desc: "每周中度运动3-5天，活跃的生活方式",
+        active: "非常活跃",
+        active_desc: "每周高强度运动6-7天，非常活跃的工作",
+        very_active: "极其活跃",
+        very_active_desc: "运动员，体力工作+每日训练",
+      },
+      goal: "目标",
+      goals: {
+        lose_fast: "快速减重",
+        lose_fast_desc: "每周减2磅（1公斤） - 激进但有效",
+        lose_slow: "减重",
+        lose_slow_desc: "每周减1磅（0.5公斤） - 可持续且健康",
+        maintain: "维持体重",
+        maintain_desc: "保持当前体重 - 完美维持体型",
+        gain_slow: "增重",
+        gain_slow_desc: "每周增1磅（0.5公斤） - 清洁肌肉增长",
+        gain_fast: "快速增重",
+        gain_fast_desc: "每周增2磅（1公斤） - 最大肌肉增长",
+      },
+      results: {
+        title: "您的结果",
+        bmr: "基础代谢率",
+        bmr_explanation:
+          "基础代谢率 (BMR) 是您的身体在完全静息状态下燃烧的卡路里数，仅用于维持呼吸、循环和细胞产生等基本功能。这是您的身体生存所需的最低能量。",
+        tdee: "总每日能量消耗",
+        tdee_explanation: "总每日能量消耗 (TDEE) 是您的BMR加上通过日常活动和运动燃烧的卡路里。这是您根据活动水平一天燃烧的总卡路里数。",
+        target: "目标卡路里",
+        macros: "推荐宏量营养素",
+        macros_explanation:
+          "宏量营养素（宏量）是您身体需要的三大营养组：蛋白质（用于肌肉建造和修复）、碳水化合物（用于能量）和脂肪（用于激素和维生素吸收）。显示的百分比是适合大多数健身目标的平衡分配。",
+        protein: "蛋白质",
+        carbs: "碳水化合物",
+        fat: "脂肪",
+        disclaimer: "这些计算是基于平均公式的估算。实际卡路里需求可能因个体因素而异。请咨询医疗专业人员或注册营养师获取个性化建议。",
+      },
+      faq: {
+        title: "常见问题",
+        q1: "为什么我的卡路里目标与其他计算器不同？",
+        a1: "不同的计算器可能使用不同的公式或活动倍数。我们使用Mifflin-St Jeor方程，被认为是对大多数人最准确的。然而，个体新陈代谢可能与这些估算相差10-20%。",
+        q2: "我应该每天都严格按照这个卡路里数进食吗？",
+        a2: "这些是每日平均目标。某些天吃得稍多或稍少是正常的。专注于您的每周平均值，而不是每天都要精确。倾听您身体的饥饿和饱腹感信号。",
+        q3: "如果按照这些建议没有看到效果怎么办？",
+        a3: "如果您按照建议2-3周后没有看到效果，您可能需要调整。您的实际新陈代谢可能比计算的更高或更低。尝试调整100-200卡路里，再监测2周。同时确保您准确记录食物摄入。",
+        q4: "宏量营养素推荐是否适合每个人？",
+        a4: "30/40/30比例（蛋白质/碳水化合物/脂肪）对大多数人来说是一个平衡的方法。然而，运动员、有医疗条件的人或遵循特定饮食（生酮、素食等）的人可能需要不同的比例。请咨询营养师获取个性化建议。",
+      },
+    },
+    "macro-calculator": {
+      title: "宏量营养素计算器",
+      description: "为您的健身目标找到最佳的蛋白质、碳水化合物和脂肪分配",
+    },
+    "bmi-calculator": {
+      title: "BMI计算器",
+      description: "计算您的身体质量指数并了解您的体重类别",
+    },
+    "heart-rate-calculator": {
+      title: "心率区间",
+      description: "发现您的最佳训练区间，用于燃脂和提升表现",
+    },
+    "one-rep-max": {
+      title: "1RM计算器",
+      description: "估算您的单次最大重量并规划力量训练百分比",
+    },
+    back_to_calculators: "返回计算器",
+    body_fat_percentage: "体脂百分比",
+    body_fat_info_title: "什么是体脂百分比？",
+    body_fat_info_content:
+      "体脂百分比对Katch-McArdle和Cunningham公式至关重要，因为它们基于瘦体重进行计算。如果您不知道确切的体脂百分比，请使用在线视觉指南或DEXA扫描以获得准确性。",
+    "calorie-calculator-hub": {
+      title: "卡路里计算器公式",
+      subtitle: "选择最适合您需求的公式，获得准确的卡路里计算",
+      meta: {
+        title: "卡路里计算器公式 - BMR与TDEE计算器 | Workout.cool",
+        description:
+          "比较不同的BMR公式：Mifflin-St Jeor、Harris-Benedict、Katch-McArdle、Cunningham和Oxford。选择最适合您需求的卡路里计算器。",
+        keywords: "BMR公式, 卡路里计算器比较, Mifflin-St Jeor, Harris-Benedict, Katch-McArdle, Cunningham, Oxford, TDEE计算器",
+      },
+      which_formula: "我应该选择哪个公式？",
+      formula_explanation: "不同的公式适合不同的人群。以下是帮助您选择的快速指南：",
+      recommendation_general: "最佳整体公式，对一般人群最准确",
+      recommendation_traditional: "经典公式，广泛使用但准确性稍低",
+      recommendation_bodyfat: "如果您知道体脂百分比，最准确",
+      since: "自",
+      all_formulas: "所有公式",
+      popularity: "流行度",
+      accuracy: "准确性",
+      accuracy_high: "高",
+      accuracy_good: "良好",
+      accuracy_medium: "中等",
+      best_for: "最适合",
+      best_for_general: "一般使用",
+      best_for_traditional: "传统",
+      best_for_athletes: "运动员",
+      best_for_bodybuilders: "健美运动员",
+      best_for_european: "欧洲人群",
+      best_for_comparison: "比较所有",
+      "mifflin-st-jeor": {
+        title: "Mifflin-St Jeor（推荐）",
+        description: "对一般人群最准确的公式，1990年开发。目前BMR计算的黄金标准。",
+      },
+      "harris-benedict": {
+        title: "Harris-Benedict（经典）",
+        description: "经典公式的1984年修订版。广泛使用但对某些人往往高估卡路里。",
+      },
+      "katch-mcardle": {
+        title: "Katch-McArdle（运动员）",
+        description: "基于瘦体重。对于知道体脂百分比且身体活跃的人最准确。",
+      },
+      cunningham: {
+        title: "Cunningham（健美运动员）",
+        description: "专为低体脂的精瘦运动员和健美运动员设计。使用瘦体重计算。",
+      },
+      oxford: {
+        title: "Oxford（欧洲）",
+        description: "较新的公式（2005年），基于欧洲人群。考虑年龄段。",
+      },
+      comparison: {
+        title: "比较所有公式",
+        description: "并排比较所有公式的结果，看看差异并选择最适合您的。",
+      },
+    },
+    "mifflin-st-jeor": {
+      title: "Mifflin-St Jeor计算器",
+      subtitle: "BMR计算的黄金标准 - 对一般人群最准确",
+      meta: {
+        title: "Mifflin-St Jeor计算器 - 最准确的BMR与TDEE | Workout.cool",
+        description: "使用Mifflin-St Jeor方程计算您的BMR和TDEE - 对一般人群最准确的公式。获得个性化卡路里建议。",
+        keywords: "Mifflin-St Jeor计算器, BMR计算器, TDEE计算器, 最准确的卡路里计算器, 新陈代谢计算器",
+      },
+      how_it_works: "Mifflin-St Jeor公式如何工作",
+      how_it_works_description:
+        "1990年开发，该公式被认为是计算健康成人基础代谢率 (BMR) 最准确的。它比Harris-Benedict方程更精确，被营养师和健身专业人员广泛推荐。",
+    },
+    "harris-benedict": {
+      title: "Harris-Benedict计算器",
+      subtitle: "经典BMR公式 - 卡路里计算的传统方法",
+      meta: {
+        title: "Harris-Benedict计算器 - 经典BMR与TDEE公式 | Workout.cool",
+        description: "使用修订的Harris-Benedict方程（1984年）计算您的BMR和TDEE。开创现代卡路里计算的经典公式。",
+        keywords: "Harris-Benedict计算器, 经典BMR计算器, 传统TDEE计算器, 修订Harris-Benedict公式",
+      },
+      how_it_works: "Harris-Benedict公式如何工作",
+      how_it_works_description:
+        "最初于1919年开发，1984年修订，Harris-Benedict方程是第一批计算BMR的公式之一。虽然比新公式准确性稍低，但仍被广泛使用，对大多数人提供良好的估算。",
+    },
+    "katch-mcardle": {
+      title: "Katch-McArdle计算器",
+      subtitle: "基于瘦体重的精确BMR计算 - 适合运动员",
+      meta: {
+        title: "Katch-McArdle计算器 - 瘦体重BMR与TDEE | Workout.cool",
+        description: "使用基于瘦体重的Katch-McArdle公式计算您的BMR和TDEE。对于知道体脂百分比的人最准确。",
+        keywords: "Katch-McArdle计算器, 瘦体重BMR, 体脂百分比计算器, 运动员BMR计算器, 精确TDEE",
+      },
+      how_it_works: "Katch-McArdle公式如何工作",
+      how_it_works_description: "该公式基于瘦体重而非总体重计算BMR，对于知道体脂百分比的人更准确。对运动员和身体活跃的个体特别有用。",
+    },
+    cunningham: {
+      title: "Cunningham计算器",
+      subtitle: "专为精瘦运动员和健美运动员设计的BMR公式",
+      meta: {
+        title: "Cunningham计算器 - 精瘦运动员与健美运动员BMR | Workout.cool",
+        description: "使用Cunningham公式计算您的BMR和TDEE，专为低体脂的精瘦运动员和健美运动员设计。",
+        keywords: "Cunningham计算器, 健美运动员BMR计算器, 精瘦运动员BMR, 低体脂BMR计算器, 比赛准备计算器",
+      },
+      how_it_works: "Cunningham公式如何工作",
+      how_it_works_description:
+        "专为低体脂百分比的精瘦个体开发，该公式提供比其他方程更高的BMR估算。对于竞技运动员和备赛期健美运动员最准确。",
+    },
+    oxford: {
+      title: "Oxford计算器",
+      subtitle: "基于欧洲人群的现代BMR公式，考虑年龄因素",
+      meta: {
+        title: "Oxford计算器 - 现代BMR与TDEE公式 | Workout.cool",
+        description: "使用Oxford方程（2005年）计算您的BMR和TDEE，基于欧洲人群的现代公式，采用年龄特定计算。",
+        keywords: "Oxford计算器, 现代BMR计算器, 欧洲BMR公式, 年龄特定BMR计算器, 2005年BMR方程",
+      },
+      how_it_works: "Oxford公式如何工作",
+      how_it_works_description:
+        "2005年发布，这是较新的BMR公式之一。它基于欧洲人群数据开发，考虑年龄段，为30岁以下和30岁以上的人提供不同的方程。",
+    },
+    "calorie-calculator-comparison": {
+      title: "比较所有BMR公式",
+      subtitle: "查看不同BMR公式如何并排计算您的卡路里需求",
+      meta: {
+        title: "BMR公式比较 - 比较所有卡路里计算器 | Workout.cool",
+        description: "并排比较Mifflin-St Jeor、Harris-Benedict、Katch-McArdle、Cunningham和Oxford BMR公式。看看哪个公式最适合您。",
+        keywords: "BMR公式比较, 卡路里计算器比较, Mifflin vs Harris-Benedict, 最佳BMR计算器, 比较卡路里公式",
+      },
+      how_it_works: "此比较如何工作",
+      how_it_works_description:
+        "输入您的详细信息一次，即可查看所有主要BMR公式如何计算您的每日卡路里需求。这有助于您了解差异并选择最适合您目标的公式。",
+      input_details: "您的详细信息",
+      compare: "比较",
+      results_comparison: "公式比较结果",
+      vs_mifflin: "vs Mifflin-St Jeor",
+      summary: "总结与建议",
+      summary_explanation: "不同的公式可能给出不同的结果。通常，±100-200卡路里的差异是正常和预期的。",
+      recommendation: "对于大多数人来说，Mifflin-St Jeor提供最准确的基准。如果运动员知道他们的体脂百分比，应该考虑Katch-McArdle。",
+    },
   },
 } as const;

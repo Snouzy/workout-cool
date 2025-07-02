@@ -50,7 +50,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 
 export default async function HomePage() {
   return (
-    <div className="bg-background text-foreground relative flex  flex-col h-full">
+    <div className="bg-background text-foreground relative flex flex-col h-full">
       <WorkoutStepper />
     </div>
   );

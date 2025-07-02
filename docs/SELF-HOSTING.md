@@ -221,6 +221,7 @@ Update your `.env` file with the new domain
 
 ```env
 BETTER_AUTH_URL=https://yourdomain.com
+NEXT_PUBLIC_APP_URL=https://yourdomain.com
 ```
 
 ---

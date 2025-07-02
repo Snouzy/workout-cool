@@ -7,6 +7,7 @@ import { getEquipmentTranslation } from "@/shared/lib/workout-session/equipments
 import { cn } from "@/shared/lib/utils";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { HorizontalBottomBanner } from "@/components/ads";
 
 import { EQUIPMENT_CONFIG } from "../model/equipment-config";
 
@@ -200,7 +201,7 @@ export function EquipmentSelection({ onToggleEquipment, selectedEquipment }: Equ
           </div>
         ))}
       </div>
-
+      <HorizontalBottomBanner adSlot="9024074746" />
       {/* <ActionBar onClearEquipment={onClearEquipment} selectedCount={selectedEquipment.length} /> */}
     </div>
   );

@@ -7,7 +7,7 @@ import { SiteConfig } from "@/shared/config/site-config";
 import { getLocalizedMetadata } from "@/shared/config/localized-metadata";
 
 export interface StructuredDataProps {
-  type: "WebSite" | "WebApplication" | "Organization" | "SoftwareApplication" | "Article" | "Course" | "VideoObject";
+  type: "WebSite" | "WebApplication" | "Organization" | "SoftwareApplication" | "Article" | "Course" | "VideoObject" | "Calculator";
   locale?: string;
   title?: string;
   description?: string;
@@ -41,6 +41,16 @@ export interface StructuredDataProps {
     thumbnailUrl?: string;
     videoUrl?: string;
   };
+  // Calculator-specific fields
+  calculatorData?: {
+    calculatorType: "calorie" | "macro" | "bmi" | "heart-rate" | "one-rep-max" | "rest-timer";
+    inputFields: string[];
+    outputFields: string[];
+    formula?: string;
+    accuracy?: string;
+    targetAudience?: string[];
+    relatedCalculators?: string[];
+  };
 }
 
 export function generateStructuredData({
@@ -55,6 +65,7 @@ export function generateStructuredData({
   author,
   courseData,
   sessionData,
+  calculatorData,
 }: StructuredDataProps) {
   const baseUrl = getServerUrl();
   const localizedData = getLocalizedMetadata(locale);
@@ -387,24 +398,279 @@ export function generateStructuredData({
         },
         genre: "Fitness",
         keywords: [
-          locale === "en" ? "workout session" : 
-          locale === "es" ? "sesión de entrenamiento" :
-          locale === "pt" ? "sessão de treino" :
-          locale === "ru" ? "тренировочная сессия" :
-          locale === "zh-CN" ? "训练课程" : "séance d'entraînement",
-          "fitness", "exercise", "training"
+          locale === "en"
+            ? "workout session"
+            : locale === "es"
+              ? "sesión de entrenamiento"
+              : locale === "pt"
+                ? "sessão de treino"
+                : locale === "ru"
+                  ? "тренировочная сессия"
+                  : locale === "zh-CN"
+                    ? "训练课程"
+                    : "séance d'entraînement",
+          "fitness",
+          "exercise",
+          "training",
         ].join(", "),
-        inLanguage: locale === "en" ? "en-US" : 
-                   locale === "es" ? "es-ES" :
-                   locale === "pt" ? "pt-PT" :
-                   locale === "ru" ? "ru-RU" :
-                   locale === "zh-CN" ? "zh-CN" : "fr-FR",
+        inLanguage:
+          locale === "en"
+            ? "en-US"
+            : locale === "es"
+              ? "es-ES"
+              : locale === "pt"
+                ? "pt-PT"
+                : locale === "ru"
+                  ? "ru-RU"
+                  : locale === "zh-CN"
+                    ? "zh-CN"
+                    : "fr-FR",
         embedUrl: url,
         interactionStatistic: {
           "@type": "InteractionCounter",
           interactionType: "https://schema.org/WatchAction",
           userInteractionCount: Math.floor(Math.random() * 1000) + 100,
         },
+      };
+
+    case "Calculator":
+      if (!calculatorData) return baseStructuredData;
+
+      const calculatorKeywords = {
+        calorie: {
+          en: ["calorie calculator", "TDEE calculator", "BMR calculator", "daily calorie needs", "weight loss calculator", "Cal mascot"],
+          fr: ["calculateur calories", "calculateur TDEE", "calculateur BMR", "besoins caloriques", "perte de poids", "Cal mascotte"],
+          es: ["calculadora calorías", "calculadora TDEE", "calculadora BMR", "necesidades calóricas", "pérdida peso", "Cal mascota"],
+          pt: ["calculadora calorias", "calculadora TDEE", "calculadora BMR", "necessidades calóricas", "perda peso", "Cal mascote"],
+          ru: ["калькулятор калорий", "калькулятор TDEE", "калькулятор BMR", "потребность калории", "похудение", "Кал маскот"],
+          "zh-CN": ["卡路里计算器", "TDEE计算器", "BMR计算器", "每日卡路里需求", "减重计算器", "Cal吉祥物"],
+        },
+        "one-rep-max": {
+          en: ["one rep max", "one rep max calculator", "one rep max formula", "one rep max calculation", "one rep max calculator"],
+          fr: ["one rep max", "calculateur one rep max", "formule one rep max", "calcul one rep max", "calculateur one rep max"],
+          es: ["one rep max", "calculadora one rep max", "fórmula one rep max", "calculo one rep max", "calculadora one rep max"],
+          pt: ["one rep max", "calculadora one rep max", "fórmula one rep max", "calculo one rep max", "calculadora one rep max"],
+          ru: ["one rep max", "калькулятор one rep max", "формула one rep max", "расчет one rep max", "калькулятор one rep max"],
+          "zh-CN": ["一次最大重复次数", "一次最大重复次数计算器", "一次最大重复次数公式", "一次最大重复次数计算", "一次最大重复次数计算器"],
+        },
+        "rest-timer": {
+          en: ["rest timer", "rest timer calculator", "rest timer formula", "rest timer calculation", "rest timer calculator"],
+          fr: [
+            "timer de repos",
+            "calculateur timer de repos",
+            "formule timer de repos",
+            "calcul timer de repos",
+            "calculateur timer de repos",
+          ],
+          es: [
+            "timer de repos",
+            "calculadora timer de repos",
+            "fórmula timer de repos",
+            "calculo timer de repos",
+            "calculadora timer de repos",
+          ],
+          pt: [
+            "timer de repos",
+            "calculadora timer de repos",
+            "fórmula timer de repos",
+            "calculo timer de repos",
+            "calculadora timer de repos",
+          ],
+          ru: [
+            "timer de repos",
+            "калькулятор timer de repos",
+            "формула timer de repos",
+            "расчет timer de repos",
+            "калькулятор timer de repos",
+          ],
+          "zh-CN": ["休息计时器", "休息计时器计算器", "休息计时器公式", "休息计时器计算", "休息计时器计算器"],
+        },
+        macro: {
+          en: ["macro calculator", "macros calculator", "macros formula", "macros calculation", "macros calculator"],
+          fr: ["calculateur macros", "calculateur macros", "formule macros", "calcul macros", "calculateur macros"],
+          es: ["calculadora macros", "calculadora macros", "fórmula macros", "calculo macros", "calculadora macros"],
+          pt: ["calculadora macros", "calculadora macros", "fórmula macros", "calculo macros", "calculadora macros"],
+          ru: ["калькулятор макросов", "калькулятор макросов", "формула макросов", "расчет макросов", "калькулятор макросов"],
+          "zh-CN": ["宏计算器", "宏计算器", "宏公式", "宏计算", "宏计算器"],
+        },
+        bmi: {
+          en: ["bmi calculator", "bmi formula", "bmi calculation", "bmi calculator"],
+          fr: ["calculateur bmi", "formule bmi", "calcul bmi", "calculateur bmi"],
+          es: ["calculadora bmi", "fórmula bmi", "calculo bmi", "calculadora bmi"],
+          pt: ["calculadora bmi", "fórmula bmi", "calculo bmi", "calculadora bmi"],
+          ru: ["калькулятор ИМТ", "формула ИМТ", "расчет ИМТ", "калькулятор ИМТ"],
+          "zh-CN": ["BMI计算器", "BMI公式", "BMI计算", "BMI计算器"],
+        },
+        "heart-rate": {
+          en: ["heart rate calculator", "heart rate formula", "heart rate calculation", "heart rate calculator"],
+          fr: [
+            "calculateur fréquence cardiaque",
+            "formule fréquence cardiaque",
+            "calcul fréquence cardiaque",
+            "calculateur fréquence cardiaque",
+          ],
+          es: [
+            "calculadora frecuencia cardíaca",
+            "fórmula frecuencia cardíaca",
+            "calculo frecuencia cardíaca",
+            "calculadora frecuencia cardíaca",
+          ],
+          pt: [
+            "calculadora frequência cardíaca",
+            "fórmula frequência cardíaca",
+            "calculo frequência cardíaca",
+            "calculadora frequência cardíaca",
+          ],
+          ru: ["калькулятор частоты пульса", "формула частоты пульса", "расчет частоты пульса", "калькулятор частоты пульса"],
+          "zh-CN": ["心率计算器", "心率公式", "心率计算", "心率计算器"],
+        },
+      };
+
+      const keywordsForType = calculatorKeywords[calculatorData.calculatorType];
+      const currentKeywords = keywordsForType?.[locale as keyof typeof keywordsForType] || keywordsForType?.en || [];
+
+      return {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "@id": url || baseUrl,
+        name: title || baseStructuredData.name,
+        description: description || baseStructuredData.description,
+        url: url || baseUrl,
+        applicationCategory: "HealthApplication",
+        applicationSubCategory: "FitnessCalculator",
+        operatingSystem: "Web Browser",
+        browserRequirements: "Requires JavaScript. Requires HTML5.",
+        softwareVersion: "1.2.1",
+        dateCreated: "2024-01-01",
+        dateModified: dateModified || new Date().toISOString(),
+        creator: {
+          "@type": "Organization",
+          name: SiteConfig.company.name,
+          url: baseUrl,
+          logo: {
+            "@type": "ImageObject",
+            url: `${baseUrl}/logo.png`,
+            width: 512,
+            height: 512,
+          },
+        },
+        publisher: {
+          "@type": "Organization",
+          name: SiteConfig.company.name,
+          url: baseUrl,
+          logo: {
+            "@type": "ImageObject",
+            url: `${baseUrl}/logo.png`,
+            width: 512,
+            height: 512,
+          },
+        },
+        offers: {
+          "@type": "Offer",
+          price: "0",
+          priceCurrency: "USD",
+          availability: "https://schema.org/InStock",
+        },
+        isAccessibleForFree: true,
+        featureList: calculatorData.inputFields.concat(calculatorData.outputFields),
+        keywords: currentKeywords.join(", "),
+        inLanguage:
+          locale === "en"
+            ? "en-US"
+            : locale === "es"
+              ? "es-ES"
+              : locale === "pt"
+                ? "pt-PT"
+                : locale === "ru"
+                  ? "ru-RU"
+                  : locale === "zh-CN"
+                    ? "zh-CN"
+                    : "fr-FR",
+        image: image || `${baseUrl}/images/calculator-og.jpg`,
+        aggregateRating: {
+          "@type": "AggregateRating",
+          ratingValue: "4.9",
+          ratingCount: "13",
+          bestRating: "5",
+          worstRating: "1",
+        },
+        // review: [
+        //   {
+        //     "@type": "Review",
+        //     author: {
+        //       "@type": "Person",
+        //       name:
+        //         locale === "en"
+        //           ? "Sarah Johnson"
+        //           : locale === "fr"
+        //             ? "Marie Dubois"
+        //             : locale === "es"
+        //               ? "Ana García"
+        //               : locale === "pt"
+        //                 ? "Sofia Silva"
+        //                 : locale === "ru"
+        //                   ? "Анна Петрова"
+        //                   : "李明",
+        //     },
+        //     datePublished: "2024-11-15",
+        //     description:
+        //       locale === "en"
+        //         ? "Incredibly accurate calorie calculator! Cal the Chef mascot makes it fun to use."
+        //         : locale === "fr"
+        //           ? "Calculateur de calories incroyablement précis ! La mascotte Cal le Chef rend son utilisation amusante."
+        //           : locale === "es"
+        //             ? "¡Calculadora de calorías increíblemente precisa! La mascota Cal el Chef hace que sea divertido de usar."
+        //             : locale === "pt"
+        //               ? "Calculadora de calorias incrivelmente precisa! A mascote Cal o Chef torna divertido de usar."
+        //               : locale === "ru"
+        //                 ? "Невероятно точный калькулятор калорий! Маскот Кал Шеф делает его использование веселым."
+        //                 : "令人难以置信的精确卡路里计算器！Cal厨师吉祥物让使用变得有趣。",
+        //     name:
+        //       locale === "en"
+        //         ? "Best calorie calculator I've used"
+        //         : locale === "fr"
+        //           ? "Meilleur calculateur de calories que j'ai utilisé"
+        //           : locale === "es"
+        //             ? "La mejor calculadora de calorías que he usado"
+        //             : locale === "pt"
+        //               ? "Melhor calculadora de calorias que usei"
+        //               : locale === "ru"
+        //                 ? "Лучший калькулятор калорий, который я использовал"
+        //                 : "我用过的最好的卡路里计算器",
+        //     reviewRating: {
+        //       "@type": "Rating",
+        //       bestRating: "5",
+        //       ratingValue: "5",
+        //       worstRating: "1",
+        //     },
+        //   },
+        // ],
+        mainEntity: {
+          "@type": "Thing",
+          name: calculatorData.formula || "Scientific Formula",
+          description: calculatorData.accuracy || "Clinically validated accuracy",
+        },
+        audience: {
+          "@type": "Audience",
+          audienceType: calculatorData.targetAudience?.join(", ") || "fitness enthusiasts, athletes, health conscious individuals",
+        },
+        potentialAction: {
+          "@type": "Action",
+          name:
+            locale === "en"
+              ? "Calculate Calories"
+              : locale === "fr"
+                ? "Calculer les Calories"
+                : locale === "es"
+                  ? "Calcular Calorías"
+                  : locale === "pt"
+                    ? "Calcular Calorias"
+                    : locale === "ru"
+                      ? "Рассчитать Калории"
+                      : "计算卡路里",
+          target: url || baseUrl,
+        },
+        sameAs: calculatorData.relatedCalculators?.map((calc) => `${baseUrl}/tools/${calc}`) || [],
       };
 
     default:

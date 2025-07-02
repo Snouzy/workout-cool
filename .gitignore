@@ -45,4 +45,8 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# editors
+.idea
+.zed
+scripts/private/
 scripts/personal/

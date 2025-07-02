@@ -87,7 +87,269 @@ export default {
     premium_required_title: "Premium Required",
     premium_required_subtitle: "This is a premium access. Upgrade to access all premium content.",
     premium_required_button: "Upgrade to Premium",
-    // PremiumUpgradeCard translations
+    already_premium: "You're enjoying Workout.cool Premium",
+    no_ads: "No ads",
+    upgrade: "Upgrade",
+
+    // Checkout
+    checkout: {
+      processing: "Processing...",
+    },
+
+    // Pricing
+    pricing: {
+      month: "month",
+      year: "year",
+      monthly: "Monthly",
+      yearly: "Yearly",
+      discount: "-48%",
+    },
+
+    // Hero Section
+    hero: {
+      badge: "Open-Source & Self-hosting ALWAYS free",
+      title: "Train freely, support the mission",
+      subtitle: "For those who believe in the project and want to (re)believe in themselves with power boosters !",
+      stats: {
+        athletes: {
+          count: "12.4K+",
+          label: "Active athletes",
+        },
+        series: {
+          count: "1.2M+",
+          label: "Series recorded",
+        },
+        rating: {
+          count: "4.9/5",
+          label: "Community rating",
+        },
+        progression: {
+          count: "+23%",
+          label: "Average progression",
+        },
+      },
+    },
+
+    // Mission Banner
+    mission: {
+      supporters_count: "234",
+      supporters_text: "supporters helping the mission",
+      limited: "Limited",
+      early_access: "early access spots",
+    },
+
+    // Plans
+    plans: {
+      monthly: "Monthly",
+      yearly: "Yearly",
+      yearly_discount: "-48%",
+      per_month: "/month",
+      per_year: "/year",
+
+      free: {
+        name: "FREE",
+        price: "€0",
+        period: "/forever",
+        price_label: "€0/forever",
+        badge: "Open-Source • Always Free",
+        description: "All essential functions for training",
+        features: [
+          "Exercise generator",
+          "Exercises with instructions and videos",
+          "GitHub-style workout history (6 months)",
+          "Self-hosting capability",
+          "Open source code access",
+        ],
+        button: "Your actual plan",
+        footer_note: "No signup required • Full access forever",
+      },
+
+      premium: {
+        name: "PREMIUM ⭐",
+        price_label: "€7.90/month or €49/year",
+        badge: "MOST POPULAR • For enthusiasts",
+        description: "All features + early access",
+        footer_monthly: "Join the passionate community! 🔥",
+        footer_yearly: "Thank you for the yearly support! 🙏",
+        yearly_price_note: "/month",
+        features: [
+          "...all of the free plan",
+          "No ads",
+          "Unlimited history (vs 6 months free)",
+          "Progress tracking with advanced statistics (volume, progression, PR)",
+          "Pre-designed training programs",
+          "Private 1:1 chat with a coach",
+          "Early access to new features",
+        ],
+      },
+    },
+
+    // Buttons and Actions
+    actions: {
+      processing: "Processing...",
+      go_premium: "Go Premium",
+      sign_in_continue: "Go Premium",
+      upgrade_now: "Upgrade Now",
+      current_plan: "Your actual plan",
+    },
+
+    // Trust Elements
+    trust: {
+      gdpr_compliant: "100% GDPR compliant",
+      money_back: "30-day money back guarantee",
+      cancel_anytime: "1 click to cancel, no commitment",
+      secure_payment: "100% secure payment via Stripe",
+    },
+
+    // Feature Comparison
+    comparison: {
+      title: "Detailed Feature Comparison",
+      subtitle: "Everything you need to know about what's included in each plan",
+      features_label: "Features",
+      headers: {
+        features: "Features",
+        free: "Free",
+        premium: "Premium",
+      },
+      categories: {
+        equipment: "Equipment & Exercises",
+        tracking: "Tracking & Analytics",
+        programs: "Programs & AI",
+        community: "Community & Sharing",
+        support: "Support & Project",
+      },
+      features: {
+        exercise_library: "Exercise library",
+        custom_exercise: "Custom exercise",
+        video_tutorials: "Video tutorials",
+        workout_history: "Workout history",
+        progress_statistics: "Progress statistics",
+        personal_records: "Personal records tracking",
+        volume_analytics: "Volume & progression analytics",
+        predesigned_programs: "Pre-designed programs",
+        personalized_recommendations: "Personalized recommendations",
+        pro_templates: "Pro templates (Powerlifting, bodybuilding, etc.)",
+        community_access: "Community access",
+        discord_community: "Discord community",
+        private_chat: "Private 1:1 chat with coach",
+        community_support: "Community support",
+        priority_support: "Priority support",
+        early_access: "Early access to features",
+        beta_testing: "Beta testing access",
+      },
+      values: {
+        basic: "Basic",
+        complete: "Complete",
+        unlimited: "Unlimited",
+        professional: "Professional",
+        six_months: "6 months",
+        limited: "Limited",
+        all_programs: "All programs",
+        public: "Public",
+        vip_access: "VIP access",
+        private_channels: "Private channels",
+        soon: "Soon",
+        hd_slowmo: "4K + Slow-mo",
+        early_access: "Early Access",
+      },
+    },
+
+    // FAQ
+    faq: {
+      title: "Frequently Asked Questions",
+      subtitle: "Everything you need to know about Workout.cool and our mission",
+      items: [
+        {
+          question: "Why pay if it's open-source?",
+          answer:
+            "Excellent question! The code will always remain free, but maintaining servers, database and infrastructure costs money. Your contribution helps us keep the tool free for everyone. It's a win-win model: you get premium features, the community keeps free access!",
+        },
+        {
+          question: "Can I self-host Workout.cool?",
+          answer:
+            "Absolutely! The entire codebase is available on GitHub under MIT license. You can deploy it on your own servers, customize it however you want, and use it completely free. Self-hosting gives you full control over your data and workout privacy.",
+        },
+        {
+          question: "Are my workout data secure?",
+          answer:
+            "Yes! We're GDPR compliant, use encrypted connections, and store your data securely. Plus, since we're open-source, you can audit our security practices. You can also export your data anytime or self-host for complete control.",
+        },
+        {
+          question: "Can I cancel my subscription anytime?",
+          answer:
+            "Of course! No contracts, no commitments. Cancel with one click anytime. You'll keep access until your current billing period ends, and you can always restart later. Your workout data remains accessible even if you downgrade to free.",
+        },
+        {
+          question: "Are there exercises for beginners?",
+          answer:
+            "Definitely! Our exercise library covers all fitness levels from complete beginners to advanced athletes. Videos and instructions help beginners find appropriate exercises, and our video tutorials show proper form.",
+        },
+        {
+          question: "How does progress tracking work?",
+          answer:
+            "Every set, rep, weight, and time is automatically logged. You get a GitHub-style workout history showing your consistency, plus detailed analytics on volume, progression, and personal records. Premium users get advanced charts and insights.",
+        },
+        {
+          question: "Can I import data from other apps?",
+          answer:
+            "Soon. We will support CSV imports for basic data (reps & weight). If you're switching from another fitness app, our support team can help migrate your workout history.",
+        },
+        {
+          question: "Does the app work offline?",
+          answer:
+            "The core workout tracking works offline. You can log sets and reps without internet connection for 10 workouts. Exercise videos and cloud sync require internet connection. All your offline data syncs automatically when you're back online.",
+        },
+        {
+          question: "Are there programs for women?",
+          answer:
+            "Absolutely! And there will be more programs in the future. We are working on it. Supporter and Premium plans will include all the future specialized programs for different goals: strength, toning, powerlifting, bodybuilding, and more !",
+        },
+        {
+          question: "Can I create my own programs?",
+          answer: "Unfortunately, no. We are working on it !",
+        },
+      ],
+      additional_support: {
+        title: "Still have questions?",
+        description: "Our fitness-focused community is here to help you succeed",
+        community: "Community support (discord or hello@workout.cool)",
+        discussions: "Open discussions (github/discord)",
+        roadmap: "Transparent roadmap (github)",
+      },
+    },
+
+    // Final CTA
+    final_cta: {
+      motivation: "Keep pushing! 💪",
+      title: "Ready to Support the Mission?",
+      subtitle: "Join thousands of fitness enthusiasts who believe in open-source training freedom",
+      values: [
+        {
+          title: "Community First",
+          description: "Built by and for the fitness community",
+        },
+        {
+          title: "Always Transparent",
+          description: "Open-source code, transparent funding",
+        },
+        {
+          title: "Labor of Love",
+          description: "15 years of passion !",
+        },
+      ],
+      quote: {
+        text: "We believe fitness tools should be accessible to everyone. Your support helps us maintain this vision while continuing to innovate.",
+        author: "— The Workout.cool Team",
+      },
+    },
+
+    // Premium Active State
+    premium_active: {
+      title: "Premium Active! 💪",
+      supporting: "Supporting the mission 💚",
+    },
+
+    // Legacy translations (keeping for compatibility)
     premium_active_title: "Premium Active",
     premium_active_subtitle: "All features unlocked",
     free_intro_title: "You're already getting a lot for free...",
@@ -137,6 +399,284 @@ export default {
     workouts_tooltip: "Create your own workout",
     premium: "Premium",
     premium_tooltip: "Upgrade to Premium",
+    tools: "Tools",
+    tools_tooltip: "Browse tools",
+    profile: "Profile",
+    profile_tooltip: "View your profile",
+  },
+  tools: {
+    try_now: "Try now",
+    title: "Fitness Tools",
+    subtitle: "Essential calculators to optimize your training and nutrition",
+    moreComingSoon: "More tools coming soon",
+    meta: {
+      title: "Fitness Tools - Calculators for Training & Nutrition | Workout.cool",
+      description:
+        "Free fitness calculators: TDEE, macros, BMI, heart rate zones, 1RM and more. Optimize your training and nutrition with our essential tools.",
+      keywords:
+        "fitness calculator, calorie calculator, macro calculator, BMI calculator, TDEE calculator, heart rate zones, one rep max, fitness tools",
+    },
+    "calorie-calculator": {
+      body_fat_percentage: "Body Fat Percentage",
+      body_fat_info_title:
+        "Body fat percentage is essential for Katch-McArdle and Cunningham formulas as they calculate based on lean body mass. If you don't know your exact body fat %, use online visual guides or DEXA scans for accuracy.",
+      title: "Calorie Calculator",
+      description: "Calculate your daily caloric needs (TDEE) based on your activity level and goals",
+      meta: {
+        title: "Calorie Calculator - TDEE & Daily Caloric Needs | Workout.cool",
+        description:
+          "Calculate your Total Daily Energy Expenditure (TDEE) and daily caloric needs. Get personalized recommendations for weight loss, maintenance, or muscle gain.",
+        keywords:
+          "calorie calculator, TDEE calculator, daily calories, weight loss calculator, caloric needs, BMR calculator, metabolism calculator",
+      },
+      subtitle: "Calculate your daily caloric needs based on the Mifflin-St Jeor equation",
+      how_it_works: "How does this calculator work?",
+      how_it_works_description:
+        "This calculator uses scientifically proven formulas to estimate your daily caloric needs based on your personal characteristics and lifestyle.",
+      how_it_works_step1: "We calculate your base metabolism (calories burned at rest)",
+      how_it_works_step2: "We adjust based on your activity level",
+      how_it_works_step3: "We personalize according to your goal (lose, maintain, or gain weight)",
+      calculate: "Calculate",
+      calculating: "Calculating...",
+      tap_info_icons: "Tap the ℹ️ icons for more information",
+      gender: "Gender",
+      male: "Male",
+      female: "Female",
+      units: "Units",
+      metric: "Metric",
+      imperial: "Imperial",
+      age: "Age",
+      age_placeholder: "Enter your age",
+      years: "years",
+      height: "Height",
+      height_placeholder: "Enter your height",
+      weight: "Weight",
+      weight_placeholder: "Enter your weight",
+      cm: "cm",
+      kg: "kg",
+      lbs: "lbs",
+      feet: "feet",
+      inches: "inches",
+      activity_level: "Activity Level",
+      activity: {
+        sedentary: "Sedentary",
+        sedentary_desc: "Little to no exercise, desk job, minimal walking",
+        light: "Lightly Active",
+        light_desc: "Light exercise 1-3 days/week, or daily walking",
+        moderate: "Moderately Active",
+        moderate_desc: "Moderate exercise 3-5 days/week, active lifestyle",
+        active: "Very Active",
+        active_desc: "Heavy exercise 6-7 days/week, very active job",
+        very_active: "Extremely Active",
+        very_active_desc: "Athlete, physical job + daily training",
+      },
+      goal: "Goal",
+      goals: {
+        lose_fast: "Lose Weight Fast",
+        lose_fast_desc: "Lose 2 lbs (1 kg) per week - Aggressive but effective",
+        lose_slow: "Lose Weight",
+        lose_slow_desc: "Lose 1 lb (0.5 kg) per week - Sustainable and healthy",
+        maintain: "Maintain Weight",
+        maintain_desc: "Stay at current weight - Perfect for maintaining your shape",
+        gain_slow: "Gain Weight",
+        gain_slow_desc: "Gain 1 lb (0.5 kg) per week - Clean muscle building",
+        gain_fast: "Gain Weight Fast",
+        gain_fast_desc: "Gain 2 lbs (1 kg) per week - Maximum muscle growth",
+      },
+      results: {
+        title: "Your Results",
+        bmr: "BMR",
+        bmr_explanation:
+          "Basal Metabolic Rate (BMR) is the number of calories your body burns at complete rest, just to maintain basic functions like breathing, circulation, and cell production. This is the minimum energy your body needs to survive.",
+        tdee: "TDEE",
+        tdee_explanation:
+          "Total Daily Energy Expenditure (TDEE) is your BMR plus the calories burned through daily activities and exercise. This is the total number of calories you burn in a day based on your activity level.",
+        target: "Target Calories",
+        macros: "Recommended Macros",
+        macros_explanation:
+          "Macronutrients (macros) are the three main nutrient groups your body needs: Proteins (for muscle building and repair), Carbohydrates (for energy), and Fats (for hormones and vitamin absorption). The percentages shown are a balanced distribution suitable for most fitness goals.",
+        protein: "Protein",
+        carbs: "Carbohydrates",
+        fat: "Fat",
+        disclaimer:
+          "These calculations are estimates based on average formulas. Actual caloric needs may vary based on individual factors. Consult with a healthcare professional or registered dietitian for personalized advice.",
+      },
+      faq: {
+        title: "Frequently Asked Questions",
+        q1: "Why is my calorie target different from other calculators?",
+        a1: "Different calculators may use different formulas or activity multipliers. We use the Mifflin-St Jeor equation, which is considered one of the most accurate for most people. However, individual metabolism can vary by 10-20% from these estimates.",
+        q2: "Should I eat exactly this many calories every day?",
+        a2: "These are average daily targets. It's normal to eat slightly more some days and less on others. Focus on your weekly average rather than being exact every single day. Listen to your body's hunger and fullness cues.",
+        q3: "What if I'm not seeing results after following these recommendations?",
+        a3: "If you're not seeing results after 2-3 weeks, you may need to adjust. Your actual metabolism might be higher or lower than calculated. Try adjusting by 100-200 calories and monitor for another 2 weeks. Also ensure you're tracking your food accurately.",
+        q4: "Are the macro recommendations suitable for everyone?",
+        a4: "The 30/40/30 split (protein/carbs/fat) is a balanced approach suitable for most people. However, athletes, people with medical conditions, or those following specific diets (keto, vegan, etc.) may need different ratios. Consult a nutritionist for personalized recommendations.",
+      },
+    },
+    "macro-calculator": {
+      title: "Macro Calculator",
+      description: "Find your optimal protein, carbs and fat distribution for your fitness goals",
+    },
+    "bmi-calculator": {
+      title: "BMI Calculator",
+      description: "Calculate your Body Mass Index and understand your weight category",
+    },
+    "heart-rate-calculator": {
+      title: "Heart Rate Zones",
+      description: "Discover your optimal training zones for fat burning and performance",
+    },
+    "one-rep-max": {
+      title: "1RM Calculator",
+      description: "Estimate your one rep max and plan your strength training percentages",
+    },
+    back_to_calculators: "Back to calculators",
+    body_fat_percentage: "Body Fat Percentage",
+    body_fat_info_title: "What is Body Fat Percentage?",
+    body_fat_info_content:
+      "Body fat percentage is essential for Katch-McArdle and Cunningham formulas as they calculate based on lean body mass. If you don't know your exact body fat %, use online visual guides or DEXA scans for accuracy.",
+    "calorie-calculator-hub": {
+      title: "Calorie Calculator Formulas",
+      subtitle: "Choose the best formula for your needs and get accurate calorie calculations",
+      meta: {
+        title: "Calorie Calculator Formulas - BMR & TDEE Calculators | Workout.cool",
+        description:
+          "Compare different BMR formulas: Mifflin-St Jeor, Harris-Benedict, Katch-McArdle, Cunningham, and Oxford. Choose the best calorie calculator for your needs.",
+        keywords:
+          "BMR formulas, calorie calculator comparison, Mifflin-St Jeor, Harris-Benedict, Katch-McArdle, Cunningham, Oxford, TDEE calculator",
+      },
+      which_formula: "Which Formula Should I Choose?",
+      formula_explanation: "Different formulas work better for different people. Here's a quick guide to help you choose:",
+      recommendation_general: "Best overall formula, most accurate for general population",
+      recommendation_traditional: "Classic formula, widely used but slightly less accurate",
+      recommendation_bodyfat: "Most accurate if you know your body fat percentage",
+      since: "Since",
+      all_formulas: "All formulas",
+      popularity: "Popularity",
+      accuracy: "Accuracy",
+      accuracy_high: "High",
+      accuracy_good: "Good",
+      accuracy_medium: "Medium",
+      best_for: "Best for",
+      best_for_general: "General use",
+      best_for_traditional: "Traditional",
+      best_for_athletes: "Athletes",
+      best_for_bodybuilders: "Bodybuilders",
+      best_for_european: "European population",
+      best_for_comparison: "Compare all",
+      "mifflin-st-jeor": {
+        title: "Mifflin-St Jeor (Recommended)",
+        description: "Most accurate formula for general population, developed in 1990. Currently the gold standard for BMR calculations.",
+      },
+      "harris-benedict": {
+        title: "Harris-Benedict (Classic)",
+        description: "Revised 1984 version of the classic formula. Widely used but tends to overestimate calories for some people.",
+      },
+      "katch-mcardle": {
+        title: "Katch-McArdle (Athletes)",
+        description: "Based on lean body mass. Most accurate for people who know their body fat percentage and are physically active.",
+      },
+      cunningham: {
+        title: "Cunningham (Bodybuilders)",
+        description: "Designed for very lean athletes and bodybuilders with low body fat. Uses lean body mass calculation.",
+      },
+      oxford: {
+        title: "Oxford (European)",
+        description: "More recent formula (2005) based on European populations. Takes age brackets into account.",
+      },
+      comparison: {
+        title: "Compare All Formulas",
+        description: "Compare results from all formulas side by side to see the differences and choose what works best for you.",
+      },
+    },
+    "mifflin-st-jeor": {
+      title: "Mifflin-St Jeor Calculator",
+      subtitle: "The gold standard for BMR calculation - most accurate for general population",
+      meta: {
+        title: "Mifflin-St Jeor Calculator - Most Accurate BMR & TDEE | Workout.cool",
+        description:
+          "Calculate your BMR and TDEE using the Mifflin-St Jeor equation - the most accurate formula for general population. Get personalized calorie recommendations.",
+        keywords: "Mifflin-St Jeor calculator, BMR calculator, TDEE calculator, most accurate calorie calculator, metabolism calculator",
+      },
+      how_it_works: "How the Mifflin-St Jeor Formula Works",
+      how_it_works_description:
+        "Developed in 1990, this formula is considered the most accurate for calculating Basal Metabolic Rate (BMR) in healthy adults. It's more precise than the Harris-Benedict equation and is widely recommended by nutritionists and fitness professionals.",
+    },
+    "harris-benedict": {
+      title: "Harris-Benedict Calculator",
+      subtitle: "Classic BMR formula - the traditional approach to calorie calculation",
+      meta: {
+        title: "Harris-Benedict Calculator - Classic BMR & TDEE Formula | Workout.cool",
+        description:
+          "Calculate your BMR and TDEE using the revised Harris-Benedict equation (1984). The classic formula that started modern calorie calculations.",
+        keywords: "Harris-Benedict calculator, classic BMR calculator, traditional TDEE calculator, revised Harris-Benedict formula",
+      },
+      how_it_works: "How the Harris-Benedict Formula Works",
+      how_it_works_description:
+        "Originally developed in 1919 and revised in 1984, the Harris-Benedict equation was one of the first formulas to calculate BMR. While slightly less accurate than newer formulas, it remains widely used and provides good estimates for most people.",
+    },
+    "katch-mcardle": {
+      title: "Katch-McArdle Calculator",
+      subtitle: "Precise BMR calculation based on lean body mass - ideal for athletes",
+      meta: {
+        title: "Katch-McArdle Calculator - Lean Body Mass BMR & TDEE | Workout.cool",
+        description:
+          "Calculate your BMR and TDEE using the Katch-McArdle formula based on lean body mass. Most accurate for people who know their body fat percentage.",
+        keywords: "Katch-McArdle calculator, lean body mass BMR, body fat percentage calculator, athlete BMR calculator, precise TDEE",
+      },
+      how_it_works: "How the Katch-McArdle Formula Works",
+      how_it_works_description:
+        "This formula calculates BMR based on lean body mass rather than total body weight, making it more accurate for people who know their body fat percentage. It's particularly useful for athletes and physically active individuals.",
+    },
+    cunningham: {
+      title: "Cunningham Calculator",
+      subtitle: "BMR formula designed for very lean athletes and bodybuilders",
+      meta: {
+        title: "Cunningham Calculator - BMR for Lean Athletes & Bodybuilders | Workout.cool",
+        description:
+          "Calculate your BMR and TDEE using the Cunningham formula, specifically designed for very lean athletes and bodybuilders with low body fat.",
+        keywords:
+          "Cunningham calculator, bodybuilder BMR calculator, lean athlete BMR, low body fat BMR calculator, competition prep calculator",
+      },
+      how_it_works: "How the Cunningham Formula Works",
+      how_it_works_description:
+        "Developed specifically for very lean individuals with low body fat percentages, this formula provides higher BMR estimates than other equations. It's most accurate for competitive athletes and bodybuilders in contest preparation.",
+    },
+    oxford: {
+      title: "Oxford Calculator",
+      subtitle: "Modern BMR formula based on European populations with age considerations",
+      meta: {
+        title: "Oxford Calculator - Modern BMR & TDEE Formula | Workout.cool",
+        description:
+          "Calculate your BMR and TDEE using the Oxford equation (2005), a modern formula based on European populations with age-specific calculations.",
+        keywords: "Oxford calculator, modern BMR calculator, European BMR formula, age-specific BMR calculator, 2005 BMR equation",
+      },
+      how_it_works: "How the Oxford Formula Works",
+      how_it_works_description:
+        "Published in 2005, this is one of the more recent BMR formulas. It was developed using data from European populations and takes age brackets into account, providing different equations for people under and over 30 years old.",
+    },
+    "calorie-calculator-comparison": {
+      title: "Compare All BMR Formulas",
+      subtitle: "See how different BMR formulas calculate your calorie needs side by side",
+      meta: {
+        title: "BMR Formula Comparison - Compare All Calorie Calculators | Workout.cool",
+        description:
+          "Compare Mifflin-St Jeor, Harris-Benedict, Katch-McArdle, Cunningham, and Oxford BMR formulas side by side. See which formula works best for you.",
+        keywords:
+          "BMR formula comparison, calorie calculator comparison, Mifflin vs Harris-Benedict, best BMR calculator, compare calorie formulas",
+      },
+      how_it_works: "How This Comparison Works",
+      how_it_works_description:
+        "Enter your details once and see how all major BMR formulas calculate your daily calorie needs. This helps you understand the differences and choose the most suitable formula for your goals.",
+      input_details: "Your Details",
+      compare: "Compare",
+      results_comparison: "Formula Comparison Results",
+      vs_mifflin: "vs Mifflin-St Jeor",
+      summary: "Summary & Recommendations",
+      summary_explanation:
+        "Different formulas can give varying results. Generally, differences of ±100-200 calories are normal and expected.",
+      recommendation:
+        "For most people, Mifflin-St Jeor provides the most accurate baseline. Athletes should consider Katch-McArdle if they know their body fat percentage.",
+    },
   },
   levels: {
     BEGINNER: "Beginner",
@@ -236,9 +776,9 @@ export default {
     },
   },
 
-  // Donation Alert
+  // Premium Upsell Alert
   donation_alert: {
-    title: "Keep Workout.cool free. Support us via",
+    title: "Unlock advanced features with Workout.cool Premium",
     or: "or",
   },
 
@@ -606,5 +1146,6 @@ export default {
     premium: "Premium",
     free: "Free",
     new: "New",
+    coming_soon: "Coming soon",
   },
 } as const;

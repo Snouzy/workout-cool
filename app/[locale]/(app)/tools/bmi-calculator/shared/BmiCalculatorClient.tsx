@@ -23,9 +23,15 @@ export function BmiCalculatorClient() {
   const [height, setHeight] = useState<number>(170); // cm for metric, inches for imperial
   const [weight, setWeight] = useState<number>(70); // kg for metric, lbs for imperial
   const [result, setResult] = useState<BmiResult | null>(null);
+  const [isInitialized, setIsInitialized] = useState<boolean>(false);
 
-  // Convert values when unit system changes
+  // Convert values when unit system changes (but not on first render)
   useEffect(() => {
+    if (!isInitialized) {
+      setIsInitialized(true);
+      return;
+    }
+
     if (unit === "imperial") {
       // Convert from metric to imperial
       setHeight(Math.round(convertHeight(height, "metric", "imperial")));

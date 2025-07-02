@@ -68,45 +68,6 @@ export default async function BmiCalculatorPage({ params }: { params: Promise<{ 
 
           {/* Calculator */}
           <BmiCalculatorClient />
-
-          {/* Information Section */}
-          <div className="mt-12 bg-gradient-to-br from-primary/5 to-primary/10 dark:from-primary/10 dark:to-primary/5 rounded-2xl p-6 sm:p-8 border border-primary/20">
-            <h2 className="text-2xl font-bold mb-4 text-base-content dark:text-base-content/90">About BMI</h2>
-            <div className="prose prose-sm dark:prose-invert max-w-none">
-              <p className="text-base-content/70 dark:text-base-content/60 mb-4">
-                Body Mass Index (BMI) is a screening tool used to assess whether you&apos;re at a healthy weight for your height. It&apos;s
-                calculated by dividing your weight in kilograms by your height in meters squared.
-              </p>
-              <p className="text-base-content/70 dark:text-base-content/60 mb-4">
-                While BMI is a useful screening tool, it has limitations. It doesn&apos;t distinguish between muscle and fat mass, so very
-                muscular individuals may have a high BMI despite being healthy. Always consult with healthcare professionals for
-                personalized health advice.
-              </p>
-              <h3 className="text-lg font-semibold mb-2 text-base-content dark:text-base-content/90">
-                BMI Categories (WHO Classification)
-              </h3>
-              <ul className="space-y-1 text-base-content/70 dark:text-base-content/60">
-                <li>
-                  <strong>Underweight:</strong> BMI less than 18.5
-                </li>
-                <li>
-                  <strong>Normal weight:</strong> BMI 18.5-24.9
-                </li>
-                <li>
-                  <strong>Overweight:</strong> BMI 25.0-29.9
-                </li>
-                <li>
-                  <strong>Obesity Class I:</strong> BMI 30.0-34.9
-                </li>
-                <li>
-                  <strong>Obesity Class II:</strong> BMI 35.0-39.9
-                </li>
-                <li>
-                  <strong>Obesity Class III:</strong> BMI 40.0 and above
-                </li>
-              </ul>
-            </div>
-          </div>
         </div>
       </div>
     </>

@@ -32,7 +32,7 @@ export async function ProgramCard({ program, featured = false, size = "medium", 
   const paddingClass = {
     small: "p-3",
     medium: "p-4",
-    large: featured ? "p-6" : "p-4",
+    large: "p-4",
   }[size];
 
   const titleClass = {

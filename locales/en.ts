@@ -410,7 +410,7 @@ export default {
     subtitle: "Essential calculators to optimize your training and nutrition",
     moreComingSoon: "More tools coming soon",
     meta: {
-      title: "Fitness Tools - Calculators for Training & Nutrition | Workout.cool",
+      title: "Fitness Tools - Calculators for Training & Nutrition",
       description:
         "Free fitness calculators: TDEE, macros, BMI, heart rate zones, 1RM and more. Optimize your training and nutrition with our essential tools.",
       keywords:
@@ -423,7 +423,7 @@ export default {
       title: "Calorie Calculator",
       description: "Calculate your daily caloric needs (TDEE) based on your activity level and goals",
       meta: {
-        title: "Calorie Calculator - TDEE & Daily Caloric Needs | Workout.cool",
+        title: "Calorie Calculator - TDEE & Daily Caloric Needs",
         description:
           "Calculate your Total Daily Energy Expenditure (TDEE) and daily caloric needs. Get personalized recommendations for weight loss, maintenance, or muscle gain.",
         keywords:
@@ -538,7 +538,7 @@ export default {
       title: "Calorie Calculator Formulas",
       subtitle: "Choose the best formula for your needs and get accurate calorie calculations",
       meta: {
-        title: "Calorie Calculator Formulas - BMR & TDEE Calculators | Workout.cool",
+        title: "Calorie Calculator Formulas - BMR & TDEE Calculators",
         description:
           "Compare different BMR formulas: Mifflin-St Jeor, Harris-Benedict, Katch-McArdle, Cunningham, and Oxford. Choose the best calorie calculator for your needs.",
         keywords:
@@ -592,7 +592,7 @@ export default {
       title: "Mifflin-St Jeor Calculator",
       subtitle: "The gold standard for BMR calculation - most accurate for general population",
       meta: {
-        title: "Mifflin-St Jeor Calculator - Most Accurate BMR & TDEE | Workout.cool",
+        title: "Mifflin-St Jeor Calculator - Most Accurate BMR & TDEE",
         description:
           "Calculate your BMR and TDEE using the Mifflin-St Jeor equation - the most accurate formula for general population. Get personalized calorie recommendations.",
         keywords: "Mifflin-St Jeor calculator, BMR calculator, TDEE calculator, most accurate calorie calculator, metabolism calculator",
@@ -605,7 +605,7 @@ export default {
       title: "Harris-Benedict Calculator",
       subtitle: "Classic BMR formula - the traditional approach to calorie calculation",
       meta: {
-        title: "Harris-Benedict Calculator - Classic BMR & TDEE Formula | Workout.cool",
+        title: "Harris-Benedict Calculator - Classic BMR & TDEE Formula",
         description:
           "Calculate your BMR and TDEE using the revised Harris-Benedict equation (1984). The classic formula that started modern calorie calculations.",
         keywords: "Harris-Benedict calculator, classic BMR calculator, traditional TDEE calculator, revised Harris-Benedict formula",
@@ -618,7 +618,7 @@ export default {
       title: "Katch-McArdle Calculator",
       subtitle: "Precise BMR calculation based on lean body mass - ideal for athletes",
       meta: {
-        title: "Katch-McArdle Calculator - Lean Body Mass BMR & TDEE | Workout.cool",
+        title: "Katch-McArdle Calculator - Lean Body Mass BMR & TDEE",
         description:
           "Calculate your BMR and TDEE using the Katch-McArdle formula based on lean body mass. Most accurate for people who know their body fat percentage.",
         keywords: "Katch-McArdle calculator, lean body mass BMR, body fat percentage calculator, athlete BMR calculator, precise TDEE",
@@ -631,7 +631,7 @@ export default {
       title: "Cunningham Calculator",
       subtitle: "BMR formula designed for very lean athletes and bodybuilders",
       meta: {
-        title: "Cunningham Calculator - BMR for Lean Athletes & Bodybuilders | Workout.cool",
+        title: "Cunningham Calculator - BMR for Lean Athletes & Bodybuilders",
         description:
           "Calculate your BMR and TDEE using the Cunningham formula, specifically designed for very lean athletes and bodybuilders with low body fat.",
         keywords:
@@ -645,7 +645,7 @@ export default {
       title: "Oxford Calculator",
       subtitle: "Modern BMR formula based on European populations with age considerations",
       meta: {
-        title: "Oxford Calculator - Modern BMR & TDEE Formula | Workout.cool",
+        title: "Oxford Calculator - Modern BMR & TDEE Formula",
         description:
           "Calculate your BMR and TDEE using the Oxford equation (2005), a modern formula based on European populations with age-specific calculations.",
         keywords: "Oxford calculator, modern BMR calculator, European BMR formula, age-specific BMR calculator, 2005 BMR equation",
@@ -658,7 +658,7 @@ export default {
       title: "Compare All BMR Formulas",
       subtitle: "See how different BMR formulas calculate your calorie needs side by side",
       meta: {
-        title: "BMR Formula Comparison - Compare All Calorie Calculators | Workout.cool",
+        title: "BMR Formula Comparison - Compare All Calorie Calculators",
         description:
           "Compare Mifflin-St Jeor, Harris-Benedict, Katch-McArdle, Cunningham, and Oxford BMR formulas side by side. See which formula works best for you.",
         keywords:
@@ -677,6 +677,84 @@ export default {
       recommendation:
         "For most people, Mifflin-St Jeor provides the most accurate baseline. Athletes should consider Katch-McArdle if they know their body fat percentage.",
     },
+    "bmi-calculator-hub": {
+      title: "BMI Calculator Tools",
+      subtitle: "Calculate your Body Mass Index with different methods and get personalized health insights",
+      meta: {
+        title: "BMI Calculator - Body Mass Index Tools & Health Assessment",
+        description:
+          "Calculate your BMI with our comprehensive tools. Standard BMI, adjusted for athletes, pediatric BMI, and comparison tools. Get health insights and recommendations.",
+        keywords: "BMI calculator, body mass index, health assessment, weight status, BMI tools, pediatric BMI, athlete BMI",
+      },
+      understanding_bmi: "Understanding BMI",
+      bmi_explanation: "BMI is a screening tool that helps assess whether you're at a healthy weight for your height. Choose the right calculator for your needs:",
+      recommendation_standard: "Best for general population and initial health screening",
+      recommendation_adjusted: "More accurate for athletes and muscular individuals",
+      recommendation_pediatric: "Specialized for children and adolescents with age-specific percentiles",
+      popularity: "Popularity",
+      accuracy: "Accuracy",
+      accuracy_high: "High",
+      accuracy_good: "Good", 
+      accuracy_medium: "Medium",
+      best_for: "Best for",
+      best_for_general: "General use",
+      best_for_athletes: "Athletes",
+      best_for_children: "Children",
+      best_for_comparison: "Compare all",
+      category_standard: "Standard",
+      category_advanced: "Advanced",
+      category_specialized: "Specialized",
+      standard: {
+        title: "Standard BMI Calculator",
+        description: "Classic BMI calculation using the standard WHO formula. Quick and easy assessment for general population.",
+      },
+      adjusted: {
+        title: "Adjusted BMI Calculator",
+        description: "Enhanced BMI calculation that considers muscle mass and body composition for more accurate results in athletic individuals.",
+      },
+      pediatric: {
+        title: "Pediatric BMI Calculator",
+        description: "Specialized BMI calculator for children and adolescents using age and gender-specific percentiles and growth charts.",
+      },
+      comparison: {
+        title: "BMI Comparison Tool",
+        description: "Compare different BMI calculation methods side by side to understand how various factors affect your results.",
+      },
+    },
+  },
+  "bmi-calculator": {
+    height: "Height",
+    weight: "Weight",
+    feet: "ft",
+    inches: "in",
+    cm: "cm",
+    kg: "kg",
+    lbs: "lbs",
+    height_placeholder: "Enter height",
+    weight_placeholder: "Enter weight",
+    calculate: "Calculate BMI",
+    your_bmi: "Your BMI",
+    bmi_category: "BMI Category",
+    health_risk: "Health Risk",
+    recommendations: "Recommendations",
+    units: "Units",
+    metric: "Metric (kg/cm)",
+    imperial: "Imperial (lbs/ft)",
+    category_underweight: "Underweight",
+    category_normal: "Normal Weight",
+    category_overweight: "Overweight",
+    category_obese_class_1: "Obesity Class I",
+    category_obese_class_2: "Obesity Class II",
+    category_obese_class_3: "Obesity Class III",
+    risk_low: "Low",
+    risk_normal: "Normal",
+    risk_increased: "Increased",
+    risk_high: "High",
+    risk_very_high: "Very High",
+    risk_extremely_high: "Extremely High",
+    bmi_range: "BMI Range",
+    normal_range: "Normal BMI range: 18.5 - 24.9",
+    disclaimer: "BMI is a screening tool and may not reflect body composition. Consult healthcare professionals for personalized advice.",
   },
   levels: {
     BEGINNER: "Beginner",

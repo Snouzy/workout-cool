@@ -3,7 +3,7 @@ import { Metadata } from "next";
 import { PremiumUpgradeCard } from "@/features/premium/ui/premium-upgrade-card";
 
 export const metadata: Metadata = {
-  title: "Premium Plans - Train freely, support the mission | Workout.cool",
+  title: "Premium Plans - Train freely, support the mission",
   description:
     "Join thousands of fitness enthusiasts who believe in open-source training freedom. Support our mission while unlocking advanced features.",
   keywords: ["premium", "fitness", "workout", "open-source", "subscription", "training"],

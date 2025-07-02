@@ -404,7 +404,7 @@ export default {
     subtitle: "Calculadoras essenciais para otimizar o seu treino e nutrição",
     moreComingSoon: "Mais ferramentas em breve",
     meta: {
-      title: "Ferramentas de Fitness - Calculadoras para Treino e Nutrição | Workout.cool",
+      title: "Ferramentas de Fitness - Calculadoras para Treino e Nutrição",
       description:
         "Calculadoras gratuitas de fitness: TDEE, macros, IMC, zonas de frequência cardíaca, 1RM e mais. Otimize o seu treino e nutrição com as nossas ferramentas essenciais.",
       keywords:
@@ -414,7 +414,7 @@ export default {
       title: "Calculadora de Calorias",
       description: "Calcule as suas necessidades calóricas diárias (TDEE) baseadas no seu nível de atividade e objetivos",
       meta: {
-        title: "Calculadora de Calorias - TDEE e Necessidades Calóricas Diárias | Workout.cool",
+        title: "Calculadora de Calorias - TDEE e Necessidades Calóricas Diárias",
         description:
           "Calcule o seu Gasto Energético Total Diário (TDEE) e necessidades calóricas diárias. Obtenha recomendações personalizadas para perda de peso, manutenção ou ganho muscular.",
         keywords:
@@ -529,7 +529,7 @@ export default {
       title: "Fórmulas da Calculadora de Calorias",
       subtitle: "Escolha a melhor fórmula para as suas necessidades e obtenha cálculos de calorias precisos",
       meta: {
-        title: "Fórmulas da Calculadora de Calorias - Calculadoras TMB e TDEE | Workout.cool",
+        title: "Fórmulas da Calculadora de Calorias - Calculadoras TMB e TDEE",
         description:
           "Compare diferentes fórmulas de TMB: Mifflin-St Jeor, Harris-Benedict, Katch-McArdle, Cunningham e Oxford. Escolha a melhor calculadora de calorias para as suas necessidades.",
         keywords:
@@ -586,7 +586,7 @@ export default {
       title: "Calculadora Mifflin-St Jeor",
       subtitle: "O padrão ouro para cálculo de TMB - mais precisa para a população geral",
       meta: {
-        title: "Calculadora Mifflin-St Jeor - TMB e TDEE Mais Precisos | Workout.cool",
+        title: "Calculadora Mifflin-St Jeor - TMB e TDEE Mais Precisos",
         description:
           "Calcule a sua TMB e TDEE usando a equação Mifflin-St Jeor - a fórmula mais precisa para a população geral. Obtenha recomendações calóricas personalizadas.",
         keywords:
@@ -600,7 +600,7 @@ export default {
       title: "Calculadora Harris-Benedict",
       subtitle: "Fórmula clássica de TMB - a abordagem tradicional para cálculo de calorias",
       meta: {
-        title: "Calculadora Harris-Benedict - Fórmula Clássica TMB e TDEE | Workout.cool",
+        title: "Calculadora Harris-Benedict - Fórmula Clássica TMB e TDEE",
         description:
           "Calcule a sua TMB e TDEE usando a equação Harris-Benedict revista (1984). A fórmula clássica que iniciou os cálculos modernos de calorias.",
         keywords: "calculadora Harris-Benedict, calculadora TMB clássica, calculadora TDEE tradicional, fórmula Harris-Benedict revista",
@@ -613,7 +613,7 @@ export default {
       title: "Calculadora Katch-McArdle",
       subtitle: "Cálculo preciso de TMB baseado na massa magra corporal - ideal para atletas",
       meta: {
-        title: "Calculadora Katch-McArdle - TMB e TDEE da Massa Magra | Workout.cool",
+        title: "Calculadora Katch-McArdle - TMB e TDEE da Massa Magra",
         description:
           "Calcule a sua TMB e TDEE usando a fórmula Katch-McArdle baseada na massa magra corporal. Mais precisa para pessoas que conhecem a sua percentagem de gordura corporal.",
         keywords:
@@ -627,7 +627,7 @@ export default {
       title: "Calculadora Cunningham",
       subtitle: "Fórmula de TMB projetada para atletas muito magros e fisiculturistas",
       meta: {
-        title: "Calculadora Cunningham - TMB para Atletas Magros e Fisiculturistas | Workout.cool",
+        title: "Calculadora Cunningham - TMB para Atletas Magros e Fisiculturistas",
         description:
           "Calcule a sua TMB e TDEE usando a fórmula Cunningham, especificamente projetada para atletas muito magros e fisiculturistas com baixa gordura corporal.",
         keywords:
@@ -641,7 +641,7 @@ export default {
       title: "Calculadora Oxford",
       subtitle: "Fórmula moderna de TMB baseada em populações europeias com considerações de idade",
       meta: {
-        title: "Calculadora Oxford - Fórmula Moderna TMB e TDEE | Workout.cool",
+        title: "Calculadora Oxford - Fórmula Moderna TMB e TDEE",
         description:
           "Calcule a sua TMB e TDEE usando a equação Oxford (2005), uma fórmula moderna baseada em populações europeias com cálculos específicos por idade.",
         keywords: "calculadora Oxford, calculadora TMB moderna, fórmula TMB europeia, calculadora TMB específica idade, equação TMB 2005",
@@ -654,7 +654,7 @@ export default {
       title: "Comparar todas as fórmulas BMR",
       subtitle: "Veja como diferentes fórmulas BMR calculam as suas necessidades calóricas lado a lado",
       meta: {
-        title: "Comparação de fórmulas BMR - Comparar todos os calculadores de calorias | Workout.cool",
+        title: "Comparação de fórmulas BMR - Comparar todos os calculadores de calorias",
         description:
           "Compare as fórmulas Mifflin-St Jeor, Harris-Benedict, Katch-McArdle, Cunningham e Oxford BMR lado a lado. Veja qual fórmula funciona melhor para si.",
         keywords:
@@ -673,6 +673,84 @@ export default {
       recommendation:
         "Para a maioria das pessoas, Mifflin-St Jeor fornece a base mais precisa. Os atletas devem considerar Katch-McArdle se conhecerem a sua percentagem de gordura corporal.",
     },
+    "bmi-calculator-hub": {
+      title: "Ferramentas Calculadora IMC",
+      subtitle: "Calcule o seu Índice de Massa Corporal com diferentes métodos e obtenha informações de saúde personalizadas",
+      meta: {
+        title: "Calculadora IMC - Ferramentas de Índice de Massa Corporal e Avaliação de Saúde",
+        description:
+          "Calcule o seu IMC com as nossas ferramentas abrangentes. IMC padrão, ajustado para atletas, IMC pediátrico, e ferramentas de comparação. Obtenha informações de saúde e recomendações.",
+        keywords: "calculadora IMC, índice massa corporal, avaliação saúde, estado peso, ferramentas IMC, IMC pediátrico, IMC atleta",
+      },
+      understanding_bmi: "Compreender o IMC",
+      bmi_explanation: "O IMC é uma ferramenta de rastreio que ajuda a avaliar se tem um peso saudável para a sua altura. Escolha a calculadora certa para as suas necessidades:",
+      recommendation_standard: "Melhor para a população geral e rastreio inicial de saúde",
+      recommendation_adjusted: "Mais preciso para atletas e indivíduos musculosos",
+      recommendation_pediatric: "Especializado para crianças e adolescentes com percentis específicos por idade",
+      popularity: "Popularidade",
+      accuracy: "Precisão",
+      accuracy_high: "Alta",
+      accuracy_good: "Boa",
+      accuracy_medium: "Média",
+      best_for: "Melhor para",
+      best_for_general: "Uso geral",
+      best_for_athletes: "Atletas",
+      best_for_children: "Crianças",
+      best_for_comparison: "Comparar tudo",
+      category_standard: "Padrão",
+      category_advanced: "Avançado",
+      category_specialized: "Especializado",
+      standard: {
+        title: "Calculadora IMC Padrão",
+        description: "Cálculo IMC clássico usando a fórmula padrão da OMS. Avaliação rápida e fácil para a população geral.",
+      },
+      adjusted: {
+        title: "Calculadora IMC Ajustada",
+        description: "Cálculo IMC melhorado que considera a massa muscular e composição corporal para resultados mais precisos em indivíduos atléticos.",
+      },
+      pediatric: {
+        title: "Calculadora IMC Pediátrica",
+        description: "Calculadora IMC especializada para crianças e adolescentes usando percentis específicos por idade e sexo e gráficos de crescimento.",
+      },
+      comparison: {
+        title: "Ferramenta de Comparação IMC",
+        description: "Compare diferentes métodos de cálculo IMC lado a lado para compreender como vários fatores afetam os seus resultados.",
+      },
+    },
+  },
+  "bmi-calculator": {
+    height: "Altura",
+    weight: "Peso",
+    feet: "pés",
+    inches: "pol",
+    cm: "cm",
+    kg: "kg",
+    lbs: "lbs",
+    height_placeholder: "Insira a altura",
+    weight_placeholder: "Insira o peso",
+    calculate: "Calcular IMC",
+    your_bmi: "O seu IMC",
+    bmi_category: "Categoria IMC",
+    health_risk: "Risco de Saúde",
+    recommendations: "Recomendações",
+    units: "Unidades",
+    metric: "Métrico (kg/cm)",
+    imperial: "Imperial (lbs/pés)",
+    category_underweight: "Baixo peso",
+    category_normal: "Peso normal",
+    category_overweight: "Excesso de peso",
+    category_obese_class_1: "Obesidade Classe I",
+    category_obese_class_2: "Obesidade Classe II",
+    category_obese_class_3: "Obesidade Classe III",
+    risk_low: "Baixo",
+    risk_normal: "Normal",
+    risk_increased: "Aumentado",
+    risk_high: "Alto",
+    risk_very_high: "Muito alto",
+    risk_extremely_high: "Extremamente alto",
+    bmi_range: "Intervalo IMC",
+    normal_range: "Intervalo IMC normal: 18,5 - 24,9",
+    disclaimer: "O IMC é uma ferramenta de rastreio e pode não refletir a composição corporal. Consulte profissionais de saúde para conselhos personalizados.",
   },
   levels: {
     BEGINNER: "Iniciante",

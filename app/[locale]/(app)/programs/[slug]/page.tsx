@@ -58,7 +58,6 @@ export async function generateMetadata({ params }: ProgramDetailPageProps): Prom
 export default async function ProgramDetailPageRoute({ params }: ProgramDetailPageProps) {
   const { slug, locale } = await params;
   const program = await getProgramBySlug(slug);
-  const t = await getI18n();
 
   if (!program) {
     notFound();

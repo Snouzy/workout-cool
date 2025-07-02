@@ -52,7 +52,6 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
   const [completedSessions, setCompletedSessions] = useState<Set<string>>(new Set());
   const [_isLoadingProgress, setIsLoadingProgress] = useState(false);
   const [hasJoinedProgram, setHasJoinedProgram] = useState(false);
-  const [currentSessionNumber, setCurrentSessionNumber] = useState(1);
   const [isProgramCompleted, setIsProgramCompleted] = useState(false);
   const t = useI18n();
   const searchParams = useSearchParams();
@@ -91,7 +90,6 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
       setHasJoinedProgram(false);
       setCompletedSessions(new Set());
       setSelectedWeek(1);
-      setCurrentSessionNumber(1);
       setIsProgramCompleted(false);
     }
   }, [isAuthenticated]);
@@ -113,7 +111,6 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
       if (progress?.enrollment) {
         setHasJoinedProgram(true);
         setSelectedWeek(progress.stats.currentWeek);
-        setCurrentSessionNumber(progress.stats.currentSession);
         setIsProgramCompleted(progress.stats.isProgramCompleted);
         if (progress.enrollment.sessionProgress) {
           const completed = new Set(
@@ -125,7 +122,6 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
         setHasJoinedProgram(false);
         setCompletedSessions(new Set());
         setSelectedWeek(1);
-        setCurrentSessionNumber(1);
         setIsProgramCompleted(false);
       }
     } catch (error) {

@@ -980,6 +980,22 @@ export default {
         a4: "La división 30/40/30 (proteína/carbohidratos/grasa) es un enfoque equilibrado adecuado para la mayoría de las personas. Sin embargo, atletas, personas con condiciones médicas o aquellos que siguen dietas específicas (keto, vegano, etc.) pueden necesitar diferentes proporciones. Consulta a un nutricionista para recomendaciones personalizadas.",
       },
     },
+    "macro-calculator": {
+      title: "Calculadora de Macros",
+      description: "Encuentra tu distribución óptima de proteínas, carbohidratos y grasas para tus objetivos de fitness",
+    },
+    "bmi-calculator": {
+      title: "Calculadora de IMC",
+      description: "Calcula tu Índice de Masa Corporal y comprende tu categoría de peso",
+    },
+    "heart-rate-calculator": {
+      title: "Zonas de Frecuencia Cardíaca",
+      description: "Descubre tus zonas de entrenamiento óptimas para quemar grasa y mejorar tu rendimiento",
+    },
+    "one-rep-max": {
+      title: "Calculadora de 1RM",
+      description: "Estima tu 1RM y planifica tus porcentajes de entrenamiento de fuerza",
+    },
     back_to_calculators: "Volver a las calculadoras",
     body_fat_percentage: "Porcentaje de Grasa Corporal",
     body_fat_info_title: "¿Qué es el Porcentaje de Grasa Corporal?",

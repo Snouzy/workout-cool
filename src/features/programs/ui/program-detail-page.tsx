@@ -356,10 +356,10 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
                           <div className="relative">
                             <Image
                               alt={coach.name}
-                              className="w-16 h-16 rounded-full border-3 border-[#25CB78]"
-                              height={64}
+                              className="w-24 h-24 rounded-full border-3 border-[#25CB78] object-cover"
+                              height={96}
                               src={coach.image}
-                              width={64}
+                              width={96}
                             />
                             <div className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full flex items-center justify-center">
                               <Image

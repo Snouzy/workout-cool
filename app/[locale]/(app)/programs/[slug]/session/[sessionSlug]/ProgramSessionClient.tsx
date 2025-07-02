@@ -207,6 +207,8 @@ export function ProgramSessionClient({ program, week, session, isAuthenticated, 
     );
   }
 
+  const totalSets = session.exercises.reduce((total, ex) => total + ex.suggestedSets.length, 0);
+
   // Use access guard to handle authentication and premium restrictions
   return (
     <SessionAccessGuard
@@ -242,16 +244,16 @@ export function ProgramSessionClient({ program, week, session, isAuthenticated, 
           <div className="max-w-4xl mx-auto">
             <article className="bg-white dark:bg-gray-800 rounded-lg p-2 sm:p-6 mb-6">
               {/* Session info */}
-              <header className="flex items-center justify-between mb-6 flex-col-reverse sm:flex-row">
-                <div className="mt-5 sm:mt-0">
+              <header className="flex items-center justify-between mb-6 flex-col text-center">
+                <div className="mt-5 sm:mt-0 flex flex-col gap-2">
                   <h1 className="text-2xl font-bold text-gray-900 dark:text-white">{programSessionTitle}</h1>
-                  {programSessionDescription && <p className="text-gray-600 dark:text-gray-400 mt-2">{programSessionDescription}</p>}
+                  <SessionRichSnippets
+                    duration={Math.round(session.exercises.length * 3)}
+                    exerciseCount={session.exercises.length}
+                    totalSets={totalSets}
+                  />
                 </div>
-                <SessionRichSnippets
-                  duration={Math.round(session.exercises.length * 3)}
-                  exerciseCount={session.exercises.length}
-                  totalSets={session.exercises.reduce((total, ex) => total + ex.suggestedSets.length, 0)}
-                />
+                {programSessionDescription && <p className="text-gray-600 dark:text-gray-400 mt-2">{programSessionDescription}</p>}
               </header>
 
               {/* Exercise list */}

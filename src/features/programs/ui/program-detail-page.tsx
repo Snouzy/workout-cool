@@ -188,7 +188,7 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
                   <Users size={12} />
                   {program.participantCount}+
                 </span>
-                {/* eslint-disable-next-line max-len */}
+                {/* TODO: i18n category */}
                 {/* {program.isPremium && <span className="bg-yellow-500 text-white px-3 py-1 rounded-full text-xs font-medium">Premium</span>} */}
               </div>
               <h1 className="text-3xl font-bold mb-2">{programTitle}</h1>
@@ -431,7 +431,6 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
                       const isCompleted = completedSessions.has(session.id);
                       return (
                         <div
-                          // eslint-disable-next-line max-len
                           className={`bg-white dark:bg-gray-800 rounded-xl p-4 border-2 cursor-pointer transition-all duration-200 ease-in-out flex items-center gap-4 ${
                             isCompleted
                               ? "border-[#25CB78] bg-[#25CB78]/5"
@@ -447,7 +446,7 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
                           {/* Session Number Badge */}
                           <div className="relative">
                             <div
-                              className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 font-bold text-white ${
+                              className={`w-8 sm:w-12 h-8 sm:h-12 rounded-xl flex items-center justify-center flex-shrink-0 font-bold text-white ${
                                 isCompleted
                                   ? "bg-[#25CB78]"
                                   : session.isPremium
@@ -520,7 +519,7 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
 
       {/* Enhanced Persuasive Floating CTA - Only show if program is not completed */}
       {!isProgramCompleted && tab !== "sessions" && (
-        <div className="absolute bottom-2 right-0 left-0 max-w-sm mx-auto px-4">
+        <div className="absolute bottom-2 right-0 left-0 max-w-sm mx-auto px-4 z-[10]">
           <button
             className={
               "w-full bg-gradient-to-r from-[#4F8EF7] to-[#25CB78] hover:from-[#4F8EF7]/90 hover:to-[#25CB78]/90 text-white px-6 py-4 font-bold border-2 border-white/20 hover:scale-[1.02] transition-all duration-200 ease-in-out z-1 flex items-center justify-center gap-2 shadow-xl rounded-full"

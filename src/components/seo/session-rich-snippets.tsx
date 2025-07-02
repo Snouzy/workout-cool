@@ -33,7 +33,9 @@ export function SessionRichSnippets({ duration, exerciseCount, totalSets, classN
       {/* Total Sets */}
       <div className="flex items-center gap-1">
         <Timer size={16} />
-        <span>{t("programs.set", { count: totalSets })}</span>
+        <span>
+          {totalSets} {t("programs.set", { count: totalSets })}
+        </span>
       </div>
 
       {/* Hidden structured data for SEO */}

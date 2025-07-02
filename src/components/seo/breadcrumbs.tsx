@@ -30,8 +30,8 @@ export function Breadcrumbs({ items }: BreadcrumbsProps) {
   return (
     <>
       <StructuredDataScript data={breadcrumbStructuredData} />
-      <nav aria-label="Breadcrumb" className="m-2">
-        <ol className="flex items-center space-x-1 sm:space-x-2 text-xs text-gray-600 dark:text-gray-400">
+      <nav aria-label="Breadcrumb" className="m-2 overflow-x-auto min-h-5 flex items-center">
+        <ol className="flex items-center space-x-1 sm:space-x-2 text-xs text-gray-600 dark:text-gray-400 whitespace-nowrap min-w-max">
           {items.map((item, index) => (
             <li className="flex items-center" key={index}>
               {index > 0 && <ChevronRight aria-hidden="true" className="h-4 w-4 text-gray-400" />}

@@ -1,11 +1,10 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Lock } from "lucide-react";
+import { Lock, Star, Clock, Calendar } from "lucide-react";
 
 import { Locale } from "locales/types";
 import { getI18n } from "locales/server";
 import { getProgramDescription, getProgramSlug, getProgramTitle } from "@/features/programs/lib/translations-mapper";
-import { DurationBadge } from "@/components/seo/duration-badge";
 
 import { PublicProgram } from "../actions/get-public-programs.action";
 
@@ -17,133 +16,176 @@ interface ProgramCardProps {
 }
 
 export async function ProgramCard({ program, featured = false, size = "medium", locale }: ProgramCardProps) {
+  console.log("program:", program);
   const isLocked = program.isPremium;
   const t = await getI18n();
   const title = getProgramTitle(program, locale);
   const description = getProgramDescription(program, locale);
   const programSlug = getProgramSlug(program, locale);
 
-  const heightClass = {
-    small: "h-32",
-    medium: "h-40",
-    large: "h-48",
-  }[size];
-
   const paddingClass = {
-    small: "p-3",
-    medium: "p-4",
-    large: "p-4",
+    small: "p-3 sm:p-4",
+    medium: "p-4 sm:p-5",
+    large: "p-4 sm:p-6",
   }[size];
 
   const titleClass = {
-    small: "text-sm font-semibold",
+    small: "text-base font-bold",
     medium: "text-lg font-bold",
-    large: featured ? "text-xl font-bold mb-2" : "text-lg font-bold",
+    large: "text-xl font-bold",
   }[size];
 
   const subtitleClass = {
-    small: "text-xs",
-    medium: "text-sm opacity-90",
-    large: featured ? "text-sm mb-1 opacity-90" : "text-sm opacity-90",
+    small: "text-sm",
+    medium: "text-sm",
+    large: "text-base",
   }[size];
 
-  const getGradient = (level: string) => {
+  const getLevelConfig = (level: string) => {
     switch (level) {
       case "BEGINNER":
-        return "from-green-500 to-emerald-600";
+        return {
+          gradient: "from-[#25CB78] to-emerald-500",
+          emoji: "/images/emojis/WorkoutCoolHappy.png",
+          color: "text-emerald-800 dark:text-emerald-200",
+          bgColor: "bg-emerald-100/90 dark:bg-emerald-900/80",
+          borderColor: "border-emerald-200/60 dark:border-emerald-700/60",
+        };
       case "INTERMEDIATE":
-        return "from-blue-500 to-indigo-600";
+        return {
+          gradient: "from-[#4F8EF7] to-blue-500",
+          emoji: "/images/emojis/WorkoutCoolBiceps.png",
+          color: "text-blue-800 dark:text-blue-200",
+          bgColor: "bg-blue-100/90 dark:bg-blue-900/80",
+          borderColor: "border-blue-200/60 dark:border-blue-700/60",
+        };
       case "ADVANCED":
-        return "from-red-500 to-orange-600";
+        return {
+          gradient: "from-orange-500 to-red-500",
+          emoji: "/images/emojis/WorkoutCoolSwag.png",
+          color: "text-orange-800 dark:text-orange-200",
+          bgColor: "bg-orange-100/90 dark:bg-orange-900/80",
+          borderColor: "border-orange-200/60 dark:border-orange-700/60",
+        };
       default:
-        return "from-slate-500 to-gray-600";
+        return {
+          gradient: "from-slate-500 to-gray-600",
+          emoji: "/images/emojis/WorkoutCoolHappy.png",
+          color: "text-slate-800 dark:text-slate-200",
+          bgColor: "bg-slate-100/90 dark:bg-slate-900/80",
+          borderColor: "border-slate-200/60 dark:border-slate-700/60",
+        };
     }
   };
 
+  const levelConfig = getLevelConfig(program.level);
+
   return (
-    <div className={featured ? "md:col-span-2" : ""}>
+    <div className="group">
       <Link
         aria-label={`${title} - ${t(`levels.${program.level}` as keyof typeof t)} program`}
-        className={`relative block rounded-xl overflow-hidden border-2 transition-all ease-in-out ${heightClass} ${
-          featured
-            ? "border-[#4F8EF7]/20 hover:border-[#4F8EF7] hover:scale-[1.01]"
-            : program.isPremium
-              ? "border-[#25CB78]/20 hover:border-[#25CB78] hover:scale-[1.02]"
-              : "border-gray-200 dark:border-gray-700 hover:border-[#4F8EF7] hover:scale-[1.02]"
-        }`}
+        className={`
+          block rounded-2xl overflow-hidden transition-all duration-300 ease-out
+          bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900
+          border-2 ${levelConfig.borderColor} hover:border-opacity-60
+          shadow-sm hover:shadow-xl hover:shadow-slate-200/50 dark:hover:shadow-slate-900/50
+          hover:scale-[1.02] hover:-translate-y-1
+        `}
         href={`/programs/${programSlug}`}
         itemScope
         itemType="https://schema.org/Course"
       >
-        {/* Gradient background */}
-        <div className={`absolute inset-0 bg-gradient-to-br ${getGradient(program.level)}`}></div>
+        {/* Gradient Accent */}
+        <div className={`h-1 bg-gradient-to-r ${levelConfig.gradient}`} />
 
-        {/* Image overlay */}
-        <Image
-          alt={title}
-          className="absolute inset-0 w-full h-full object-cover mix-blend-overlay"
-          fill
-          loading="lazy"
-          src={program.image}
-        />
+        {/* Image Section */}
+        <div className="relative h-32 sm:h-36 overflow-hidden">
+          <Image alt={title} className="w-full h-full object-cover" fill loading="lazy" src={program.image} />
+          {/* Overlay pour lisibilité */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
 
-        {/* Dark overlay */}
-        <div className="absolute inset-0 bg-black/40"></div>
+          {/* Header avec badges sur l'image */}
+          <div className="absolute top-3 left-3 right-3 flex items-start justify-between">
+            <div className="flex flex-wrap gap-2">
+              <span
+                className={`
+                ${levelConfig.bgColor} ${levelConfig.color} 
+                px-2 py-1 sm:px-3 rounded-full text-xs font-semibold
+                border ${levelConfig.borderColor}
+                bg-opacity-90 backdrop-blur-sm shadow-sm
+              `}
+              >
+                {t(`levels.${program.level}` as keyof typeof t)}
+              </span>
+              {isLocked && (
+                <span className="bg-yellow-400/90 text-yellow-900 px-2 py-1 sm:px-3 rounded-full text-xs font-semibold border border-yellow-400/40 backdrop-blur-sm shadow-sm">
+                  Premium
+                </span>
+              )}
+            </div>
 
-        {/* Badges */}
-        <div className={`absolute ${size === "large" ? "top-4 left-4" : "top-3 left-3"} flex flex-wrap gap-2`}>
-          <span className="bg-white/20 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full">
-            {t(`levels.${program.level}` as keyof typeof t)}
-          </span>
-        </div>
-
-        {/* Lock/Emoji/Stats */}
-        <div className={`absolute ${size === "large" ? "top-4 right-4" : "top-3 right-3"} flex flex-col items-end gap-2`}>
-          {/* Lock ou emoji */}
-          <div
-            className={`${size === "large" ? "w-10 h-10" : "w-8 h-8"} bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center`}
-          >
-            {isLocked ? (
-              <Lock className="text-white" size={size === "large" ? 16 : 14} />
-            ) : (
-              <Image
-                alt="Emoji"
-                className={`object-contain ${size === "large" ? "w-6 h-6" : "w-5 h-5"}`}
-                height={size === "large" ? 24 : 20}
-                loading="lazy"
-                src="/images/emojis/WorkoutCoolHappy.png"
-                width={size === "large" ? 24 : 20}
-              />
-            )}
+            {/* Emoji/Lock */}
+            <div className="relative">
+              <div
+                className={`
+                w-8 h-8 
+                bg-white/90 dark:bg-slate-800/90 rounded-full flex items-center justify-center
+                shadow-sm border border-white/20 backdrop-blur-sm
+                group-hover:scale-110 transition-transform duration-200
+              `}
+              >
+                {isLocked ? (
+                  <Lock className="text-slate-600 dark:text-slate-400" size={size === "large" ? 16 : 14} />
+                ) : (
+                  <Image
+                    alt="Emoji"
+                    className={"object-contain w-6 h-6"}
+                    height={size === "large" ? 24 : 20}
+                    loading="lazy"
+                    src={levelConfig.emoji}
+                    width={size === "large" ? 24 : 20}
+                  />
+                )}
+              </div>
+              {!isLocked && <div className="absolute -top-1 -right-1 w-3 h-3 bg-[#25CB78] rounded-full animate-pulse" />}
+            </div>
           </div>
         </div>
 
-        {/* Content */}
-        <div className={`absolute bottom-0 left-0 right-0 ${paddingClass} text-white`}>
-          <div className="flex items-end justify-between">
-            <div className="flex-1 min-w-0">
-              <h4 className={`${titleClass} leading-tight truncate`} itemProp="name">
-                {title}
-              </h4>
-              <p className={`${subtitleClass} truncate`} itemProp="description">
-                {description}
-              </p>
+        {/* Content Section */}
+        <div className={`${paddingClass} space-y-3`}>
+          {/* Titre et description */}
+          <div>
+            <h4
+              className={`${titleClass} leading-tight mb-1 text-slate-800 dark:text-slate-200 group-hover:text-slate-900 dark:group-hover:text-slate-100 transition-colors`}
+              itemProp="name"
+            >
+              {title}
+            </h4>
+            <p className={`${subtitleClass} text-slate-600 dark:text-slate-400 leading-relaxed line-clamp-2`} itemProp="description">
+              {description}
+            </p>
+          </div>
 
-              {/* Rich Snippets */}
-              <div className="space-y-1 mt-2">
-                {/* <RichSnippetRating
-                  className="text-xs opacity-90"
-                  rating={4.7}
-                  reviewCount={Math.max(Math.floor(program.participantCount / 7), 1)} // TODO: add rating
-                /> */}
-                <DurationBadge
-                  className="text-xs opacity-75"
-                  durationWeeks={program.durationWeeks}
-                  locale={locale}
-                  sessionDurationMin={program.sessionDurationMin}
-                  sessionsPerWeek={program.sessionsPerWeek}
-                />
-              </div>
+          {/* Quick stats */}
+          <div className="flex items-center gap-3 sm:gap-4 text-xs text-slate-500 dark:text-slate-400">
+            <div className="flex items-center gap-1">
+              <Calendar className="w-3 h-3" />
+              <span>
+                {program.durationWeeks} {t("programs.week_short").toLocaleLowerCase()}
+              </span>
+            </div>
+            <div className="flex items-center gap-1">
+              <Clock className="w-3 h-3" />
+              <span>
+                {program.sessionDurationMin} {t("programs.min_short").toLocaleLowerCase()}
+              </span>
+            </div>
+            <div className="flex items-center gap-1">
+              <Star className="w-3 h-3" />
+              <span>
+                {program.sessionsPerWeek}x/{t("programs.week_short").toLocaleLowerCase()}
+              </span>
             </div>
           </div>
         </div>

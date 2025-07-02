@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Crown, TrendingUp } from "lucide-react";
+import { Crown, TrendingUp, Sparkles } from "lucide-react";
 
 import { Locale } from "locales/types";
 import { getI18n } from "locales/server";
@@ -17,70 +17,140 @@ export async function ProgramsPage({ locale }: ProgramsPageProps) {
 
   if (programs.length === 0) {
     return (
-      <div className="flex flex-col h-full flex-1">
-        <div className="flex flex-col items-center justify-center flex-1">
-          <h1 className="text-lg sm:text-xl leading-tight font-bold mb-2">{t("programs.no_programs_available")}</h1>
-          <p className="text-base-content/60">{t("programs.no_programs_available_description")}</p>
+      <div className="flex flex-col h-full flex-1 bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
+        <div className="flex flex-col items-center justify-center flex-1 p-6">
+          <div className="mb-6">
+            <Image
+              alt="Mascotte WorkoutCool triste"
+              className="object-contain w-20 h-20"
+              height={80}
+              priority
+              src="/images/emojis/WorkoutCoolCry.png"
+              width={80}
+            />
+          </div>
+          <h1 className="text-xl sm:text-2xl font-bold mb-3 text-slate-800 dark:text-slate-200 text-center">
+            {t("programs.no_programs_available")}
+          </h1>
+          <p className="text-slate-600 dark:text-slate-400 text-center max-w-md">{t("programs.no_programs_available_description")}</p>
         </div>
       </div>
     );
   }
 
   return (
-    <main className="flex flex-col">
-      {/* Hero Section */}
-      <header className="bg-gradient-to-r from-[#4F8EF7] to-[#25CB78] p-4 sm:p-6 text-white relative">
-        <div className="flex items-center justify-between">
-          <div className="flex-1">
-            <div className="flex items-center gap-2 mb-2">
-              <h1 className="text-lg sm:text-xl leading-tight font-bold">{t("programs.workout_programs")}</h1>
-              <span className="bg-yellow-400 text-black px-2 py-1 rounded-full text-xs font-bold animate-pulse">{t("commons.new")}</span>
+    <main className="flex flex-col min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
+      {/* Hero Section - Style Apple moderne */}
+      <header className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#4F8EF7] via-[#4F8EF7] to-[#25CB78]" />
+        <div className="absolute inset-0 opacity-30">
+          <div
+            className="w-full h-full"
+            style={{
+              backgroundImage:
+                "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
+            }}
+          />
+        </div>
+
+        <div className="relative p-6 sm:p-8">
+          <div className="flex items-start justify-between mb-6">
+            <div className="flex-1">
+              <div className="flex items-center gap-3 mb-3">
+                <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">{t("programs.workout_programs")}</h1>
+                <div className="relative">
+                  <span className="bg-yellow-400 text-black px-3 py-1 rounded-full text-xs font-bold shadow-lg">{t("commons.new")}</span>
+                  <div className="absolute -inset-1 bg-yellow-400/20 rounded-full animate-ping" />
+                </div>
+              </div>
+              <p className="text-white/90 text-base sm:text-lg leading-relaxed max-w-lg">{t("programs.workout_programs_description")}</p>
             </div>
-            <p className="text-white/90 text-sm mb-3">{t("programs.workout_programs_description")}</p>
+
+            <div className="relative ml-4">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 relative">
+                <Image
+                  alt="Mascotte WorkoutCool"
+                  className="object-contain w-full h-full"
+                  height={80}
+                  priority
+                  src="/images/emojis/WorkoutCoolBiceps.png"
+                  width={80}
+                />
+                <div className="absolute -top-2 -right-2 bg-yellow-400 rounded-full p-1.5 shadow-lg">
+                  <Crown className="text-black w-3 h-3" />
+                </div>
+              </div>
+            </div>
           </div>
-          <div className="w-14 h-14 sm:w-16 sm:h-16 relative">
-            <Image
-              alt="Mascotte WorkoutCool"
-              className="object-contain h-14 w-14 sm:h-16 sm:w-16"
-              height={64}
-              priority
-              src="/images/emojis/WorkoutCoolHappy.png"
-              width={64}
-            />
-            <div className="absolute -top-1 -right-1 bg-yellow-400 rounded-full p-1">
-              <Crown className="text-black" size={12} />
+
+          {/* Stats rapides */}
+          <div className="flex items-center gap-4 text-white/80 text-sm">
+            <div className="flex items-center gap-1">
+              <Sparkles className="w-4 h-4" />
+              <span>{programs.length} programmes</span>
             </div>
+            <div className="w-1 h-1 bg-white/40 rounded-full" />
+            <span>Débutant friendly</span>
           </div>
         </div>
       </header>
 
-      <section className="overflow-auto p-4 space-y-6">
-        {/* Premium Programs Section */}
+      <section className="flex-1 p-4 sm:p-6 space-y-8">
+        {/* Programs Grid */}
         {programs.length > 0 && (
           <div>
             <h2 className="sr-only">{t("programs.available_programs")}</h2>
-            {/* Premium programs with featured layout */}
-            <div aria-label={t("programs.workout_programs")} className="grid grid-cols-1 md:grid-cols-3 gap-4" role="list">
+
+            {/* Grille asymétrique mobile-first */}
+            <div aria-label={t("programs.workout_programs")} className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6" role="list">
               {programs.map((program, index) => (
-                <article className="relative" key={program.id} role="listitem">
-                  <ProgramCard featured={index === 0} locale={locale} program={program} size="large" />
+                <article
+                  className={"relative animate-fade-in-up"}
+                  key={program.id}
+                  role="listitem"
+                  style={{
+                    animationDelay: `${index * 100}ms`,
+                    animationFillMode: "both",
+                  }}
+                >
+                  <ProgramCard featured={false} locale={locale} program={program} size={index === 0 ? "medium" : "medium"} />
                 </article>
               ))}
             </div>
 
-            {/* Coming Soon Teaser */}
-            <aside className="mt-6 bg-gray-50 dark:bg-gray-800 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl p-6 text-center">
-              <div className="flex items-center justify-center gap-2 mb-2">
-                <TrendingUp aria-hidden="true" className="text-[#4F8EF7]" size={20} />
-                <h3 className="font-bold text-gray-900 dark:text-white">{t("programs.more_programs_coming_title")}</h3>
-              </div>
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">{t("programs.more_programs_coming_description")}</p>
-              <div className="flex items-center justify-center gap-2 text-xs text-gray-500 dark:text-gray-400">
-                <span className="bg-[#4F8EF7]/10 text-[#4F8EF7] px-2 py-1 rounded-full">{t("programs.coming_strength")}</span>
-                <span className="bg-[#25CB78]/10 text-[#25CB78] px-2 py-1 rounded-full">{t("programs.coming_cardio")}</span>
-                <span className="bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-2 py-1 rounded-full">
-                  {t("programs.coming_yoga")}
-                </span>
+            {/* Coming Soon Section - Style plus moderne */}
+            <aside className="mt-12 relative overflow-hidden">
+              <div className="bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-900 border-2 border-dashed border-slate-300 dark:border-slate-600 rounded-2xl p-8 text-center relative">
+                <div className="absolute top-4 right-4">
+                  <Image
+                    alt="Mascotte WorkoutCool excitée"
+                    className="object-contain w-12 h-12 opacity-60"
+                    height={48}
+                    src="/images/emojis/WorkoutCoolWooow.png"
+                    width={48}
+                  />
+                </div>
+
+                <div className="flex items-center justify-center gap-3 mb-4">
+                  <TrendingUp className="text-[#4F8EF7] w-6 h-6" />
+                  <h3 className="text-xl font-bold text-slate-800 dark:text-slate-200">{t("programs.more_programs_coming_title")}</h3>
+                </div>
+
+                <p className="text-slate-600 dark:text-slate-400 mb-6 max-w-md mx-auto leading-relaxed">
+                  {t("programs.more_programs_coming_description")}
+                </p>
+
+                <div className="flex flex-wrap items-center justify-center gap-3">
+                  <span className="bg-[#4F8EF7]/10 text-[#4F8EF7] px-4 py-2 rounded-full font-medium border border-[#4F8EF7]/20 transition-all duration-200 hover:bg-[#4F8EF7]/20">
+                    {t("programs.coming_strength")}
+                  </span>
+                  <span className="bg-[#25CB78]/10 text-[#25CB78] px-4 py-2 rounded-full font-medium border border-[#25CB78]/20 transition-all duration-200 hover:bg-[#25CB78]/20">
+                    {t("programs.coming_cardio")}
+                  </span>
+                  <span className="bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-4 py-2 rounded-full font-medium border border-purple-200 dark:border-purple-800 transition-all duration-200 hover:bg-purple-200 dark:hover:bg-purple-900/50">
+                    {t("programs.coming_yoga")}
+                  </span>
+                </div>
               </div>
             </aside>
           </div>

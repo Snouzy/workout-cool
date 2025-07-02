@@ -715,6 +715,8 @@ export default {
       standard: {
         title: "Calculateur IMC Standard",
         description: "Calcul IMC classique utilisant la formule standard OMS. Évaluation rapide et facile pour la population générale.",
+        page_title: "Calculateur IMC Standard",
+        page_description: "Calculez votre Indice de Masse Corporelle en utilisant la formule standard de l'OMS. Obtenez des résultats instantanés avec catégorie de santé et recommandations personnalisées.",
       },
       adjusted: {
         title: "Calculateur IMC Ajusté",
@@ -957,9 +959,12 @@ export default {
       example: "Exemple",
       
       bmi_prime_formula: "Formule IMC Prime",
+      bmi_prime_description: "Rapport de votre IMC à la limite supérieure de l'IMC normal (25)",
       
       ponderal_index_title: "Indice Pondéral",
       ponderal_index_explanation: "L'Indice Pondéral (IP) est similaire à l'IMC en ce qu'il mesure la maigreur ou la corpulence d'une personne basée sur sa taille et son poids. La principale différence entre l'IP et l'IMC est l'élévation au cube plutôt qu'au carré de la taille dans la formule. Bien que l'IMC puisse être un outil utile pour considérer de grandes populations, il n'est pas fiable pour déterminer la maigreur ou la corpulence chez les individus.",
+      ponderal_index_metric_description: "Indice Pondéral utilisant les unités métriques",
+      ponderal_index_imperial_description: "Indice Pondéral utilisant les unités impériales",
       
       medical_disclaimer_title: "Avertissement Médical",
     },

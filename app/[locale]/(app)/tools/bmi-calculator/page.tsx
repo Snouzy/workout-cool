@@ -92,10 +92,9 @@ export default async function BmiCalculatorPage({ params }: { params: Promise<{ 
         <div className="container mx-auto px-2 sm:px-4 py-4 sm:py-8 max-w-4xl">
           {/* Header */}
           <div className="text-center max-w-3xl mx-auto mb-8">
-            <h1 className="text-3xl sm:text-4xl font-bold mb-4 text-base-content dark:text-base-content/90">Standard BMI Calculator</h1>
+            <h1 className="text-3xl sm:text-4xl font-bold mb-4 text-base-content dark:text-base-content/90">{t("tools.bmi-calculator-hub.standard.page_title")}</h1>
             <p className="text-lg text-base-content/70 dark:text-base-content/60">
-              Calculate your Body Mass Index using the standard WHO formula. Get instant results with health category and personalized
-              recommendations.
+              {t("tools.bmi-calculator-hub.standard.page_description")}
             </p>
           </div>
 

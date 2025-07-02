@@ -8,11 +8,11 @@ interface MathEquationProps {
 
 export function MathEquation({ equation, display = false, className = "" }: MathEquationProps) {
   return (
-    <div className={`math-equation ${display ? 'block' : 'inline-block'} ${className}`}>
+    <div className={`math-equation ${display ? "block" : "inline-block"} ${className}`}>
       <span 
         className="font-mono text-lg"
-        style={{ fontFamily: 'KaTeX_Math, Times New Roman, serif' }}
         dangerouslySetInnerHTML={{ __html: equation }}
+        style={{ fontFamily: "KaTeX_Math, Times New Roman, serif" }}
       />
     </div>
   );
@@ -34,7 +34,7 @@ export function FormulaCard({ title, equation, example, description, className =
       </h4>
       
       <div className="text-center py-4">
-        <div className="text-xl font-mono" style={{ fontFamily: 'KaTeX_Math, Times New Roman, serif' }}>
+        <div className="text-xl font-mono" style={{ fontFamily: "KaTeX_Math, Times New Roman, serif" }}>
           <div dangerouslySetInnerHTML={{ __html: equation }} />
         </div>
       </div>
@@ -48,7 +48,7 @@ export function FormulaCard({ title, equation, example, description, className =
       {example && (
         <div className="text-center border-t border-base-content/10 pt-4">
           <p className="text-sm text-base-content/60 mb-2">Example:</p>
-          <div className="text-lg font-mono" style={{ fontFamily: 'KaTeX_Math, Times New Roman, serif' }}>
+          <div className="text-lg font-mono" style={{ fontFamily: "KaTeX_Math, Times New Roman, serif" }}>
             <div dangerouslySetInnerHTML={{ __html: example }} />
           </div>
         </div>

@@ -1182,6 +1182,8 @@ export default {
       standard: {
         title: "标准BMI计算器",
         description: "使用WHO标准公式的经典BMI计算。为一般人群提供快速简便的评估。",
+        page_title: "标准BMI计算器",
+        page_description: "使用WHO标准公式计算您的身体质量指数。获得即时结果，包含健康类别和个性化建议。",
       },
       adjusted: {
         title: "调整版BMI计算器",
@@ -1266,10 +1268,13 @@ export default {
       example: "示例",
 
       bmi_prime_formula: "BMI Prime公式",
+      bmi_prime_description: "您的BMI与正常BMI上限（25）的比值",
 
       ponderal_index_title: "体重指数",
       ponderal_index_explanation:
         "体重指数（PI）与BMI相似，都是基于身高和体重测量人的瘦弱或肥胖程度。PI和BMI的主要区别在于公式中身高是立方而不是平方。虽然BMI在考虑大人群时可能是有用的工具，但对于确定个体的瘦弱或肥胖程度并不可靠。",
+      ponderal_index_metric_description: "使用公制单位的体重指数",
+      ponderal_index_imperial_description: "使用英制单位的体重指数",
 
       medical_disclaimer_title: "医疗免责声明",
     },

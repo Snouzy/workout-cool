@@ -117,19 +117,19 @@ export function BmiEducationalContent() {
               <h4 className="text-lg font-semibold text-base-content">{t("bmi-calculator.educational.cardiovascular_risks")}</h4>
               <ul className="space-y-2 text-base-content/80">
                 <li className="flex items-start gap-2">
-                  <span className="text-error mt-1">•</span>
+                  <span className="text-error">•</span>
                   {t("bmi-calculator.educational.high_blood_pressure")}
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-error mt-1">•</span>
+                  <span className="text-error">•</span>
                   {t("bmi-calculator.educational.cholesterol_issues")}
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-error mt-1">•</span>
+                  <span className="text-error">•</span>
                   {t("bmi-calculator.educational.coronary_heart_disease")}
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-error mt-1">•</span>
+                  <span className="text-error">•</span>
                   {t("bmi-calculator.educational.stroke")}
                 </li>
               </ul>
@@ -139,19 +139,19 @@ export function BmiEducationalContent() {
               <h4 className="text-lg font-semibold text-base-content">{t("bmi-calculator.educational.metabolic_risks")}</h4>
               <ul className="space-y-2 text-base-content/80">
                 <li className="flex items-start gap-2">
-                  <span className="text-error mt-1">•</span>
+                  <span className="text-error">•</span>
                   {t("bmi-calculator.educational.type_2_diabetes")}
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-error mt-1">•</span>
+                  <span className="text-error">•</span>
                   {t("bmi-calculator.educational.gallbladder_disease")}
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-error mt-1">•</span>
+                  <span className="text-error">•</span>
                   {t("bmi-calculator.educational.sleep_apnea")}
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-error mt-1">•</span>
+                  <span className="text-error">•</span>
                   {t("bmi-calculator.educational.osteoarthritis")}
                 </li>
               </ul>
@@ -162,19 +162,19 @@ export function BmiEducationalContent() {
             <h4 className="text-lg font-semibold text-base-content">{t("bmi-calculator.educational.other_risks")}</h4>
             <ul className="grid md:grid-cols-2 gap-2 text-base-content/80">
               <li className="flex items-start gap-2">
-                <span className="text-error mt-1">•</span>
+                <span className="text-error">•</span>
                 {t("bmi-calculator.educational.certain_cancers")}
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-error mt-1">•</span>
+                <span className="text-error">•</span>
                 {t("bmi-calculator.educational.mental_health_issues")}
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-error mt-1">•</span>
+                <span className="text-error">•</span>
                 {t("bmi-calculator.educational.reduced_quality_life")}
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-error mt-1">•</span>
+                <span className="text-error">•</span>
                 {t("bmi-calculator.educational.increased_mortality")}
               </li>
             </ul>
@@ -300,7 +300,7 @@ export function BmiEducationalContent() {
         </div>
 
         <FormulaCard
-          description="Ratio of your BMI to the upper limit of normal BMI (25)"
+          description={t("bmi-calculator.educational.bmi_prime_description")}
           equation={`BMI Prime = ${createFraction("BMI", "25")}`}
           title={t("bmi-calculator.educational.bmi_prime_formula")}
         />
@@ -371,14 +371,14 @@ export function BmiEducationalContent() {
         <div className="grid md:grid-cols-2 gap-8">
           {/* Metric PI Formula */}
           <FormulaCard
-            description="Ponderal Index using metric units"
+            description={t("bmi-calculator.educational.ponderal_index_metric_description")}
             equation={`PI = ${createFraction("weight (kg)", createSuperscript("height", "3") + " (m)")}`}
             title={t("bmi-calculator.educational.metric_formula")}
           />
 
           {/* Imperial PI Formula */}
           <FormulaCard
-            description="Ponderal Index using imperial units"
+            description={t("bmi-calculator.educational.ponderal_index_imperial_description")}
             equation={`PI = ${createFraction(createSuperscript("height", "3") + " (in)", "∛weight (lbs)")}`}
             title={t("bmi-calculator.educational.imperial_formula")}
           />

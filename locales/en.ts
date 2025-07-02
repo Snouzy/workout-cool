@@ -707,6 +707,8 @@ export default {
       standard: {
         title: "Standard BMI Calculator",
         description: "Classic BMI calculation using the standard WHO formula. Quick and easy assessment for general population.",
+        page_title: "Standard BMI Calculator",
+        page_description: "Calculate your Body Mass Index using the standard WHO formula. Get instant results with health category and personalized recommendations.",
       },
       adjusted: {
         title: "Adjusted BMI Calculator",
@@ -943,9 +945,12 @@ export default {
       example: "Example",
       
       bmi_prime_formula: "BMI Prime Formula",
+      bmi_prime_description: "Ratio of your BMI to the upper limit of normal BMI (25)",
       
       ponderal_index_title: "Ponderal Index",
       ponderal_index_explanation: "The Ponderal Index (PI) is similar to BMI in that it measures the leanness or corpulence of a person based on their height and weight. The main difference between the PI and BMI is the cubing rather than squaring of the height in the formula. While BMI can be a useful tool when considering large populations, it is not reliable for determining leanness or corpulence in individuals.",
+      ponderal_index_metric_description: "Ponderal Index using metric units",
+      ponderal_index_imperial_description: "Ponderal Index using imperial units",
       
       medical_disclaimer_title: "Medical Disclaimer",
     },

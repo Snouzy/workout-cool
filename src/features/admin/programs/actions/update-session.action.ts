@@ -15,18 +15,21 @@ interface UpdateSessionData {
   titlePt: string;
   titleRu: string;
   titleZhCn: string;
+  titleKo: string;
   slug: string;
   slugEn: string;
   slugEs: string;
   slugPt: string;
   slugRu: string;
   slugZhCn: string;
+  slugKo: string;
   description: string;
   descriptionEn: string;
   descriptionEs: string;
   descriptionPt: string;
   descriptionRu: string;
   descriptionZhCn: string;
+  descriptionKo: string;
   equipment: ExerciseAttributeValueEnum[];
   estimatedMinutes: number;
   isPremium: boolean;
@@ -83,6 +86,7 @@ export async function updateSession(data: UpdateSessionData) {
     slugPt: await ensureUniqueSessionSlug(data.slugPt, "slugPt"),
     slugRu: await ensureUniqueSessionSlug(data.slugRu, "slugRu"),
     slugZhCn: await ensureUniqueSessionSlug(data.slugZhCn, "slugZhCn"),
+    slugKo: await ensureUniqueSessionSlug(data.slugKo, "slugKo"),
   };
 
   const updatedSession = await prisma.programSession.update({
@@ -94,18 +98,21 @@ export async function updateSession(data: UpdateSessionData) {
       titlePt: data.titlePt,
       titleRu: data.titleRu,
       titleZhCn: data.titleZhCn,
+      titleKo: data.titleKo,
       slug: uniqueSlugs.slug,
       slugEn: uniqueSlugs.slugEn,
       slugEs: uniqueSlugs.slugEs,
       slugPt: uniqueSlugs.slugPt,
       slugRu: uniqueSlugs.slugRu,
       slugZhCn: uniqueSlugs.slugZhCn,
+      slugKo: uniqueSlugs.slugKo,
       description: data.description,
       descriptionEn: data.descriptionEn,
       descriptionEs: data.descriptionEs,
       descriptionPt: data.descriptionPt,
       descriptionRu: data.descriptionRu,
       descriptionZhCn: data.descriptionZhCn,
+      descriptionKo: data.descriptionKo,
       equipment: data.equipment,
       estimatedMinutes: data.estimatedMinutes,
       isPremium: data.isPremium,

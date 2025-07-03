@@ -66,6 +66,7 @@ export async function generateMetadata({ params }: SessionDetailPageProps): Prom
         "pt-PT": `https://www.workout.cool/pt/programs/${slug}/session/${sessionSlug}`,
         "ru-RU": `https://www.workout.cool/ru/programs/${slug}/session/${sessionSlug}`,
         "zh-CN": `https://www.workout.cool/zh-CN/programs/${slug}/session/${sessionSlug}`,
+        "ko-KR": `https://www.workout.cool/ko/programs/${slug}/session/${sessionSlug}`,
         "x-default": `https://www.workout.cool/programs/${slug}/session/${sessionSlug}`,
       },
     },

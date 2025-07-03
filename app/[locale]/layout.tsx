@@ -68,7 +68,9 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
                 ? "ru_RU"
                 : locale === "zh-CN"
                   ? "zh_CN"
-                  : "fr_FR",
+                  : locale === "ko"
+                    ? "ko_KR"
+                    : "fr_FR",
       alternateLocale: [
         "fr_FR",
         "fr_CA",
@@ -90,6 +92,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
         "zh_CN",
         "zh_TW",
         "zh_HK",
+        "ko_KR",
       ].filter(
         (alt) =>
           alt !==
@@ -103,7 +106,9 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
                   ? "ru_RU"
                   : locale === "zh-CN"
                     ? "zh_CN"
-                    : "fr_FR"),
+                    : locale === "ko"
+                      ? "ko_KR"
+                      : "fr_FR"),
       ),
       images: [
         {
@@ -169,6 +174,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
         "pt-PT": "https://www.workout.cool/pt",
         "ru-RU": "https://www.workout.cool/ru",
         "zh-CN": "https://www.workout.cool/zh-CN",
+        "ko-KR": "https://www.workout.cool/ko",
         "x-default": "https://www.workout.cool",
       },
     },
@@ -274,6 +280,7 @@ export default async function RootLayout({ params, children }: RootLayoutProps) 
           <link href="https://www.workout.cool/pt" hrefLang="pt" rel="alternate" />
           <link href="https://www.workout.cool/ru" hrefLang="ru" rel="alternate" />
           <link href="https://www.workout.cool/zh-CN" hrefLang="zh-CN" rel="alternate" />
+          <link href="https://www.workout.cool/ko" hrefLang="ko" rel="alternate" />
           <link href="https://www.workout.cool" hrefLang="x-default" rel="alternate" />
 
           {/* Theme color for PWA */}

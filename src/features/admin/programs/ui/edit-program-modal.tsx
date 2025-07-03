@@ -19,12 +19,14 @@ interface EditProgramModalProps {
     titlePt: string;
     titleRu: string;
     titleZhCn: string;
+    titleKo: string;
     description: string;
     descriptionEn: string;
     descriptionEs: string;
     descriptionPt: string;
     descriptionRu: string;
     descriptionZhCn: string;
+    descriptionKo: string;
     category: string;
     image: string;
     level: ProgramLevel;
@@ -56,12 +58,14 @@ export function EditProgramModal({ program, open, onOpenChange }: EditProgramMod
     titlePt: program.titlePt,
     titleRu: program.titleRu,
     titleZhCn: program.titleZhCn,
+    titleKo: program.titleKo,
     description: program.description,
     descriptionEn: program.descriptionEn,
     descriptionEs: program.descriptionEs,
     descriptionPt: program.descriptionPt,
     descriptionRu: program.descriptionRu,
     descriptionZhCn: program.descriptionZhCn,
+    descriptionKo: program.descriptionKo,
     category: program.category,
     image: program.image,
     level: program.level,
@@ -151,8 +155,10 @@ export function EditProgramModal({ program, open, onOpenChange }: EditProgramMod
             <button className={`tab ${activeTab === "zh" ? "tab-active" : ""}`} onClick={() => setActiveTab("zh")} type="button">
               🇨🇳 ZH
             </button>
+            <button className={`tab ${activeTab === "ko" ? "tab-active" : ""}`} onClick={() => setActiveTab("ko")} type="button">
+              🇰🇷 KO
+            </button>
           </div>
-
           {/* French Fields */}
           {activeTab === "fr" && (
             <div className="space-y-4">
@@ -181,7 +187,6 @@ export function EditProgramModal({ program, open, onOpenChange }: EditProgramMod
               </div>
             </div>
           )}
-
           {/* English Fields */}
           {activeTab === "en" && (
             <div className="space-y-4">
@@ -210,7 +215,6 @@ export function EditProgramModal({ program, open, onOpenChange }: EditProgramMod
               </div>
             </div>
           )}
-
           {/* Spanish Fields */}
           {activeTab === "es" && (
             <div className="space-y-4">
@@ -239,7 +243,6 @@ export function EditProgramModal({ program, open, onOpenChange }: EditProgramMod
               </div>
             </div>
           )}
-
           {/* Portuguese Fields */}
           {activeTab === "pt" && (
             <div className="space-y-4">
@@ -268,7 +271,6 @@ export function EditProgramModal({ program, open, onOpenChange }: EditProgramMod
               </div>
             </div>
           )}
-
           {/* Russian Fields */}
           {activeTab === "ru" && (
             <div className="space-y-4">
@@ -297,7 +299,6 @@ export function EditProgramModal({ program, open, onOpenChange }: EditProgramMod
               </div>
             </div>
           )}
-
           {/* Chinese Fields */}
           {activeTab === "zh" && (
             <div className="space-y-4">
@@ -326,6 +327,34 @@ export function EditProgramModal({ program, open, onOpenChange }: EditProgramMod
               </div>
             </div>
           )}
+          {/* Korean Fields */}
+          {activeTab === "ko" && (
+            <div className="space-y-4">
+              <div>
+                <label className="label">
+                  <span className="label-text">제목 (한국어)</span>
+                </label>
+                <input
+                  className="input input-bordered w-full"
+                  disabled={isSaving}
+                  onChange={(e) => setFormData({ ...formData, titleKo: e.target.value })}
+                  type="text"
+                  value={formData.titleKo}
+                />
+              </div>
+              <div>
+                <label className="label">
+                  <span className="label-text">설명 (한국어)</span>
+                </label>
+                <textarea
+                  className="textarea textarea-bordered w-full h-24"
+                  disabled={isSaving}
+                  onChange={(e) => setFormData({ ...formData, descriptionKo: e.target.value })}
+                  value={formData.descriptionKo}
+                />
+              </div>
+            </div>
+          )}
 
           {/* Image et emoji */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -342,7 +371,6 @@ export function EditProgramModal({ program, open, onOpenChange }: EditProgramMod
               />
             </div>
           </div>
-
           {/* Métadonnées */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
@@ -390,7 +418,6 @@ export function EditProgramModal({ program, open, onOpenChange }: EditProgramMod
               </select>
             </div>
           </div>
-
           {/* Paramètres du programme */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
@@ -433,7 +460,6 @@ export function EditProgramModal({ program, open, onOpenChange }: EditProgramMod
               />
             </div>
           </div>
-
           {/* Équipement */}
           <div>
             <label className="label">
@@ -457,7 +483,6 @@ export function EditProgramModal({ program, open, onOpenChange }: EditProgramMod
               })}
             </div>
           </div>
-
           {/* Premium */}
           <div>
             <label className="label cursor-pointer justify-start gap-2">
@@ -471,7 +496,6 @@ export function EditProgramModal({ program, open, onOpenChange }: EditProgramMod
               <span className="label-text">Programme Premium</span>
             </label>
           </div>
-
           {/* Coachs */}
           <div>
             <div className="flex items-center justify-between mb-4">

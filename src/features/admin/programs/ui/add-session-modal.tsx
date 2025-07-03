@@ -24,12 +24,14 @@ const sessionSchema = z.object({
   titlePt: z.string().min(1, "Le titre en portugais est requis"),
   titleRu: z.string().min(1, "Le titre en russe est requis"),
   titleZhCn: z.string().min(1, "Le titre en chinois est requis"),
+  titleKo: z.string().min(1, "Le titre en cooréen est requis"),
   description: z.string().min(1, "La description est requise"),
   descriptionEn: z.string().min(1, "La description en anglais est requise"),
   descriptionEs: z.string().min(1, "La description en espagnol est requise"),
   descriptionPt: z.string().min(1, "La description en portugais est requise"),
   descriptionRu: z.string().min(1, "La description en russe est requise"),
   descriptionZhCn: z.string().min(1, "La description en chinois est requise"),
+  descriptionKo: z.string().min(1, "La description en cooréen est requise"),
   estimatedMinutes: z.number().min(5, "Au moins 5 minutes"),
   isPremium: z.boolean(),
   equipment: z.array(z.nativeEnum(ExerciseAttributeValueEnum)),
@@ -74,12 +76,14 @@ export function AddSessionModal({ open, onOpenChange, weekId, nextSessionNumber 
       titlePt: `Sessão ${nextSessionNumber}`,
       titleRu: `Сессия ${nextSessionNumber}`,
       titleZhCn: `第${nextSessionNumber}节`,
+      titleKo: `세션 ${nextSessionNumber}`,
       description: `Description de la séance ${nextSessionNumber}`,
       descriptionEn: `Description of session ${nextSessionNumber}`,
       descriptionEs: `Descripción de la sesión ${nextSessionNumber}`,
       descriptionPt: `Descrição da sessão ${nextSessionNumber}`,
       descriptionRu: `Описание сессии ${nextSessionNumber}`,
       descriptionZhCn: `第${nextSessionNumber}节课程描述`,
+      descriptionKo: `${nextSessionNumber} 세션의 설명`,
       estimatedMinutes: 30,
       isPremium: true,
       equipment: [],
@@ -106,6 +110,7 @@ export function AddSessionModal({ open, onOpenChange, weekId, nextSessionNumber 
         titlePt: data.titlePt,
         titleRu: data.titleRu,
         titleZhCn: data.titleZhCn,
+        titleKo: data.titleKo,
       });
 
       await addSessionToWeek({
@@ -161,6 +166,9 @@ export function AddSessionModal({ open, onOpenChange, weekId, nextSessionNumber 
             </button>
             <button className={`tab ${activeTab === "zh" ? "tab-active" : ""}`} onClick={() => setActiveTab("zh")} type="button">
               🇨🇳 ZH
+            </button>
+            <button className={`tab ${activeTab === "ko" ? "tab-active" : ""}`} onClick={() => setActiveTab("ko")} type="button">
+              🇰🇷 KO
             </button>
           </div>
 
@@ -256,6 +264,22 @@ export function AddSessionModal({ open, onOpenChange, weekId, nextSessionNumber 
                 <Label htmlFor="descriptionZhCn">描述 (中文)</Label>
                 <Textarea id="descriptionZhCn" {...register("descriptionZhCn")} placeholder="课程描述..." rows={3} />
                 {errors.descriptionZhCn && <p className="text-sm text-red-500 mt-1">{errors.descriptionZhCn.message}</p>}
+              </div>
+            </div>
+          )}
+
+          {/* Korean Fields */}
+          {activeTab === "ko" && (
+            <div className="space-y-4">
+              <div>
+                <Label htmlFor="titleKo">제목 (한국어)</Label>
+                <Input id="titleKo" {...register("titleKo")} placeholder={`세션 ${nextSessionNumber}`} />
+                {errors.titleKo && <p className="text-sm text-red-500 mt-1">{errors.titleKo.message}</p>}
+              </div>
+              <div>
+                <Label htmlFor="descriptionKo">설명 (한국어)</Label>
+                <Textarea id="descriptionKo" {...register("descriptionKo")} placeholder="세션 설명..." rows={3} />
+                {errors.descriptionKo && <p className="text-sm text-red-500 mt-1">{errors.descriptionKo.message}</p>}
               </div>
             </div>
           )}

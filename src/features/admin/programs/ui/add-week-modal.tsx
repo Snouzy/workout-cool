@@ -14,12 +14,14 @@ const weekSchema = z.object({
   titlePt: z.string().min(1, "Le titre en portugais est requis"),
   titleRu: z.string().min(1, "Le titre en russe est requis"),
   titleZhCn: z.string().min(1, "Le titre en chinois est requis"),
+  titleKo: z.string().min(1, "Le titre en coréen est requis"),
   description: z.string().optional(),
   descriptionEn: z.string().optional(),
   descriptionEs: z.string().optional(),
   descriptionPt: z.string().optional(),
   descriptionRu: z.string().optional(),
   descriptionZhCn: z.string().optional(),
+  descriptionKo: z.string().optional(),
 });
 
 type WeekFormData = z.infer<typeof weekSchema>;
@@ -41,12 +43,14 @@ export function AddWeekModal({ open, onOpenChange, programId, nextWeekNumber }: 
     titlePt: `Semana ${nextWeekNumber}`,
     titleRu: `Неделя ${nextWeekNumber}`,
     titleZhCn: `第${nextWeekNumber}周`,
+    titleKo: `${nextWeekNumber}주처`,
     description: "",
     descriptionEn: "",
     descriptionEs: "",
     descriptionPt: "",
     descriptionRu: "",
     descriptionZhCn: "",
+    descriptionKo: "",
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -107,6 +111,9 @@ export function AddWeekModal({ open, onOpenChange, programId, nextWeekNumber }: 
               </button>
               <button className={`tab ${activeTab === "zh" ? "tab-active" : ""}`} onClick={() => setActiveTab("zh")} type="button">
                 🇨🇳 ZH
+              </button>
+              <button className={`tab ${activeTab === "ko" ? "tab-active" : ""}`} onClick={() => setActiveTab("ko")} type="button">
+                🇰🇷 KO
               </button>
             </div>
 
@@ -297,6 +304,38 @@ export function AddWeekModal({ open, onOpenChange, programId, nextWeekNumber }: 
                     onChange={(e) => setFormData({ ...formData, descriptionZhCn: e.target.value })}
                     placeholder="本周描述..."
                     value={formData.descriptionZhCn}
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* Korean Fields */}
+            {activeTab === "ko" && (
+              <div className="space-y-4">
+                <div>
+                  <label className="label">
+                    <span className="label-text">제목 (한국어)</span>
+                  </label>
+                  <input
+                    className="input input-bordered w-full"
+                    disabled={isLoading}
+                    onChange={(e) => setFormData({ ...formData, titleKo: e.target.value })}
+                    placeholder={`${nextWeekNumber}주차`}
+                    required
+                    type="text"
+                    value={formData.titleKo}
+                  />
+                </div>
+                <div>
+                  <label className="label">
+                    <span className="label-text">설명 (한국어)</span>
+                  </label>
+                  <textarea
+                    className="textarea textarea-bordered w-full h-24"
+                    disabled={isLoading}
+                    onChange={(e) => setFormData({ ...formData, descriptionKo: e.target.value })}
+                    placeholder="이번 주 설명..."
+                    value={formData.descriptionKo}
                   />
                 </div>
               </div>

@@ -87,7 +87,9 @@ export function generateStructuredData({
               ? "ru-RU"
               : locale === "zh-CN"
                 ? "zh-CN"
-                : "fr-FR",
+                : locale === "ko"
+                  ? "ko-KR"
+                  : "fr-FR",
     publisher: {
       "@type": "Organization",
       name: SiteConfig.company.name,
@@ -163,13 +165,15 @@ export function generateStructuredData({
                     ]
                   : locale === "zh-CN"
                     ? ["个性化锻炼计划构建器", "全面的运动数据库", "进度跟踪", "肌肉群目标定位", "基于设备的筛选"]
-                    : [
-                        "Créateur d'entraînement personnalisé",
-                        "Base de données d'exercices complète",
-                        "Suivi des progrès",
-                        "Ciblage des groupes musculaires",
-                        "Filtrage par équipement",
-                      ],
+                    : locale === "ko"
+                      ? ["맞춤형 운동 플래너", "포괄적인 운동 데이터베이스", "진행 상황 추적", "근육군별 타겟팅", "장비 기반 필터링"]
+                      : [
+                          "Créateur d'entraînement personnalisé",
+                          "Base de données d'exercices complète",
+                          "Suivi des progrès",
+                          "Ciblage des groupes musculaires",
+                          "Filtrage par équipement",
+                        ],
       };
 
     case "Organization":
@@ -220,7 +224,9 @@ export function generateStructuredData({
                   ? "Последнее обновление включает улучшенную базу данных упражнений и лучший пользовательский опыт"
                   : locale === "zh-CN"
                     ? "最新更新包括改进的运动数据库和更好的用户体验"
-                    : "La dernière mise à jour inclut une base de données d'exercices améliorée et une meilleure expérience utilisateur",
+                    : locale === "ko"
+                      ? "최신 업데이트에는 개선된 운동 데이터베이스와 향상된 사용자 경험이 포함되어 있습니다."
+                      : "La dernière mise à jour inclut une base de données d'exercices améliorée et une meilleure expérience utilisateur",
         screenshot: image || `${baseUrl}/images/default-og-image_${locale}.jpg`,
         aggregateRating: {
           "@type": "AggregateRating",
@@ -289,7 +295,9 @@ export function generateStructuredData({
                   ? "Фитнес и техники тренировок"
                   : locale === "zh-CN"
                     ? "健身和锻炼技巧"
-                    : "Techniques de fitness et d'entraînement",
+                    : locale === "ko"
+                      ? "피트니스 및 운동 기술"
+                      : "Techniques de fitness et d'entraînement",
         courseCode: courseData.id,
         hasCourseInstance: {
           "@type": "CourseInstance",
@@ -334,7 +342,9 @@ export function generateStructuredData({
                   ? "ru-RU"
                   : locale === "zh-CN"
                     ? "zh-CN"
-                    : "fr-FR",
+                    : locale === "ko"
+                      ? "ko-KR"
+                      : "fr-FR",
         isAccessibleForFree: !courseData.isPremium,
         syllabusSections: [
           {
@@ -350,7 +360,9 @@ export function generateStructuredData({
                       ? `${courseData.totalSessions} тренировочных сессий`
                       : locale === "zh-CN"
                         ? `${courseData.totalSessions} 训练课程`
-                        : `${courseData.totalSessions} séances d'entraînement`,
+                        : locale === "ko"
+                          ? `${courseData.totalSessions} 운동 세션`
+                          : `${courseData.totalSessions} séances d'entraînement`,
             description:
               locale === "en"
                 ? `Complete ${courseData.durationWeeks}-week program with ${courseData.sessionsPerWeek} sessions per week`
@@ -362,7 +374,9 @@ export function generateStructuredData({
                       ? `Полная программа на ${courseData.durationWeeks} недель с ${courseData.sessionsPerWeek} сессиями в неделю`
                       : locale === "zh-CN"
                         ? `${courseData.durationWeeks}周完整计划，每周${courseData.sessionsPerWeek}次训练`
-                        : `Programme complet de ${courseData.durationWeeks} semaines avec ${courseData.sessionsPerWeek} séances par semaine`,
+                        : locale === "ko"
+                          ? `주당 ${courseData.sessionsPerWeek}회 세션으로 구성된 ${courseData.durationWeeks}주 전체 프로그램입니다.`
+                          : `Programme complet de ${courseData.durationWeeks} semaines avec ${courseData.sessionsPerWeek} séances par semaine`,
           },
         ],
       };
@@ -408,7 +422,9 @@ export function generateStructuredData({
                   ? "тренировочная сессия"
                   : locale === "zh-CN"
                     ? "训练课程"
-                    : "séance d'entraînement",
+                    : locale === "ko"
+                      ? "운동 세션"
+                      : "séance d'entraînement",
           "fitness",
           "exercise",
           "training",
@@ -424,7 +440,9 @@ export function generateStructuredData({
                   ? "ru-RU"
                   : locale === "zh-CN"
                     ? "zh-CN"
-                    : "fr-FR",
+                    : locale === "ko"
+                      ? "ko-KR"
+                      : "fr-FR",
         embedUrl: url,
         interactionStatistic: {
           "@type": "InteractionCounter",
@@ -444,6 +462,7 @@ export function generateStructuredData({
           pt: ["calculadora calorias", "calculadora TDEE", "calculadora BMR", "necessidades calóricas", "perda peso", "Cal mascote"],
           ru: ["калькулятор калорий", "калькулятор TDEE", "калькулятор BMR", "потребность калории", "похудение", "Кал маскот"],
           "zh-CN": ["卡路里计算器", "TDEE计算器", "BMR计算器", "每日卡路里需求", "减重计算器", "Cal吉祥物"],
+          ko: ["칼로리 계산기", "TDEE 계산기", "BMR 계산기", "일일 칼로리 필요량", "체중 감량 계산기", "칼 마스코트"],
         },
         "one-rep-max": {
           en: ["one rep max", "one rep max calculator", "one rep max formula", "one rep max calculation", "one rep max calculator"],
@@ -452,6 +471,7 @@ export function generateStructuredData({
           pt: ["one rep max", "calculadora one rep max", "fórmula one rep max", "calculo one rep max", "calculadora one rep max"],
           ru: ["one rep max", "калькулятор one rep max", "формула one rep max", "расчет one rep max", "калькулятор one rep max"],
           "zh-CN": ["一次最大重复次数", "一次最大重复次数计算器", "一次最大重复次数公式", "一次最大重复次数计算", "一次最大重复次数计算器"],
+          ko: ["1RM", "1RM 계산기", "1RM 공식", "1RM 계산", "최대 반복 횟수 계산기"],
         },
         "rest-timer": {
           en: ["rest timer", "rest timer calculator", "rest timer formula", "rest timer calculation", "rest timer calculator"],
@@ -484,6 +504,7 @@ export function generateStructuredData({
             "калькулятор timer de repos",
           ],
           "zh-CN": ["休息计时器", "休息计时器计算器", "休息计时器公式", "休息计时器计算", "休息计时器计算器"],
+          ko: ["휴식 타이머", "휴식 타이머 계산기", "휴식 타이머 공식", "휴식 타이머 계산", "휴식 타이머 계산기"],
         },
         macro: {
           en: ["macro calculator", "macros calculator", "macros formula", "macros calculation", "macros calculator"],
@@ -492,6 +513,7 @@ export function generateStructuredData({
           pt: ["calculadora macros", "calculadora macros", "fórmula macros", "calculo macros", "calculadora macros"],
           ru: ["калькулятор макросов", "калькулятор макросов", "формула макросов", "расчет макросов", "калькулятор макросов"],
           "zh-CN": ["宏计算器", "宏计算器", "宏公式", "宏计算", "宏计算器"],
+          ko: ["매크로 계산기", "매크로 계산기", "매크로 공식", "매크로 계산", "매크로 계산기"],
         },
         bmi: {
           en: ["bmi calculator", "bmi formula", "bmi calculation", "bmi calculator"],
@@ -500,6 +522,7 @@ export function generateStructuredData({
           pt: ["calculadora bmi", "fórmula bmi", "calculo bmi", "calculadora bmi"],
           ru: ["калькулятор ИМТ", "формула ИМТ", "расчет ИМТ", "калькулятор ИМТ"],
           "zh-CN": ["BMI计算器", "BMI公式", "BMI计算", "BMI计算器"],
+          ko: ["BMI 계산기", "BMI 공식", "BMI 계산", "BMI 계산기"],
         },
         "heart-rate": {
           en: ["heart rate calculator", "heart rate formula", "heart rate calculation", "heart rate calculator"],
@@ -523,6 +546,7 @@ export function generateStructuredData({
           ],
           ru: ["калькулятор частоты пульса", "формула частоты пульса", "расчет частоты пульса", "калькулятор частоты пульса"],
           "zh-CN": ["心率计算器", "心率公式", "心率计算", "心率计算器"],
+          ko: ["심박수 계산기", "심박수 공식", "심박수 계산", "심박수 계산기"],
         },
       };
 
@@ -585,7 +609,9 @@ export function generateStructuredData({
                   ? "ru-RU"
                   : locale === "zh-CN"
                     ? "zh-CN"
-                    : "fr-FR",
+                    : locale === "ko"
+                      ? "ko-KR"
+                      : "fr-FR",
         image: image || `${baseUrl}/images/calculator-og.jpg`,
         aggregateRating: {
           "@type": "AggregateRating",
@@ -667,7 +693,9 @@ export function generateStructuredData({
                     ? "Calcular Calorias"
                     : locale === "ru"
                       ? "Рассчитать Калории"
-                      : "计算卡路里",
+                      : locale === "ko"
+                        ? "칼로리 계산"
+                        : "计算卡路里",
           target: url || baseUrl,
         },
         sameAs: calculatorData.relatedCalculators?.map((calc) => `${baseUrl}/tools/${calc}`) || [],

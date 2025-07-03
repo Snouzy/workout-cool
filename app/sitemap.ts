@@ -7,7 +7,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const currentDate = new Date().toISOString();
 
   // Static routes with locale support
-  const locales = ["fr", "en", "es", "pt", "ru", "zh-CN"];
+  const locales = ["fr", "en", "es", "pt", "ru", "zh-CN", "ko"];
 
   const staticRoutes = [
     // Home page (root)
@@ -167,6 +167,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       pt: program.slugPt,
       ru: program.slugRu,
       "zh-CN": program.slugZhCn,
+      ko: program.slugKo,
     };
 
     Object.entries(programSlugs).forEach(([locale, slug]) => {
@@ -189,6 +190,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
               pt: session.slugPt,
               ru: session.slugRu,
               "zh-CN": session.slugZhCn,
+              ko: session.slugKo,
             };
 
             const sessionSlug = sessionSlugs[locale as keyof typeof sessionSlugs];

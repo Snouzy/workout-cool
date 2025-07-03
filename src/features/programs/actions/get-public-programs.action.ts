@@ -13,6 +13,7 @@ export interface PublicProgram {
   slugPt: string;
   slugRu: string;
   slugZhCn: string;
+  slugKo: string;
 
   title: string;
   titleEn: string;
@@ -20,6 +21,7 @@ export interface PublicProgram {
   titlePt: string;
   titleRu: string;
   titleZhCn: string;
+  titleKo: string;
 
   description: string;
   descriptionEn: string;
@@ -27,6 +29,7 @@ export interface PublicProgram {
   descriptionPt: string;
   descriptionRu: string;
   descriptionZhCn: string;
+  descriptionKo: string;
 
   category: string;
   image: string;
@@ -86,6 +89,7 @@ export async function getPublicPrograms(): Promise<PublicProgram[]> {
       slugPt: program.slugPt,
       slugRu: program.slugRu,
       slugZhCn: program.slugZhCn,
+      slugKo: program.slugKo,
 
       title: program.title,
       titleEn: program.titleEn,
@@ -93,6 +97,7 @@ export async function getPublicPrograms(): Promise<PublicProgram[]> {
       titlePt: program.titlePt,
       titleRu: program.titleRu,
       titleZhCn: program.titleZhCn,
+      titleKo: program.titleKo,
 
       description: program.description,
       descriptionEn: program.descriptionEn,
@@ -100,6 +105,7 @@ export async function getPublicPrograms(): Promise<PublicProgram[]> {
       descriptionPt: program.descriptionPt,
       descriptionRu: program.descriptionRu,
       descriptionZhCn: program.descriptionZhCn,
+      descriptionKo: program.descriptionKo,
 
       category: program.category,
       image: program.image,

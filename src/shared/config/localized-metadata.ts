@@ -108,6 +108,26 @@ export const LocalizedMetadata = {
     category: "健身",
     classification: "健身与健康",
   },
+  ko: {
+    title: "Workout Cool",
+    description: "포괄적인 운동 데이터베이스를 갖춘 현대적인 피트니스 코칭 플랫폼",
+    keywords: [
+      "피트니스",
+      "운동",
+      "훈련",
+      "보디빌딩",
+      "스포츠",
+      "코칭",
+      "운동 프로그램",
+      "피트니스 앱",
+      "운동 플래너",
+      "운동 데이터베이스",
+    ],
+    ogAlt: "Workout Cool - 현대적인 피트니스 플랫폼",
+    applicationName: "Workout Cool",
+    category: "피트니스",
+    classification: "피트니스 및 건강",
+  },
 } as const;
 
 export type SupportedLocale = keyof typeof LocalizedMetadata;

@@ -11,6 +11,7 @@ export interface SitemapProgramData {
   slugPt: string;
   slugRu: string;
   slugZhCn: string;
+  slugKo: string;
   updatedAt: Date;
   weeks: {
     weekNumber: number;
@@ -21,6 +22,7 @@ export interface SitemapProgramData {
       slugPt: string;
       slugRu: string;
       slugZhCn: string;
+      slugKo: string;
       // updatedAt: Date; // TODO: add this back in when we have a way to update the sitemap
     }[];
   }[];
@@ -40,6 +42,7 @@ export async function getSitemapData(): Promise<SitemapProgramData[]> {
         slugPt: true,
         slugRu: true,
         slugZhCn: true,
+        slugKo: true,
         updatedAt: true,
         weeks: {
           select: {
@@ -52,6 +55,7 @@ export async function getSitemapData(): Promise<SitemapProgramData[]> {
                 slugPt: true,
                 slugRu: true,
                 slugZhCn: true,
+                slugKo: true,
               },
               orderBy: {
                 sessionNumber: "asc",

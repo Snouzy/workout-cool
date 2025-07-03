@@ -61,6 +61,7 @@ export async function addExerciseToSession(data: AddExerciseData) {
       instructionsPt: data.instructionsEn,
       instructionsRu: data.instructionsEn,
       instructionsZhCn: data.instructionsEn,
+      instructionsKo: data.instructionsEn,
       suggestedSets: {
         create: data.suggestedSets.map((set) => ({
           setIndex: set.setIndex,

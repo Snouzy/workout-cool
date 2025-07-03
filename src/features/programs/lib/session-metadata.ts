@@ -24,7 +24,7 @@ export function generateSessionSEOKeywords(session: ProgramSessionWithExercises,
       case "zh-CN":
         return ex.exercise.nameZhCn || ex.exercise.nameEn;
       case "ko":
-        return ex.exercise.nameKo || ex.exercise.nameKo;
+        return ex.exercise.nameKo || ex.exercise.nameEn;
       default:
         return ex.exercise.name;
     }

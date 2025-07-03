@@ -45,7 +45,7 @@ export async function updateWeek(weekId: string, data: UpdateWeekData) {
         titlePt: data.titlePt,
         titleRu: data.titleRu,
         titleZhCn: data.titleZhCn,
-        titleKo: data.titleZhCn,
+        titleKo: data.titleKo,
         description: data.description || "",
         descriptionEn: data.descriptionEn || "",
         descriptionEs: data.descriptionEs || "",

@@ -14,7 +14,7 @@ const weekSchema = z.object({
   titlePt: z.string().min(1, "Le titre en portugais est requis"),
   titleRu: z.string().min(1, "Le titre en russe est requis"),
   titleZhCn: z.string().min(1, "Le titre en chinois est requis"),
-  titleKo: z.string().min(1, "Le titre en chinois est requis"),
+  titleKo: z.string().min(1, "Le titre en coréen est requis"),
   description: z.string().optional(),
   descriptionEn: z.string().optional(),
   descriptionEs: z.string().optional(),

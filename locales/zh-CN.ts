@@ -901,6 +901,7 @@ export default {
     premium: "高级",
     free: "免费",
     new: "新",
+    favorite_added: "已添加到收藏",
   },
   tools: {
     try_now: "立即试用",

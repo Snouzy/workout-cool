@@ -197,7 +197,7 @@ export function WorkoutSessionSets({
                   )}
                   {/* Fallback: description si pas d'introduction */}
                 </div>
-                <FavoriteExerciseButton exerciseId={ex.id} size="md" className="ml-auto" onToggleFavorite={() => null} />
+                <FavoriteExerciseButton exerciseId={ex.id} size="md" className="ml-auto" />
               </div>
               {/* Modale vidéo */}
               {details && details.fullVideoUrl && videoModal.open && videoModal.exerciseId === ex.id && (

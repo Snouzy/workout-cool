@@ -1438,5 +1438,6 @@ export default {
     coming_soon: "Em breve",
     free: "Gratuito",
     new: "Novo",
+    favorite_added: "Adicionado aos favoritos",
   },
 } as const;

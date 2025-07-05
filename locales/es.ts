@@ -906,6 +906,7 @@ export default {
     free: "Gratis",
     new: "Nuevo",
     coming_soon: "Próximamente",
+    favorite_added: "Agregado a favoritos",
   },
   tools: {
     try_now: "Probar ahora",

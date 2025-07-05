@@ -687,14 +687,15 @@ export default {
         keywords: "BMI calculator, body mass index, health assessment, weight status, BMI tools, pediatric BMI, athlete BMI",
       },
       understanding_bmi: "Understanding BMI",
-      bmi_explanation: "BMI is a screening tool that helps assess whether you're at a healthy weight for your height. Choose the right calculator for your needs:",
+      bmi_explanation:
+        "BMI is a screening tool that helps assess whether you're at a healthy weight for your height. Choose the right calculator for your needs:",
       recommendation_standard: "Best for general population and initial health screening",
       recommendation_adjusted: "More accurate for athletes and muscular individuals",
       recommendation_pediatric: "Specialized for children and adolescents with age-specific percentiles",
       popularity: "Popularity",
       accuracy: "Accuracy",
       accuracy_high: "High",
-      accuracy_good: "Good", 
+      accuracy_good: "Good",
       accuracy_medium: "Medium",
       best_for: "Best for",
       best_for_general: "General use",
@@ -708,11 +709,13 @@ export default {
         title: "Standard BMI Calculator",
         description: "Classic BMI calculation using the standard WHO formula. Quick and easy assessment for general population.",
         page_title: "Standard BMI Calculator",
-        page_description: "Calculate your Body Mass Index using the standard WHO formula. Get instant results with health category and personalized recommendations.",
+        page_description:
+          "Calculate your Body Mass Index using the standard WHO formula. Get instant results with health category and personalized recommendations.",
       },
       adjusted: {
         title: "Adjusted BMI Calculator",
-        description: "Enhanced BMI calculation that considers muscle mass and body composition for more accurate results in athletic individuals.",
+        description:
+          "Enhanced BMI calculation that considers muscle mass and body composition for more accurate results in athletic individuals.",
       },
       pediatric: {
         title: "Pediatric BMI Calculator",
@@ -744,17 +747,17 @@ export default {
     units: "Units",
     metric: "Metric (kg/cm)",
     imperial: "Imperial (lbs/ft)",
-    
+
     // Detailed BMI Categories (WHO)
     category_severe_thinness: "Severe Thinness",
-    category_moderate_thinness: "Moderate Thinness", 
+    category_moderate_thinness: "Moderate Thinness",
     category_mild_thinness: "Mild Thinness",
     category_normal: "Normal Weight",
     category_overweight: "Overweight",
     category_obese_class_1: "Obesity Class I",
     category_obese_class_2: "Obesity Class II",
     category_obese_class_3: "Obesity Class III",
-    
+
     // Health Risks
     risk_low: "Low",
     risk_normal: "Normal",
@@ -762,28 +765,30 @@ export default {
     risk_high: "High",
     risk_very_high: "Very High",
     risk_extremely_high: "Extremely High",
-    
+
     // Additional Information
     bmi_range: "BMI Range",
     ideal_weight: "Ideal Weight Range",
     weight_to_lose: "Weight to Lose",
     weight_to_gain: "Weight to Gain",
     normal_range: "Normal BMI range: 18.5 - 24.9",
-    
+
     // BMI Prime
     about_bmi_prime: "About BMI Prime",
-    bmi_prime_explanation: "BMI Prime is the ratio of your BMI to the upper limit of normal BMI (25). A value of 1.0 means you're at the upper limit of normal weight.",
+    bmi_prime_explanation:
+      "BMI Prime is the ratio of your BMI to the upper limit of normal BMI (25). A value of 1.0 means you're at the upper limit of normal weight.",
     underweight: "Underweight",
     normal: "Normal",
-    overweight: "Overweight", 
+    overweight: "Overweight",
     obese: "Obese",
-    
+
     // Limitations
     limitations_title: "BMI Limitations",
-    limitations_text: "BMI doesn't distinguish between muscle and fat mass. Athletes and very muscular individuals may have high BMI despite being healthy. Age, sex, ethnicity, and body composition also affect interpretation.",
-    
+    limitations_text:
+      "BMI doesn't distinguish between muscle and fat mass. Athletes and very muscular individuals may have high BMI despite being healthy. Age, sex, ethnicity, and body composition also affect interpretation.",
+
     disclaimer: "BMI is a screening tool and may not reflect body composition. Consult healthcare professionals for personalized advice.",
-    
+
     // Recommendations
     recommendations: {
       severe_thinness: {
@@ -843,7 +848,7 @@ export default {
         multidisciplinary: "Multidisciplinary approach with medical team",
       },
     },
-    
+
     // Health Risks
     health_risks: {
       overweight: {
@@ -876,19 +881,23 @@ export default {
         underlying_conditions: "May indicate underlying medical conditions",
       },
     },
-    
+
     // Educational Content
     educational: {
       introduction_title: "BMI Introduction",
-      introduction_text: "BMI is a measurement of a person's leanness or corpulence based on their height and weight, and is intended to quantify tissue mass. It is widely used as a general indicator of whether a person has a healthy body weight for their height.",
-      introduction_usage: "Specifically, the value obtained from the calculation of BMI is used to categorize whether a person is underweight, normal weight, overweight, or obese depending on what range the value falls between. These ranges of BMI vary based on factors such as region and age, and are sometimes further divided into subcategories such as severely underweight or very severely obese.",
-      
+      introduction_text:
+        "BMI is a measurement of a person's leanness or corpulence based on their height and weight, and is intended to quantify tissue mass. It is widely used as a general indicator of whether a person has a healthy body weight for their height.",
+      introduction_usage:
+        "Specifically, the value obtained from the calculation of BMI is used to categorize whether a person is underweight, normal weight, overweight, or obese depending on what range the value falls between. These ranges of BMI vary based on factors such as region and age, and are sometimes further divided into subcategories such as severely underweight or very severely obese.",
+
       adult_table_title: "BMI Table for Adults",
-      adult_table_description: "This is the World Health Organization's (WHO) recommended body weight based on BMI values for adults. It is used for both men and women, age 20 or older.",
-      
+      adult_table_description:
+        "This is the World Health Organization's (WHO) recommended body weight based on BMI values for adults. It is used for both men and women, age 20 or older.",
+
       children_table_title: "BMI Table for Children and Teens, Age 2-20",
-      children_table_description: "The Centers for Disease Control and Prevention (CDC) recommends BMI categorization for children and teens between age 2 and 20.",
-      
+      children_table_description:
+        "The Centers for Disease Control and Prevention (CDC) recommends BMI categorization for children and teens between age 2 and 20.",
+
       classification: "Classification",
       bmi_range: "BMI Range - kg/m²",
       category: "Category",
@@ -897,28 +906,29 @@ export default {
       healthy_weight: "Healthy Weight",
       at_risk_overweight: "At Risk of Overweight",
       overweight: "Overweight",
-      
+
       overweight_risks_title: "Risks Associated with Being Overweight",
-      overweight_risks_intro: "Being overweight increases the risk of a number of serious diseases and health conditions. Below is a list of said risks, according to the Centers for Disease Control and Prevention (CDC):",
-      
+      overweight_risks_intro:
+        "Being overweight increases the risk of a number of serious diseases and health conditions. Below is a list of said risks, according to the Centers for Disease Control and Prevention (CDC):",
+
       cardiovascular_risks: "Cardiovascular Risks",
       high_blood_pressure: "High blood pressure",
       cholesterol_issues: "Higher levels of LDL cholesterol, lower levels of HDL cholesterol, and high levels of triglycerides",
       coronary_heart_disease: "Coronary heart disease",
       stroke: "Stroke",
-      
+
       metabolic_risks: "Metabolic Risks",
       type_2_diabetes: "Type II diabetes",
       gallbladder_disease: "Gallbladder disease",
       sleep_apnea: "Sleep apnea and breathing problems",
       osteoarthritis: "Osteoarthritis, a type of joint disease caused by breakdown of joint cartilage",
-      
+
       other_risks: "Other Health Risks",
       certain_cancers: "Certain cancers (endometrial, breast, colon, kidney, gallbladder, liver)",
       mental_health_issues: "Mental illnesses such as clinical depression, anxiety, and others",
       reduced_quality_life: "Low quality of life and body pains",
       increased_mortality: "Generally, an increased risk of mortality compared to those with a healthy BMI",
-      
+
       underweight_risks_title: "Risks Associated with Being Underweight",
       underweight_risks_intro: "Being underweight has its own associated risks, listed below:",
       malnutrition: "Malnutrition, vitamin deficiencies, anemia (lowered ability to carry blood vessels)",
@@ -928,30 +938,31 @@ export default {
       reproductive_issues: "Possible reproductive issues for women due to hormonal imbalances",
       surgery_complications: "Potential complications as a result of surgery",
       increased_mortality_underweight: "Generally, an increased risk of mortality compared to those with a healthy BMI",
-      
+
       adults_limitations: "In Adults",
       older_adults_fat: "Older adults tend to have more body fat than younger adults with the same BMI",
       women_fat_difference: "Women tend to have more body fat than men for an equivalent BMI",
       athletes_muscle_mass: "Muscular individuals and highly trained athletes may have higher BMIs due to large muscle mass",
-      
+
       children_limitations: "In Children and Adolescents",
       height_maturation_influence: "Height and level of sexual maturation can influence BMI and body fat among children",
       fat_free_mass_difference: "BMI could be a result of increased levels of either fat or fat-free mass",
       population_accuracy: "BMI is fairly indicative of body fat for 90-95% of the population",
-      
+
       formulas_title: "BMI Formula",
       metric_formula: "Metric Formula",
       imperial_formula: "Imperial Formula",
       example: "Example",
-      
+
       bmi_prime_formula: "BMI Prime Formula",
       bmi_prime_description: "Ratio of your BMI to the upper limit of normal BMI (25)",
-      
+
       ponderal_index_title: "Ponderal Index",
-      ponderal_index_explanation: "The Ponderal Index (PI) is similar to BMI in that it measures the leanness or corpulence of a person based on their height and weight. The main difference between the PI and BMI is the cubing rather than squaring of the height in the formula. While BMI can be a useful tool when considering large populations, it is not reliable for determining leanness or corpulence in individuals.",
+      ponderal_index_explanation:
+        "The Ponderal Index (PI) is similar to BMI in that it measures the leanness or corpulence of a person based on their height and weight. The main difference between the PI and BMI is the cubing rather than squaring of the height in the formula. While BMI can be a useful tool when considering large populations, it is not reliable for determining leanness or corpulence in individuals.",
       ponderal_index_metric_description: "Ponderal Index using metric units",
       ponderal_index_imperial_description: "Ponderal Index using imperial units",
-      
+
       medical_disclaimer_title: "Medical Disclaimer",
     },
   },
@@ -1429,5 +1440,6 @@ export default {
     free: "Free",
     new: "New",
     coming_soon: "Coming soon",
+    favorite_added: "Added to favorites",
   },
 } as const;

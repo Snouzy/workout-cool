@@ -5,10 +5,12 @@ import { useSession } from "@/features/auth/lib/auth-client";
 import { createFavoritedExercise } from "@/features/exercises/actions/add-favorite-exercise.action";
 import { deleteFavoritedExercise } from "@/features/exercises/actions/delete-favorite-exercise.action";
 
-type LocalFavorite = {
+export type SyncStatus = "local" | "synced" | "deleteOnSync";
+
+export interface LocalFavorite {
   exerciseId: string;
-  status: "local" | "synced" | "deleted";
-};
+  status: SyncStatus;
+}
 
 interface SyncState {
   isSyncing: boolean;
@@ -44,7 +46,7 @@ export function useSyncFavoritedExercises() {
         }
       }
 
-      const deletedToSync = localFavorites.filter((f) => f.status === "deleted");
+      const deletedToSync = localFavorites.filter((f) => f.status === "deleteOnSync");
       for (const fav of deletedToSync) {
         try {
           const result = await deleteFavoritedExercise({ exerciseId: fav.exerciseId });
@@ -57,7 +59,7 @@ export function useSyncFavoritedExercises() {
         }
       }
 
-      const updatedFavorites = localFavorites.filter((f) => f.status !== "deleted").map((f) => ({ ...f, status: "synced" as const }));
+      const updatedFavorites = localFavorites.filter((f) => f.status !== "deleteOnSync").map((f) => ({ ...f, status: "synced" as const }));
       saveLocalFavorites(updatedFavorites);
     } catch (error) {
       console.error("Failed to sync favorites:", error);
@@ -71,15 +73,7 @@ export function useSyncFavoritedExercises() {
       const stored = localStorage.getItem("favoriteExercises");
       if (!stored) return [];
 
-      const parsed = JSON.parse(stored);
-      // Handle migration from old string[] format
-      if (Array.isArray(parsed) && parsed.length > 0 && typeof parsed[0] === "string") {
-        const migrated: LocalFavorite[] = parsed.map((id) => ({ exerciseId: id, status: "local" }));
-        localStorage.setItem("favoriteExercises", JSON.stringify(migrated));
-        return migrated;
-      }
-
-      return parsed;
+      return JSON.parse(stored);
     } catch {
       return [];
     }
@@ -102,5 +96,7 @@ export function useSyncFavoritedExercises() {
   return {
     syncState,
     syncFavoritedExercises,
+    getLocalFavorites,
+    saveLocalFavorites,
   };
 }

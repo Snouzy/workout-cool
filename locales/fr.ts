@@ -1445,5 +1445,6 @@ export default {
     premium: "Premium",
     free: "Gratuit",
     new: "Nouveau",
+    favorite_added: "Ajouté aux favoris",
   },
 } as const;

@@ -1440,5 +1440,6 @@ export default {
     premium: "Премиум",
     free: "Бесплатно",
     new: "Новый",
+    favorite_added: "Добавлено в избранное",
   },
 } as const;

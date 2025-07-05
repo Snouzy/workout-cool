@@ -13,8 +13,10 @@ import { useWorkoutSession } from "@/features/workout-session/model/use-workout-
 import { useSyncWorkoutSessions } from "@/features/workout-session/model/use-sync-workout-sessions";
 import { ExerciseVideoModal } from "@/features/workout-builder/ui/exercise-video-modal";
 import { env } from "@/env";
+import { useSyncFavoritedExercises } from "@/features/exercises/hooks/use-sync-favorited-exercises";
 import { PremiumUpsellAlert } from "@/components/ui/premium-upsell-alert";
 import { Button } from "@/components/ui/button";
+import { FavoriteExerciseButton } from "./favorite-exercise-button";
 import { HorizontalBottomBanner } from "@/components/ads";
 
 import { WorkoutSessionSet } from "./workout-session-set";
@@ -37,6 +39,7 @@ export function WorkoutSessionSets({
   const [videoModal, setVideoModal] = useState<{ open: boolean; exerciseId?: string }>({ open: false });
   const { syncSessions } = useSyncWorkoutSessions();
   const prevExerciseIndexRef = useRef<number>(currentExerciseIndex);
+  const { syncFavoritedExercises } = useSyncFavoritedExercises();
 
   // auto-scroll to current exercise when index changes (but not when adding sets)
   useEffect(() => {
@@ -115,6 +118,7 @@ export function WorkoutSessionSets({
 
   const handleFinishSession = () => {
     completeWorkout();
+    syncFavoritedExercises();
     syncSessions();
     onCongrats();
     confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
@@ -193,6 +197,7 @@ export function WorkoutSessionSets({
                   )}
                   {/* Fallback: description si pas d'introduction */}
                 </div>
+                <FavoriteExerciseButton exerciseId={ex.id} size="md" className="ml-auto" onToggleFavorite={() => null} />
               </div>
               {/* Modale vidéo */}
               {details && details.fullVideoUrl && videoModal.open && videoModal.exerciseId === ex.id && (

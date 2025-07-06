@@ -1,9 +1,9 @@
 import React from "react";
 import { Metadata } from "next";
+import { HeartRateEducationalContent } from "app/[locale]/(app)/tools/heart-rate-zones/shared/components/HeartRateEducationalContent";
 
 import { getI18n } from "locales/server";
-import { HeartRateZonesCalculatorClient } from "app/[locale]/(app)/tools/heart-rate-zones/shared/HeartRateZonesCalculatorClient";
-import { HeartRateEducationalContent } from "app/[locale]/(app)/tools/heart-rate-zones/shared/components/HeartRateEducationalContent";
+import { SimpleHeartRateCalculator } from "app/[locale]/(app)/tools/heart-rate-zones/shared/SimpleHeartRateCalculator";
 import { getServerUrl } from "@/shared/lib/server-url";
 import { generateSEOMetadata, SEOScripts } from "@/components/seo/SEOHead";
 
@@ -95,32 +95,31 @@ export default async function HeartRateZonesPage({ params }: { params: Promise<{
         }}
         title={t("tools.heart-rate-zones.meta.title")}
       />
-      <div className="min-h-screen bg-gradient-to-br from-base-100 via-base-200/50 to-base-100 dark:from-base-300 dark:via-base-200 dark:to-base-300">
-        {/* Animated background elements */}
+      <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white dark:from-gray-900 dark:to-gray-800">
+        {/* Simple animated hearts background */}
         <div className="fixed inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-20 left-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-20 right-10 w-96 h-96 bg-secondary/10 rounded-full blur-3xl animate-pulse delay-700"></div>
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent/5 rounded-full blur-3xl animate-pulse delay-500"></div>
+          <div className="absolute top-10 left-10 text-6xl opacity-10 animate-bounce">❤️</div>
+          <div className="absolute top-40 right-20 text-5xl opacity-10 animate-bounce" style={{ animationDelay: "0.5s" }}>
+            💙
+          </div>
+          <div className="absolute bottom-20 left-1/3 text-7xl opacity-10 animate-bounce" style={{ animationDelay: "1s" }}>
+            💚
+          </div>
+          <div className="absolute bottom-40 right-10 text-6xl opacity-10 animate-bounce" style={{ animationDelay: "1.5s" }}>
+            💛
+          </div>
         </div>
-        
-        <div className="container mx-auto px-2 sm:px-4 py-4 sm:py-8 max-w-4xl relative z-10">
-          {/* Gamified Header */}
-          <div className="text-center max-w-3xl mx-auto mb-8 animate-fade-in-up">
-            <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full mb-4">
-              <span className="text-2xl">❤️</span>
-              <span className="font-semibold">Calculateur Interactif</span>
-              <span className="text-2xl">🎯</span>
-            </div>
-            <h1 className="text-4xl sm:text-5xl font-bold mb-4 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-              {t("tools.heart-rate-zones.page_title")}
-            </h1>
-            <p className="text-lg text-base-content/70 dark:text-base-content/60">
-              {t("tools.heart-rate-zones.page_description")}
-            </p>
+
+        <div className="container mx-auto px-4 py-6 max-w-4xl relative z-10">
+          {/* Ultra-simple header */}
+          <div className="text-center mb-8">
+            <div className="text-6xl mb-4">❤️</div>
+            <h1 className="text-3xl sm:text-4xl font-bold mb-2 text-gray-900 dark:text-white">{t("tools.heart-rate-zones.page_title")}</h1>
+            <p className="text-lg text-gray-600 dark:text-gray-300">{t("tools.heart-rate-zones.page_description")}</p>
           </div>
 
           {/* Calculator */}
-          <HeartRateZonesCalculatorClient />
+          <SimpleHeartRateCalculator />
 
           {/* Educational Content */}
           <div className="mt-16">

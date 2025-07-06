@@ -8,11 +8,11 @@ import {
   BarChart3,
   BookOpen,
   HelpCircle,
+  Info,
   Calculator,
   Lightbulb,
   ChevronRight,
   Sparkles,
-  Info,
 } from "lucide-react";
 
 import { useI18n } from "locales/client";

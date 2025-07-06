@@ -1,9 +1,10 @@
 import React from "react";
 import { Metadata } from "next";
-import { HeartRateEducationalContent } from "app/[locale]/(app)/tools/heart-rate-zones/shared/components/HeartRateEducationalContent";
 
 import { getI18n } from "locales/server";
-import { SimpleHeartRateCalculator } from "app/[locale]/(app)/tools/heart-rate-zones/shared/SimpleHeartRateCalculator";
+import { calculateHeartRateZones } from "app/[locale]/(app)/tools/heart-rate-zones/shared/server-calculations";
+import { SEOFriendlyHeartRateCalculator } from "app/[locale]/(app)/tools/heart-rate-zones/shared/SEOFriendlyHeartRateCalculator";
+import { SimpleEducationalContent } from "app/[locale]/(app)/tools/heart-rate-zones/shared/components/SimpleEducationalContent";
 import { getServerUrl } from "@/shared/lib/server-url";
 import { generateSEOMetadata, SEOScripts } from "@/components/seo/SEOHead";
 
@@ -74,6 +75,10 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 export default async function HeartRateZonesPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   const t = await getI18n();
+  
+  // Calculate default results for SSR (age 30)
+  const defaultAge = 30;
+  const defaultResults = calculateHeartRateZones(defaultAge, t);
 
   return (
     <>
@@ -119,11 +124,11 @@ export default async function HeartRateZonesPage({ params }: { params: Promise<{
           </div>
 
           {/* Calculator */}
-          <SimpleHeartRateCalculator />
+          <SEOFriendlyHeartRateCalculator defaultAge={defaultAge} defaultResults={defaultResults} />
 
           {/* Educational Content */}
           <div className="mt-16">
-            <HeartRateEducationalContent />
+            <SimpleEducationalContent />
           </div>
         </div>
       </div>

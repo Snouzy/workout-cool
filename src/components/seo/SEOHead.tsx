@@ -43,7 +43,7 @@ export function generateSEOMetadata({
   noIndex = false,
 }: SEOHeadProps): Metadata {
   const baseUrl = getServerUrl();
-  const fullTitle = title ? `${title} | ${SiteConfig.title}` : SiteConfig.title;
+  const fullTitle = title ? `${title}` : SiteConfig.title;
   const finalDescription = description || SiteConfig.description;
   const finalCanonical = canonical || baseUrl;
   const finalOgImage = ogImage || `${baseUrl}/images/default-og-image_${locale === "zh-CN" ? "zh" : locale}.jpg`;
@@ -86,15 +86,54 @@ export function generateSEOMetadata({
       description: finalDescription,
       url: finalCanonical,
       siteName: SiteConfig.title,
-      locale: locale === "en" ? "en_US" : locale === "es" ? "es_ES" : locale === "pt" ? "pt_PT" : locale === "ru" ? "ru_RU" : locale === "zh-CN" ? "zh_CN" : "fr_FR",
+      locale:
+        locale === "en"
+          ? "en_US"
+          : locale === "es"
+            ? "es_ES"
+            : locale === "pt"
+              ? "pt_PT"
+              : locale === "ru"
+                ? "ru_RU"
+                : locale === "zh-CN"
+                  ? "zh_CN"
+                  : "fr_FR",
       alternateLocale: [
-        "fr_FR", "fr_CA", "fr_CH", "fr_BE",
-        "en_US", "en_GB", "en_CA", "en_AU", 
-        "es_ES", "es_MX", "es_AR", "es_CL",
-        "pt_PT", "pt_BR",
-        "ru_RU", "ru_BY", "ru_KZ",
-        "zh_CN", "zh_TW", "zh_HK"
-      ].filter(alt => alt !== (locale === "en" ? "en_US" : locale === "es" ? "es_ES" : locale === "pt" ? "pt_PT" : locale === "ru" ? "ru_RU" : locale === "zh-CN" ? "zh_CN" : "fr_FR")),
+        "fr_FR",
+        "fr_CA",
+        "fr_CH",
+        "fr_BE",
+        "en_US",
+        "en_GB",
+        "en_CA",
+        "en_AU",
+        "es_ES",
+        "es_MX",
+        "es_AR",
+        "es_CL",
+        "pt_PT",
+        "pt_BR",
+        "ru_RU",
+        "ru_BY",
+        "ru_KZ",
+        "zh_CN",
+        "zh_TW",
+        "zh_HK",
+      ].filter(
+        (alt) =>
+          alt !==
+          (locale === "en"
+            ? "en_US"
+            : locale === "es"
+              ? "es_ES"
+              : locale === "pt"
+                ? "pt_PT"
+                : locale === "ru"
+                  ? "ru_RU"
+                  : locale === "zh-CN"
+                    ? "zh_CN"
+                    : "fr_FR"),
+      ),
       images: [
         {
           url: finalOgImage,

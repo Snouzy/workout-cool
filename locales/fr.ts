@@ -526,13 +526,17 @@ export default {
     },
     "heart-rate-zones": {
       title: "Calculateur de Zones de Fréquence Cardiaque",
-      description: "Calculez vos zones d'entraînement de fréquence cardiaque optimales pour une performance maximale et la combustion des graisses",
+      description:
+        "Calculez vos zones d'entraînement de fréquence cardiaque optimales pour une performance maximale et la combustion des graisses",
       page_title: "Calculateur de Zones de Fréquence Cardiaque",
-      page_description: "Calculez vos zones d'entraînement de fréquence cardiaque personnalisées en utilisant des formules scientifiquement prouvées. Optimisez vos entraînements cardio pour brûler des graisses, l'endurance et la performance.",
+      page_description:
+        "Calculez vos zones d'entraînement de fréquence cardiaque personnalisées en utilisant des formules scientifiquement prouvées. Optimisez vos entraînements cardio pour brûler des graisses, l'endurance et la performance.",
       meta: {
         title: "Calculateur de Zones de Fréquence Cardiaque - Fréquence Cible et Zones d'Entraînement",
-        description: "Calculez votre fréquence cardiaque maximale et vos zones d'entraînement personnalisées. Utilisez les formules de base ou Karvonen pour trouver vos zones VO2 Max, Anaérobie, Aérobie, Combustion des Graisses et Échauffement.",
-        keywords: "calculateur zones fréquence cardiaque, fréquence cardiaque cible, fréquence cardiaque maximale, zones entraînement, zone VO2 max, zone anaérobie, zone aérobie, zone combustion graisses, formule Karvonen, entraînement fréquence cardiaque",
+        description:
+          "Calculez votre fréquence cardiaque maximale et vos zones d'entraînement personnalisées. Utilisez les formules de base ou Karvonen pour trouver vos zones VO2 Max, Anaérobie, Aérobie, Combustion des Graisses et Échauffement.",
+        keywords:
+          "calculateur zones fréquence cardiaque, fréquence cardiaque cible, fréquence cardiaque maximale, zones entraînement, zone VO2 max, zone anaérobie, zone aérobie, zone combustion graisses, formule Karvonen, entraînement fréquence cardiaque",
       },
       calculate: "Calculer les Zones",
       calculating: "Calcul en cours...",
@@ -553,7 +557,9 @@ export default {
       resting_heart_rate_info: "Mesurez votre fréquence cardiaque au réveil, avant de sortir du lit. La plage normale est de 60-100 bpm.",
       max_heart_rate: "Fréquence Cardiaque Maximale (FCM)",
       max_heart_rate_placeholder: "Entrez votre FCM",
-      max_heart_rate_info: "Votre fréquence cardiaque maximale réelle d'un test d'effort ou d'un entraînement à effort maximal. Plus précis que les estimations basées sur l'âge.",
+      max_heart_rate_info:
+        "Votre fréquence cardiaque maximale réelle d'un test d'effort ou d'un entraînement à effort maximal. Plus précis que les estimations basées sur l'âge.",
+
       results: {
         title: "Vos Zones de Fréquence Cardiaque",
         max_heart_rate: "Fréquence Cardiaque Maximale",
@@ -636,23 +642,56 @@ export default {
         q5: "Puis-je m'entraîner dans la zone VO2 Max tous les jours ?",
         a5: "Non, la zone VO2 Max est extrêmement intense et ne devrait être utilisée que 1-2 fois par semaine pour de courts intervalles. La plupart de l'entraînement devrait être dans les zones Aérobie et Combustion des Graisses pour construire l'endurance et permettre la récupération.",
       },
+      guide: {
+        title: "Guide Complet des Zones de Fréquence Cardiaque pour l'Entraînement",
+        text1:
+          "Les zones de fréquence cardiaque sont un outil scientifique essentiel pour optimiser vos entraînements et atteindre vos objectifs fitness. Que vous cherchiez à perdre du poids, améliorer votre endurance ou augmenter vos performances, comprendre et utiliser les zones cardiaques transformera votre approche de l'exercice.",
+        text2:
+          "Ce calculateur utilise des formules validées scientifiquement pour déterminer vos zones personnalisées basées sur votre âge et, optionnellement, votre fréquence cardiaque au repos. Chaque zone correspond à une intensité spécifique et offre des bénéfices uniques pour votre santé cardiovasculaire.",
+      },
+      table: {
+        title: "Tableau de Référence des Fréquences Cardiaques par Âge",
+        col1: "Âge",
+        col2: "FCM",
+        col3: "50% Intensité",
+        col4: "85% Intensité",
+        avertiser: "* Ces valeurs sont des moyennes. Votre FCM réelle peut varier de ±10-15 bpm.",
+      },
+      details: {
+        title: "Les 5 Zones d'Entraînement Expliquées en Détail",
+        benefits: "Bénéfices",
+        zone1_title: "Zone 1 : Échauffement (50-60% FCM)",
+        zone1_content:
+          "La zone d'échauffement est idéale pour débuter une séance, récupérer entre les intervalles ou terminer un entraînement. À cette intensité, vous pouvez maintenir une conversation normale sans essoufflement.",
+        zone1_details_1: "Améliore la circulation sanguine",
+        zone1_details_2: "Prépare les muscles et articulations",
+        zone1_details_3: "Réduit le risque de blessures",
+        zone1_details_4: "Favorise la récupération active",
+        zone1_duration: "Durée recommandée : ",
+        zone1_duration_value: "5-10 minutes en début/fin de séance",
+        zone1_duration_value_2: "20-30 minutes pour la récupération active",
+      },
       educational: {
         title: "Comprendre l'Entraînement par Fréquence Cardiaque",
         what_are_zones: {
           title: "Que Sont les Zones de Fréquence Cardiaque ?",
-          content: "Les zones de fréquence cardiaque sont des plages de battements par minute qui correspondent à différentes intensités d'exercice. S'entraîner dans des zones spécifiques vous aide à atteindre différents objectifs de forme physique plus efficacement.",
+          content:
+            "Les zones de fréquence cardiaque sont des plages de battements par minute qui correspondent à différentes intensités d'exercice. S'entraîner dans des zones spécifiques vous aide à atteindre différents objectifs de forme physique plus efficacement.",
         },
         why_use_zones: {
           title: "Pourquoi Utiliser les Zones de Fréquence Cardiaque ?",
-          content: "S'entraîner avec des zones de fréquence cardiaque garantit que vous vous exercez à la bonne intensité pour vos objectifs. Cela prévient le surentraînement, maximise les résultats et vous aide à vous entraîner plus efficacement.",
+          content:
+            "S'entraîner avec des zones de fréquence cardiaque garantit que vous vous exercez à la bonne intensité pour vos objectifs. Cela prévient le surentraînement, maximise les résultats et vous aide à vous entraîner plus efficacement.",
         },
         zone_distribution: {
           title: "Distribution Hebdomadaire Recommandée des Zones",
-          content: "Pour une forme physique équilibrée : 80% dans les Zones 1-3 (base aérobie), 15% dans la Zone 4 (seuil), 5% dans la Zone 5 (VO2 max). Ajustez en fonction de vos objectifs spécifiques et de votre niveau de forme physique.",
+          content:
+            "Pour une forme physique équilibrée : 80% dans les Zones 1-3 (base aérobie), 15% dans la Zone 4 (seuil), 5% dans la Zone 5 (VO2 max). Ajustez en fonction de vos objectifs spécifiques et de votre niveau de forme physique.",
         },
         monitoring: {
           title: "Comment Surveiller Votre Fréquence Cardiaque",
-          content: "Utilisez une ceinture thoracique pour plus de précision, ou un moniteur au poignet pour la commodité. Vérifiez régulièrement votre fréquence cardiaque pendant l'exercice et ajustez l'intensité pour rester dans votre zone cible.",
+          content:
+            "Utilisez une ceinture thoracique pour plus de précision, ou un moniteur au poignet pour la commodité. Vérifiez régulièrement votre fréquence cardiaque pendant l'exercice et ajustez l'intensité pour rester dans votre zone cible.",
         },
       },
     },
@@ -848,7 +887,8 @@ export default {
         title: "Calculateur IMC Standard",
         description: "Calcul IMC classique utilisant la formule standard OMS. Évaluation rapide et facile pour la population générale.",
         page_title: "Calculateur IMC Standard",
-        page_description: "Calculez votre Indice de Masse Corporelle en utilisant la formule standard de l'OMS. Obtenez des résultats instantanés avec catégorie de santé et recommandations personnalisées.",
+        page_description:
+          "Calculez votre Indice de Masse Corporelle en utilisant la formule standard de l'OMS. Obtenez des résultats instantanés avec catégorie de santé et recommandations personnalisées.",
       },
       adjusted: {
         title: "Calculateur IMC Ajusté",
@@ -929,7 +969,7 @@ export default {
 
     disclaimer:
       "L'IMC est un outil de dépistage et peut ne pas refléter la composition corporelle. Consultez des professionnels de santé pour des conseils personnalisés.",
-    
+
     // Recommendations
     recommendations: {
       severe_thinness: {
@@ -989,7 +1029,7 @@ export default {
         multidisciplinary: "Approche multidisciplinaire avec équipe médicale",
       },
     },
-    
+
     // Health Risks
     health_risks: {
       overweight: {
@@ -1022,19 +1062,23 @@ export default {
         underlying_conditions: "Peut indiquer des conditions médicales sous-jacentes",
       },
     },
-    
+
     // Educational Content
     educational: {
       introduction_title: "Introduction à l'IMC",
-      introduction_text: "L'IMC est une mesure de la maigreur ou de la corpulence d'une personne basée sur sa taille et son poids, et vise à quantifier la masse tissulaire. Il est largement utilisé comme indicateur général pour déterminer si une personne a un poids santé par rapport à sa taille.",
-      introduction_usage: "Spécifiquement, la valeur obtenue du calcul de l'IMC est utilisée pour catégoriser si une personne est en insuffisance pondérale, poids normal, surpoids ou obèse selon la plage dans laquelle la valeur se situe. Ces plages d'IMC varient selon des facteurs comme la région et l'âge, et sont parfois subdivisées en sous-catégories comme insuffisance pondérale sévère ou obésité très sévère.",
-      
+      introduction_text:
+        "L'IMC est une mesure de la maigreur ou de la corpulence d'une personne basée sur sa taille et son poids, et vise à quantifier la masse tissulaire. Il est largement utilisé comme indicateur général pour déterminer si une personne a un poids santé par rapport à sa taille.",
+      introduction_usage:
+        "Spécifiquement, la valeur obtenue du calcul de l'IMC est utilisée pour catégoriser si une personne est en insuffisance pondérale, poids normal, surpoids ou obèse selon la plage dans laquelle la valeur se situe. Ces plages d'IMC varient selon des facteurs comme la région et l'âge, et sont parfois subdivisées en sous-catégories comme insuffisance pondérale sévère ou obésité très sévère.",
+
       adult_table_title: "Tableau IMC pour Adultes",
-      adult_table_description: "Voici les recommandations de l'Organisation Mondiale de la Santé (OMS) pour le poids corporel basé sur les valeurs d'IMC pour les adultes. Il est utilisé pour les hommes et les femmes, âgés de 20 ans ou plus.",
-      
+      adult_table_description:
+        "Voici les recommandations de l'Organisation Mondiale de la Santé (OMS) pour le poids corporel basé sur les valeurs d'IMC pour les adultes. Il est utilisé pour les hommes et les femmes, âgés de 20 ans ou plus.",
+
       children_table_title: "Tableau IMC pour Enfants et Adolescents, Âge 2-20",
-      children_table_description: "Les Centres de Contrôle et de Prévention des Maladies (CDC) recommandent la catégorisation IMC pour les enfants et adolescents entre 2 et 20 ans.",
-      
+      children_table_description:
+        "Les Centres de Contrôle et de Prévention des Maladies (CDC) recommandent la catégorisation IMC pour les enfants et adolescents entre 2 et 20 ans.",
+
       classification: "Classification",
       bmi_range: "Plage IMC - kg/m²",
       category: "Catégorie",
@@ -1043,28 +1087,29 @@ export default {
       healthy_weight: "Poids Santé",
       at_risk_overweight: "À Risque de Surpoids",
       overweight: "Surpoids",
-      
+
       overweight_risks_title: "Risques Associés au Surpoids",
-      overweight_risks_intro: "Le surpoids augmente le risque de nombreuses maladies graves et conditions de santé. Voici une liste de ces risques, selon les Centres de Contrôle et de Prévention des Maladies (CDC) :",
-      
+      overweight_risks_intro:
+        "Le surpoids augmente le risque de nombreuses maladies graves et conditions de santé. Voici une liste de ces risques, selon les Centres de Contrôle et de Prévention des Maladies (CDC) :",
+
       cardiovascular_risks: "Risques Cardiovasculaires",
       high_blood_pressure: "Hypertension artérielle",
       cholesterol_issues: "Niveaux élevés de cholestérol LDL, niveaux faibles de cholestérol HDL, et niveaux élevés de triglycérides",
       coronary_heart_disease: "Maladie coronarienne",
       stroke: "Accident vasculaire cérébral",
-      
+
       metabolic_risks: "Risques Métaboliques",
       type_2_diabetes: "Diabète de type II",
       gallbladder_disease: "Maladie de la vésicule biliaire",
       sleep_apnea: "Apnée du sommeil et problèmes respiratoires",
       osteoarthritis: "Arthrose, un type de maladie articulaire causée par la dégradation du cartilage articulaire",
-      
+
       other_risks: "Autres Risques de Santé",
       certain_cancers: "Certains cancers (endomètre, sein, côlon, rein, vésicule biliaire, foie)",
       mental_health_issues: "Maladies mentales comme la dépression clinique, l'anxiété et autres",
       reduced_quality_life: "Qualité de vie réduite et douleurs corporelles",
       increased_mortality: "Généralement, un risque accru de mortalité comparé à ceux avec un IMC sain",
-      
+
       underweight_risks_title: "Risques Associés à l'Insuffisance Pondérale",
       underweight_risks_intro: "L'insuffisance pondérale a ses propres risques associés, listés ci-dessous :",
       malnutrition: "Malnutrition, carences vitaminiques, anémie (capacité réduite de transport sanguin)",
@@ -1074,30 +1119,33 @@ export default {
       reproductive_issues: "Problèmes reproductifs possibles pour les femmes dus aux déséquilibres hormonaux",
       surgery_complications: "Complications potentielles résultant de chirurgie",
       increased_mortality_underweight: "Généralement, un risque accru de mortalité comparé à ceux avec un IMC sain",
-      
+
       adults_limitations: "Chez les Adultes",
       older_adults_fat: "Les adultes âgés ont tendance à avoir plus de graisse corporelle que les jeunes adultes avec le même IMC",
       women_fat_difference: "Les femmes ont tendance à avoir plus de graisse corporelle que les hommes pour un IMC équivalent",
-      athletes_muscle_mass: "Les individus musclés et athlètes très entraînés peuvent avoir des IMC plus élevés dus à une grande masse musculaire",
-      
+      athletes_muscle_mass:
+        "Les individus musclés et athlètes très entraînés peuvent avoir des IMC plus élevés dus à une grande masse musculaire",
+
       children_limitations: "Chez les Enfants et Adolescents",
-      height_maturation_influence: "La taille et le niveau de maturation sexuelle peuvent influencer l'IMC et la graisse corporelle chez les enfants",
+      height_maturation_influence:
+        "La taille et le niveau de maturation sexuelle peuvent influencer l'IMC et la graisse corporelle chez les enfants",
       fat_free_mass_difference: "L'IMC pourrait résulter de niveaux accrus soit de graisse soit de masse maigre",
       population_accuracy: "L'IMC est assez indicatif de la graisse corporelle pour 90-95% de la population",
-      
+
       formulas_title: "Formule IMC",
       metric_formula: "Formule Métrique",
       imperial_formula: "Formule Impériale",
       example: "Exemple",
-      
+
       bmi_prime_formula: "Formule IMC Prime",
       bmi_prime_description: "Rapport de votre IMC à la limite supérieure de l'IMC normal (25)",
-      
+
       ponderal_index_title: "Indice Pondéral",
-      ponderal_index_explanation: "L'Indice Pondéral (IP) est similaire à l'IMC en ce qu'il mesure la maigreur ou la corpulence d'une personne basée sur sa taille et son poids. La principale différence entre l'IP et l'IMC est l'élévation au cube plutôt qu'au carré de la taille dans la formule. Bien que l'IMC puisse être un outil utile pour considérer de grandes populations, il n'est pas fiable pour déterminer la maigreur ou la corpulence chez les individus.",
+      ponderal_index_explanation:
+        "L'Indice Pondéral (IP) est similaire à l'IMC en ce qu'il mesure la maigreur ou la corpulence d'une personne basée sur sa taille et son poids. La principale différence entre l'IP et l'IMC est l'élévation au cube plutôt qu'au carré de la taille dans la formule. Bien que l'IMC puisse être un outil utile pour considérer de grandes populations, il n'est pas fiable pour déterminer la maigreur ou la corpulence chez les individus.",
       ponderal_index_metric_description: "Indice Pondéral utilisant les unités métriques",
       ponderal_index_imperial_description: "Indice Pondéral utilisant les unités impériales",
-      
+
       medical_disclaimer_title: "Avertissement Médical",
     },
   },

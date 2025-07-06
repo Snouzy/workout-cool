@@ -3,9 +3,11 @@
 import React, { useState } from "react";
 import Link from "next/link";
 
+import { useI18n } from "locales/client";
+
 export function SEOOptimizedContent() {
   const [activeTab, setActiveTab] = useState(0);
-
+  const t = useI18n();
   // Age-based heart rate chart data
   const ageChartData = [
     { age: "20-29", maxHR: "190-200", target50: "95-100", target85: "162-170" },
@@ -96,34 +98,24 @@ export function SEOOptimizedContent() {
     <div className="space-y-12 mt-16">
       {/* Introduction détaillée */}
       <section className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl p-3 sm:p-8">
-        <h2 className="text-3xl font-bold mb-6 text-gray-900 dark:text-white">
-          Guide Complet des Zones de Fréquence Cardiaque pour l'Entraînement
-        </h2>
+        <h2 className="text-3xl font-bold mb-6 text-gray-900 dark:text-white">{t("tools.heart-rate-zones.guide.title")}</h2>
         <div className="prose prose-lg max-w-none dark:prose-invert">
-          <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-            Les zones de fréquence cardiaque sont un outil scientifique essentiel pour optimiser vos entraînements et atteindre vos
-            objectifs fitness. Que vous cherchiez à perdre du poids, améliorer votre endurance ou augmenter vos performances, comprendre et
-            utiliser les zones cardiaques transformera votre approche de l'exercice.
-          </p>
-          <p className="text-gray-700 dark:text-gray-300 leading-relaxed mt-4">
-            Ce calculateur utilise des formules validées scientifiquement pour déterminer vos zones personnalisées basées sur votre âge et,
-            optionnellement, votre fréquence cardiaque au repos. Chaque zone correspond à une intensité spécifique et offre des bénéfices
-            uniques pour votre santé cardiovasculaire.
-          </p>
+          <p className="text-gray-700 dark:text-gray-300 leading-relaxed">{t("tools.heart-rate-zones.guide.text1")}</p>
+          <p className="text-gray-700 dark:text-gray-300 leading-relaxed mt-4">{t("tools.heart-rate-zones.guide.text2")}</p>
         </div>
       </section>
 
       {/* Tableau de référence par âge */}
       <section className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-3xl p-8">
-        <h2 className="text-3xl font-bold mb-6 text-gray-900 dark:text-white">Tableau de Référence des Fréquences Cardiaques par Âge</h2>
+        <h2 className="text-3xl font-bold mb-6 text-gray-900 dark:text-white">{t("tools.heart-rate-zones.table.title")}</h2>
         <div className="overflow-x-auto">
           <table className="w-full bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg">
             <thead className="bg-blue-600 text-white">
               <tr>
-                <th className="px-6 py-4 text-left">Âge</th>
-                <th className="px-6 py-4 text-left">FCM (bpm)</th>
-                <th className="px-6 py-4 text-left">50% Intensité</th>
-                <th className="px-6 py-4 text-left">85% Intensité</th>
+                <th className="px-6 py-4 text-left">{t("tools.heart-rate-zones.table.col1")}</th>
+                <th className="px-6 py-4 text-left">{t("tools.heart-rate-zones.table.col2")}</th>
+                <th className="px-6 py-4 text-left">{t("tools.heart-rate-zones.table.col3")}</th>
+                <th className="px-6 py-4 text-left">{t("tools.heart-rate-zones.table.col4")}</th>
               </tr>
             </thead>
             <tbody>
@@ -138,41 +130,42 @@ export function SEOOptimizedContent() {
             </tbody>
           </table>
         </div>
-        <p className="text-sm text-gray-600 dark:text-gray-400 mt-4">
-          * Ces valeurs sont des moyennes. Votre FCM réelle peut varier de ±10-15 bpm.
-        </p>
+        <p className="text-sm text-gray-600 dark:text-gray-400 mt-4">{t("tools.heart-rate-zones.table.avertiser")}</p>
       </section>
 
       {/* Explication détaillée des zones */}
       <section className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl p-3 sm:p-8">
-        <h2 className="text-3xl font-bold mb-8 text-gray-900 dark:text-white">Les 5 Zones d'Entraînement Expliquées en Détail</h2>
+        <h2 className="text-3xl font-bold mb-8 text-gray-900 dark:text-white">{t("tools.heart-rate-zones.details.title")}</h2>
 
         <div className="space-y-6">
           <div className="bg-blue-50 dark:bg-blue-900/20 rounded-2xl p-6">
             <div className="flex items-start gap-4">
               <div className="text-4xl">🚶</div>
               <div className="flex-1">
-                <h3 className="text-2xl font-bold text-blue-700 dark:text-blue-300 mb-2">Zone 1 : Échauffement (50-60% FCM)</h3>
-                <p className="text-gray-700 dark:text-gray-300 mb-3">
-                  La zone d'échauffement est idéale pour débuter une séance, récupérer entre les intervalles ou terminer un entraînement. À
-                  cette intensité, vous pouvez maintenir une conversation normale sans essoufflement.
-                </p>
+                <h3 className="text-2xl font-bold text-blue-700 dark:text-blue-300 mb-2">
+                  {t("tools.heart-rate-zones.details.zone1_title")}
+                </h3>
+                <p className="text-gray-700 dark:text-gray-300 mb-3">{t("tools.heart-rate-zones.details.zone1_content")}</p>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <h4 className="font-semibold text-gray-800 dark:text-gray-200 mb-2">Bénéfices :</h4>
+                    <h4 className="font-semibold text-gray-800 dark:text-gray-200 mb-2">
+                      {t("tools.heart-rate-zones.details.benefits")} :
+                    </h4>
                     <ul className="list-disc list-inside text-sm text-gray-600 dark:text-gray-400 space-y-1">
-                      <li>Améliore la circulation sanguine</li>
-                      <li>Prépare les muscles et articulations</li>
-                      <li>Réduit le risque de blessures</li>
-                      <li>Favorise la récupération active</li>
+                      <li>{t("tools.heart-rate-zones.details.zone1_details_1")}</li>
+                      <li>{t("tools.heart-rate-zones.details.zone1_details_2")}</li>
+                      <li>{t("tools.heart-rate-zones.details.zone1_details_3")}</li>
+                      <li>{t("tools.heart-rate-zones.details.zone1_details_4")}</li>
                     </ul>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-gray-800 dark:text-gray-200 mb-2">Durée recommandée :</h4>
+                    <h4 className="font-semibold text-gray-800 dark:text-gray-200 mb-2">
+                      {t("tools.heart-rate-zones.details.zone1_duration")} :
+                    </h4>
                     <p className="text-sm text-gray-600 dark:text-gray-400">
-                      5-10 minutes en début/fin de séance
+                      {t("tools.heart-rate-zones.details.zone1_duration_value")}
                       <br />
-                      20-30 minutes pour la récupération active
+                      {t("tools.heart-rate-zones.details.zone1_duration_value_2")}
                     </p>
                   </div>
                 </div>

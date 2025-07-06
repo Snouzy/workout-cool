@@ -354,7 +354,7 @@ export function SEOOptimizedContent() {
             {t("tools.heart-rate-zones.intern_links_button")}
           </button>
 
-          <div className="mt-12 grid md:grid-cols-3 gap-6 text-left">
+          <div className="mt-12 grid md:grid-cols-2 gap-6 text-left">
             <Link
               className="block bg-white/10 backdrop-blur rounded-2xl p-6 hover:bg-white/20 transition-colors"
               href="/tools/bmi-calculator"
@@ -369,13 +369,14 @@ export function SEOOptimizedContent() {
               <h3 className="font-bold text-lg mb-2">{t("tools.heart-rate-zones.intern_links_calorie_title")}</h3>
               <p className="opacity-90">{t("tools.heart-rate-zones.intern_links_calorie_description")}</p>
             </Link>
-            <Link
+            {/* <Link
+              aria-disabled
               className="block bg-white/10 backdrop-blur rounded-2xl p-6 hover:bg-white/20 transition-colors"
               href="/tools/macro-calculator"
             >
               <h3 className="font-bold text-lg mb-2">{t("tools.heart-rate-zones.intern_links_macro_title")}</h3>
               <p className="opacity-90">{t("tools.heart-rate-zones.intern_links_macro_description")}</p>
-            </Link>
+            </Link> */}
           </div>
         </div>
       </section>

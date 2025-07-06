@@ -192,7 +192,7 @@ export function EducationalContent() {
             <p className="text-sm">{t("tools.heart-rate-zones.weekly_plan.tuesday.title")}</p>
             <p className="text-xs opacity-75">{t("tools.heart-rate-zones.weekly_plan.tuesday.description")}</p>
           </div>
-          <div className="bg-gray-100 dark:bg-gray-700 rounded-2xl p-4 text-center">
+          <div className="bg-gray-300 dark:bg-gray-800 rounded-2xl p-4 text-center">
             <p className="font-bold text-gray-700 dark:text-gray-300">{t("commons.wednesday")}</p>
             <div className="text-3xl my-2">😴</div>
             <p className="text-sm">{t("tools.heart-rate-zones.weekly_plan.wednesday.title")}</p>

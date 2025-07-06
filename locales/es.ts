@@ -906,6 +906,13 @@ export default {
     free: "Gratis",
     new: "Nuevo",
     coming_soon: "Próximamente",
+    monday: "Lunes",
+    tuesday: "Martes",
+    wednesday: "Miércoles",
+    thursday: "Jueves",
+    friday: "Viernes",
+    saturday: "Sábado",
+    sunday: "Domingo",
   },
   tools: {
     try_now: "Probar ahora",
@@ -1029,11 +1036,14 @@ export default {
       title: "Calculadora de Zonas de Frecuencia Cardíaca",
       description: "Calcula tus zonas de entrenamiento de frecuencia cardíaca óptimas para máximo rendimiento y quema de grasa",
       page_title: "Calculadora de Zonas de Frecuencia Cardíaca",
-      page_description: "Calcula tus zonas de entrenamiento de frecuencia cardíaca personalizadas usando fórmulas científicamente probadas. Optimiza tus entrenamientos cardiovasculares para quemar grasa, resistencia y rendimiento.",
+      page_description:
+        "Calcula tus zonas de entrenamiento de frecuencia cardíaca personalizadas usando fórmulas científicamente probadas. Optimiza tus entrenamientos cardiovasculares para quemar grasa, resistencia y rendimiento.",
       meta: {
         title: "Calculadora de Zonas de Frecuencia Cardíaca - Frecuencia Objetivo y Zonas de Entrenamiento",
-        description: "Calcula tu frecuencia cardíaca máxima y zonas de entrenamiento personalizadas. Usa fórmulas básicas o Karvonen para encontrar tus zonas de VO2 Máx, Anaeróbica, Aeróbica, Quema de Grasa y Calentamiento.",
-        keywords: "calculadora zonas frecuencia cardíaca, frecuencia cardíaca objetivo, frecuencia cardíaca máxima, zonas entrenamiento, zona VO2 máx, zona anaeróbica, zona aeróbica, zona quema grasa, fórmula Karvonen, entrenamiento frecuencia cardíaca",
+        description:
+          "Calcula tu frecuencia cardíaca máxima y zonas de entrenamiento personalizadas. Usa fórmulas básicas o Karvonen para encontrar tus zonas de VO2 Máx, Anaeróbica, Aeróbica, Quema de Grasa y Calentamiento.",
+        keywords:
+          "calculadora zonas frecuencia cardíaca, frecuencia cardíaca objetivo, frecuencia cardíaca máxima, zonas entrenamiento, zona VO2 máx, zona anaeróbica, zona aeróbica, zona quema grasa, fórmula Karvonen, entrenamiento frecuencia cardíaca",
       },
       calculate: "Calcular Zonas",
       calculating: "Calculando...",
@@ -1054,7 +1064,8 @@ export default {
       resting_heart_rate_info: "Mide tu frecuencia cardíaca al despertar, antes de levantarte de la cama. El rango normal es 60-100 lpm.",
       max_heart_rate: "Frecuencia Cardíaca Máxima (FCM)",
       max_heart_rate_placeholder: "Ingresa tu FCM",
-      max_heart_rate_info: "Tu frecuencia cardíaca máxima real de una prueba de esfuerzo o entrenamiento de máximo esfuerzo. Más preciso que las estimaciones basadas en edad.",
+      max_heart_rate_info:
+        "Tu frecuencia cardíaca máxima real de una prueba de esfuerzo o entrenamiento de máximo esfuerzo. Más preciso que las estimaciones basadas en edad.",
       results: {
         title: "Tus Zonas de Frecuencia Cardíaca",
         max_heart_rate: "Frecuencia Cardíaca Máxima",
@@ -1070,28 +1081,32 @@ export default {
         warm_up: {
           name: "Zona de Calentamiento",
           intensity: "50-60%",
-          benefits: "Prepara el cuerpo para el ejercicio, mejora la flexibilidad",
+          benefits: "🧘 Perfect warm-up",
+          example: "Slow walk",
           duration: "5-10 minutos",
           description: "Intensidad muy ligera para calentar y enfriar",
         },
         fat_burn: {
           name: "Zona de Quema de Grasa",
           intensity: "60-70%",
-          benefits: "Máxima quema de grasa, construye base de resistencia",
+          benefits: "🔥 Máxima quema de grasa",
+          example: "Light jogging",
           duration: "20-40 minutos",
           description: "Intensidad ligera, ritmo cómodo para entrenamientos más largos",
         },
         aerobic: {
           name: "Zona Aeróbica",
           intensity: "70-80%",
-          benefits: "Mejora la condición cardiovascular y resistencia",
+          benefits: "💪 Mejora la condición cardiovascular y resistencia",
+          example: "Moderate run",
           duration: "10-40 minutos",
           description: "Intensidad moderada, sostenible por períodos prolongados",
         },
         anaerobic: {
           name: "Zona Anaeróbica",
           intensity: "80-90%",
-          benefits: "Aumenta velocidad y potencia, construye músculo",
+          benefits: "⚡ Aumenta velocidad",
+          example: "Short sprint",
           duration: "2-10 minutos",
           description: "Intensidad dura, desafiante pero sostenible por períodos cortos",
         },
@@ -1141,19 +1156,23 @@ export default {
         title: "Entendiendo el Entrenamiento por Frecuencia Cardíaca",
         what_are_zones: {
           title: "¿Qué Son las Zonas de Frecuencia Cardíaca?",
-          content: "Las zonas de frecuencia cardíaca son rangos de latidos por minuto que corresponden a diferentes intensidades de ejercicio. Entrenar en zonas específicas te ayuda a lograr diferentes objetivos de fitness más efectivamente.",
+          content:
+            "Las zonas de frecuencia cardíaca son rangos de latidos por minuto que corresponden a diferentes intensidades de ejercicio. Entrenar en zonas específicas te ayuda a lograr diferentes objetivos de fitness más efectivamente.",
         },
         why_use_zones: {
           title: "¿Por Qué Usar Zonas de Frecuencia Cardíaca?",
-          content: "Entrenar con zonas de frecuencia cardíaca asegura que estés ejercitándote a la intensidad correcta para tus objetivos. Previene el sobreentrenamiento, maximiza los resultados y te ayuda a entrenar más eficientemente.",
+          content:
+            "Entrenar con zonas de frecuencia cardíaca asegura que estés ejercitándote a la intensidad correcta para tus objetivos. Previene el sobreentrenamiento, maximiza los resultados y te ayuda a entrenar más eficientemente.",
         },
         zone_distribution: {
           title: "Distribución Semanal Recomendada de Zonas",
-          content: "Para una condición física equilibrada: 80% en Zonas 1-3 (base aeróbica), 15% en Zona 4 (umbral), 5% en Zona 5 (VO2 máx). Ajusta según tus objetivos específicos y nivel de condición física.",
+          content:
+            "Para una condición física equilibrada: 80% en Zonas 1-3 (base aeróbica), 15% en Zona 4 (umbral), 5% en Zona 5 (VO2 máx). Ajusta según tus objetivos específicos y nivel de condición física.",
         },
         monitoring: {
           title: "Cómo Monitorear Tu Frecuencia Cardíaca",
-          content: "Usa una banda de pecho para mayor precisión, o un monitor de muñeca por conveniencia. Revisa tu frecuencia cardíaca regularmente durante el ejercicio y ajusta la intensidad para mantenerte en tu zona objetivo.",
+          content:
+            "Usa una banda de pecho para mayor precisión, o un monitor de muñeca por conveniencia. Revisa tu frecuencia cardíaca regularmente durante el ejercicio y ajusta la intensidad para mantenerte en tu zona objetivo.",
         },
       },
     },
@@ -1348,7 +1367,8 @@ export default {
         title: "Calculadora IMC Estándar",
         description: "Cálculo IMC clásico usando la fórmula estándar de la OMS. Evaluación rápida y fácil para la población general.",
         page_title: "Calculadora IMC Estándar",
-        page_description: "Calcula tu Índice de Masa Corporal usando la fórmula estándar de la OMS. Obtén resultados instantáneos con categoría de salud y recomendaciones personalizadas.",
+        page_description:
+          "Calcula tu Índice de Masa Corporal usando la fórmula estándar de la OMS. Obtén resultados instantáneos con categoría de salud y recomendaciones personalizadas.",
       },
       adjusted: {
         title: "Calculadora IMC Ajustada",

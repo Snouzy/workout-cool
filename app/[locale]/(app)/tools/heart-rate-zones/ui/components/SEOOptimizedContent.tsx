@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 
-import { useI18n } from "locales/client";
+import { TFunction, useI18n } from "locales/client";
 
 export function SEOOptimizedContent() {
   const [activeTab, setActiveTab] = useState(0);
@@ -18,79 +18,38 @@ export function SEOOptimizedContent() {
     { age: "70+", maxHR: "140-150", target50: "70-75", target85: "119-128" },
   ];
 
-  const faqItems = [
+  const faqItems = (t: TFunction) => [
     {
-      question: "Qu'est-ce que la fréquence cardiaque maximale (FCM) ?",
-      answer:
-        "La fréquence cardiaque maximale est le nombre maximal de battements par minute que votre cœur peut atteindre lors d'un effort physique intense. Elle est généralement calculée avec la formule : 220 - votre âge. Cependant, cette formule peut varier de ±10-15 bpm selon les individus.",
+      question: t("tools.heart-rate-zones.seo_faq_q1_question"),
+      answer: t("tools.heart-rate-zones.seo_faq_q1_answer"),
     },
     {
-      question: "Comment mesurer ma fréquence cardiaque au repos ?",
-      answer:
-        "Mesurez votre pouls au réveil, avant de sortir du lit. Comptez les battements pendant 60 secondes ou pendant 15 secondes et multipliez par 4. Répétez pendant 3-5 jours et utilisez la moyenne. Une FCR normale est entre 60-100 bpm.",
+      question: t("tools.heart-rate-zones.seo_faq_q2_question"),
+      answer: t("tools.heart-rate-zones.seo_faq_q2_answer"),
     },
     {
-      question: "Quelle zone est la meilleure pour perdre du poids ?",
-      answer:
-        "La zone de combustion des graisses (60-70% FCM) est optimale pour brûler les graisses comme carburant. Cependant, les zones plus intenses brûlent plus de calories totales. Pour une perte de poids efficace, alternez entre différentes zones.",
+      question: t("tools.heart-rate-zones.seo_faq_q3_question"),
+      answer: t("tools.heart-rate-zones.seo_faq_q3_answer"),
     },
     {
-      question: "Puis-je m'entraîner dans la zone VO2 Max tous les jours ?",
-      answer:
-        "Non, la zone VO2 Max (90-100% FCM) est extrêmement intense et ne devrait être utilisée que 1-2 fois par semaine pour de courtes périodes (30 secondes à 2 minutes). La majorité de votre entraînement devrait être dans les zones aérobiques.",
+      question: t("tools.heart-rate-zones.seo_faq_q4_question"),
+      answer: t("tools.heart-rate-zones.seo_faq_q4_answer"),
     },
     {
-      question: "La formule 220-âge est-elle précise ?",
-      answer:
-        "C'est une estimation générale qui fonctionne pour la plupart des gens mais peut varier de ±10-15 bpm. Pour plus de précision, utilisez la formule de Karvonen avec votre FCR ou faites un test d'effort supervisé.",
+      question: t("tools.heart-rate-zones.seo_faq_q5_question"),
+      answer: t("tools.heart-rate-zones.seo_faq_q5_answer"),
     },
     {
-      question: "Comment savoir si je suis dans la bonne zone ?",
-      answer:
-        "Utilisez un cardiofréquencemètre pour une mesure précise. Sans appareil, utilisez le test de la parole : Zone légère = conversation facile, Zone modérée = phrases courtes, Zone intense = mots isolés seulement.",
+      question: t("tools.heart-rate-zones.seo_faq_q6_question"),
+      answer: t("tools.heart-rate-zones.seo_faq_q6_answer"),
     },
     {
-      question: "Les zones changent-elles avec l'amélioration de ma condition physique ?",
-      answer:
-        "Oui, avec l'entraînement, votre fréquence cardiaque au repos diminue et votre efficacité cardiaque s'améliore. Recalculez vos zones tous les 2-3 mois pour ajuster votre entraînement.",
+      question: t("tools.heart-rate-zones.seo_faq_q7_question"),
+      answer: t("tools.heart-rate-zones.seo_faq_q7_answer"),
     },
     {
-      question: "Quelle est la différence entre les formules Basic et Karvonen ?",
-      answer:
-        "La formule Basic utilise seulement l'âge (THR = FCM × %Intensité). La formule Karvonen est plus précise car elle prend en compte votre FCR : THR = [(FCM - FCR) × %Intensité] + FCR.",
-    },
-  ];
-
-  const trainingTips = [
-    {
-      title: "Échauffement progressif",
-      description: "Commencez toujours par 5-10 minutes en zone 1 (50-60%) pour préparer votre système cardiovasculaire.",
-      icon: "🔥",
-    },
-    {
-      title: "Règle du 80/20",
-      description: "80% de votre entraînement en zones 1-3 (aérobie), 20% en zones 4-5 (anaérobie) pour un développement optimal.",
-      icon: "📊",
-    },
-    {
-      title: "Récupération active",
-      description: "Après un effort intense, redescendez progressivement en zone 1-2 pendant 5-10 minutes.",
-      icon: "🔄",
-    },
-    {
-      title: "Hydratation constante",
-      description: "Buvez avant, pendant et après l'exercice. La déshydratation augmente la fréquence cardiaque.",
-      icon: "💧",
-    },
-    {
-      title: "Sommeil réparateur",
-      description: "7-9 heures de sommeil permettent une meilleure récupération et une FCR plus basse.",
-      icon: "😴",
-    },
-    {
-      title: "Progression graduelle",
-      description: "Augmentez l'intensité ou la durée de 10% maximum par semaine pour éviter le surentraînement.",
-      icon: "📈",
+      question: t("tools.heart-rate-zones.seo_faq_q8_question"),
+      answer: t("tools.heart-rate-zones.seo_faq_q8_answer"),
     },
   ];
 
@@ -178,28 +137,29 @@ export function SEOOptimizedContent() {
               <div className="text-4xl">🔥</div>
               <div className="flex-1">
                 <h3 className="text-2xl font-bold text-green-700 dark:text-green-300 mb-2">
-                  Zone 2 : Combustion des Graisses (60-70% FCM)
+                  {t("tools.heart-rate-zones.details.zone2_title")}
                 </h3>
-                <p className="text-gray-700 dark:text-gray-300 mb-3">
-                  Dans cette zone, votre corps utilise principalement les graisses comme source d'énergie. C'est l'intensité optimale pour
-                  développer l'endurance de base et améliorer l'efficacité métabolique.
-                </p>
+                <p className="text-gray-700 dark:text-gray-300 mb-3">{t("tools.heart-rate-zones.details.zone2_content")}</p>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <h4 className="font-semibold text-gray-800 dark:text-gray-200 mb-2">Bénéfices :</h4>
+                    <h4 className="font-semibold text-gray-800 dark:text-gray-200 mb-2">
+                      {t("tools.heart-rate-zones.details.benefits")} :
+                    </h4>
                     <ul className="list-disc list-inside text-sm text-gray-600 dark:text-gray-400 space-y-1">
-                      <li>Maximise l'utilisation des graisses</li>
-                      <li>Développe l'endurance aérobie</li>
-                      <li>Améliore l'efficacité cardiaque</li>
-                      <li>Renforce le système immunitaire</li>
+                      <li>{t("tools.heart-rate-zones.details.zone2_details_1")}</li>
+                      <li>{t("tools.heart-rate-zones.details.zone2_details_2")}</li>
+                      <li>{t("tools.heart-rate-zones.details.zone2_details_3")}</li>
+                      <li>{t("tools.heart-rate-zones.details.zone2_details_4")}</li>
                     </ul>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-gray-800 dark:text-gray-200 mb-2">Durée recommandée :</h4>
+                    <h4 className="font-semibold text-gray-800 dark:text-gray-200 mb-2">
+                      {t("tools.heart-rate-zones.details.zone2_duration")} :
+                    </h4>
                     <p className="text-sm text-gray-600 dark:text-gray-400">
-                      30-90 minutes pour l'endurance
+                      {t("tools.heart-rate-zones.details.zone2_duration_value")}
                       <br />
-                      45-60 minutes pour la perte de poids
+                      {t("tools.heart-rate-zones.details.zone2_duration_value_2")}
                     </p>
                   </div>
                 </div>
@@ -211,27 +171,30 @@ export function SEOOptimizedContent() {
             <div className="flex items-start gap-4">
               <div className="text-4xl">🏃</div>
               <div className="flex-1">
-                <h3 className="text-2xl font-bold text-yellow-700 dark:text-yellow-300 mb-2">Zone 3 : Aérobie (70-80% FCM)</h3>
-                <p className="text-gray-700 dark:text-gray-300 mb-3">
-                  La zone aérobie améliore significativement votre capacité cardiovasculaire. Vous respirez plus fort mais pouvez encore
-                  prononcer des phrases courtes. C'est la zone d'entraînement principale pour la plupart des athlètes.
-                </p>
+                <h3 className="text-2xl font-bold text-yellow-700 dark:text-yellow-300 mb-2">
+                  {t("tools.heart-rate-zones.details.zone3_title")}
+                </h3>
+                <p className="text-gray-700 dark:text-gray-300 mb-3">{t("tools.heart-rate-zones.details.zone3_content")}</p>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <h4 className="font-semibold text-gray-800 dark:text-gray-200 mb-2">Bénéfices :</h4>
+                    <h4 className="font-semibold text-gray-800 dark:text-gray-200 mb-2">
+                      {t("tools.heart-rate-zones.details.benefits")} :
+                    </h4>
                     <ul className="list-disc list-inside text-sm text-gray-600 dark:text-gray-400 space-y-1">
-                      <li>Augmente la capacité pulmonaire</li>
-                      <li>Améliore l'endurance cardiovasculaire</li>
-                      <li>Renforce le cœur</li>
-                      <li>Optimise l'utilisation de l'oxygène</li>
+                      <li>{t("tools.heart-rate-zones.details.zone3_details_1")}</li>
+                      <li>{t("tools.heart-rate-zones.details.zone3_details_2")}</li>
+                      <li>{t("tools.heart-rate-zones.details.zone3_details_3")}</li>
+                      <li>{t("tools.heart-rate-zones.details.zone3_details_4")}</li>
                     </ul>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-gray-800 dark:text-gray-200 mb-2">Durée recommandée :</h4>
+                    <h4 className="font-semibold text-gray-800 dark:text-gray-200 mb-2">
+                      {t("tools.heart-rate-zones.details.zone3_duration")} :
+                    </h4>
                     <p className="text-sm text-gray-600 dark:text-gray-400">
-                      20-60 minutes en continu
+                      {t("tools.heart-rate-zones.details.zone3_duration_value")}
                       <br />
-                      Intervalles de 5-15 minutes
+                      {t("tools.heart-rate-zones.details.zone3_duration_value_2")}
                     </p>
                   </div>
                 </div>
@@ -243,27 +206,30 @@ export function SEOOptimizedContent() {
             <div className="flex items-start gap-4">
               <div className="text-4xl">💪</div>
               <div className="flex-1">
-                <h3 className="text-2xl font-bold text-orange-700 dark:text-orange-300 mb-2">Zone 4 : Anaérobie (80-90% FCM)</h3>
-                <p className="text-gray-700 dark:text-gray-300 mb-3">
-                  Dans la zone anaérobie, votre corps produit de l'acide lactique plus rapidement qu'il ne peut l'éliminer. Cette intensité
-                  développe la puissance et la vitesse mais ne peut être maintenue longtemps.
-                </p>
+                <h3 className="text-2xl font-bold text-orange-700 dark:text-orange-300 mb-2">
+                  {t("tools.heart-rate-zones.details.zone4_title")}
+                </h3>
+                <p className="text-gray-700 dark:text-gray-300 mb-3">{t("tools.heart-rate-zones.details.zone4_content")}</p>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <h4 className="font-semibold text-gray-800 dark:text-gray-200 mb-2">Bénéfices :</h4>
+                    <h4 className="font-semibold text-gray-800 dark:text-gray-200 mb-2">
+                      {t("tools.heart-rate-zones.details.benefits")} :
+                    </h4>
                     <ul className="list-disc list-inside text-sm text-gray-600 dark:text-gray-400 space-y-1">
-                      <li>Augmente la puissance musculaire</li>
-                      <li>Améliore la tolérance au lactate</li>
-                      <li>Développe la vitesse</li>
-                      <li>Renforce le mental</li>
+                      <li>{t("tools.heart-rate-zones.details.zone4_details_1")}</li>
+                      <li>{t("tools.heart-rate-zones.details.zone4_details_2")}</li>
+                      <li>{t("tools.heart-rate-zones.details.zone4_details_3")}</li>
+                      <li>{t("tools.heart-rate-zones.details.zone4_details_4")}</li>
                     </ul>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-gray-800 dark:text-gray-200 mb-2">Durée recommandée :</h4>
+                    <h4 className="font-semibold text-gray-800 dark:text-gray-200 mb-2">
+                      {t("tools.heart-rate-zones.details.zone4_duration")} :
+                    </h4>
                     <p className="text-sm text-gray-600 dark:text-gray-400">
-                      Intervalles de 2-8 minutes
+                      {t("tools.heart-rate-zones.details.zone4_duration_value")}
                       <br />
-                      Récupération égale ou double
+                      {t("tools.heart-rate-zones.details.zone4_duration_value_2")}
                     </p>
                   </div>
                 </div>
@@ -275,27 +241,30 @@ export function SEOOptimizedContent() {
             <div className="flex items-start gap-4">
               <div className="text-4xl">🚀</div>
               <div className="flex-1">
-                <h3 className="text-2xl font-bold text-red-700 dark:text-red-300 mb-2">Zone 5 : VO2 Max (90-100% FCM)</h3>
-                <p className="text-gray-700 dark:text-gray-300 mb-3">
-                  La zone VO2 Max représente l'effort maximal. À cette intensité, vous ne pouvez prononcer que quelques mots et l'effort est
-                  insoutenable au-delà de quelques minutes. Réservée aux athlètes expérimentés.
-                </p>
+                <h3 className="text-2xl font-bold text-red-700 dark:text-red-300 mb-2">
+                  {t("tools.heart-rate-zones.details.zone5_title")}
+                </h3>
+                <p className="text-gray-700 dark:text-gray-300 mb-3">{t("tools.heart-rate-zones.details.zone5_content")}</p>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <h4 className="font-semibold text-gray-800 dark:text-gray-200 mb-2">Bénéfices :</h4>
+                    <h4 className="font-semibold text-gray-800 dark:text-gray-200 mb-2">
+                      {t("tools.heart-rate-zones.details.benefits")} :
+                    </h4>
                     <ul className="list-disc list-inside text-sm text-gray-600 dark:text-gray-400 space-y-1">
-                      <li>Maximise la capacité aérobie</li>
-                      <li>Améliore l'économie de course</li>
-                      <li>Développe la puissance maximale</li>
-                      <li>Repousse les limites mentales</li>
+                      <li>{t("tools.heart-rate-zones.details.zone5_details_1")}</li>
+                      <li>{t("tools.heart-rate-zones.details.zone5_details_2")}</li>
+                      <li>{t("tools.heart-rate-zones.details.zone5_details_3")}</li>
+                      <li>{t("tools.heart-rate-zones.details.zone5_details_4")}</li>
                     </ul>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-gray-800 dark:text-gray-200 mb-2">Durée recommandée :</h4>
+                    <h4 className="font-semibold text-gray-800 dark:text-gray-200 mb-2">
+                      {t("tools.heart-rate-zones.details.zone5_duration")} :
+                    </h4>
                     <p className="text-sm text-gray-600 dark:text-gray-400">
-                      Intervalles de 30s à 2 minutes
+                      {t("tools.heart-rate-zones.details.zone5_duration_value")}
                       <br />
-                      Maximum 1-2 fois par semaine
+                      {t("tools.heart-rate-zones.details.zone5_duration_value_2")}
                     </p>
                   </div>
                 </div>
@@ -307,14 +276,25 @@ export function SEOOptimizedContent() {
 
       {/* Conseils d'entraînement */}
       <section className="bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-3xl p-8">
-        <h2 className="text-3xl font-bold mb-8 text-gray-900 dark:text-white">Conseils d'Expert pour Optimiser votre Entraînement</h2>
+        <h2 className="text-3xl font-bold mb-8 text-gray-900 dark:text-white">{t("tools.heart-rate-zones.training_tips.title")}</h2>
 
         <div className="grid md:grid-cols-2 gap-6">
-          {trainingTips.map((tip) => (
-            <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow" key={tip.title}>
-              <div className="text-4xl mb-4">{tip.icon}</div>
-              <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">{tip.title}</h3>
-              <p className="text-gray-600 dark:text-gray-300">{tip.description}</p>
+          {[
+            { icon: "🔥", tip: "tip1" },
+            { icon: "📊", tip: "tip2" },
+            { icon: "🔄", tip: "tip3" },
+            { icon: "💧", tip: "tip4" },
+            { icon: "😴", tip: "tip5" },
+            { icon: "📈", tip: "tip6" },
+          ].map((item) => (
+            <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow" key={item.tip}>
+              <div className="text-4xl mb-4">{item.icon}</div>
+              <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">
+                {t(`tools.heart-rate-zones.training_tips.${item.tip}.title` as keyof typeof t)}
+              </h3>
+              <p className="text-gray-600 dark:text-gray-300">
+                {t(`tools.heart-rate-zones.training_tips.${item.tip}.description` as keyof typeof t)}
+              </p>
             </div>
           ))}
         </div>
@@ -322,10 +302,10 @@ export function SEOOptimizedContent() {
 
       {/* FAQ complète avec schema */}
       <section className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl p-3 sm:p-8" itemScope itemType="https://schema.org/FAQPage">
-        <h2 className="text-3xl font-bold mb-8 text-gray-900 dark:text-white">Questions Fréquentes sur les Zones de Fréquence Cardiaque</h2>
+        <h2 className="text-3xl font-bold mb-8 text-gray-900 dark:text-white">{t("tools.heart-rate-zones.seo_faq_title")}</h2>
 
         <div className="space-y-4">
-          {faqItems.map((item, index) => (
+          {faqItems(t).map((item, index) => (
             <div
               className="border border-gray-200 dark:border-gray-700 rounded-2xl overflow-hidden"
               itemProp="mainEntity"
@@ -362,15 +342,13 @@ export function SEOOptimizedContent() {
       {/* Liens internes et CTA */}
       <section className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-3xl p-8 text-white">
         <div className="text-center">
-          <h2 className="text-3xl font-bold mb-4">Prêt à Optimiser vos Entraînements ?</h2>
-          <p className="text-xl mb-8 opacity-90">
-            Utilisez notre calculateur pour découvrir vos zones personnalisées et transformez votre fitness
-          </p>
+          <h2 className="text-3xl font-bold mb-4">{t("tools.heart-rate-zones.intern_links_title")}</h2>
+          <p className="text-xl mb-8 opacity-90">{t("tools.heart-rate-zones.intern_links_subtitle")}</p>
           <button
             className="bg-white text-blue-600 hover:bg-gray-100 text-xl font-bold py-4 px-8 rounded-full transform transition-all hover:scale-105 active:scale-95 shadow-xl"
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           >
-            Calculer Mes Zones Maintenant
+            {t("tools.heart-rate-zones.intern_links_button")}
           </button>
 
           <div className="mt-12 grid md:grid-cols-3 gap-6 text-left">
@@ -378,22 +356,22 @@ export function SEOOptimizedContent() {
               className="block bg-white/10 backdrop-blur rounded-2xl p-6 hover:bg-white/20 transition-colors"
               href="/tools/bmi-calculator"
             >
-              <h3 className="font-bold text-lg mb-2">Calculateur d'IMC</h3>
-              <p className="opacity-90">Évaluez votre indice de masse corporelle</p>
+              <h3 className="font-bold text-lg mb-2">{t("tools.heart-rate-zones.intern_links_bmi_title")}</h3>
+              <p className="opacity-90">{t("tools.heart-rate-zones.intern_links_bmi_description")}</p>
             </Link>
             <Link
               className="block bg-white/10 backdrop-blur rounded-2xl p-6 hover:bg-white/20 transition-colors"
               href="/tools/calorie-calculator"
             >
-              <h3 className="font-bold text-lg mb-2">Calculateur de Calories</h3>
-              <p className="opacity-90">Déterminez vos besoins caloriques quotidiens</p>
+              <h3 className="font-bold text-lg mb-2">{t("tools.heart-rate-zones.intern_links_calorie_title")}</h3>
+              <p className="opacity-90">{t("tools.heart-rate-zones.intern_links_calorie_description")}</p>
             </Link>
             <Link
               className="block bg-white/10 backdrop-blur rounded-2xl p-6 hover:bg-white/20 transition-colors"
               href="/tools/macro-calculator"
             >
-              <h3 className="font-bold text-lg mb-2">Calculateur de Macros</h3>
-              <p className="opacity-90">Optimisez votre répartition nutritionnelle</p>
+              <h3 className="font-bold text-lg mb-2">{t("tools.heart-rate-zones.intern_links_macro_title")}</h3>
+              <p className="opacity-90">{t("tools.heart-rate-zones.intern_links_macro_description")}</p>
             </Link>
           </div>
         </div>
@@ -404,13 +382,8 @@ export function SEOOptimizedContent() {
         <div className="flex items-start gap-4">
           <span className="text-3xl">⚠️</span>
           <div>
-            <h3 className="font-bold text-lg mb-2 text-gray-900 dark:text-white">Avertissement Médical Important</h3>
-            <p className="text-gray-700 dark:text-gray-300 text-sm">
-              Ce calculateur fournit des estimations basées sur des formules générales. Les résultats peuvent varier selon votre condition
-              physique, vos médicaments et votre état de santé. Consultez toujours un professionnel de santé avant de commencer un nouveau
-              programme d'exercice, particulièrement si vous avez des conditions médicales préexistantes ou si vous ressentez des symptômes
-              inhabituels pendant l'exercice.
-            </p>
+            <h3 className="font-bold text-lg mb-2 text-gray-900 dark:text-white">{t("tools.heart-rate-zones.medical_warning_title")}</h3>
+            <p className="text-gray-700 dark:text-gray-300 text-sm">{t("tools.heart-rate-zones.medical_warning_content")}</p>
           </div>
         </div>
       </section>

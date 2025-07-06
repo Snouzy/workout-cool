@@ -3,16 +3,16 @@
 import { useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 
-import { useSyncFavoritedExercises } from "../hooks/use-sync-favorited-exercises";
+import { useSyncFavoriteExercises } from "../hooks/use-sync-favorite-exercises";
 
-export const FavoritedExercisesSynchronizer = () => {
-  const { syncFavoritedExercises } = useSyncFavoritedExercises();
+export const FavoriteExercisesSynchronizer = () => {
+  const { syncFavoriteExercises } = useSyncFavoriteExercises();
   const searchParams = useSearchParams();
   const isSigninParam = searchParams.get("signin") === "true";
 
   useEffect(() => {
     if (isSigninParam) {
-      syncFavoritedExercises();
+      syncFavoriteExercises();
     }
   }, [isSigninParam]);
 

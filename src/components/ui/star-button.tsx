@@ -3,48 +3,28 @@ import { cn } from "@/shared/lib/utils";
 import { Button } from "./button";
 
 interface StarButtonProps {
-  isFavorited: boolean;
+  isActive: boolean;
   isLoading: boolean;
-  onToggle: () => void;
+  onClick?: () => void;
   className?: string;
-  size?: "sm" | "md" | "lg";
 }
 
-export function StarButton({ isFavorited, isLoading, onToggle, className, size = "md" }: StarButtonProps) {
-  const sizeClasses = {
-    sm: "h-6 w-6",
-    md: "h-8 w-8",
-    lg: "h-10 w-10",
-  };
-
-  const iconSizes = {
-    sm: "h-3 w-3",
-    md: "h-4 w-4",
-    lg: "h-5 w-5",
-  };
-
+export function StarButton({ isActive, isLoading, onClick, className }: StarButtonProps) {
   return (
     <Button
       variant="ghost"
       size="icon"
-      onClick={onToggle}
       disabled={isLoading}
+      onClick={onClick}
       className={cn(
-        sizeClasses[size],
-        "hover:bg-yellow-50 dark:hover:bg-yellow-900/20 transition-colors duration-200",
-        isFavorited && "text-yellow-500 hover:text-yellow-600",
-        !isFavorited && "text-gray-400 hover:text-yellow-500",
+        "hover:bg-yellow-50 dark:hover:bg-yellow-900/20 transition-colors duration-200 h-4 w-4",
+        isActive && "text-yellow-500 hover:text-yellow-600",
+        !isActive && "text-gray-400 hover:text-yellow-500",
         className,
       )}
     >
-      <Star
-        className={cn(
-          iconSizes[size],
-          "transition-all duration-200",
-          isFavorited ? "fill-current" : "fill-none",
-          isLoading && "animate-pulse",
-        )}
-      />
+      <Star className={cn("transition-all duration-200 h-4 w-4", isActive ? "fill-current" : "fill-none", isLoading && "animate-pulse")} />
     </Button>
   );
 }
+

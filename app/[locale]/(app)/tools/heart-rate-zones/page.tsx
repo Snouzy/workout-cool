@@ -130,7 +130,7 @@ export default async function HeartRateZonesPage({ params }: { params: Promise<{
         type="application/ld+json"
       />
       <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white dark:from-gray-900 dark:to-gray-800">
-        <div className="container mx-auto px-4 py-6 max-w-4xl relative z-10">
+        <div className="container mx-auto px-2 sm:px-4 py-6 max-w-4xl relative z-10">
           {/* SEO-optimized header */}
           <div className="text-center mb-8">
             <div className="text-6xl mb-4">❤️</div>

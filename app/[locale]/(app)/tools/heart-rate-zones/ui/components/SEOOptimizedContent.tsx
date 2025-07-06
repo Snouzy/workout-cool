@@ -4,10 +4,13 @@ import React, { useState } from "react";
 import Link from "next/link";
 
 import { TFunction, useI18n } from "locales/client";
+import { useScrollToTop } from "@/hooks/useScrollToTop";
 
 export function SEOOptimizedContent() {
   const [activeTab, setActiveTab] = useState(0);
   const t = useI18n();
+  const scrollToTop = useScrollToTop();
+
   // Age-based heart rate chart data
   const ageChartData = [
     { age: "20-29", maxHR: "190-200", target50: "95-100", target85: "162-170" },
@@ -275,7 +278,7 @@ export function SEOOptimizedContent() {
       </section>
 
       {/* Conseils d'entraînement */}
-      <section className="bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-3xl p-8">
+      <section className="bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-3xl p-3 sm:p-8">
         <h2 className="text-3xl font-bold mb-8 text-gray-900 dark:text-white">{t("tools.heart-rate-zones.training_tips.title")}</h2>
 
         <div className="grid md:grid-cols-2 gap-6">
@@ -346,7 +349,7 @@ export function SEOOptimizedContent() {
           <p className="text-xl mb-8 opacity-90">{t("tools.heart-rate-zones.intern_links_subtitle")}</p>
           <button
             className="bg-white text-blue-600 hover:bg-gray-100 text-xl font-bold py-4 px-8 rounded-full transform transition-all hover:scale-105 active:scale-95 shadow-xl"
-            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            onClick={scrollToTop}
           >
             {t("tools.heart-rate-zones.intern_links_button")}
           </button>

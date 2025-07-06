@@ -85,7 +85,7 @@ export function HeartRateResults({ results }: HeartRateResultsProps) {
       </div>
 
       {/* Simple tips */}
-      <div className="bg-blue-50 dark:bg-blue-900/20 rounded-3xl p-8">
+      <div className="bg-blue-50 dark:bg-blue-900/20 rounded-3xl p-3 sm:p-8">
         <div className="text-center mb-6">
           <div className="text-5xl mb-2">💡</div>
           <h3 className="text-2xl font-bold text-gray-900 dark:text-white">{t("tools.heart-rate-zones.tips.title")}</h3>

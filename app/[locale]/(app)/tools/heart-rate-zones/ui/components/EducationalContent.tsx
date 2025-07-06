@@ -3,9 +3,11 @@
 import React from "react";
 
 import { TFunction, useI18n } from "locales/client";
+import { useScrollToTop } from "@/hooks/useScrollToTop";
 
 export function EducationalContent() {
   const t = useI18n();
+  const scrollToTop = useScrollToTop();
 
   const zones = (t: TFunction) => [
     {
@@ -128,7 +130,7 @@ export function EducationalContent() {
       </div>
 
       {/* Simple Tips Grid */}
-      <div className="bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-3xl p-8">
+      <div className="bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-3xl p-3 sm:p-8">
         <div className="text-center mb-8">
           <div className="text-5xl mb-4">💡</div>
           <h2 className="text-3xl font-bold text-gray-900 dark:text-white">{t("tools.heart-rate-zones.training_tips_2.title")}</h2>
@@ -225,7 +227,7 @@ export function EducationalContent() {
       <div className="text-center">
         <button
           className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white text-xl font-bold py-6 px-12 rounded-full transform transition-all hover:scale-105 active:scale-95 shadow-xl"
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          onClick={scrollToTop}
         >
           {t("tools.heart-rate-zones.weekly_plan.cta")}
         </button>

@@ -908,6 +908,7 @@ export default {
     friday: "周五",
     saturday: "周六",
     sunday: "周日",
+    added_to_favorites: "已添加到收藏夹",
   },
   tools: {
     try_now: "立即试用",

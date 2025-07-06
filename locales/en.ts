@@ -1775,5 +1775,6 @@ export default {
     friday: "Friday",
     saturday: "Saturday",
     sunday: "Sunday",
+    added_to_favorites: "Added to favorites",
   },
 } as const;

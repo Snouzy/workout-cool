@@ -1802,5 +1802,6 @@ export default {
     friday: "Vendredi",
     saturday: "Samedi",
     sunday: "Dimanche",
+    added_to_favorites: "Ajouté aux favoris",
   },
 } as const;

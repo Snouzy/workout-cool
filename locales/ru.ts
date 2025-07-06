@@ -1777,5 +1777,6 @@ export default {
     friday: "Пятница",
     saturday: "Суббота",
     sunday: "Воскресенье",
+    added_to_favorites: "Добавлено в избранное",
   },
 } as const;

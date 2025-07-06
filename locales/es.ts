@@ -913,6 +913,7 @@ export default {
     friday: "Viernes",
     saturday: "Sábado",
     sunday: "Domingo",
+    added_to_favorites: "Agregado a favoritos",
   },
   tools: {
     try_now: "Probar ahora",

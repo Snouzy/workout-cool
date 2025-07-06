@@ -95,7 +95,7 @@ export function SEOOptimizedContent() {
   return (
     <div className="space-y-12 mt-16">
       {/* Introduction détaillée */}
-      <section className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl p-8">
+      <section className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl p-3 sm:p-8">
         <h2 className="text-3xl font-bold mb-6 text-gray-900 dark:text-white">
           Guide Complet des Zones de Fréquence Cardiaque pour l'Entraînement
         </h2>
@@ -144,7 +144,7 @@ export function SEOOptimizedContent() {
       </section>
 
       {/* Explication détaillée des zones */}
-      <section className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl p-8">
+      <section className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl p-3 sm:p-8">
         <h2 className="text-3xl font-bold mb-8 text-gray-900 dark:text-white">Les 5 Zones d'Entraînement Expliquées en Détail</h2>
 
         <div className="space-y-6">
@@ -316,7 +316,7 @@ export function SEOOptimizedContent() {
       <section className="bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-3xl p-8">
         <h2 className="text-3xl font-bold mb-8 text-gray-900 dark:text-white">Conseils d'Expert pour Optimiser votre Entraînement</h2>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-2 gap-6">
           {trainingTips.map((tip) => (
             <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow" key={tip.title}>
               <div className="text-4xl mb-4">{tip.icon}</div>
@@ -328,7 +328,7 @@ export function SEOOptimizedContent() {
       </section>
 
       {/* FAQ complète avec schema */}
-      <section className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl p-8" itemScope itemType="https://schema.org/FAQPage">
+      <section className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl p-3 sm:p-8" itemScope itemType="https://schema.org/FAQPage">
         <h2 className="text-3xl font-bold mb-8 text-gray-900 dark:text-white">Questions Fréquentes sur les Zones de Fréquence Cardiaque</h2>
 
         <div className="space-y-4">

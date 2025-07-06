@@ -116,7 +116,7 @@ export function HeartRateZonesCalculatorClient({ defaultAge = 30, defaultResults
   return (
     <div className="max-w-4xl mx-auto space-y-8">
       {/* Age input section - always visible */}
-      <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl p-8">
+      <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl p-3 sm:p-8">
         <div className="text-center mb-6">
           <div className="text-6xl mb-4 animate-heartbeat">🎂</div>
           <h2 className="text-2xl font-bold mb-2 text-gray-900 dark:text-white">{t("tools.heart-rate-zones.age")}</h2>
@@ -148,7 +148,7 @@ export function HeartRateZonesCalculatorClient({ defaultAge = 30, defaultResults
       {results && (
         <div className="space-y-6 animate-fade-in-up">
           {/* Max heart rate display */}
-          <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl p-8 text-center">
+          <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl p-3 sm:p-8 text-center">
             <div className="text-5xl mb-4 animate-heartbeat">💓</div>
             <h3 className="text-xl font-semibold text-gray-600 dark:text-gray-300 mb-2">
               {t("tools.heart-rate-zones.results.max_heart_rate")}
@@ -158,7 +158,7 @@ export function HeartRateZonesCalculatorClient({ defaultAge = 30, defaultResults
           </div>
 
           {/* Heart rate zones */}
-          <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl p-8">
+          <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl p-3 sm:p-8">
             <h3 className="text-2xl font-bold text-center mb-8 text-gray-900 dark:text-white">
               {t("tools.heart-rate-zones.results.target_zones")} 🎯
             </h3>

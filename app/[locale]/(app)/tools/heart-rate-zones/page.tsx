@@ -1,15 +1,14 @@
 import React from "react";
 import { Metadata } from "next";
-import { HeartRateZonesCalculatorClient } from "app/[locale]/(app)/tools/heart-rate-zones/shared/HeartRateZonesCalculatorClient";
 
 import { Locale } from "locales/types";
 import { getI18n } from "locales/server";
-import { calculateHeartRateZones } from "app/[locale]/(app)/tools/heart-rate-zones/shared/server-calculations";
-import { SimpleEducationalContent } from "app/[locale]/(app)/tools/heart-rate-zones/shared/components/SimpleEducationalContent";
-import { SEOOptimizedContent } from "app/[locale]/(app)/tools/heart-rate-zones/shared/components/SEOOptimizedContent";
-import { InternationalSEOContent } from "app/[locale]/(app)/tools/heart-rate-zones/shared/components/InternationalSEOContent";
+import { HeartRateZonesCalculatorClient } from "app/[locale]/(app)/tools/heart-rate-zones/ui/HeartRateZonesCalculatorClient";
+import { SEOOptimizedContent } from "app/[locale]/(app)/tools/heart-rate-zones/ui/components/SEOOptimizedContent";
+import { EducationalContent } from "app/[locale]/(app)/tools/heart-rate-zones/ui/components/EducationalContent";
 import { HEART_RATE_ZONES_CONTENT } from "app/[locale]/(app)/tools/heart-rate-zones/seo/page-content";
 import { HEART_RATE_ZONES_SEO } from "app/[locale]/(app)/tools/heart-rate-zones/seo/config";
+import { calculateHeartRateZones } from "app/[locale]/(app)/tools/heart-rate-zones/lib/utils";
 import { getServerUrl } from "@/shared/lib/server-url";
 import { generateSEOMetadata, SEOScripts } from "@/components/seo/SEOHead";
 
@@ -144,8 +143,7 @@ export default async function HeartRateZonesPage({ params }: { params: Promise<{
 
           {/* Educational Content */}
           <div className="mt-16">
-            <InternationalSEOContent />
-            <SimpleEducationalContent />
+            <EducationalContent />
             <SEOOptimizedContent />
           </div>
         </div>

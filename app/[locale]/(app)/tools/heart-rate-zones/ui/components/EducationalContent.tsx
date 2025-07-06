@@ -4,7 +4,7 @@ import React from "react";
 
 import { useI18n } from "locales/client";
 
-export function SimpleEducationalContent() {
+export function EducationalContent() {
   const t = useI18n();
 
   const zones = [
@@ -95,7 +95,7 @@ export function SimpleEducationalContent() {
   return (
     <div className="space-y-12 mt-16">
       {/* Visual Zone Guide */}
-      <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl p-8">
+      <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl p-3 sm:p-8">
         <div className="text-center mb-8">
           <div className="text-5xl mb-4">🎨</div>
           <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">{t("tools.heart-rate-zones.educational.title")}</h2>

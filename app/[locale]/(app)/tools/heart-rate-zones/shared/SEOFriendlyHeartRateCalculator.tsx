@@ -34,17 +34,11 @@ interface SEOFriendlyHeartRateCalculatorProps {
   defaultResults?: HeartRateResults;
 }
 
-export function SEOFriendlyHeartRateCalculator({ 
-  defaultAge = 30,
-  defaultResults 
-}: SEOFriendlyHeartRateCalculatorProps) {
+export function SEOFriendlyHeartRateCalculator({ defaultAge = 30, defaultResults }: SEOFriendlyHeartRateCalculatorProps) {
   const t = useI18n();
   const [results, setResults] = useState<HeartRateResults | null>(defaultResults || null);
 
-  const {
-    watch,
-    setValue,
-  } = useForm<SimpleHeartRateFormData>({
+  const { watch, setValue } = useForm<SimpleHeartRateFormData>({
     resolver: zodResolver(simpleHeartRateSchema),
     defaultValues: {
       age: defaultAge,
@@ -91,7 +85,7 @@ export function SEOFriendlyHeartRateCalculator({
         minHR: Math.round(maxHeartRate * 0.8),
         maxHR: Math.round(maxHeartRate * 0.9),
         emoji: "💪",
-        color: "text-orange-600",
+        color: "text-orange-500",
         bgColor: "bg-orange-100",
         description: t("tools.heart-rate-zones.zones.anaerobic.description"),
       },
@@ -125,12 +119,8 @@ export function SEOFriendlyHeartRateCalculator({
       <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl p-8">
         <div className="text-center mb-6">
           <div className="text-6xl mb-4 animate-heartbeat">🎂</div>
-          <h2 className="text-2xl font-bold mb-2 text-gray-900 dark:text-white">
-            {t("tools.heart-rate-zones.age")}
-          </h2>
-          <p className="text-gray-600 dark:text-gray-300">
-            {t("tools.heart-rate-zones.age_placeholder")}
-          </p>
+          <h2 className="text-2xl font-bold mb-2 text-gray-900 dark:text-white">{t("tools.heart-rate-zones.age")}</h2>
+          <p className="text-gray-600 dark:text-gray-300">{t("tools.heart-rate-zones.age_placeholder")}</p>
         </div>
 
         {/* Age slider */}
@@ -163,9 +153,7 @@ export function SEOFriendlyHeartRateCalculator({
             <h3 className="text-xl font-semibold text-gray-600 dark:text-gray-300 mb-2">
               {t("tools.heart-rate-zones.results.max_heart_rate")}
             </h3>
-            <div className="text-6xl font-bold text-red-500">
-              {results.maxHeartRate}
-            </div>
+            <div className="text-6xl font-bold text-red-500">{results.maxHeartRate}</div>
             <div className="text-2xl text-gray-500">bpm</div>
           </div>
 
@@ -174,6 +162,30 @@ export function SEOFriendlyHeartRateCalculator({
             <h3 className="text-2xl font-bold text-center mb-8 text-gray-900 dark:text-white">
               {t("tools.heart-rate-zones.results.target_zones")} 🎯
             </h3>
+
+            {/* Global zones visualization */}
+            <div className="mb-8 p-4 bg-gray-50 dark:bg-gray-700 rounded-2xl">
+              <div className="mb-2 text-sm font-semibold text-gray-700 dark:text-gray-300">Vue d'ensemble des zones</div>
+              <div className="relative h-8 bg-white dark:bg-gray-600 rounded-full overflow-hidden">
+                {results.zones.map((zone) => (
+                  <div
+                    className={`absolute h-full ${zone.color.replace("text-", "bg-")} opacity-80`}
+                    key={zone.name}
+                    style={{
+                      left: `${(zone.minHR / results.maxHeartRate) * 100}%`,
+                      width: `${((zone.maxHR - zone.minHR) / results.maxHeartRate) * 100}%`,
+                    }}
+                    title={`${zone.name}: ${zone.minHR}-${zone.maxHR} bpm`}
+                  />
+                ))}
+              </div>
+              <div className="flex justify-between text-xs text-gray-500 mt-1">
+                <span>0</span>
+                <span>{Math.round(results.maxHeartRate * 0.5)}</span>
+                <span>{Math.round(results.maxHeartRate * 0.75)}</span>
+                <span>{results.maxHeartRate} bpm</span>
+              </div>
+            </div>
 
             <div className="space-y-4">
               {results.zones.map((zone) => (
@@ -185,12 +197,8 @@ export function SEOFriendlyHeartRateCalculator({
                     <div className="flex items-center gap-4">
                       <div className="text-5xl">{zone.emoji}</div>
                       <div>
-                        <h4 className={`text-xl font-bold ${zone.color}`}>
-                          {zone.name}
-                        </h4>
-                        <p className="text-gray-600 text-sm mt-1">
-                          {zone.description}
-                        </p>
+                        <h4 className={`text-xl font-bold ${zone.color}`}>{zone.name}</h4>
+                        <p className="text-gray-600 text-sm mt-1">{zone.description}</p>
                       </div>
                     </div>
                     <div className="text-right">
@@ -203,13 +211,16 @@ export function SEOFriendlyHeartRateCalculator({
 
                   {/* Visual progress bar */}
                   <div className="mt-4">
-                    <div className="bg-white/50 rounded-full h-3 overflow-hidden">
+                    <div className="bg-gray-200 dark:bg-gray-600 rounded-full h-3 overflow-hidden">
                       <div
                         className={`h-full ${zone.color.replace("text-", "bg-")} transition-all`}
                         style={{
-                          width: `${((zone.maxHR - zone.minHR) / results.maxHeartRate) * 100}%`,
+                          width: `${(zone.maxHR / results.maxHeartRate) * 100}%`,
                         }}
                       />
+                    </div>
+                    <div className="text-xs text-gray-500 mt-1 text-right">
+                      {Math.round((zone.maxHR / results.maxHeartRate) * 100)}% de FCM
                     </div>
                   </div>
                 </div>
@@ -221,35 +232,25 @@ export function SEOFriendlyHeartRateCalculator({
           <div className="bg-blue-50 dark:bg-blue-900/20 rounded-3xl p-8">
             <div className="text-center mb-6">
               <div className="text-5xl mb-2">💡</div>
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
-                {t("tools.heart-rate-zones.tips.title")}
-              </h3>
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white">{t("tools.heart-rate-zones.tips.title")}</h3>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="bg-white dark:bg-gray-800 rounded-2xl p-4 flex items-start gap-3">
                 <span className="text-2xl">✅</span>
-                <p className="text-gray-700 dark:text-gray-300">
-                  {t("tools.heart-rate-zones.tips.tip1")}
-                </p>
+                <p className="text-gray-700 dark:text-gray-300">{t("tools.heart-rate-zones.tips.tip1")}</p>
               </div>
               <div className="bg-white dark:bg-gray-800 rounded-2xl p-4 flex items-start gap-3">
                 <span className="text-2xl">⏱️</span>
-                <p className="text-gray-700 dark:text-gray-300">
-                  {t("tools.heart-rate-zones.tips.tip2")}
-                </p>
+                <p className="text-gray-700 dark:text-gray-300">{t("tools.heart-rate-zones.tips.tip2")}</p>
               </div>
               <div className="bg-white dark:bg-gray-800 rounded-2xl p-4 flex items-start gap-3">
                 <span className="text-2xl">📈</span>
-                <p className="text-gray-700 dark:text-gray-300">
-                  {t("tools.heart-rate-zones.tips.tip3")}
-                </p>
+                <p className="text-gray-700 dark:text-gray-300">{t("tools.heart-rate-zones.tips.tip3")}</p>
               </div>
               <div className="bg-white dark:bg-gray-800 rounded-2xl p-4 flex items-start gap-3">
                 <span className="text-2xl">🏥</span>
-                <p className="text-gray-700 dark:text-gray-300">
-                  {t("tools.heart-rate-zones.tips.tip4")}
-                </p>
+                <p className="text-gray-700 dark:text-gray-300">{t("tools.heart-rate-zones.tips.tip4")}</p>
               </div>
             </div>
           </div>

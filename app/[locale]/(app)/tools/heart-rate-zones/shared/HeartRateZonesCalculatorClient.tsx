@@ -2,278 +2,260 @@
 
 import { z } from "zod";
 import { useForm } from "react-hook-form";
-import React, { useState } from "react";
-import { Info } from "lucide-react";
+import React, { useState, useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useI18n } from "locales/client";
-import { HeartRateZonesDisplay } from "app/[locale]/(app)/tools/heart-rate-zones/shared/components/HeartRateZonesDisplay";
+import "./styles.css";
 
-const heartRateSchema = z.object({
-  method: z.enum(["basic", "karvonen_age", "karvonen_custom"]),
+const simpleHeartRateSchema = z.object({
   age: z.coerce.number().min(1).max(120),
-  restingHeartRate: z.coerce.number().min(30).max(120).optional(),
-  maxHeartRate: z.coerce.number().min(100).max(220).optional(),
 });
 
-type HeartRateFormData = z.infer<typeof heartRateSchema>;
+type SimpleHeartRateFormData = z.infer<typeof simpleHeartRateSchema>;
 
 interface HeartRateZone {
   name: string;
-  intensity: string;
   minHR: number;
   maxHR: number;
-  benefits: string;
-  duration: string;
-  description: string;
+  emoji: string;
   color: string;
+  bgColor: string;
+  description: string;
 }
 
 interface HeartRateResults {
   maxHeartRate: number;
-  heartRateReserve?: number;
   zones: HeartRateZone[];
-  formula: string;
 }
 
-export function HeartRateZonesCalculatorClient() {
-  const t = useI18n();
-  const [results, setResults] = useState<HeartRateResults | null>(null);
-  const [isCalculating, setIsCalculating] = useState(false);
+interface SEOFriendlyHeartRateCalculatorProps {
+  defaultAge?: number;
+  defaultResults?: HeartRateResults;
+}
 
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<HeartRateFormData>({
-    resolver: zodResolver(heartRateSchema),
+export function HeartRateZonesCalculatorClient({ defaultAge = 30, defaultResults }: SEOFriendlyHeartRateCalculatorProps) {
+  const t = useI18n();
+  const [results, setResults] = useState<HeartRateResults | null>(defaultResults || null);
+
+  const { watch, setValue } = useForm<SimpleHeartRateFormData>({
+    resolver: zodResolver(simpleHeartRateSchema),
     defaultValues: {
-      method: "basic",
-      age: 30,
+      age: defaultAge,
     },
   });
 
-  const method = watch("method");
+  const age = watch("age");
 
-  const calculateZones = (data: HeartRateFormData) => {
-    setIsCalculating(true);
-
+  const calculateZones = (currentAge: number) => {
     // Calculate MHR
-    let maxHeartRate: number;
-    if (data.method === "karvonen_custom" && data.maxHeartRate) {
-      maxHeartRate = data.maxHeartRate;
-    } else {
-      maxHeartRate = 220 - data.age;
-    }
+    const maxHeartRate = 220 - currentAge;
 
-    // Calculate zones based on method
-    const zones: HeartRateZone[] = [];
-    const zoneDefinitions = [
+    // Simple zones with emojis and colors
+    const zones: HeartRateZone[] = [
       {
-        key: "warm_up",
-        minIntensity: 0.5,
-        maxIntensity: 0.6,
-        color: "badge-neutral",
+        name: t("tools.heart-rate-zones.zones.warm_up.name"),
+        minHR: Math.round(maxHeartRate * 0.5),
+        maxHR: Math.round(maxHeartRate * 0.6),
+        emoji: "🚶",
+        color: "text-blue-600",
+        bgColor: "bg-blue-100",
+        description: t("tools.heart-rate-zones.zones.warm_up.description"),
       },
       {
-        key: "fat_burn",
-        minIntensity: 0.6,
-        maxIntensity: 0.7,
-        color: "badge-info",
+        name: t("tools.heart-rate-zones.zones.fat_burn.name"),
+        minHR: Math.round(maxHeartRate * 0.6),
+        maxHR: Math.round(maxHeartRate * 0.7),
+        emoji: "🔥",
+        color: "text-green-600",
+        bgColor: "bg-green-100",
+        description: t("tools.heart-rate-zones.zones.fat_burn.description"),
       },
       {
-        key: "aerobic",
-        minIntensity: 0.7,
-        maxIntensity: 0.8,
-        color: "badge-success",
+        name: t("tools.heart-rate-zones.zones.aerobic.name"),
+        minHR: Math.round(maxHeartRate * 0.7),
+        maxHR: Math.round(maxHeartRate * 0.8),
+        emoji: "🏃",
+        color: "text-yellow-600",
+        bgColor: "bg-yellow-100",
+        description: t("tools.heart-rate-zones.zones.aerobic.description"),
       },
       {
-        key: "anaerobic",
-        minIntensity: 0.8,
-        maxIntensity: 0.9,
-        color: "badge-warning",
+        name: t("tools.heart-rate-zones.zones.anaerobic.name"),
+        minHR: Math.round(maxHeartRate * 0.8),
+        maxHR: Math.round(maxHeartRate * 0.9),
+        emoji: "💪",
+        color: "text-orange-500",
+        bgColor: "bg-orange-100",
+        description: t("tools.heart-rate-zones.zones.anaerobic.description"),
       },
       {
-        key: "vo2_max",
-        minIntensity: 0.9,
-        maxIntensity: 1.0,
-        color: "badge-error",
+        name: t("tools.heart-rate-zones.zones.vo2_max.name"),
+        minHR: Math.round(maxHeartRate * 0.9),
+        maxHR: maxHeartRate,
+        emoji: "🚀",
+        color: "text-red-600",
+        bgColor: "bg-red-100",
+        description: t("tools.heart-rate-zones.zones.vo2_max.description"),
       },
     ];
 
-    let heartRateReserve: number | undefined;
-    let formula: string;
-
-    if (data.method === "basic") {
-      // Basic formula: THR = MHR × %Intensity
-      formula = t("tools.heart-rate-zones.formulas.basic_explanation");
-
-      zoneDefinitions.forEach((zone) => {
-        const minHR = Math.round(maxHeartRate * zone.minIntensity);
-        const maxHR = Math.round(maxHeartRate * zone.maxIntensity);
-
-        zones.push({
-          name: t(`tools.heart-rate-zones.zones.${zone.key}.name` as keyof typeof t),
-          intensity: t(`tools.heart-rate-zones.zones.${zone.key}.intensity` as keyof typeof t),
-          minHR,
-          maxHR,
-          benefits: t(`tools.heart-rate-zones.zones.${zone.key}.benefits` as keyof typeof t),
-          duration: t(`tools.heart-rate-zones.zones.${zone.key}.duration` as keyof typeof t),
-          description: t(`tools.heart-rate-zones.zones.${zone.key}.description` as keyof typeof t),
-          color: zone.color,
-        });
-      });
-    } else {
-      // Karvonen formula: THR = [(MHR - RHR) × %Intensity] + RHR
-      formula = t("tools.heart-rate-zones.formulas.karvonen_explanation");
-      const restingHeartRate = data.restingHeartRate || 70; // Default RHR if not provided
-      heartRateReserve = maxHeartRate - restingHeartRate;
-
-      zoneDefinitions.forEach((zone) => {
-        const minHR = Math.round(heartRateReserve! * zone.minIntensity + restingHeartRate);
-        const maxHR = Math.round(heartRateReserve! * zone.maxIntensity + restingHeartRate);
-
-        zones.push({
-          name: t(`tools.heart-rate-zones.zones.${zone.key}.name` as keyof typeof t),
-          intensity: t(`tools.heart-rate-zones.zones.${zone.key}.intensity` as keyof typeof t),
-          minHR,
-          maxHR,
-          benefits: t(`tools.heart-rate-zones.zones.${zone.key}.benefits` as keyof typeof t),
-          duration: t(`tools.heart-rate-zones.zones.${zone.key}.duration` as keyof typeof t),
-          description: t(`tools.heart-rate-zones.zones.${zone.key}.description` as keyof typeof t),
-          color: zone.color,
-        });
-      });
-    }
-
     setResults({
       maxHeartRate,
-      heartRateReserve,
       zones,
-      formula,
     });
-
-    setTimeout(() => {
-      setIsCalculating(false);
-    }, 500);
   };
 
+  // Calculate on age change
+  useEffect(() => {
+    if (age && age >= 1 && age <= 120) {
+      calculateZones(age);
+    }
+  }, [age]);
+
   return (
-    <div className="space-y-8">
-      <div className="card bg-base-100 shadow-xl">
-        <div className="card-body">
-          <h2 className="card-title text-2xl">{t("tools.heart-rate-zones.title")}</h2>
-          <p className="text-base-content/70">{t("tools.heart-rate-zones.description")}</p>
+    <div className="max-w-4xl mx-auto space-y-8">
+      {/* Age input section - always visible */}
+      <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl p-8">
+        <div className="text-center mb-6">
+          <div className="text-6xl mb-4 animate-heartbeat">🎂</div>
+          <h2 className="text-2xl font-bold mb-2 text-gray-900 dark:text-white">{t("tools.heart-rate-zones.age")}</h2>
+          <p className="text-gray-600 dark:text-gray-300">{t("tools.heart-rate-zones.age_placeholder")}</p>
+        </div>
 
-          <form className="space-y-6 mt-6" onSubmit={handleSubmit(calculateZones)}>
-            {/* Method Selection */}
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text font-medium flex items-center gap-2">
-                  {t("tools.heart-rate-zones.method")}
-                  <div className="tooltip tooltip-right" data-tip={t("tools.heart-rate-zones.method_info")}>
-                    <Info className="h-4 w-4 text-base-content/60" />
-                  </div>
-                </span>
-              </label>
-              <select className="select select-bordered w-full" {...register("method")}>
-                <option value="basic">{t("tools.heart-rate-zones.methods.basic")}</option>
-                <option value="karvonen_age">{t("tools.heart-rate-zones.methods.karvonen_age")}</option>
-                <option value="karvonen_custom">{t("tools.heart-rate-zones.methods.karvonen_custom")}</option>
-              </select>
-              <label className="label">
-                <span className="label-text-alt">
-                  {method === "basic" && t("tools.heart-rate-zones.methods.basic_desc")}
-                  {method === "karvonen_age" && t("tools.heart-rate-zones.methods.karvonen_age_desc")}
-                  {method === "karvonen_custom" && t("tools.heart-rate-zones.methods.karvonen_custom_desc")}
-                </span>
-              </label>
-              {errors.method && (
-                <label className="label">
-                  <span className="label-text-alt text-error">{errors.method.message}</span>
-                </label>
-              )}
-            </div>
-
-            {/* Age Input */}
-            {method !== "karvonen_custom" && (
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text font-medium">{t("tools.heart-rate-zones.age")}</span>
-                </label>
-                <input
-                  className={`input input-bordered w-full ${errors.age ? "input-error" : ""}`}
-                  placeholder={t("tools.heart-rate-zones.age_placeholder")}
-                  type="number"
-                  {...register("age")}
-                />
-                {errors.age && (
-                  <label className="label">
-                    <span className="label-text-alt text-error">{errors.age.message}</span>
-                  </label>
-                )}
-              </div>
-            )}
-
-            {/* Resting Heart Rate Input */}
-            {(method === "karvonen_age" || method === "karvonen_custom") && (
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text font-medium flex items-center gap-2">
-                    {t("tools.heart-rate-zones.resting_heart_rate")}
-                    <div className="tooltip tooltip-right" data-tip={t("tools.heart-rate-zones.resting_heart_rate_info")}>
-                      <Info className="h-4 w-4 text-base-content/60" />
-                    </div>
-                  </span>
-                </label>
-                <input
-                  className={`input input-bordered w-full ${errors.restingHeartRate ? "input-error" : ""}`}
-                  placeholder={t("tools.heart-rate-zones.resting_heart_rate_placeholder")}
-                  type="number"
-                  {...register("restingHeartRate")}
-                />
-                {errors.restingHeartRate && (
-                  <label className="label">
-                    <span className="label-text-alt text-error">{errors.restingHeartRate.message}</span>
-                  </label>
-                )}
-              </div>
-            )}
-
-            {/* Max Heart Rate Input */}
-            {method === "karvonen_custom" && (
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text font-medium flex items-center gap-2">
-                    {t("tools.heart-rate-zones.max_heart_rate")}
-                    <div className="tooltip tooltip-right" data-tip={t("tools.heart-rate-zones.max_heart_rate_info")}>
-                      <Info className="h-4 w-4 text-base-content/60" />
-                    </div>
-                  </span>
-                </label>
-                <input
-                  className={`input input-bordered w-full ${errors.maxHeartRate ? "input-error" : ""}`}
-                  placeholder={t("tools.heart-rate-zones.max_heart_rate_placeholder")}
-                  type="number"
-                  {...register("maxHeartRate")}
-                />
-                {errors.maxHeartRate && (
-                  <label className="label">
-                    <span className="label-text-alt text-error">{errors.maxHeartRate.message}</span>
-                  </label>
-                )}
-              </div>
-            )}
-
-            <button className={`btn btn-primary w-full ${isCalculating ? "loading" : ""}`} disabled={isCalculating} type="submit">
-              {isCalculating ? t("tools.heart-rate-zones.calculating") : t("tools.heart-rate-zones.calculate")}
-            </button>
-          </form>
+        {/* Age slider */}
+        <div className="mb-4">
+          <div className="text-6xl font-bold text-blue-600 mb-4 text-center">{age}</div>
+          <input
+            className="w-full h-4 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
+            max="120"
+            min="1"
+            onChange={(e) => setValue("age", parseInt(e.target.value))}
+            style={{
+              background: `linear-gradient(to right, #3B82F6 0%, #3B82F6 ${(age / 120) * 100}%, #E5E7EB ${(age / 120) * 100}%, #E5E7EB 100%)`,
+            }}
+            type="range"
+            value={age}
+          />
+          <div className="flex justify-between text-sm text-gray-500 mt-2">
+            <span>1</span>
+            <span>120</span>
+          </div>
         </div>
       </div>
 
-      {results && <HeartRateZonesDisplay results={results} />}
+      {/* Results section - always visible */}
+      {results && (
+        <div className="space-y-6 animate-fade-in-up">
+          {/* Max heart rate display */}
+          <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl p-8 text-center">
+            <div className="text-5xl mb-4 animate-heartbeat">💓</div>
+            <h3 className="text-xl font-semibold text-gray-600 dark:text-gray-300 mb-2">
+              {t("tools.heart-rate-zones.results.max_heart_rate")}
+            </h3>
+            <div className="text-6xl font-bold text-red-500">{results.maxHeartRate}</div>
+            <div className="text-2xl text-gray-500">bpm</div>
+          </div>
+
+          {/* Heart rate zones */}
+          <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl p-8">
+            <h3 className="text-2xl font-bold text-center mb-8 text-gray-900 dark:text-white">
+              {t("tools.heart-rate-zones.results.target_zones")} 🎯
+            </h3>
+
+            {/* Global zones visualization */}
+            <div className="mb-8 p-4 bg-gray-50 dark:bg-gray-700 rounded-2xl">
+              <div className="mb-2 text-sm font-semibold text-gray-700 dark:text-gray-300">Vue d&apos;ensemble des zones</div>
+              <div className="relative h-8 bg-white dark:bg-gray-600 rounded-full overflow-hidden">
+                {results.zones.map((zone) => (
+                  <div
+                    className={`absolute h-full ${zone.color.replace("text-", "bg-")} opacity-80`}
+                    key={zone.name}
+                    style={{
+                      left: `${(zone.minHR / results.maxHeartRate) * 100}%`,
+                      width: `${((zone.maxHR - zone.minHR) / results.maxHeartRate) * 100}%`,
+                    }}
+                    title={`${zone.name}: ${zone.minHR}-${zone.maxHR} bpm`}
+                  />
+                ))}
+              </div>
+              <div className="flex justify-between text-xs text-gray-500 mt-1">
+                <span>0</span>
+                <span>{Math.round(results.maxHeartRate * 0.5)}</span>
+                <span>{Math.round(results.maxHeartRate * 0.75)}</span>
+                <span>{results.maxHeartRate} bpm</span>
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              {results.zones.map((zone) => (
+                <div
+                  className={`${zone.bgColor} rounded-2xl p-6 transform transition-all hover:scale-105 cursor-pointer card-hover`}
+                  key={zone.name}
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-4">
+                      <div className="text-5xl">{zone.emoji}</div>
+                      <div>
+                        <h4 className={`text-xl font-bold ${zone.color}`}>{zone.name}</h4>
+                        <p className="text-gray-600 text-sm mt-1">{zone.description}</p>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <div className={`text-3xl font-bold ${zone.color}`}>
+                        {zone.minHR}-{zone.maxHR}
+                      </div>
+                      <div className="text-gray-500 text-sm">bpm</div>
+                    </div>
+                  </div>
+
+                  {/* Visual progress bar */}
+                  <div className="mt-4">
+                    <div className="bg-gray-200 dark:bg-gray-600 rounded-full h-3 overflow-hidden">
+                      <div
+                        className={`h-full ${zone.color.replace("text-", "bg-")} transition-all`}
+                        style={{
+                          width: `${(zone.maxHR / results.maxHeartRate) * 100}%`,
+                        }}
+                      />
+                    </div>
+                    <div className="text-xs text-gray-500 mt-1 text-right">
+                      {Math.round((zone.maxHR / results.maxHeartRate) * 100)}% de FCM
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Simple tips */}
+          <div className="bg-blue-50 dark:bg-blue-900/20 rounded-3xl p-8">
+            <div className="text-center mb-6">
+              <div className="text-5xl mb-2">💡</div>
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white">{t("tools.heart-rate-zones.tips.title")}</h3>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="bg-white dark:bg-gray-800 rounded-2xl p-4 flex items-start gap-3">
+                <span className="text-2xl">✅</span>
+                <p className="text-gray-700 dark:text-gray-300">{t("tools.heart-rate-zones.tips.tip1")}</p>
+              </div>
+              <div className="bg-white dark:bg-gray-800 rounded-2xl p-4 flex items-start gap-3">
+                <span className="text-2xl">⏱️</span>
+                <p className="text-gray-700 dark:text-gray-300">{t("tools.heart-rate-zones.tips.tip2")}</p>
+              </div>
+              <div className="bg-white dark:bg-gray-800 rounded-2xl p-4 flex items-start gap-3">
+                <span className="text-2xl">📈</span>
+                <p className="text-gray-700 dark:text-gray-300">{t("tools.heart-rate-zones.tips.tip3")}</p>
+              </div>
+              <div className="bg-white dark:bg-gray-800 rounded-2xl p-4 flex items-start gap-3">
+                <span className="text-2xl">🏥</span>
+                <p className="text-gray-700 dark:text-gray-300">{t("tools.heart-rate-zones.tips.tip4")}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

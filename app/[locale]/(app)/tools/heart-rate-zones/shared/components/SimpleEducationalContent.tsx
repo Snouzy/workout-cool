@@ -99,7 +99,7 @@ export function SimpleEducationalContent() {
         <div className="text-center mb-8">
           <div className="text-5xl mb-4">🎨</div>
           <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">{t("tools.heart-rate-zones.educational.title")}</h2>
-          <p className="text-lg text-gray-600 dark:text-gray-300">Visualisez facilement chaque zone d'entraînement</p>
+          <p className="text-lg text-gray-600 dark:text-gray-300">Visualisez facilement chaque zone d&apos;entraînement</p>
         </div>
 
         <div className="grid gap-4">
@@ -174,7 +174,7 @@ export function SimpleEducationalContent() {
         <div className="text-center mb-8">
           <div className="text-5xl mb-4">📅</div>
           <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">Plan hebdomadaire type</h2>
-          <p className="text-lg text-gray-600 dark:text-gray-300">Un exemple de semaine d'entraînement équilibrée</p>
+          <p className="text-lg text-gray-600 dark:text-gray-300">Un exemple de semaine d&apos;entraînement équilibrée</p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">

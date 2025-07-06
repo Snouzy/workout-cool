@@ -5,7 +5,7 @@ import { Calculator } from "lucide-react";
 
 import { useI18n } from "locales/client";
 
-import { calculateCalories, type CalorieCalculatorInputs, type CalorieResults } from "../../shared/calorie-formulas.utils";
+import { calculateCalories, type CalorieCalculatorInputs, type CalorieResults } from "./calorie-formulas.utils";
 import { BodyFatInput } from "./components/BodyFatInput";
 import {
   GenderSelector,

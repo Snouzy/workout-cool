@@ -1,3 +1,5 @@
+import { TFunction } from "locales/client";
+
 interface HeartRateZone {
   name: string;
   minHR: number;
@@ -13,7 +15,7 @@ interface HeartRateResults {
   zones: HeartRateZone[];
 }
 
-export function calculateHeartRateZones(age: number, t: any): HeartRateResults {
+export function calculateHeartRateZones(age: number, t: TFunction): HeartRateResults {
   // Calculate MHR
   const maxHeartRate = 220 - age;
 

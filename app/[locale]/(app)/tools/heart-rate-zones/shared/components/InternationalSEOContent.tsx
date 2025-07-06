@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+
 import { useCurrentLocale } from "locales/client";
 
 export function InternationalSEOContent() {
@@ -12,7 +13,8 @@ export function InternationalSEOContent() {
       case "en":
         return {
           heroTitle: "Heart Rate Zones Calculator",
-          heroSubtitle: "Discover your personalized training zones to optimize performance, burn more fat, and improve cardiovascular fitness",
+          heroSubtitle:
+            "Discover your personalized training zones to optimize performance, burn more fat, and improve cardiovascular fitness",
           ctaButton: "Calculate My Zones Now",
           benefitTitle1: "Science-Based Training",
           benefitDesc1: "Use proven formulas (Basic & Karvonen) to calculate your exact heart rate zones",
@@ -24,7 +26,8 @@ export function InternationalSEOContent() {
       case "es":
         return {
           heroTitle: "Calculadora de Zonas de Frecuencia Cardíaca",
-          heroSubtitle: "Descubre tus zonas de entrenamiento personalizadas para optimizar el rendimiento, quemar más grasa y mejorar tu condición cardiovascular",
+          heroSubtitle:
+            "Descubre tus zonas de entrenamiento personalizadas para optimizar el rendimiento, quemar más grasa y mejorar tu condición cardiovascular",
           ctaButton: "Calcular Mis Zonas Ahora",
           benefitTitle1: "Entrenamiento Basado en Ciencia",
           benefitDesc1: "Usa fórmulas probadas (Basic y Karvonen) para calcular tus zonas exactas de frecuencia cardíaca",
@@ -36,7 +39,8 @@ export function InternationalSEOContent() {
       case "fr":
         return {
           heroTitle: "Calculateur de Zones de Fréquence Cardiaque",
-          heroSubtitle: "Découvrez vos zones d'entraînement personnalisées pour optimiser vos performances, brûler plus de graisses et améliorer votre condition cardiovasculaire",
+          heroSubtitle:
+            "Découvrez vos zones d'entraînement personnalisées pour optimiser vos performances, brûler plus de graisses et améliorer votre condition cardiovasculaire",
           ctaButton: "Calculer Mes Zones Maintenant",
           benefitTitle1: "Entraînement Basé sur la Science",
           benefitDesc1: "Utilisez des formules éprouvées (Basic et Karvonen) pour calculer vos zones exactes de fréquence cardiaque",
@@ -48,7 +52,8 @@ export function InternationalSEOContent() {
       case "pt":
         return {
           heroTitle: "Calculadora de Zonas de Frequência Cardíaca",
-          heroSubtitle: "Descubra suas zonas de treino personalizadas para otimizar o desempenho, queimar mais gordura e melhorar sua condição cardiovascular",
+          heroSubtitle:
+            "Descubra suas zonas de treino personalizadas para otimizar o desempenho, queimar mais gordura e melhorar sua condição cardiovascular",
           ctaButton: "Calcular Minhas Zonas Agora",
           benefitTitle1: "Treino Baseado em Ciência",
           benefitDesc1: "Use fórmulas comprovadas (Basic e Karvonen) para calcular suas zonas exatas de frequência cardíaca",
@@ -60,7 +65,8 @@ export function InternationalSEOContent() {
       case "ru":
         return {
           heroTitle: "Калькулятор Зон Пульса",
-          heroSubtitle: "Откройте персональные тренировочные зоны для оптимизации результатов, сжигания жира и улучшения сердечно-сосудистой системы",
+          heroSubtitle:
+            "Откройте персональные тренировочные зоны для оптимизации результатов, сжигания жира и улучшения сердечно-сосудистой системы",
           ctaButton: "Рассчитать Мои Зоны",
           benefitTitle1: "Научный Подход к Тренировкам",
           benefitDesc1: "Используйте проверенные формулы (Basic и Карвонена) для расчета точных зон пульса",
@@ -103,15 +109,11 @@ export function InternationalSEOContent() {
       <div className="container mx-auto px-4 max-w-6xl">
         {/* Hero Section */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900 dark:text-white">
-            {content.heroTitle}
-          </h1>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8">
-            {content.heroSubtitle}
-          </p>
+          <h1 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900 dark:text-white">{content.heroTitle}</h1>
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8">{content.heroSubtitle}</p>
           <button
-            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
             className="bg-blue-600 hover:bg-blue-700 text-white text-lg font-bold py-4 px-8 rounded-full transform transition-all hover:scale-105 active:scale-95 shadow-xl"
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           >
             {content.ctaButton}
           </button>
@@ -121,30 +123,18 @@ export function InternationalSEOContent() {
         <div className="grid md:grid-cols-3 gap-8 mt-16">
           <div className="text-center">
             <div className="text-5xl mb-4">🔬</div>
-            <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">
-              {content.benefitTitle1}
-            </h3>
-            <p className="text-gray-600 dark:text-gray-300">
-              {content.benefitDesc1}
-            </p>
+            <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">{content.benefitTitle1}</h3>
+            <p className="text-gray-600 dark:text-gray-300">{content.benefitDesc1}</p>
           </div>
           <div className="text-center">
             <div className="text-5xl mb-4">🎯</div>
-            <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">
-              {content.benefitTitle2}
-            </h3>
-            <p className="text-gray-600 dark:text-gray-300">
-              {content.benefitDesc2}
-            </p>
+            <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">{content.benefitTitle2}</h3>
+            <p className="text-gray-600 dark:text-gray-300">{content.benefitDesc2}</p>
           </div>
           <div className="text-center">
             <div className="text-5xl mb-4">📚</div>
-            <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">
-              {content.benefitTitle3}
-            </h3>
-            <p className="text-gray-600 dark:text-gray-300">
-              {content.benefitDesc3}
-            </p>
+            <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">{content.benefitTitle3}</h3>
+            <p className="text-gray-600 dark:text-gray-300">{content.benefitDesc3}</p>
           </div>
         </div>
       </div>

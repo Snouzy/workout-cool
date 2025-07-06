@@ -164,9 +164,20 @@ export function generateSEOMetadata({
 
 interface SEOScriptsProps extends SEOHeadProps {
   children?: React.ReactNode;
+  // Add hreflang support
+  hreflangPath?: string; // e.g., "/tools/heart-rate-zones"
 }
 
-export function SEOScripts({ title, description, locale = "en", canonical, ogImage, structuredData, children }: SEOScriptsProps) {
+export function SEOScripts({
+  title,
+  description,
+  locale = "en",
+  canonical,
+  ogImage,
+  structuredData,
+  hreflangPath,
+  children,
+}: SEOScriptsProps) {
   const baseUrl = getServerUrl();
   const finalCanonical = canonical || baseUrl;
   const finalOgImage = ogImage || `${baseUrl}/images/default-og-image_${locale === "zh-CN" ? "zh" : locale}.jpg`;
@@ -187,9 +198,23 @@ export function SEOScripts({ title, description, locale = "en", canonical, ogIma
     });
   }
 
+  // Generate hreflang tags if path is provided
+  const hreflangTags = hreflangPath ? (
+    <>
+      <link href={`${baseUrl}/en${hreflangPath}`} hrefLang="en" rel="alternate" />
+      <link href={`${baseUrl}/es${hreflangPath}`} hrefLang="es" rel="alternate" />
+      <link href={`${baseUrl}/fr${hreflangPath}`} hrefLang="fr" rel="alternate" />
+      <link href={`${baseUrl}/pt${hreflangPath}`} hrefLang="pt" rel="alternate" />
+      <link href={`${baseUrl}/ru${hreflangPath}`} hrefLang="ru" rel="alternate" />
+      <link href={`${baseUrl}/zh-CN${hreflangPath}`} hrefLang="zh-CN" rel="alternate" />
+      <link href={`${baseUrl}/en${hreflangPath}`} hrefLang="x-default" rel="alternate" />
+    </>
+  ) : null;
+
   return (
     <>
       {structuredDataObj && <StructuredDataScript data={structuredDataObj} />}
+      {hreflangTags}
       {children}
     </>
   );

@@ -43,7 +43,7 @@ export interface StructuredDataProps {
   };
   // Calculator-specific fields
   calculatorData?: {
-    calculatorType: "calorie" | "macro" | "bmi" | "heart-rate" | "one-rep-max" | "rest-timer";
+    calculatorType: "calorie" | "macro" | "bmi" | "heart-rate" | "heart-rate-zones" | "one-rep-max" | "rest-timer";
     inputFields: string[];
     outputFields: string[];
     formula?: string;
@@ -523,6 +523,32 @@ export function generateStructuredData({
           ],
           ru: ["калькулятор частоты пульса", "формула частоты пульса", "расчет частоты пульса", "калькулятор частоты пульса"],
           "zh-CN": ["心率计算器", "心率公式", "心率计算", "心率计算器"],
+        },
+        "heart-rate-zones": {
+          en: ["heart rate zones calculator", "target heart rate", "training zones", "Karvonen formula", "VO2 max zone"],
+          fr: [
+            "calculateur zones fréquence cardiaque",
+            "fréquence cardiaque cible",
+            "zones d'entraînement",
+            "formule Karvonen",
+            "zone VO2 max",
+          ],
+          es: [
+            "calculadora zonas frecuencia cardíaca",
+            "frecuencia cardíaca objetivo",
+            "zonas de entrenamiento",
+            "fórmula Karvonen",
+            "zona VO2 máx",
+          ],
+          pt: [
+            "calculadora zonas frequência cardíaca",
+            "frequência cardíaca alvo",
+            "zonas de treino",
+            "fórmula Karvonen",
+            "zona VO2 máx",
+          ],
+          ru: ["калькулятор зон пульса", "целевой пульс", "тренировочные зоны", "формула Карвонена", "зона VO2 max"],
+          "zh-CN": ["心率区间计算器", "目标心率", "训练区间", "卡沃宁公式", "VO2最大值区间"],
         },
       };
 

@@ -48,8 +48,7 @@ const fitnessTools: FitnessTool[] = [
     emoji: "WorkoutCoolMedical.png",
     gradientFrom: "from-[#8B5CF6]",
     gradientTo: "to-[#7C3AED]",
-    href: "/tools/heart-rate-calculator",
-    coming_soon: true,
+    href: "/tools/heart-rate-zones",
   },
   {
     id: "one-rep-max",

@@ -1,8 +1,9 @@
 import { z } from "zod";
 import { NextRequest, NextResponse } from "next/server";
 
+import { ActionError } from "@/shared/api/safe-actions";
 import { getMobileCompatibleSession } from "@/shared/api/mobile-auth";
-import { updatePasswordAction } from "@/features/update-password/model/update-password.action";
+import { updateUserPassword } from "@/features/update-password/model/update-password.action";
 
 const changePasswordSchema = z.object({
   currentPassword: z.string().min(1),
@@ -25,22 +26,8 @@ export async function PUT(req: NextRequest) {
       return NextResponse.json({ error: "INVALID_INPUT", details: parsed.error.format() }, { status: 400 });
     }
 
-    // Use the existing server action
-    const result = await updatePasswordAction(parsed.data);
-
-    if (result?.serverError) {
-      // Handle specific error messages
-      let errorMessage = "PASSWORD_UPDATE_FAILED";
-      if (result.serverError.includes("do not match")) {
-        errorMessage = "PASSWORDS_DO_NOT_MATCH";
-      } else if (result.serverError.includes("current password")) {
-        errorMessage = "INVALID_CURRENT_PASSWORD";
-      } else if (result.serverError.includes("new password")) {
-        errorMessage = "INVALID_NEW_PASSWORD";
-      }
-
-      return NextResponse.json({ error: errorMessage }, { status: 400 });
-    }
+    // Use the core password update function directly
+    await updateUserPassword(session.user.id, parsed.data.currentPassword, parsed.data.newPassword, parsed.data.confirmPassword);
 
     return NextResponse.json({
       success: true,
@@ -48,6 +35,19 @@ export async function PUT(req: NextRequest) {
     });
   } catch (error: any) {
     console.error("Update password error:", error);
+
+    // Handle ActionError instances
+    if (error instanceof ActionError) {
+      let errorMessage = "PASSWORD_UPDATE_FAILED";
+      if (error.message.includes("do not match")) {
+        errorMessage = "PASSWORDS_DO_NOT_MATCH";
+      } else if (error.message.includes("current password")) {
+        errorMessage = "INVALID_CURRENT_PASSWORD";
+      } else if (error.message.includes("new password")) {
+        errorMessage = "INVALID_NEW_PASSWORD";
+      }
+      return NextResponse.json({ error: errorMessage }, { status: 400 });
+    }
 
     // Handle specific errors
     if (error.message?.includes("account")) {

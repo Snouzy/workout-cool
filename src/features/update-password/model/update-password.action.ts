@@ -1,56 +1,73 @@
 "use server";
 
+import { z } from "zod";
+
 import { prisma } from "@/shared/lib/prisma";
 import { ERROR_MESSAGES } from "@/shared/constants/errors";
-import { actionClient, ActionError } from "@/shared/api/safe-actions";
+import { ActionError } from "@/shared/api/safe-actions";
+import { mobileAuthenticatedActionClient } from "@/shared/api/mobile-safe-actions";
 import { UpdatePasswordSchema } from "@/features/update-password/model/update-password.schema";
 import { validatePassword } from "@/features/update-password/lib/validate-password";
 import { hashStringWithSalt } from "@/features/update-password/lib/hash";
 import { env } from "@/env";
-import { serverRequiredUser } from "@/entities/user/model/get-server-session-user";
 
-export const updatePasswordAction = actionClient
-  .schema(UpdatePasswordSchema)
-  .action(async ({ parsedInput: { confirmPassword, currentPassword, newPassword } }) => {
-    const user = await serverRequiredUser();
+/**
+ * Core password update logic that can be used by both the action and API route
+ */
+export async function updateUserPassword(
+  userId: string,
+  currentPassword: string,
+  newPassword: string,
+  confirmPassword: string
+) {
+  if (newPassword !== confirmPassword) {
+    throw new ActionError(ERROR_MESSAGES.PASSWORDS_DO_NOT_MATCH);
+  }
 
-    const { password, id } = await prisma.account.findFirstOrThrow({
-      where: { userId: user.id },
-      select: { password: true, id: true },
-    });
+  const { password, id } = await prisma.account.findFirstOrThrow({
+    where: { userId },
+    select: { password: true, id: true },
+  });
 
-    if (newPassword !== confirmPassword) {
-      throw new ActionError(ERROR_MESSAGES.PASSWORDS_DO_NOT_MATCH);
-    }
+  const hashedCurrentPassword = hashStringWithSalt(currentPassword, env.BETTER_AUTH_SECRET);
 
-    const hashedCurrentPassword = hashStringWithSalt(currentPassword, env.BETTER_AUTH_SECRET);
+  if (hashedCurrentPassword !== password) {
+    throw new ActionError(ERROR_MESSAGES.INVALID_CURRENT_PASSWORD);
+  }
 
-    if (hashedCurrentPassword !== password) {
-      throw new ActionError(ERROR_MESSAGES.INVALID_CURRENT_PASSWORD);
-    }
+  if (!validatePassword(newPassword)) {
+    throw new ActionError(ERROR_MESSAGES.INVALID_NEW_PASSWORD);
+  }
 
-    if (!validatePassword(newPassword)) {
-      throw new ActionError(ERROR_MESSAGES.INVALID_NEW_PASSWORD);
-    }
-
-    const updatedUser = await prisma.user.update({
-      where: {
-        id: user.id,
-      },
-      data: {
-        accounts: {
-          update: {
-            where: {
-              id,
-              userId: user.id,
-            },
-            data: {
-              password: hashStringWithSalt(newPassword, env.BETTER_AUTH_SECRET),
-            },
+  const updatedUser = await prisma.user.update({
+    where: {
+      id: userId,
+    },
+    data: {
+      accounts: {
+        update: {
+          where: {
+            id,
+            userId,
+          },
+          data: {
+            password: hashStringWithSalt(newPassword, env.BETTER_AUTH_SECRET),
           },
         },
       },
-    });
-
-    return updatedUser;
+    },
   });
+
+  return updatedUser;
+}
+
+export const updatePasswordAction = mobileAuthenticatedActionClient
+  .schema(UpdatePasswordSchema)
+  .action(
+    async ({ parsedInput, ctx }: { parsedInput: z.infer<typeof UpdatePasswordSchema>; ctx: { user: { id: string; email: string } } }) => {
+      const { confirmPassword, currentPassword, newPassword } = parsedInput;
+      const { user } = ctx;
+
+      return updateUserPassword(user.id, currentPassword, newPassword, confirmPassword);
+    },
+  );

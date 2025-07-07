@@ -58,7 +58,7 @@ export const BaseEmailLayout = ({ previewText, children }: BaseEmailLayoutProps)
         >
           {/* Logo Section */}
           <Section className="mb-6 text-center">
-            <Img alt={`${SiteConfig.title} Logo`} className="mx-auto" height="36" src={SiteConfig.cdnIcon} width="auto" />
+            <Img alt={`${SiteConfig.title} Logo`} className="mx-auto" height="36" src={SiteConfig.logo} width="auto" />
           </Section>
 
           {/* Email specific content */}

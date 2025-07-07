@@ -906,6 +906,13 @@ export default {
     free: "Gratis",
     new: "Nuevo",
     coming_soon: "Próximamente",
+    monday: "Lunes",
+    tuesday: "Martes",
+    wednesday: "Miércoles",
+    thursday: "Jueves",
+    friday: "Viernes",
+    saturday: "Sábado",
+    sunday: "Domingo",
   },
   tools: {
     try_now: "Probar ahora",
@@ -984,6 +991,7 @@ export default {
         gain_fast_desc: "Ganar 2 lbs (1 kg) por semana - Máxima crecimiento muscular",
       },
       results: {
+        overview: "Resumen",
         title: "Tus Resultados",
         bmr: "TMB",
         bmr_explanation:
@@ -1024,6 +1032,345 @@ export default {
     "heart-rate-calculator": {
       title: "Zonas de Frecuencia Cardíaca",
       description: "Descubre tus zonas de entrenamiento óptimas para quemar grasa y mejorar tu rendimiento",
+    },
+    "heart-rate-zones": {
+      title: "Calculadora de Zonas de Frecuencia Cardíaca",
+      description: "Calcula tus zonas de entrenamiento de frecuencia cardíaca óptimas para un rendimiento máximo y la quema de grasa",
+      page_title: "Calculadora de Zonas de Frecuencia Cardíaca",
+      page_description:
+        "Calcula tus zonas de entrenamiento de frecuencia cardíaca personalizadas usando fórmulas científicamente comprobadas. Optimiza tus entrenamientos cardio para quemar grasa, resistencia y rendimiento.",
+      meta: {
+        title: "Calculadora de Zonas de Frecuencia Cardíaca - Frecuencia Objetivo y Zonas de Entrenamiento",
+        description:
+          "Calcula tu frecuencia cardíaca máxima y tus zonas de entrenamiento personalizadas. Usa las fórmulas básicas o Karvonen para encontrar tus zonas de VO2 Máx, Anaeróbica, Aeróbica, Quema de Grasa y Calentamiento.",
+        keywords:
+          "calculadora zonas frecuencia cardíaca, frecuencia cardíaca objetivo, frecuencia cardíaca máxima, zonas entrenamiento, zona VO2 máx, zona anaeróbica, zona aeróbica, zona quema grasa, fórmula Karvonen, entrenamiento frecuencia cardíaca",
+      },
+      calculate: "Calcular Zonas",
+      calculating: "Calculando...",
+      method: "Método de Cálculo",
+      method_info: "Elige la fórmula que mejor se adapte a tu nivel de condición física y datos disponibles",
+      methods: {
+        basic: "Básico por Edad",
+        basic_desc: "Fórmula simple usando solo la edad - buena para principiantes",
+        karvonen_age: "Karvonen por Edad y FCR",
+        karvonen_age_desc: "Más preciso usando edad y frecuencia cardíaca en reposo",
+        karvonen_custom: "Karvonen por FCM y FCR",
+        karvonen_custom_desc: "El más preciso usando frecuencias cardíacas máxima y en reposo medidas",
+      },
+      age: "Edad",
+      age_placeholder: "Ingresa tu edad",
+      resting_heart_rate: "Frecuencia Cardíaca en Reposo (FCR)",
+      resting_heart_rate_placeholder: "Ingresa tu FCR",
+      resting_heart_rate_info: "Mide tu frecuencia cardíaca al despertar, antes de salir de la cama. El rango normal es 60-100 lpm.",
+      max_heart_rate: "Frecuencia Cardíaca Máxima (FCM)",
+      max_heart_rate_placeholder: "Ingresa tu FCM",
+      max_heart_rate_info:
+        "Tu frecuencia cardíaca máxima real de una prueba de esfuerzo o entrenamiento de esfuerzo máximo. Más preciso que las estimaciones basadas en edad.",
+
+      results: {
+        title: "Tus Zonas de Frecuencia Cardíaca",
+        max_heart_rate: "Frecuencia Cardíaca Máxima",
+        heart_rate_reserve: "Reserva de Frecuencia Cardíaca",
+        target_zones: "Zonas de Entrenamiento Objetivo",
+        zone: "Zona",
+        intensity: "Intensidad",
+        heart_rate_range: "Frecuencia Cardíaca (lpm)",
+        benefits: "Beneficios",
+        duration: "Duración Típica",
+      },
+      zones: {
+        warm_up: {
+          name: "Zona de Calentamiento",
+          intensity: "50-60%",
+          benefits: "🧘 Calentamiento perfecto",
+          example: "Caminata tranquila",
+          duration: "5-10 minutos",
+          description: "Intensidad muy ligera para calentamiento y recuperación",
+        },
+        fat_burn: {
+          name: "Zona de Quema de Grasa",
+          intensity: "60-70%",
+          benefits: "🔥 Quema grasa",
+          example: "Trote ligero",
+          duration: "20-40 minutos",
+          description: "Intensidad ligera, ritmo cómodo para entrenamientos más largos",
+        },
+        aerobic: {
+          name: "Zona Aeróbica",
+          intensity: "70-80%",
+          benefits: "💪 Mejora la resistencia",
+          example: "Carrera moderada",
+          duration: "10-40 minutos",
+          description: "Intensidad moderada, sostenible durante períodos prolongados",
+        },
+        anaerobic: {
+          name: "Zona Anaeróbica",
+          intensity: "80-90%",
+          benefits: "⚡ Aumenta la velocidad",
+          example: "Sprint corto",
+          duration: "2-10 minutos",
+          description: "Intensidad difícil, desafiante pero sostenible por períodos cortos",
+        },
+        vo2_max: {
+          name: "Zona VO2 Máx",
+          intensity: "90-100%",
+          benefits: "🏆 Rendimiento máx",
+          example: "Sprint intenso",
+          duration: "30 segundos - 2 minutos",
+          description: "Intensidad máxima, sostenible solo por períodos muy cortos",
+        },
+      },
+      formulas: {
+        basic_formula: "Fórmula Básica",
+        basic_explanation: "FCO = FCM × %Intensidad",
+        karvonen_formula: "Fórmula Karvonen",
+        karvonen_explanation: "FCO = [(FCM - FCR) × %Intensidad] + FCR",
+        mhr_calculation: "FCM = 220 - Edad",
+      },
+      abbreviations: {
+        thr: "FCO = Frecuencia Cardíaca Objetivo",
+        mhr: "FCM = Frecuencia Cardíaca Máxima",
+        rhr: "FCR = Frecuencia Cardíaca en Reposo",
+        hrr: "RFC = Reserva de Frecuencia Cardíaca",
+        bpm: "lpm = Latidos Por Minuto",
+      },
+      tips: {
+        title: "Consejos de Entrenamiento",
+        tip1: "Comienza con zonas de baja intensidad si eres principiante en el ejercicio",
+        tip2: "Mezcla diferentes zonas en tu entrenamiento semanal para mejores resultados",
+        tip3: "Usa un monitor de frecuencia cardíaca para un seguimiento preciso durante los entrenamientos",
+        tip4: "Tus zonas pueden cambiar a medida que mejora tu condición física - recalcula periódicamente",
+      },
+      faq: {
+        title: "Preguntas Frecuentes",
+        q1: "¿Qué método de cálculo debo usar?",
+        a1: "Si eres principiante, usa el método Básico. Si conoces tu frecuencia cardíaca en reposo, usa Karvonen por Edad para mayor precisión. Para las zonas más precisas, usa Karvonen con FCM y FCR medidas.",
+        q2: "¿Cómo medir mi frecuencia cardíaca en reposo?",
+        a2: "Mide tu pulso durante 60 segundos inmediatamente después de despertar, antes de salir de la cama. Hazlo durante 3-5 días y usa el promedio. La FCR normal es 60-100 lpm, valores más bajos indican mejor condición física.",
+        q3: "¿En qué zona debo entrenar para perder peso?",
+        a3: "La Zona de Quema de Grasa (60-70%) es óptima para quemar grasa como combustible. Sin embargo, las zonas de mayor intensidad queman más calorías totales. Mezcla las zonas para mejores resultados - incluye tanto entrenamientos de quema de grasa como de alta intensidad.",
+        q4: "¿Qué tan precisa es la fórmula 220-edad?",
+        a4: "Es una estimación general que funciona para la mayoría de las personas pero puede variar ±10-15 lpm. Para mayor precisión, considera una prueba supervisada de frecuencia cardíaca máxima o usa la fórmula Karvonen con tus mediciones reales.",
+        q5: "¿Puedo entrenar en la zona VO2 Máx todos los días?",
+        a5: "No, la zona VO2 Máx es extremadamente intensa y solo debe usarse 1-2 veces por semana para intervalos cortos. La mayor parte del entrenamiento debe estar en las zonas Aeróbica y Quema de Grasa para construir resistencia y permitir la recuperación.",
+      },
+      guide: {
+        title: "Guía Completa de Zonas de Frecuencia Cardíaca para el Entrenamiento",
+        text1:
+          "Las zonas de frecuencia cardíaca son una herramienta científica esencial para optimizar tus entrenamientos y alcanzar tus objetivos fitness. Ya sea que busques perder peso, mejorar tu resistencia o aumentar tu rendimiento, entender y usar las zonas cardíacas transformará tu enfoque del ejercicio.",
+        text2:
+          "Esta calculadora utiliza fórmulas validadas científicamente para determinar tus zonas personalizadas basadas en tu edad y, opcionalmente, tu frecuencia cardíaca en reposo. Cada zona corresponde a una intensidad específica y ofrece beneficios únicos para tu salud cardiovascular.",
+      },
+      table: {
+        title: "Tabla de Referencia de Frecuencias Cardíacas por Edad",
+        col1: "Edad",
+        col2: "FCM",
+        col3: "50% Intensidad",
+        col4: "85% Intensidad",
+        avertiser: "* Estos valores son promedios. Tu FCM real puede variar ±10-15 lpm.",
+      },
+      details: {
+        title: "Las 5 Zonas de Entrenamiento Explicadas en Detalle",
+        benefits: "Beneficios",
+        zone1_title: "Zona 1: Calentamiento (50-60% FCM)",
+        zone1_content:
+          "La zona de calentamiento es ideal para comenzar una sesión, recuperar entre intervalos o terminar un entrenamiento. A esta intensidad, puedes mantener una conversación normal sin quedarte sin aliento.",
+        zone1_details_1: "Mejora la circulación sanguínea",
+        zone1_details_2: "Prepara músculos y articulaciones",
+        zone1_details_3: "Reduce el riesgo de lesiones",
+        zone1_details_4: "Favorece la recuperación activa",
+        zone1_duration: "Duración recomendada",
+        zone1_duration_value: "5-10 minutos al inicio/final de la sesión",
+        zone1_duration_value_2: "20-30 minutos para recuperación activa",
+        zone2_title: "Zona 2: Quema de Grasa (60-70% FCM)",
+        zone2_content:
+          "En esta zona, tu cuerpo utiliza principalmente las grasas como fuente de energía. Es la intensidad óptima para desarrollar la resistencia base y mejorar la eficiencia metabólica.",
+        zone2_details_1: "Maximiza el uso de grasas",
+        zone2_details_2: "Desarrolla la resistencia aeróbica",
+        zone2_details_3: "Mejora la eficiencia cardíaca",
+        zone2_details_4: "Fortalece el sistema inmunológico",
+        zone2_duration: "Duración recomendada",
+        zone2_duration_value: "30-90 minutos para resistencia",
+        zone2_duration_value_2: "45-60 minutos para pérdida de peso",
+        zone3_title: "Zona 3: Aeróbica (70-80% FCM)",
+        zone3_content:
+          "La zona aeróbica mejora significativamente tu capacidad cardiovascular. Respiras más fuerte pero aún puedes pronunciar frases cortas. Es la zona de entrenamiento principal para la mayoría de los atletas.",
+        zone3_details_1: "Aumenta la capacidad pulmonar",
+        zone3_details_2: "Mejora la resistencia cardiovascular",
+        zone3_details_3: "Fortalece el corazón",
+        zone3_details_4: "Optimiza el uso del oxígeno",
+        zone3_duration: "Duración recomendada",
+        zone3_duration_value: "20-60 minutos continuos",
+        zone3_duration_value_2: "Intervalos de 5-15 minutos",
+        zone4_title: "Zona 4: Anaeróbica (80-90% FCM)",
+        zone4_content:
+          "En la zona anaeróbica, tu cuerpo produce ácido láctico más rápido de lo que puede eliminarlo. Esta intensidad desarrolla la potencia y velocidad pero no puede mantenerse mucho tiempo.",
+        zone4_details_1: "Aumenta la potencia muscular",
+        zone4_details_2: "Mejora la tolerancia al lactato",
+        zone4_details_3: "Desarrolla la velocidad",
+        zone4_details_4: "Fortalece la mente",
+        zone4_duration: "Duración recomendada",
+        zone4_duration_value: "Intervalos de 2-8 minutos",
+        zone4_duration_value_2: "Recuperación igual o doble",
+        zone5_title: "Zona 5: VO2 Máx (90-100% FCM)",
+        zone5_content:
+          "La zona VO2 Máx representa el esfuerzo máximo. A esta intensidad, solo puedes pronunciar pocas palabras y el esfuerzo es insostenible más allá de unos minutos. Reservada para atletas experimentados.",
+        zone5_details_1: "Maximiza la capacidad aeróbica",
+        zone5_details_2: "Mejora la economía de carrera",
+        zone5_details_3: "Desarrolla la potencia máxima",
+        zone5_details_4: "Empuja los límites mentales",
+        zone5_duration: "Duración recomendada",
+        zone5_duration_value: "Intervalos de 30s a 2 minutos",
+        zone5_duration_value_2: "Máximo 1-2 veces por semana",
+      },
+      educational: {
+        title: "Entendiendo el Entrenamiento por Frecuencia Cardíaca",
+        description: "Visualiza fácilmente cada zona de entrenamiento",
+        what_are_zones: {
+          title: "¿Qué Son las Zonas de Frecuencia Cardíaca?",
+          content:
+            "Las zonas de frecuencia cardíaca son rangos de latidos por minuto que corresponden a diferentes intensidades de ejercicio. Entrenar en zonas específicas te ayuda a alcanzar diferentes objetivos de condición física más efectivamente.",
+        },
+        why_use_zones: {
+          title: "¿Por Qué Usar las Zonas de Frecuencia Cardíaca?",
+          content:
+            "Entrenar con zonas de frecuencia cardíaca garantiza que ejercites a la intensidad correcta para tus objetivos. Previene el sobreentrenamiento, maximiza los resultados y te ayuda a entrenar más eficientemente.",
+        },
+        zone_distribution: {
+          title: "Distribución Semanal Recomendada de Zonas",
+          content:
+            "Para una condición física equilibrada: 80% en Zonas 1-3 (base aeróbica), 15% en Zona 4 (umbral), 5% en Zona 5 (VO2 máx). Ajusta según tus objetivos específicos y nivel de condición física.",
+        },
+        monitoring: {
+          title: "Cómo Monitorear Tu Frecuencia Cardíaca",
+          content:
+            "Usa una banda de pecho para mayor precisión, o un monitor de muñeca por comodidad. Verifica regularmente tu frecuencia cardíaca durante el ejercicio y ajusta la intensidad para mantenerte en tu zona objetivo.",
+        },
+      },
+      training_tips: {
+        title: "Consejos de Experto para Optimizar tu Entrenamiento",
+        tip1: {
+          title: "Calentamiento progresivo",
+          description: "Siempre comienza con 5-10 minutos en zona 1 (50-60%) para preparar tu sistema cardiovascular.",
+        },
+        tip2: {
+          title: "Regla del 80/20",
+          description: "80% de tu entrenamiento en zonas 1-3 (aeróbico), 20% en zonas 4-5 (anaeróbico) para desarrollo óptimo.",
+        },
+        tip3: {
+          title: "Recuperación activa",
+          description: "Después de un esfuerzo intenso, baja progresivamente a zona 1-2 durante 5-10 minutos.",
+        },
+        tip4: {
+          title: "Hidratación constante",
+          description: "Bebe antes, durante y después del ejercicio. La deshidratación aumenta la frecuencia cardíaca.",
+        },
+        tip5: {
+          title: "Sueño reparador",
+          description: "7-9 horas de sueño permiten mejor recuperación y una FCR más baja.",
+        },
+        tip6: {
+          title: "Progresión gradual",
+          description: "Aumenta la intensidad o duración máximo 10% por semana para evitar el sobreentrenamiento.",
+        },
+      },
+      training_tips_2: {
+        title: "Consejos prácticos",
+        title1: "Encuentra tu zona",
+        description1: "Cada zona tiene un objetivo diferente. ¡Elige según tu meta!",
+        title2: "Duración recomendada",
+        description2: "Mientras más alta la intensidad, más corta debe ser la duración.",
+        title3: "Progresión",
+        description3: "Comienza suavemente y aumenta progresivamente la intensidad.",
+        title4: "Escucha tu cuerpo",
+        description4: "Si te sientes mal, reduce la velocidad inmediatamente.",
+      },
+      quick_facts: {
+        title: "¿Sabías que?",
+        fact1: "220 - tu edad = Frecuencia cardíaca máxima aproximada",
+        fact2: "Mide tu pulso al despertar para conocer tu frecuencia en reposo",
+        fact3: "Un reloj inteligente puede seguir tu frecuencia en tiempo real",
+        fact4: "80% de tu entrenamiento debería estar en zonas 1-3",
+      },
+      weekly_plan: {
+        title: "Plan semanal tipo",
+        description: "Un ejemplo de semana de entrenamiento equilibrada",
+        monday: {
+          title: "Zona 1-2",
+          description: "30-45 min",
+        },
+        tuesday: {
+          title: "Zona 2-3",
+          description: "45-60 min",
+        },
+        wednesday: {
+          title: "Descanso",
+          description: "Recuperación",
+        },
+        thursday: {
+          title: "Zona 3-4",
+          description: "30-40 min",
+        },
+        friday: {
+          title: "Zona 1-2",
+          description: "30 min",
+        },
+        saturday: {
+          title: "Zona 4-5",
+          description: "20-30 min",
+        },
+        tips: "💡 ¡Adapta este plan según tu nivel y objetivos!",
+        cta: "⬆️ Calcular mis zonas ahora",
+      },
+      seo_faq_title: "Preguntas Frecuentes sobre las Zonas de Frecuencia Cardíaca",
+      seo_faq_q1_question: "¿Qué es la frecuencia cardíaca máxima (FCM)?",
+      seo_faq_q1_answer:
+        "La frecuencia cardíaca máxima es el número máximo de latidos por minuto que tu corazón puede alcanzar durante un esfuerzo físico intenso. Generalmente se calcula con la fórmula: 220 - tu edad. Sin embargo, esta fórmula puede variar ±10-15 lpm según los individuos.",
+      seo_faq_q2_question: "¿Cómo medir mi frecuencia cardíaca en reposo?",
+      seo_faq_q2_answer:
+        "Mide tu pulso al despertar, antes de salir de la cama. Cuenta los latidos durante 60 segundos o durante 15 segundos y multiplica por 4. Repite durante 3-5 días y usa el promedio. Una FCR normal está entre 60-100 lpm.",
+      seo_faq_q3_question: "¿Cuál zona es la mejor para perder peso?",
+      seo_faq_q3_answer:
+        "La zona de quema de grasa (60-70% FCM) es óptima para quemar grasa como combustible. Sin embargo, las zonas más intensas queman más calorías totales. Para una pérdida de peso efectiva, alterna entre diferentes zonas.",
+      seo_faq_q4_question: "¿Puedo entrenar en la zona VO2 Máx todos los días?",
+      seo_faq_q4_answer:
+        "No, la zona VO2 Máx (90-100% FCM) es extremadamente intensa y solo debe usarse 1-2 veces por semana para períodos cortos (30 segundos a 2 minutos). La mayoría de tu entrenamiento debe estar en las zonas aeróbicas.",
+      seo_faq_q5_question: "¿Es precisa la fórmula 220-edad?",
+      seo_faq_q5_answer:
+        "Es una estimación general que funciona para la mayoría de las personas pero puede variar ±10-15 lpm. Para mayor precisión, usa la fórmula de Karvonen con tu FCR o haz una prueba de esfuerzo supervisada.",
+      seo_faq_q6_question: "¿Cómo saber si estoy en la zona correcta?",
+      seo_faq_q6_answer:
+        "Usa un monitor de frecuencia cardíaca para una medición precisa. Sin dispositivo, usa la prueba del habla: Zona ligera = conversación fácil, Zona moderada = frases cortas, Zona intensa = palabras sueltas solamente.",
+      seo_faq_q7_question: "¿Las zonas cambian con la mejora de mi condición física?",
+      seo_faq_q7_answer:
+        "Sí, con el entrenamiento, tu frecuencia cardíaca en reposo disminuye y tu eficiencia cardíaca mejora. Recalcula tus zonas cada 2-3 meses para ajustar tu entrenamiento.",
+      seo_faq_q8_question: "¿Cuál es la diferencia entre las fórmulas Básica y Karvonen?",
+      seo_faq_q8_answer:
+        "La fórmula Básica usa solo la edad (FCO = FCM × %Intensidad). La fórmula Karvonen es más precisa porque toma en cuenta tu FCR: FCO = [(FCM - FCR) × %Intensidad] + FCR.",
+      intern_links_title: "¿Listo para Optimizar tus Entrenamientos?",
+      intern_links_subtitle: "Usa nuestra calculadora para descubrir tus zonas personalizadas y transforma tu fitness",
+      intern_links_button: "Calcular Mis Zonas Ahora",
+      intern_links_bmi_title: "Calculadora de IMC",
+      intern_links_bmi_description: "Evalúa tu índice de masa corporal",
+      intern_links_calorie_title: "Calculadora de Calorías",
+      intern_links_calorie_description: "Determina tus necesidades calóricas diarias",
+      intern_links_macro_title: "Calculadora de Macros",
+      intern_links_macro_description: "Optimiza tu distribución nutricional",
+      cta: {
+        title: "¿Listo para Optimizar tus Entrenamientos?",
+        subtitle: "Usa nuestra calculadora para descubrir tus zonas personalizadas y transforma tu fitness",
+        button: "Calcular Mis Zonas Ahora",
+        bmi_title: "Calculadora de IMC",
+        bmi_description: "Evalúa tu índice de masa corporal",
+        calorie_title: "Calculadora de Calorías",
+        calorie_description: "Determina tus necesidades calóricas diarias",
+        macro_title: "Calculadora de Macros",
+        macro_description: "Optimiza tu distribución nutricional",
+      },
+      medical_warning_title: "Advertencia Médica Importante",
+      medical_warning_content:
+        "Esta calculadora proporciona estimaciones basadas en fórmulas generales. Los resultados pueden variar según tu condición física, medicamentos y estado de salud. Siempre consulta a un profesional de salud antes de comenzar un nuevo programa de ejercicio, particularmente si tienes condiciones médicas preexistentes o si experimentas síntomas inusuales durante el ejercicio.",
     },
     "one-rep-max": {
       title: "Calculadora de 1RM",
@@ -1216,7 +1563,8 @@ export default {
         title: "Calculadora IMC Estándar",
         description: "Cálculo IMC clásico usando la fórmula estándar de la OMS. Evaluación rápida y fácil para la población general.",
         page_title: "Calculadora IMC Estándar",
-        page_description: "Calcula tu Índice de Masa Corporal usando la fórmula estándar de la OMS. Obtén resultados instantáneos con categoría de salud y recomendaciones personalizadas.",
+        page_description:
+          "Calcula tu Índice de Masa Corporal usando la fórmula estándar de la OMS. Obtén resultados instantáneos con categoría de salud y recomendaciones personalizadas.",
       },
       adjusted: {
         title: "Calculadora IMC Ajustada",

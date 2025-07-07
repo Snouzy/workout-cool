@@ -21,7 +21,7 @@ interface SEOHeadProps {
     datePublished?: string;
     dateModified?: string;
     calculatorData?: {
-      calculatorType: "calorie" | "macro" | "bmi" | "heart-rate" | "one-rep-max" | "rest-timer";
+      calculatorType: "calorie" | "macro" | "bmi" | "heart-rate" | "heart-rate-zones" | "one-rep-max" | "rest-timer";
       inputFields: string[];
       outputFields: string[];
       formula?: string;
@@ -43,7 +43,7 @@ export function generateSEOMetadata({
   noIndex = false,
 }: SEOHeadProps): Metadata {
   const baseUrl = getServerUrl();
-  const fullTitle = title ? `${title} | ${SiteConfig.title}` : SiteConfig.title;
+  const fullTitle = title ? `${title}` : SiteConfig.title;
   const finalDescription = description || SiteConfig.description;
   const finalCanonical = canonical || baseUrl;
   const finalOgImage = ogImage || `${baseUrl}/images/default-og-image_${locale === "zh-CN" ? "zh" : locale}.jpg`;
@@ -86,15 +86,54 @@ export function generateSEOMetadata({
       description: finalDescription,
       url: finalCanonical,
       siteName: SiteConfig.title,
-      locale: locale === "en" ? "en_US" : locale === "es" ? "es_ES" : locale === "pt" ? "pt_PT" : locale === "ru" ? "ru_RU" : locale === "zh-CN" ? "zh_CN" : "fr_FR",
+      locale:
+        locale === "en"
+          ? "en_US"
+          : locale === "es"
+            ? "es_ES"
+            : locale === "pt"
+              ? "pt_PT"
+              : locale === "ru"
+                ? "ru_RU"
+                : locale === "zh-CN"
+                  ? "zh_CN"
+                  : "fr_FR",
       alternateLocale: [
-        "fr_FR", "fr_CA", "fr_CH", "fr_BE",
-        "en_US", "en_GB", "en_CA", "en_AU", 
-        "es_ES", "es_MX", "es_AR", "es_CL",
-        "pt_PT", "pt_BR",
-        "ru_RU", "ru_BY", "ru_KZ",
-        "zh_CN", "zh_TW", "zh_HK"
-      ].filter(alt => alt !== (locale === "en" ? "en_US" : locale === "es" ? "es_ES" : locale === "pt" ? "pt_PT" : locale === "ru" ? "ru_RU" : locale === "zh-CN" ? "zh_CN" : "fr_FR")),
+        "fr_FR",
+        "fr_CA",
+        "fr_CH",
+        "fr_BE",
+        "en_US",
+        "en_GB",
+        "en_CA",
+        "en_AU",
+        "es_ES",
+        "es_MX",
+        "es_AR",
+        "es_CL",
+        "pt_PT",
+        "pt_BR",
+        "ru_RU",
+        "ru_BY",
+        "ru_KZ",
+        "zh_CN",
+        "zh_TW",
+        "zh_HK",
+      ].filter(
+        (alt) =>
+          alt !==
+          (locale === "en"
+            ? "en_US"
+            : locale === "es"
+              ? "es_ES"
+              : locale === "pt"
+                ? "pt_PT"
+                : locale === "ru"
+                  ? "ru_RU"
+                  : locale === "zh-CN"
+                    ? "zh_CN"
+                    : "fr_FR"),
+      ),
       images: [
         {
           url: finalOgImage,
@@ -125,9 +164,20 @@ export function generateSEOMetadata({
 
 interface SEOScriptsProps extends SEOHeadProps {
   children?: React.ReactNode;
+  // Add hreflang support
+  hreflangPath?: string; // e.g., "/tools/heart-rate-zones"
 }
 
-export function SEOScripts({ title, description, locale = "en", canonical, ogImage, structuredData, children }: SEOScriptsProps) {
+export function SEOScripts({
+  title,
+  description,
+  locale = "en",
+  canonical,
+  ogImage,
+  structuredData,
+  hreflangPath,
+  children,
+}: SEOScriptsProps) {
   const baseUrl = getServerUrl();
   const finalCanonical = canonical || baseUrl;
   const finalOgImage = ogImage || `${baseUrl}/images/default-og-image_${locale === "zh-CN" ? "zh" : locale}.jpg`;
@@ -148,9 +198,23 @@ export function SEOScripts({ title, description, locale = "en", canonical, ogIma
     });
   }
 
+  // Generate hreflang tags if path is provided
+  const hreflangTags = hreflangPath ? (
+    <>
+      <link href={`${baseUrl}/en${hreflangPath}`} hrefLang="en" rel="alternate" />
+      <link href={`${baseUrl}/es${hreflangPath}`} hrefLang="es" rel="alternate" />
+      <link href={`${baseUrl}/fr${hreflangPath}`} hrefLang="fr" rel="alternate" />
+      <link href={`${baseUrl}/pt${hreflangPath}`} hrefLang="pt" rel="alternate" />
+      <link href={`${baseUrl}/ru${hreflangPath}`} hrefLang="ru" rel="alternate" />
+      <link href={`${baseUrl}/zh-CN${hreflangPath}`} hrefLang="zh-CN" rel="alternate" />
+      <link href={`${baseUrl}/en${hreflangPath}`} hrefLang="x-default" rel="alternate" />
+    </>
+  ) : null;
+
   return (
     <>
       {structuredDataObj && <StructuredDataScript data={structuredDataObj} />}
+      {hreflangTags}
       {children}
     </>
   );

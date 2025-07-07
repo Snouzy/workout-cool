@@ -56,6 +56,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       })),
     ),
 
+    // Heart rate calculator pages for all locales
+    ...locales.flatMap((locale) =>
+      [`${baseUrl}/${locale}/tools/heart-rate-zones`].map((url) => ({
+        url,
+        lastModified: currentDate,
+        changeFrequency: "monthly" as const,
+        priority: 0.85,
+      })),
+    ),
+
     // BMI calculator
     ...locales.flatMap((locale) =>
       [`${baseUrl}/${locale}/tools/bmi-calculator`].map((url) => ({

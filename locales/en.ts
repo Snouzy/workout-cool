@@ -525,6 +525,334 @@ export default {
       title: "Heart Rate Zones",
       description: "Discover your optimal training zones for fat burning and performance",
     },
+    "heart-rate-zones": {
+      title: "Heart Rate Zones Calculator",
+      description: "Calculate your optimal heart rate training zones for maximum performance and fat burning",
+      page_title: "Heart Rate Zones Calculator",
+      page_description:
+        "Calculate your personalized heart rate training zones using scientifically proven formulas. Optimize your cardio workouts for fat burning, endurance, and performance.",
+      meta: {
+        title: "Heart Rate Zones Calculator - Target Heart Rate & Training Zones",
+        description:
+          "Calculate your maximum heart rate and personalized training zones. Use basic or Karvonen formulas to find your VO2 Max, Anaerobic, Aerobic, Fat Burn, and Warm Up zones.",
+        keywords:
+          "heart rate zones calculator, target heart rate, maximum heart rate, training zones, VO2 max zone, anaerobic zone, aerobic zone, fat burn zone, Karvonen formula, heart rate training",
+      },
+      calculate: "Calculate Zones",
+      calculating: "Calculating...",
+      method: "Calculation Method",
+      method_info: "Choose the formula that best suits your fitness level and available data",
+      methods: {
+        basic: "Basic by Age",
+        basic_desc: "Simple formula using age only - good for beginners",
+        karvonen_age: "Karvonen by Age & RHR",
+        karvonen_age_desc: "More accurate using age and resting heart rate",
+        karvonen_custom: "Karvonen by MHR & RHR",
+        karvonen_custom_desc: "Most accurate using measured max and resting heart rates",
+      },
+      age: "Age",
+      age_placeholder: "Enter your age",
+      resting_heart_rate: "Resting Heart Rate (RHR)",
+      resting_heart_rate_placeholder: "Enter your RHR",
+      resting_heart_rate_info: "Measure your heart rate when you wake up, before getting out of bed. Normal range is 60-100 bpm.",
+      max_heart_rate: "Maximum Heart Rate (MHR)",
+      max_heart_rate_placeholder: "Enter your MHR",
+      max_heart_rate_info:
+        "Your actual maximum heart rate from a stress test or max effort workout. More accurate than age-based estimates.",
+      results: {
+        overview: "Overview of your heart rate zones",
+        title: "Your Heart Rate Zones",
+        max_heart_rate: "Maximum Heart Rate",
+        heart_rate_reserve: "Heart Rate Reserve",
+        target_zones: "Target Training Zones",
+        zone: "Zone",
+        intensity: "Intensity",
+        heart_rate_range: "Heart Rate (bpm)",
+        benefits: "Benefits",
+        duration: "Typical Duration",
+      },
+      zones: {
+        warm_up: {
+          name: "Warm Up Zone",
+          intensity: "50-60%",
+          benefits: "🧘 Perfect warm-up",
+          example: "Slow walk",
+          duration: "5-10 minutes",
+          description: "Very light intensity for warming up and cooling down",
+        },
+        fat_burn: {
+          name: "Fat Burn Zone",
+          intensity: "60-70%",
+          benefits: "🔥 Maximum fat burning",
+          example: "Light jogging",
+          duration: "20-40 minutes",
+          description: "Light intensity, comfortable pace for longer workouts",
+        },
+        aerobic: {
+          name: "Aerobic Zone",
+          intensity: "70-80%",
+          benefits: "💪 Improves cardiovascular",
+          example: "Moderate run",
+          duration: "10-40 minutes",
+          description: "Moderate intensity, sustainable for extended periods",
+        },
+        anaerobic: {
+          name: "Anaerobic Zone",
+          intensity: "80-90%",
+          benefits: "⚡ Increases speed",
+          example: "Short sprint",
+          duration: "2-10 minutes",
+          description: "Hard intensity, challenging but sustainable for short periods",
+        },
+        vo2_max: {
+          name: "VO2 Max Zone",
+          intensity: "90-100%",
+          benefits: "🏆 Maximum performance",
+          example: "Sprint",
+          duration: "30 seconds - 2 minutes",
+          description: "Maximum intensity, only sustainable for very short bursts",
+        },
+      },
+      formulas: {
+        basic_formula: "Basic Formula",
+        basic_explanation: "THR = MHR × %Intensity",
+        karvonen_formula: "Karvonen Formula",
+        karvonen_explanation: "THR = [(MHR - RHR) × %Intensity] + RHR",
+        mhr_calculation: "MHR = 220 - Age",
+      },
+      abbreviations: {
+        thr: "THR = Target Heart Rate",
+        mhr: "MHR = Maximum Heart Rate",
+        rhr: "RHR = Resting Heart Rate",
+        hrr: "HRR = Heart Rate Reserve",
+        bpm: "bpm = Beats Per Minute",
+      },
+      tips: {
+        title: "Training Tips",
+        tip1: "Start with lower intensity zones if you're new to exercise",
+        tip2: "Mix different zones in your weekly training for best results",
+        tip3: "Use a heart rate monitor for accurate tracking during workouts",
+        tip4: "Your zones may change as your fitness improves - recalculate periodically",
+      },
+      faq: {
+        title: "Frequently Asked Questions",
+        q1: "Which calculation method should I use?",
+        a1: "If you're just starting, use the Basic method. If you know your resting heart rate, use Karvonen by Age for better accuracy. For the most precise zones, use Karvonen with measured MHR and RHR.",
+        q2: "How do I measure my resting heart rate?",
+        a2: "Measure your pulse for 60 seconds immediately after waking up, before getting out of bed. Do this for 3-5 days and use the average. Normal RHR is 60-100 bpm, with lower values indicating better fitness.",
+        q3: "What zone should I train in for weight loss?",
+        a3: "The Fat Burn Zone (60-70%) is optimal for burning fat as fuel. However, higher intensity zones burn more total calories. Mix zones for best results - include both fat burn and higher intensity workouts.",
+        q4: "How accurate is the 220-age formula?",
+        a4: "It's a general estimate that works for most people but can vary by ±10-15 bpm. For more accuracy, consider a supervised max heart rate test or use the Karvonen formula with your actual measurements.",
+        q5: "Can I train in the VO2 Max zone every day?",
+        a5: "No, the VO2 Max zone is extremely intense and should only be used 1-2 times per week for short intervals. Most training should be in the Aerobic and Fat Burn zones to build endurance and allow recovery.",
+      },
+      guide: {
+        title: "Complete Guide to Heart Rate Zones for Training",
+        text1:
+          "Heart rate zones are a scientific tool essential for optimizing your training and achieving your fitness goals. Whether you're looking to lose weight, improve endurance, or increase performance, understanding and using heart rate zones will transform your approach to exercise.",
+        text2:
+          "This calculator uses scientifically proven formulas to determine your personalized zones based on your age and, optionally, your resting heart rate. Each zone corresponds to a specific intensity and offers unique benefits for your cardiovascular health.",
+      },
+      table: {
+        title: "Reference Table of Heart Rates by Age",
+        col1: "Age",
+        col2: "FCM",
+        col3: "50% Intensity",
+        col4: "85% Intensity",
+        avertiser: "* These values are averages. Your actual FCM may vary by ±10-15 bpm.",
+      },
+      details: {
+        title: "The 5 Training Zones Explained in Detail",
+        benefits: "Benefits",
+        zone1_title: "Zone 1 : Warm Up (50-60% FCM)",
+        zone1_content:
+          "The warm up zone is ideal for starting a session, recovering between intervals, or finishing a workout. At this intensity, you can maintain a normal conversation without getting out of breath.",
+        zone1_details_1: "Improves blood circulation",
+        zone1_details_2: "Prepares muscles and joints",
+        zone1_details_3: "Reduces the risk of injury",
+        zone1_details_4: "Favorizes active recovery",
+        zone1_duration: "Recommended Duration",
+        zone1_duration_value: "5-10 minutes at the beginning/end of a session",
+        zone1_duration_value_2: "20-30 minutes for active recovery",
+        zone2_title: "Zone 2 : Fat Burn (60-70% FCM)",
+        zone2_content:
+          "In this zone, your body primarily uses fat as fuel. It's the optimal intensity for developing your aerobic base and improving metabolic efficiency.",
+        zone2_details_1: "Maximizes fat utilization",
+        zone2_details_2: "Develops aerobic endurance",
+        zone2_details_3: "Improves cardiac efficiency",
+        zone2_details_4: "Strengthens the immune system",
+        zone2_duration: "Recommended Duration",
+        zone2_duration_value: "30-90 minutes for endurance",
+        zone2_duration_value_2: "45-60 minutes for weight loss",
+        zone3_title: "Zone 3 : Aerobic (70-80% FCM)",
+        zone3_content:
+          "The aerobic zone significantly improves your cardiovascular capacity. You breathe harder but can still speak in short sentences. It's the main training zone for most athletes.",
+        zone3_details_1: "Increases pulmonary capacity",
+        zone3_details_2: "Improves cardiovascular endurance",
+        zone3_details_3: "Strengthens the heart",
+        zone3_details_4: "Optimizes oxygen utilization",
+        zone3_duration: "Recommended Duration",
+        zone3_duration_value: "20-60 minutes continuously",
+        zone3_duration_value_2: "Intervals of 5-15 minutes",
+        zone4_title: "Zone 4 : Anaerobic (80-90% FCM)",
+        zone4_content:
+          "In the anaerobic zone, your body produces lactic acid faster than it can eliminate it. This intensity develops power and speed but can't be sustained for long periods.",
+        zone4_details_1: "Increases muscle power",
+        zone4_details_2: "Improves lactate tolerance",
+        zone4_details_3: "Develops speed",
+        zone4_details_4: "Strengthens the mind",
+        zone4_duration: "Recommended Duration",
+        zone4_duration_value: "Intervals of 2-8 minutes",
+        zone4_duration_value_2: "Equal or double recovery",
+        zone5_title: "Zone 5 : VO2 Max (90-100% FCM)",
+        zone5_content:
+          "The VO2 Max zone represents the maximum effort. At this intensity, you can only pronounce a few words and the effort is unbearable beyond a few minutes. Reserved for experienced athletes.",
+        zone5_details_1: "Maximizes aerobic capacity",
+        zone5_details_2: "Improves running economy",
+        zone5_details_3: "Develops maximum power",
+        zone5_details_4: "Pushes mental limits",
+        zone5_duration: "Recommended Duration",
+        zone5_duration_value: "Intervals of 30s to 2 minutes",
+        zone5_duration_value_2: "Maximum 1-2 times per week",
+      },
+      training_tips: {
+        title: "Expert Training Tips to Optimize Your Training",
+        tip1: {
+          title: "Progressive Warm-up",
+          description: "Always start with 5-10 minutes in Zone 1 (50-60%) to prepare your cardiovascular system.",
+        },
+        tip2: {
+          title: "80/20 Rule",
+          description: "80% of your training in Zones 1-3 (aerobic), 20% in Zones 4-5 (anaerobic) for optimal development.",
+        },
+        tip3: {
+          title: "Active Recovery",
+          description: "After an intense effort, gradually return to Zone 1-2 for 5-10 minutes.",
+        },
+        tip4: {
+          title: "Constant Hydration",
+          description: "Drink before, during, and after exercise. Dehydration increases heart rate.",
+        },
+        tip5: {
+          title: "Restorative Sleep",
+          description: "7-9 hours of sleep allows better recovery and a lower resting heart rate.",
+        },
+        tip6: {
+          title: "Gradual Progression",
+          description: "Increase intensity or duration by 10% maximum per week to avoid overtraining.",
+        },
+      },
+      training_tips_2: {
+        title: "Practical Tips",
+        title1: "Find your zone",
+        description1: "Each zone has a different goal. Choose based on your goal!",
+        title2: "Recommended Duration",
+        description2: "The higher the intensity, the shorter the duration.",
+        title3: "Progression",
+        description3: "Start slowly and gradually increase the intensity.",
+        title4: "Listen to your body",
+        description4: "If you feel bad, slow down immediately.",
+      },
+      quick_facts: {
+        title: "Did you know?",
+        fact1: "220 - your age = approximate maximum heart rate",
+        fact2: "Measure your pulse in the morning to know your resting heart rate",
+        fact3: "A smartwatch can track your heart rate in real time",
+        fact4: "80% of your training should be in zones 1-3",
+      },
+      weekly_plan: {
+        title: "Typical Weekly Plan",
+        description: "An example of a balanced weekly training plan",
+        monday: {
+          title: "Zone 1-2",
+          description: "30-45 min",
+        },
+        tuesday: {
+          title: "Zone 2-3",
+          description: "45-60 min",
+        },
+        wednesday: {
+          title: "Repos",
+          description: "Recovery",
+        },
+        thursday: {
+          title: "Zone 3-4",
+          description: "30-40 min",
+        },
+        friday: {
+          title: "Zone 1-2",
+          description: "30 min",
+        },
+        saturday: {
+          title: "Zone 4-5",
+          description: "20-30 min",
+        },
+        tips: "💡 Adapt this plan according to your level and goals!",
+        cta: "⬆️ Calculate my zones now",
+      },
+      seo_faq_title: "Frequently Asked Questions about Heart Rate Zones",
+      seo_faq_q1_question: "What is the maximum heart rate (FCM)?",
+      seo_faq_q1_answer:
+        "The maximum heart rate is the maximum number of beats per minute your heart can reach during an intense physical effort. It is generally calculated with the formula: 220 - your age. However, this formula can vary by ±10-15 bpm depending on individuals.",
+      seo_faq_q2_question: "How to measure my resting heart rate?",
+      seo_faq_q2_answer:
+        "Measure your pulse for 60 seconds immediately after waking up, before getting out of bed. Count the beats for 60 seconds or 15 seconds and multiply by 4. Repeat for 3-5 days and use the average. A normal resting heart rate is between 60-100 bpm.",
+      seo_faq_q3_question: "What zone is best for weight loss?",
+      seo_faq_q3_answer:
+        "The Fat Burn Zone (60-70%) is optimal for burning fat as fuel. However, higher intensity zones burn more total calories. Mix zones for best results - include both fat burn and higher intensity workouts.",
+      seo_faq_q4_question: "Can I train in the VO2 Max zone every day?",
+      seo_faq_q4_answer:
+        "No, the VO2 Max zone is extremely intense and should only be used 1-2 times per week for short intervals (30 seconds to 2 minutes). Most of your training should be in the aerobic zones to build endurance and allow recovery.",
+      seo_faq_q5_question: "Is the 220-age formula accurate?",
+      seo_faq_q5_answer:
+        "It's a general estimate that works for most people but can vary by ±10-15 bpm. For more accuracy, consider a supervised max heart rate test or use the Karvonen formula with your actual measurements.",
+      seo_faq_q6_question: "How to know if I'm in the right zone?",
+      seo_faq_q6_answer:
+        "Use a heart rate monitor for the most accurate measurement. Without a device, use the speech test: Light zone = easy conversation, Moderate zone = short sentences, High zone = isolated words only.",
+      seo_faq_q7_question: "Do zones change with improving fitness?",
+      seo_faq_q7_answer:
+        "Yes, with training, your resting heart rate decreases and your cardiac efficiency improves. Recalculate your zones every 2-3 months to adjust your training.",
+      seo_faq_q8_question: "What is the difference between the Basic and Karvonen formulas?",
+      seo_faq_q8_answer:
+        "The Basic formula only uses age (THR = FCM × %Intensity). The Karvonen formula is more accurate because it takes your RHR into account: THR = [(FCM - RHR) × %Intensity] + RHR.",
+      intern_links_title: "Ready to Optimize Your Training?",
+      intern_links_subtitle: "Use our calculator to discover your personalized zones and transform your fitness",
+      intern_links_button: "Calculate My Zones Now",
+      intern_links_bmi_title: "BMI Calculator",
+      intern_links_bmi_description: "Evaluate your body mass index",
+      intern_links_calorie_title: "Calorie Calculator",
+      intern_links_calorie_description: "Determine your daily calorie needs",
+      intern_links_macro_title: "Macro Calculator",
+      intern_links_macro_description: "Optimize your nutritional distribution",
+      medical_warning_title: "Medical Warning",
+      medical_warning_content:
+        "This calculator provides estimates based on general formulas. Results may vary based on your physical condition, medications, and health status. Always consult a healthcare professional before starting a new exercise program, particularly if you have pre-existing medical conditions or experience unusual symptoms during exercise.",
+      educational: {
+        title: "Understanding Heart Rate Training",
+        description: "Visualize each training zone easily",
+        what_are_zones: {
+          title: "What Are Heart Rate Zones?",
+          content:
+            "Heart rate zones are ranges of heart beats per minute that correspond to different exercise intensities. Training in specific zones helps you achieve different fitness goals more effectively.",
+        },
+        why_use_zones: {
+          title: "Why Use Heart Rate Zones?",
+          content:
+            "Training with heart rate zones ensures you're exercising at the right intensity for your goals. It prevents overtraining, maximizes results, and helps you train more efficiently.",
+        },
+        zone_distribution: {
+          title: "Recommended Weekly Zone Distribution",
+          content:
+            "For balanced fitness: 80% in Zones 1-3 (aerobic base), 15% in Zone 4 (threshold), 5% in Zone 5 (VO2 max). Adjust based on your specific goals and fitness level.",
+        },
+        monitoring: {
+          title: "How to Monitor Your Heart Rate",
+          content:
+            "Use a chest strap for most accuracy, or a wrist-based monitor for convenience. Check your heart rate regularly during exercise and adjust intensity to stay in your target zone.",
+        },
+      },
+    },
     "one-rep-max": {
       title: "1RM Calculator",
       description: "Estimate your one rep max and plan your strength training percentages",
@@ -687,14 +1015,15 @@ export default {
         keywords: "BMI calculator, body mass index, health assessment, weight status, BMI tools, pediatric BMI, athlete BMI",
       },
       understanding_bmi: "Understanding BMI",
-      bmi_explanation: "BMI is a screening tool that helps assess whether you're at a healthy weight for your height. Choose the right calculator for your needs:",
+      bmi_explanation:
+        "BMI is a screening tool that helps assess whether you're at a healthy weight for your height. Choose the right calculator for your needs:",
       recommendation_standard: "Best for general population and initial health screening",
       recommendation_adjusted: "More accurate for athletes and muscular individuals",
       recommendation_pediatric: "Specialized for children and adolescents with age-specific percentiles",
       popularity: "Popularity",
       accuracy: "Accuracy",
       accuracy_high: "High",
-      accuracy_good: "Good", 
+      accuracy_good: "Good",
       accuracy_medium: "Medium",
       best_for: "Best for",
       best_for_general: "General use",
@@ -708,11 +1037,13 @@ export default {
         title: "Standard BMI Calculator",
         description: "Classic BMI calculation using the standard WHO formula. Quick and easy assessment for general population.",
         page_title: "Standard BMI Calculator",
-        page_description: "Calculate your Body Mass Index using the standard WHO formula. Get instant results with health category and personalized recommendations.",
+        page_description:
+          "Calculate your Body Mass Index using the standard WHO formula. Get instant results with health category and personalized recommendations.",
       },
       adjusted: {
         title: "Adjusted BMI Calculator",
-        description: "Enhanced BMI calculation that considers muscle mass and body composition for more accurate results in athletic individuals.",
+        description:
+          "Enhanced BMI calculation that considers muscle mass and body composition for more accurate results in athletic individuals.",
       },
       pediatric: {
         title: "Pediatric BMI Calculator",
@@ -744,17 +1075,17 @@ export default {
     units: "Units",
     metric: "Metric (kg/cm)",
     imperial: "Imperial (lbs/ft)",
-    
+
     // Detailed BMI Categories (WHO)
     category_severe_thinness: "Severe Thinness",
-    category_moderate_thinness: "Moderate Thinness", 
+    category_moderate_thinness: "Moderate Thinness",
     category_mild_thinness: "Mild Thinness",
     category_normal: "Normal Weight",
     category_overweight: "Overweight",
     category_obese_class_1: "Obesity Class I",
     category_obese_class_2: "Obesity Class II",
     category_obese_class_3: "Obesity Class III",
-    
+
     // Health Risks
     risk_low: "Low",
     risk_normal: "Normal",
@@ -762,28 +1093,30 @@ export default {
     risk_high: "High",
     risk_very_high: "Very High",
     risk_extremely_high: "Extremely High",
-    
+
     // Additional Information
     bmi_range: "BMI Range",
     ideal_weight: "Ideal Weight Range",
     weight_to_lose: "Weight to Lose",
     weight_to_gain: "Weight to Gain",
     normal_range: "Normal BMI range: 18.5 - 24.9",
-    
+
     // BMI Prime
     about_bmi_prime: "About BMI Prime",
-    bmi_prime_explanation: "BMI Prime is the ratio of your BMI to the upper limit of normal BMI (25). A value of 1.0 means you're at the upper limit of normal weight.",
+    bmi_prime_explanation:
+      "BMI Prime is the ratio of your BMI to the upper limit of normal BMI (25). A value of 1.0 means you're at the upper limit of normal weight.",
     underweight: "Underweight",
     normal: "Normal",
-    overweight: "Overweight", 
+    overweight: "Overweight",
     obese: "Obese",
-    
+
     // Limitations
     limitations_title: "BMI Limitations",
-    limitations_text: "BMI doesn't distinguish between muscle and fat mass. Athletes and very muscular individuals may have high BMI despite being healthy. Age, sex, ethnicity, and body composition also affect interpretation.",
-    
+    limitations_text:
+      "BMI doesn't distinguish between muscle and fat mass. Athletes and very muscular individuals may have high BMI despite being healthy. Age, sex, ethnicity, and body composition also affect interpretation.",
+
     disclaimer: "BMI is a screening tool and may not reflect body composition. Consult healthcare professionals for personalized advice.",
-    
+
     // Recommendations
     recommendations: {
       severe_thinness: {
@@ -843,7 +1176,7 @@ export default {
         multidisciplinary: "Multidisciplinary approach with medical team",
       },
     },
-    
+
     // Health Risks
     health_risks: {
       overweight: {
@@ -876,19 +1209,23 @@ export default {
         underlying_conditions: "May indicate underlying medical conditions",
       },
     },
-    
+
     // Educational Content
     educational: {
       introduction_title: "BMI Introduction",
-      introduction_text: "BMI is a measurement of a person's leanness or corpulence based on their height and weight, and is intended to quantify tissue mass. It is widely used as a general indicator of whether a person has a healthy body weight for their height.",
-      introduction_usage: "Specifically, the value obtained from the calculation of BMI is used to categorize whether a person is underweight, normal weight, overweight, or obese depending on what range the value falls between. These ranges of BMI vary based on factors such as region and age, and are sometimes further divided into subcategories such as severely underweight or very severely obese.",
-      
+      introduction_text:
+        "BMI is a measurement of a person's leanness or corpulence based on their height and weight, and is intended to quantify tissue mass. It is widely used as a general indicator of whether a person has a healthy body weight for their height.",
+      introduction_usage:
+        "Specifically, the value obtained from the calculation of BMI is used to categorize whether a person is underweight, normal weight, overweight, or obese depending on what range the value falls between. These ranges of BMI vary based on factors such as region and age, and are sometimes further divided into subcategories such as severely underweight or very severely obese.",
+
       adult_table_title: "BMI Table for Adults",
-      adult_table_description: "This is the World Health Organization's (WHO) recommended body weight based on BMI values for adults. It is used for both men and women, age 20 or older.",
-      
+      adult_table_description:
+        "This is the World Health Organization's (WHO) recommended body weight based on BMI values for adults. It is used for both men and women, age 20 or older.",
+
       children_table_title: "BMI Table for Children and Teens, Age 2-20",
-      children_table_description: "The Centers for Disease Control and Prevention (CDC) recommends BMI categorization for children and teens between age 2 and 20.",
-      
+      children_table_description:
+        "The Centers for Disease Control and Prevention (CDC) recommends BMI categorization for children and teens between age 2 and 20.",
+
       classification: "Classification",
       bmi_range: "BMI Range - kg/m²",
       category: "Category",
@@ -897,28 +1234,29 @@ export default {
       healthy_weight: "Healthy Weight",
       at_risk_overweight: "At Risk of Overweight",
       overweight: "Overweight",
-      
+
       overweight_risks_title: "Risks Associated with Being Overweight",
-      overweight_risks_intro: "Being overweight increases the risk of a number of serious diseases and health conditions. Below is a list of said risks, according to the Centers for Disease Control and Prevention (CDC):",
-      
+      overweight_risks_intro:
+        "Being overweight increases the risk of a number of serious diseases and health conditions. Below is a list of said risks, according to the Centers for Disease Control and Prevention (CDC):",
+
       cardiovascular_risks: "Cardiovascular Risks",
       high_blood_pressure: "High blood pressure",
       cholesterol_issues: "Higher levels of LDL cholesterol, lower levels of HDL cholesterol, and high levels of triglycerides",
       coronary_heart_disease: "Coronary heart disease",
       stroke: "Stroke",
-      
+
       metabolic_risks: "Metabolic Risks",
       type_2_diabetes: "Type II diabetes",
       gallbladder_disease: "Gallbladder disease",
       sleep_apnea: "Sleep apnea and breathing problems",
       osteoarthritis: "Osteoarthritis, a type of joint disease caused by breakdown of joint cartilage",
-      
+
       other_risks: "Other Health Risks",
       certain_cancers: "Certain cancers (endometrial, breast, colon, kidney, gallbladder, liver)",
       mental_health_issues: "Mental illnesses such as clinical depression, anxiety, and others",
       reduced_quality_life: "Low quality of life and body pains",
       increased_mortality: "Generally, an increased risk of mortality compared to those with a healthy BMI",
-      
+
       underweight_risks_title: "Risks Associated with Being Underweight",
       underweight_risks_intro: "Being underweight has its own associated risks, listed below:",
       malnutrition: "Malnutrition, vitamin deficiencies, anemia (lowered ability to carry blood vessels)",
@@ -928,30 +1266,31 @@ export default {
       reproductive_issues: "Possible reproductive issues for women due to hormonal imbalances",
       surgery_complications: "Potential complications as a result of surgery",
       increased_mortality_underweight: "Generally, an increased risk of mortality compared to those with a healthy BMI",
-      
+
       adults_limitations: "In Adults",
       older_adults_fat: "Older adults tend to have more body fat than younger adults with the same BMI",
       women_fat_difference: "Women tend to have more body fat than men for an equivalent BMI",
       athletes_muscle_mass: "Muscular individuals and highly trained athletes may have higher BMIs due to large muscle mass",
-      
+
       children_limitations: "In Children and Adolescents",
       height_maturation_influence: "Height and level of sexual maturation can influence BMI and body fat among children",
       fat_free_mass_difference: "BMI could be a result of increased levels of either fat or fat-free mass",
       population_accuracy: "BMI is fairly indicative of body fat for 90-95% of the population",
-      
+
       formulas_title: "BMI Formula",
       metric_formula: "Metric Formula",
       imperial_formula: "Imperial Formula",
       example: "Example",
-      
+
       bmi_prime_formula: "BMI Prime Formula",
       bmi_prime_description: "Ratio of your BMI to the upper limit of normal BMI (25)",
-      
+
       ponderal_index_title: "Ponderal Index",
-      ponderal_index_explanation: "The Ponderal Index (PI) is similar to BMI in that it measures the leanness or corpulence of a person based on their height and weight. The main difference between the PI and BMI is the cubing rather than squaring of the height in the formula. While BMI can be a useful tool when considering large populations, it is not reliable for determining leanness or corpulence in individuals.",
+      ponderal_index_explanation:
+        "The Ponderal Index (PI) is similar to BMI in that it measures the leanness or corpulence of a person based on their height and weight. The main difference between the PI and BMI is the cubing rather than squaring of the height in the formula. While BMI can be a useful tool when considering large populations, it is not reliable for determining leanness or corpulence in individuals.",
       ponderal_index_metric_description: "Ponderal Index using metric units",
       ponderal_index_imperial_description: "Ponderal Index using imperial units",
-      
+
       medical_disclaimer_title: "Medical Disclaimer",
     },
   },
@@ -1429,5 +1768,12 @@ export default {
     free: "Free",
     new: "New",
     coming_soon: "Coming soon",
+    monday: "Monday",
+    tuesday: "Tuesday",
+    wednesday: "Wednesday",
+    thursday: "Thursday",
+    friday: "Friday",
+    saturday: "Saturday",
+    sunday: "Sunday",
   },
 } as const;

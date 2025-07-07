@@ -483,6 +483,7 @@ export default {
         gain_fast_desc: "Prendre 1 kg par semaine - Croissance musculaire maximale",
       },
       results: {
+        overview: "Vue d'ensemble de vos zones",
         title: "Vos Résultats",
         bmr: "MB",
         bmr_explanation:
@@ -523,6 +524,346 @@ export default {
     "heart-rate-calculator": {
       title: "Zones de fréquence cardiaque",
       description: "Découvrez vos zones d'entraînement optimales pour brûler des graisses et performer",
+    },
+    "heart-rate-zones": {
+      title: "Calculateur de Zones de Fréquence Cardiaque",
+      description:
+        "Calculez vos zones d'entraînement de fréquence cardiaque optimales pour une performance maximale et la combustion des graisses",
+      page_title: "Calculateur de Zones de Fréquence Cardiaque",
+      page_description:
+        "Calculez vos zones d'entraînement de fréquence cardiaque personnalisées en utilisant des formules scientifiquement prouvées. Optimisez vos entraînements cardio pour brûler des graisses, l'endurance et la performance.",
+      meta: {
+        title: "Calculateur de Zones de Fréquence Cardiaque - Fréquence Cible et Zones d'Entraînement",
+        description:
+          "Calculez votre fréquence cardiaque maximale et vos zones d'entraînement personnalisées. Utilisez les formules de base ou Karvonen pour trouver vos zones VO2 Max, Anaérobie, Aérobie, Combustion des Graisses et Échauffement.",
+        keywords:
+          "calculateur zones fréquence cardiaque, fréquence cardiaque cible, fréquence cardiaque maximale, zones entraînement, zone VO2 max, zone anaérobie, zone aérobie, zone combustion graisses, formule Karvonen, entraînement fréquence cardiaque",
+      },
+      calculate: "Calculer les Zones",
+      calculating: "Calcul en cours...",
+      method: "Méthode de Calcul",
+      method_info: "Choisissez la formule qui convient le mieux à votre niveau de forme physique et aux données disponibles",
+      methods: {
+        basic: "Basique par Âge",
+        basic_desc: "Formule simple utilisant uniquement l'âge - bonne pour les débutants",
+        karvonen_age: "Karvonen par Âge et FCR",
+        karvonen_age_desc: "Plus précis en utilisant l'âge et la fréquence cardiaque au repos",
+        karvonen_custom: "Karvonen par FCM et FCR",
+        karvonen_custom_desc: "Le plus précis en utilisant les fréquences cardiaques maximale et au repos mesurées",
+      },
+      age: "Âge",
+      age_placeholder: "Entrez votre âge",
+      resting_heart_rate: "Fréquence Cardiaque au Repos (FCR)",
+      resting_heart_rate_placeholder: "Entrez votre FCR",
+      resting_heart_rate_info: "Mesurez votre fréquence cardiaque au réveil, avant de sortir du lit. La plage normale est de 60-100 bpm.",
+      max_heart_rate: "Fréquence Cardiaque Maximale (FCM)",
+      max_heart_rate_placeholder: "Entrez votre FCM",
+      max_heart_rate_info:
+        "Votre fréquence cardiaque maximale réelle d'un test d'effort ou d'un entraînement à effort maximal. Plus précis que les estimations basées sur l'âge.",
+
+      results: {
+        title: "Vos Zones de Fréquence Cardiaque",
+        max_heart_rate: "Fréquence Cardiaque Maximale",
+        heart_rate_reserve: "Réserve de Fréquence Cardiaque",
+        target_zones: "Zones d'Entraînement Cibles",
+        zone: "Zone",
+        intensity: "Intensité",
+        heart_rate_range: "Fréquence Cardiaque (bpm)",
+        benefits: "Bénéfices",
+        duration: "Durée Typique",
+      },
+      zones: {
+        warm_up: {
+          name: "Zone d'Échauffement",
+          intensity: "50-60%",
+          benefits: "🧘 Échauffement parfait",
+          example: "Marche tranquille",
+          duration: "5-10 minutes",
+          description: "Intensité très légère pour l'échauffement et la récupération",
+        },
+        fat_burn: {
+          name: "Zone de Combustion des Graisses",
+          intensity: "60-70%",
+          benefits: "🔥 Brûle les graisses",
+          example: "Jogging léger",
+          duration: "20-40 minutes",
+          description: "Intensité légère, rythme confortable pour des entraînements plus longs",
+        },
+        aerobic: {
+          name: "Zone Aérobie",
+          intensity: "70-80%",
+          benefits: "💪 Améliore l'endurance",
+          example: "Course modérée",
+          duration: "10-40 minutes",
+          description: "Intensité modérée, soutenable pendant des périodes prolongées",
+        },
+        anaerobic: {
+          name: "Zone Anaérobie",
+          intensity: "80-90%",
+          benefits: "⚡ Augmente la vitesse",
+          example: "Sprint court",
+          duration: "2-10 minutes",
+          description: "Intensité difficile, stimulante mais soutenable pour de courtes périodes",
+        },
+        vo2_max: {
+          name: "Zone VO2 Max",
+          intensity: "90-100%",
+          benefits: "🏆 Performance max",
+          example: "Sprint intense",
+          duration: "30 secondes - 2 minutes",
+          description: "Intensité maximale, soutenable uniquement pour de très courtes périodes",
+        },
+      },
+      formulas: {
+        basic_formula: "Formule de Base",
+        basic_explanation: "FCC = FCM × %Intensité",
+        karvonen_formula: "Formule Karvonen",
+        karvonen_explanation: "FCC = [(FCM - FCR) × %Intensité] + FCR",
+        mhr_calculation: "FCM = 220 - Âge",
+      },
+      abbreviations: {
+        thr: "FCC = Fréquence Cardiaque Cible",
+        mhr: "FCM = Fréquence Cardiaque Maximale",
+        rhr: "FCR = Fréquence Cardiaque au Repos",
+        hrr: "RFC = Réserve de Fréquence Cardiaque",
+        bpm: "bpm = Battements Par Minute",
+      },
+      tips: {
+        title: "Conseils d'Entraînement",
+        tip1: "Commencez par des zones de faible intensité si vous débutez l'exercice",
+        tip2: "Mélangez différentes zones dans votre entraînement hebdomadaire pour de meilleurs résultats",
+        tip3: "Utilisez un moniteur de fréquence cardiaque pour un suivi précis pendant les entraînements",
+        tip4: "Vos zones peuvent changer à mesure que votre condition physique s'améliore - recalculez périodiquement",
+      },
+      faq: {
+        title: "Questions Fréquemment Posées",
+        q1: "Quelle méthode de calcul dois-je utiliser ?",
+        a1: "Si vous débutez, utilisez la méthode Basique. Si vous connaissez votre fréquence cardiaque au repos, utilisez Karvonen par Âge pour plus de précision. Pour les zones les plus précises, utilisez Karvonen avec FCM et FCR mesurées.",
+        q2: "Comment mesurer ma fréquence cardiaque au repos ?",
+        a2: "Mesurez votre pouls pendant 60 secondes immédiatement après le réveil, avant de sortir du lit. Faites-le pendant 3-5 jours et utilisez la moyenne. La FCR normale est de 60-100 bpm, les valeurs plus basses indiquant une meilleure condition physique.",
+        q3: "Dans quelle zone dois-je m'entraîner pour perdre du poids ?",
+        a3: "La Zone de Combustion des Graisses (60-70%) est optimale pour brûler les graisses comme carburant. Cependant, les zones de plus haute intensité brûlent plus de calories totales. Mélangez les zones pour de meilleurs résultats - incluez à la fois des entraînements de combustion des graisses et de haute intensité.",
+        q4: "Quelle est la précision de la formule 220-âge ?",
+        a4: "C'est une estimation générale qui fonctionne pour la plupart des gens mais peut varier de ±10-15 bpm. Pour plus de précision, envisagez un test supervisé de fréquence cardiaque maximale ou utilisez la formule Karvonen avec vos mesures réelles.",
+        q5: "Puis-je m'entraîner dans la zone VO2 Max tous les jours ?",
+        a5: "Non, la zone VO2 Max est extrêmement intense et ne devrait être utilisée que 1-2 fois par semaine pour de courts intervalles. La plupart de l'entraînement devrait être dans les zones Aérobie et Combustion des Graisses pour construire l'endurance et permettre la récupération.",
+      },
+      guide: {
+        title: "Guide Complet des Zones de Fréquence Cardiaque pour l'Entraînement",
+        text1:
+          "Les zones de fréquence cardiaque sont un outil scientifique essentiel pour optimiser vos entraînements et atteindre vos objectifs fitness. Que vous cherchiez à perdre du poids, améliorer votre endurance ou augmenter vos performances, comprendre et utiliser les zones cardiaques transformera votre approche de l'exercice.",
+        text2:
+          "Ce calculateur utilise des formules validées scientifiquement pour déterminer vos zones personnalisées basées sur votre âge et, optionnellement, votre fréquence cardiaque au repos. Chaque zone correspond à une intensité spécifique et offre des bénéfices uniques pour votre santé cardiovasculaire.",
+      },
+      table: {
+        title: "Tableau de Référence des Fréquences Cardiaques par Âge",
+        col1: "Âge",
+        col2: "FCM",
+        col3: "50% Intensité",
+        col4: "85% Intensité",
+        avertiser: "* Ces valeurs sont des moyennes. Votre FCM réelle peut varier de ±10-15 bpm.",
+      },
+      details: {
+        title: "Les 5 Zones d'Entraînement Expliquées en Détail",
+        benefits: "Bénéfices",
+        zone1_title: "Zone 1 : Échauffement (50-60% FCM)",
+        zone1_content:
+          "La zone d'échauffement est idéale pour débuter une séance, récupérer entre les intervalles ou terminer un entraînement. À cette intensité, vous pouvez maintenir une conversation normale sans essoufflement.",
+        zone1_details_1: "Améliore la circulation sanguine",
+        zone1_details_2: "Prépare les muscles et articulations",
+        zone1_details_3: "Réduit le risque de blessures",
+        zone1_details_4: "Favorise la récupération active",
+        zone1_duration: "Durée recommandée",
+        zone1_duration_value: "5-10 minutes en début/fin de séance",
+        zone1_duration_value_2: "20-30 minutes pour la récupération active",
+        zone2_title: "Zone 2 : Combustion des Graisses (60-70% FCM)",
+        zone2_content:
+          "Dans cette zone, votre corps utilise principalement les graisses comme source d'énergie. C'est l'intensité optimale pour développer l'endurance de base et améliorer l'efficacité métabolique.",
+        zone2_details_1: "Maximise l'utilisation des graisses",
+        zone2_details_2: "Développe l'endurance aérobie",
+        zone2_details_3: "Améliore l'efficacité cardiaque",
+        zone2_details_4: "Renforce le système immunitaire",
+        zone2_duration: "Durée recommandée",
+        zone2_duration_value: "30-90 minutes pour l'endurance",
+        zone2_duration_value_2: "45-60 minutes pour la perte de poids",
+        zone3_title: "Zone 3 : Aérobie (70-80% FCM)",
+        zone3_content:
+          "La zone aérobie améliore significativement votre capacité cardiovasculaire. Vous respirez plus fort mais pouvez encore prononcer des phrases courtes. C'est la zone d'entraînement principale pour la plupart des athlètes.",
+        zone3_details_1: "Augmente la capacité pulmonaire",
+        zone3_details_2: "Améliore l'endurance cardiovasculaire",
+        zone3_details_3: "Renforce le cœur",
+        zone3_details_4: "Optimise l'utilisation de l'oxygène",
+        zone3_duration: "Durée recommandée",
+        zone3_duration_value: "20-60 minutes en continu",
+        zone3_duration_value_2: "Intervalles de 5-15 minutes",
+        zone4_title: "Zone 4 : Anaérobie (80-90% FCM)",
+        zone4_content:
+          "Dans la zone anaérobie, votre corps produit de l'acide lactique plus rapidement qu'il ne peut l'éliminer. Cette intensité développe la puissance et la vitesse mais ne peut être maintenue longtemps.",
+        zone4_details_1: "Augmente la puissance musculaire",
+        zone4_details_2: "Améliore la tolérance au lactate",
+        zone4_details_3: "Développe la vitesse",
+        zone4_details_4: "Renforce le mental",
+        zone4_duration: "Durée recommandée",
+        zone4_duration_value: "Intervalles de 2-8 minutes",
+        zone4_duration_value_2: "Récupération égale ou double",
+        zone5_title: "Zone 5 : VO2 Max (90-100% FCM)",
+        zone5_content:
+          "La zone VO2 Max représente l'effort maximal. À cette intensité, vous ne pouvez prononcer que quelques mots et l'effort est insoutenable au-delà de quelques minutes. Réservée aux athlètes expérimentés.",
+        zone5_details_1: "Maximise la capacité aérobie",
+        zone5_details_2: "Améliore l'économie de course",
+        zone5_details_3: "Développe la puissance maximale",
+        zone5_details_4: "Repousse les limites mentales",
+        zone5_duration: "Durée recommandée",
+        zone5_duration_value: "Intervalles de 30s à 2 minutes",
+        zone5_duration_value_2: "Maximum 1-2 fois par semaine",
+      },
+      educational: {
+        title: "Comprendre l'Entraînement par Fréquence Cardiaque",
+        description: "Visualisez facilement chaque zone d'entraînement",
+        what_are_zones: {
+          title: "Que Sont les Zones de Fréquence Cardiaque ?",
+          content:
+            "Les zones de fréquence cardiaque sont des plages de battements par minute qui correspondent à différentes intensités d'exercice. S'entraîner dans des zones spécifiques vous aide à atteindre différents objectifs de forme physique plus efficacement.",
+        },
+        why_use_zones: {
+          title: "Pourquoi Utiliser les Zones de Fréquence Cardiaque ?",
+          content:
+            "S'entraîner avec des zones de fréquence cardiaque garantit que vous vous exercez à la bonne intensité pour vos objectifs. Cela prévient le surentraînement, maximise les résultats et vous aide à vous entraîner plus efficacement.",
+        },
+        zone_distribution: {
+          title: "Distribution Hebdomadaire Recommandée des Zones",
+          content:
+            "Pour une forme physique équilibrée : 80% dans les Zones 1-3 (base aérobie), 15% dans la Zone 4 (seuil), 5% dans la Zone 5 (VO2 max). Ajustez en fonction de vos objectifs spécifiques et de votre niveau de forme physique.",
+        },
+        monitoring: {
+          title: "Comment Surveiller Votre Fréquence Cardiaque",
+          content:
+            "Utilisez une ceinture thoracique pour plus de précision, ou un moniteur au poignet pour la commodité. Vérifiez régulièrement votre fréquence cardiaque pendant l'exercice et ajustez l'intensité pour rester dans votre zone cible.",
+        },
+      },
+      training_tips: {
+        title: "Conseils d'Expert pour Optimiser votre Entraînement",
+        tip1: {
+          title: "Échauffement progressif",
+          description: "Commencez toujours par 5-10 minutes en zone 1 (50-60%) pour préparer votre système cardiovasculaire.",
+        },
+        tip2: {
+          title: "Règle du 80/20",
+          description: "80% de votre entraînement en zones 1-3 (aérobie), 20% en zones 4-5 (anaérobie) pour un développement optimal.",
+        },
+        tip3: {
+          title: "Récupération active",
+          description: "Après un effort intense, redescendez progressivement en zone 1-2 pendant 5-10 minutes.",
+        },
+        tip4: {
+          title: "Hydratation constante",
+          description: "Buvez avant, pendant et après l'exercice. La déshydratation augmente la fréquence cardiaque.",
+        },
+        tip5: {
+          title: "Sommeil réparateur",
+          description: "7-9 heures de sommeil permettent une meilleure récupération et une FCR plus basse.",
+        },
+        tip6: {
+          title: "Progression graduelle",
+          description: "Augmentez l'intensité ou la durée de 10% maximum par semaine pour éviter le surentraînement.",
+        },
+      },
+      training_tips_2: {
+        title: "Conseils pratiques",
+        title1: "Trouvez votre zone",
+        description1: "Chaque zone a un objectif différent. Choisissez selon votre but !",
+        title2: "Durée recommandée",
+        description2: "Plus l'intensité est élevée, plus la durée doit être courte.",
+        title3: "Progression",
+        description3: "Commencez doucement et augmentez progressivement l'intensité.",
+        title4: "Écoutez votre corps",
+        description4: "Si vous vous sentez mal, ralentissez immédiatement.",
+      },
+      quick_facts: {
+        title: "Le saviez-vous ?",
+        fact1: "220 - votre âge = Fréquence cardiaque maximale approximative",
+        fact2: "Mesurez votre pouls au réveil pour connaître votre fréquence au repos",
+        fact3: "Une montre connectée peut suivre votre fréquence en temps réel",
+        fact4: "80% de votre entraînement devrait être en zones 1-3",
+      },
+      weekly_plan: {
+        title: "Plan hebdomadaire type",
+        description: "Un exemple de semaine d'entraînement équilibrée",
+        monday: {
+          title: "Zone 1-2",
+          description: "30-45 min",
+        },
+        tuesday: {
+          title: "Zone 2-3",
+          description: "45-60 min",
+        },
+        wednesday: {
+          title: "Repos",
+          description: "Récupération",
+        },
+        thursday: {
+          title: "Zone 3-4",
+          description: "30-40 min",
+        },
+        friday: {
+          title: "Zone 1-2",
+          description: "30 min",
+        },
+        saturday: {
+          title: "Zone 4-5",
+          description: "20-30 min",
+        },
+        tips: "💡 Adaptez ce plan selon votre niveau et vos objectifs !",
+        cta: "⬆️ Calculer mes zones maintenant",
+      },
+      seo_faq_title: "Questions Fréquentes sur les Zones de Fréquence Cardiaque",
+      seo_faq_q1_question: "Qu'est-ce que la fréquence cardiaque maximale (FCM) ?",
+      seo_faq_q1_answer:
+        "La fréquence cardiaque maximale est le nombre maximal de battements par minute que votre cœur peut atteindre lors d'un effort physique intense. Elle est généralement calculée avec la formule : 220 - votre âge. Cependant, cette formule peut varier de ±10-15 bpm selon les individus.",
+      seo_faq_q2_question: "Comment mesurer ma fréquence cardiaque au repos ?",
+      seo_faq_q2_answer:
+        "Mesurez votre pouls au réveil, avant de sortir du lit. Comptez les battements pendant 60 secondes ou pendant 15 secondes et multipliez par 4. Répétez pendant 3-5 jours et utilisez la moyenne. Une FCR normale est entre 60-100 bpm.",
+      seo_faq_q3_question: "Quelle zone est la meilleure pour perdre du poids ?",
+      seo_faq_q3_answer:
+        "La zone de combustion des graisses (60-70% FCM) est optimale pour brûler les graisses comme carburant. Cependant, les zones plus intenses brûlent plus de calories totales. Pour une perte de poids efficace, alternez entre différentes zones.",
+      seo_faq_q4_question: "Puis-je m'entraîner dans la zone VO2 Max tous les jours ?",
+      seo_faq_q4_answer:
+        "Non, la zone VO2 Max (90-100% FCM) est extrêmement intense et ne devrait être utilisée que 1-2 fois par semaine pour de courtes périodes (30 secondes à 2 minutes). La majorité de votre entraînement devrait être dans les zones aérobiques.",
+      seo_faq_q5_question: "La formule 220-âge est-elle précise ?",
+      seo_faq_q5_answer:
+        "C'est une estimation générale qui fonctionne pour la plupart des gens mais peut varier de ±10-15 bpm. Pour plus de précision, utilisez la formule de Karvonen avec votre FCR ou faites un test d'effort supervisé.",
+      seo_faq_q6_question: "Comment savoir si je suis dans la bonne zone ?",
+      seo_faq_q6_answer:
+        "Utilisez un cardiofréquencemètre pour une mesure précise. Sans appareil, utilisez le test de la parole : Zone légère = conversation facile, Zone modérée = phrases courtes, Zone intense = mots isolés seulement.",
+      seo_faq_q7_question: "Les zones changent-elles avec l'amélioration de ma condition physique ?",
+      seo_faq_q7_answer:
+        "Oui, avec l'entraînement, votre fréquence cardiaque au repos diminue et votre efficacité cardiaque s'améliore. Recalculez vos zones tous les 2-3 mois pour ajuster votre entraînement.",
+      seo_faq_q8_question: "Quelle est la différence entre les formules Basic et Karvonen ?",
+      seo_faq_q8_answer:
+        "La formule Basic utilise seulement l'âge (THR = FCM × %Intensité). La formule Karvonen est plus précise car elle prend en compte votre FCR : THR = [(FCM - FCR) × %Intensité] + FCR.",
+      intern_links_title: "Prêt à Optimiser vos Entraînements ?",
+      intern_links_subtitle: "Utilisez notre calculateur pour découvrir vos zones personnalisées et transformez votre fitness",
+      intern_links_button: "Calculer Mes Zones Maintenant",
+      intern_links_bmi_title: "Calculateur d'IMC",
+      intern_links_bmi_description: "Évaluez votre indice de masse corporelle",
+      intern_links_calorie_title: "Calculateur de Calories",
+      intern_links_calorie_description: "Déterminez vos besoins caloriques quotidiens",
+      intern_links_macro_title: "Calculateur de Macros",
+      intern_links_macro_description: "Optimisez votre répartition nutritionnelle",
+      cta: {
+        title: "Prêt à Optimiser vos Entraînements ?",
+        subtitle: "Utilisez notre calculateur pour découvrir vos zones personnalisées et transformez votre fitness",
+        button: "Calculer Mes Zones Maintenant",
+        bmi_title: "Calculateur d'IMC",
+        bmi_description: "Évaluez votre indice de masse corporelle",
+        calorie_title: "Calculateur de Calories",
+        calorie_description: "Déterminez vos besoins caloriques quotidiens",
+        macro_title: "Calculateur de Macros",
+        macro_description: "Optimisez votre répartition nutritionnelle",
+      },
+      medical_warning_title: "Avertissement Médical Important",
+      medical_warning_content:
+        "Ce calculateur fournit des estimations basées sur des formules générales. Les résultats peuvent varier selon votre condition physique, vos médicaments et votre état de santé. Consultez toujours un professionnel de santé avant de commencer un nouveau programme d'exercice, particulièrement si vous avez des conditions médicales préexistantes ou si vous ressentez des symptômes inhabituels pendant l'exercice.",
     },
     "one-rep-max": {
       title: "Calculateur 1RM",
@@ -716,7 +1057,8 @@ export default {
         title: "Calculateur IMC Standard",
         description: "Calcul IMC classique utilisant la formule standard OMS. Évaluation rapide et facile pour la population générale.",
         page_title: "Calculateur IMC Standard",
-        page_description: "Calculez votre Indice de Masse Corporelle en utilisant la formule standard de l'OMS. Obtenez des résultats instantanés avec catégorie de santé et recommandations personnalisées.",
+        page_description:
+          "Calculez votre Indice de Masse Corporelle en utilisant la formule standard de l'OMS. Obtenez des résultats instantanés avec catégorie de santé et recommandations personnalisées.",
       },
       adjusted: {
         title: "Calculateur IMC Ajusté",
@@ -797,7 +1139,7 @@ export default {
 
     disclaimer:
       "L'IMC est un outil de dépistage et peut ne pas refléter la composition corporelle. Consultez des professionnels de santé pour des conseils personnalisés.",
-    
+
     // Recommendations
     recommendations: {
       severe_thinness: {
@@ -857,7 +1199,7 @@ export default {
         multidisciplinary: "Approche multidisciplinaire avec équipe médicale",
       },
     },
-    
+
     // Health Risks
     health_risks: {
       overweight: {
@@ -890,19 +1232,23 @@ export default {
         underlying_conditions: "Peut indiquer des conditions médicales sous-jacentes",
       },
     },
-    
+
     // Educational Content
     educational: {
       introduction_title: "Introduction à l'IMC",
-      introduction_text: "L'IMC est une mesure de la maigreur ou de la corpulence d'une personne basée sur sa taille et son poids, et vise à quantifier la masse tissulaire. Il est largement utilisé comme indicateur général pour déterminer si une personne a un poids santé par rapport à sa taille.",
-      introduction_usage: "Spécifiquement, la valeur obtenue du calcul de l'IMC est utilisée pour catégoriser si une personne est en insuffisance pondérale, poids normal, surpoids ou obèse selon la plage dans laquelle la valeur se situe. Ces plages d'IMC varient selon des facteurs comme la région et l'âge, et sont parfois subdivisées en sous-catégories comme insuffisance pondérale sévère ou obésité très sévère.",
-      
+      introduction_text:
+        "L'IMC est une mesure de la maigreur ou de la corpulence d'une personne basée sur sa taille et son poids, et vise à quantifier la masse tissulaire. Il est largement utilisé comme indicateur général pour déterminer si une personne a un poids santé par rapport à sa taille.",
+      introduction_usage:
+        "Spécifiquement, la valeur obtenue du calcul de l'IMC est utilisée pour catégoriser si une personne est en insuffisance pondérale, poids normal, surpoids ou obèse selon la plage dans laquelle la valeur se situe. Ces plages d'IMC varient selon des facteurs comme la région et l'âge, et sont parfois subdivisées en sous-catégories comme insuffisance pondérale sévère ou obésité très sévère.",
+
       adult_table_title: "Tableau IMC pour Adultes",
-      adult_table_description: "Voici les recommandations de l'Organisation Mondiale de la Santé (OMS) pour le poids corporel basé sur les valeurs d'IMC pour les adultes. Il est utilisé pour les hommes et les femmes, âgés de 20 ans ou plus.",
-      
+      adult_table_description:
+        "Voici les recommandations de l'Organisation Mondiale de la Santé (OMS) pour le poids corporel basé sur les valeurs d'IMC pour les adultes. Il est utilisé pour les hommes et les femmes, âgés de 20 ans ou plus.",
+
       children_table_title: "Tableau IMC pour Enfants et Adolescents, Âge 2-20",
-      children_table_description: "Les Centres de Contrôle et de Prévention des Maladies (CDC) recommandent la catégorisation IMC pour les enfants et adolescents entre 2 et 20 ans.",
-      
+      children_table_description:
+        "Les Centres de Contrôle et de Prévention des Maladies (CDC) recommandent la catégorisation IMC pour les enfants et adolescents entre 2 et 20 ans.",
+
       classification: "Classification",
       bmi_range: "Plage IMC - kg/m²",
       category: "Catégorie",
@@ -911,28 +1257,29 @@ export default {
       healthy_weight: "Poids Santé",
       at_risk_overweight: "À Risque de Surpoids",
       overweight: "Surpoids",
-      
+
       overweight_risks_title: "Risques Associés au Surpoids",
-      overweight_risks_intro: "Le surpoids augmente le risque de nombreuses maladies graves et conditions de santé. Voici une liste de ces risques, selon les Centres de Contrôle et de Prévention des Maladies (CDC) :",
-      
+      overweight_risks_intro:
+        "Le surpoids augmente le risque de nombreuses maladies graves et conditions de santé. Voici une liste de ces risques, selon les Centres de Contrôle et de Prévention des Maladies (CDC) :",
+
       cardiovascular_risks: "Risques Cardiovasculaires",
       high_blood_pressure: "Hypertension artérielle",
       cholesterol_issues: "Niveaux élevés de cholestérol LDL, niveaux faibles de cholestérol HDL, et niveaux élevés de triglycérides",
       coronary_heart_disease: "Maladie coronarienne",
       stroke: "Accident vasculaire cérébral",
-      
+
       metabolic_risks: "Risques Métaboliques",
       type_2_diabetes: "Diabète de type II",
       gallbladder_disease: "Maladie de la vésicule biliaire",
       sleep_apnea: "Apnée du sommeil et problèmes respiratoires",
       osteoarthritis: "Arthrose, un type de maladie articulaire causée par la dégradation du cartilage articulaire",
-      
+
       other_risks: "Autres Risques de Santé",
       certain_cancers: "Certains cancers (endomètre, sein, côlon, rein, vésicule biliaire, foie)",
       mental_health_issues: "Maladies mentales comme la dépression clinique, l'anxiété et autres",
       reduced_quality_life: "Qualité de vie réduite et douleurs corporelles",
       increased_mortality: "Généralement, un risque accru de mortalité comparé à ceux avec un IMC sain",
-      
+
       underweight_risks_title: "Risques Associés à l'Insuffisance Pondérale",
       underweight_risks_intro: "L'insuffisance pondérale a ses propres risques associés, listés ci-dessous :",
       malnutrition: "Malnutrition, carences vitaminiques, anémie (capacité réduite de transport sanguin)",
@@ -942,30 +1289,33 @@ export default {
       reproductive_issues: "Problèmes reproductifs possibles pour les femmes dus aux déséquilibres hormonaux",
       surgery_complications: "Complications potentielles résultant de chirurgie",
       increased_mortality_underweight: "Généralement, un risque accru de mortalité comparé à ceux avec un IMC sain",
-      
+
       adults_limitations: "Chez les Adultes",
       older_adults_fat: "Les adultes âgés ont tendance à avoir plus de graisse corporelle que les jeunes adultes avec le même IMC",
       women_fat_difference: "Les femmes ont tendance à avoir plus de graisse corporelle que les hommes pour un IMC équivalent",
-      athletes_muscle_mass: "Les individus musclés et athlètes très entraînés peuvent avoir des IMC plus élevés dus à une grande masse musculaire",
-      
+      athletes_muscle_mass:
+        "Les individus musclés et athlètes très entraînés peuvent avoir des IMC plus élevés dus à une grande masse musculaire",
+
       children_limitations: "Chez les Enfants et Adolescents",
-      height_maturation_influence: "La taille et le niveau de maturation sexuelle peuvent influencer l'IMC et la graisse corporelle chez les enfants",
+      height_maturation_influence:
+        "La taille et le niveau de maturation sexuelle peuvent influencer l'IMC et la graisse corporelle chez les enfants",
       fat_free_mass_difference: "L'IMC pourrait résulter de niveaux accrus soit de graisse soit de masse maigre",
       population_accuracy: "L'IMC est assez indicatif de la graisse corporelle pour 90-95% de la population",
-      
+
       formulas_title: "Formule IMC",
       metric_formula: "Formule Métrique",
       imperial_formula: "Formule Impériale",
       example: "Exemple",
-      
+
       bmi_prime_formula: "Formule IMC Prime",
       bmi_prime_description: "Rapport de votre IMC à la limite supérieure de l'IMC normal (25)",
-      
+
       ponderal_index_title: "Indice Pondéral",
-      ponderal_index_explanation: "L'Indice Pondéral (IP) est similaire à l'IMC en ce qu'il mesure la maigreur ou la corpulence d'une personne basée sur sa taille et son poids. La principale différence entre l'IP et l'IMC est l'élévation au cube plutôt qu'au carré de la taille dans la formule. Bien que l'IMC puisse être un outil utile pour considérer de grandes populations, il n'est pas fiable pour déterminer la maigreur ou la corpulence chez les individus.",
+      ponderal_index_explanation:
+        "L'Indice Pondéral (IP) est similaire à l'IMC en ce qu'il mesure la maigreur ou la corpulence d'une personne basée sur sa taille et son poids. La principale différence entre l'IP et l'IMC est l'élévation au cube plutôt qu'au carré de la taille dans la formule. Bien que l'IMC puisse être un outil utile pour considérer de grandes populations, il n'est pas fiable pour déterminer la maigreur ou la corpulence chez les individus.",
       ponderal_index_metric_description: "Indice Pondéral utilisant les unités métriques",
       ponderal_index_imperial_description: "Indice Pondéral utilisant les unités impériales",
-      
+
       medical_disclaimer_title: "Avertissement Médical",
     },
   },
@@ -1445,5 +1795,12 @@ export default {
     premium: "Premium",
     free: "Gratuit",
     new: "Nouveau",
+    monday: "Lundi",
+    tuesday: "Mardi",
+    wednesday: "Mercredi",
+    thursday: "Jeudi",
+    friday: "Vendredi",
+    saturday: "Samedi",
+    sunday: "Dimanche",
   },
 } as const;

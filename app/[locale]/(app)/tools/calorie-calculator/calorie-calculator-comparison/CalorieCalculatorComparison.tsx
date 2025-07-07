@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 
 import { useI18n } from "locales/client";
-import { calculateCalories, CalorieCalculatorInputs, CalorieResults } from "app/[locale]/(app)/tools/shared/calorie-formulas.utils";
 import { BodyFatInput } from "app/[locale]/(app)/tools/calorie-calculator/shared/components/BodyFatInput";
 import {
   ActivityLevelSelector,
@@ -14,6 +13,11 @@ import {
   UnitSelector,
   WeightInput,
 } from "app/[locale]/(app)/tools/calorie-calculator/shared/components";
+import {
+  calculateCalories,
+  CalorieCalculatorInputs,
+  CalorieResults,
+} from "app/[locale]/(app)/tools/calorie-calculator/shared/calorie-formulas.utils";
 
 interface FormulaResult {
   name: string;

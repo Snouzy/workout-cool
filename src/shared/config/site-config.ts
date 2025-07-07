@@ -14,9 +14,9 @@ export const SiteConfig = {
     "exercise database",
   ],
   prodUrl: "https://workout.cool",
+  logo: "/images/logo.png",
   domain: "workout.cool",
   appIcon: "/images/logo4.jpg",
-  cdnIcon: "https://cdn.workout.cool/images/53992ead-81ad-43d9-bc89-9abe9a6ed800/public", // TODO
   company: {
     name: "Workout Cool",
     address: "34 avenue des champ Elysée 75008 Paris, France",

@@ -38,20 +38,7 @@ export async function PUT(req: NextRequest) {
 
     // Handle ActionError instances
     if (error instanceof ActionError) {
-      let errorMessage = "PASSWORD_UPDATE_FAILED";
-      if (error.message.includes("do not match")) {
-        errorMessage = "PASSWORDS_DO_NOT_MATCH";
-      } else if (error.message.includes("current password")) {
-        errorMessage = "INVALID_CURRENT_PASSWORD";
-      } else if (error.message.includes("new password")) {
-        errorMessage = "INVALID_NEW_PASSWORD";
-      }
-      return NextResponse.json({ error: errorMessage }, { status: 400 });
-    }
-
-    // Handle specific errors
-    if (error.message?.includes("account")) {
-      return NextResponse.json({ error: "NO_PASSWORD_ACCOUNT" }, { status: 400 });
+      return NextResponse.json({ error: error.message }, { status: 400 });
     }
 
     return NextResponse.json({ error: "INTERNAL_SERVER_ERROR" }, { status: 500 });

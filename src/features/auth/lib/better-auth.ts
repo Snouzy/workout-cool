@@ -13,7 +13,7 @@ import { env } from "@/env";
 
 export const auth = betterAuth({
   // trustedOrigins: [SiteConfig.prodUrl, "localhost:3000", "https://better-auth.com", "http://localhost:3000"],
-  trustedOrigins: ["*"],
+  trustedOrigins: ["*", "workoutfast://", "expo://"],
   plugins: [
     admin(),
     customSession(async ({ user, session }) => {

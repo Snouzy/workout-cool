@@ -12,12 +12,10 @@ const updateProfileSchema = z.object({
 
 // GET current user profile
 export async function GET(req: NextRequest) {
-  console.log("req:", req);
   try {
     const session = await auth.api.getSession({
       headers: req.headers,
     });
-    console.log("session:", session);
 
     if (!session?.user) {
       return NextResponse.json({ error: "UNAUTHORIZED" }, { status: 401 });

@@ -3,6 +3,7 @@ CREATE TABLE "user_favorite_exercises" (
     "id" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
     "exerciseId" TEXT NOT NULL,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "user_favorite_exercises_pkey" PRIMARY KEY ("id")
 );

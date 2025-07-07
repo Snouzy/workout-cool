@@ -3,10 +3,10 @@
 import { revalidatePath } from "next/cache";
 
 import { prisma } from "@/shared/lib/prisma";
-import { authenticatedActionClient } from "@/shared/api/safe-actions";
+import { mobileAuthenticatedActionClient } from "@/shared/api/mobile-safe-actions";
 import { updateUserSchema } from "@/entities/user/schemas/update-user.schema";
 
-export const updateUserAction = authenticatedActionClient.schema(updateUserSchema).action(async ({ parsedInput, ctx }) => {
+export const updateUserAction = mobileAuthenticatedActionClient.schema(updateUserSchema).action(async ({ parsedInput, ctx }) => {
   const { user } = ctx;
 
   if (!user) {

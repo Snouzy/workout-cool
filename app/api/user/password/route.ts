@@ -1,8 +1,8 @@
 import { z } from "zod";
 import { NextRequest, NextResponse } from "next/server";
 
+import { getMobileCompatibleSession } from "@/shared/api/mobile-auth";
 import { updatePasswordAction } from "@/features/update-password/model/update-password.action";
-import { auth } from "@/features/auth/lib/better-auth";
 
 const changePasswordSchema = z.object({
   currentPassword: z.string().min(1),
@@ -12,10 +12,7 @@ const changePasswordSchema = z.object({
 
 export async function PUT(req: NextRequest) {
   try {
-    const session = await auth.api.getSession({
-      headers: req.headers,
-    });
-    console.log("session:", session);
+    const session = await getMobileCompatibleSession(req);
 
     if (!session?.user) {
       return NextResponse.json({ error: "UNAUTHORIZED" }, { status: 401 });

@@ -4,37 +4,7 @@ import { headers } from "next/headers";
 import { auth } from "@/features/auth/lib/better-auth";
 
 import { ActionError } from "./safe-actions";
-
-/**
- * Cleans malformed cookies from mobile app (same as in mobile-auth.ts)
- */
-function cleanMobileCookies(cookieHeader: string): string {
-  if (!cookieHeader) return "";
-
-  const cleaned = cookieHeader.replace(/,better-auth\./g, "; better-auth.");
-  const cookieMap = new Map<string, string>();
-
-  cleaned.split(";").forEach((cookie) => {
-    const trimmed = cookie.trim();
-    if (trimmed && trimmed.includes("=")) {
-      const [name, ...valueParts] = trimmed.split("=");
-      if (name && valueParts.length > 0) {
-        const cleanName = name.trim();
-        const value = valueParts.join("=").replace(/,\s*$/, "");
-
-        if (cleanName.startsWith("better-auth.")) {
-          cookieMap.set(cleanName, value);
-        } else if (!cookieMap.has(cleanName)) {
-          cookieMap.set(cleanName, value);
-        }
-      }
-    }
-  });
-
-  return Array.from(cookieMap.entries())
-    .map(([name, value]) => `${name}=${value}`)
-    .join("; ");
-}
+import { cleanMobileCookies } from "./mobile-cookie-utils";
 
 /**
  * Gets the authenticated user from headers, handling mobile app cookie issues

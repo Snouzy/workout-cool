@@ -2,46 +2,7 @@ import { NextRequest } from "next/server";
 
 import { auth } from "@/features/auth/lib/better-auth";
 
-/**
- * Cleans malformed cookies from mobile app (Expo)
- *
- * The Expo app sometimes sends cookies with commas instead of semicolons:
- * "token=abc,token=xyz" instead of "token=abc; token=xyz"
- *
- * This function fixes the format and removes duplicates.
- */
-function cleanMobileCookies(cookieHeader: string): string {
-  if (!cookieHeader) return "";
-
-  // Fix comma-separated cookies (replace ",better-auth." with "; better-auth.")
-  const cleaned = cookieHeader.replace(/,better-auth\./g, "; better-auth.");
-
-  // Parse and deduplicate cookies
-  const cookieMap = new Map<string, string>();
-
-  cleaned.split(";").forEach((cookie) => {
-    const trimmed = cookie.trim();
-    if (trimmed && trimmed.includes("=")) {
-      const [name, ...valueParts] = trimmed.split("=");
-      if (name && valueParts.length > 0) {
-        const cleanName = name.trim();
-        const value = valueParts.join("=").replace(/,\s*$/, ""); // Remove trailing comma
-
-        // For better-auth cookies, keep the last occurrence (most recent)
-        if (cleanName.startsWith("better-auth.")) {
-          cookieMap.set(cleanName, value);
-        } else if (!cookieMap.has(cleanName)) {
-          cookieMap.set(cleanName, value);
-        }
-      }
-    }
-  });
-
-  // Reconstruct clean cookie string
-  return Array.from(cookieMap.entries())
-    .map(([name, value]) => `${name}=${value}`)
-    .join("; ");
-}
+import { cleanMobileCookies } from "./mobile-cookie-utils";
 
 /**
  * Gets the authenticated session from a request, handling mobile app cookie issues

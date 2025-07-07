@@ -31,7 +31,7 @@ export function useSyncFavoriteExercises() {
 
     try {
       const res = await getFavoriteExercises();
-      if (!res?.serverError) {
+      if (res?.serverError) {
         throw new Error(res?.serverError);
       }
       const serverFavorites = res.data?.favorites ?? [];

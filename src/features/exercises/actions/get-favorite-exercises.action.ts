@@ -20,9 +20,9 @@ export const getFavoriteExercises = authenticatedActionClient
           updatedAt: "desc",
         },
       });
-      
-      return { 
-        success: true, 
+
+      return {
+        success: true,
         favorites: favorites.map(f => ({
           exerciseId: f.exerciseId,
           updatedAt: f.updatedAt.toISOString(),

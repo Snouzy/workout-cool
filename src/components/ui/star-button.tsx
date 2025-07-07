@@ -17,14 +17,15 @@ export function StarButton({ isActive, isLoading, onClick, className }: StarButt
       disabled={isLoading}
       onClick={onClick}
       className={cn(
-        "hover:bg-yellow-50 dark:hover:bg-yellow-900/20 transition-colors duration-200 h-4 w-4",
-        isActive && "text-yellow-500 hover:text-yellow-600",
-        !isActive && "text-gray-400 hover:text-yellow-500",
+        "transition-colors duration-200 h-6 w-6 !text-yellow-500 hover:!text-yellow-600",
         className,
       )}
     >
-      <Star className={cn("transition-all duration-200 h-4 w-4", isActive ? "fill-current" : "fill-none", isLoading && "animate-pulse")} />
+      <Star className={cn(
+        "transition-all duration-200 h-5 w-5",
+        isActive ? "fill-current" : "fill-none",
+        isLoading && "animate-pulse"
+      )} />
     </Button>
   );
 }
-

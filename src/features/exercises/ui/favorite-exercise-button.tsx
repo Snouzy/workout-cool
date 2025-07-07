@@ -1,8 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { createFavoriteExercise } from "@/features/exercises/actions/create-favorite-exercise.action";
-import { deleteFavoriteExercise } from "@/features/exercises/actions/delete-favorite-exercise.action";
 import { useSession } from "@/features/auth/lib/auth-client";
 import { StarButton } from "@/components/ui/star-button";
 import { brandedToast } from "@/components/ui/toast";
@@ -19,7 +17,6 @@ export function FavoriteExerciseButton({ exerciseId, className }: FavoriteExerci
   const [isLoading, setIsLoading] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
   const { syncFavoriteExercises } = useSyncFavoriteExercises();
-  const { data: session } = useSession();
   const t = useI18n();
 
   useEffect(() => {
@@ -46,6 +43,7 @@ export function FavoriteExerciseButton({ exerciseId, className }: FavoriteExerci
     if (newFavoriteState) {
       favoriteExercisesLocal.add(exerciseId); // status: "local"
       setIsFavorite(true);
+      brandedToast({ title: t("commons.added_to_favorites"), variant: "success" });
     } else {
       favoriteExercisesLocal.removeById(exerciseId);
       setIsFavorite(false);

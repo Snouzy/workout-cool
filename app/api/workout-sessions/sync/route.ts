@@ -32,6 +32,7 @@ export async function POST(request: NextRequest) {
       });
     }
 
+    console.error("Failed to sync session", JSON.stringify(result, null, 2));
     return NextResponse.json({ error: "Failed to sync session" }, { status: 500 });
   } catch (error) {
     console.error("Error in workout session sync:", error);

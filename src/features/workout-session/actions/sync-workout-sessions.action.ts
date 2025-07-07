@@ -6,8 +6,8 @@ import { ExerciseAttributeValueEnum } from "@prisma/client";
 import { workoutSessionStatuses } from "@/shared/lib/workout-session/types/workout-session";
 import { prisma } from "@/shared/lib/prisma";
 import { ALL_WORKOUT_SET_TYPES, WORKOUT_SET_UNITS_TUPLE } from "@/shared/constants/workout-set-types";
+import { ERROR_MESSAGES } from "@/shared/constants/errors";
 import { actionClient } from "@/shared/api/safe-actions";
-import { serverAuth } from "@/entities/user/model/get-server-session-user";
 
 const workoutSetSchema = z.object({
   id: z.string(),
@@ -37,14 +37,33 @@ const syncWorkoutSessionSchema = z.object({
   }),
 });
 
-export const syncWorkoutSessionAction = actionClient.schema(syncWorkoutSessionSchema).action(async ({ parsedInput }) => {
+export const syncWorkoutSessionAction = actionClient.schema(syncWorkoutSessionSchema).action(async ({ parsedInput, ctx }) => {
   try {
     const { session } = parsedInput;
-    const user = await serverAuth();
 
-    if (!user) {
-      console.error("❌ User not authenticated");
-      return { serverError: "NOT_AUTHENTICATED" };
+    // Check if user exists
+    const userExists = await prisma.user.findUnique({
+      where: { id: session.userId },
+    });
+
+    if (!userExists) {
+      console.error(`User with ID ${session.userId} does not exist`);
+      return { serverError: ERROR_MESSAGES.USER_NOT_FOUND };
+    }
+
+    // Check if all exercises exist
+    const exerciseIds = session.exercises.map((e) => e.id);
+    const existingExercises = await prisma.exercise.findMany({
+      where: { id: { in: exerciseIds } },
+      select: { id: true },
+    });
+
+    const existingExerciseIds = new Set(existingExercises.map((e) => e.id));
+    const missingExercises = exerciseIds.filter((id) => !existingExerciseIds.has(id));
+
+    if (missingExercises.length > 0) {
+      console.error("Missing exercises:", missingExercises);
+      return { serverError: `Exercises not found: ${missingExercises.join(", ")}` };
     }
 
     const { status: _s, ...sessionData } = session;

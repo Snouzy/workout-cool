@@ -3,18 +3,13 @@ import { NextRequest, NextResponse } from "next/server";
 import { getMobileCompatibleSession } from "@/shared/api/mobile-auth";
 import { getWorkoutSessionsAction } from "@/features/workout-session/actions/get-workout-sessions.action";
 
-export async function GET(request: NextRequest, { params }: { params: { userId: string } }) {
+export async function GET(request: NextRequest) {
   try {
     // Check authentication
     const session = await getMobileCompatibleSession(request);
 
     if (!session?.user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
-    // Only allow users to fetch their own sessions
-    if (session.user.id !== params.userId) {
-      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
     // Fetch workout sessions
@@ -28,6 +23,8 @@ export async function GET(request: NextRequest, { params }: { params: { userId: 
       endedAt: session.endedAt?.toISOString() || null,
       duration: session.duration || null,
       muscles: session.muscles || [],
+      rating: session.rating || null,
+      ratingComment: session.ratingComment || null,
       exercises: session.exercises.map((sessionExercise) => ({
         id: sessionExercise.exerciseId,
         order: sessionExercise.order,

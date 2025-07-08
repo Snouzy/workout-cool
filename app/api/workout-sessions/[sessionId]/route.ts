@@ -3,8 +3,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { getMobileCompatibleSession } from "@/shared/api/mobile-auth";
 import { deleteWorkoutSessionAction } from "@/features/workout-session/actions/delete-workout-session.action";
 
-export async function DELETE(request: NextRequest, { params }: { params: { sessionId: string } }) {
+export async function DELETE(request: NextRequest, { params }: { params: Promise<{ sessionId: string }> }) {
   try {
+    const { sessionId } = await params;
     // Check authentication
     const session = await getMobileCompatibleSession(request);
     if (!session?.user) {
@@ -13,7 +14,7 @@ export async function DELETE(request: NextRequest, { params }: { params: { sessi
 
     // Use the existing server action for deletion
     const result = await deleteWorkoutSessionAction({
-      id: params.sessionId,
+      id: sessionId,
     });
 
     if (result?.serverError) {

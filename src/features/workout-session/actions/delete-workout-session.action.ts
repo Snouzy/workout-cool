@@ -4,7 +4,6 @@ import { z } from "zod";
 
 import { prisma } from "@/shared/lib/prisma";
 import { actionClient } from "@/shared/api/safe-actions";
-import { serverAuth } from "@/entities/user/model/get-server-session-user";
 
 const deleteWorkoutSessionSchema = z.object({
   id: z.string(),
@@ -12,15 +11,8 @@ const deleteWorkoutSessionSchema = z.object({
 
 export const deleteWorkoutSessionAction = actionClient.schema(deleteWorkoutSessionSchema).action(async ({ parsedInput }) => {
   try {
-    const user = await serverAuth();
     const { id } = parsedInput;
 
-    if (!user) {
-      console.error("❌ User not authenticated");
-      return { serverError: "NOT_AUTHENTICATED" };
-    }
-
-    // Vérifier que la session appartient à l'utilisateur
     const session = await prisma.workoutSession.findUnique({
       where: { id },
       select: { userId: true },
@@ -29,11 +21,6 @@ export const deleteWorkoutSessionAction = actionClient.schema(deleteWorkoutSessi
     if (!session) {
       console.error("❌ Session not found:", id);
       return { serverError: "Session not found" };
-    }
-
-    if (session.userId !== user.id) {
-      console.error("❌ Unauthorized access to session:", id);
-      return { serverError: "Unauthorized" };
     }
 
     // Supprimer la session (cascade supprimera automatiquement les exercices et sets)

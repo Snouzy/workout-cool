@@ -285,6 +285,9 @@ model WorkoutSession {
   exercises WorkoutSessionExercise[]
   muscles   ExerciseAttributeValueEnum[] @default([])
 
+  rating        Int? // 1-5 star rating
+  ratingComment String? @db.Text // Optional comment for rating
+
   // Program progress tracking
   userSessionProgress UserSessionProgress?
 

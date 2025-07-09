@@ -1493,6 +1493,9 @@ export default {
       loading_exercises: "Ошибка загрузки упражнений",
     },
     no_exercises_found: "Упражнения не найдены. Попробуйте изменить выбор оборудования или мышц.",
+    addExercise: "Добавить упражнение",
+    exerciseAdded: "{name} добавлено в тренировку",
+    exercises: "упражнения",
     equipment: {
       bodyweight: {
         label: "Собственный вес",
@@ -1763,6 +1766,7 @@ export default {
     support: "Поддержка",
     change_language: "Изменить язык",
     in_progress: "В процессе",
+    close: "Закрыть",
     subscription: "Подписка",
     manage_subscription: "Управление подпиской",
     become_premium: "Стань Премиум",

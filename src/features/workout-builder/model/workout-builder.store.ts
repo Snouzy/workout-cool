@@ -27,6 +27,7 @@ interface WorkoutBuilderState {
   clearMuscles: () => void;
   fetchExercises: () => Promise<void>;
   setExercisesOrder: (order: string[]) => void;
+  setExercisesByMuscle: (exercisesByMuscle: any[]) => void;
   shuffleExercise: (exerciseId: string, muscle: ExerciseAttributeValueEnum) => Promise<void>;
   pickExercise: (exerciseId: string) => Promise<void>;
   deleteExercise: (exerciseId: string) => void;
@@ -90,6 +91,8 @@ export const useWorkoutBuilderStore = create<WorkoutBuilderState>((set, get) => 
   },
 
   setExercisesOrder: (order) => set({ exercisesOrder: order }),
+  
+  setExercisesByMuscle: (exercisesByMuscle) => set({ exercisesByMuscle }),
 
   deleteExercise: (exerciseId) =>
     set((state) => ({

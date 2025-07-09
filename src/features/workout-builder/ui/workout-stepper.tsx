@@ -8,6 +8,7 @@ import { ExerciseAttributeValueEnum } from "@prisma/client";
 
 import { useI18n } from "locales/client";
 import Trophy from "@public/images/trophy.png";
+import useBoolean from "@/hooks/useBoolean";
 import { WorkoutSessionSets } from "@/features/workout-session/ui/workout-session-sets";
 import { WorkoutSessionHeader } from "@/features/workout-session/ui/workout-session-header";
 import { DonationModal } from "@/features/workout-session/ui/donation-modal";
@@ -24,6 +25,7 @@ import { StepperHeader } from "./stepper-header";
 import { MuscleSelection } from "./muscle-selection";
 import { ExercisesSelection } from "./exercises-selection";
 import { EquipmentSelection } from "./equipment-selection";
+import { AddExerciseModal } from "./add-exercise-modal";
 
 import type { ExerciseWithAttributes, WorkoutBuilderStep } from "../types";
 
@@ -109,8 +111,10 @@ export function WorkoutStepper() {
     deleteExercise(exerciseId);
   };
 
+  const addExerciseModal = useBoolean();
+
   const handleAddExercise = () => {
-    alert("TODO : Add exercise 🥶");
+    addExerciseModal.setTrue();
   };
 
   const orderedExercises = exercisesOrder.length
@@ -275,6 +279,8 @@ export function WorkoutStepper() {
         onStartWorkout={handleStartWorkout}
         totalSteps={STEPPER_STEPS.length}
       />
+
+      <AddExerciseModal isOpen={addExerciseModal.value} onClose={addExerciseModal.setFalse} selectedEquipment={selectedEquipment} />
     </div>
   );
 }

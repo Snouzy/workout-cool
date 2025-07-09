@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useSession } from "@/features/auth/lib/auth-client";
+
+import { favoriteExercisesLocal } from "@/features/workout-builder/model/favorite-exercises.local";
 import { syncFavoriteExercisesAction } from "@/features/workout-builder/actions/sync-favorite-exercises.action";
 import { getFavoriteExercises } from "@/features/workout-builder/actions/get-favorite-exercises.action";
-import { favoriteExercisesLocal } from "@/features/workout-builder/model/favorite-exercises.local";
+import { useSession } from "@/features/auth/lib/auth-client";
 
 interface SyncState {
   isSyncing: boolean;
@@ -34,7 +35,7 @@ export function useSyncFavoriteExercises() {
       if (res?.serverError) {
         throw new Error(res?.serverError);
       }
-      const serverFavorites = res.data?.favorites ?? [];
+      const serverFavorites = res?.data?.favorites ?? [];
       const localFavorites = favoriteExercisesLocal.getAll();
       let updatedLocalFavorites = localFavorites.map((f) => f.exerciseId);
 

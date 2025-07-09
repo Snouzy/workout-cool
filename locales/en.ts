@@ -1447,7 +1447,6 @@ export default {
   // Workout Builder
   workout_builder: {
     confirm_delete: "Are you sure you want to delete this workout session?",
-    favorites: "Favorites",
     steps: {
       equipment: {
         title: "Equipment",
@@ -1784,5 +1783,6 @@ export default {
     added_to_favorites: "Added to favorites",
     add_to_favorites: "Add to favorites",
     remove_from_favorites: "Remove from favorites",
+    favorites: "Favorites",
   },
 } as const;

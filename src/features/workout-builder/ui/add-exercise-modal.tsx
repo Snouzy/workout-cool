@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { Plus, Loader2 } from "lucide-react";
+import { Plus, Loader2, X, ChevronDown, ChevronUp } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { ExerciseAttributeValueEnum } from "@prisma/client";
 
@@ -62,8 +62,8 @@ export const AddExerciseModal = ({ isOpen, onClose, selectedEquipment }: AddExer
   }, [isOpen, onClose]);
 
   const handleAddExercise = (exercise: ExerciseWithAttributes, muscle: ExerciseAttributeValueEnum) => {
-    const muscleGroupIndex = exercisesByMuscle.findIndex(group => group.muscle === muscle);
-    
+    const muscleGroupIndex = exercisesByMuscle.findIndex((group) => group.muscle === muscle);
+
     if (muscleGroupIndex === -1) {
       setExercisesByMuscle([...exercisesByMuscle, { muscle, exercises: [exercise] }]);
     } else {
@@ -74,9 +74,9 @@ export const AddExerciseModal = ({ isOpen, onClose, selectedEquipment }: AddExer
       };
       setExercisesByMuscle(newExercisesByMuscle);
     }
-    
+
     setExercisesOrder([...exercisesOrder, exercise.id]);
-    
+
     onClose();
   };
 
@@ -88,76 +88,133 @@ export const AddExerciseModal = ({ isOpen, onClose, selectedEquipment }: AddExer
   if (!isOpen) return null;
 
   return (
-    <div className="modal modal-open">
-      <div className="modal-box max-w-2xl max-h-[80vh] overflow-hidden flex flex-col">
-        <h3 className="font-bold text-lg mb-4">{t("workout_builder.addExercise")}</h3>
-        
-        <div className="flex-1 overflow-y-auto">
+    <div aria-labelledby="modal-title" aria-modal="true" className="modal modal-open" role="dialog">
+      <div className="modal-box max-w-3xl max-h-[90vh] overflow-hidden flex flex-col p-0 w-full">
+        {/* Header ultra-simple avec action claire */}
+        <div className="bg-white border-b-2 border-gray-200 p-6 flex items-center justify-between">
+          <h1 className="text-2xl font-bold text-gray-900" id="modal-title">
+            {t("workout_builder.addExercise")}
+          </h1>
+          <button
+            aria-label={t("commons.close")}
+            className="btn btn-circle btn-lg bg-red-500 hover:bg-red-600 text-white border-0 transition-all duration-200 shadow-lg hover:shadow-xl"
+            onClick={onClose}
+          >
+            <X className="h-6 w-6" />
+          </button>
+        </div>
+
+        {/* Contenu principal - focus sur une seule tâche */}
+        <div className="flex-1 overflow-y-auto p-2 sm:p-6 bg-gray-50">
           {isLoading ? (
-            <div className="flex items-center justify-center py-8">
-              <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            <div className="flex flex-col items-center justify-center py-16 space-y-4">
+              <Loader2 className="h-12 w-12 animate-spin text-blue-500" />
+              <p className="text-xl text-gray-600 font-medium">{t("commons.loading")}...</p>
             </div>
           ) : (
-            <div className="space-y-2">
+            <div className="space-y-4">
               {muscleGroups?.map((group) => (
-                <div className="collapse collapse-arrow bg-base-200" key={group.muscle}>
-                  <input
-                    checked={expandedMuscle === group.muscle}
-                    name="muscle-accordion"
-                    onChange={() => setExpandedMuscle(expandedMuscle === group.muscle ? null : group.muscle)}
-                    type="radio"
-                  />
-                  <div className="collapse-title text-base font-medium flex items-center justify-between">
-                    <span>{getMuscleLabel(group.muscle)}</span>
-                    <span className="text-sm text-base-content/60">
-                      {group.exercises.length} {t("workout_builder.exercises")}
-                    </span>
-                  </div>
-                  <div className="collapse-content">
-                    <div className="space-y-2 pt-2">
+                <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden" key={group.muscle}>
+                  {/* Bouton de groupe musculaire - très visible */}
+                  <button
+                    aria-controls={`muscle-${group.muscle}`}
+                    aria-expanded={expandedMuscle === group.muscle}
+                    className="w-full p-6 bg-blue-50 hover:bg-blue-100 transition-colors duration-200 flex items-center justify-between focus:outline-none focus:ring-4 focus:ring-blue-300"
+                    onClick={() => setExpandedMuscle(expandedMuscle === group.muscle ? null : group.muscle)}
+                  >
+                    <div className="flex items-center space-x-4">
+                      <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
+                      <span className="text-xl font-bold text-gray-900">{getMuscleLabel(group.muscle)}</span>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <span className="text-lg font-medium text-blue-600 bg-blue-100 px-3 py-1 rounded-full">{group.exercises.length}</span>
+                      {expandedMuscle === group.muscle ? (
+                        <ChevronUp className="h-6 w-6 text-gray-600" />
+                      ) : (
+                        <ChevronDown className="h-6 w-6 text-gray-600" />
+                      )}
+                    </div>
+                  </button>
+
+                  {/* Liste des exercices - ultra-claire */}
+                  {expandedMuscle === group.muscle && (
+                    <div className="divide-y divide-gray-100" id={`muscle-${group.muscle}`}>
                       {group.exercises.map((exercise) => (
                         <div
-                          className="flex items-center gap-3 p-3 bg-base-100 rounded-lg hover:bg-base-200 cursor-pointer transition-colors"
+                          aria-label={`Ajouter ${locale === "en" ? exercise.nameEn : exercise.name}`}
+                          className="p-6 hover:bg-gray-50 transition-colors duration-200 cursor-pointer group"
                           key={exercise.id}
                           onClick={() => handleAddExercise(exercise, group.muscle)}
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter" || e.key === " ") {
+                              e.preventDefault();
+                              handleAddExercise(exercise, group.muscle);
+                            }
+                          }}
+                          role="button"
+                          tabIndex={0}
                         >
-                          {exercise.fullVideoImageUrl && (
-                            <div className="relative h-10 w-10 rounded overflow-hidden shrink-0 bg-slate-200 dark:bg-slate-800 border border-slate-200 dark:border-slate-700/50">
-                              <Image
-                                alt={exercise.nameEn}
-                                className="w-full h-full object-cover scale-[1.5]"
-                                height={32}
-                                loading="lazy"
-                                src={exercise.fullVideoImageUrl}
-                                width={32}
-                              />
+                          <div className="flex items-center gap-6">
+                            {/* Image de l'exercice - plus grande */}
+                            {exercise.fullVideoImageUrl && (
+                              <div className="relative h-16 w-16 rounded-lg overflow-hidden shrink-0 bg-gray-100 border-2 border-gray-400 group-hover:border-green-300 transition-colors">
+                                <Image
+                                  alt={exercise.nameEn}
+                                  className="w-full h-full object-cover scale-[1.5]"
+                                  height={64}
+                                  loading="lazy"
+                                  src={exercise.fullVideoImageUrl}
+                                  width={64}
+                                />
+                              </div>
+                            )}
+                            <div className="flex-1 flex flex-col md:flex-row">
+                              {/* Nom de l'exercice - très lisible */}
+                              <div className="flex-1">
+                                <h3 className="text-lg font-semibold text-gray-900 group-hover:text-green-700 transition-colors leading-tight mb-2 sm:mb-0">
+                                  {locale === "en" ? exercise.nameEn : exercise.name}
+                                </h3>
+                              </div>
+
+                              {/* Bouton d'ajout - action principale ultra-claire */}
+                              <button
+                                aria-label={`Ajouter ${locale === "en" ? exercise.nameEn : exercise.name}`}
+                                className="btn btn-lg bg-green-500 hover:bg-green-600 text-white border-0 transition-all duration-200 shadow-lg hover:shadow-xl group-hover:scale-105"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleAddExercise(exercise, group.muscle);
+                                }}
+                              >
+                                <Plus className="h-6 w-6" />
+                                <span className="ml-2 font-bold">{t("commons.add")}</span>
+                              </button>
                             </div>
-                          )}
-                          <div className="flex-1">
-                            <p className="font-medium">
-                              {locale === "en" ? exercise.nameEn : exercise.name}
-                            </p>
                           </div>
-                          <button className="btn btn-sm btn-primary">
-                            <Plus className="h-4 w-4" />
-                          </button>
                         </div>
                       ))}
                     </div>
-                  </div>
+                  )}
                 </div>
               ))}
             </div>
           )}
         </div>
 
-        <div className="modal-action">
-          <button className="btn" onClick={onClose}>
-            {t("commons.close")}
-          </button>
+        {/* Footer avec action de fermeture claire */}
+        <div className="bg-white border-t-2 border-gray-200 p-6">
+          <div className="flex justify-center">
+            <button
+              aria-label={t("commons.close")}
+              className="btn btn-lg bg-red-500 hover:bg-red-600 text-white border-0 transition-all duration-200 shadow-lg hover:shadow-xl px-8"
+              onClick={onClose}
+            >
+              <X className="h-5 w-5" />
+              <span className="ml-3 text-lg font-bold">{t("commons.close")}</span>
+            </button>
+          </div>
         </div>
       </div>
-      <div className="modal-backdrop" onClick={onClose} />
+      <div className="modal-backdrop bg-black/50" onClick={onClose} />
     </div>
   );
 };

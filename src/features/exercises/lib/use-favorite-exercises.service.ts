@@ -62,7 +62,6 @@ export const useFavoriteExercisesService = () => {
     }
   };
 
-  // Method to fetch server favorites (for initial load)
   const fetchServerFavorites = async (): Promise<string[]> => {
     if (!userId) return [];
 

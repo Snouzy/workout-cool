@@ -1,20 +1,20 @@
 "use client";
 
 import { useEffect } from "react";
-import { useSearchParams } from "next/navigation";
+
+import { useSession } from "@/features/auth/lib/auth-client";
 
 import { useSyncFavoriteExercises } from "../hooks/use-sync-favorite-exercises";
 
 export function FavoriteExercisesSynchronizer() {
   const { syncFavoriteExercises } = useSyncFavoriteExercises();
-  const searchParams = useSearchParams();
-  const isSigninParam = searchParams.get("signin") === "true";
+  const { data: session } = useSession();
 
   useEffect(() => {
-    if (isSigninParam) {
+    if (session?.user) {
       syncFavoriteExercises();
     }
-  }, [isSigninParam]);
+  }, [session?.user]);
 
   return null;
 }

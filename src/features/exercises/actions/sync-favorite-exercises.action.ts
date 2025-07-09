@@ -1,6 +1,7 @@
 "use server";
 
 import { z } from "zod";
+
 import { prisma } from "@/shared/lib/prisma";
 import { authenticatedActionClient } from "@/shared/api/safe-actions";
 
@@ -24,7 +25,7 @@ export const syncFavoriteExercisesAction = authenticatedActionClient
         // Create new favorites
         if (exerciseIds.length > 0) {
           await tx.userFavoriteExercise.createMany({
-            data: exerciseIds.map(exerciseId => ({
+            data: exerciseIds.map((exerciseId) => ({
               userId: user.id,
               exerciseId,
             })),

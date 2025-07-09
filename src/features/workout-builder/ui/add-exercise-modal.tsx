@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { Plus, Loader2, X, ChevronDown, ChevronUp } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
@@ -8,8 +8,7 @@ import { ExerciseAttributeValueEnum } from "@prisma/client";
 
 import { useCurrentLocale, useI18n } from "locales/client";
 import { FavoriteButton } from "@/features/exercises/ui/favorite-button";
-import { useFavoriteExercisesService } from "@/features/exercises/lib/use-favorite-exercises.service";
-import { useSession } from "@/features/auth/lib/auth-client";
+import { useFavoritesModal } from "@/features/exercises/hooks/use-favorites-modal";
 
 import { useWorkoutBuilderStore } from "../model/workout-builder.store";
 import { getExercisesByMuscleAction } from "../actions/get-exercises-by-muscle.action";
@@ -39,11 +38,8 @@ interface MuscleGroup {
 export const AddExerciseModal = ({ isOpen, onClose, selectedEquipment }: AddExerciseModalProps) => {
   const t = useI18n();
   const locale = useCurrentLocale();
-  const { data: session } = useSession();
   const [expandedMuscle, setExpandedMuscle] = useState<string | null>(null);
-  const [favoriteExercises, setFavoriteExercises] = useState<Set<string>>(new Set());
   const { exercisesByMuscle, setExercisesByMuscle, setExercisesOrder, exercisesOrder } = useWorkoutBuilderStore();
-  const favoriteService = useFavoriteExercisesService();
   const { data: muscleGroups, isLoading } = useQuery({
     queryKey: ["exercises-by-muscle", selectedEquipment],
     queryFn: async () => {
@@ -56,6 +52,12 @@ export const AddExerciseModal = ({ isOpen, onClose, selectedEquipment }: AddExer
     enabled: isOpen && selectedEquipment.length > 0,
   });
 
+  // Use the favorites hook
+  const { favoriteExercises, isFavorite, handleToggleFavorite } = useFavoritesModal({
+    isOpen,
+    muscleGroups: muscleGroups || [],
+  });
+
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -65,39 +67,6 @@ export const AddExerciseModal = ({ isOpen, onClose, selectedEquipment }: AddExer
       return () => document.removeEventListener("keydown", handleEsc);
     }
   }, [isOpen, onClose]);
-
-  useEffect(() => {
-    if (isOpen) {
-      // Load favorites synchronously from local storage
-      const favorites = favoriteService.getAll();
-      setFavoriteExercises(new Set(favorites));
-
-      // Fetch server favorites in background if user is logged in
-      if (session?.user) {
-        favoriteService.fetchServerFavorites().then((serverFavorites) => {
-          // Merge with local favorites
-          const localFavorites = favoriteService.getAll();
-          const allFavorites = [...new Set([...localFavorites, ...serverFavorites])];
-          setFavoriteExercises(new Set(allFavorites));
-        });
-      }
-    }
-  }, [isOpen, favoriteService, session]);
-
-  const handleToggleFavorite = (exerciseId: string) => {
-    favoriteService.toggle(exerciseId);
-
-    // Update local state optimistically
-    setFavoriteExercises((prev) => {
-      const newSet = new Set(prev);
-      if (newSet.has(exerciseId)) {
-        newSet.delete(exerciseId);
-      } else {
-        newSet.add(exerciseId);
-      }
-      return newSet;
-    });
-  };
 
   const handleAddExercise = (exercise: ExerciseWithAttributes, muscle: ExerciseAttributeValueEnum) => {
     const muscleGroupIndex = exercisesByMuscle.findIndex((group) => group.muscle === muscle);
@@ -122,24 +91,6 @@ export const AddExerciseModal = ({ isOpen, onClose, selectedEquipment }: AddExer
     const muscleKey = muscle.toLowerCase();
     return t(("workout_builder.muscles." + muscleKey) as keyof typeof t);
   };
-
-  const getFavoriteExercises = () => {
-    if (!muscleGroups) return [];
-
-    const favoriteExercisesList: Array<ExerciseWithAttributes & { muscle: ExerciseAttributeValueEnum }> = [];
-
-    muscleGroups.forEach((group) => {
-      group.exercises.forEach((exercise) => {
-        if (favoriteExercises.has(exercise.id)) {
-          favoriteExercisesList.push({ ...exercise, muscle: group.muscle });
-        }
-      });
-    });
-
-    return favoriteExercisesList;
-  };
-
-  const allFavoriteExercises = useMemo(() => getFavoriteExercises(), [favoriteExercises]);
 
   if (!isOpen) return null;
 
@@ -181,19 +132,19 @@ export const AddExerciseModal = ({ isOpen, onClose, selectedEquipment }: AddExer
           ) : (
             <div className="space-y-3">
               {/* Favorites Section */}
-              {allFavoriteExercises.length > 0 && (
+              {favoriteExercises.length > 0 && (
                 <div className="bg-white dark:bg-gray-900 rounded-xl border border-yellow-200 dark:border-yellow-700 overflow-hidden">
                   <div className="p-4 bg-gradient-to-r from-yellow-50 to-orange-50 dark:from-yellow-900/30 dark:to-orange-900/30">
                     <div className="flex items-center space-x-3">
                       <div className="w-3 h-3 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full"></div>
                       <span className="text-lg font-bold text-gray-900 dark:text-white">{t("workout_builder.favorites")}</span>
                       <span className="text-sm font-medium text-yellow-600 dark:text-yellow-400 bg-yellow-100 dark:bg-yellow-800/50 px-2 py-1 rounded-full">
-                        {allFavoriteExercises.length}
+                        {favoriteExercises.length}
                       </span>
                     </div>
                   </div>
                   <div className="divide-y divide-gray-100 dark:divide-gray-800">
-                    {allFavoriteExercises.map((exercise) => (
+                    {favoriteExercises.map((exercise) => (
                       <div
                         aria-label={`Ajouter ${locale === "en" ? exercise.nameEn : exercise.name}`}
                         className="p-4 hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-200 ease-in-out cursor-pointer group"
@@ -229,7 +180,7 @@ export const AddExerciseModal = ({ isOpen, onClose, selectedEquipment }: AddExer
                           <div className="flex items-center">
                             <FavoriteButton
                               exerciseId={exercise.id}
-                              isFavorite={favoriteExercises.has(exercise.id)}
+                              isFavorite={isFavorite(exercise.id)}
                               onToggle={handleToggleFavorite}
                               size="md"
                             />
@@ -335,7 +286,7 @@ export const AddExerciseModal = ({ isOpen, onClose, selectedEquipment }: AddExer
                             <div className="flex items-center">
                               <FavoriteButton
                                 exerciseId={exercise.id}
-                                isFavorite={favoriteExercises.has(exercise.id)}
+                                isFavorite={isFavorite(exercise.id)}
                                 onToggle={handleToggleFavorite}
                                 size="md"
                               />

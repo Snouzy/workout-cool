@@ -13,12 +13,14 @@ interface UpdateProgramData {
   titleEn: string;
   titleEs: string;
   titlePt: string;
+  titleUa: string;
   titleRu: string;
   titleZhCn: string;
   description: string;
   descriptionEn: string;
   descriptionEs: string;
   descriptionPt: string;
+  descriptionUa: string;
   descriptionRu: string;
   descriptionZhCn: string;
   category: string;
@@ -54,6 +56,7 @@ export async function updateProgram(programId: string, data: UpdateProgramData) 
     const slugEn = generateSlug(data.titleEn);
     const slugEs = generateSlug(data.titleEs);
     const slugPt = generateSlug(data.titlePt);
+    const slugUa = generateSlug(data.titleUa);
     const slugRu = generateSlug(data.titleRu);
     const slugZhCn = generateSlug(data.titleZhCn);
 
@@ -63,7 +66,7 @@ export async function updateProgram(programId: string, data: UpdateProgramData) 
         AND: [
           { id: { not: programId } },
           {
-            OR: [{ slug }, { slugEn }, { slugEs }, { slugPt }, { slugRu }, { slugZhCn }],
+            OR: [{ slug }, { slugEn }, { slugEs }, { slugPt }, { slugUa }, { slugRu }, { slugZhCn }],
           },
         ],
       },
@@ -84,18 +87,21 @@ export async function updateProgram(programId: string, data: UpdateProgramData) 
           slugEn,
           slugEs,
           slugPt,
+          slugUa,
           slugRu,
           slugZhCn,
           title: data.title,
           titleEn: data.titleEn,
           titleEs: data.titleEs,
           titlePt: data.titlePt,
+          titleUa: data.titleUa,
           titleRu: data.titleRu,
           titleZhCn: data.titleZhCn,
           description: data.description,
           descriptionEn: data.descriptionEn,
           descriptionEs: data.descriptionEs,
           descriptionPt: data.descriptionPt,
+          descriptionUa: data.descriptionUa,
           descriptionRu: data.descriptionRu,
           descriptionZhCn: data.descriptionZhCn,
           category: data.category,

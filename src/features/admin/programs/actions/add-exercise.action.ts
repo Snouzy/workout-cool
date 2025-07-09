@@ -60,7 +60,7 @@ export async function addExerciseToSession(data: AddExerciseData) {
       instructionsEs: data.instructionsEn, // Default fallback
       instructionsPt: data.instructionsEn,
       instructionsRu: data.instructionsEn,
-      instructionsUa: data.instructionsEn, // Default fallback
+      instructionsUa: data.instructionsEn,
       instructionsZhCn: data.instructionsEn,
       suggestedSets: {
         create: data.suggestedSets.map((set) => ({

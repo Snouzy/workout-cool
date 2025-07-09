@@ -16,6 +16,7 @@ const exerciseSchema = z.object({
   exerciseId: z.string().min(1, "Veuillez sélectionner un exercice"),
   instructions: z.string().min(1, "Les instructions sont requises"),
   instructionsEn: z.string().min(1, "Les instructions en anglais sont requises"),
+  instructionsUa: z.string().min(1, "Les instructions en ukrainien sont requises"),
   suggestedSets: z.array(
     z.object({
       setIndex: z.number(),

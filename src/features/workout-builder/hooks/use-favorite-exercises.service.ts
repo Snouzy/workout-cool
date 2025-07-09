@@ -1,8 +1,8 @@
 import { useSession } from "@/features/auth/lib/auth-client";
 
+import { favoriteExercisesLocal } from "../model/favorite-exercises.local";
 import { syncFavoriteExercisesAction } from "../actions/sync-favorite-exercises.action";
 import { getFavoriteExercises } from "../actions/get-favorite-exercises.action";
-import { favoriteExercisesLocal } from "./favorite-exercises.local";
 
 export const useFavoriteExercisesService = () => {
   const { data: session } = useSession();

@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { useSession } from "@/features/auth/lib/auth-client";
-import { syncFavoriteExercisesAction } from "@/features/exercises/actions/sync-favorite-exercises.action";
-import { getFavoriteExercises } from "@/features/exercises/actions/get-favorite-exercises.action";
-import { favoriteExercisesLocal } from "@/features/exercises/lib/favorite-exercises.local";
+import { syncFavoriteExercisesAction } from "@/features/workout-builder/actions/sync-favorite-exercises.action";
+import { getFavoriteExercises } from "@/features/workout-builder/actions/get-favorite-exercises.action";
+import { favoriteExercisesLocal } from "@/features/workout-builder/model/favorite-exercises.local";
 
 interface SyncState {
   isSyncing: boolean;
@@ -76,7 +76,6 @@ export function useSyncFavoriteExercises() {
       if (syncResult?.serverError) {
         throw new Error(syncResult?.serverError);
       }
-
     } catch (error) {
       console.error("Failed to sync favorites:", error);
       setSyncState((prev) => ({ ...prev, error: error as Error }));

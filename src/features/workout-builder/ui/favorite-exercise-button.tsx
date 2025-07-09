@@ -8,7 +8,7 @@ import {
   FAVORITE_EXERICSES_STORAGE_KEY,
   favoriteExercisesLocal,
   LocalFavoriteExercise,
-} from "@/features/exercises/lib/favorite-exercises.local";
+} from "@/features/workout-builder/model/favorite-exercises.local";
 import { brandedToast } from "@/components/ui/toast";
 import { StarButton } from "@/components/ui/star-button";
 

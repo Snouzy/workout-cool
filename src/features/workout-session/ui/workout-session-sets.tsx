@@ -12,13 +12,13 @@ import { cn } from "@/shared/lib/utils";
 import { useWorkoutSession } from "@/features/workout-session/model/use-workout-session";
 import { useSyncWorkoutSessions } from "@/features/workout-session/model/use-sync-workout-sessions";
 import { ExerciseVideoModal } from "@/features/workout-builder/ui/exercise-video-modal";
-import { useSyncFavoriteExercises } from "@/features/exercises/hooks/use-sync-favorite-exercises";
+import { useSyncFavoriteExercises } from "@/features/workout-builder/hooks/use-sync-favorite-exercises";
 import { env } from "@/env";
 import { PremiumUpsellAlert } from "@/components/ui/premium-upsell-alert";
 import { Button } from "@/components/ui/button";
 import { HorizontalBottomBanner } from "@/components/ads";
 
-import { FavoriteExerciseButton } from "../../exercises/ui/favorite-exercise-button";
+import { FavoriteExerciseButton } from "../../workout-builder/ui/favorite-exercise-button";
 import { WorkoutSessionSet } from "./workout-session-set";
 
 export function WorkoutSessionSets({

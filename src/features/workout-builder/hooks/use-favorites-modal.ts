@@ -3,7 +3,7 @@ import { ExerciseAttributeValueEnum } from "@prisma/client";
 
 import { useSession } from "@/features/auth/lib/auth-client";
 
-import { useFavoriteExercisesService } from "../lib/use-favorite-exercises.service";
+import { useFavoriteExercisesService } from "./use-favorite-exercises.service";
 
 interface ExerciseWithAttributes {
   id: string;

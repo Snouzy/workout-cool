@@ -7,8 +7,8 @@ import { useQuery } from "@tanstack/react-query";
 import { ExerciseAttributeValueEnum } from "@prisma/client";
 
 import { useCurrentLocale, useI18n } from "locales/client";
-import { FavoriteButton } from "@/features/exercises/ui/favorite-button";
-import { useFavoritesModal } from "@/features/exercises/hooks/use-favorites-modal";
+import { FavoriteButton } from "@/features/workout-builder/ui/favorite-button";
+import { useFavoritesModal } from "@/features/workout-builder/hooks/use-favorites-modal";
 
 import { useWorkoutBuilderStore } from "../model/workout-builder.store";
 import { getExercisesByMuscleAction } from "../actions/get-exercises-by-muscle.action";
@@ -159,31 +159,33 @@ export const AddExerciseModal = ({ isOpen, onClose, selectedEquipment }: AddExer
                         role="button"
                         tabIndex={0}
                       >
-                        <div className="flex items-center gap-4">
-                          {/* Image de l'exercice avec bordure colorée */}
-                          <div className="relative">
-                            {exercise.fullVideoImageUrl && (
-                              <div className="relative h-16 w-16 rounded-xl overflow-hidden shrink-0 bg-gray-100 dark:bg-gray-700 border-2 border-yellow-200 dark:border-yellow-600 group-hover:border-yellow-400 group-hover:shadow-lg transition-all duration-200">
-                                <Image
-                                  alt={exercise.nameEn}
-                                  className="w-full h-full object-cover scale-[1.5]"
-                                  height={64}
-                                  loading="lazy"
-                                  src={exercise.fullVideoImageUrl}
-                                  width={64}
-                                />
-                              </div>
-                            )}
-                          </div>
+                        <div className="flex items-center gap-2 sm:gap-4">
+                          <div className="flex flex-col sm:flex-row">
+                            {/* Image de l'exercice avec bordure colorée */}
+                            <div className="relative">
+                              {exercise.fullVideoImageUrl && (
+                                <div className="relative h-16 w-16 rounded-xl overflow-hidden shrink-0 bg-gray-100 dark:bg-gray-700 border-2 border-yellow-200 dark:border-yellow-600 group-hover:border-yellow-400 group-hover:shadow-lg transition-all duration-200">
+                                  <Image
+                                    alt={exercise.nameEn}
+                                    className="w-full h-full object-cover scale-[1.5]"
+                                    height={64}
+                                    loading="lazy"
+                                    src={exercise.fullVideoImageUrl}
+                                    width={64}
+                                  />
+                                </div>
+                              )}
+                            </div>
 
-                          {/* Favorite Button */}
-                          <div className="flex items-center">
-                            <FavoriteButton
-                              exerciseId={exercise.id}
-                              isFavorite={isFavorite(exercise.id)}
-                              onToggle={handleToggleFavorite}
-                              size="md"
-                            />
+                            {/* Favorite Button */}
+                            <div className="flex items-center justify-center">
+                              <FavoriteButton
+                                exerciseId={exercise.id}
+                                isFavorite={isFavorite(exercise.id)}
+                                onToggle={handleToggleFavorite}
+                                size="md"
+                              />
+                            </div>
                           </div>
 
                           <div className="flex-1 flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
@@ -262,34 +264,36 @@ export const AddExerciseModal = ({ isOpen, onClose, selectedEquipment }: AddExer
                           tabIndex={0}
                         >
                           <div className="flex items-center gap-4">
-                            {/* Image de l'exercice avec bordure colorée */}
-                            <div className="relative">
-                              {exercise.fullVideoImageUrl && (
-                                <div className="relative h-16 w-16 rounded-xl overflow-hidden shrink-0 bg-gray-100 dark:bg-gray-700 border-2 border-gray-200 dark:border-gray-600 group-hover:border-green-400 group-hover:shadow-lg transition-all duration-200">
-                                  <Image
-                                    alt={exercise.nameEn}
-                                    className="w-full h-full object-cover scale-[1.5]"
-                                    height={64}
-                                    loading="lazy"
-                                    src={exercise.fullVideoImageUrl}
-                                    width={64}
-                                  />
+                            <div className="flex flex-col sm:flex-row">
+                              {/* Image de l'exercice avec bordure colorée */}
+                              <div className="relative">
+                                {exercise.fullVideoImageUrl && (
+                                  <div className="relative h-16 w-16 rounded-xl overflow-hidden shrink-0 bg-gray-100 dark:bg-gray-700 border-2 border-gray-400 dark:border-gray-600 group-hover:border-green-400 group-hover:shadow-lg transition-all duration-200">
+                                    <Image
+                                      alt={exercise.nameEn}
+                                      className="w-full h-full object-cover scale-[1.5]"
+                                      height={64}
+                                      loading="lazy"
+                                      src={exercise.fullVideoImageUrl}
+                                      width={64}
+                                    />
+                                  </div>
+                                )}
+                                {/* Badge de réussite */}
+                                <div className="absolute -top-1 -right-1 w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                                  <span className="text-xs font-bold text-yellow-900">B</span>
                                 </div>
-                              )}
-                              {/* Badge de réussite */}
-                              <div className="absolute -top-1 -right-1 w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                                <span className="text-xs font-bold text-yellow-900">B</span>
                               </div>
-                            </div>
 
-                            {/* Favorite Button */}
-                            <div className="flex items-center">
-                              <FavoriteButton
-                                exerciseId={exercise.id}
-                                isFavorite={isFavorite(exercise.id)}
-                                onToggle={handleToggleFavorite}
-                                size="md"
-                              />
+                              {/* Favorite Button */}
+                              <div className="flex items-center justify-center">
+                                <FavoriteButton
+                                  exerciseId={exercise.id}
+                                  isFavorite={isFavorite(exercise.id)}
+                                  onToggle={handleToggleFavorite}
+                                  size="md"
+                                />
+                              </div>
                             </div>
 
                             <div className="flex-1 flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">

@@ -19,7 +19,7 @@ import { Button } from "@/components/ui/button";
 import { HorizontalTopBanner } from "@/components/ads";
 
 import { StepperStepProps } from "../types";
-import { useWorkoutStepper } from "../model/use-workout-stepper";
+import { useWorkoutStepper } from "../hooks/use-workout-stepper";
 import { useWorkoutSession } from "../../workout-session/model/use-workout-session";
 import { StepperHeader } from "./stepper-header";
 import { MuscleSelection } from "./muscle-selection";

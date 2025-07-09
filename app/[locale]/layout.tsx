@@ -9,7 +9,7 @@ import { getServerUrl } from "@/shared/lib/server-url";
 import { SiteConfig } from "@/shared/config/site-config";
 import { getLocalizedMetadata } from "@/shared/config/localized-metadata";
 import { WorkoutSessionsSynchronizer } from "@/features/workout-session/ui/workout-sessions-synchronizer";
-import { FavoriteExercisesSynchronizer } from "@/features/exercises/ui/favorite-exercises-synchronizer";
+import { FavoriteExercisesSynchronizer } from "@/features/workout-builder/model/favorite-exercises-synchronizer";
 import { ThemeSynchronizer } from "@/features/theme/ui/ThemeSynchronizer";
 import { env } from "@/env";
 import { Version } from "@/components/version";

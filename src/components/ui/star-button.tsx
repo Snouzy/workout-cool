@@ -5,7 +5,7 @@ import { cn } from "@/shared/lib/utils";
 interface StarButtonProps {
   isActive: boolean;
   isLoading: boolean;
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent) => void;
   className?: string;
   children?: React.ReactNode;
 }

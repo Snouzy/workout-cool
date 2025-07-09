@@ -20,6 +20,15 @@
       <img src="https://img.shields.io/badge/Ko--fi-Support%20Project-FF5E5B?style=for-the-badge&logo=ko-fi&logoColor=white" alt="Ko-fi">
     </a>
   </p>
+  <!-- Keep these links. Translations will automatically update with the README. -->
+  <a href="https://readme-i18n.com/Snouzy/workout-cool?lang=de">Deutsch</a> | 
+  <a href="https://readme-i18n.com/Snouzy/workout-cool?lang=es">Español</a> | 
+  <a href="https://readme-i18n.com/Snouzy/workout-cool?lang=fr">français</a> | 
+  <a href="https://readme-i18n.com/Snouzy/workout-cool?lang=ja">日本語</a> | 
+  <a href="https://readme-i18n.com/Snouzy/workout-cool?lang=ko">한국어</a> | 
+  <a href="https://readme-i18n.com/Snouzy/workout-cool?lang=pt">Português</a> | 
+  <a href="https://readme-i18n.com/Snouzy/workout-cool?lang=ru">Русский</a> | 
+  <a href="https://readme-i18n.com/Snouzy/workout-cool?lang=zh">中文</a>
 </p>
 </div>
 

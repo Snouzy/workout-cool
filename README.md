@@ -22,7 +22,6 @@
   </p>
   <!-- Keep these links. Translations will automatically update with the README. -->
   <a href="https://readme-i18n.com/Snouzy/workout-cool?lang=de">Deutsch</a> | 
-  <a href="https://readme-i18n.com/Snouzy/workout-cool?lang=en">English</a> | 
   <a href="https://readme-i18n.com/Snouzy/workout-cool?lang=es">Español</a> | 
   <a href="https://readme-i18n.com/Snouzy/workout-cool?lang=fr">français</a> | 
   <a href="https://readme-i18n.com/Snouzy/workout-cool?lang=ja">日本語</a> | 

@@ -143,6 +143,155 @@ export class PremiumService {
   }
 
   /**
+   * Assign RevenueCat user ID to a user
+   * Links RevenueCat user ID to BetterAuth user account
+   */
+  static async assignRevenueCatUserId(userId: string, revenueCatUserId: string): Promise<void> {
+    // Check if RevenueCat user ID is already assigned to another user
+    const existingUser = await prisma.user.findFirst({
+      where: {
+        subscriptions: {
+          some: {
+            revenueCatUserId: revenueCatUserId,
+            userId: { not: userId },
+          },
+        },
+      },
+    });
+
+    if (existingUser) {
+      throw new Error(`RevenueCat user ID ${revenueCatUserId} is already assigned to another user`);
+    }
+
+    // Get or create a default subscription plan
+    let defaultPlan = await prisma.subscriptionPlan.findFirst({
+      where: { isActive: true },
+      orderBy: { priceMonthly: "asc" },
+    });
+
+    if (!defaultPlan) {
+      // Create a default plan if none exists
+      defaultPlan = await prisma.subscriptionPlan.create({
+        data: {
+          priceMonthly: 0,
+          priceYearly: 0,
+          currency: "EUR",
+          interval: "month",
+          isActive: true,
+          availableRegions: [],
+        },
+      });
+    }
+
+    // Create or update subscription record with RevenueCat user ID
+    await prisma.subscription.upsert({
+      where: {
+        userId_platform: {
+          userId,
+          platform: Platform.IOS, // Default to iOS for mobile
+        },
+      },
+      update: {
+        revenueCatUserId,
+        updatedAt: new Date(),
+      },
+      create: {
+        userId,
+        planId: defaultPlan.id,
+        platform: Platform.IOS,
+        status: "ACTIVE",
+        startedAt: new Date(),
+        revenueCatUserId,
+      },
+    });
+  }
+
+  /**
+   * Link anonymous RevenueCat user to authenticated BetterAuth user
+   * Migrates subscription data from anonymous to authenticated user
+   */
+  static async linkRevenueCatUser(
+    authenticatedUserId: string,
+    anonymousRevenueCatUserId: string
+  ): Promise<void> {
+    await prisma.$transaction(async (tx) => {
+      // Find subscriptions with the anonymous RevenueCat user ID
+      const anonymousSubscriptions = await tx.subscription.findMany({
+        where: {
+          revenueCatUserId: anonymousRevenueCatUserId,
+        },
+      });
+
+      // Transfer subscriptions to authenticated user
+      for (const subscription of anonymousSubscriptions) {
+        await tx.subscription.update({
+          where: { id: subscription.id },
+          data: {
+            userId: authenticatedUserId,
+            updatedAt: new Date(),
+          },
+        });
+      }
+
+      // Update user premium status if any active subscriptions exist
+      const hasActiveSubscriptions = anonymousSubscriptions.some(
+        (sub) => sub.status === "ACTIVE"
+      );
+
+      if (hasActiveSubscriptions) {
+        await tx.user.update({
+          where: { id: authenticatedUserId },
+          data: { isPremium: true },
+        });
+      }
+    });
+  }
+
+  /**
+   * Get user by RevenueCat user ID
+   */
+  static async getUserByRevenueCatId(revenueCatUserId: string) {
+    const subscription = await prisma.subscription.findFirst({
+      where: {
+        revenueCatUserId: revenueCatUserId,
+      },
+      include: {
+        user: true,
+      },
+    });
+
+    return subscription?.user || null;
+  }
+
+  /**
+   * Check if user has RevenueCat user ID assigned
+   */
+  static async hasRevenueCatUserId(userId: string): Promise<boolean> {
+    const subscription = await prisma.subscription.findFirst({
+      where: {
+        userId: userId,
+        revenueCatUserId: { not: null },
+      },
+    });
+
+    return !!subscription;
+  }
+
+  /**
+   * Get user's RevenueCat user ID
+   */
+  static async getUserRevenueCatId(userId: string): Promise<string | null> {
+    const subscription = await prisma.subscription.findFirst({
+      where: {
+        userId: userId,
+        revenueCatUserId: { not: null },
+      },
+    });
+
+    return subscription?.revenueCatUserId || null;
+  }
+
+  /**
    * Revoke premium access
    * Updates subscription status and maintains backward compatibility
    */
@@ -183,6 +332,102 @@ export class PremiumService {
           },
         });
       }
+    });
+  }
+
+  /**
+   * Check premium status specifically from RevenueCat entitlements
+   */
+  static async checkRevenueCatPremiumStatus(userId: string): Promise<PremiumStatus> {
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: {
+        isPremium: true,
+        subscriptions: {
+          where: {
+            status: "ACTIVE",
+            revenueCatUserId: { not: null },
+          },
+          select: {
+            currentPeriodEnd: true,
+            revenueCatUserId: true,
+            revenueCatEntitlement: true,
+            revenueCatTransactionId: true,
+            plan: {
+              select: { id: true },
+            },
+          },
+          orderBy: { createdAt: "desc" },
+        },
+      },
+    });
+
+    if (!user) {
+      return { isPremium: false };
+    }
+
+    // Check for active RevenueCat subscriptions
+    const activeRevenueCatSubscriptions = user.subscriptions.filter(sub => {
+      // Must have RevenueCat data
+      if (!sub.revenueCatUserId || !sub.revenueCatEntitlement) {
+        return false;
+      }
+
+      // Check expiry if available
+      if (sub.currentPeriodEnd) {
+        return sub.currentPeriodEnd > new Date();
+      }
+
+      // If no expiry date, assume active (lifetime or ongoing)
+      return true;
+    });
+
+    const isPremium = activeRevenueCatSubscriptions.length > 0;
+
+    return {
+      isPremium,
+      subscriptions: activeRevenueCatSubscriptions.map((sub): UserSubscription => ({
+        id: sub.plan.id,
+        expiryDate: sub.currentPeriodEnd || null,
+        isActive: true,
+        revenueCatData: {
+          userId: sub.revenueCatUserId!,
+          entitlement: sub.revenueCatEntitlement!,
+          transactionId: sub.revenueCatTransactionId,
+        },
+      })),
+    };
+  }
+
+  /**
+   * Validate RevenueCat entitlement for specific features
+   */
+  static async validateRevenueCatEntitlement(userId: string, requiredEntitlement: string): Promise<boolean> {
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: {
+        subscriptions: {
+          where: {
+            status: "ACTIVE",
+            revenueCatEntitlement: { contains: requiredEntitlement },
+          },
+          select: {
+            currentPeriodEnd: true,
+            revenueCatEntitlement: true,
+          },
+        },
+      },
+    });
+
+    if (!user) {
+      return false;
+    }
+
+    // Check if any subscription has the required entitlement and is not expired
+    return user.subscriptions.some(sub => {
+      const hasEntitlement = sub.revenueCatEntitlement?.includes(requiredEntitlement);
+      const isNotExpired = !sub.currentPeriodEnd || sub.currentPeriodEnd > new Date();
+      return hasEntitlement && isNotExpired;
     });
   }
 }

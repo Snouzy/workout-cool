@@ -398,8 +398,10 @@ model Subscription {
   plan   SubscriptionPlan @relation(fields: [planId], references: [id])
 
   // RevenueCat data
-  revenueCatUserId      String?
-  revenueCatEntitlement String?
+  revenueCatUserId         String?
+  revenueCatEntitlement    String?
+  revenueCatTransactionId  String? // Original transaction ID from RevenueCat
+  revenueCatProductId      String? // Product ID from RevenueCat
 
   // Status
   status SubscriptionStatus
@@ -443,6 +445,40 @@ model License {
   createdAt DateTime @default(now())
 
   @@map("licenses")
+}
+
+// RevenueCat webhook event logging for debugging and monitoring
+model RevenueCatWebhookEvent {
+  id String @id @default(cuid())
+
+  // Event metadata
+  eventType        String  // INITIAL_PURCHASE, RENEWAL, CANCELLATION, etc.
+  eventTimestamp   DateTime
+  appUserId        String
+  environment      String  // SANDBOX or PRODUCTION
+  
+  // Transaction details
+  productId        String?
+  transactionId    String?
+  originalTransactionId String?
+  entitlementIds   String? // JSON array as string
+  
+  // Processing metadata
+  processed        Boolean @default(false)
+  processingError  String? @db.Text
+  retryCount       Int @default(0)
+  
+  // Raw event data for debugging
+  rawEventData     Json
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([appUserId])
+  @@index([eventType])
+  @@index([processed])
+  @@index([eventTimestamp])
+  @@map("revenuecat_webhook_events")
 }
 
 // ========================================

@@ -30,7 +30,7 @@ export function usePremiumPlans() {
       // Get user timezone for better region detection
       const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
-      const response = await fetch(`/api/premium/plans?tz=${encodeURIComponent(timezone)}`);
+      const response = await fetch(`/premium/plans?tz=${encodeURIComponent(timezone)}`);
       if (!response.ok) {
         throw new Error("Failed to fetch plans");
       }

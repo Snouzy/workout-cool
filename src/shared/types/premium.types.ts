@@ -6,10 +6,12 @@ export interface PremiumStatus {
   isPremium: boolean;
   expiresAt?: Date;
   provider?: PremiumProvider;
+  revenueCatUserId?: string | null;
+  hasRevenueCatAccount?: boolean;
 }
 
 // Available payment providers - easy to extend
-export type PremiumProvider = "stripe" | "paypal" | "lemonsqueezy" | "other";
+export type PremiumProvider = "stripe" | "paypal" | "lemonsqueezy" | "revenuecat" | "other";
 
 // Plan types for the new 3-plan structure
 export type PlanType = "free" | "supporter" | "premium";

@@ -27,6 +27,11 @@ export const env = createEnv({
 
     STRIPE_SECRET_KEY: z.string().optional(),
     STRIPE_WEBHOOK_SECRET: z.string().optional(),
+
+    // RevenueCat configuration
+    REVENUECAT_SECRET_KEY: z.string().optional(),
+    REVENUECAT_WEBHOOK_SECRET: z.string().optional(),
+    REVENUECAT_PROJECT_ID: z.string().optional(),
   },
   /**
    * If you add `client` environment variables, you need to add them to

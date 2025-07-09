@@ -496,6 +496,11 @@ export default {
     title: "Novedades",
     release_notes: "Notas",
     notes: {
+      note_2025_07_09: {
+        title: "🎯 Selección de Ejercicios, Favoritos y Nuevas Herramientas",
+        content:
+          "<li>Nueva <strong>selección de ejercicios</strong> durante la creación de entrenamientos (paso 3)</li><li>Sistema de <strong>ejercicios favoritos</strong> para marcar tus movimientos preferidos</li><li>Nuevas <em>herramientas de fitness</em>: calculadora de IMC y zonas de frecuencia cardíaca</li><li>Tarjetas de programas mejoradas</li><li>¡Nuevos colaboradores se unen al proyecto! 🚀</li>",
+      },
       note_2025_07_02: {
         title: "🛠️ Auto-alojamiento, Ruso y Nuevas Herramientas",
         content:

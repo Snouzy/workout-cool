@@ -1360,6 +1360,11 @@ export default {
     title: "What's New",
     release_notes: "Release Notes",
     notes: {
+      note_2025_07_09: {
+        title: "🎯 Exercise Selection, Favorites & New Tools",
+        content:
+          "<li>New <strong>exercise selection</strong> during workout creation (step 3)</li><li><strong>Favorite exercises</strong> system to mark your preferred movements</li><li>New <em>fitness tools</em>: BMI calculator and heart rate zones</li><li>Improved program cards</li><li>New contributors join the project! 🚀</li>",
+      },
       note_2025_07_02: {
         title: "🛠️ Self-Hosting, Russian & New Tools",
         content:

@@ -1,6 +1,6 @@
 "use client";
 
-import { useWorkoutBuilderStore } from "./workout-builder.store";
+import { useWorkoutBuilderStore } from "../model/workout-builder.store";
 
 export function useWorkoutStepper() {
   const {

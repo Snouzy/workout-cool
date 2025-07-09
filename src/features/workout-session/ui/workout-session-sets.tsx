@@ -12,11 +12,13 @@ import { cn } from "@/shared/lib/utils";
 import { useWorkoutSession } from "@/features/workout-session/model/use-workout-session";
 import { useSyncWorkoutSessions } from "@/features/workout-session/model/use-sync-workout-sessions";
 import { ExerciseVideoModal } from "@/features/workout-builder/ui/exercise-video-modal";
+import { useSyncFavoriteExercises } from "@/features/workout-builder/hooks/use-sync-favorite-exercises";
 import { env } from "@/env";
 import { PremiumUpsellAlert } from "@/components/ui/premium-upsell-alert";
 import { Button } from "@/components/ui/button";
 import { HorizontalBottomBanner } from "@/components/ads";
 
+import { FavoriteExerciseButton } from "../../workout-builder/ui/favorite-exercise-button";
 import { WorkoutSessionSet } from "./workout-session-set";
 
 export function WorkoutSessionSets({
@@ -37,6 +39,7 @@ export function WorkoutSessionSets({
   const [videoModal, setVideoModal] = useState<{ open: boolean; exerciseId?: string }>({ open: false });
   const { syncSessions } = useSyncWorkoutSessions();
   const prevExerciseIndexRef = useRef<number>(currentExerciseIndex);
+  const { syncFavoriteExercises } = useSyncFavoriteExercises();
 
   // auto-scroll to current exercise when index changes (but not when adding sets)
   useEffect(() => {
@@ -115,6 +118,7 @@ export function WorkoutSessionSets({
 
   const handleFinishSession = () => {
     completeWorkout();
+    syncFavoriteExercises();
     syncSessions();
     onCongrats();
     confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
@@ -173,16 +177,16 @@ export function WorkoutSessionSets({
                 )}
                 <div
                   className={cn(
-                    "text-xl leading-[1.3]",
+                    "text-xl leading-[1.3] flex-1",
                     idx === currentExerciseIndex
                       ? "font-bold text-blue-600"
                       : "text-slate-700 dark:text-slate-300 transition-colors hover:text-blue-500",
                   )}
                 >
-                  {exerciseName}
+                  <span className="text-xl leading-[1.3] flex-1">{exerciseName}</span>
                   {details?.introduction && (
                     <span
-                      className="block text-xs mt-1 text-slate-500 dark:text-slate-400 underline cursor-pointer hover:text-blue-600"
+                      className="flex text-xs mt-1 text-slate-500 dark:text-slate-400 underline cursor-pointer hover:text-blue-600"
                       onClick={(e) => {
                         e.stopPropagation();
                         setVideoModal({ open: true, exerciseId: ex.id });
@@ -191,7 +195,6 @@ export function WorkoutSessionSets({
                       {t("workout_builder.session.see_instructions")}
                     </span>
                   )}
-                  {/* Fallback: description si pas d'introduction */}
                 </div>
               </div>
               {/* Modale vidéo */}
@@ -204,8 +207,11 @@ export function WorkoutSessionSets({
               )}
               {/* Si exercice courant, afficher le détail */}
               {idx === currentExerciseIndex && (
-                <div className="bg-white dark:bg-transparent rounded-xl my-10">
+                <div className="bg-white dark:bg-transparent rounded-xl mt-6 mb-10">
                   {/* Liste des sets */}
+                  <div className="flex justify-start items-center gap-2">
+                    <FavoriteExerciseButton exerciseId={ex.id} />
+                  </div>
                   <div className="space-y-10 mb-8">
                     {ex.sets.map((set, setIdx) => (
                       <WorkoutSessionSet

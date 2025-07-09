@@ -1780,5 +1780,9 @@ export default {
     friday: "Friday",
     saturday: "Saturday",
     sunday: "Sunday",
+    added_to_favorites: "Added to favorites",
+    add_to_favorites: "Add to favorites",
+    remove_from_favorites: "Remove from favorites",
+    favorites: "Favorites",
   },
 } as const;

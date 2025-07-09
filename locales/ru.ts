@@ -1781,5 +1781,9 @@ export default {
     friday: "Пятница",
     saturday: "Суббота",
     sunday: "Воскресенье",
+    added_to_favorites: "Добавлено в избранное",
+    add_to_favorites: "Добавить в избранное",
+    remove_from_favorites: "Удалить из избранного",
+    favorites: "Избранное",
   },
 } as const;

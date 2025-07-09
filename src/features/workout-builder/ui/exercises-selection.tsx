@@ -7,7 +7,7 @@ import { useI18n } from "locales/client";
 import { env } from "@/env";
 import { HorizontalBottomBanner } from "@/components/ads";
 
-import { useWorkoutStepper } from "../model/use-workout-stepper";
+import { useWorkoutStepper } from "../hooks/use-workout-stepper";
 import { ExerciseListItem } from "./exercise-list-item";
 
 import type { ExerciseWithAttributes } from "../types";

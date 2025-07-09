@@ -4,7 +4,7 @@ import { ExerciseAttributeValueEnum, WorkoutSessionExercise } from "@prisma/clie
 import { WorkoutBuilderStep } from "../types";
 import { shuffleExerciseAction } from "../actions/shuffle-exercise.action";
 import { pickExerciseAction } from "../actions/pick-exercise.action";
-import { getExercisesAction } from "./get-exercises.action";
+import { getExercisesAction } from "../actions/get-exercises.action";
 
 interface WorkoutBuilderState {
   currentStep: WorkoutBuilderStep;
@@ -92,6 +92,8 @@ export const useWorkoutBuilderStore = create<WorkoutBuilderState>((set, get) => 
 
   setExercisesOrder: (order) => set({ exercisesOrder: order }),
   
+  setExercisesByMuscle: (exercisesByMuscle) => set({ exercisesByMuscle }),
+
   setExercisesByMuscle: (exercisesByMuscle) => set({ exercisesByMuscle }),
 
   deleteExercise: (exerciseId) =>

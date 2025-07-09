@@ -1,5 +1,6 @@
 "use client";
 
+import { useBoolean } from "usehooks-ts";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { Plus, Loader2, X, ChevronDown, ChevronUp } from "lucide-react";
@@ -7,6 +8,8 @@ import { useQuery } from "@tanstack/react-query";
 import { ExerciseAttributeValueEnum } from "@prisma/client";
 
 import { useCurrentLocale, useI18n } from "locales/client";
+import { FavoriteButton } from "@/features/workout-builder/ui/favorite-button";
+import { useFavoritesModal } from "@/features/workout-builder/hooks/use-favorites-modal";
 
 import { useWorkoutBuilderStore } from "../model/workout-builder.store";
 import { getExercisesByMuscleAction } from "../actions/get-exercises-by-muscle.action";
@@ -37,8 +40,9 @@ export const AddExerciseModal = ({ isOpen, onClose, selectedEquipment }: AddExer
   const t = useI18n();
   const locale = useCurrentLocale();
   const [expandedMuscle, setExpandedMuscle] = useState<string | null>(null);
-  const { exercisesByMuscle, setExercisesByMuscle, setExercisesOrder, exercisesOrder } = useWorkoutBuilderStore();
+  const { value: isFavoritesExpanded, setTrue: openFavorites, setFalse: closeFavorites } = useBoolean(false);
 
+  const { exercisesByMuscle, setExercisesByMuscle, setExercisesOrder, exercisesOrder } = useWorkoutBuilderStore();
   const { data: muscleGroups, isLoading } = useQuery({
     queryKey: ["exercises-by-muscle", selectedEquipment],
     queryFn: async () => {
@@ -49,6 +53,12 @@ export const AddExerciseModal = ({ isOpen, onClose, selectedEquipment }: AddExer
       return result?.data as MuscleGroup[];
     },
     enabled: isOpen && selectedEquipment.length > 0,
+  });
+
+  // Use the favorites hook
+  const { favoriteExercises, isFavorite, handleToggleFavorite } = useFavoritesModal({
+    isOpen,
+    muscleGroups: muscleGroups || [],
   });
 
   useEffect(() => {
@@ -124,6 +134,106 @@ export const AddExerciseModal = ({ isOpen, onClose, selectedEquipment }: AddExer
             </div>
           ) : (
             <div className="space-y-3">
+              {/* Favorites Section */}
+              {favoriteExercises.length > 0 && (
+                <div className="bg-white dark:bg-gray-900 rounded-xl border border-yellow-200 dark:border-yellow-700 overflow-hidden">
+                  {/* Favorites Header (Accordion Button) */}
+                  <button
+                    aria-controls="favorites-section"
+                    aria-expanded={isFavoritesExpanded}
+                    className="w-full p-4 bg-gradient-to-r from-yellow-50 to-orange-50 dark:from-yellow-900/30 dark:to-orange-900/30 hover:from-yellow-100 hover:to-orange-100 dark:hover:from-yellow-800/40 dark:hover:to-orange-800/40 transition-all duration-200 ease-in-out flex items-center justify-between focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                    onClick={() => (isFavoritesExpanded ? closeFavorites() : openFavorites())}
+                  >
+                    <div className="flex items-center space-x-3">
+                      <div className="w-3 h-3 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full"></div>
+                      <span className="text-lg font-bold text-gray-900 dark:text-white">{t("commons.favorites")}</span>
+                      <span className="text-sm font-medium text-yellow-600 dark:text-yellow-400 bg-yellow-100 dark:bg-yellow-800/50 px-2 py-1 rounded-full">
+                        {favoriteExercises.length}
+                      </span>
+                    </div>
+                    {isFavoritesExpanded ? (
+                      <ChevronUp className="h-5 w-5 text-gray-600 dark:text-gray-300" />
+                    ) : (
+                      <ChevronDown className="h-5 w-5 text-gray-600 dark:text-gray-300" />
+                    )}
+                  </button>
+
+                  {/* Favorites Content */}
+                  {isFavoritesExpanded && (
+                    <div className="divide-y divide-gray-100 dark:divide-gray-800" id="favorites-section">
+                      {favoriteExercises.map((exercise) => (
+                        <div
+                          aria-label={`Ajouter ${locale === "en" ? exercise.nameEn : exercise.name}`}
+                          className="p-4 hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-200 ease-in-out cursor-pointer group"
+                          key={exercise.id}
+                          onClick={() => handleAddExercise(exercise, exercise.muscle)}
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter" || e.key === " ") {
+                              e.preventDefault();
+                              handleAddExercise(exercise, exercise.muscle);
+                            }
+                          }}
+                          role="button"
+                          tabIndex={0}
+                        >
+                          <div className="flex items-center gap-2 sm:gap-4">
+                            <div className="flex flex-col sm:flex-row">
+                              {/* Image de l'exercice avec bordure colorée */}
+                              <div className="relative">
+                                {exercise.fullVideoImageUrl && (
+                                  <div className="relative h-16 w-16 rounded-xl overflow-hidden shrink-0 bg-gray-100 dark:bg-gray-700 border-2 border-yellow-200 dark:border-yellow-600 group-hover:border-yellow-400 group-hover:shadow-lg transition-all duration-200">
+                                    <Image
+                                      alt={exercise.nameEn}
+                                      className="w-full h-full object-cover scale-[1.5]"
+                                      height={64}
+                                      loading="lazy"
+                                      src={exercise.fullVideoImageUrl}
+                                      width={64}
+                                    />
+                                  </div>
+                                )}
+                              </div>
+
+                              {/* Favorite Button */}
+                              <div className="flex items-center justify-center">
+                                <FavoriteButton
+                                  exerciseId={exercise.id}
+                                  isFavorite={isFavorite(exercise.id)}
+                                  onToggle={handleToggleFavorite}
+                                />
+                              </div>
+                            </div>
+
+                            <div className="flex-1 flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                              {/* Nom de l'exercice */}
+                              <div className="flex-1">
+                                <h3 className="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-yellow-600 dark:group-hover:text-yellow-400 transition-colors leading-tight">
+                                  {locale === "fr" ? exercise.name : exercise.nameEn}
+                                </h3>
+                              </div>
+
+                              {/* Bouton d'ajout moderne */}
+                              <button
+                                aria-label={`Ajouter ${locale === "en" ? exercise.nameEn : exercise.name}`}
+                                className="btn btn-sm sm:btn-md bg-green-500 hover:bg-green-600 text-white border-0 transition-all duration-200 ease-in-out group-hover:scale-105 shadow-sm hover:shadow-md"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleAddExercise(exercise, exercise.muscle);
+                                }}
+                              >
+                                <Plus className="h-4 w-4 sm:h-5 sm:w-5" />
+                                <span className="ml-1 font-medium">{t("commons.add")}</span>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* Muscle Groups */}
               {muscleGroups?.map((group) => (
                 <div
                   className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden"
@@ -171,23 +281,34 @@ export const AddExerciseModal = ({ isOpen, onClose, selectedEquipment }: AddExer
                           tabIndex={0}
                         >
                           <div className="flex items-center gap-4">
-                            {/* Image de l'exercice avec bordure colorée */}
-                            <div className="relative">
-                              {exercise.fullVideoImageUrl && (
-                                <div className="relative h-16 w-16 rounded-xl overflow-hidden shrink-0 bg-gray-100 dark:bg-gray-700 border-2 border-gray-200 dark:border-gray-600 group-hover:border-green-400 group-hover:shadow-lg transition-all duration-200">
-                                  <Image
-                                    alt={exercise.nameEn}
-                                    className="w-full h-full object-cover scale-[1.5]"
-                                    height={64}
-                                    loading="lazy"
-                                    src={exercise.fullVideoImageUrl}
-                                    width={64}
-                                  />
+                            <div className="flex flex-col sm:flex-row">
+                              {/* Image de l'exercice avec bordure colorée */}
+                              <div className="relative">
+                                {exercise.fullVideoImageUrl && (
+                                  <div className="relative h-16 w-16 rounded-xl overflow-hidden shrink-0 bg-gray-100 dark:bg-gray-700 border-2 border-gray-400 dark:border-gray-600 group-hover:border-green-400 group-hover:shadow-lg transition-all duration-200">
+                                    <Image
+                                      alt={exercise.nameEn}
+                                      className="w-full h-full object-cover scale-[1.5]"
+                                      height={64}
+                                      loading="lazy"
+                                      src={exercise.fullVideoImageUrl}
+                                      width={64}
+                                    />
+                                  </div>
+                                )}
+                                {/* Badge de réussite */}
+                                <div className="absolute -top-1 -right-1 w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                                  <span className="text-xs font-bold text-yellow-900">B</span>
                                 </div>
-                              )}
-                              {/* Badge de réussite */}
-                              <div className="absolute -top-1 -right-1 w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                                <span className="text-xs font-bold text-yellow-900">B</span>
+                              </div>
+
+                              {/* Favorite Button */}
+                              <div className="flex items-center justify-center">
+                                <FavoriteButton
+                                  exerciseId={exercise.id}
+                                  isFavorite={isFavorite(exercise.id)}
+                                  onToggle={handleToggleFavorite}
+                                />
                               </div>
                             </div>
 

@@ -917,6 +917,10 @@ export default {
     friday: "Viernes",
     saturday: "Sábado",
     sunday: "Domingo",
+    added_to_favorites: "Agregado a favoritos",
+    add_to_favorites: "Agregar a favoritos",
+    remove_from_favorites: "Eliminar de favoritos",
+    favorites: "Favoritos",
   },
   tools: {
     try_now: "Probar ahora",

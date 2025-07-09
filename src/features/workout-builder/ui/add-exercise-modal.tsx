@@ -142,7 +142,7 @@ export const AddExerciseModal = ({ isOpen, onClose, selectedEquipment }: AddExer
                       {group.exercises.map((exercise) => (
                         <div
                           aria-label={`Ajouter ${locale === "en" ? exercise.nameEn : exercise.name}`}
-                          className="p-6 hover:bg-gray-50 transition-colors duration-200 cursor-pointer group"
+                          className="p-2 sm:p-6 hover:bg-gray-50 transition-colors duration-200 cursor-pointer group"
                           key={exercise.id}
                           onClick={() => handleAddExercise(exercise, group.muscle)}
                           onKeyDown={(e) => {
@@ -179,7 +179,7 @@ export const AddExerciseModal = ({ isOpen, onClose, selectedEquipment }: AddExer
                               {/* Bouton d'ajout - action principale ultra-claire */}
                               <button
                                 aria-label={`Ajouter ${locale === "en" ? exercise.nameEn : exercise.name}`}
-                                className="btn btn-lg bg-green-500 hover:bg-green-600 text-white border-0 transition-all duration-200 shadow-lg hover:shadow-xl group-hover:scale-105"
+                                className="btn sm:btn-lg bg-green-500 hover:bg-green-600 text-white border-0 transition-all duration-200 shadow-lg hover:shadow-xl group-hover:scale-105"
                                 onClick={(e) => {
                                   e.stopPropagation();
                                   handleAddExercise(exercise, group.muscle);

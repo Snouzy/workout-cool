@@ -50,3 +50,6 @@ next-env.d.ts
 .zed
 scripts/private/
 scripts/personal/
+
+product-development
+.claude/

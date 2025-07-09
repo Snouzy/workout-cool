@@ -1518,6 +1518,9 @@ export default {
       loading_exercises: "Erreur lors du chargement des exercices",
     },
     no_exercises_found: "Aucun exercice trouvé. Essayez de changer vos équipements ou vos muscles sélectionnés.",
+    addExercise: "Ajouter un exercice",
+    exerciseAdded: "{name} ajouté à l'entraînement",
+    exercises: "exercices",
     equipment: {
       bodyweight: {
         label: "Poids du corps",
@@ -1792,6 +1795,7 @@ export default {
     support: "Support",
     change_language: "Changer de langue",
     in_progress: "En cours",
+    close: "Fermer",
     premium: "Premium",
     free: "Gratuit",
     new: "Nouveau",

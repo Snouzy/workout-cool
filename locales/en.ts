@@ -1477,6 +1477,7 @@ export default {
       forearms: "Forearms",
       traps: "Traps",
       obliques: "Obliques",
+      lats: "Lats",
     },
     exercise: {
       watch_video: "Watch video",
@@ -1492,6 +1493,9 @@ export default {
       loading_exercises: "Error loading exercises",
     },
     no_exercises_found: "No exercises found. Try to change your equipment or muscles selection.",
+    addExercise: "Add exercise",
+    exerciseAdded: "{name} added to workout",
+    exercises: "exercises",
     equipment: {
       bodyweight: {
         label: "Bodyweight",
@@ -1764,6 +1768,7 @@ export default {
     support: "Support",
     change_language: "Change language",
     in_progress: "In progress",
+    close: "Close",
     premium: "Premium",
     free: "Free",
     new: "New",

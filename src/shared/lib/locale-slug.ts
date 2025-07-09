@@ -7,6 +7,7 @@ interface SlugData {
   slugEn: string;
   slugEs: string;
   slugPt: string;
+  slugUa: string;
   slugRu: string;
   slugZhCn: string;
 }
@@ -22,6 +23,8 @@ export function getSlugForLocale(slugData: SlugData, locale: string): string {
       return slugData.slugEs;
     case "pt":
       return slugData.slugPt;
+    case "ua":
+      return slugData.slugUa;
     case "ru":
       return slugData.slugRu;
     case "zh-CN":
@@ -39,6 +42,7 @@ interface TitleData {
   titleEn: string;
   titleEs: string;
   titlePt: string;
+  titleUa: string;
   titleRu: string;
   titleZhCn: string;
 }
@@ -51,6 +55,8 @@ export function getTitleForLocale(titleData: TitleData, locale: string): string 
       return titleData.titleEs;
     case "pt":
       return titleData.titlePt;
+    case "ua":
+      return titleData.titleUa;
     case "ru":
       return titleData.titleRu;
     case "zh-CN":

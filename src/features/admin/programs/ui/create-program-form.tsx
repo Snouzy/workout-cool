@@ -15,12 +15,14 @@ const programSchema = z.object({
   titleEn: z.string().min(1, "Le titre en anglais est requis"),
   titleEs: z.string().min(1, "Le titre en espagnol est requis"),
   titlePt: z.string().min(1, "Le titre en portugais est requis"),
+  titleUa: z.string().min(1, "Le titre en ukrainien est requis"),
   titleRu: z.string().min(1, "Le titre en russe est requis"),
   titleZhCn: z.string().min(1, "Le titre en chinois est requis"),
   description: z.string().min(1, "La description est requise"),
   descriptionEn: z.string().min(1, "La description en anglais est requise"),
   descriptionEs: z.string().min(1, "La description en espagnol est requise"),
   descriptionPt: z.string().min(1, "La description en portugais est requise"),
+  descriptionUa: z.string().min(1, "La description en ukrainien est requise"),
   descriptionRu: z.string().min(1, "La description en russe est requise"),
   descriptionZhCn: z.string().min(1, "La description en chinois est requise"),
   category: z.string().min(1, "La catégorie est requise"),
@@ -98,12 +100,14 @@ export function CreateProgramForm({ currentStep, onStepComplete, onSuccess, onCa
       titleEn: "",
       titleEs: "",
       titlePt: "",
+      titleUa: "",
       titleRu: "",
       titleZhCn: "",
       description: "",
       descriptionEn: "",
       descriptionEs: "",
       descriptionPt: "",
+      descriptionUa: "",
       descriptionRu: "",
       descriptionZhCn: "",
     },
@@ -166,6 +170,9 @@ export function CreateProgramForm({ currentStep, onStepComplete, onSuccess, onCa
           </button>
           <button className={`tab ${activeTab === "pt" ? "tab-active" : ""}`} onClick={() => setActiveTab("pt")} type="button">
             🇵🇹 PT
+          </button>
+          <button className={`tab ${activeTab === "ua" ? "tab-active" : ""}`} onClick={() => setActiveTab("ua")} type="button">
+            🇺🇦 UA
           </button>
           <button className={`tab ${activeTab === "ru" ? "tab-active" : ""}`} onClick={() => setActiveTab("ru")} type="button">
             🇷🇺 RU
@@ -252,6 +259,26 @@ export function CreateProgramForm({ currentStep, onStepComplete, onSuccess, onCa
                 </label>
                 <textarea className="textarea textarea-bordered h-24" id="descriptionPt" {...register("descriptionPt")} />
                 {errors.descriptionPt && <div className="text-sm text-error mt-1">{errors.descriptionPt.message}</div>}
+              </div>
+            </div>
+          )}
+
+          {/* Ukrainian Fields */}
+          {activeTab === "ua" && (
+            <div className="space-y-4">
+              <div className="form-control">
+                <label className="label" htmlFor="titleUa">
+                  <span className="label-text">Назва (Українська)</span>
+                </label>
+                <input className="input input-bordered" id="titleUa" {...register("titleUa")} />
+                {errors.titleUa && <div className="text-sm text-error mt-1">{errors.titleUa.message}</div>}
+              </div>
+              <div className="form-control">
+                <label className="label" htmlFor="descriptionUa">
+                  <span className="label-text">Опис (Українська)</span>
+                </label>
+                <textarea className="textarea textarea-bordered h-24" id="descriptionUa" {...register("descriptionUa")} />
+                {errors.descriptionUa && <div className="text-sm text-error mt-1">{errors.descriptionUa.message}</div>}
               </div>
             </div>
           )}

@@ -25,6 +25,8 @@ export function DurationBadge({
       return `${durationWeeks} semanas • ${totalHours}h total`;
     } else if (locale === "pt") {
       return `${durationWeeks} semanas • ${totalHours}h total`;
+    } else if (locale === "ua") {
+      return `${durationWeeks} тижнів • ${totalHours}год загалом`;
     } else if (locale === "ru") {
       return `${durationWeeks} недель • ${totalHours}ч всего`;
     } else if (locale === "zh-CN") {

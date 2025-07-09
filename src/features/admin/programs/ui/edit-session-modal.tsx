@@ -23,12 +23,14 @@ const sessionSchema = z.object({
   titleEn: z.string().min(1, "Le titre en anglais est requis"),
   titleEs: z.string().min(1, "Le titre en espagnol est requis"),
   titlePt: z.string().min(1, "Le titre en portugais est requis"),
+  titleUa: z.string().min(1, "Le titre en ukrainien est requis"),
   titleRu: z.string().min(1, "Le titre en russe est requis"),
   titleZhCn: z.string().min(1, "Le titre en chinois est requis"),
   description: z.string().min(1, "La description est requise"),
   descriptionEn: z.string().min(1, "La description en anglais est requise"),
   descriptionEs: z.string().min(1, "La description en espagnol est requise"),
   descriptionPt: z.string().min(1, "La description en portugais est requise"),
+  descriptionUa: z.string().min(1, "La description en ukrainien est requise"),
   descriptionRu: z.string().min(1, "La description en russe est requise"),
   descriptionZhCn: z.string().min(1, "La description en chinois est requise"),
   estimatedMinutes: z.number().min(5, "Au moins 5 minutes"),
@@ -72,12 +74,14 @@ export function EditSessionModal({ open, onOpenChange, session }: EditSessionMod
       titleEn: session.titleEn,
       titleEs: session.titleEs,
       titlePt: session.titlePt,
+      titleUa: session.titleUa,
       titleRu: session.titleRu,
       titleZhCn: session.titleZhCn,
       description: session.description,
       descriptionEn: session.descriptionEn,
       descriptionEs: session.descriptionEs,
       descriptionPt: session.descriptionPt,
+      descriptionUa: session.descriptionUa,
       descriptionRu: session.descriptionRu,
       descriptionZhCn: session.descriptionZhCn,
       estimatedMinutes: session.estimatedMinutes,
@@ -104,6 +108,7 @@ export function EditSessionModal({ open, onOpenChange, session }: EditSessionMod
         titleEn: data.titleEn,
         titleEs: data.titleEs,
         titlePt: data.titlePt,
+        titleUa: data.titleUa,
         titleRu: data.titleRu,
         titleZhCn: data.titleZhCn,
       });
@@ -152,6 +157,9 @@ export function EditSessionModal({ open, onOpenChange, session }: EditSessionMod
             </button>
             <button className={`tab ${activeTab === "pt" ? "tab-active" : ""}`} onClick={() => setActiveTab("pt")} type="button">
               🇵🇹 PT
+            </button>
+            <button className={`tab ${activeTab === "ua" ? "tab-active" : ""}`} onClick={() => setActiveTab("ua")} type="button">
+              🇺🇦 UA
             </button>
             <button className={`tab ${activeTab === "ru" ? "tab-active" : ""}`} onClick={() => setActiveTab("ru")} type="button">
               🇷🇺 RU
@@ -221,6 +229,22 @@ export function EditSessionModal({ open, onOpenChange, session }: EditSessionMod
                 <Label htmlFor="edit-descriptionPt">Descrição (Português)</Label>
                 <Textarea id="edit-descriptionPt" {...register("descriptionPt")} rows={3} />
                 {errors.descriptionPt && <p className="text-sm text-red-500 mt-1">{errors.descriptionPt.message}</p>}
+              </div>
+            </div>
+          )}
+
+          {/* Ukrainian Fields */}
+          {activeTab === "ua" && (
+            <div className="space-y-4">
+              <div>
+                <Label htmlFor="edit-titleUa">Назва (Українська)</Label>
+                <Input id="edit-titleUa" {...register("titleUa")} />
+                {errors.titleUa && <p className="text-sm text-red-500 mt-1">{errors.titleUa.message}</p>}
+              </div>
+              <div>
+                <Label htmlFor="edit-descriptionUa">Опис (Українська)</Label>
+                <Textarea id="edit-descriptionUa" {...register("descriptionUa")} rows={3} />
+                {errors.descriptionUa && <p className="text-sm text-red-500 mt-1">{errors.descriptionUa.message}</p>}
               </div>
             </div>
           )}

@@ -13,18 +13,21 @@ interface UpdateSessionData {
   titleEn: string;
   titleEs: string;
   titlePt: string;
+  titleUa: string;
   titleRu: string;
   titleZhCn: string;
   slug: string;
   slugEn: string;
   slugEs: string;
   slugPt: string;
+  slugUa: string;
   slugRu: string;
   slugZhCn: string;
   description: string;
   descriptionEn: string;
   descriptionEs: string;
   descriptionPt: string;
+  descriptionUa: string;
   descriptionRu: string;
   descriptionZhCn: string;
   equipment: ExerciseAttributeValueEnum[];
@@ -81,6 +84,7 @@ export async function updateSession(data: UpdateSessionData) {
     slugEn: await ensureUniqueSessionSlug(data.slugEn, "slugEn"),
     slugEs: await ensureUniqueSessionSlug(data.slugEs, "slugEs"),
     slugPt: await ensureUniqueSessionSlug(data.slugPt, "slugPt"),
+    slugUa: await ensureUniqueSessionSlug(data.slugUa, "slugUa"),
     slugRu: await ensureUniqueSessionSlug(data.slugRu, "slugRu"),
     slugZhCn: await ensureUniqueSessionSlug(data.slugZhCn, "slugZhCn"),
   };
@@ -92,18 +96,21 @@ export async function updateSession(data: UpdateSessionData) {
       titleEn: data.titleEn,
       titleEs: data.titleEs,
       titlePt: data.titlePt,
+      titleUa: data.titleUa,
       titleRu: data.titleRu,
       titleZhCn: data.titleZhCn,
       slug: uniqueSlugs.slug,
       slugEn: uniqueSlugs.slugEn,
       slugEs: uniqueSlugs.slugEs,
       slugPt: uniqueSlugs.slugPt,
+      slugUa: uniqueSlugs.slugUa,
       slugRu: uniqueSlugs.slugRu,
       slugZhCn: uniqueSlugs.slugZhCn,
       description: data.description,
       descriptionEn: data.descriptionEn,
       descriptionEs: data.descriptionEs,
       descriptionPt: data.descriptionPt,
+      descriptionUa: data.descriptionUa,
       descriptionRu: data.descriptionRu,
       descriptionZhCn: data.descriptionZhCn,
       equipment: data.equipment,

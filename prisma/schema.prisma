@@ -482,18 +482,21 @@ model Program {
   slugEn             String                       @unique
   slugEs             String                       @unique
   slugPt             String                       @unique
+  slugUa             String                       @unique
   slugRu             String                       @unique
   slugZhCn           String                       @unique
   title              String
   titleEn            String
   titleEs            String
   titlePt            String
+  titleUa            String
   titleRu            String
   titleZhCn          String
   description        String                       @db.Text
   descriptionEn      String                       @db.Text
   descriptionEs      String                       @db.Text
   descriptionPt      String                       @db.Text
+  descriptionUa      String                       @db.Text
   descriptionRu      String                       @db.Text
   descriptionZhCn    String                       @db.Text
   category           String
@@ -540,12 +543,14 @@ model ProgramWeek {
   titleEn         String
   titleEs         String
   titlePt         String
+  titleUa         String
   titleRu         String
   titleZhCn       String
   description     String @db.Text
   descriptionEn   String @db.Text
   descriptionEs   String @db.Text
   descriptionPt   String @db.Text
+  descriptionUa   String @db.Text
   descriptionRu   String @db.Text
   descriptionZhCn String @db.Text
 
@@ -564,18 +569,21 @@ model ProgramSession {
   titleEn          String
   titleEs          String
   titlePt          String
+  titleUa          String
   titleRu          String
   titleZhCn        String
   slug             String
   slugEn           String
   slugEs           String
   slugPt           String
+  slugUa           String
   slugRu           String
   slugZhCn         String
   description      String                       @db.Text
   descriptionEn    String                       @db.Text
   descriptionEs    String                       @db.Text
   descriptionPt    String                       @db.Text
+  descriptionUa    String                       @db.Text
   descriptionRu    String                       @db.Text
   descriptionZhCn  String                       @db.Text
   equipment        ExerciseAttributeValueEnum[] @default([])
@@ -591,6 +599,7 @@ model ProgramSession {
   @@unique([weekId, slugEn])
   @@unique([weekId, slugEs])
   @@unique([weekId, slugPt])
+  @@unique([weekId, slugUa])
   @@unique([weekId, slugRu])
   @@unique([weekId, slugZhCn])
   @@map("program_sessions")
@@ -605,6 +614,7 @@ model ProgramSessionExercise {
   instructionsEn   String @db.Text
   instructionsEs   String @db.Text
   instructionsPt   String @db.Text
+  instructionsUa   String @db.Text
   instructionsRu   String @db.Text
   instructionsZhCn String @db.Text
 

@@ -114,7 +114,7 @@ export function PremiumUpgradeCard() {
 
   // Format price based on locale and currency
   const formatPrice = (price: number, currency: string) => {
-    return new Intl.NumberFormat(locale === "zh-CN" ? "zh-CN" : locale, {
+    return new Intl.NumberFormat(locale === "ua" ? "uk-UA" : locale === "zh-CN" ? "zh-CN" : locale, {
       style: "currency",
       currency: currency,
       minimumFractionDigits: currency === "EUR" ? 2 : 0,

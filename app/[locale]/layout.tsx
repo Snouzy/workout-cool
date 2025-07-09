@@ -64,11 +64,13 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
             ? "es_ES"
             : locale === "pt"
               ? "pt_PT"
-              : locale === "ru"
-                ? "ru_RU"
-                : locale === "zh-CN"
-                  ? "zh_CN"
-                  : "fr_FR",
+              : locale === "ua"
+                ? "uk_UA"
+                : locale === "ru"
+                  ? "ru_RU"
+                  : locale === "zh-CN"
+                    ? "zh_CN"
+                    : "fr_FR",
       alternateLocale: [
         "fr_FR",
         "fr_CA",
@@ -90,6 +92,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
         "zh_CN",
         "zh_TW",
         "zh_HK",
+        "uk_UA",
       ].filter(
         (alt) =>
           alt !==
@@ -99,11 +102,13 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
               ? "es_ES"
               : locale === "pt"
                 ? "pt_PT"
-                : locale === "ru"
-                  ? "ru_RU"
-                  : locale === "zh-CN"
-                    ? "zh_CN"
-                    : "fr_FR"),
+                : locale === "ua"
+                  ? "uk_UA"
+                  : locale === "ru"
+                    ? "ru_RU"
+                    : locale === "zh-CN"
+                      ? "zh_CN"
+                      : "fr_FR"),
       ),
       images: [
         {
@@ -167,6 +172,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
         "en-US": "https://www.workout.cool/en",
         "es-ES": "https://www.workout.cool/es",
         "pt-PT": "https://www.workout.cool/pt",
+        "uk-UA": "https://www.workout.cool/ua",
         "ru-RU": "https://www.workout.cool/ru",
         "zh-CN": "https://www.workout.cool/zh-CN",
         "x-default": "https://www.workout.cool",

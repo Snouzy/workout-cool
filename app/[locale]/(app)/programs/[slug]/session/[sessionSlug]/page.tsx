@@ -47,7 +47,7 @@ export async function generateMetadata({ params }: SessionDetailPageProps): Prom
           alt: sessionMetadata.title,
         },
       ],
-      locale: locale === "zh-CN" ? "zh_CN" : locale.replace("-", "_"),
+      locale: locale === "ua" ? "uk_UA" : locale === "zh-CN" ? "zh_CN" : locale.replace("-", "_"),
       type: "website",
     },
     twitter: {

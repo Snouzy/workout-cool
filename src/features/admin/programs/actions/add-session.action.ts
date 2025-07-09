@@ -14,18 +14,21 @@ interface AddSessionData {
   titleEn: string;
   titleEs: string;
   titlePt: string;
+  titleUa: string;
   titleRu: string;
   titleZhCn: string;
   slug: string;
   slugEn: string;
   slugEs: string;
   slugPt: string;
+  slugUa: string;
   slugRu: string;
   slugZhCn: string;
   description: string;
   descriptionEn: string;
   descriptionEs: string;
   descriptionPt: string;
+  descriptionUa: string;
   descriptionRu: string;
   descriptionZhCn: string;
   equipment: ExerciseAttributeValueEnum[];
@@ -65,18 +68,21 @@ export async function addSessionToWeek(data: AddSessionData) {
       titleEn: data.titleEn,
       titleEs: data.titleEs,
       titlePt: data.titlePt,
+      titleUa: data.titleUa,
       titleRu: data.titleRu,
       titleZhCn: data.titleZhCn,
       slug: data.slug,
       slugEn: data.slugEn,
       slugEs: data.slugEs,
       slugPt: data.slugPt,
+      slugUa: data.slugUa,
       slugRu: data.slugRu,
       slugZhCn: data.slugZhCn,
       description: data.description,
       descriptionEn: data.descriptionEn,
       descriptionEs: data.descriptionEs,
       descriptionPt: data.descriptionPt,
+      descriptionUa: data.descriptionUa,
       descriptionRu: data.descriptionRu,
       descriptionZhCn: data.descriptionZhCn,
       equipment: data.equipment,

@@ -4,6 +4,8 @@ import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-ki
 import { DndContext, closestCenter, PointerSensor, useSensor, useSensors, DragEndEvent, MouseSensor } from "@dnd-kit/core";
 
 import { useI18n } from "locales/client";
+import { env } from "@/env";
+import { HorizontalBottomBanner } from "@/components/ads";
 
 import { useWorkoutStepper } from "../model/use-workout-stepper";
 import { ExerciseListItem } from "./exercise-list-item";
@@ -144,6 +146,10 @@ export const ExercisesSelection = ({
         <div className="text-center py-20">
           <p className="text-slate-600 dark:text-slate-400">{t("workout_builder.no_exercises_found")}</p>
         </div>
+      )}
+
+      {env.NEXT_PUBLIC_EXERCISE_SELECTION_BANNER_AD_SLOT && (
+        <HorizontalBottomBanner adSlot={env.NEXT_PUBLIC_EXERCISE_SELECTION_BANNER_AD_SLOT} />
       )}
     </div>
   );

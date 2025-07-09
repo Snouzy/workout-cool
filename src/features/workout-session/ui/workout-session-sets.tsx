@@ -12,8 +12,10 @@ import { cn } from "@/shared/lib/utils";
 import { useWorkoutSession } from "@/features/workout-session/model/use-workout-session";
 import { useSyncWorkoutSessions } from "@/features/workout-session/model/use-sync-workout-sessions";
 import { ExerciseVideoModal } from "@/features/workout-builder/ui/exercise-video-modal";
-import { DonationAlert } from "@/components/ui/donation-alert";
+import { env } from "@/env";
+import { PremiumUpsellAlert } from "@/components/ui/premium-upsell-alert";
 import { Button } from "@/components/ui/button";
+import { HorizontalBottomBanner } from "@/components/ads";
 
 import { WorkoutSessionSet } from "./workout-session-set";
 
@@ -121,7 +123,7 @@ export function WorkoutSessionSets({
   return (
     <div className="w-full max-w-3xl mx-auto pb-8 px-3 sm:px-6">
       <div className="mb-6">
-        <DonationAlert />
+        <PremiumUpsellAlert />
       </div>
       <ol className="relative border-l-2 ml-2 border-slate-200 dark:border-slate-700">
         {session.exercises.map((ex, idx) => {
@@ -244,7 +246,7 @@ export function WorkoutSessionSets({
       {isWorkoutActive && (
         <div className="flex justify-center mt-8 mb-24">
           <Button
-            aria-label="Terminer la séance"
+            aria-label={t("workout_builder.session.finish_session")}
             className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white font-bold px-8 py-3 text-lg rounded-2xl border border-green-700 transition-all duration-200 active:scale-95 focus:ring-2 focus:ring-green-400"
             onClick={handleFinishSession}
           >
@@ -252,6 +254,10 @@ export function WorkoutSessionSets({
             {t("workout_builder.session.finish_session")}
           </Button>
         </div>
+      )}
+
+      {env.NEXT_PUBLIC_BOTTOM_WORKOUT_SESSION_BANNER_AD_SLOT && (
+        <HorizontalBottomBanner adSlot={env.NEXT_PUBLIC_BOTTOM_WORKOUT_SESSION_BANNER_AD_SLOT} />
       )}
     </div>
   );

@@ -1,106 +1,91 @@
 "use client";
-import { useState } from "react";
+
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { ChevronDown, Users, LayoutDashboard, Settings, BarChart3, X, Minus } from "lucide-react";
+import { Users, LayoutDashboard, BarChart3, Settings } from "lucide-react";
 
 import { cn } from "@/shared/lib/utils";
-import NavLink from "@/features/layout/nav-link";
-import { Card } from "@/components/ui/card";
-import { Accordion } from "@/components/ui/accordion";
-import { LogoSvg } from "@/components/svg/LogoSvg";
+
+import version from "../../../../../../package.json";
+
+const navigation = [
+  {
+    name: "Dashboard",
+    href: "/admin/dashboard",
+    icon: LayoutDashboard,
+    description: "Overview of the statistics.",
+  },
+  {
+    name: "Users",
+    href: "/admin/users",
+    icon: Users,
+    description: "Manage users.",
+  },
+  {
+    name: "Programs",
+    href: "/admin/programs",
+    icon: BarChart3,
+    description: "Manage programs.",
+  },
+  {
+    name: "Settings",
+    href: "/admin/settings",
+    icon: Settings,
+    description: "Configuration of the system.",
+  },
+];
 
 export const AdminSidebar = () => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const pathName = usePathname();
-  const activeClass = "rounded-lg border !border-gray-300 bg-gray-400 !text-black !font-semibold";
-
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-    const mainContent = document.getElementById("main-content");
-    if (mainContent) {
-      mainContent.style.marginLeft = isSidebarOpen ? "260px" : "60px";
-    }
-  };
-
-  const toggleSidebarResponsive = () => {
-    document.getElementById("adminSidebar")?.classList.remove("open");
-    document.getElementById("adminOverlay")?.classList.toggle("open");
-  };
+  const pathname = usePathname();
 
   return (
-    <>
-      <div className="fixed inset-0 z-30 hidden bg-black/50" id="adminOverlay" onClick={toggleSidebarResponsive} />
-      <Card
-        className={`sidebar fixed top-0 z-40 flex h-screen w-[260px] flex-col rounded-none bg-white transition-all duration-300 lg:top-16 lg:h-[calc(100vh_-_64px)] ltr:-left-[260px] ltr:lg:left-0 rtl:-right-[260px] rtl:lg:right-0 dark:border-t dark:border-gray-300/10 ${isSidebarOpen ? "closed" : ""}`}
-        id="adminSidebar"
-      >
-        <button
-          className="absolute -top-3.5 hidden size-6 place-content-center rounded-full border border-gray-300 bg-white text-black lg:grid ltr:-right-2.5 rtl:-left-2.5 dark:border-gray-700 dark:bg-gray dark:text-white"
-          onClick={toggleSidebar}
-          type="button"
-        >
-          <ChevronDown className={`h-4 w-4 ltr:rotate-90 rtl:-rotate-90 ${isSidebarOpen ? "hidden" : ""}`} />
-          <ChevronDown className={`hidden h-4 w-4 ltr:-rotate-90 rtl:rotate-90 ${isSidebarOpen ? "!block" : ""}`} />
-        </button>
-        <div className="flex items-start justify-between border-b border-gray-300 px-4 py-5 lg:hidden dark:border-gray-700/50">
-          <Link className="inline-block" href="/">
-            <LogoSvg className="w-24" />
-          </Link>
-          <button onClick={toggleSidebarResponsive} type="button">
-            <X className="-mt-2 ml-auto size-4 hover:text-black ltr:-mr-2 rtl:-ml-2" />
-          </button>
+    <aside className="hidden w-64 flex-col border-r border-gray-200 bg-white md:flex dark:border-gray-700 dark:bg-gray-800">
+      <div className="flex flex-1 flex-col pt-6">
+        <nav className="flex-1 space-y-2 px-4">
+          <div className="mb-6">
+            <h2 className="px-3 text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">Navigation</h2>
+          </div>
+
+          {navigation.map((item) => {
+            const isActive = pathname === item.href || pathname.startsWith(item.href + "/");
+            const Icon = item.icon;
+
+            return (
+              <Link
+                className={cn(
+                  "group flex items-center rounded-lg px-3 py-3 text-sm font-medium transition-colors",
+                  isActive
+                    ? "bg-blue-50 text-blue-700 dark:bg-blue-900/50 dark:text-blue-400"
+                    : "text-gray-700 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white",
+                )}
+                href={item.href}
+                key={item.name}
+              >
+                <Icon
+                  className={cn(
+                    "mr-3 h-5 w-5 flex-shrink-0",
+                    isActive
+                      ? "text-blue-600 dark:text-blue-400"
+                      : "text-gray-400 group-hover:text-gray-600 dark:text-gray-400 dark:group-hover:text-gray-300",
+                  )}
+                />
+                <div className="flex flex-col">
+                  <span>{item.name}</span>
+                  <span className="text-xs text-gray-500 dark:text-gray-400">{item.description}</span>
+                </div>
+              </Link>
+            );
+          })}
+        </nav>
+
+        {/* Footer */}
+        <div className="border-t border-gray-200 p-4 dark:border-gray-700">
+          <div className="text-xs text-gray-500 dark:text-gray-400">
+            <p>WorkoutCool Admin</p>
+            <p className="mt-1">Version {version.version}</p>
+          </div>
         </div>
-        <Accordion className="sidemenu grow overflow-y-auto overflow-x-hidden px-2.5 pb-10 pt-2.5 transition-all" collapsible type="single">
-          <h3 className="mb-1 mt-2.5 whitespace-nowrap rounded-lg bg-gray-400 px-5 py-2.5 text-xs/tight font-semibold uppercase text-black dark:bg-gray-400/[6%] dark:text-white">
-            <span>Administration</span>
-            <Minus className="hidden h-4 w-5 text-gray" />
-          </h3>
-          <NavLink
-            className={cn("nav-link", {
-              [activeClass]: pathName === "/admin/dashboard",
-            })}
-            href="/admin/dashboard"
-          >
-            <LayoutDashboard className="size-[18px] shrink-0" />
-            <span>Tableau de bord</span>
-          </NavLink>
-
-          <NavLink
-            className={cn("nav-link", {
-              [activeClass]: pathName === "/admin/users",
-            })}
-            href="/admin/users"
-          >
-            <Users className="size-[18px] shrink-0" />
-            <span>Utilisateurs</span>
-          </NavLink>
-
-          <NavLink
-            className={cn("nav-link", {
-              [activeClass]: pathName === "/admin/analytics",
-            })}
-            href="/admin/analytics"
-          >
-            <BarChart3 className="size-[18px] shrink-0" />
-            <span>Analytiques</span>
-          </NavLink>
-
-          <h3 className="mb-1 mt-2.5 whitespace-nowrap rounded-lg bg-gray-400 px-5 py-2.5 text-xs/tight font-semibold uppercase text-black dark:bg-gray-400/[6%] dark:text-white">
-            <span>Configuration</span>
-            <Minus className="hidden h-4 w-5 text-gray" />
-          </h3>
-          <NavLink
-            className={cn("nav-link", {
-              [activeClass]: pathName === "/admin/settings",
-            })}
-            href="/admin/settings"
-          >
-            <Settings className="size-[18px] shrink-0" />
-            <span>Paramètres</span>
-          </NavLink>
-        </Accordion>
-      </Card>
-    </>
+      </div>
+    </aside>
   );
 };

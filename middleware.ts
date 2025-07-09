@@ -69,6 +69,13 @@ export async function middleware(request: NextRequest) {
   // Normal i18n middleware processing
   const response = I18nMiddleware(request);
 
+  // Extract current locale from pathname
+  const localeMatch = pathname.match(/^\/([a-z]{2}(?:-[A-Z]{2})?)/);
+  const currentLocale = localeMatch ? localeMatch[1] : detectedLocale;
+
+  // Set Content-Language header for SEO
+  response.headers.set("Content-Language", currentLocale);
+
   // Store detected locale in cookie for future visits
   if (!request.cookies.get("detected-locale")) {
     response.cookies.set("detected-locale", detectedLocale, {
@@ -95,6 +102,6 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    "/((?!api|static|_next|manifest.json|favicon.ico|robots.txt|sw.js|apple-touch-icon.png|android-chrome-.*\\.png|images|icons|sitemap.xml).*)",
+    "/((?!api|static|_next|manifest.json|favicon.ico|robots.txt|sw.js|apple-touch-icon.png|android-chrome-.*\\.png|images|logo|icons|sitemap.xml|ads.txt).*)",
   ],
 };

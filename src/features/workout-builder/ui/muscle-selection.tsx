@@ -16,6 +16,8 @@ import { CalvesGroup } from "@/features/workout-builder/ui/muscles/calves-group"
 import { BicepsGroup } from "@/features/workout-builder/ui/muscles/biceps-group";
 import { BackGroup } from "@/features/workout-builder/ui/muscles/back-group";
 import { AbdominalsGroup } from "@/features/workout-builder/ui/muscles/abdominals-group";
+import { env } from "@/env";
+import { HorizontalBottomBanner } from "@/components/ads";
 
 interface MuscleSelectionProps {
   onToggleMuscle: (muscle: ExerciseAttributeValueEnum) => void;
@@ -1214,6 +1216,10 @@ export function MuscleSelection({ onToggleMuscle, selectedMuscles }: MuscleSelec
       <div className="flex justify-center">
         <MuscleIllustration onToggleMuscle={onToggleMuscle} selectedMuscles={selectedMuscles} />
       </div>
+
+      {env.NEXT_PUBLIC_MUSCLE_SELECTION_BANNER_AD_SLOT && (
+        <HorizontalBottomBanner adSlot={env.NEXT_PUBLIC_MUSCLE_SELECTION_BANNER_AD_SLOT} />
+      )}
     </div>
   );
 }

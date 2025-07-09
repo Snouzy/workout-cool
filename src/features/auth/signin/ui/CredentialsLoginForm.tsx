@@ -2,6 +2,7 @@
 import { useForm } from "react-hook-form";
 import * as React from "react";
 import { useSearchParams } from "next/navigation";
+import Link from "next/link";
 import { Label } from "@radix-ui/react-label";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -19,6 +20,7 @@ export function CredentialsLoginForm({ className, ...props }: React.ComponentPro
   const t = useI18n();
   const searchParams = useSearchParams();
   const isResetSuccess = searchParams.get("reset") === "success";
+  const redirectUrl = searchParams.get("redirect");
 
   const { signIn } = useSignIn();
 
@@ -77,9 +79,12 @@ export function CredentialsLoginForm({ className, ...props }: React.ComponentPro
 
       <div className="text-center text-sm">
         {t("commons.dont_have_account")}{" "}
-        <a className="underline underline-offset-4" href={`/${paths.signUp}`}>
+        <Link 
+          className="underline underline-offset-4" 
+          href={`/${paths.signUp}${redirectUrl ? `?redirect=${encodeURIComponent(redirectUrl)}` : ""}`}
+        >
           {t("commons.signup")}
-        </a>
+        </Link>
       </div>
     </div>
   );

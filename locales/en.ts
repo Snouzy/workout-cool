@@ -1,4 +1,1304 @@
 export default {
+  programs: {
+    available_programs: "Available programs",
+    exercises_in_session: "Exercises in session",
+    start_session: "Start session",
+    starting_session: "Starting...",
+    more_than: "more than",
+    my_progress: "My progress",
+    session: "session",
+    completed_feminine: "completed",
+    completed_sets: "completed sets",
+    "set#zero": "set",
+    "set#one": "set",
+    "set#other": "sets",
+    error_starting_session: "Error starting session",
+    premium_session: "Premium session",
+    premium_session_description: "This session is part of the premium content. You can see the details but not perform the workout.",
+    premium_session_exercises: "Included exercises",
+    workout_description: "Workout description",
+    connect_to_access: "Connect to access",
+    become_premium: "Become Premium",
+    back_to_program: "Back to program",
+    no_equipment: "No equipment",
+    workout_programs_title: "Workout programs (+ in progress)",
+    workout_programs: "Workout programs",
+    workout_programs_description: "Choose your challenge and become stronger! 💪",
+    no_programs_available: "No programs available",
+    no_programs_available_description: "Programs will be available soon!",
+    completed: "Completed",
+    about: "About",
+    program: "Program",
+    not_found: "Program not found",
+    characteristics: "Characteristics",
+    weeks: "weeks",
+    sessions_per_week: "sessions/week",
+    session_duration: "min/session",
+    "your_coach#zero": "Your cool coach",
+    "your_coach#one": "Your cool coach",
+    "your_coach#other": "Your cool coaches",
+    community: "Active community",
+    community_count: "coolbuilders have joined",
+    week_short: "Week",
+    week: "Week",
+    exercises: "exercises",
+    min_short: "min",
+    premium: "Premium",
+    free: "Free",
+    join_cta: "Join the challenge",
+    continue: "Continue",
+    sessions: "Sessions",
+    auth_required: "Authentication Required",
+    auth_required_description: "You need to sign in to access this workout session.",
+    login_to_continue: "Sign In to Continue",
+    signup_to_continue: "Sign Up to Continue",
+    premium_required: "Premium Required",
+    upgrade_to_premium: "Upgrade to Premium",
+    program_completed: "Program completed",
+    check_out_program: "Check out this workout program!",
+    share_success: "Shared successfully!",
+    copied_to_clipboard: "Link copied!",
+    share_failed: "Share failed",
+    premium_required_description: "This is a premium access. Upgrade to access all premium content.",
+    important_info: "Important information",
+    donation_teaser:
+      "At first, we were running on donations. But as you can imagine, donations weren't sufficient to cover development and running costs. So we made you a package that will help us keep the lights on and unlock a few superpowers along the way.",
+    new: "NEW",
+    more_programs_coming_title: "More programs coming soon!",
+    more_programs_coming_description:
+      "We're working hard to create new programs. By upgrading to premium now, you'll have them all automatically. Thanks for your support. 🚀",
+    coming_strength: "Force & Muscle",
+    coming_cardio: "Cardio HIIT",
+    coming_yoga: "Yoga & Mobility",
+    sessions_coming_soon: "Sessions coming soon!",
+    sessions_in_creation: "Our team is working hard to create quality sessions for this week. Come back soon! 🚀",
+    welcome_modal: {
+      welcome_title: "Welcome to {programTitle}!",
+      subtitle: "Get ready to push your limits! 💪",
+      level_label: "Level",
+      duration_label: "Duration",
+      frequency_label: "Frequency",
+      later_button: "Later",
+      start_button: "Let's go!",
+    },
+  },
+  premium: {
+    checkout_error: "Error during checkout",
+    premium_required_title: "Premium Required",
+    premium_required_subtitle: "This is a premium access. Upgrade to access all premium content.",
+    premium_required_button: "Upgrade to Premium",
+    already_premium: "You're enjoying Workout.cool Premium",
+    no_ads: "No ads",
+    upgrade: "Upgrade",
+
+    // Checkout
+    checkout: {
+      processing: "Processing...",
+    },
+
+    // Pricing
+    pricing: {
+      month: "month",
+      year: "year",
+      monthly: "Monthly",
+      yearly: "Yearly",
+      discount: "-48%",
+    },
+
+    // Hero Section
+    hero: {
+      badge: "Open-Source & Self-hosting ALWAYS free",
+      title: "Train freely, support the mission",
+      subtitle: "For those who believe in the project and want to (re)believe in themselves with power boosters !",
+      stats: {
+        athletes: {
+          count: "12.4K+",
+          label: "Active athletes",
+        },
+        series: {
+          count: "1.2M+",
+          label: "Series recorded",
+        },
+        rating: {
+          count: "4.9/5",
+          label: "Community rating",
+        },
+        progression: {
+          count: "+23%",
+          label: "Average progression",
+        },
+      },
+    },
+
+    // Mission Banner
+    mission: {
+      supporters_count: "234",
+      supporters_text: "supporters helping the mission",
+      limited: "Limited",
+      early_access: "early access spots",
+    },
+
+    // Plans
+    plans: {
+      monthly: "Monthly",
+      yearly: "Yearly",
+      yearly_discount: "-48%",
+      per_month: "/month",
+      per_year: "/year",
+
+      free: {
+        name: "FREE",
+        price: "€0",
+        period: "/forever",
+        price_label: "€0/forever",
+        badge: "Open-Source • Always Free",
+        description: "All essential functions for training",
+        features: [
+          "Exercise generator",
+          "Exercises with instructions and videos",
+          "GitHub-style workout history (6 months)",
+          "Self-hosting capability",
+          "Open source code access",
+        ],
+        button: "Your actual plan",
+        footer_note: "No signup required • Full access forever",
+      },
+
+      premium: {
+        name: "PREMIUM ⭐",
+        price_label: "€7.90/month or €49/year",
+        badge: "MOST POPULAR • For enthusiasts",
+        description: "All features + early access",
+        footer_monthly: "Join the passionate community! 🔥",
+        footer_yearly: "Thank you for the yearly support! 🙏",
+        yearly_price_note: "/month",
+        features: [
+          "...all of the free plan",
+          "No ads",
+          "Unlimited history (vs 6 months free)",
+          "Progress tracking with advanced statistics (volume, progression, PR)",
+          "Pre-designed training programs",
+          "Private 1:1 chat with a coach",
+          "Early access to new features",
+        ],
+      },
+    },
+
+    // Buttons and Actions
+    actions: {
+      processing: "Processing...",
+      go_premium: "Go Premium",
+      sign_in_continue: "Go Premium",
+      upgrade_now: "Upgrade Now",
+      current_plan: "Your actual plan",
+    },
+
+    // Trust Elements
+    trust: {
+      gdpr_compliant: "100% GDPR compliant",
+      money_back: "30-day money back guarantee",
+      cancel_anytime: "1 click to cancel, no commitment",
+      secure_payment: "100% secure payment via Stripe",
+    },
+
+    // Feature Comparison
+    comparison: {
+      title: "Detailed Feature Comparison",
+      subtitle: "Everything you need to know about what's included in each plan",
+      features_label: "Features",
+      headers: {
+        features: "Features",
+        free: "Free",
+        premium: "Premium",
+      },
+      categories: {
+        equipment: "Equipment & Exercises",
+        tracking: "Tracking & Analytics",
+        programs: "Programs & AI",
+        community: "Community & Sharing",
+        support: "Support & Project",
+      },
+      features: {
+        exercise_library: "Exercise library",
+        custom_exercise: "Custom exercise",
+        video_tutorials: "Video tutorials",
+        workout_history: "Workout history",
+        progress_statistics: "Progress statistics",
+        personal_records: "Personal records tracking",
+        volume_analytics: "Volume & progression analytics",
+        predesigned_programs: "Pre-designed programs",
+        personalized_recommendations: "Personalized recommendations",
+        pro_templates: "Pro templates (Powerlifting, bodybuilding, etc.)",
+        community_access: "Community access",
+        discord_community: "Discord community",
+        private_chat: "Private 1:1 chat with coach",
+        community_support: "Community support",
+        priority_support: "Priority support",
+        early_access: "Early access to features",
+        beta_testing: "Beta testing access",
+      },
+      values: {
+        basic: "Basic",
+        complete: "Complete",
+        unlimited: "Unlimited",
+        professional: "Professional",
+        six_months: "6 months",
+        limited: "Limited",
+        all_programs: "All programs",
+        public: "Public",
+        vip_access: "VIP access",
+        private_channels: "Private channels",
+        soon: "Soon",
+        hd_slowmo: "4K + Slow-mo",
+        early_access: "Early Access",
+      },
+    },
+
+    // FAQ
+    faq: {
+      title: "Frequently Asked Questions",
+      subtitle: "Everything you need to know about Workout.cool and our mission",
+      items: [
+        {
+          question: "Why pay if it's open-source?",
+          answer:
+            "Excellent question! The code will always remain free, but maintaining servers, database and infrastructure costs money. Your contribution helps us keep the tool free for everyone. It's a win-win model: you get premium features, the community keeps free access!",
+        },
+        {
+          question: "Can I self-host Workout.cool?",
+          answer:
+            "Absolutely! The entire codebase is available on GitHub under MIT license. You can deploy it on your own servers, customize it however you want, and use it completely free. Self-hosting gives you full control over your data and workout privacy.",
+        },
+        {
+          question: "Are my workout data secure?",
+          answer:
+            "Yes! We're GDPR compliant, use encrypted connections, and store your data securely. Plus, since we're open-source, you can audit our security practices. You can also export your data anytime or self-host for complete control.",
+        },
+        {
+          question: "Can I cancel my subscription anytime?",
+          answer:
+            "Of course! No contracts, no commitments. Cancel with one click anytime. You'll keep access until your current billing period ends, and you can always restart later. Your workout data remains accessible even if you downgrade to free.",
+        },
+        {
+          question: "Are there exercises for beginners?",
+          answer:
+            "Definitely! Our exercise library covers all fitness levels from complete beginners to advanced athletes. Videos and instructions help beginners find appropriate exercises, and our video tutorials show proper form.",
+        },
+        {
+          question: "How does progress tracking work?",
+          answer:
+            "Every set, rep, weight, and time is automatically logged. You get a GitHub-style workout history showing your consistency, plus detailed analytics on volume, progression, and personal records. Premium users get advanced charts and insights.",
+        },
+        {
+          question: "Can I import data from other apps?",
+          answer:
+            "Soon. We will support CSV imports for basic data (reps & weight). If you're switching from another fitness app, our support team can help migrate your workout history.",
+        },
+        {
+          question: "Does the app work offline?",
+          answer:
+            "The core workout tracking works offline. You can log sets and reps without internet connection for 10 workouts. Exercise videos and cloud sync require internet connection. All your offline data syncs automatically when you're back online.",
+        },
+        {
+          question: "Are there programs for women?",
+          answer:
+            "Absolutely! And there will be more programs in the future. We are working on it. Supporter and Premium plans will include all the future specialized programs for different goals: strength, toning, powerlifting, bodybuilding, and more !",
+        },
+        {
+          question: "Can I create my own programs?",
+          answer: "Unfortunately, no. We are working on it !",
+        },
+      ],
+      additional_support: {
+        title: "Still have questions?",
+        description: "Our fitness-focused community is here to help you succeed",
+        community: "Community support (discord or hello@workout.cool)",
+        discussions: "Open discussions (github/discord)",
+        roadmap: "Transparent roadmap (github)",
+      },
+    },
+
+    // Final CTA
+    final_cta: {
+      motivation: "Keep pushing! 💪",
+      title: "Ready to Support the Mission?",
+      subtitle: "Join thousands of fitness enthusiasts who believe in open-source training freedom",
+      values: [
+        {
+          title: "Community First",
+          description: "Built by and for the fitness community",
+        },
+        {
+          title: "Always Transparent",
+          description: "Open-source code, transparent funding",
+        },
+        {
+          title: "Labor of Love",
+          description: "15 years of passion !",
+        },
+      ],
+      quote: {
+        text: "We believe fitness tools should be accessible to everyone. Your support helps us maintain this vision while continuing to innovate.",
+        author: "— The Workout.cool Team",
+      },
+    },
+
+    // Premium Active State
+    premium_active: {
+      title: "Premium Active! 💪",
+      supporting: "Supporting the mission 💚",
+    },
+
+    // Legacy translations (keeping for compatibility)
+    premium_active_title: "Premium Active",
+    premium_active_subtitle: "All features unlocked",
+    free_intro_title: "You're already getting a lot for free...",
+    free_intro_text:
+      "Workout.cool is a free, open-source fitness app used daily by 60,000+ users. It's built with love (not VC money ^^) and it costs us real time and money to keep it running.",
+    donation_story_text:
+      "At first, we were running on donations. But as you can imagine, donations weren't sufficient to cover development and running costs. So we made you a package that will help us keep the lights on and unlock a few superpowers along the way.",
+    health_upgrade_text: "If Workout.cool helps you level up your health, please consider going Premium :D !",
+    unlock_features_text: "Unlock advanced features & support open-source fitness.",
+    invest_yourself_quote: "Never skimp on fitness & books — invest in yourself !",
+    support_mission: "Support the mission",
+    best_value_badge: "BEST VALUE",
+    annual_plan: "Annual",
+    monthly_plan: "Monthly",
+    discount_badge: "40% off",
+    per_month: "/month",
+    feature_all_programs: "All workout programs",
+    feature_progress_tracking: "Progress tracking",
+    coming_soon: "(soon)",
+    feature_future_updates: "All future programs & updates",
+    feature_priority_support: "Priority support",
+    save_yearly: "Save 40% yearly",
+    processing: "Processing...",
+    cta_annual: "I want to support + save 40%",
+    cta_monthly: "Let's unlock my full plan",
+    thank_supporting: "Thank you for supporting.",
+    no_pressure: "No pressure. You can upgrade anytime.",
+    keep_pushing: "keep pushing ! huhu",
+    still_unsure: "Still not sure? No worries. Workout.cool will always remain free and open-source.",
+    support_helps: "But if you believe in what we're building and you can afford it, your support will help 💚",
+    self_hosting: "Self-hosting",
+    community: "Community",
+    mit_license: "MIT License",
+    pricing_year: "year",
+    pricing_month: "month",
+    conversion_flow_title: "Redirecting...",
+    conversion_flow_message: "Successfully signed in! Redirecting to checkout...",
+    redirecting_to_checkout: "Redirecting to checkout",
+  },
+  breadcrumbs: {
+    home: "Home",
+  },
+  bottom_navigation: {
+    programs: "Programs",
+    programs_tooltip: "Browse programs",
+    workouts: "Workouts",
+    workouts_tooltip: "Create your own workout",
+    premium: "Premium",
+    premium_tooltip: "Upgrade to Premium",
+    tools: "Tools",
+    tools_tooltip: "Browse tools",
+    profile: "Profile",
+    profile_tooltip: "View your profile",
+  },
+  tools: {
+    try_now: "Try now",
+    title: "Fitness Tools",
+    subtitle: "Essential calculators to optimize your training and nutrition",
+    moreComingSoon: "More tools coming soon",
+    meta: {
+      title: "Fitness Tools - Calculators for Training & Nutrition",
+      description:
+        "Free fitness calculators: TDEE, macros, BMI, heart rate zones, 1RM and more. Optimize your training and nutrition with our essential tools.",
+      keywords:
+        "fitness calculator, calorie calculator, macro calculator, BMI calculator, TDEE calculator, heart rate zones, one rep max, fitness tools",
+    },
+    "calorie-calculator": {
+      body_fat_percentage: "Body Fat Percentage",
+      body_fat_info_title:
+        "Body fat percentage is essential for Katch-McArdle and Cunningham formulas as they calculate based on lean body mass. If you don't know your exact body fat %, use online visual guides or DEXA scans for accuracy.",
+      title: "Calorie Calculator",
+      description: "Calculate your daily caloric needs (TDEE) based on your activity level and goals",
+      meta: {
+        title: "Calorie Calculator - TDEE & Daily Caloric Needs",
+        description:
+          "Calculate your Total Daily Energy Expenditure (TDEE) and daily caloric needs. Get personalized recommendations for weight loss, maintenance, or muscle gain.",
+        keywords:
+          "calorie calculator, TDEE calculator, daily calories, weight loss calculator, caloric needs, BMR calculator, metabolism calculator",
+      },
+      subtitle: "Calculate your daily caloric needs based on the Mifflin-St Jeor equation",
+      how_it_works: "How does this calculator work?",
+      how_it_works_description:
+        "This calculator uses scientifically proven formulas to estimate your daily caloric needs based on your personal characteristics and lifestyle.",
+      how_it_works_step1: "We calculate your base metabolism (calories burned at rest)",
+      how_it_works_step2: "We adjust based on your activity level",
+      how_it_works_step3: "We personalize according to your goal (lose, maintain, or gain weight)",
+      calculate: "Calculate",
+      calculating: "Calculating...",
+      tap_info_icons: "Tap the ℹ️ icons for more information",
+      gender: "Gender",
+      male: "Male",
+      female: "Female",
+      units: "Units",
+      metric: "Metric",
+      imperial: "Imperial",
+      age: "Age",
+      age_placeholder: "Enter your age",
+      years: "years",
+      height: "Height",
+      height_placeholder: "Enter your height",
+      weight: "Weight",
+      weight_placeholder: "Enter your weight",
+      cm: "cm",
+      kg: "kg",
+      lbs: "lbs",
+      feet: "feet",
+      inches: "inches",
+      activity_level: "Activity Level",
+      activity: {
+        sedentary: "Sedentary",
+        sedentary_desc: "Little to no exercise, desk job, minimal walking",
+        light: "Lightly Active",
+        light_desc: "Light exercise 1-3 days/week, or daily walking",
+        moderate: "Moderately Active",
+        moderate_desc: "Moderate exercise 3-5 days/week, active lifestyle",
+        active: "Very Active",
+        active_desc: "Heavy exercise 6-7 days/week, very active job",
+        very_active: "Extremely Active",
+        very_active_desc: "Athlete, physical job + daily training",
+      },
+      goal: "Goal",
+      goals: {
+        lose_fast: "Lose Weight Fast",
+        lose_fast_desc: "Lose 2 lbs (1 kg) per week - Aggressive but effective",
+        lose_slow: "Lose Weight",
+        lose_slow_desc: "Lose 1 lb (0.5 kg) per week - Sustainable and healthy",
+        maintain: "Maintain Weight",
+        maintain_desc: "Stay at current weight - Perfect for maintaining your shape",
+        gain_slow: "Gain Weight",
+        gain_slow_desc: "Gain 1 lb (0.5 kg) per week - Clean muscle building",
+        gain_fast: "Gain Weight Fast",
+        gain_fast_desc: "Gain 2 lbs (1 kg) per week - Maximum muscle growth",
+      },
+      results: {
+        title: "Your Results",
+        bmr: "BMR",
+        bmr_explanation:
+          "Basal Metabolic Rate (BMR) is the number of calories your body burns at complete rest, just to maintain basic functions like breathing, circulation, and cell production. This is the minimum energy your body needs to survive.",
+        tdee: "TDEE",
+        tdee_explanation:
+          "Total Daily Energy Expenditure (TDEE) is your BMR plus the calories burned through daily activities and exercise. This is the total number of calories you burn in a day based on your activity level.",
+        target: "Target Calories",
+        macros: "Recommended Macros",
+        macros_explanation:
+          "Macronutrients (macros) are the three main nutrient groups your body needs: Proteins (for muscle building and repair), Carbohydrates (for energy), and Fats (for hormones and vitamin absorption). The percentages shown are a balanced distribution suitable for most fitness goals.",
+        protein: "Protein",
+        carbs: "Carbohydrates",
+        fat: "Fat",
+        disclaimer:
+          "These calculations are estimates based on average formulas. Actual caloric needs may vary based on individual factors. Consult with a healthcare professional or registered dietitian for personalized advice.",
+      },
+      faq: {
+        title: "Frequently Asked Questions",
+        q1: "Why is my calorie target different from other calculators?",
+        a1: "Different calculators may use different formulas or activity multipliers. We use the Mifflin-St Jeor equation, which is considered one of the most accurate for most people. However, individual metabolism can vary by 10-20% from these estimates.",
+        q2: "Should I eat exactly this many calories every day?",
+        a2: "These are average daily targets. It's normal to eat slightly more some days and less on others. Focus on your weekly average rather than being exact every single day. Listen to your body's hunger and fullness cues.",
+        q3: "What if I'm not seeing results after following these recommendations?",
+        a3: "If you're not seeing results after 2-3 weeks, you may need to adjust. Your actual metabolism might be higher or lower than calculated. Try adjusting by 100-200 calories and monitor for another 2 weeks. Also ensure you're tracking your food accurately.",
+        q4: "Are the macro recommendations suitable for everyone?",
+        a4: "The 30/40/30 split (protein/carbs/fat) is a balanced approach suitable for most people. However, athletes, people with medical conditions, or those following specific diets (keto, vegan, etc.) may need different ratios. Consult a nutritionist for personalized recommendations.",
+      },
+    },
+    "macro-calculator": {
+      title: "Macro Calculator",
+      description: "Find your optimal protein, carbs and fat distribution for your fitness goals",
+    },
+    "bmi-calculator": {
+      title: "BMI Calculator",
+      description: "Calculate your Body Mass Index and understand your weight category",
+    },
+    "heart-rate-calculator": {
+      title: "Heart Rate Zones",
+      description: "Discover your optimal training zones for fat burning and performance",
+    },
+    "heart-rate-zones": {
+      title: "Heart Rate Zones Calculator",
+      description: "Calculate your optimal heart rate training zones for maximum performance and fat burning",
+      page_title: "Heart Rate Zones Calculator",
+      page_description:
+        "Calculate your personalized heart rate training zones using scientifically proven formulas. Optimize your cardio workouts for fat burning, endurance, and performance.",
+      meta: {
+        title: "Heart Rate Zones Calculator - Target Heart Rate & Training Zones",
+        description:
+          "Calculate your maximum heart rate and personalized training zones. Use basic or Karvonen formulas to find your VO2 Max, Anaerobic, Aerobic, Fat Burn, and Warm Up zones.",
+        keywords:
+          "heart rate zones calculator, target heart rate, maximum heart rate, training zones, VO2 max zone, anaerobic zone, aerobic zone, fat burn zone, Karvonen formula, heart rate training",
+      },
+      calculate: "Calculate Zones",
+      calculating: "Calculating...",
+      method: "Calculation Method",
+      method_info: "Choose the formula that best suits your fitness level and available data",
+      methods: {
+        basic: "Basic by Age",
+        basic_desc: "Simple formula using age only - good for beginners",
+        karvonen_age: "Karvonen by Age & RHR",
+        karvonen_age_desc: "More accurate using age and resting heart rate",
+        karvonen_custom: "Karvonen by MHR & RHR",
+        karvonen_custom_desc: "Most accurate using measured max and resting heart rates",
+      },
+      age: "Age",
+      age_placeholder: "Enter your age",
+      resting_heart_rate: "Resting Heart Rate (RHR)",
+      resting_heart_rate_placeholder: "Enter your RHR",
+      resting_heart_rate_info: "Measure your heart rate when you wake up, before getting out of bed. Normal range is 60-100 bpm.",
+      max_heart_rate: "Maximum Heart Rate (MHR)",
+      max_heart_rate_placeholder: "Enter your MHR",
+      max_heart_rate_info:
+        "Your actual maximum heart rate from a stress test or max effort workout. More accurate than age-based estimates.",
+      results: {
+        overview: "Overview of your heart rate zones",
+        title: "Your Heart Rate Zones",
+        max_heart_rate: "Maximum Heart Rate",
+        heart_rate_reserve: "Heart Rate Reserve",
+        target_zones: "Target Training Zones",
+        zone: "Zone",
+        intensity: "Intensity",
+        heart_rate_range: "Heart Rate (bpm)",
+        benefits: "Benefits",
+        duration: "Typical Duration",
+      },
+      zones: {
+        warm_up: {
+          name: "Warm Up Zone",
+          intensity: "50-60%",
+          benefits: "🧘 Perfect warm-up",
+          example: "Slow walk",
+          duration: "5-10 minutes",
+          description: "Very light intensity for warming up and cooling down",
+        },
+        fat_burn: {
+          name: "Fat Burn Zone",
+          intensity: "60-70%",
+          benefits: "🔥 Maximum fat burning",
+          example: "Light jogging",
+          duration: "20-40 minutes",
+          description: "Light intensity, comfortable pace for longer workouts",
+        },
+        aerobic: {
+          name: "Aerobic Zone",
+          intensity: "70-80%",
+          benefits: "💪 Improves cardiovascular",
+          example: "Moderate run",
+          duration: "10-40 minutes",
+          description: "Moderate intensity, sustainable for extended periods",
+        },
+        anaerobic: {
+          name: "Anaerobic Zone",
+          intensity: "80-90%",
+          benefits: "⚡ Increases speed",
+          example: "Short sprint",
+          duration: "2-10 minutes",
+          description: "Hard intensity, challenging but sustainable for short periods",
+        },
+        vo2_max: {
+          name: "VO2 Max Zone",
+          intensity: "90-100%",
+          benefits: "🏆 Maximum performance",
+          example: "Sprint",
+          duration: "30 seconds - 2 minutes",
+          description: "Maximum intensity, only sustainable for very short bursts",
+        },
+      },
+      formulas: {
+        basic_formula: "Basic Formula",
+        basic_explanation: "THR = MHR × %Intensity",
+        karvonen_formula: "Karvonen Formula",
+        karvonen_explanation: "THR = [(MHR - RHR) × %Intensity] + RHR",
+        mhr_calculation: "MHR = 220 - Age",
+      },
+      abbreviations: {
+        thr: "THR = Target Heart Rate",
+        mhr: "MHR = Maximum Heart Rate",
+        rhr: "RHR = Resting Heart Rate",
+        hrr: "HRR = Heart Rate Reserve",
+        bpm: "bpm = Beats Per Minute",
+      },
+      tips: {
+        title: "Training Tips",
+        tip1: "Start with lower intensity zones if you're new to exercise",
+        tip2: "Mix different zones in your weekly training for best results",
+        tip3: "Use a heart rate monitor for accurate tracking during workouts",
+        tip4: "Your zones may change as your fitness improves - recalculate periodically",
+      },
+      faq: {
+        title: "Frequently Asked Questions",
+        q1: "Which calculation method should I use?",
+        a1: "If you're just starting, use the Basic method. If you know your resting heart rate, use Karvonen by Age for better accuracy. For the most precise zones, use Karvonen with measured MHR and RHR.",
+        q2: "How do I measure my resting heart rate?",
+        a2: "Measure your pulse for 60 seconds immediately after waking up, before getting out of bed. Do this for 3-5 days and use the average. Normal RHR is 60-100 bpm, with lower values indicating better fitness.",
+        q3: "What zone should I train in for weight loss?",
+        a3: "The Fat Burn Zone (60-70%) is optimal for burning fat as fuel. However, higher intensity zones burn more total calories. Mix zones for best results - include both fat burn and higher intensity workouts.",
+        q4: "How accurate is the 220-age formula?",
+        a4: "It's a general estimate that works for most people but can vary by ±10-15 bpm. For more accuracy, consider a supervised max heart rate test or use the Karvonen formula with your actual measurements.",
+        q5: "Can I train in the VO2 Max zone every day?",
+        a5: "No, the VO2 Max zone is extremely intense and should only be used 1-2 times per week for short intervals. Most training should be in the Aerobic and Fat Burn zones to build endurance and allow recovery.",
+      },
+      guide: {
+        title: "Complete Guide to Heart Rate Zones for Training",
+        text1:
+          "Heart rate zones are a scientific tool essential for optimizing your training and achieving your fitness goals. Whether you're looking to lose weight, improve endurance, or increase performance, understanding and using heart rate zones will transform your approach to exercise.",
+        text2:
+          "This calculator uses scientifically proven formulas to determine your personalized zones based on your age and, optionally, your resting heart rate. Each zone corresponds to a specific intensity and offers unique benefits for your cardiovascular health.",
+      },
+      table: {
+        title: "Reference Table of Heart Rates by Age",
+        col1: "Age",
+        col2: "FCM",
+        col3: "50% Intensity",
+        col4: "85% Intensity",
+        avertiser: "* These values are averages. Your actual FCM may vary by ±10-15 bpm.",
+      },
+      details: {
+        title: "The 5 Training Zones Explained in Detail",
+        benefits: "Benefits",
+        zone1_title: "Zone 1 : Warm Up (50-60% FCM)",
+        zone1_content:
+          "The warm up zone is ideal for starting a session, recovering between intervals, or finishing a workout. At this intensity, you can maintain a normal conversation without getting out of breath.",
+        zone1_details_1: "Improves blood circulation",
+        zone1_details_2: "Prepares muscles and joints",
+        zone1_details_3: "Reduces the risk of injury",
+        zone1_details_4: "Favorizes active recovery",
+        zone1_duration: "Recommended Duration",
+        zone1_duration_value: "5-10 minutes at the beginning/end of a session",
+        zone1_duration_value_2: "20-30 minutes for active recovery",
+        zone2_title: "Zone 2 : Fat Burn (60-70% FCM)",
+        zone2_content:
+          "In this zone, your body primarily uses fat as fuel. It's the optimal intensity for developing your aerobic base and improving metabolic efficiency.",
+        zone2_details_1: "Maximizes fat utilization",
+        zone2_details_2: "Develops aerobic endurance",
+        zone2_details_3: "Improves cardiac efficiency",
+        zone2_details_4: "Strengthens the immune system",
+        zone2_duration: "Recommended Duration",
+        zone2_duration_value: "30-90 minutes for endurance",
+        zone2_duration_value_2: "45-60 minutes for weight loss",
+        zone3_title: "Zone 3 : Aerobic (70-80% FCM)",
+        zone3_content:
+          "The aerobic zone significantly improves your cardiovascular capacity. You breathe harder but can still speak in short sentences. It's the main training zone for most athletes.",
+        zone3_details_1: "Increases pulmonary capacity",
+        zone3_details_2: "Improves cardiovascular endurance",
+        zone3_details_3: "Strengthens the heart",
+        zone3_details_4: "Optimizes oxygen utilization",
+        zone3_duration: "Recommended Duration",
+        zone3_duration_value: "20-60 minutes continuously",
+        zone3_duration_value_2: "Intervals of 5-15 minutes",
+        zone4_title: "Zone 4 : Anaerobic (80-90% FCM)",
+        zone4_content:
+          "In the anaerobic zone, your body produces lactic acid faster than it can eliminate it. This intensity develops power and speed but can't be sustained for long periods.",
+        zone4_details_1: "Increases muscle power",
+        zone4_details_2: "Improves lactate tolerance",
+        zone4_details_3: "Develops speed",
+        zone4_details_4: "Strengthens the mind",
+        zone4_duration: "Recommended Duration",
+        zone4_duration_value: "Intervals of 2-8 minutes",
+        zone4_duration_value_2: "Equal or double recovery",
+        zone5_title: "Zone 5 : VO2 Max (90-100% FCM)",
+        zone5_content:
+          "The VO2 Max zone represents the maximum effort. At this intensity, you can only pronounce a few words and the effort is unbearable beyond a few minutes. Reserved for experienced athletes.",
+        zone5_details_1: "Maximizes aerobic capacity",
+        zone5_details_2: "Improves running economy",
+        zone5_details_3: "Develops maximum power",
+        zone5_details_4: "Pushes mental limits",
+        zone5_duration: "Recommended Duration",
+        zone5_duration_value: "Intervals of 30s to 2 minutes",
+        zone5_duration_value_2: "Maximum 1-2 times per week",
+      },
+      training_tips: {
+        title: "Expert Training Tips to Optimize Your Training",
+        tip1: {
+          title: "Progressive Warm-up",
+          description: "Always start with 5-10 minutes in Zone 1 (50-60%) to prepare your cardiovascular system.",
+        },
+        tip2: {
+          title: "80/20 Rule",
+          description: "80% of your training in Zones 1-3 (aerobic), 20% in Zones 4-5 (anaerobic) for optimal development.",
+        },
+        tip3: {
+          title: "Active Recovery",
+          description: "After an intense effort, gradually return to Zone 1-2 for 5-10 minutes.",
+        },
+        tip4: {
+          title: "Constant Hydration",
+          description: "Drink before, during, and after exercise. Dehydration increases heart rate.",
+        },
+        tip5: {
+          title: "Restorative Sleep",
+          description: "7-9 hours of sleep allows better recovery and a lower resting heart rate.",
+        },
+        tip6: {
+          title: "Gradual Progression",
+          description: "Increase intensity or duration by 10% maximum per week to avoid overtraining.",
+        },
+      },
+      training_tips_2: {
+        title: "Practical Tips",
+        title1: "Find your zone",
+        description1: "Each zone has a different goal. Choose based on your goal!",
+        title2: "Recommended Duration",
+        description2: "The higher the intensity, the shorter the duration.",
+        title3: "Progression",
+        description3: "Start slowly and gradually increase the intensity.",
+        title4: "Listen to your body",
+        description4: "If you feel bad, slow down immediately.",
+      },
+      quick_facts: {
+        title: "Did you know?",
+        fact1: "220 - your age = approximate maximum heart rate",
+        fact2: "Measure your pulse in the morning to know your resting heart rate",
+        fact3: "A smartwatch can track your heart rate in real time",
+        fact4: "80% of your training should be in zones 1-3",
+      },
+      weekly_plan: {
+        title: "Typical Weekly Plan",
+        description: "An example of a balanced weekly training plan",
+        monday: {
+          title: "Zone 1-2",
+          description: "30-45 min",
+        },
+        tuesday: {
+          title: "Zone 2-3",
+          description: "45-60 min",
+        },
+        wednesday: {
+          title: "Repos",
+          description: "Recovery",
+        },
+        thursday: {
+          title: "Zone 3-4",
+          description: "30-40 min",
+        },
+        friday: {
+          title: "Zone 1-2",
+          description: "30 min",
+        },
+        saturday: {
+          title: "Zone 4-5",
+          description: "20-30 min",
+        },
+        tips: "💡 Adapt this plan according to your level and goals!",
+        cta: "⬆️ Calculate my zones now",
+      },
+      seo_faq_title: "Frequently Asked Questions about Heart Rate Zones",
+      seo_faq_q1_question: "What is the maximum heart rate (FCM)?",
+      seo_faq_q1_answer:
+        "The maximum heart rate is the maximum number of beats per minute your heart can reach during an intense physical effort. It is generally calculated with the formula: 220 - your age. However, this formula can vary by ±10-15 bpm depending on individuals.",
+      seo_faq_q2_question: "How to measure my resting heart rate?",
+      seo_faq_q2_answer:
+        "Measure your pulse for 60 seconds immediately after waking up, before getting out of bed. Count the beats for 60 seconds or 15 seconds and multiply by 4. Repeat for 3-5 days and use the average. A normal resting heart rate is between 60-100 bpm.",
+      seo_faq_q3_question: "What zone is best for weight loss?",
+      seo_faq_q3_answer:
+        "The Fat Burn Zone (60-70%) is optimal for burning fat as fuel. However, higher intensity zones burn more total calories. Mix zones for best results - include both fat burn and higher intensity workouts.",
+      seo_faq_q4_question: "Can I train in the VO2 Max zone every day?",
+      seo_faq_q4_answer:
+        "No, the VO2 Max zone is extremely intense and should only be used 1-2 times per week for short intervals (30 seconds to 2 minutes). Most of your training should be in the aerobic zones to build endurance and allow recovery.",
+      seo_faq_q5_question: "Is the 220-age formula accurate?",
+      seo_faq_q5_answer:
+        "It's a general estimate that works for most people but can vary by ±10-15 bpm. For more accuracy, consider a supervised max heart rate test or use the Karvonen formula with your actual measurements.",
+      seo_faq_q6_question: "How to know if I'm in the right zone?",
+      seo_faq_q6_answer:
+        "Use a heart rate monitor for the most accurate measurement. Without a device, use the speech test: Light zone = easy conversation, Moderate zone = short sentences, High zone = isolated words only.",
+      seo_faq_q7_question: "Do zones change with improving fitness?",
+      seo_faq_q7_answer:
+        "Yes, with training, your resting heart rate decreases and your cardiac efficiency improves. Recalculate your zones every 2-3 months to adjust your training.",
+      seo_faq_q8_question: "What is the difference between the Basic and Karvonen formulas?",
+      seo_faq_q8_answer:
+        "The Basic formula only uses age (THR = FCM × %Intensity). The Karvonen formula is more accurate because it takes your RHR into account: THR = [(FCM - RHR) × %Intensity] + RHR.",
+      intern_links_title: "Ready to Optimize Your Training?",
+      intern_links_subtitle: "Use our calculator to discover your personalized zones and transform your fitness",
+      intern_links_button: "Calculate My Zones Now",
+      intern_links_bmi_title: "BMI Calculator",
+      intern_links_bmi_description: "Evaluate your body mass index",
+      intern_links_calorie_title: "Calorie Calculator",
+      intern_links_calorie_description: "Determine your daily calorie needs",
+      intern_links_macro_title: "Macro Calculator",
+      intern_links_macro_description: "Optimize your nutritional distribution",
+      medical_warning_title: "Medical Warning",
+      medical_warning_content:
+        "This calculator provides estimates based on general formulas. Results may vary based on your physical condition, medications, and health status. Always consult a healthcare professional before starting a new exercise program, particularly if you have pre-existing medical conditions or experience unusual symptoms during exercise.",
+      educational: {
+        title: "Understanding Heart Rate Training",
+        description: "Visualize each training zone easily",
+        what_are_zones: {
+          title: "What Are Heart Rate Zones?",
+          content:
+            "Heart rate zones are ranges of heart beats per minute that correspond to different exercise intensities. Training in specific zones helps you achieve different fitness goals more effectively.",
+        },
+        why_use_zones: {
+          title: "Why Use Heart Rate Zones?",
+          content:
+            "Training with heart rate zones ensures you're exercising at the right intensity for your goals. It prevents overtraining, maximizes results, and helps you train more efficiently.",
+        },
+        zone_distribution: {
+          title: "Recommended Weekly Zone Distribution",
+          content:
+            "For balanced fitness: 80% in Zones 1-3 (aerobic base), 15% in Zone 4 (threshold), 5% in Zone 5 (VO2 max). Adjust based on your specific goals and fitness level.",
+        },
+        monitoring: {
+          title: "How to Monitor Your Heart Rate",
+          content:
+            "Use a chest strap for most accuracy, or a wrist-based monitor for convenience. Check your heart rate regularly during exercise and adjust intensity to stay in your target zone.",
+        },
+      },
+    },
+    "one-rep-max": {
+      title: "1RM Calculator",
+      description: "Estimate your one rep max and plan your strength training percentages",
+    },
+    back_to_calculators: "Back to calculators",
+    body_fat_percentage: "Body Fat Percentage",
+    body_fat_info_title: "What is Body Fat Percentage?",
+    body_fat_info_content:
+      "Body fat percentage is essential for Katch-McArdle and Cunningham formulas as they calculate based on lean body mass. If you don't know your exact body fat %, use online visual guides or DEXA scans for accuracy.",
+    "calorie-calculator-hub": {
+      title: "Calorie Calculator Formulas",
+      subtitle: "Choose the best formula for your needs and get accurate calorie calculations",
+      meta: {
+        title: "Calorie Calculator Formulas - BMR & TDEE Calculators",
+        description:
+          "Compare different BMR formulas: Mifflin-St Jeor, Harris-Benedict, Katch-McArdle, Cunningham, and Oxford. Choose the best calorie calculator for your needs.",
+        keywords:
+          "BMR formulas, calorie calculator comparison, Mifflin-St Jeor, Harris-Benedict, Katch-McArdle, Cunningham, Oxford, TDEE calculator",
+      },
+      which_formula: "Which Formula Should I Choose?",
+      formula_explanation: "Different formulas work better for different people. Here's a quick guide to help you choose:",
+      recommendation_general: "Best overall formula, most accurate for general population",
+      recommendation_traditional: "Classic formula, widely used but slightly less accurate",
+      recommendation_bodyfat: "Most accurate if you know your body fat percentage",
+      since: "Since",
+      all_formulas: "All formulas",
+      popularity: "Popularity",
+      accuracy: "Accuracy",
+      accuracy_high: "High",
+      accuracy_good: "Good",
+      accuracy_medium: "Medium",
+      best_for: "Best for",
+      best_for_general: "General use",
+      best_for_traditional: "Traditional",
+      best_for_athletes: "Athletes",
+      best_for_bodybuilders: "Bodybuilders",
+      best_for_european: "European population",
+      best_for_comparison: "Compare all",
+      "mifflin-st-jeor": {
+        title: "Mifflin-St Jeor (Recommended)",
+        description: "Most accurate formula for general population, developed in 1990. Currently the gold standard for BMR calculations.",
+      },
+      "harris-benedict": {
+        title: "Harris-Benedict (Classic)",
+        description: "Revised 1984 version of the classic formula. Widely used but tends to overestimate calories for some people.",
+      },
+      "katch-mcardle": {
+        title: "Katch-McArdle (Athletes)",
+        description: "Based on lean body mass. Most accurate for people who know their body fat percentage and are physically active.",
+      },
+      cunningham: {
+        title: "Cunningham (Bodybuilders)",
+        description: "Designed for very lean athletes and bodybuilders with low body fat. Uses lean body mass calculation.",
+      },
+      oxford: {
+        title: "Oxford (European)",
+        description: "More recent formula (2005) based on European populations. Takes age brackets into account.",
+      },
+      comparison: {
+        title: "Compare All Formulas",
+        description: "Compare results from all formulas side by side to see the differences and choose what works best for you.",
+      },
+    },
+    "mifflin-st-jeor": {
+      title: "Mifflin-St Jeor Calculator",
+      subtitle: "The gold standard for BMR calculation - most accurate for general population",
+      meta: {
+        title: "Mifflin-St Jeor Calculator - Most Accurate BMR & TDEE",
+        description:
+          "Calculate your BMR and TDEE using the Mifflin-St Jeor equation - the most accurate formula for general population. Get personalized calorie recommendations.",
+        keywords: "Mifflin-St Jeor calculator, BMR calculator, TDEE calculator, most accurate calorie calculator, metabolism calculator",
+      },
+      how_it_works: "How the Mifflin-St Jeor Formula Works",
+      how_it_works_description:
+        "Developed in 1990, this formula is considered the most accurate for calculating Basal Metabolic Rate (BMR) in healthy adults. It's more precise than the Harris-Benedict equation and is widely recommended by nutritionists and fitness professionals.",
+    },
+    "harris-benedict": {
+      title: "Harris-Benedict Calculator",
+      subtitle: "Classic BMR formula - the traditional approach to calorie calculation",
+      meta: {
+        title: "Harris-Benedict Calculator - Classic BMR & TDEE Formula",
+        description:
+          "Calculate your BMR and TDEE using the revised Harris-Benedict equation (1984). The classic formula that started modern calorie calculations.",
+        keywords: "Harris-Benedict calculator, classic BMR calculator, traditional TDEE calculator, revised Harris-Benedict formula",
+      },
+      how_it_works: "How the Harris-Benedict Formula Works",
+      how_it_works_description:
+        "Originally developed in 1919 and revised in 1984, the Harris-Benedict equation was one of the first formulas to calculate BMR. While slightly less accurate than newer formulas, it remains widely used and provides good estimates for most people.",
+    },
+    "katch-mcardle": {
+      title: "Katch-McArdle Calculator",
+      subtitle: "Precise BMR calculation based on lean body mass - ideal for athletes",
+      meta: {
+        title: "Katch-McArdle Calculator - Lean Body Mass BMR & TDEE",
+        description:
+          "Calculate your BMR and TDEE using the Katch-McArdle formula based on lean body mass. Most accurate for people who know their body fat percentage.",
+        keywords: "Katch-McArdle calculator, lean body mass BMR, body fat percentage calculator, athlete BMR calculator, precise TDEE",
+      },
+      how_it_works: "How the Katch-McArdle Formula Works",
+      how_it_works_description:
+        "This formula calculates BMR based on lean body mass rather than total body weight, making it more accurate for people who know their body fat percentage. It's particularly useful for athletes and physically active individuals.",
+    },
+    cunningham: {
+      title: "Cunningham Calculator",
+      subtitle: "BMR formula designed for very lean athletes and bodybuilders",
+      meta: {
+        title: "Cunningham Calculator - BMR for Lean Athletes & Bodybuilders",
+        description:
+          "Calculate your BMR and TDEE using the Cunningham formula, specifically designed for very lean athletes and bodybuilders with low body fat.",
+        keywords:
+          "Cunningham calculator, bodybuilder BMR calculator, lean athlete BMR, low body fat BMR calculator, competition prep calculator",
+      },
+      how_it_works: "How the Cunningham Formula Works",
+      how_it_works_description:
+        "Developed specifically for very lean individuals with low body fat percentages, this formula provides higher BMR estimates than other equations. It's most accurate for competitive athletes and bodybuilders in contest preparation.",
+    },
+    oxford: {
+      title: "Oxford Calculator",
+      subtitle: "Modern BMR formula based on European populations with age considerations",
+      meta: {
+        title: "Oxford Calculator - Modern BMR & TDEE Formula",
+        description:
+          "Calculate your BMR and TDEE using the Oxford equation (2005), a modern formula based on European populations with age-specific calculations.",
+        keywords: "Oxford calculator, modern BMR calculator, European BMR formula, age-specific BMR calculator, 2005 BMR equation",
+      },
+      how_it_works: "How the Oxford Formula Works",
+      how_it_works_description:
+        "Published in 2005, this is one of the more recent BMR formulas. It was developed using data from European populations and takes age brackets into account, providing different equations for people under and over 30 years old.",
+    },
+    "calorie-calculator-comparison": {
+      title: "Compare All BMR Formulas",
+      subtitle: "See how different BMR formulas calculate your calorie needs side by side",
+      meta: {
+        title: "BMR Formula Comparison - Compare All Calorie Calculators",
+        description:
+          "Compare Mifflin-St Jeor, Harris-Benedict, Katch-McArdle, Cunningham, and Oxford BMR formulas side by side. See which formula works best for you.",
+        keywords:
+          "BMR formula comparison, calorie calculator comparison, Mifflin vs Harris-Benedict, best BMR calculator, compare calorie formulas",
+      },
+      how_it_works: "How This Comparison Works",
+      how_it_works_description:
+        "Enter your details once and see how all major BMR formulas calculate your daily calorie needs. This helps you understand the differences and choose the most suitable formula for your goals.",
+      input_details: "Your Details",
+      compare: "Compare",
+      results_comparison: "Formula Comparison Results",
+      vs_mifflin: "vs Mifflin-St Jeor",
+      summary: "Summary & Recommendations",
+      summary_explanation:
+        "Different formulas can give varying results. Generally, differences of ±100-200 calories are normal and expected.",
+      recommendation:
+        "For most people, Mifflin-St Jeor provides the most accurate baseline. Athletes should consider Katch-McArdle if they know their body fat percentage.",
+    },
+    "bmi-calculator-hub": {
+      title: "BMI Calculator Tools",
+      subtitle: "Calculate your Body Mass Index with different methods and get personalized health insights",
+      meta: {
+        title: "BMI Calculator - Body Mass Index Tools & Health Assessment",
+        description:
+          "Calculate your BMI with our comprehensive tools. Standard BMI, adjusted for athletes, pediatric BMI, and comparison tools. Get health insights and recommendations.",
+        keywords: "BMI calculator, body mass index, health assessment, weight status, BMI tools, pediatric BMI, athlete BMI",
+      },
+      understanding_bmi: "Understanding BMI",
+      bmi_explanation:
+        "BMI is a screening tool that helps assess whether you're at a healthy weight for your height. Choose the right calculator for your needs:",
+      recommendation_standard: "Best for general population and initial health screening",
+      recommendation_adjusted: "More accurate for athletes and muscular individuals",
+      recommendation_pediatric: "Specialized for children and adolescents with age-specific percentiles",
+      popularity: "Popularity",
+      accuracy: "Accuracy",
+      accuracy_high: "High",
+      accuracy_good: "Good",
+      accuracy_medium: "Medium",
+      best_for: "Best for",
+      best_for_general: "General use",
+      best_for_athletes: "Athletes",
+      best_for_children: "Children",
+      best_for_comparison: "Compare all",
+      category_standard: "Standard",
+      category_advanced: "Advanced",
+      category_specialized: "Specialized",
+      standard: {
+        title: "Standard BMI Calculator",
+        description: "Classic BMI calculation using the standard WHO formula. Quick and easy assessment for general population.",
+        page_title: "Standard BMI Calculator",
+        page_description:
+          "Calculate your Body Mass Index using the standard WHO formula. Get instant results with health category and personalized recommendations.",
+      },
+      adjusted: {
+        title: "Adjusted BMI Calculator",
+        description:
+          "Enhanced BMI calculation that considers muscle mass and body composition for more accurate results in athletic individuals.",
+      },
+      pediatric: {
+        title: "Pediatric BMI Calculator",
+        description: "Specialized BMI calculator for children and adolescents using age and gender-specific percentiles and growth charts.",
+      },
+      comparison: {
+        title: "BMI Comparison Tool",
+        description: "Compare different BMI calculation methods side by side to understand how various factors affect your results.",
+      },
+    },
+  },
+  "bmi-calculator": {
+    height: "Height",
+    weight: "Weight",
+    feet: "ft",
+    inches: "in",
+    cm: "cm",
+    kg: "kg",
+    lbs: "lbs",
+    height_placeholder: "Enter height",
+    weight_placeholder: "Enter weight",
+    calculate: "Calculate BMI",
+    your_bmi: "Your BMI",
+    bmi_prime: "BMI Prime",
+    ponderal_index: "Ponderal Index",
+    bmi_category: "BMI Category",
+    health_risk: "Health Risk",
+    recommendations_label: "Recommendations",
+    units: "Units",
+    metric: "Metric (kg/cm)",
+    imperial: "Imperial (lbs/ft)",
+
+    // Detailed BMI Categories (WHO)
+    category_severe_thinness: "Severe Thinness",
+    category_moderate_thinness: "Moderate Thinness",
+    category_mild_thinness: "Mild Thinness",
+    category_normal: "Normal Weight",
+    category_overweight: "Overweight",
+    category_obese_class_1: "Obesity Class I",
+    category_obese_class_2: "Obesity Class II",
+    category_obese_class_3: "Obesity Class III",
+
+    // Health Risks
+    risk_low: "Low",
+    risk_normal: "Normal",
+    risk_increased: "Increased",
+    risk_high: "High",
+    risk_very_high: "Very High",
+    risk_extremely_high: "Extremely High",
+
+    // Additional Information
+    bmi_range: "BMI Range",
+    ideal_weight: "Ideal Weight Range",
+    weight_to_lose: "Weight to Lose",
+    weight_to_gain: "Weight to Gain",
+    normal_range: "Normal BMI range: 18.5 - 24.9",
+
+    // BMI Prime
+    about_bmi_prime: "About BMI Prime",
+    bmi_prime_explanation:
+      "BMI Prime is the ratio of your BMI to the upper limit of normal BMI (25). A value of 1.0 means you're at the upper limit of normal weight.",
+    underweight: "Underweight",
+    normal: "Normal",
+    overweight: "Overweight",
+    obese: "Obese",
+
+    // Limitations
+    limitations_title: "BMI Limitations",
+    limitations_text:
+      "BMI doesn't distinguish between muscle and fat mass. Athletes and very muscular individuals may have high BMI despite being healthy. Age, sex, ethnicity, and body composition also affect interpretation.",
+
+    disclaimer: "BMI is a screening tool and may not reflect body composition. Consult healthcare professionals for personalized advice.",
+
+    // Recommendations
+    recommendations: {
+      severe_thinness: {
+        medical_consultation: "Immediate medical consultation strongly recommended",
+        nutritional_assessment: "Comprehensive nutritional assessment needed",
+        weight_gain_program: "May require supervised weight gain program",
+        screen_conditions: "Screen for underlying medical conditions",
+        psychological_evaluation: "Consider psychological evaluation if eating disorder suspected",
+      },
+      moderate_thinness: {
+        healthcare_provider: "Consult with healthcare provider for evaluation",
+        nutrient_dense_foods: "Focus on nutrient-dense, calorie-rich foods",
+        registered_dietitian: "Consider working with a registered dietitian",
+        monitor_malnutrition: "Monitor for signs of malnutrition",
+        gradual_weight_gain: "Gradual, healthy weight gain recommended",
+      },
+      mild_thinness: {
+        consider_healthcare: "Consider consulting with a healthcare provider",
+        nutrient_dense_foods: "Focus on nutrient-dense foods to gain healthy weight",
+        strength_training: "Include strength training to build muscle mass",
+        monitor_health: "Monitor your health regularly",
+        gradual_weight_gain: "Aim for gradual weight gain (1-2 lbs per week)",
+      },
+      normal: {
+        maintain_weight: "Maintain your current healthy weight",
+        physical_activity: "Continue regular physical activity (150+ minutes per week)",
+        balanced_diet: "Eat a balanced, nutritious diet",
+        health_checkups: "Regular health check-ups",
+        overall_wellness: "Focus on overall wellness and body composition",
+      },
+      overweight: {
+        gradual_weight_loss: "Aim for gradual weight loss (1-2 lbs per week)",
+        increase_activity: "Increase physical activity to 150+ minutes per week",
+        portion_control: "Focus on portion control and balanced nutrition",
+        healthcare_provider: "Consider consulting with a healthcare provider",
+        lifestyle_goals: "Set realistic, sustainable lifestyle goals",
+      },
+      obese_class_1: {
+        healthcare_provider: "Consult with a healthcare provider for a weight management plan",
+        weight_loss_target: "Aim for 5-10% weight loss initially",
+        diet_exercise: "Combine diet and exercise interventions",
+        nutritional_counseling: "Consider professional nutritional counseling",
+        screen_conditions: "Screen for weight-related health conditions",
+      },
+      obese_class_2: {
+        medical_supervision: "Seek medical supervision for weight management",
+        lifestyle_programs: "Consider comprehensive lifestyle intervention programs",
+        evaluate_conditions: "Evaluate for weight-related health conditions",
+        medical_treatments: "May benefit from medical weight loss treatments",
+        bariatric_surgery: "Consider bariatric surgery evaluation if appropriate",
+      },
+      obese_class_3: {
+        medical_consultation: "Immediate medical consultation recommended",
+        bariatric_surgery: "Consider bariatric surgery evaluation",
+        weight_management: "Comprehensive medical weight management program",
+        health_complications: "Address weight-related health complications",
+        multidisciplinary: "Multidisciplinary approach with medical team",
+      },
+    },
+
+    // Health Risks
+    health_risks: {
+      overweight: {
+        high_blood_pressure: "High blood pressure",
+        ldl_cholesterol: "Higher levels of LDL cholesterol (bad cholesterol)",
+        hdl_cholesterol: "Lower levels of HDL cholesterol (good cholesterol)",
+        triglycerides: "High levels of triglycerides",
+        type_2_diabetes: "Type II diabetes",
+        coronary_heart_disease: "Coronary heart disease",
+        stroke: "Stroke",
+        gallbladder_disease: "Gallbladder disease",
+        osteoarthritis: "Osteoarthritis",
+        sleep_apnea: "Sleep apnea and breathing problems",
+        certain_cancers: "Certain cancers (endometrial, breast, colon, kidney, gallbladder, liver)",
+        low_quality_life: "Low quality of life",
+        mental_illnesses: "Mental illnesses such as clinical depression and anxiety",
+        body_pains: "Body pains and difficulty with physical functions",
+        increased_mortality: "Generally increased risk of mortality",
+      },
+      underweight: {
+        malnutrition: "Malnutrition and vitamin deficiencies",
+        anemia: "Anemia (lowered ability to carry oxygen in blood)",
+        osteoporosis: "Osteoporosis (increased risk of bone fractures)",
+        immune_function: "Decreased immune function",
+        growth_development: "Growth and development issues (especially in children)",
+        reproductive_issues: "Reproductive issues for women due to hormonal imbalances",
+        miscarriage_risk: "Higher chance of miscarriage in first trimester",
+        surgery_complications: "Potential complications during surgery",
+        increased_mortality: "Generally increased risk of mortality",
+        underlying_conditions: "May indicate underlying medical conditions",
+      },
+    },
+
+    // Educational Content
+    educational: {
+      introduction_title: "BMI Introduction",
+      introduction_text:
+        "BMI is a measurement of a person's leanness or corpulence based on their height and weight, and is intended to quantify tissue mass. It is widely used as a general indicator of whether a person has a healthy body weight for their height.",
+      introduction_usage:
+        "Specifically, the value obtained from the calculation of BMI is used to categorize whether a person is underweight, normal weight, overweight, or obese depending on what range the value falls between. These ranges of BMI vary based on factors such as region and age, and are sometimes further divided into subcategories such as severely underweight or very severely obese.",
+
+      adult_table_title: "BMI Table for Adults",
+      adult_table_description:
+        "This is the World Health Organization's (WHO) recommended body weight based on BMI values for adults. It is used for both men and women, age 20 or older.",
+
+      children_table_title: "BMI Table for Children and Teens, Age 2-20",
+      children_table_description:
+        "The Centers for Disease Control and Prevention (CDC) recommends BMI categorization for children and teens between age 2 and 20.",
+
+      classification: "Classification",
+      bmi_range: "BMI Range - kg/m²",
+      category: "Category",
+      percentile_range: "Percentile Range",
+      underweight: "Underweight",
+      healthy_weight: "Healthy Weight",
+      at_risk_overweight: "At Risk of Overweight",
+      overweight: "Overweight",
+
+      overweight_risks_title: "Risks Associated with Being Overweight",
+      overweight_risks_intro:
+        "Being overweight increases the risk of a number of serious diseases and health conditions. Below is a list of said risks, according to the Centers for Disease Control and Prevention (CDC):",
+
+      cardiovascular_risks: "Cardiovascular Risks",
+      high_blood_pressure: "High blood pressure",
+      cholesterol_issues: "Higher levels of LDL cholesterol, lower levels of HDL cholesterol, and high levels of triglycerides",
+      coronary_heart_disease: "Coronary heart disease",
+      stroke: "Stroke",
+
+      metabolic_risks: "Metabolic Risks",
+      type_2_diabetes: "Type II diabetes",
+      gallbladder_disease: "Gallbladder disease",
+      sleep_apnea: "Sleep apnea and breathing problems",
+      osteoarthritis: "Osteoarthritis, a type of joint disease caused by breakdown of joint cartilage",
+
+      other_risks: "Other Health Risks",
+      certain_cancers: "Certain cancers (endometrial, breast, colon, kidney, gallbladder, liver)",
+      mental_health_issues: "Mental illnesses such as clinical depression, anxiety, and others",
+      reduced_quality_life: "Low quality of life and body pains",
+      increased_mortality: "Generally, an increased risk of mortality compared to those with a healthy BMI",
+
+      underweight_risks_title: "Risks Associated with Being Underweight",
+      underweight_risks_intro: "Being underweight has its own associated risks, listed below:",
+      malnutrition: "Malnutrition, vitamin deficiencies, anemia (lowered ability to carry blood vessels)",
+      osteoporosis: "Osteoporosis, a disease that causes bone weakness, increasing the risk of breaking a bone",
+      immune_function_decrease: "A decrease in immune function",
+      growth_development_issues: "Growth and development issues, particularly in children and teenagers",
+      reproductive_issues: "Possible reproductive issues for women due to hormonal imbalances",
+      surgery_complications: "Potential complications as a result of surgery",
+      increased_mortality_underweight: "Generally, an increased risk of mortality compared to those with a healthy BMI",
+
+      adults_limitations: "In Adults",
+      older_adults_fat: "Older adults tend to have more body fat than younger adults with the same BMI",
+      women_fat_difference: "Women tend to have more body fat than men for an equivalent BMI",
+      athletes_muscle_mass: "Muscular individuals and highly trained athletes may have higher BMIs due to large muscle mass",
+
+      children_limitations: "In Children and Adolescents",
+      height_maturation_influence: "Height and level of sexual maturation can influence BMI and body fat among children",
+      fat_free_mass_difference: "BMI could be a result of increased levels of either fat or fat-free mass",
+      population_accuracy: "BMI is fairly indicative of body fat for 90-95% of the population",
+
+      formulas_title: "BMI Formula",
+      metric_formula: "Metric Formula",
+      imperial_formula: "Imperial Formula",
+      example: "Example",
+
+      bmi_prime_formula: "BMI Prime Formula",
+      bmi_prime_description: "Ratio of your BMI to the upper limit of normal BMI (25)",
+
+      ponderal_index_title: "Ponderal Index",
+      ponderal_index_explanation:
+        "The Ponderal Index (PI) is similar to BMI in that it measures the leanness or corpulence of a person based on their height and weight. The main difference between the PI and BMI is the cubing rather than squaring of the height in the formula. While BMI can be a useful tool when considering large populations, it is not reliable for determining leanness or corpulence in individuals.",
+      ponderal_index_metric_description: "Ponderal Index using metric units",
+      ponderal_index_imperial_description: "Ponderal Index using imperial units",
+
+      medical_disclaimer_title: "Medical Disclaimer",
+    },
+  },
+  levels: {
+    BEGINNER: "Beginner",
+    INTERMEDIATE: "Intermediate",
+    ADVANCED: "Advanced",
+  },
   email_sent: "Email sent",
   cant_send_email: "Can't send email",
   logout: "Logout",
@@ -60,6 +1360,11 @@ export default {
     title: "What's New",
     release_notes: "Release Notes",
     notes: {
+      note_2025_07_02: {
+        title: "🛠️ Self-Hosting, Russian & New Tools",
+        content:
+          "Improved <strong>self-hosting</strong> capabilities, added <strong>Russian language</strong> support, and introduced new <em>fitness tools</em> including a calorie calculator. 🚀",
+      },
       note_2025_06_23: {
         title: "🇵🇹 Portuguese Support & Donation Banner",
         content:
@@ -92,9 +1397,9 @@ export default {
     },
   },
 
-  // Donation Alert
+  // Premium Upsell Alert
   donation_alert: {
-    title: "Keep Workout.cool free. Support us via",
+    title: "Unlock advanced features with Workout.cool Premium",
     or: "or",
   },
 
@@ -108,7 +1413,7 @@ export default {
     costs_description: "Currently, donations don't even cover basic costs: servers, authentication, infrastructure, database, etc.",
     open_source_title: "100% Open Source",
     open_source_description:
-      "This app is completely free and open source. No profit is generated - it's a passion project to help the community and help people exercise.",
+      "This app is completely free, ads free and open source. No profit is generated - it's a passion project to help the community and help people exercise.",
     no_ads: "No ads",
     no_tracking: "No tracking",
     impact_title: "Your impact",
@@ -159,6 +1464,8 @@ export default {
     muscles: {
       back: "Back",
       abdominals: "Abdominals",
+      abductors: "Abductors",
+      adductors: "Adductors",
       biceps: "Biceps",
       triceps: "Triceps",
       chest: "Chest",
@@ -451,6 +1758,9 @@ export default {
     back_to_login: "Back to login",
     sending: "Sending...",
     send_me_link: "Send me a link",
+    subscription: "Subscription",
+    manage_subscription: "Manage subscription",
+    become_premium: "Become Premium",
     extremely_dissatisfied: "Extremely dissatisfied",
     somewhat_dissatisfied: "Somewhat dissatisfied",
     neutral: "Neutral",
@@ -459,5 +1769,16 @@ export default {
     change_language: "Change language",
     in_progress: "In progress",
     close: "Close",
+    premium: "Premium",
+    free: "Free",
+    new: "New",
+    coming_soon: "Coming soon",
+    monday: "Monday",
+    tuesday: "Tuesday",
+    wednesday: "Wednesday",
+    thursday: "Thursday",
+    friday: "Friday",
+    saturday: "Saturday",
+    sunday: "Sunday",
   },
 } as const;

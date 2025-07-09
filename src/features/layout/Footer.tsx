@@ -40,12 +40,12 @@ const NAVIGATION = (t: TFunction) => [
 export const Footer = async () => {
   const t = await getI18n();
   return (
-    <footer className="relative border-t border-base-300 dark:border-gray-800 bg-base-100 dark:bg-black px-4 sm:px-6 py-4 rounded-b-lg">
+    <footer className="relative border-t border-base-300 dark:border-gray-800 bg-base-100 dark:bg-black px-2 sm:px-6 py-2 rounded-b-lg">
       <WorkoutSessionTimer />
 
       <div className="flex sm:flex-row justify-between items-center gap-4">
         {/* Social Icons */}
-        <div className="flex gap-2">
+        <div className="flex gap-0 sm:gap-2">
           {SOCIAL_LINKS.map(({ href, icon: Icon, label }) => (
             <a
               aria-label={label}
@@ -61,7 +61,7 @@ export const Footer = async () => {
         </div>
 
         {/* Navigation Links */}
-        <div className="flex sm:flex-row gap-2 sm:gap-4 text-center text-gray-700 dark:text-gray-300">
+        <div className="flex sm:flex-row gap-1 sm:gap-3 text-center text-gray-700 dark:text-gray-300">
           {NAVIGATION(t).map(({ name, href, hideOnMobile }) => (
             <Link
               className={cn(

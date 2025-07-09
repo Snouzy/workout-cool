@@ -32,7 +32,7 @@
 - [Project Architecture](#project-architecture)
 - [Roadmap](#roadmap)
 - [Contributing](#contributing)
-- [Deployment / Self-hosting](#deployment)
+- [Self-hosting](#deployment--self-hosting)
 - [Resources](#resources)
 - [License](#license)
 - [Sponsor This Project](#-sponsor-this-project)
@@ -42,6 +42,40 @@
 <a href="https://github.com/Snouzy/workout-cool/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=Snouzy/workout-cool&nocache=1" />
 </a>
+
+## Sponsors
+
+<div>
+  <h4>They are helping making workout.cool free and open-source for everyone :</h4>
+
+<a href="https://vercel.com/oss">
+  <img alt="Vercel OSS Program" src="https://vercel.com/oss/program-badge.svg" />
+</a>
+<br/>
+<br/>
+
+  <table>
+    <tr>
+      <td align="center">
+        <a href="https://github.com/lj020326">
+          <img src="https://github.com/lj020326.png" width="50px;" alt="lj020326"/>
+          <br />
+          <sub><b>lj020326</b></sub>
+          <br />
+        </a>
+      </td>
+      <td align="center">
+        <a href="https://github.com/lucasnevespereira">
+          <img src="https://github.com/lucasnevespereira.png" width="50px;" alt="lucasnevespereira"/>
+          <br />
+          <sub><b>lucasnevespereira</b></sub>
+          <br />
+        </a>
+      </td>
+    </tr>
+  </table>
+
+</div>
 
 ## About
 
@@ -267,6 +301,8 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 
 ## Deployment / Self-hosting
 
+> 📖 **For detailed self-hosting instructions, see our [Complete Self-hosting Guide](docs/SELF-HOSTING.md)**
+
 To seed the database with the sample exercises, set the `SEED_SAMPLE_DATA` env variable to `true`.
 
 ### Using Docker
@@ -364,3 +400,9 @@ Appear in the README and on the website as supporter by donating:
   Your support helps cover hosting costs, exercise database updates, and continuous improvement.<br>
   Thank you for keeping <strong>workout.cool</strong> alive and evolving 💪
 </p>
+
+<br />
+<br />
+<a href="https://vercel.com/oss">
+<img alt="Vercel OSS Program" src="https://vercel.com/oss/program-badge.svg" />
+</a>

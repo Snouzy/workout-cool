@@ -115,7 +115,7 @@ const config = [
       "@typescript-eslint/comma-dangle": "off",
       "import/prefer-default-export": "off",
       "unused-imports/no-unused-imports": "warn",
-      "max-len": ["warn", { code: 140, ignorePattern: "^import .*", ignoreStrings: true }],
+      "max-len": ["warn", { code: 140, ignorePattern: "^import .*| className=*|background=*", ignoreStrings: true }],
       "import/order": [
         "error",
         {

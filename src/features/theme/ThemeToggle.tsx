@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect } from "react";
 import { useTheme } from "next-themes";
 import { MoonIcon, SunIcon } from "lucide-react";
 
@@ -8,10 +7,6 @@ import { Button } from "@/components/ui/button";
 
 export function ThemeToggle() {
   const { setTheme, resolvedTheme } = useTheme();
-
-  useEffect(() => {
-    console.log("resolvedTheme:", resolvedTheme);
-  }, [resolvedTheme]);
 
   return (
     <div className="tooltip tooltip-bottom" data-tip={resolvedTheme === "light" ? "Dark mode" : "Light mode"}>

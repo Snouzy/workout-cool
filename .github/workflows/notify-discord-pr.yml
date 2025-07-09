@@ -14,6 +14,7 @@ jobs:
   Discord:
     runs-on: ubuntu-latest
     name: Discord PR Notifier
+    if: github.event.pull_request.head.repo.full_name == github.repository
     steps:
       - uses: actions/checkout@v4
         if: github.event_name == 'workflow_dispatch'
@@ -134,7 +135,7 @@ jobs:
 
           # Escape special characters for JSON
           PR_TITLE_ESCAPED=$(echo "$PR_TITLE" | sed 's/"/\\"/g' | sed "s/'/\\'/g")
-          
+
           # Create a temporary JSON file using jq to ensure valid JSON
           jq -n \
             --arg avatar_url "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" \

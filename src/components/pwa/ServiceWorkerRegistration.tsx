@@ -9,6 +9,8 @@ export function ServiceWorkerRegistration() {
         .register("/sw.js")
         .then((registration) => {
           console.log("SW registered: ", registration);
+          // Check for updates
+          registration.update();
         })
         .catch((registrationError) => {
           console.log("SW registration failed: ", registrationError);

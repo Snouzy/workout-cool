@@ -14,7 +14,9 @@ import { WorkoutSessionHeader } from "@/features/workout-session/ui/workout-sess
 import { DonationModal } from "@/features/workout-session/ui/donation-modal";
 import { useDonationModal } from "@/features/workout-session/hooks/use-donation-modal";
 import { WorkoutBuilderFooter } from "@/features/workout-builder/ui/workout-stepper-footer";
+import { env } from "@/env";
 import { Button } from "@/components/ui/button";
+import { HorizontalTopBanner } from "@/components/ads";
 
 import { StepperStepProps } from "../types";
 import { useWorkoutStepper } from "../model/use-workout-stepper";
@@ -182,6 +184,9 @@ export function WorkoutStepper() {
   if (isWorkoutActive && session) {
     return (
       <div className="w-full max-w-6xl mx-auto">
+        {env.NEXT_PUBLIC_TOP_WORKOUT_SESSION_BANNER_AD_SLOT && (
+          <HorizontalTopBanner adSlot={env.NEXT_PUBLIC_TOP_WORKOUT_SESSION_BANNER_AD_SLOT} />
+        )}
         {!showCongrats && <WorkoutSessionHeader onQuitWorkout={quitWorkout} />}
         <WorkoutSessionSets isWorkoutActive={isWorkoutActive} onCongrats={handleCongrats} showCongrats={showCongrats} />
       </div>
@@ -252,6 +257,16 @@ export function WorkoutStepper() {
 
   return (
     <div className="w-full max-w-6xl mx-auto h-full">
+      {currentStep === 1 && env.NEXT_PUBLIC_TOP_STEPPER_STEP_1_BANNER_AD_SLOT && (
+        <HorizontalTopBanner adSlot={env.NEXT_PUBLIC_TOP_STEPPER_STEP_1_BANNER_AD_SLOT} />
+      )}
+      {currentStep === 2 && env.NEXT_PUBLIC_TOP_STEPPER_STEP_2_BANNER_AD_SLOT && (
+        <HorizontalTopBanner adSlot={env.NEXT_PUBLIC_TOP_STEPPER_STEP_2_BANNER_AD_SLOT} />
+      )}
+      {currentStep === 3 && env.NEXT_PUBLIC_TOP_STEPPER_STEP_3_BANNER_AD_SLOT && (
+        <HorizontalTopBanner adSlot={env.NEXT_PUBLIC_TOP_STEPPER_STEP_3_BANNER_AD_SLOT} />
+      )}
+
       <StepperHeader currentStep={currentStep} onStepClick={handleStepClick} steps={steps} />
 
       <div className="px-2 sm:px-6">{renderStepContent()}</div>
@@ -264,12 +279,8 @@ export function WorkoutStepper() {
         onStartWorkout={handleStartWorkout}
         totalSteps={STEPPER_STEPS.length}
       />
-      
-      <AddExerciseModal
-        isOpen={addExerciseModal.value}
-        onClose={addExerciseModal.setFalse}
-        selectedEquipment={selectedEquipment}
-      />
+
+      <AddExerciseModal isOpen={addExerciseModal.value} onClose={addExerciseModal.setFalse} selectedEquipment={selectedEquipment} />
     </div>
   );
 }

@@ -1,4 +1,1313 @@
 export default {
+  programs: {
+    available_programs: "Programas disponíveis",
+    exercises_in_session: "Exercícios na sessão",
+    start_session: "Iniciar sessão",
+    starting_session: "Iniciando...",
+    more_than: "mais de",
+    my_progress: "Meu progresso",
+    session: "sessão",
+    completed_feminine: "concluídas",
+    completed_sets: "sessões concluídas",
+    "set#zero": "série",
+    "set#one": "série",
+    "set#other": "séries",
+    error_starting_session: "Erro ao iniciar a sessão",
+    premium_session: "Sessão Premium",
+    premium_session_description: "Esta sessão é parte do conteúdo premium. Pode ver os detalhes mas não pode realizar o treino.",
+    premium_session_exercises: "Exercícios incluídos",
+    workout_description: "Descrição da sessão",
+    connect_to_access: "Conecte-se para acessar",
+    become_premium: "Torne-se Premium",
+    back_to_program: "Voltar ao programa",
+    no_equipment: "Nenhum equipamento",
+    workout_programs_title: "Programas de treino (+ em curso de criação)",
+    workout_programs: "Programas de treino",
+    workout_programs_description: "Escolha o seu desafio e torne-se mais forte! 💪",
+    no_programs_available: "Nenhum programa disponível",
+    no_programs_available_description: "Os programas estarão disponíveis em breve!",
+    auth_required: "Autenticação requerida",
+    auth_required_description: "Precisa de iniciar sessão para acessar esta sessão de treino.",
+    login_to_continue: "Iniciar sessão para continuar",
+    signup_to_continue: "Registar para continuar",
+    premium_required: "Premium requerido",
+    premium_required_description: "Esta sessão é premium. Atualize para acessar todo o conteúdo premium.",
+    upgrade_to_premium: "Atualizar para Premium",
+    completed: "Concluído",
+    about: "Sobre",
+    program: "Programa",
+    not_found: "Programa não encontrado",
+    characteristics: "Características",
+    weeks: "semanas",
+    sessions_per_week: "sessões/semana",
+    session_duration: "min/sessão",
+    "your_coach#zero": "Seu coach",
+    "your_coach#one": "Seu coach",
+    "your_coach#other": "Seus coaches",
+    community: "Comunidade ativa",
+    community_count: "coolbuilders têm rejeitado",
+    week_short: "Sem.",
+    week: "Semana",
+    exercises: "exercícios",
+    min_short: "min",
+    premium: "Premium",
+    free: "Gratuito",
+    continue: "Continuar",
+    join_cta: "Inscrever-se",
+    sessions: "Sessões",
+    check_out_program: "Descubra este programa de treino!",
+    program_completed: "Programa terminado",
+    share_success: "Compartido com sucesso!",
+    copied_to_clipboard: "Link copiado!",
+    share_failed: "Erro ao compartilhar",
+    important_info: "Informações importantes",
+    donation_teaser:
+      "No início, funcionávamos com doações. Mas como pode imaginar, as doações não foram suficientes para cobrir os custos de desenvolvimento e funcionamento. Então criámos um pacote que nos ajudará a manter as luzes acesas e desbloquear alguns superpoderes pelo caminho.",
+    new: "NOVO",
+    more_programs_coming_title: "Mais programas em breve!",
+    more_programs_coming_description:
+      "Estamos a trabalhar duro para criar novos programas. Ao passar a premium agora, terá eles automaticamente. Obrigado pelo seu apoio. 🚀",
+    coming_strength: "Força & Músculo",
+    coming_cardio: "Cardio HIIT",
+    coming_yoga: "Yoga & Mobilidade",
+    sessions_coming_soon: "Sessões em breve!",
+    sessions_in_creation: "A nossa equipa está a trabalhar em sessões de qualidade para esta semana. Volte em breve! 🚀",
+    welcome_modal: {
+      welcome_title: "Bem-vindo ao {programTitle}!",
+      subtitle: "Prepare-se para superar seus limites! 💪",
+      level_label: "Nível",
+      duration_label: "Duração",
+      frequency_label: "Frequência",
+      later_button: "Mais tarde",
+      start_button: "Vamos lá!",
+    },
+  },
+  premium: {
+    checkout_error: "Erro ao processar o pagamento",
+    premium_required_title: "Premium Obrigatório",
+    premium_required_subtitle: "Este é um acesso premium. Atualize para Premium para aceder a todo o conteúdo premium.",
+    premium_required_button: "Atualizar para Premium",
+    already_premium: "Está a desfrutar do Workout.cool Premium",
+    no_ads: "Sem anúncios",
+    upgrade: "Atualizar",
+
+    pricing: {
+      month: "month",
+      year: "year",
+      monthly: "Monthly",
+      yearly: "Yearly",
+      discount: "-48%",
+    },
+
+    // Hero Section
+    hero: {
+      badge: "Open-Source & Auto-hospedagem SEMPRE gratuitos",
+      title: "Treine livremente, apoie a missão",
+      subtitle: "Para aqueles que acreditam no projeto e querem (re)acreditar em si mesmos com power boosters !",
+      stats: {
+        athletes: {
+          count: "12.4K+",
+          label: "Atletas ativos",
+        },
+        series: {
+          count: "1.2M+",
+          label: "Séries registadas",
+        },
+        rating: {
+          count: "4.9/5",
+          label: "Avaliação da comunidade",
+        },
+        progression: {
+          count: "+23%",
+          label: "Progressão média",
+        },
+      },
+
+      // Health Risks
+      health_risks: {
+        overweight: {
+          high_blood_pressure: "Pressão arterial alta",
+          ldl_cholesterol: "Níveis elevados de colesterol LDL (colesterol mau)",
+          hdl_cholesterol: "Níveis baixos de colesterol HDL (colesterol bom)",
+          triglycerides: "Níveis elevados de triglicéridos",
+          type_2_diabetes: "Diabetes tipo II",
+          coronary_heart_disease: "Doença coronária",
+          stroke: "Acidente vascular cerebral",
+          gallbladder_disease: "Doença da vesícula biliar",
+          osteoarthritis: "Osteoartrite",
+          sleep_apnea: "Apneia do sono e problemas respiratórios",
+          certain_cancers: "Certos cancros (endometrial, mama, cólon, rim, vesícula biliar, fígado)",
+          low_quality_life: "Baixa qualidade de vida",
+          mental_illnesses: "Doenças mentais como depressão clínica e ansiedade",
+          body_pains: "Dores corporais e dificuldade com funções físicas",
+          increased_mortality: "Risco geralmente aumentado de mortalidade",
+        },
+        underweight: {
+          malnutrition: "Desnutrição e deficiências vitamínicas",
+          anemia: "Anemia (capacidade reduzida para transportar oxigénio no sangue)",
+          osteoporosis: "Osteoporose (risco aumentado de fraturas ósseas)",
+          immune_function: "Função imunitária diminuída",
+          growth_development: "Problemas de crescimento e desenvolvimento (especialmente em crianças)",
+          reproductive_issues: "Problemas reprodutivos em mulheres devido a desequilíbrios hormonais",
+          miscarriage_risk: "Maior probabilidade de aborto espontâneo no primeiro trimestre",
+          surgery_complications: "Complicações potenciais durante cirurgias",
+          increased_mortality: "Risco geralmente aumentado de mortalidade",
+          underlying_conditions: "Pode indicar condições médicas subjacentes",
+        },
+      },
+    },
+
+    // Mission Banner
+    mission: {
+      supporters_count: "234",
+      supporters_text: "suportadores a ajudar a missão",
+      limited: "Limitado",
+      early_access: "lugares de acesso antecipado",
+    },
+
+    // Plans
+    plans: {
+      monthly: "Mensal",
+      yearly: "Anual",
+      yearly_discount: "-48%",
+      per_month: "/mês",
+      per_year: "/ano",
+
+      free: {
+        name: "GRATUITO",
+        price: "€0",
+        period: "/para sempre",
+        price_label: "€0/para sempre",
+        badge: "Open-Source • Sempre Gratuito",
+        description: "Todas as funções essenciais para treinar",
+        features: [
+          "Gerador de exercícios com vídeos",
+          "Histórico de treinos tipo GitHub (6 meses)",
+          "Partilhar e repetir sessões (em breve)",
+          "Auto-hospedagem possível",
+          "Código fonte disponível",
+        ],
+        button: "O seu plano atual",
+        footer_note: "Não é necessário registo • Acesso completo para sempre",
+      },
+
+      premium: {
+        name: "PREMIUM ⭐",
+        price_label: "€7.90/mês ou €49/ano",
+        badge: "MAIS POPULAR • Para entusiastas",
+        description: "Todas as funcionalidades + acesso antecipado",
+        footer_monthly: "Junte-se à comunidade apaixonada! 🔥",
+        footer_yearly: "Obrigado pelo apoio anual! 🙏",
+        yearly_price_note: "/mês",
+        features: [
+          "...todo do plano Gratuito",
+          "Sem publicidade",
+          "Histórico ilimitado (vs 6 meses gratuito)",
+          "Acompanhamento de progresso com estatísticas avançadas (volume, progressão, PR)",
+          "Programas de treino pré-concebidos",
+          "Chat privado com um coach 1:1",
+          "Acesso antecipado a novas funcionalidades",
+        ],
+      },
+    },
+
+    // Buttons and Actions
+    actions: {
+      processing: "A processar...",
+      go_premium: "Tornar-se Premium",
+      sign_in_continue: "Tornar-se Premium",
+      upgrade_now: "Atualizar agora",
+      current_plan: "O seu plano atual",
+    },
+
+    // Trust Elements
+    trust: {
+      gdpr_compliant: "100% conforme com o RGPD",
+      money_back: "30 dias de garantia de devolução de dinheiro",
+      cancel_anytime: "1 clique para cancelar, sem compromisso",
+      secure_payment: "Pagamento seguro via Stripe",
+    },
+
+    // Feature Comparison
+    comparison: {
+      title: "Comparação de funcionalidades detalhada",
+      subtitle: "Tudo o que precisa de saber sobre o que está incluído em cada plano",
+      features_label: "Funcionalidades",
+      headers: {
+        features: "Funcionalidades",
+        free: "Gratuito",
+        premium: "Premium",
+      },
+      categories: {
+        equipment: "Equipamento & Exercícios",
+        tracking: "Acompanhamento & Análises",
+        programs: "Programas & IA",
+        community: "Comunidade & Compartilhamento",
+        support: "Suporte & Projeto",
+      },
+      features: {
+        exercise_library: "Biblioteca de exercícios",
+        custom_exercise: "Exercício personalizado",
+        video_tutorials: "Tutoriais em vídeo",
+        workout_history: "Histórico de treinos",
+        progress_statistics: "Estatísticas de progresso",
+        personal_records: "Acompanhamento de recordes pessoais",
+        volume_analytics: "Análises de volume & progresso",
+        predesigned_programs: "Programas pré-designados",
+        personalized_recommendations: "Recomendações personalizadas",
+        pro_templates: "Modelos profissionais (Powerlifting, bodybuilding, etc.)",
+        community_access: "Acesso à comunidade",
+        discord_community: "Comunidade Discord",
+        private_chat: "Chat privado 1:1 com o coach",
+        community_support: "Suporte comunitário",
+        priority_support: "Suporte prioritário",
+        early_access: "Acesso antecipado a funcionalidades",
+        beta_testing: "Teste beta",
+      },
+      values: {
+        basic: "Básico",
+        complete: "Completo",
+        unlimited: "Ilimitado",
+        professional: "Profissional",
+        six_months: "6 meses",
+        limited: "Limitado",
+        all_programs: "Todos os programas",
+        public: "Público",
+        vip_access: "Acesso VIP",
+        private_channels: "Canais privados",
+        soon: "Em breve",
+        hd_slowmo: "4K + Slow-mo",
+        early_access: "Acesso antecipado",
+      },
+    },
+
+    // FAQ
+    faq: {
+      title: "Perguntas frequentes",
+      subtitle: "Tudo o que precisa de saber sobre Workout.cool e a nossa missão",
+      items: [
+        {
+          question: "Porque pagar se é open-source?",
+          answer:
+            "Excelente pergunta! O código sempre permanecerá gratuito, mas manter servidores, base de dados e infraestrutura custa dinheiro. A sua contribuição ajuda-nos a manter a ferramenta gratuita para todos. É um modelo vantajoso: você obtém funcionalidades premium, a comunidade mantém acesso gratuito!",
+        },
+        {
+          question: "Posso auto-hospedar o Workout.cool?",
+          answer:
+            "Absolutamente! Todo o código está disponível no GitHub sob licença MIT. Pode implantá-lo em seus próprios servidores, personalizá-lo como quiser e usá-lo completamente gratuitamente. Auto-hospedagem dá-lhe controlo total sobre os seus dados e privacidade do treino.",
+        },
+        {
+          question: "As minhas dados de treino estão seguros?",
+          answer:
+            "Sim! Somos conformes com o RGPD, usamos conexões encriptadas e armazenamos os seus dados com segurança. Além disso, como somos open-source, pode auditar as nossas práticas de segurança. Também pode exportar os seus dados a qualquer momento ou auto-hospedar para ter controlo total.",
+        },
+        {
+          question: "Posso cancelar a minha subscrição a qualquer momento?",
+          answer:
+            "Claro! Sem contratos, sem compromissos. Pode cancelar com um clique a qualquer momento. Manterá acesso até o fim do seu período de faturação atual, e pode sempre reiniciar mais tarde. Os seus dados de treino permanecem acessíveis mesmo se downgrade para gratuito.",
+        },
+        {
+          question: "Existem exercícios para iniciantes?",
+          answer:
+            "Claro! A nossa biblioteca de exercícios cobre todos os níveis de aptidão desde os mais iniciantes até aos atletas avançados. Vídeos e instruções ajudam os iniciantes a encontrar exercícios apropriados, e os nossos tutoriais em vídeo mostram a forma correta.",
+        },
+        {
+          question: "Como funciona o acompanhamento do progresso?",
+          answer:
+            "Cada série, repetição, peso e tempo é automaticamente registado. Obtém um histórico de treinos estilo GitHub que mostra a sua consistência, mais análises detalhadas sobre volume, progressão e recordes pessoais. Os utilizadores Premium obtêm gráficos avançados e insights.",
+        },
+        {
+          question: "Can I import data from other apps?",
+          answer:
+            "Em breve. Vamos suportar a importação de dados em CSV para dados básicos (reps & peso). Se está a mudar de outra aplicação de fitness, a nossa equipa de suporte pode ajudar a migrar o seu histórico de treinos.",
+        },
+        {
+          question: "Does the app work offline?",
+          answer:
+            "O acompanhamento do treino funciona offline. Pode registar séries e repetições sem ligação à internet para 10 treinos. Vídeos de exercícios e sincronização na nuvem requerem ligação à internet. Todos os seus dados offline sincronizam automaticamente quando volta online.",
+        },
+        {
+          question: "Are there programs for women?",
+          answer:
+            "Claro! E haverá mais programas no futuro. Estamos a trabalhar nisso. Os planos Suporte e Premium incluirão todos os programas especializados futuros para diferentes objetivos: força, tonificação, levantamento de peso, musculação e mais!",
+        },
+        {
+          question: "Can I create my own programs?",
+          answer: "Infelizmente, não. Estamos a trabalhar nisso!",
+        },
+      ],
+      additional_support: {
+        title: "Ainda tem perguntas?",
+        description: "A nossa comunidade focada no fitness está aqui para ajudar-lhe a ter sucesso",
+        community: "Suporte comunitário (discord ou hello@workout.cool)",
+        discussions: "Discussões abertas (github/discord)",
+        roadmap: "Roadmap transparente (github)",
+      },
+    },
+
+    // Final CTA
+    final_cta: {
+      motivation: "Continue a esforçar-se! 💪",
+      title: "Pronto para apoiar a missão?",
+      subtitle: "Junte-se a milhares de entusiastas do fitness que acreditam na liberdade de treino open-source",
+      values: [
+        {
+          title: "Comunidade primeiro",
+          description: "Construído por e para a comunidade fitness",
+        },
+        {
+          title: "Sempre transparente",
+          description: "Código open-source, financiamento transparente",
+        },
+        {
+          title: "Projeto de amor",
+          description: "15 anos de paixão!",
+        },
+      ],
+      quote: {
+        text: "Acreditamos que as ferramentas de fitness devem ser acessíveis a todos. O seu apoio ajuda-nos a manter esta visão enquanto continuamos a inovar.",
+        author: "— A equipa Workout.cool",
+      },
+    },
+
+    // Premium Active State
+    premium_active: {
+      title: "Premium Ativo! 💪",
+      supporting: "Apoiando a missão",
+    },
+
+    // Legacy translations (keeping for compatibility)
+    premium_active_title: "Premium Ativo",
+    premium_active_subtitle: "Todos os recursos desbloqueados",
+    free_intro_title: "Já está a receber muito gratuitamente...",
+    free_intro_text:
+      "Workout.cool é uma aplicação de fitness gratuita e open source usada diariamente por mais de 60.000 utilizadores. É construída com amor (não com dinheiro de VC ^^) e custa-nos tempo e dinheiro real mantê-la a funcionar.",
+    donation_story_text:
+      "No início, funcionávamos com doações. Mas como pode imaginar, as doações não foram suficientes para cobrir os custos de desenvolvimento e funcionamento. Então criámos um pacote que nos ajudará a manter as luzes acesas e desbloquear alguns superpoderes pelo caminho.",
+    health_upgrade_text: "Se o Workout.cool o ajuda a melhorar a sua saúde, por favor considere tornar-se Premium :D !",
+    unlock_features_text: "Desbloqueie recursos avançados e apoie o fitness open source",
+    invest_yourself_quote: "Nunca poupe em fitness e livros — invista em si mesmo!",
+    support_mission: "Apoiar a missão",
+    best_value_badge: "MELHOR VALOR",
+    annual_plan: "Anual",
+    monthly_plan: "Mensal",
+    discount_badge: "40% de desconto",
+    per_month: "/mês",
+    feature_all_programs: "Todos os programas de treino",
+    feature_progress_tracking: "Acompanhamento do progresso",
+    coming_soon: "(em breve)",
+    feature_future_updates: "Todos os futuros programas e atualizações",
+    feature_priority_support: "Suporte prioritário",
+    save_yearly: "Poupe 40% anualmente",
+    processing: "A processar...",
+    cta_annual: "Quero apoiar + poupar 40%",
+    cta_monthly: "Desbloquear plano completo",
+    thank_supporting: "Obrigado pelo seu apoio.",
+    no_pressure: "Sem pressão. Pode fazer upgrade a qualquer momento.",
+    keep_pushing: "continue a esforçar-se! huhu",
+    still_unsure: "Ainda não tem certeza? Sem problemas. O Workout.cool permanecerá sempre gratuito e open source.",
+    support_helps: "Mas se acredita no que estamos a construir e pode pagar, o seu apoio ajudará 💚",
+    self_hosting: "Auto-hospedagem",
+    community: "Comunidade",
+    mit_license: "Licença MIT",
+    pricing_year: "ano",
+    pricing_month: "mês",
+    conversion_flow_title: "A redirecionar...",
+    conversion_flow_message: "Sessão iniciada com sucesso! A redirecionar para o checkout...",
+    redirecting_to_checkout: "A redirecionar para o checkout",
+  },
+  breadcrumbs: {
+    home: "Início",
+  },
+  bottom_navigation: {
+    programs: "Programas",
+    programs_tooltip: "Pesquisar programas",
+    workouts: "Treinos",
+    workouts_tooltip: "Criar o seu próprio treino",
+    premium: "Premium",
+    premium_tooltip: "Torne-se Premium",
+    tools: "Ferramentas",
+    tools_tooltip: "Explorar ferramentas",
+    profile: "Perfil",
+    profile_tooltip: "Ver o seu perfil",
+  },
+  tools: {
+    try_now: "Experimentar agora",
+    title: "Ferramentas de Fitness",
+    subtitle: "Calculadoras essenciais para otimizar o seu treino e nutrição",
+    moreComingSoon: "Mais ferramentas em breve",
+    meta: {
+      title: "Ferramentas de Fitness - Calculadoras para Treino e Nutrição",
+      description:
+        "Calculadoras gratuitas de fitness: TDEE, macros, IMC, zonas de frequência cardíaca, 1RM e mais. Otimize o seu treino e nutrição com as nossas ferramentas essenciais.",
+      keywords:
+        "calculadora fitness, calculadora calorias, calculadora macros, calculadora IMC, calculadora TDEE, zonas frequência cardíaca, repetição máxima, ferramentas fitness",
+    },
+    "calorie-calculator": {
+      title: "Calculadora de Calorias",
+      description: "Calcule as suas necessidades calóricas diárias (TDEE) baseadas no seu nível de atividade e objetivos",
+      meta: {
+        title: "Calculadora de Calorias - TDEE e Necessidades Calóricas Diárias",
+        description:
+          "Calcule o seu Gasto Energético Total Diário (TDEE) e necessidades calóricas diárias. Obtenha recomendações personalizadas para perda de peso, manutenção ou ganho muscular.",
+        keywords:
+          "calculadora calorias, calculadora TDEE, calorias diárias, calculadora perda peso, necessidades calóricas, calculadora TMB, calculadora metabolismo",
+      },
+      subtitle: "Calcule as suas necessidades calóricas diárias baseadas na equação de Mifflin-St Jeor",
+      how_it_works: "Como funciona esta calculadora?",
+      how_it_works_description:
+        "Esta calculadora usa fórmulas cientificamente comprovadas para estimar as suas necessidades calóricas diárias baseadas nas suas características pessoais e estilo de vida.",
+      how_it_works_step1: "Calculamos o seu metabolismo basal (calorias queimadas em repouso)",
+      how_it_works_step2: "Ajustamos baseado no seu nível de atividade",
+      how_it_works_step3: "Personalizamos de acordo com o seu objetivo (perder, manter ou ganhar peso)",
+      calculate: "Calcular",
+      calculating: "A calcular...",
+      tap_info_icons: "Toque nos ícones ℹ️ para mais informações",
+      gender: "Género",
+      male: "Masculino",
+      female: "Feminino",
+      units: "Unidades",
+      metric: "Métrico",
+      imperial: "Imperial",
+      age: "Idade",
+      age_placeholder: "Insira a sua idade",
+      years: "anos",
+      height: "Altura",
+      height_placeholder: "Insira a sua altura",
+      weight: "Peso",
+      weight_placeholder: "Insira o seu peso",
+      cm: "cm",
+      kg: "kg",
+      lbs: "lbs",
+      feet: "pés",
+      inches: "polegadas",
+      activity_level: "Nível de Atividade",
+      activity: {
+        sedentary: "Sedentário",
+        sedentary_desc: "Pouco ou nenhum exercício, trabalho de secretária, caminhada mínima",
+        light: "Ligeiramente Ativo",
+        light_desc: "Exercício leve 1-3 dias/semana, ou caminhada diária",
+        moderate: "Moderadamente Ativo",
+        moderate_desc: "Exercício moderado 3-5 dias/semana, estilo de vida ativo",
+        active: "Muito Ativo",
+        active_desc: "Exercício intenso 6-7 dias/semana, trabalho muito ativo",
+        very_active: "Extremamente Ativo",
+        very_active_desc: "Atleta, trabalho físico + treino diário",
+      },
+      goal: "Objetivo",
+      goals: {
+        lose_fast: "Perder Peso Rapidamente",
+        lose_fast_desc: "Perder 2 lbs (1 kg) por semana - Agressivo mas eficaz",
+        lose_slow: "Perder Peso",
+        lose_slow_desc: "Perder 1 lb (0,5 kg) por semana - Sustentável e saudável",
+        maintain: "Manter Peso",
+        maintain_desc: "Manter o peso atual - Perfeito para manter a forma",
+        gain_slow: "Ganhar Peso",
+        gain_slow_desc: "Ganhar 1 lb (0,5 kg) por semana - Construção muscular limpa",
+        gain_fast: "Ganhar Peso Rapidamente",
+        gain_fast_desc: "Ganhar 2 lbs (1 kg) por semana - Crescimento muscular máximo",
+      },
+      results: {
+        title: "Os Seus Resultados",
+        bmr: "TMB",
+        bmr_explanation:
+          "Taxa Metabólica Basal (TMB) é o número de calorias que o seu corpo queima em repouso completo, apenas para manter funções básicas como respiração, circulação e produção celular. Esta é a energia mínima que o seu corpo precisa para sobreviver.",
+        tdee: "TDEE",
+        tdee_explanation:
+          "Gasto Energético Total Diário (TDEE) é a sua TMB mais as calorias queimadas através de atividades diárias e exercícios. Este é o número total de calorias que queima num dia baseado no seu nível de atividade.",
+        target: "Calorias Alvo",
+        macros: "Macros Recomendados",
+        macros_explanation:
+          "Macronutrientes (macros) são os três principais grupos de nutrientes que o seu corpo precisa: Proteínas (para construção e reparação muscular), Hidratos de Carbono (para energia) e Gorduras (para hormonas e absorção de vitaminas). As percentagens mostradas são uma distribuição equilibrada adequada para a maioria dos objetivos de fitness.",
+        protein: "Proteína",
+        carbs: "Hidratos de Carbono",
+        fat: "Gordura",
+        disclaimer:
+          "Estes cálculos são estimativas baseadas em fórmulas médias. As necessidades calóricas reais podem variar baseadas em fatores individuais. Consulte um profissional de saúde ou nutricionista registado para conselhos personalizados.",
+      },
+      faq: {
+        title: "Perguntas Frequentes",
+        q1: "Porque é que o meu alvo calórico é diferente de outras calculadoras?",
+        a1: "Diferentes calculadoras podem usar diferentes fórmulas ou multiplicadores de atividade. Nós usamos a equação de Mifflin-St Jeor, que é considerada uma das mais precisas para a maioria das pessoas. No entanto, o metabolismo individual pode variar 10-20% destas estimativas.",
+        q2: "Devo comer exatamente estas calorias todos os dias?",
+        a2: "Estes são alvos médios diários. É normal comer ligeiramente mais alguns dias e menos noutros. Foque-se na sua média semanal em vez de ser exato todos os dias. Ouça os sinais de fome e saciedade do seu corpo.",
+        q3: "E se não estiver a ver resultados após seguir estas recomendações?",
+        a3: "Se não estiver a ver resultados após 2-3 semanas, pode precisar de ajustar. O seu metabolismo real pode ser mais alto ou baixo que o calculado. Tente ajustar em 100-200 calorias e monitore por mais 2 semanas. Também certifique-se de que está a registar a sua comida com precisão.",
+        q4: "As recomendações de macros são adequadas para todos?",
+        a4: "A divisão 30/40/30 (proteína/hidratos/gordura) é uma abordagem equilibrada adequada para a maioria das pessoas. No entanto, atletas, pessoas com condições médicas, ou aqueles que seguem dietas específicas (keto, vegana, etc.) podem precisar de rácios diferentes. Consulte um nutricionista para recomendações personalizadas.",
+      },
+    },
+    "macro-calculator": {
+      title: "Calculadora de Macros",
+      description: "Encontre a distribuição ótima de proteínas, hidratos de carbono e gorduras para os seus objetivos de fitness",
+    },
+    "bmi-calculator": {
+      title: "Calculadora de IMC",
+      description: "Calcule o seu Índice de Massa Corporal e compreenda a sua categoria de peso",
+    },
+    "heart-rate-calculator": {
+      title: "Zonas de Frequência Cardíaca",
+      description: "Descubra as suas zonas de treino ótimas para queima de gordura e performance",
+    },
+    "heart-rate-zones": {
+      title: "Calculadora de Zonas de Frequência Cardíaca",
+      description: "Calcule suas zonas de treino de frequência cardíaca ideais para desempenho máximo e queima de gordura",
+      page_title: "Calculadora de Zonas de Frequência Cardíaca",
+      page_description:
+        "Calcule suas zonas de treino de frequência cardíaca personalizadas usando fórmulas cientificamente comprovadas. Otimize seus treinos de cardio para queima de gordura, resistência e desempenho.",
+      meta: {
+        title: "Calculadora de Zonas de Frequência Cardíaca - Frequência Alvo e Zonas de Treino",
+        description:
+          "Calcule sua frequência cardíaca máxima e suas zonas de treino personalizadas. Use as fórmulas básicas ou de Karvonen para encontrar suas zonas de VO2 Máx, Anaeróbia, Aeróbia, Queima de Gordura e Aquecimento.",
+        keywords:
+          "calculadora zonas frequência cardíaca, frequência cardíaca alvo, frequência cardíaca máxima, zonas de treino, zona VO2 máx, zona anaeróbia, zona aeróbia, zona queima de gordura, fórmula Karvonen, treino frequência cardíaca",
+      },
+      calculate: "Calcular Zonas",
+      calculating: "Calculando...",
+      method: "Método de Cálculo",
+      method_info: "Escolha a fórmula que melhor se adapta ao seu nível de condicionamento e aos dados disponíveis",
+      methods: {
+        basic: "Básica por Idade",
+        basic_desc: "Fórmula simples usando apenas a idade – boa para iniciantes",
+        karvonen_age: "Karvonen por Idade e FCR",
+        karvonen_age_desc: "Mais precisa usando idade e frequência cardíaca de repouso",
+        karvonen_custom: "Karvonen por FCM e FCR",
+        karvonen_custom_desc: "A mais precisa usando frequências cardíacas máxima e de repouso medidas",
+      },
+      age: "Idade",
+      age_placeholder: "Insira sua idade",
+      resting_heart_rate: "Frequência Cardíaca de Repouso (FCR)",
+      resting_heart_rate_placeholder: "Insira sua FCR",
+      resting_heart_rate_info: "Meça sua frequência cardíaca ao acordar, antes de se levantar. A faixa normal é 60–100 bpm.",
+      max_heart_rate: "Frequência Cardíaca Máxima (FCM)",
+      max_heart_rate_placeholder: "Insira sua FCM",
+      max_heart_rate_info:
+        "Sua frequência cardíaca máxima real de um teste de esforço ou treino em intensidade máxima. Mais precisa que estimativas baseadas na idade.",
+
+      results: {
+        overview: "Visão Geral",
+        title: "Suas Zonas de Frequência Cardíaca",
+        max_heart_rate: "Frequência Cardíaca Máxima",
+        heart_rate_reserve: "Reserva de Frequência Cardíaca",
+        target_zones: "Zonas de Treino Alvo",
+        zone: "Zona",
+        intensity: "Intensidade",
+        heart_rate_range: "Frequência Cardíaca (bpm)",
+        benefits: "Benefícios",
+        duration: "Duração Típica",
+      },
+      zones: {
+        warm_up: {
+          name: "Zona de Aquecimento",
+          intensity: "50–60%",
+          benefits: "🧘 Aquecimento ideal",
+          example: "Caminhada leve",
+          duration: "5–10 minutos",
+          description: "Intensidade muito leve para aquecimento e recuperação",
+        },
+        fat_burn: {
+          name: "Zona de Queima de Gordura",
+          intensity: "60–70%",
+          benefits: "🔥 Queima gordura",
+          example: "Corrida leve",
+          duration: "20–40 minutos",
+          description: "Intensidade leve, ritmo confortável para treinos mais longos",
+        },
+        aerobic: {
+          name: "Zona Aeróbia",
+          intensity: "70–80%",
+          benefits: "💪 Melhora a resistência",
+          example: "Corrida moderada",
+          duration: "10–40 minutos",
+          description: "Intensidade moderada, sustentável por períodos prolongados",
+        },
+        anaerobic: {
+          name: "Zona Anaeróbia",
+          intensity: "80–90%",
+          benefits: "⚡ Aumenta a velocidade",
+          example: "Sprint curto",
+          duration: "2–10 minutos",
+          description: "Intensidade alta, desafiadora mas sustentável por curtos períodos",
+        },
+        vo2_max: {
+          name: "Zona VO2 Máx",
+          intensity: "90–100%",
+          benefits: "🏆 Desempenho máximo",
+          example: "Sprint intenso",
+          duration: "30 segundos–2 minutos",
+          description: "Intensidade máxima, sustentável apenas por períodos muito curtos",
+        },
+      },
+      formulas: {
+        basic_formula: "Fórmula Básica",
+        basic_explanation: "FCC = FCM × %Intensidade",
+        karvonen_formula: "Fórmula de Karvonen",
+        karvonen_explanation: "FCC = [(FCM – FCR) × %Intensidade] + FCR",
+        mhr_calculation: "FCM = 220 – Idade",
+      },
+      abbreviations: {
+        thr: "FCC = Frequência Cardíaca Alvo",
+        mhr: "FCM = Frequência Cardíaca Máxima",
+        rhr: "FCR = Frequência Cardíaca de Repouso",
+        hrr: "RFC = Reserva de Frequência Cardíaca",
+        bpm: "bpm = Batimentos Por Minuto",
+      },
+      tips: {
+        title: "Dicas de Treino",
+        tip1: "Comece por zonas de baixa intensidade se for iniciante",
+        tip2: "Misture diferentes zonas no seu treino semanal para melhores resultados",
+        tip3: "Use um monitor de frequência cardíaca para acompanhamento preciso durante os treinos",
+        tip4: "Suas zonas podem mudar conforme seu condicionamento melhora – recalcule periodicamente",
+      },
+      faq: {
+        title: "Perguntas Frequentes",
+        q1: "Qual método de cálculo devo usar?",
+        a1: "Se for iniciante, use o método Básico. Se conhecer sua frequência de repouso, use Karvonen por Idade para mais precisão. Para as zonas mais precisas, use Karvonen com FCM e FCR medidas.",
+        q2: "Como medir minha frequência cardíaca de repouso?",
+        a2: "Meça seu pulso por 60 segundos logo ao acordar, antes de se levantar. Faça isso por 3–5 dias e use a média. FCR normal é 60–100 bpm, valores mais baixos indicam melhor condicionamento.",
+        q3: "Em qual zona devo treinar para perder peso?",
+        a3: "A Zona de Queima de Gordura (60–70%) é ótima para usar gordura como combustível. Mas zonas de maior intensidade queimam mais calorias totais. Misture as zonas para melhores resultados – inclua treinos de queima de gordura e alta intensidade.",
+        q4: "Qual a precisão da fórmula 220–idade?",
+        a4: "É uma estimativa geral que funciona para a maioria, mas pode variar ±10–15 bpm. Para mais precisão, considere um teste supervisionado de FCM ou use Karvonen com suas medidas reais.",
+        q5: "Posso treinar na zona VO2 Máx todos os dias?",
+        a5: "Não, a zona VO2 Máx é muito intensa e deve ser usada apenas 1–2 vezes por semana em intervalos curtos. A maior parte do treino deve ser nas zonas Aeróbia e Queima de Gordura para construir resistência e permitir recuperação.",
+      },
+      guide: {
+        title: "Guia Completo das Zonas de Frequência Cardíaca para Treino",
+        text1:
+          "As zonas de frequência cardíaca são uma ferramenta científica essencial para otimizar seus treinos e atingir seus objetivos de fitness. Quer você queira perder peso, melhorar sua resistência ou aumentar seu desempenho, compreender e usar as zonas cardíacas vai transformar sua abordagem ao exercício.",
+        text2:
+          "Esta calculadora usa fórmulas validadas cientificamente para determinar suas zonas personalizadas com base em sua idade e, opcionalmente, em sua frequência cardíaca de repouso. Cada zona corresponde a uma intensidade específica e oferece benefícios únicos para sua saúde cardiovascular.",
+      },
+      table: {
+        title: "Tabela de Referência de Frequências Cardíacas por Idade",
+        col1: "Idade",
+        col2: "FCM",
+        col3: "50% Intensidade",
+        col4: "85% Intensidade",
+        avertiser: "* Estes valores são médias. Sua FCM real pode variar ±10–15 bpm.",
+      },
+      details: {
+        title: "As 5 Zonas de Treino Explicadas em Detalhes",
+        benefits: "Benefícios",
+        zone1_title: "Zona 1 : Aquecimento (50–60% FCM)",
+        zone1_content:
+          "A zona de aquecimento é ideal para iniciar uma sessão, recuperar entre intervalos ou terminar um treino. Nesta intensidade, você pode manter uma conversa sem ficar sem fôlego.",
+        zone1_details_1: "Melhora a circulação sanguínea",
+        zone1_details_2: "Prepara músculos e articulações",
+        zone1_details_3: "Reduz risco de lesões",
+        zone1_details_4: "Favorece recuperação ativa",
+        zone1_duration: "Duração recomendada",
+        zone1_duration_value: "5–10 minutos no início/fim",
+        zone1_duration_value_2: "20–30 minutos para recuperação ativa",
+        zone2_title: "Zona 2 : Queima de Gordura (60–70% FCM)",
+        zone2_content:
+          "Nesta zona, seu corpo usa principalmente gordura como fonte de energia. É a intensidade ideal para desenvolver resistência básica e melhorar eficiência metabólica.",
+        zone2_details_1: "Maximiza uso de gordura",
+        zone2_details_2: "Desenvolve resistência aeróbia",
+        zone2_details_3: "Melhora eficiência cardíaca",
+        zone2_details_4: "Reforça sistema imunológico",
+        zone2_duration: "Duração recomendada",
+        zone2_duration_value: "30–90 minutos para resistência",
+        zone2_duration_value_2: "45–60 minutos para perda de peso",
+        zone3_title: "Zona 3 : Aeróbia (70–80% FCM)",
+        zone3_content:
+          "A zona aeróbia melhora significativamente sua capacidade cardiovascular. Você respira mais forte mas ainda consegue falar frases curtas. É a zona principal de treino para a maioria dos atletas.",
+        zone3_details_1: "Aumenta capacidade pulmonar",
+        zone3_details_2: "Melhora resistência cardiovascular",
+        zone3_details_3: "Fortalece o coração",
+        zone3_details_4: "Otimiza uso de oxigênio",
+        zone3_duration: "Duração recomendada",
+        zone3_duration_value: "20–60 minutos contínuos",
+        zone3_duration_value_2: "Intervalos de 5–15 minutos",
+        zone4_title: "Zona 4 : Anaeróbia (80–90% FCM)",
+        zone4_content:
+          "Na zona anaeróbia, seu corpo produz lactato mais rápido do que pode eliminar. Essa intensidade desenvolve potência e velocidade, mas não pode ser mantida por muito tempo.",
+        zone4_details_1: "Aumenta potência muscular",
+        zone4_details_2: "Melhora tolerância ao lactato",
+        zone4_details_3: "Desenvolve velocidade",
+        zone4_details_4: "Reforça o mental",
+        zone4_duration: "Duração recomendada",
+        zone4_duration_value: "Intervalos de 2–8 minutos",
+        zone4_duration_value_2: "Recuperação igual ou dupla",
+        zone5_title: "Zona 5 : VO2 Máx (90–100% FCM)",
+        zone5_content:
+          "A zona VO2 Máx representa o esforço máximo. Nesta intensidade, você só consegue dizer poucas palavras e não aguenta além de alguns minutos. Reservada a atletas experientes.",
+        zone5_details_1: "Maximiza capacidade aeróbia",
+        zone5_details_2: "Melhora economia de corrida",
+        zone5_details_3: "Desenvolve potência máxima",
+        zone5_details_4: "Empurra limites mentais",
+        zone5_duration: "Duração recomendada",
+        zone5_duration_value: "Intervalos de 30s–2 minutos",
+        zone5_duration_value_2: "Máximo 1–2 vezes por semana",
+      },
+      educational: {
+        title: "Entendendo o Treino por Frequência Cardíaca",
+        description: "Visualiza fácilmente cada zona de treino",
+        what_are_zones: {
+          title: "O Que São Zonas de Frequência Cardíaca?",
+          content:
+            "As zonas de frequência cardíaca são faixas de batimentos por minuto que correspondem a diferentes intensidades de exercício. Treinar em zonas específicas ajuda a alcançar objetivos de fitness de forma mais eficiente.",
+        },
+        why_use_zones: {
+          title: "Por Que Usar Zonas de Frequência Cardíaca?",
+          content:
+            "Treinar com zonas de frequência cardíaca garante que você esteja se exercitando na intensidade certa para seus objetivos. Isso previne overtraining, maximiza resultados e ajuda a treinar de forma mais eficiente.",
+        },
+        zone_distribution: {
+          title: "Distribuição Semanal Recomendada de Zonas",
+          content:
+            "Para um condicionamento equilibrado: 80% nas Zonas 1–3 (base aeróbia), 15% na Zona 4 (limiar), 5% na Zona 5 (VO2 máx). Ajuste conforme seus objetivos e nível de condicionamento.",
+        },
+        monitoring: {
+          title: "Como Monitorar Sua Frequência Cardíaca",
+          content:
+            "Use uma cinta peitoral para mais precisão ou um monitor de pulso para conveniência. Verifique regularmente sua frequência durante o exercício e ajuste a intensidade para permanecer na zona alvo.",
+        },
+      },
+      training_tips: {
+        title: "Dicas de Especialista para Otimizar Seu Treino",
+        tip1: {
+          title: "Aquecimento Progressivo",
+          description: "Comece sempre com 5–10 minutos na zona 1 (50–60%) para preparar seu sistema cardiovascular.",
+        },
+        tip2: {
+          title: "Regra 80/20",
+          description: "80% do treino em zonas 1–3 (aeróbia), 20% em zonas 4–5 (anaeróbia) para desenvolvimento ideal.",
+        },
+        tip3: {
+          title: "Recuperação Ativa",
+          description: "Após esforço intenso, reduza gradualmente para zona 1–2 por 5–10 minutos.",
+        },
+        tip4: {
+          title: "Hidratação Contínua",
+          description: "Beba antes, durante e após o exercício. Desidratação aumenta a frequência cardíaca.",
+        },
+        tip5: {
+          title: "Sono Reparador",
+          description: "7–9 horas de sono para melhor recuperação e FCR mais baixa.",
+        },
+        tip6: {
+          title: "Progressão Gradual",
+          description: "Aumente intensidade ou duração no máximo 10% por semana para evitar overtraining.",
+        },
+      },
+      training_tips_2: {
+        title: "Dicas Práticas",
+        title1: "Encontre sua Zona",
+        description1: "Cada zona tem um objetivo diferente. Escolha conforme sua meta!",
+        title2: "Duração Recomendada",
+        description2: "Quanto maior a intensidade, mais curta deve ser a duração.",
+        title3: "Progressão",
+        description3: "Comece devagar e aumente a intensidade gradualmente.",
+        title4: "Ouça seu Corpo",
+        description4: "Se sentir mal, diminua imediatamente.",
+      },
+      quick_facts: {
+        title: "Você Sabia?",
+        fact1: "220 – sua idade = Frequência Cardíaca Máxima aproximada",
+        fact2: "Meça seu pulso ao acordar para conhecer sua frequência de repouso",
+        fact3: "Um relógio inteligente pode acompanhar sua frequência em tempo real",
+        fact4: "80% do treino deve ser nas zonas 1–3",
+      },
+      weekly_plan: {
+        title: "Plano Semanal Exemplo",
+        description: "Um exemplo de semana de treino equilibrado",
+        monday: {
+          title: "Zona 1–2",
+          description: "30–45 min",
+        },
+        tuesday: {
+          title: "Zona 2–3",
+          description: "45–60 min",
+        },
+        wednesday: {
+          title: "Descanso",
+          description: "Recuperação",
+        },
+        thursday: {
+          title: "Zona 3–4",
+          description: "30–40 min",
+        },
+        friday: {
+          title: "Zona 1–2",
+          description: "30 min",
+        },
+        saturday: {
+          title: "Zona 4–5",
+          description: "20–30 min",
+        },
+        tips: "💡 Adapte este plano ao seu nível e objetivos!",
+        cta: "⬆️ Calcular minhas zonas agora",
+      },
+      seo_faq_title: "Perguntas Frequentes sobre Zonas de Frequência Cardíaca",
+      seo_faq_q1_question: "O que é a frequência cardíaca máxima (FCM)?",
+      seo_faq_q1_answer:
+        "A frequência cardíaca máxima é o número máximo de batimentos por minuto que seu coração pode alcançar durante esforço intenso. Geralmente calculada como: 220 – sua idade. Pode variar ±10–15 bpm.",
+      seo_faq_q2_question: "Como medir minha frequência cardíaca de repouso?",
+      seo_faq_q2_answer:
+        "Meça seu pulso ao acordar, antes de se levantar. Conte os batimentos por 60 segundos ou por 15 segundos e multiplique por 4. Repita por 3–5 dias e use a média. FCR normal é 60–100 bpm.",
+      seo_faq_q3_question: "Qual zona é melhor para perder peso?",
+      seo_faq_q3_answer:
+        "A zona de queima de gordura (60–70% FCM) é ótima para usar gordura como combustível. Entretanto, zonas mais intensas queimam mais calorias totais. Para perda de peso eficaz, alterne entre diferentes zonas.",
+      seo_faq_q4_question: "Posso treinar na zona VO2 Máx todos os dias?",
+      seo_faq_q4_answer:
+        "Não, a zona VO2 Máx (90–100% FCM) é extremamente intensa e deve ser usada apenas 1–2 vezes por semana em curtos períodos (30s–2 min). A maior parte do treino deve ser em zonas aeróbias.",
+      seo_faq_q5_question: "A fórmula 220–idade é precisa?",
+      seo_faq_q5_answer:
+        "É uma estimativa geral que funciona para a maioria, mas pode variar ±10–15 bpm. Para mais precisão, use a fórmula de Karvonen com sua FCR ou faça um teste de esforço supervisionado.",
+      seo_faq_q6_question: "Como saber se estou na zona certa?",
+      seo_faq_q6_answer:
+        "Use um monitor cardíaco para maior precisão. Sem equipamento, faça o teste da fala: zona leve = conversa fácil, zona moderada = frases curtas, zona intensa = palavras isoladas.",
+      seo_faq_q7_question: "As zonas mudam com a melhora do condicionamento?",
+      seo_faq_q7_answer:
+        "Sim, com o treino sua frequência de repouso diminui e a eficiência cardíaca melhora. Recalcule suas zonas a cada 2–3 meses para ajustar o treino.",
+      seo_faq_q8_question: "Qual a diferença entre as fórmulas Basic e Karvonen?",
+      seo_faq_q8_answer:
+        "A fórmula Basic usa apenas a idade (THR = FCM × %Intensidade). A fórmula Karvonen é mais precisa porque considera sua FCR: THR = [(FCM – FCR) × %Intensidade] + FCR.",
+      intern_links_title: "Pronto para Otimizar seus Treinos?",
+      intern_links_subtitle: "Use nossa calculadora para descobrir suas zonas personalizadas e transforme seu fitness",
+      intern_links_button: "Calcular Minhas Zonas Agora",
+      intern_links_bmi_title: "Calculadora de IMC",
+      intern_links_bmi_description: "Avalie seu índice de massa corporal",
+      intern_links_calorie_title: "Calculadora de Calorias",
+      intern_links_calorie_description: "Determine suas necessidades calóricas diárias",
+      intern_links_macro_title: "Calculadora de Macronutrientes",
+      intern_links_macro_description: "Otimize sua distribuição nutricional",
+      cta: {
+        title: "Pronto para Otimizar seus Treinos?",
+        subtitle: "Use nossa calculadora para descobrir suas zonas personalizadas e transforme seu fitness",
+        button: "Calcular Minhas Zonas Agora",
+        bmi_title: "Calculadora de IMC",
+        bmi_description: "Avalie seu índice de massa corporal",
+        calorie_title: "Calculadora de Calorias",
+        calorie_description: "Determine suas necessidades calóricas diárias",
+        macro_title: "Calculadora de Macronutrientes",
+        macro_description: "Otimize sua distribuição nutricional",
+      },
+      medical_warning_title: "Aviso Médico Importante",
+      medical_warning_content:
+        "Esta calculadora fornece estimativas baseadas em fórmulas gerais. Os resultados podem variar conforme seu condicionamento, medicamentos e estado de saúde. Consulte sempre um profissional de saúde antes de iniciar um novo programa de exercícios, especialmente se tiver condições médicas prévias ou sentir sintomas incomuns durante o exercício.",
+    },
+    "one-rep-max": {
+      title: "Calculadora 1RM",
+      description: "Estime a sua repetição máxima e planeie as percentagens do seu treino de força",
+    },
+    back_to_calculators: "Voltar às calculadoras",
+    body_fat_percentage: "Percentagem de Gordura Corporal",
+    body_fat_info_title: "O que é a Percentagem de Gordura Corporal?",
+    body_fat_info_content:
+      "A percentagem de gordura corporal é essencial para as fórmulas de Katch-McArdle e Cunningham pois calculam baseadas na massa magra corporal. Se não conhece a sua % de gordura corporal exata, use guias visuais online ou scans DEXA para precisão.",
+    "calorie-calculator-hub": {
+      title: "Fórmulas da Calculadora de Calorias",
+      subtitle: "Escolha a melhor fórmula para as suas necessidades e obtenha cálculos de calorias precisos",
+      meta: {
+        title: "Fórmulas da Calculadora de Calorias - Calculadoras TMB e TDEE",
+        description:
+          "Compare diferentes fórmulas de TMB: Mifflin-St Jeor, Harris-Benedict, Katch-McArdle, Cunningham e Oxford. Escolha a melhor calculadora de calorias para as suas necessidades.",
+        keywords:
+          "fórmulas TMB, comparação calculadora calorias, Mifflin-St Jeor, Harris-Benedict, Katch-McArdle, Cunningham, Oxford, calculadora TDEE",
+      },
+      which_formula: "Que Fórmula Devo Escolher?",
+      formula_explanation:
+        "Diferentes fórmulas funcionam melhor para diferentes pessoas. Aqui está um guia rápido para o ajudar a escolher:",
+      recommendation_general: "Melhor fórmula geral, mais precisa para a população geral",
+      recommendation_traditional: "Fórmula clássica, amplamente usada mas ligeiramente menos precisa",
+      recommendation_bodyfat: "Mais precisa se conhecer a sua percentagem de gordura corporal",
+      since: "Desde",
+      all_formulas: "Todas as fórmulas",
+      popularity: "Popularidade",
+      accuracy: "Precisão",
+      accuracy_high: "Alta",
+      accuracy_good: "Boa",
+      accuracy_medium: "Média",
+      best_for: "Melhor para",
+      best_for_general: "Uso geral",
+      best_for_traditional: "Tradicional",
+      best_for_athletes: "Atletas",
+      best_for_bodybuilders: "Fisiculturistas",
+      best_for_european: "População europeia",
+      best_for_comparison: "Comparar todas",
+      "mifflin-st-jeor": {
+        title: "Mifflin-St Jeor (Recomendada)",
+        description: "Fórmula mais precisa para a população geral, desenvolvida em 1990. Atualmente o padrão ouro para cálculos de TMB.",
+      },
+      "harris-benedict": {
+        title: "Harris-Benedict (Clássica)",
+        description: "Versão revista de 1984 da fórmula clássica. Amplamente usada mas tende a sobrestimar calorias para algumas pessoas.",
+      },
+      "katch-mcardle": {
+        title: "Katch-McArdle (Atletas)",
+        description:
+          "Baseada na massa magra corporal. Mais precisa para pessoas que conhecem a sua percentagem de gordura corporal e são fisicamente ativas.",
+      },
+      cunningham: {
+        title: "Cunningham (Fisiculturistas)",
+        description:
+          "Projetada para atletas muito magros e fisiculturistas com baixa gordura corporal. Usa cálculo da massa magra corporal.",
+      },
+      oxford: {
+        title: "Oxford (Europeia)",
+        description: "Fórmula mais recente (2005) baseada em populações europeias. Tem em conta faixas etárias.",
+      },
+      comparison: {
+        title: "Comparar Todas as Fórmulas",
+        description: "Compare resultados de todas as fórmulas lado a lado para ver as diferenças e escolher o que funciona melhor para si.",
+      },
+    },
+    "mifflin-st-jeor": {
+      title: "Calculadora Mifflin-St Jeor",
+      subtitle: "O padrão ouro para cálculo de TMB - mais precisa para a população geral",
+      meta: {
+        title: "Calculadora Mifflin-St Jeor - TMB e TDEE Mais Precisos",
+        description:
+          "Calcule a sua TMB e TDEE usando a equação Mifflin-St Jeor - a fórmula mais precisa para a população geral. Obtenha recomendações calóricas personalizadas.",
+        keywords:
+          "calculadora Mifflin-St Jeor, calculadora TMB, calculadora TDEE, calculadora calorias mais precisa, calculadora metabolismo",
+      },
+      how_it_works: "Como Funciona a Fórmula Mifflin-St Jeor",
+      how_it_works_description:
+        "Desenvolvida em 1990, esta fórmula é considerada a mais precisa para calcular a Taxa Metabólica Basal (TMB) em adultos saudáveis. É mais precisa que a equação Harris-Benedict e é amplamente recomendada por nutricionistas e profissionais de fitness.",
+    },
+    "harris-benedict": {
+      title: "Calculadora Harris-Benedict",
+      subtitle: "Fórmula clássica de TMB - a abordagem tradicional para cálculo de calorias",
+      meta: {
+        title: "Calculadora Harris-Benedict - Fórmula Clássica TMB e TDEE",
+        description:
+          "Calcule a sua TMB e TDEE usando a equação Harris-Benedict revista (1984). A fórmula clássica que iniciou os cálculos modernos de calorias.",
+        keywords: "calculadora Harris-Benedict, calculadora TMB clássica, calculadora TDEE tradicional, fórmula Harris-Benedict revista",
+      },
+      how_it_works: "Como Funciona a Fórmula Harris-Benedict",
+      how_it_works_description:
+        "Originalmente desenvolvida em 1919 e revista em 1984, a equação Harris-Benedict foi uma das primeiras fórmulas para calcular TMB. Embora ligeiramente menos precisa que fórmulas mais recentes, continua amplamente usada e fornece boas estimativas para a maioria das pessoas.",
+    },
+    "katch-mcardle": {
+      title: "Calculadora Katch-McArdle",
+      subtitle: "Cálculo preciso de TMB baseado na massa magra corporal - ideal para atletas",
+      meta: {
+        title: "Calculadora Katch-McArdle - TMB e TDEE da Massa Magra",
+        description:
+          "Calcule a sua TMB e TDEE usando a fórmula Katch-McArdle baseada na massa magra corporal. Mais precisa para pessoas que conhecem a sua percentagem de gordura corporal.",
+        keywords:
+          "calculadora Katch-McArdle, TMB massa magra, calculadora percentagem gordura corporal, calculadora TMB atleta, TDEE preciso",
+      },
+      how_it_works: "Como Funciona a Fórmula Katch-McArdle",
+      how_it_works_description:
+        "Esta fórmula calcula TMB baseada na massa magra corporal em vez do peso corporal total, tornando-a mais precisa para pessoas que conhecem a sua percentagem de gordura corporal. É particularmente útil para atletas e indivíduos fisicamente ativos.",
+    },
+    cunningham: {
+      title: "Calculadora Cunningham",
+      subtitle: "Fórmula de TMB projetada para atletas muito magros e fisiculturistas",
+      meta: {
+        title: "Calculadora Cunningham - TMB para Atletas Magros e Fisiculturistas",
+        description:
+          "Calcule a sua TMB e TDEE usando a fórmula Cunningham, especificamente projetada para atletas muito magros e fisiculturistas com baixa gordura corporal.",
+        keywords:
+          "calculadora Cunningham, calculadora TMB fisiculturista, TMB atleta magro, calculadora baixa gordura corporal, calculadora preparação competição",
+      },
+      how_it_works: "Como Funciona a Fórmula Cunningham",
+      how_it_works_description:
+        "Desenvolvida especificamente para indivíduos muito magros com baixas percentagens de gordura corporal, esta fórmula fornece estimativas de TMB mais altas que outras equações. É mais precisa para atletas competitivos e fisiculturistas em preparação para competições.",
+    },
+    oxford: {
+      title: "Calculadora Oxford",
+      subtitle: "Fórmula moderna de TMB baseada em populações europeias com considerações de idade",
+      meta: {
+        title: "Calculadora Oxford - Fórmula Moderna TMB e TDEE",
+        description:
+          "Calcule a sua TMB e TDEE usando a equação Oxford (2005), uma fórmula moderna baseada em populações europeias com cálculos específicos por idade.",
+        keywords: "calculadora Oxford, calculadora TMB moderna, fórmula TMB europeia, calculadora TMB específica idade, equação TMB 2005",
+      },
+      how_it_works: "Como Funciona a Fórmula Oxford",
+      how_it_works_description:
+        "Publicada em 2005, esta é uma das fórmulas de TMB mais recentes. Foi desenvolvida usando dados de populações europeias e tem em conta faixas etárias, fornecendo equações diferentes para pessoas com menos e mais de 30 anos.",
+    },
+    "calorie-calculator-comparison": {
+      title: "Comparar todas as fórmulas BMR",
+      subtitle: "Veja como diferentes fórmulas BMR calculam as suas necessidades calóricas lado a lado",
+      meta: {
+        title: "Comparação de fórmulas BMR - Comparar todos os calculadores de calorias",
+        description:
+          "Compare as fórmulas Mifflin-St Jeor, Harris-Benedict, Katch-McArdle, Cunningham e Oxford BMR lado a lado. Veja qual fórmula funciona melhor para si.",
+        keywords:
+          "comparação fórmula BMR, comparação calculador calorias, Mifflin vs Harris-Benedict, melhor calculador BMR, comparar fórmulas calorias",
+      },
+      how_it_works: "Como funciona esta comparação",
+      how_it_works_description:
+        "Insira os seus detalhes uma vez e veja como todas as principais fórmulas BMR calculam as suas necessidades calóricas diárias. Isto ajuda-o a compreender as diferenças e escolher a fórmula mais adequada para os seus objetivos.",
+      input_details: "Os seus detalhes",
+      compare: "Comparar",
+      results_comparison: "Resultados da comparação de fórmulas",
+      vs_mifflin: "vs Mifflin-St Jeor",
+      summary: "Resumo e recomendações",
+      summary_explanation:
+        "Diferentes fórmulas podem dar resultados variáveis. Geralmente, diferenças de ±100-200 calorias são normais e esperadas.",
+      recommendation:
+        "Para a maioria das pessoas, Mifflin-St Jeor fornece a base mais precisa. Os atletas devem considerar Katch-McArdle se conhecerem a sua percentagem de gordura corporal.",
+    },
+    "bmi-calculator-hub": {
+      title: "Ferramentas Calculadora IMC",
+      subtitle: "Calcule o seu Índice de Massa Corporal com diferentes métodos e obtenha informações de saúde personalizadas",
+      meta: {
+        title: "Calculadora IMC - Ferramentas de Índice de Massa Corporal e Avaliação de Saúde",
+        description:
+          "Calcule o seu IMC com as nossas ferramentas abrangentes. IMC padrão, ajustado para atletas, IMC pediátrico, e ferramentas de comparação. Obtenha informações de saúde e recomendações.",
+        keywords: "calculadora IMC, índice massa corporal, avaliação saúde, estado peso, ferramentas IMC, IMC pediátrico, IMC atleta",
+      },
+      understanding_bmi: "Compreender o IMC",
+      bmi_explanation:
+        "O IMC é uma ferramenta de rastreio que ajuda a avaliar se tem um peso saudável para a sua altura. Escolha a calculadora certa para as suas necessidades:",
+      recommendation_standard: "Melhor para a população geral e rastreio inicial de saúde",
+      recommendation_adjusted: "Mais preciso para atletas e indivíduos musculosos",
+      recommendation_pediatric: "Especializado para crianças e adolescentes com percentis específicos por idade",
+      popularity: "Popularidade",
+      accuracy: "Precisão",
+      accuracy_high: "Alta",
+      accuracy_good: "Boa",
+      accuracy_medium: "Média",
+      best_for: "Melhor para",
+      best_for_general: "Uso geral",
+      best_for_athletes: "Atletas",
+      best_for_children: "Crianças",
+      best_for_comparison: "Comparar tudo",
+      category_standard: "Padrão",
+      category_advanced: "Avançado",
+      category_specialized: "Especializado",
+      standard: {
+        title: "Calculadora IMC Padrão",
+        description: "Cálculo IMC clássico usando a fórmula padrão da OMS. Avaliação rápida e fácil para a população geral.",
+        page_title: "Calculadora IMC Padrão",
+        page_description:
+          "Calcule o seu Índice de Massa Corporal usando a fórmula padrão da OMS. Obtenha resultados instantâneos com categoria de saúde e recomendações personalizadas.",
+      },
+      adjusted: {
+        title: "Calculadora IMC Ajustada",
+        description:
+          "Cálculo IMC melhorado que considera a massa muscular e composição corporal para resultados mais precisos em indivíduos atléticos.",
+      },
+      pediatric: {
+        title: "Calculadora IMC Pediátrica",
+        description:
+          "Calculadora IMC especializada para crianças e adolescentes usando percentis específicos por idade e sexo e gráficos de crescimento.",
+      },
+      comparison: {
+        title: "Ferramenta de Comparação IMC",
+        description:
+          "Compare diferentes métodos de cálculo IMC lado a lado para compreender como vários fatores afetam os seus resultados.",
+      },
+    },
+  },
+  "bmi-calculator": {
+    educational: {
+      introduction_title: "Introdução ao IMC",
+      introduction_text:
+        "O IMC é uma medida da magreza ou corpulência de uma pessoa baseada na sua altura e peso, e destina-se a quantificar a massa tecidual. É amplamente utilizado como indicador geral de se uma pessoa tem um peso corporal saudável para a sua altura.",
+      introduction_usage:
+        "Especificamente, o valor obtido do cálculo do IMC é usado para categorizar se uma pessoa tem baixo peso, peso normal, excesso de peso ou obesidade dependendo da faixa em que o valor se enquadra. Estas faixas de IMC variam com base em fatores como região e idade, e são por vezes subdivididas em subcategorias como baixo peso severo ou obesidade muito severa.",
+
+      adult_table_title: "Tabela de IMC para Adultos",
+      adult_table_description:
+        "Esta é a recomendação de peso corporal da Organização Mundial de Saúde (OMS) baseada em valores de IMC para adultos. É utilizada tanto para homens como mulheres, com 20 anos ou mais.",
+
+      children_table_title: "Tabela de IMC para Crianças e Adolescentes, Idade 2-20",
+      children_table_description:
+        "Os Centros de Controlo e Prevenção de Doenças (CDC) recomendam a categorização do IMC para crianças e adolescentes entre os 2 e 20 anos.",
+
+      classification: "Classificação",
+      bmi_range: "Faixa de IMC - kg/m²",
+      category: "Categoria",
+      percentile_range: "Faixa de Percentil",
+      underweight: "Baixo peso",
+      healthy_weight: "Peso Saudável",
+      at_risk_overweight: "Em Risco de Excesso de Peso",
+      overweight: "Excesso de Peso",
+
+      overweight_risks_title: "Riscos Associados ao Excesso de Peso",
+      overweight_risks_intro:
+        "O excesso de peso aumenta o risco de várias doenças graves e condições de saúde. Abaixo está uma lista de tais riscos, segundo os Centros de Controlo e Prevenção de Doenças (CDC):",
+
+      cardiovascular_risks: "Riscos Cardiovasculares",
+      high_blood_pressure: "Pressão arterial alta",
+      cholesterol_issues: "Níveis mais altos de colesterol LDL, níveis mais baixos de colesterol HDL e níveis altos de triglicéridos",
+      coronary_heart_disease: "Doença coronária",
+      stroke: "Acidente vascular cerebral",
+
+      metabolic_risks: "Riscos Metabólicos",
+      type_2_diabetes: "Diabetes tipo II",
+      gallbladder_disease: "Doença da vesícula biliar",
+      sleep_apnea: "Apneia do sono e problemas respiratórios",
+      osteoarthritis: "Osteoartrite, um tipo de doença articular causada pela degradação da cartilagem articular",
+
+      other_risks: "Outros Riscos de Saúde",
+      certain_cancers: "Certos cancros (endometrial, mama, cólon, rim, vesícula biliar, fígado)",
+      mental_health_issues: "Doenças mentais como depressão clínica, ansiedade e outras",
+      reduced_quality_life: "Baixa qualidade de vida e dores corporais",
+      increased_mortality: "Geralmente, um risco aumentado de mortalidade comparado com aqueles com um IMC saudável",
+
+      underweight_risks_title: "Riscos Associados ao Baixo Peso",
+      underweight_risks_intro: "O baixo peso tem os seus próprios riscos associados, listados abaixo:",
+      malnutrition: "Desnutrição, deficiências vitamínicas, anemia (capacidade reduzida para transportar oxigénio no sangue)",
+      osteoporosis: "Osteoporose, uma doença que causa fraqueza óssea, aumentando o risco de fractura de ossos",
+      immune_function_decrease: "Uma diminuição na função imunitária",
+      growth_development_issues: "Problemas de crescimento e desenvolvimento, particularmente em crianças e adolescentes",
+      reproductive_issues: "Possíveis problemas reprodutivos para mulheres devido a desequilíbrios hormonais",
+      surgery_complications: "Complicações potenciais como resultado de cirurgia",
+      increased_mortality_underweight: "Geralmente, um risco aumentado de mortalidade comparado com aqueles com um IMC saudável",
+
+      adults_limitations: "Em Adultos",
+      older_adults_fat: "Adultos mais velhos tendem a ter mais gordura corporal que adultos mais jovens com o mesmo IMC",
+      women_fat_difference: "Mulheres tendem a ter mais gordura corporal que homens para um IMC equivalente",
+      athletes_muscle_mass: "Indivíduos musculosos e atletas altamente treinados podem ter IMCs mais altos devido a grande massa muscular",
+
+      children_limitations: "Em Crianças e Adolescentes",
+      height_maturation_influence: "Altura e nível de maturação sexual podem influenciar o IMC e gordura corporal entre crianças",
+      fat_free_mass_difference: "O IMC pode ser resultado de níveis aumentados de gordura ou massa livre de gordura",
+      population_accuracy: "O IMC é bastante indicativo de gordura corporal para 90-95% da população",
+
+      formulas_title: "Fórmula do IMC",
+      metric_formula: "Fórmula Métrica",
+      imperial_formula: "Fórmula Imperial",
+      example: "Exemplo",
+
+      bmi_prime_formula: "Fórmula do IMC Prime",
+      bmi_prime_description: "Relação do seu IMC com o limite superior do IMC normal (25)",
+
+      ponderal_index_title: "Índice Ponderal",
+      ponderal_index_explanation:
+        "O Índice Ponderal (IP) é similar ao IMC em que mede a magreza ou corpulência de uma pessoa baseada na sua altura e peso. A principal diferença entre o IP e o IMC é o cubo em vez do quadrado da altura na fórmula. Enquanto o IMC pode ser uma ferramenta útil ao considerar grandes populações, não é confiável para determinar magreza ou corpulência em indivíduos.",
+      ponderal_index_metric_description: "Índice Ponderal usando unidades métricas",
+      ponderal_index_imperial_description: "Índice Ponderal usando unidades imperiais",
+
+      medical_disclaimer_title: "Aviso Médico",
+    },
+    height: "Altura",
+    weight: "Peso",
+    feet: "pés",
+    inches: "pol",
+    cm: "cm",
+    kg: "kg",
+    lbs: "lbs",
+    height_placeholder: "Insira a altura",
+    weight_placeholder: "Insira o peso",
+    calculate: "Calcular IMC",
+    your_bmi: "O seu IMC",
+    bmi_prime: "IMC Prime",
+    ponderal_index: "Índice Ponderal",
+    bmi_category: "Categoria IMC",
+    health_risk: "Risco de Saúde",
+    recommendations_label: "Recomendações",
+    units: "Unidades",
+    metric: "Métrico (kg/cm)",
+    imperial: "Imperial (lbs/pés)",
+
+    // Detailed BMI Categories (WHO)
+    category_severe_thinness: "Magreza Severa",
+    category_moderate_thinness: "Magreza Moderada",
+    category_mild_thinness: "Magreza Ligeira",
+    category_normal: "Peso Normal",
+    category_overweight: "Excesso de Peso",
+    category_obese_class_1: "Obesidade Classe I",
+    category_obese_class_2: "Obesidade Classe II",
+    category_obese_class_3: "Obesidade Classe III",
+
+    // Health Risks
+    risk_low: "Baixo",
+    risk_normal: "Normal",
+    risk_increased: "Aumentado",
+    risk_high: "Alto",
+    risk_very_high: "Muito Alto",
+    risk_extremely_high: "Extremamente Alto",
+
+    // Additional Information
+    bmi_range: "Intervalo IMC",
+    ideal_weight: "Intervalo de Peso Ideal",
+    weight_to_lose: "Peso a Perder",
+    weight_to_gain: "Peso a Ganhar",
+    normal_range: "Intervalo IMC normal: 18,5 - 24,9",
+
+    // BMI Prime
+    about_bmi_prime: "Sobre o IMC Prime",
+    bmi_prime_explanation:
+      "O IMC Prime é a relação entre o seu IMC e o limite superior do IMC normal (25). Um valor de 1,0 significa que está no limite superior do peso normal.",
+    underweight: "Baixo peso",
+    normal: "Normal",
+    overweight: "Excesso de peso",
+    obese: "Obeso",
+
+    // Limitations
+    limitations_title: "Limitações do IMC",
+    limitations_text:
+      "O IMC não distingue entre massa muscular e massa gorda. Atletas e pessoas muito musculosas podem ter um IMC alto apesar de estarem saudáveis. A idade, sexo, etnia e composição corporal também afetam a interpretação.",
+
+    disclaimer:
+      "O IMC é uma ferramenta de rastreio e pode não refletir a composição corporal. Consulte profissionais de saúde para conselhos personalizados.",
+
+    // Recommendations
+    recommendations: {
+      severe_thinness: {
+        medical_consultation: "Consulta médica imediata fortemente recomendada",
+        nutritional_assessment: "Avaliação nutricional abrangente necessária",
+        weight_gain_program: "Pode necessitar de programa supervisionado de ganho de peso",
+        screen_conditions: "Rastreio de condições médicas subjacentes",
+        psychological_evaluation: "Considerar avaliação psicológica se suspeita de distúrbio alimentar",
+      },
+      moderate_thinness: {
+        healthcare_provider: "Consultar profissional de saúde para avaliação",
+        nutrient_dense_foods: "Focar em alimentos ricos em nutrientes e calorias",
+        registered_dietitian: "Considerar trabalhar com nutricionista registado",
+        monitor_malnutrition: "Monitorizar sinais de desnutrição",
+        gradual_weight_gain: "Ganho de peso gradual e saudável recomendado",
+      },
+      mild_thinness: {
+        consider_healthcare: "Considerar consultar profissional de saúde",
+        nutrient_dense_foods: "Focar em alimentos ricos em nutrientes para ganhar peso saudavelmente",
+        strength_training: "Incluir treino de força para desenvolver massa muscular",
+        monitor_health: "Monitorizar a sua saúde regularmente",
+        gradual_weight_gain: "Visar ganho de peso gradual (0,5-1 kg por semana)",
+      },
+      normal: {
+        maintain_weight: "Manter o seu peso saudável atual",
+        physical_activity: "Continuar atividade física regular (150+ minutos por semana)",
+        balanced_diet: "Seguir dieta equilibrada e nutritiva",
+        health_checkups: "Check-ups de saúde regulares",
+        overall_wellness: "Focar no bem-estar geral e composição corporal",
+      },
+      overweight: {
+        gradual_weight_loss: "Visar perda de peso gradual (0,5-1 kg por semana)",
+        increase_activity: "Aumentar atividade física para 150+ minutos por semana",
+        portion_control: "Focar no controlo de porções e nutrição equilibrada",
+        healthcare_provider: "Considerar consultar profissional de saúde",
+        lifestyle_goals: "Estabelecer objetivos de estilo de vida realistas e sustentáveis",
+      },
+      obese_class_1: {
+        healthcare_provider: "Consultar profissional de saúde para plano de gestão de peso",
+        weight_loss_target: "Visar perda de peso de 5-10% inicialmente",
+        diet_exercise: "Combinar intervenções de dieta e exercício",
+        nutritional_counseling: "Considerar aconselhamento nutricional profissional",
+        screen_conditions: "Rastreio de condições de saúde relacionadas com o peso",
+      },
+      obese_class_2: {
+        medical_supervision: "Procurar supervisão médica para gestão de peso",
+        lifestyle_programs: "Considerar programas abrangentes de intervenção de estilo de vida",
+        evaluate_conditions: "Avaliar condições de saúde relacionadas com o peso",
+        medical_treatments: "Pode beneficiar de tratamentos médicos para perda de peso",
+        bariatric_surgery: "Considerar avaliação de cirurgia bariátrica se apropriado",
+      },
+      obese_class_3: {
+        medical_consultation: "Consulta médica imediata recomendada",
+        bariatric_surgery: "Considerar avaliação de cirurgia bariátrica",
+        weight_management: "Programa médico abrangente de gestão de peso",
+        health_complications: "Abordar complicações de saúde relacionadas com o peso",
+        multidisciplinary: "Abordagem multidisciplinar com equipa médica",
+      },
+    },
+  },
+  levels: {
+    BEGINNER: "Iniciante",
+    INTERMEDIATE: "Intermédio",
+    ADVANCED: "Avançado",
+  },
   email_sent: "Email enviado",
   cant_send_email: "Não foi possível enviar o email",
   logout: "Terminar sessão",
@@ -60,6 +1369,11 @@ export default {
     title: "Novidades",
     release_notes: "Notas de Lançamento",
     notes: {
+      note_2025_07_02: {
+        title: "🛠️ Auto-hospedagem, Russo e Novas Ferramentas",
+        content:
+          "Melhoria da <strong>auto-hospedagem</strong>, adicionado suporte para <strong>russo</strong>, e introdução de novas <em>ferramentas de fitness</em> incluindo uma calculadora de calorias. 🚀",
+      },
       note_2025_06_23: {
         title: "🇵🇹 Suporte Português & Banner de Doação",
         content:
@@ -92,9 +1406,9 @@ export default {
     },
   },
 
-  // Donation Alert
+  // Premium Upsell Alert
   donation_alert: {
-    title: "Mantém Workout.cool gratuito. Apoia-nos via",
+    title: "Desbloqueie funcionalidades avançadas com Workout.cool Premium",
     or: "ou",
   },
 
@@ -109,7 +1423,7 @@ export default {
       "Actualmente, as doações nem sequer cobrem os custos básicos: servidores, autenticação, infraestrutura, base de dados, etc.",
     open_source_title: "100% Open Source",
     open_source_description:
-      "Esta app é completamente gratuita e de código aberto. Não há lucro - é um projeto de paixão para ajudar a comunidade e ajudar as pessoas a fazer exercício.",
+      "Esta app é completamente gratuita e de open source. Não há lucro - é um projeto de paixão para ajudar a comunidade e ajudar as pessoas a fazer exercício.",
     no_ads: "Sem publicidade",
     no_tracking: "Sem rastreamento",
     impact_title: "O seu impacto",
@@ -160,6 +1474,8 @@ export default {
     muscles: {
       back: "Costas",
       abdominals: "Abdominais",
+      adductors: "Adutores",
+      abductors: "Abdutores",
       biceps: "Bíceps",
       triceps: "Tríceps",
       chest: "Peito",
@@ -460,5 +1776,19 @@ export default {
     change_language: "Alterar idioma",
     in_progress: "Em progresso",
     close: "Fechar",
+    premium: "Premium",
+    subscription: "Abonamento",
+    manage_subscription: "Gerir abonamento",
+    become_premium: "Torne-se Premium",
+    coming_soon: "Em breve",
+    free: "Gratuito",
+    new: "Novo",
+    monday: "Segunda-feira",
+    tuesday: "Terça-feira",
+    wednesday: "Quarta-feira",
+    thursday: "Quinta-feira",
+    friday: "Sexta-feira",
+    saturday: "Sábado",
+    sunday: "Domingo",
   },
 } as const;

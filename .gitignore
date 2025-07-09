@@ -44,3 +44,12 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# editors
+.idea
+.zed
+scripts/private/
+scripts/personal/
+
+product-development
+.claude/

@@ -1,16 +1,17 @@
-const CACHE_NAME = "workout-cool-v1";
+const CACHE_NAME = "1.2.5";
 const urlsToCache = [
-  "/",
   "/manifest.json",
   "/images/favicon-32x32.png",
   "/images/favicon-16x16.png",
   "/apple-touch-icon.png",
   "/android-chrome-192x192.png",
   "/android-chrome-512x512.png",
+  "/logo.png",
 ];
 
 // Install event - cache resources
 self.addEventListener("install", (event) => {
+  self.skipWaiting(); // 🔥 force install
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
       return cache.addAll(urlsToCache);
@@ -18,13 +19,26 @@ self.addEventListener("install", (event) => {
   );
 });
 
-// Fetch event - serve from cache when offline
+// Fetch event - network first with cache fallback
 self.addEventListener("fetch", (event) => {
-  event.respondWith(
-    caches.match(event.request).then((response) => {
-      return response || fetch(event.request);
-    }),
-  );
+  // Skip non-GET requests
+  if (event.request.method !== "GET") {
+    return;
+  }
+
+  // Skip OAuth/auth related URLs
+  const url = new URL(event.request.url);
+  if (
+    url.pathname.startsWith("/api/auth") ||
+    url.pathname.startsWith("/auth") ||
+    url.hostname !== self.location.hostname ||
+    url.pathname.startsWith("/api/stripe") ||
+    url.protocol === "chrome-extension:"
+  ) {
+    return;
+  }
+
+  event.respondWith(fetch(event.request));
 });
 
 // Activate event - clean up old caches
@@ -40,4 +54,6 @@ self.addEventListener("activate", (event) => {
       );
     }),
   );
+
+  self.clients.claim();
 });

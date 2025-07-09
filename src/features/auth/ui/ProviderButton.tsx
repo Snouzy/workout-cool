@@ -31,11 +31,16 @@ export const ProviderButton = (props: ProviderButtonProps) => {
 
   const searchParams = useSearchParams();
 
-  const signInMutation = useMutation({
+  const authMutation = useMutation({
     mutationFn: async () => {
+      const redirectUrl = searchParams.get("redirect");
+      const callbackUrl = searchParams.get("callbackUrl");
+      const defaultAction = props.action === "signup" ? "signup" : "signin";
+      const defaultCallback = `${getServerUrl()}/?${defaultAction}=true`;
+      
       await authClient.signIn.social({
         provider: "google",
-        callbackURL: searchParams.get("callbackUrl") ?? `${getServerUrl()}/?signin=true`,
+        callbackURL: redirectUrl || callbackUrl || defaultCallback,
       });
     },
   });
@@ -49,12 +54,12 @@ export const ProviderButton = (props: ProviderButtonProps) => {
     <Button
       className={props.className}
       onClick={() => {
-        signInMutation.mutate();
+        authMutation.mutate();
       }}
       size="large"
       variant="outline"
     >
-      {signInMutation.isPending ? <Loader size={16} /> : data.icon}
+      {authMutation.isPending ? <Loader size={16} /> : data.icon}
       <span className="ml-2 text-base">{traduction}</span>
     </Button>
   );

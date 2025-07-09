@@ -1,6 +1,10 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
+import Link from "next/link";
+
 import { useI18n } from "locales/client";
+import { paths } from "@/shared/constants/paths";
 import { ProviderButton } from "@/features/auth/ui/ProviderButton";
 import { useSignUp } from "@/features/auth/signup/model/useSignUp";
 import { Input } from "@/components/ui/input";
@@ -13,6 +17,8 @@ import type { SignUpSchema } from "../schema/signup.schema";
 
 export const SignUpForm = () => {
   const t = useI18n();
+  const searchParams = useSearchParams();
+  const redirectUrl = searchParams.get("redirect");
 
   const form = useZodForm({ schema: signUpSchema });
 
@@ -125,6 +131,16 @@ export const SignUpForm = () => {
       </Form>
       <div className="mt-2 flex flex-col gap-2">
         <ProviderButton action="signup" providerId="google" variant="default" />
+      </div>
+      
+      <div className="mt-4 text-center text-sm">
+        {t("commons.already_have_account")}{" "}
+        <Link 
+          className="underline underline-offset-4" 
+          href={`/${paths.signIn}${redirectUrl ? `?redirect=${encodeURIComponent(redirectUrl)}` : ""}`}
+        >
+          {t("commons.login")}
+        </Link>
       </div>
     </>
   );

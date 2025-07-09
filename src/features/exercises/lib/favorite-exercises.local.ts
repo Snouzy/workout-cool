@@ -5,11 +5,11 @@ export interface LocalFavoriteExercise {
   status: SyncStatus;
   updatedAt: string; // ISO date string
 }
-const STORAGE_KEY = "favoriteExercises";
+export const FAVORITE_EXERICSES_STORAGE_KEY = "favoriteExercises";
 
 function getAll(): LocalFavoriteExercise[] {
   try {
-    const stored = localStorage.getItem(STORAGE_KEY);
+    const stored = localStorage.getItem(FAVORITE_EXERICSES_STORAGE_KEY);
     if (!stored) return [];
     return JSON.parse(stored);
   } catch {
@@ -19,7 +19,7 @@ function getAll(): LocalFavoriteExercise[] {
 
 function saveAll(favorites: LocalFavoriteExercise[]) {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(favorites));
+    localStorage.setItem(FAVORITE_EXERICSES_STORAGE_KEY, JSON.stringify(favorites));
   } catch (error) {
     console.error("Failed to save favorites:", error);
   }

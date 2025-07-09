@@ -1,11 +1,17 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useSession } from "@/features/auth/lib/auth-client";
-import { StarButton } from "@/components/ui/star-button";
-import { brandedToast } from "@/components/ui/toast";
+
 import { useI18n } from "locales/client";
-import { favoriteExercisesLocal, LocalFavoriteExercise } from "@/features/exercises/lib/favorite-exercises.local";
+import { cn } from "@/shared/lib/utils";
+import {
+  FAVORITE_EXERICSES_STORAGE_KEY,
+  favoriteExercisesLocal,
+  LocalFavoriteExercise,
+} from "@/features/exercises/lib/favorite-exercises.local";
+import { brandedToast } from "@/components/ui/toast";
+import { StarButton } from "@/components/ui/star-button";
+
 import { useSyncFavoriteExercises } from "../hooks/use-sync-favorite-exercises";
 
 interface FavoriteExerciseButtonProps {
@@ -18,10 +24,11 @@ export function FavoriteExerciseButton({ exerciseId, className }: FavoriteExerci
   const [isFavorite, setIsFavorite] = useState(false);
   const { syncFavoriteExercises } = useSyncFavoriteExercises();
   const t = useI18n();
+  const text = isFavorite ? t("commons.remove_from_favorites") : t("commons.add_to_favorites");
 
   useEffect(() => {
     try {
-      const stored = localStorage.getItem("favoriteExercises");
+      const stored = localStorage.getItem(FAVORITE_EXERICSES_STORAGE_KEY);
       if (!stored) {
         setIsFavorite(false);
         return;
@@ -57,5 +64,9 @@ export function FavoriteExerciseButton({ exerciseId, className }: FavoriteExerci
     }
   }
 
-  return <StarButton isActive={isFavorite} isLoading={isLoading} onClick={handleToggleFavorite} className={className} />;
+  return (
+    <StarButton className={cn("mb-2", className)} isActive={isFavorite} isLoading={isLoading} onClick={handleToggleFavorite}>
+      <span className="text-sm text-slate-500 dark:text-slate-400">{text}</span>
+    </StarButton>
+  );
 }

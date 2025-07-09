@@ -7,11 +7,10 @@ interface FavoriteButtonProps {
   exerciseId: string;
   isFavorite: boolean;
   onToggle: (exerciseId: string) => void;
-  size?: "sm" | "md" | "lg";
   className?: string;
 }
 
-export const FavoriteButton = ({ exerciseId, isFavorite, onToggle, size = "md", className = "" }: FavoriteButtonProps) => {
+export const FavoriteButton = ({ exerciseId, isFavorite, onToggle, className = "" }: FavoriteButtonProps) => {
   const handleToggle = (e: React.MouseEvent) => {
     e.stopPropagation();
 

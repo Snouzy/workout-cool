@@ -183,7 +183,6 @@ export const AddExerciseModal = ({ isOpen, onClose, selectedEquipment }: AddExer
                                 exerciseId={exercise.id}
                                 isFavorite={isFavorite(exercise.id)}
                                 onToggle={handleToggleFavorite}
-                                size="md"
                               />
                             </div>
                           </div>
@@ -291,7 +290,6 @@ export const AddExerciseModal = ({ isOpen, onClose, selectedEquipment }: AddExer
                                   exerciseId={exercise.id}
                                   isFavorite={isFavorite(exercise.id)}
                                   onToggle={handleToggleFavorite}
-                                  size="md"
                                 />
                               </div>
                             </div>

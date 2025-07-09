@@ -1447,6 +1447,7 @@ export default {
   // Workout Builder
   workout_builder: {
     confirm_delete: "Are you sure you want to delete this workout session?",
+    favorites: "Favorites",
     steps: {
       equipment: {
         title: "Equipment",

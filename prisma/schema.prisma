@@ -35,6 +35,7 @@ model User {
   banReason      String?
   banExpires     DateTime?
   WorkoutSession WorkoutSession[]
+  FavoriteExercises UserFavoriteExercise[]
 
   // Subscription fields
   subscriptions Subscription[]
@@ -45,6 +46,18 @@ model User {
   programEnrollments UserProgramEnrollment[]
 
   @@map("user")
+}
+
+model UserFavoriteExercise {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  exerciseId String
+  exercise   Exercise @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
+  updatedAt  DateTime @updatedAt
+
+  @@unique([userId, exerciseId])
+  @@map("user_favorite_exercises")
 }
 
 model Session {
@@ -126,6 +139,7 @@ model Exercise {
   attributes             ExerciseAttribute[]
   WorkoutSessionExercise WorkoutSessionExercise[]
   ProgramSessionExercise ProgramSessionExercise[]
+  favoritesByUsers       UserFavoriteExercise[]
 
   @@map("exercises")
 }

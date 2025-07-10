@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useQueryState } from "nuqs";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
@@ -8,6 +8,7 @@ import { ExerciseAttributeValueEnum } from "@prisma/client";
 
 import { useI18n } from "locales/client";
 import Trophy from "@public/images/trophy.png";
+import useBoolean from "@/shared/hooks/useBoolean";
 import { WorkoutSessionSets } from "@/features/workout-session/ui/workout-session-sets";
 import { WorkoutSessionHeader } from "@/features/workout-session/ui/workout-session-header";
 import { DonationModal } from "@/features/workout-session/ui/donation-modal";
@@ -18,12 +19,13 @@ import { Button } from "@/components/ui/button";
 import { HorizontalTopBanner } from "@/components/ads";
 
 import { StepperStepProps } from "../types";
-import { useWorkoutStepper } from "../model/use-workout-stepper";
+import { useWorkoutStepper } from "../hooks/use-workout-stepper";
 import { useWorkoutSession } from "../../workout-session/model/use-workout-session";
 import { StepperHeader } from "./stepper-header";
 import { MuscleSelection } from "./muscle-selection";
 import { ExercisesSelection } from "./exercises-selection";
 import { EquipmentSelection } from "./equipment-selection";
+import { AddExerciseModal } from "./add-exercise-modal";
 
 import type { ExerciseWithAttributes, WorkoutBuilderStep } from "../types";
 
@@ -109,20 +111,38 @@ export function WorkoutStepper() {
     deleteExercise(exerciseId);
   };
 
+  const addExerciseModal = useBoolean();
+
   const handleAddExercise = () => {
-    alert("TODO : Add exercise 🥶");
+    addExerciseModal.setTrue();
   };
 
-  const orderedExercises = exercisesOrder.length
-    ? exercisesOrder
-        .map((id) => flatExercises.find((item) => item.id === id))
-        .filter(Boolean)
-        .map((item) => item!.exercise)
-    : flatExercises.map((item) => item.exercise);
+  // Fix: Use flatExercises as the source of truth, respecting exercisesOrder when possible
+  const orderedExercises = useMemo(() => {
+    if (flatExercises.length === 0) return [];
+
+    if (exercisesOrder.length === 0) {
+      // No custom order, use flatExercises as-is
+      return flatExercises.map((item) => item.exercise);
+    }
+
+    // Create a map for quick lookup
+    const exerciseMap = new Map(flatExercises.map((item) => [item.id, item.exercise]));
+
+    // Get ordered exercises that exist in flatExercises
+    const orderedResults = exercisesOrder.map((id) => exerciseMap.get(id)).filter(Boolean) as ExerciseWithAttributes[];
+
+    // Add any remaining exercises from flatExercises that aren't in exercisesOrder
+    const remainingExercises = flatExercises.filter((item) => !exercisesOrder.includes(item.id)).map((item) => item.exercise);
+
+    return [...orderedResults, ...remainingExercises];
+  }, [flatExercises, exercisesOrder]);
 
   const handleStartWorkout = () => {
     if (orderedExercises.length > 0) {
       startWorkout(orderedExercises, selectedEquipment, selectedMuscles);
+    } else {
+      console.log("🚀 [WORKOUT-STEPPER] No exercises to start workout with!");
     }
   };
 
@@ -275,6 +295,8 @@ export function WorkoutStepper() {
         onStartWorkout={handleStartWorkout}
         totalSteps={STEPPER_STEPS.length}
       />
+
+      <AddExerciseModal isOpen={addExerciseModal.value} onClose={addExerciseModal.setFalse} selectedEquipment={selectedEquipment} />
     </div>
   );
 }

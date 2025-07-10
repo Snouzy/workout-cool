@@ -6,6 +6,11 @@ export interface ReleaseNote {
 
 export const releaseNotes: ReleaseNote[] = [
   {
+    date: "2025-07-09",
+    titleKey: "release_notes.notes.note_2025_07_09.title",
+    contentKey: "release_notes.notes.note_2025_07_09.content",
+  },
+  {
     date: "2025-07-02",
     titleKey: "release_notes.notes.note_2025_07_02.title",
     contentKey: "release_notes.notes.note_2025_07_02.content",

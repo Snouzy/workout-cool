@@ -31,8 +31,10 @@ jobs:
         id: vars
         run: |
           if [ "${{ github.event_name }}" = "release" ]; then
+            # Get the release tag name
+            RELEASE_TAG="${{ github.event.release.tag_name }}"
             # Remove 'v' prefix if present for Docker tag
-            tag="${github.event.release.tag_name#v}"
+            tag="${RELEASE_TAG#v}"
             echo "tag=$tag" >> $GITHUB_OUTPUT
           else
             echo "tag=${{ github.event.inputs.version }}" >> $GITHUB_OUTPUT

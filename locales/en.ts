@@ -1360,6 +1360,11 @@ export default {
     title: "What's New",
     release_notes: "Release Notes",
     notes: {
+      note_2025_07_09: {
+        title: "🎯 Exercise Selection, Favorites & New Tools",
+        content:
+          "<li>New <strong>exercise selection</strong> during workout creation (step 3)</li><li><strong>Favorite exercises</strong> system to mark your preferred movements</li><li>New <em>fitness tools</em>: BMI calculator and heart rate zones</li><li>Improved program cards</li><li>New contributors join the project! 🚀</li>",
+      },
       note_2025_07_02: {
         title: "🛠️ Self-Hosting, Russian & New Tools",
         content:
@@ -1477,6 +1482,7 @@ export default {
       forearms: "Forearms",
       traps: "Traps",
       obliques: "Obliques",
+      lats: "Lats",
     },
     exercise: {
       watch_video: "Watch video",
@@ -1492,6 +1498,9 @@ export default {
       loading_exercises: "Error loading exercises",
     },
     no_exercises_found: "No exercises found. Try to change your equipment or muscles selection.",
+    addExercise: "Add exercise",
+    exerciseAdded: "{name} added to workout",
+    exercises: "exercises",
     equipment: {
       bodyweight: {
         label: "Bodyweight",
@@ -1764,6 +1773,7 @@ export default {
     support: "Support",
     change_language: "Change language",
     in_progress: "In progress",
+    close: "Close",
     premium: "Premium",
     free: "Free",
     new: "New",
@@ -1775,5 +1785,9 @@ export default {
     friday: "Friday",
     saturday: "Saturday",
     sunday: "Sunday",
+    added_to_favorites: "Added to favorites",
+    add_to_favorites: "Add to favorites",
+    remove_from_favorites: "Remove from favorites",
+    favorites: "Favorites",
   },
 } as const;

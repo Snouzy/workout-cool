@@ -3,7 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { ExerciseAttributeValueEnum } from "@prisma/client";
 
-import { getExercisesAction } from "./get-exercises.action";
+import { getExercisesAction } from "../actions/get-exercises.action";
 
 interface UseExercisesProps {
   equipment: ExerciseAttributeValueEnum[];

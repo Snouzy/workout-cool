@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 
 import { TFunction, useI18n } from "locales/client";
-import { useScrollToTop } from "@/hooks/useScrollToTop";
+import { useScrollToTop } from "@/shared/hooks/useScrollToTop";
 
 export function SEOOptimizedContent() {
   const [activeTab, setActiveTab] = useState(0);

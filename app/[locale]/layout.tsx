@@ -9,6 +9,7 @@ import { getServerUrl } from "@/shared/lib/server-url";
 import { SiteConfig } from "@/shared/config/site-config";
 import { getLocalizedMetadata } from "@/shared/config/localized-metadata";
 import { WorkoutSessionsSynchronizer } from "@/features/workout-session/ui/workout-sessions-synchronizer";
+import { FavoriteExercisesSynchronizer } from "@/features/workout-builder/model/favorite-exercises-synchronizer";
 import { ThemeSynchronizer } from "@/features/theme/ui/ThemeSynchronizer";
 import { env } from "@/env";
 import { Version } from "@/components/version";
@@ -298,6 +299,7 @@ export default async function RootLayout({ params, children }: RootLayoutProps) 
         >
           <Providers locale={locale}>
             <ServiceWorkerRegistration />
+            <FavoriteExercisesSynchronizer />
             <WorkoutSessionsSynchronizer />
             <ThemeSynchronizer />
             {/* <AdSenseAutoAds /> */}

@@ -3,7 +3,7 @@
 import React from "react";
 
 import { TFunction, useI18n } from "locales/client";
-import { useScrollToTop } from "@/hooks/useScrollToTop";
+import { useScrollToTop } from "@/shared/hooks/useScrollToTop";
 
 export function EducationalContent() {
   const t = useI18n();

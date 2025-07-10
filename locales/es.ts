@@ -496,6 +496,11 @@ export default {
     title: "Novedades",
     release_notes: "Notas",
     notes: {
+      note_2025_07_09: {
+        title: "🎯 Selección de Ejercicios, Favoritos y Nuevas Herramientas",
+        content:
+          "<li>Nueva <strong>selección de ejercicios</strong> durante la creación de entrenamientos (paso 3)</li><li>Sistema de <strong>ejercicios favoritos</strong> para marcar tus movimientos preferidos</li><li>Nuevas <em>herramientas de fitness</em>: calculadora de IMC y zonas de frecuencia cardíaca</li><li>Tarjetas de programas mejoradas</li><li>¡Nuevos colaboradores se unen al proyecto! 🚀</li>",
+      },
       note_2025_07_02: {
         title: "🛠️ Auto-alojamiento, Ruso y Nuevas Herramientas",
         content:
@@ -629,6 +634,9 @@ export default {
       loading_exercises: "Error al cargar ejercicios",
     },
     no_exercises_found: "No se encontraron ejercicios. Intenta cambiar tu selección de equipos o músculos.",
+    addExercise: "Añadir ejercicio",
+    exerciseAdded: "{name} añadido al entrenamiento",
+    exercises: "ejercicios",
     equipment: {
       bodyweight: {
         label: "Peso corporal",
@@ -902,6 +910,7 @@ export default {
     manage_subscription: "Gestionar suscripción",
     become_premium: "Torne-se Premium",
     in_progress: "En progreso",
+    close: "Cerrar",
     premium: "Premium",
     free: "Gratis",
     new: "Nuevo",
@@ -913,6 +922,10 @@ export default {
     friday: "Viernes",
     saturday: "Sábado",
     sunday: "Domingo",
+    added_to_favorites: "Agregado a favoritos",
+    add_to_favorites: "Agregar a favoritos",
+    remove_from_favorites: "Eliminar de favoritos",
+    favorites: "Favoritos",
   },
   tools: {
     try_now: "Probar ahora",

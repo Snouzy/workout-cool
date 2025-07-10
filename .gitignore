@@ -52,3 +52,4 @@ scripts/private/
 scripts/personal/
 product-development/
 .claude/
+.cache/

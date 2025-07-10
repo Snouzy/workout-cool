@@ -2,7 +2,7 @@
 
 import React from "react";
 
-import { useScrollToTop } from "@/hooks/useScrollToTop";
+import { useScrollToTop } from "@/shared/hooks/useScrollToTop";
 
 interface ScrollToTopButtonProps {
   text: string;

@@ -5,7 +5,7 @@ import { CSS } from "@dnd-kit/utilities";
 import { useSortable } from "@dnd-kit/sortable";
 
 import { useCurrentLocale, useI18n } from "locales/client";
-import useBoolean from "@/hooks/useBoolean";
+import useBoolean from "@/shared/hooks/useBoolean";
 import { Button } from "@/components/ui/button";
 
 import { ExerciseVideoModal } from "./exercise-video-modal";

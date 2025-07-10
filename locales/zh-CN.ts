@@ -498,6 +498,10 @@ export default {
     title: "新功能",
     release_notes: "更新日志",
     notes: {
+      note_2025_07_09: {
+        title: "🎯 运动选择、收藏和新工具",
+        content: "<li>新的<strong>运动选择</strong>功能在创建训练时（第3步）</li><li><strong>收藏运动</strong>系统，标记您喜欢的动作</li><li>新的<em>健身工具</em>：BMI计算器和心率区间</li><li>改进的程序卡片</li><li>新的贡献者加入项目！🚀</li>",
+      },
       note_2025_07_02: {
         title: "🛠️ 自托管、俄语和新工具",
         content: "改进了<strong>自托管</strong>功能，添加了<strong>俄语</strong>支持，并引入了新的<em>健身工具</em>，包括卡路里计算器。🚀",
@@ -625,6 +629,9 @@ export default {
       loading_exercises: "加载练习时出错",
     },
     no_exercises_found: "未找到练习。请尝试更改您的设备或肌肉选择。",
+    addExercise: "添加练习",
+    exerciseAdded: "{name} 已添加到锻炼",
+    exercises: "练习",
     equipment: {
       bodyweight: {
         label: "自重",
@@ -898,6 +905,7 @@ export default {
     become_premium: "成为高级",
     coming_soon: "即将推出",
     in_progress: "进行中",
+    close: "关闭",
     premium: "高级",
     free: "免费",
     new: "新",
@@ -908,6 +916,10 @@ export default {
     friday: "周五",
     saturday: "周六",
     sunday: "周日",
+    added_to_favorites: "已添加到收藏夹",
+    add_to_favorites: "添加到收藏夹",
+    remove_from_favorites: "从收藏夹中删除",
+    favorites: "收藏夹",
   },
   tools: {
     try_now: "立即试用",

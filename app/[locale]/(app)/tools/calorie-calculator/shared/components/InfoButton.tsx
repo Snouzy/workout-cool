@@ -3,7 +3,7 @@
 import React from "react";
 import { InfoIcon } from "lucide-react";
 
-import { useIsMobile } from "@/hooks/useIsMobile";
+import { useIsMobile } from "@/shared/hooks/useIsMobile";
 
 interface InfoButtonProps {
   onClick: () => void;

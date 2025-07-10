@@ -1824,5 +1824,7 @@ export default {
       november: "Nov",
       december: "Dez",
     },
+    "workout#one": "treino",
+    "workout#other": "treinos",
   },
 } as const;

@@ -1760,5 +1760,7 @@ export default {
       november: "十一月",
       december: "十二月",
     },
+    "workout#one": "次训练",
+    "workout#other": "次训练",
   },
 } as const;

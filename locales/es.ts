@@ -1824,5 +1824,7 @@ export default {
       november: "Nov", // noviembre
       december: "Dic", // diciembre
     },
+    "workout#one": "entrenamiento",
+    "workout#other": "entrenamientos",
   },
 } as const;

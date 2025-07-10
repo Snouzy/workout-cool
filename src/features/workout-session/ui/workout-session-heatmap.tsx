@@ -130,17 +130,16 @@ export const WorkoutSessionHeatmap: React.FC<Props> = ({
         .endOf("week")
         .subtract((columns - i - 1) * 7 + (6 - j), "day");
       const dateStr = formatDate(d);
-      const tooltip =
-        contribution.value > 0 ? (
-          <div className="text-xs text-slate-50">
-            {dateStr} : <br />
-            {contribution.value} workout{contribution.value > 1 ? "s" : ""}
-          </div>
-        ) : (
-          <div className="text-xs text-slate-50">
-            {dateStr} : <br /> No workout
-          </div>
-        );
+
+      // Create tooltip content based on workout count
+      const createTooltip = (workoutCount: number, date: string) => (
+        <div className="text-xs text-slate-50">
+          {date} : <br />
+          {workoutCount} {t("heatmap.workout", { count: workoutCount })}
+        </div>
+      );
+
+      const tooltip = createTooltip(contribution.value, dateStr);
       innerDom.push(
         <rect
           fill={color}

@@ -1818,13 +1818,13 @@ export default {
   },
   heatmap: {
     week_days_short: {
-      sunday: "L",
-      monday: "M",
-      tuesday: "M",
-      wednesday: "J",
-      thursday: "V",
-      friday: "S",
-      saturday: "D",
+      sunday: "D", // dimanche
+      monday: "L", // lundi
+      tuesday: "M", // mardi
+      wednesday: "M", // mercredi
+      thursday: "J", // jeudi
+      friday: "V", // vendredi
+      saturday: "S", // samedi
     },
     month_names_short: {
       january: "Jan",

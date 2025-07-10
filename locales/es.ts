@@ -1802,27 +1802,27 @@ export default {
   },
   heatmap: {
     week_days_short: {
-      sunday: "S",
-      monday: "M",
-      tuesday: "T",
-      wednesday: "W",
-      thursday: "T",
-      friday: "F",
-      saturday: "S",
+      sunday: "D",     // domingo
+      monday: "L",     // lunes
+      tuesday: "M",    // martes
+      wednesday: "M",  // miércoles
+      thursday: "J",   // jueves
+      friday: "V",     // viernes
+      saturday: "S",   // sábado
     },
     month_names_short: {
-      january: "Jan",
-      february: "Feb",
-      march: "Mar",
-      april: "Apr",
-      may: "May",
-      june: "Jun",
-      july: "Jul",
-      august: "Aug",
-      september: "Sep",
-      october: "Oct",
-      november: "Nov",
-      december: "Dec",
+      january: "Ene", // enero
+      february: "Feb", // febrero
+      march: "Mar", // marzo
+      april: "Abr", // abril
+      may: "May", // mayo (same)
+      june: "Jun", // junio
+      july: "Jul", // julio
+      august: "Ago", // agosto
+      september: "Sep", // septiembre
+      october: "Oct", // octubre
+      november: "Nov", // noviembre
+      december: "Dic", // diciembre
     },
   },
 } as const;

@@ -1840,5 +1840,8 @@ export default {
       november: "Nov",
       december: "Déc",
     },
+    no_workout: "No workout",
+    one_workout_unit: "workout",
+    multiple_workouts_unit: "workouts",
   },
 } as const;

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import { getExercisesSchema } from "@/features/workout-builder/schema/get-exercises.schema";
-import { getExercisesAction } from "@/features/workout-builder/model/get-exercises.action";
+import { getExercisesAction } from "@/features/workout-builder/actions/get-exercises.action";
 
 export async function GET(req: NextRequest) {
   try {

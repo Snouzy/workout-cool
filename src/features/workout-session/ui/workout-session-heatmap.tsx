@@ -1,13 +1,12 @@
 import React, { useRef, useEffect, useState } from "react";
 import dayjs from "dayjs";
 
-import { useI18n } from "locales/client";
+import { useI18n, useCurrentLocale } from "locales/client";
 
 interface Props {
   panelColors?: string[];
   values: { [date: string]: number };
   until: string;
-  dateFormat?: string;
 }
 
 const DEFAULT_PANEL_COLORS = [
@@ -17,7 +16,6 @@ const DEFAULT_PANEL_COLORS = [
   "var(--color-success-content)", // 3: high activity
   "var(--color-success-content)", // 4: max activity
 ];
-const DEFAULT_DATE_FORMAT = "YYYY-MM-DD";
 
 const PANEL_SIZE = 18;
 const PANEL_MARGIN = 2;
@@ -30,9 +28,9 @@ export const WorkoutSessionHeatmap: React.FC<Props> = ({
   panelColors = DEFAULT_PANEL_COLORS,
   values,
   until,
-  dateFormat = DEFAULT_DATE_FORMAT,
 }) => {
   const t = useI18n();
+  const currentLocale = useCurrentLocale();
   const containerRef = useRef<HTMLDivElement>(null);
   const [columns, setColumns] = useState(MAX_COLUMNS);
   const [hovered, setHovered] = useState<null | {
@@ -42,6 +40,18 @@ export const WorkoutSessionHeatmap: React.FC<Props> = ({
     mouseX: number;
     mouseY: number;
   }>(null);
+
+  // Create a locale-specific date formatter for tooltips
+  const formatDate = (date: dayjs.Dayjs) => {
+    return new Intl.DateTimeFormat(currentLocale, {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    }).format(date.toDate());
+  };
+
+  // Use ISO format for internal date calculations and storage
+  const ISO_DATE_FORMAT = "YYYY-MM-DD";
 
   // Use localized translations for week and month names
   const weekNames = [
@@ -84,7 +94,7 @@ export const WorkoutSessionHeatmap: React.FC<Props> = ({
 
   //   matrix of contributions
   function makeCalendarData(history: { [k: string]: number }, lastDay: string, columns: number) {
-    const d = dayjs(lastDay, dateFormat);
+    const d = dayjs(lastDay, ISO_DATE_FORMAT);
     const lastWeekend = d.endOf("week");
     const endDate = d.endOf("day");
     const result: ({ value: number; month: number } | null)[][] = [];
@@ -94,7 +104,7 @@ export const WorkoutSessionHeatmap: React.FC<Props> = ({
         const date = lastWeekend.subtract((columns - i - 1) * 7 + (6 - j), "day");
         if (date <= endDate) {
           result[i][j] = {
-            value: history[date.format(dateFormat)] || 0,
+            value: history[date.format(ISO_DATE_FORMAT)] || 0,
             month: date.month(),
           };
         } else {
@@ -116,11 +126,10 @@ export const WorkoutSessionHeatmap: React.FC<Props> = ({
       const y = MONTH_LABEL_HEIGHT + (PANEL_SIZE + PANEL_MARGIN) * j;
       const numOfColors = panelColors.length;
       const color = contribution.value >= numOfColors ? panelColors[numOfColors - 1] : panelColors[contribution.value];
-      // TODO i18n
-      const d = dayjs(until, dateFormat)
+      const d = dayjs(until, ISO_DATE_FORMAT)
         .endOf("week")
         .subtract((columns - i - 1) * 7 + (6 - j), "day");
-      const dateStr = d.format(dateFormat);
+      const dateStr = formatDate(d);
       const tooltip =
         contribution.value > 0 ? (
           <div className="text-xs text-slate-50">

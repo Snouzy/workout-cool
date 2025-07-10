@@ -1503,6 +1503,7 @@ export default {
       forearms: "Avant-bras",
       traps: "Trapèzes",
       obliques: "Obliques",
+      lats: "Grands dorsaux",
     },
     exercise: {
       watch_video: "Voir la vidéo",

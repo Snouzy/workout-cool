@@ -1,17 +1,15 @@
 import React, { useRef, useEffect, useState } from "react";
 import dayjs from "dayjs";
 
+import { useI18n } from "locales/client";
+
 interface Props {
-  weekNames?: string[];
-  monthNames?: string[];
   panelColors?: string[];
   values: { [date: string]: number };
   until: string;
   dateFormat?: string;
 }
 
-const DEFAULT_WEEK_NAMES = ["L", "M", "M", "J", "V", "S", "D"]; // TODO i18n
-const DEFAULT_MONTH_NAMES = ["Jan", "Fév", "Mar", "Avr", "Mai", "Juin", "Juil", "Août", "Sep", "Oct", "Nov", "Déc"]; // TODO i18n
 const DEFAULT_PANEL_COLORS = [
   "var(--color-base-300)", // 0: empty
   "var(--color-success)", // 1: low activity
@@ -29,13 +27,12 @@ const MIN_COLUMNS = 10;
 const MAX_COLUMNS = 53;
 
 export const WorkoutSessionHeatmap: React.FC<Props> = ({
-  weekNames = DEFAULT_WEEK_NAMES,
-  monthNames = DEFAULT_MONTH_NAMES,
   panelColors = DEFAULT_PANEL_COLORS,
   values,
   until,
   dateFormat = DEFAULT_DATE_FORMAT,
 }) => {
+  const t = useI18n();
   const containerRef = useRef<HTMLDivElement>(null);
   const [columns, setColumns] = useState(MAX_COLUMNS);
   const [hovered, setHovered] = useState<null | {
@@ -45,6 +42,31 @@ export const WorkoutSessionHeatmap: React.FC<Props> = ({
     mouseX: number;
     mouseY: number;
   }>(null);
+
+  // Use localized translations for week and month names
+  const weekNames = [
+    t("heatmap.week_days_short.sunday"),
+    t("heatmap.week_days_short.monday"),
+    t("heatmap.week_days_short.tuesday"),
+    t("heatmap.week_days_short.wednesday"),
+    t("heatmap.week_days_short.thursday"),
+    t("heatmap.week_days_short.friday"),
+    t("heatmap.week_days_short.saturday"),
+  ];
+  const monthNames = [
+    t("heatmap.month_names_short.january"),
+    t("heatmap.month_names_short.february"),
+    t("heatmap.month_names_short.march"),
+    t("heatmap.month_names_short.april"),
+    t("heatmap.month_names_short.may"),
+    t("heatmap.month_names_short.june"),
+    t("heatmap.month_names_short.july"),
+    t("heatmap.month_names_short.august"),
+    t("heatmap.month_names_short.september"),
+    t("heatmap.month_names_short.october"),
+    t("heatmap.month_names_short.november"),
+    t("heatmap.month_names_short.december"),
+  ];
 
   //   responsive: adapt the number of columns to the width
   useEffect(() => {

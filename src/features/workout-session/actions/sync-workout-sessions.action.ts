@@ -34,6 +34,8 @@ const syncWorkoutSessionSchema = z.object({
     exercises: z.array(workoutSessionExerciseSchema),
     status: z.enum(workoutSessionStatuses),
     muscles: z.array(z.nativeEnum(ExerciseAttributeValueEnum)),
+    rating: z.number().min(1).max(5).nullable().optional(),
+    ratingComment: z.string().nullable().optional(),
   }),
 });
 
@@ -73,6 +75,8 @@ export const syncWorkoutSessionAction = actionClient.schema(syncWorkoutSessionSc
       create: {
         ...sessionData,
         muscles: session.muscles,
+        rating: session.rating,
+        ratingComment: session.ratingComment,
         exercises: {
           create: session.exercises.map((exercise) => ({
             order: exercise.order,
@@ -93,6 +97,8 @@ export const syncWorkoutSessionAction = actionClient.schema(syncWorkoutSessionSc
       },
       update: {
         muscles: session.muscles,
+        rating: session.rating,
+        ratingComment: session.ratingComment,
         exercises: {
           deleteMany: {},
           create: session.exercises.map((exercise) => ({
@@ -110,6 +116,7 @@ export const syncWorkoutSessionAction = actionClient.schema(syncWorkoutSessionSc
     });
 
     console.log("✅ Workout session synced successfully:", result.id);
+
     return { data: result };
   } catch (error) {
     console.error("❌ Error syncing workout session:", error);

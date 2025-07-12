@@ -5,6 +5,8 @@ import Link from "next/link";
 import { TrendingUpIcon, AwardIcon, TargetIcon, BrainIcon, GlobeIcon, ChartBarIcon } from "lucide-react";
 
 import { useI18n } from "locales/client";
+import { env } from "@/env";
+import { HorizontalBottomBanner, HorizontalTopBanner } from "@/components/ads";
 
 interface CalculatorFormula {
   id: string;
@@ -126,6 +128,9 @@ export function CalorieCalculatorHub() {
   return (
     <div className="space-y-8">
       {/* Introduction */}
+      {env.NEXT_PUBLIC_TOP_CALCULATOR_HUB_BANNER_AD_SLOT && (
+        <HorizontalTopBanner adSlot={env.NEXT_PUBLIC_TOP_CALCULATOR_HUB_BANNER_AD_SLOT} />
+      )}
       <div className="text-center max-w-3xl mx-auto">
         <h1 className="text-3xl sm:text-4xl font-bold mb-4 text-base-content dark:text-base-content/90">
           {t("tools.calorie-calculator-hub.title")}
@@ -197,6 +202,10 @@ export function CalorieCalculatorHub() {
           </Link>
         ))}
       </div>
+
+      {env.NEXT_PUBLIC_BOTTOM_CALCULATOR_HUB_BANNER_AD_SLOT && (
+        <HorizontalBottomBanner adSlot={env.NEXT_PUBLIC_BOTTOM_CALCULATOR_HUB_BANNER_AD_SLOT} />
+      )}
 
       {/* Info Section */}
       <div className="mt-12 bg-gradient-to-br from-primary/5 to-primary/10 dark:from-primary/10 dark:to-primary/5 rounded-2xl p-6 sm:p-8 border border-primary/20">

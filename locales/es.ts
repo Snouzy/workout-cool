@@ -1800,4 +1800,31 @@ export default {
       },
     },
   },
+  heatmap: {
+    week_days_short: {
+      sunday: "D", // domingo
+      monday: "L", // lunes
+      tuesday: "M", // martes
+      wednesday: "M", // miércoles
+      thursday: "J", // jueves
+      friday: "V", // viernes
+      saturday: "S", // sábado
+    },
+    month_names_short: {
+      january: "Ene", // enero
+      february: "Feb", // febrero
+      march: "Mar", // marzo
+      april: "Abr", // abril
+      may: "May", // mayo (same)
+      june: "Jun", // junio
+      july: "Jul", // julio
+      august: "Ago", // agosto
+      september: "Sep", // septiembre
+      october: "Oct", // octubre
+      november: "Nov", // noviembre
+      december: "Dic", // diciembre
+    },
+    "workout#one": "entrenamiento",
+    "workout#other": "entrenamientos",
+  },
 } as const;

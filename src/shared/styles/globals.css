@@ -8,6 +8,8 @@
 
 @plugin "daisyui";
 
+/* Google AdSense Styles - Prevent "No slot size for availableWidth=0" error */
+
 :root {
   --font-sans: "Plus Jakarta Sans", sans-serif;
   --text-xs: 0.75rem;

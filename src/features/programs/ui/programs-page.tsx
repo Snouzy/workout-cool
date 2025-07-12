@@ -3,6 +3,8 @@ import { Crown, TrendingUp } from "lucide-react";
 
 import { Locale } from "locales/types";
 import { getI18n } from "locales/server";
+import { env } from "@/env";
+import { HorizontalBottomBanner, HorizontalTopBanner } from "@/components/ads";
 
 import { getPublicPrograms } from "../actions/get-public-programs.action";
 import { ProgramCard } from "./program-card";
@@ -41,6 +43,7 @@ export async function ProgramsPage({ locale }: ProgramsPageProps) {
   return (
     <main className="flex flex-col bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
       {/* Hero Section - Style Apple moderne */}
+      {env.NEXT_PUBLIC_TOP_PROGRAMS_BANNER_AD_SLOT && <HorizontalTopBanner adSlot={env.NEXT_PUBLIC_TOP_PROGRAMS_BANNER_AD_SLOT} />}
       <header className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-[#4F8EF7] via-[#4F8EF7] to-[#25CB78]" />
         <div className="absolute inset-0 opacity-30">
@@ -120,6 +123,10 @@ export async function ProgramsPage({ locale }: ProgramsPageProps) {
                     width={48}
                   />
                 </div>
+
+                {env.NEXT_PUBLIC_BOTTOM_PROGRAMS_BANNER_AD_SLOT && (
+                  <HorizontalBottomBanner adSlot={env.NEXT_PUBLIC_BOTTOM_PROGRAMS_BANNER_AD_SLOT} />
+                )}
 
                 <div className="flex items-center justify-center gap-3 mb-4">
                   <TrendingUp className="text-[#4F8EF7] w-6 h-6" />

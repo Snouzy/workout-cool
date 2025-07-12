@@ -1817,4 +1817,31 @@ export default {
     remove_from_favorites: "Retirer des favoris",
     favorites: "Favoris",
   },
+  heatmap: {
+    week_days_short: {
+      sunday: "D", // dimanche
+      monday: "L", // lundi
+      tuesday: "M", // mardi
+      wednesday: "M", // mercredi
+      thursday: "J", // jeudi
+      friday: "V", // vendredi
+      saturday: "S", // samedi
+    },
+    month_names_short: {
+      january: "Jan",
+      february: "Fév",
+      march: "Mar",
+      april: "Avr",
+      may: "Mai",
+      june: "Juin",
+      july: "Juil",
+      august: "Août",
+      september: "Sep",
+      october: "Oct",
+      november: "Nov",
+      december: "Déc",
+    },
+    "workout#one": "séance",
+    "workout#other": "séances",
+  },
 } as const;

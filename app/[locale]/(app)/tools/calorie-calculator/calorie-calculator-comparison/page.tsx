@@ -5,7 +5,9 @@ import { ChevronLeftIcon } from "lucide-react";
 
 import { getI18n } from "locales/server";
 import { getServerUrl } from "@/shared/lib/server-url";
+import { env } from "@/env";
 import { generateSEOMetadata, SEOScripts } from "@/components/seo/SEOHead";
+import { HorizontalTopBanner } from "@/components/ads";
 
 import { CalorieCalculatorComparison } from "./CalorieCalculatorComparison";
 
@@ -74,6 +76,9 @@ export default async function CalorieCalculatorComparisonPage({ params }: { para
       />
       <div className="light:bg-white dark:bg-base-200/20">
         <div className="container mx-auto px-2 sm:px-4 py-8 sm:py-12 max-w-6xl">
+          {env.NEXT_PUBLIC_TOP_CALORIE_CALCULATOR_COMPARISON_AD_SLOT && (
+            <HorizontalTopBanner adSlot={env.NEXT_PUBLIC_TOP_CALORIE_CALCULATOR_COMPARISON_AD_SLOT} />
+          )}
           {/* Back to hub */}
           <Link
             className="inline-flex items-center gap-2 text-sm text-base-content/60 hover:text-primary transition-colors mb-6"

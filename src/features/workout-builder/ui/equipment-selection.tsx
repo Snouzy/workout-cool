@@ -1,5 +1,6 @@
+"use client";
 import Image from "next/image";
-import { Check, Zap } from "lucide-react";
+import { Check } from "lucide-react";
 import { ExerciseAttributeValueEnum } from "@prisma/client";
 
 import { useI18n } from "locales/client";
@@ -113,71 +114,6 @@ function EquipmentCard({ equipment, isSelected, onToggle }: EquipmentCardProps) 
         </div>
       </CardContent>
     </Card>
-  );
-}
-
-function _StatsHeader({ selectedCount }: { selectedCount: number }) {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const t = useI18n();
-
-  return (
-    <div className="bg-gradient-to-r from-slate-900 to-slate-800 dark:from-slate-950 dark:to-slate-900 rounded-xl p-6 mb-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-2xl font-bold text-white mb-2 tracking-tight">{t("workout_builder.selection.choose_your_arsenal")}</h2>
-          <p className="text-slate-300 text-sm">{t("workout_builder.selection.select_equipment_description")}</p>
-        </div>
-
-        <div className="flex items-center gap-3">
-          <div className="text-center">
-            <div className="text-2xl font-bold text-emerald-400">{selectedCount}</div>
-            <div className="text-xs text-slate-400 uppercase tracking-wide">{t("workout_builder.stats.selected")}</div>
-          </div>
-          <div className="w-px h-12 bg-slate-700" />
-          <div className="text-center">
-            <div className="text-2xl font-bold text-slate-400">{EQUIPMENT_CONFIG.length}</div>
-            <div className="text-xs text-slate-400 uppercase tracking-wide">{t("workout_builder.stats.total")}</div>
-          </div>
-        </div>
-      </div>
-
-      <div className="mt-4 bg-slate-800 rounded-full h-2 overflow-hidden">
-        <div
-          className="h-full bg-gradient-to-r from-emerald-400 to-emerald-500 transition-all duration-500 ease-out"
-          style={{ width: `${(selectedCount / EQUIPMENT_CONFIG.length) * 100}%` }}
-        />
-      </div>
-    </div>
-  );
-}
-
-function _ActionBar({ selectedCount, onClearEquipment }: { selectedCount: number; onClearEquipment: () => void }) {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const t = useI18n();
-
-  if (selectedCount === 0) return null;
-
-  return (
-    <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50 animate-slide-up">
-      <div className="bg-slate-900 dark:bg-slate-950 text-white px-6 py-3 rounded-full shadow-2xl border border-slate-700">
-        <div className="flex items-center gap-4">
-          <div className="flex items-center gap-2">
-            <Zap className="h-4 w-4 text-emerald-400" />
-            <span className="font-medium">
-              {selectedCount}{" "}
-              {selectedCount === 1 ? t("workout_builder.stats.equipment_ready") : t("workout_builder.stats.equipment_ready_plural")}
-            </span>
-          </div>
-
-          <button
-            className="text-slate-400 hover:text-red-400 transition-colors duration-200 text-sm font-medium"
-            onClick={onClearEquipment}
-          >
-            {t("workout_builder.selection.clear_all")}
-          </button>
-        </div>
-      </div>
-    </div>
   );
 }
 

@@ -1815,8 +1815,7 @@ export default {
       november: "Ноя",
       december: "Дек",
     },
-    no_workout: "No workout",
-    one_workout_unit: "workout",
-    multiple_workouts_unit: "workouts",
+    "workout#one": "тренировка",
+    "workout#other": "тренировок",
   },
 } as const;

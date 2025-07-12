@@ -1817,5 +1817,7 @@ export default {
     no_workout: "No workout",
     one_workout_unit: "workout",
     multiple_workouts_unit: "workouts",
+    "workout#one": "workout",
+    "workout#other": "workouts",
   },
 } as const;

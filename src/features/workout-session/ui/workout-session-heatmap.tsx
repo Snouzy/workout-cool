@@ -24,11 +24,7 @@ const MONTH_LABEL_HEIGHT = 18;
 const MIN_COLUMNS = 10;
 const MAX_COLUMNS = 53;
 
-export const WorkoutSessionHeatmap: React.FC<Props> = ({
-  panelColors = DEFAULT_PANEL_COLORS,
-  values,
-  until,
-}) => {
+export const WorkoutSessionHeatmap: React.FC<Props> = ({ panelColors = DEFAULT_PANEL_COLORS, values, until }) => {
   const t = useI18n();
   const currentLocale = useCurrentLocale();
   const containerRef = useRef<HTMLDivElement>(null);
@@ -44,9 +40,9 @@ export const WorkoutSessionHeatmap: React.FC<Props> = ({
   // Create a locale-specific date formatter for tooltips
   const formatDate = (date: dayjs.Dayjs) => {
     return new Intl.DateTimeFormat(currentLocale, {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric'
+      year: "numeric",
+      month: "short",
+      day: "numeric",
     }).format(date.toDate());
   };
 
@@ -132,16 +128,10 @@ export const WorkoutSessionHeatmap: React.FC<Props> = ({
       const dateStr = formatDate(d);
 
       // Create tooltip content based on workout count
-      const getWorkoutText = (count: number): string => {
-        if (count === 0) return t("heatmap.no_workout");
-        if (count === 1) return `${count} ${t("heatmap.one_workout_unit")}`;
-        return `${count} ${t("heatmap.multiple_workouts_unit")}`;
-      };
-
       const createTooltip = (workoutCount: number, date: string) => (
         <div className="text-xs text-slate-50">
           {date} : <br />
-          {getWorkoutText(workoutCount)}
+          {workoutCount} {t("heatmap.workout", { count: workoutCount })}
         </div>
       );
 

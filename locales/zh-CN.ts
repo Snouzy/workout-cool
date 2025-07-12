@@ -1760,8 +1760,7 @@ export default {
       november: "十一月",
       december: "十二月",
     },
-    no_workout: "No workout",
-    one_workout_unit: "workout",
-    multiple_workouts_unit: "workouts",
+    "workout#one": "次训练",
+    "workout#other": "次训练",
   },
 } as const;

@@ -18,8 +18,13 @@ export function AdWrapper({ children, fallback = null, forceShow = false }: AdWr
     return null;
   }
 
+  // Show ads in development to preview layout
+  if (process.env.NODE_ENV === "development") {
+    return <>{children}</>;
+  }
+
   // Force show ads in development if forceShow is true
-  if (forceShow && process.env.NODE_ENV === "development") {
+  if (forceShow) {
     return <>{children}</>;
   }
 

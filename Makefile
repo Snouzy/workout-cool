@@ -11,6 +11,11 @@ help:
 	@echo "  db-seed     - Seed database"
 	@echo ""
 
+
+# Install Dependencies
+deps:
+	pnpm install --frozen-lockfile
+
 # Start Postgres with Docker Compose
 up:
 	docker compose up -d postgres
@@ -32,5 +37,5 @@ db-seed:
 	pnpm run import:exercises-full ./data/sample-exercises.csv
 
 # Start the dev server (with DB, migrate, seed)
-dev: up db-migrate db-generate db-seed
+dev: up deps db-migrate db-generate db-seed
 	pnpm dev

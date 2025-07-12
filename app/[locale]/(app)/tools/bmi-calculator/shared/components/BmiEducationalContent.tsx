@@ -1,5 +1,8 @@
 "use client";
+
 import { useI18n } from "locales/client";
+import { env } from "@/env";
+import { InArticle } from "@/components/ads";
 
 import { FormulaCard, createFraction, createSuperscript } from "./MathEquation";
 
@@ -20,7 +23,9 @@ export function BmiEducationalContent() {
       {/* BMI Tables */}
       <section className="space-y-8">
         <div className="space-y-6">
+          {env.NEXT_PUBLIC_IN_ARTICLE_BMI_1_AD_SLOT && <InArticle adSlot={env.NEXT_PUBLIC_IN_ARTICLE_BMI_1_AD_SLOT} />}
           <h2 className="text-3xl font-bold text-base-content">{t("bmi-calculator.educational.adult_table_title")}</h2>
+
           <p className="text-base-content/80">{t("bmi-calculator.educational.adult_table_description")}</p>
 
           {/* WHO Adult BMI Table */}
@@ -291,6 +296,8 @@ export function BmiEducationalContent() {
           />
         </div>
       </section>
+
+      {env.NEXT_PUBLIC_IN_ARTICLE_BMI_2_AD_SLOT && <InArticle adSlot={env.NEXT_PUBLIC_IN_ARTICLE_BMI_2_AD_SLOT} />}
 
       {/* BMI Prime Section */}
       <section className="space-y-6">

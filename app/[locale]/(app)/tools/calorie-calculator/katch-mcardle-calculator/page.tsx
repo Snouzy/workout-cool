@@ -7,8 +7,9 @@ import { getI18n } from "locales/server";
 import { CalorieCalculatorClient } from "app/[locale]/(app)/tools/calorie-calculator/shared/CalorieCalculatorClient";
 import { calculatorConfigs } from "app/[locale]/(app)/tools/calorie-calculator/shared/calculator-configs";
 import { getServerUrl } from "@/shared/lib/server-url";
+import { env } from "@/env";
 import { generateSEOMetadata, SEOScripts } from "@/components/seo/SEOHead";
-
+import { HorizontalTopBanner } from "@/components/ads";
 import "../styles.css";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
@@ -73,6 +74,9 @@ export default async function KatchMcArdleCalculatorPage({ params }: { params: P
         title={t("tools.katch-mcardle.meta.title")}
       />
       <div className="light:bg-white dark:bg-base-200/20">
+        {env.NEXT_PUBLIC_TOP_KATCH_MCARDLE_CALCULATOR_AD_SLOT && (
+          <HorizontalTopBanner adSlot={env.NEXT_PUBLIC_TOP_KATCH_MCARDLE_CALCULATOR_AD_SLOT} />
+        )}
         <div className="container mx-auto px-2 sm:px-4 py-4 sm:py-8 max-w-4xl">
           {/* Back to hub */}
           <Link

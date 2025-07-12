@@ -496,6 +496,11 @@ export default {
     title: "Novedades",
     release_notes: "Notas",
     notes: {
+      note_2025_07_09: {
+        title: "🎯 Selección de Ejercicios, Favoritos y Nuevas Herramientas",
+        content:
+          "<li>Nueva <strong>selección de ejercicios</strong> durante la creación de entrenamientos (paso 3)</li><li>Sistema de <strong>ejercicios favoritos</strong> para marcar tus movimientos preferidos</li><li>Nuevas <em>herramientas de fitness</em>: calculadora de IMC y zonas de frecuencia cardíaca</li><li>Tarjetas de programas mejoradas</li><li>¡Nuevos colaboradores se unen al proyecto! 🚀</li>",
+      },
       note_2025_07_02: {
         title: "🛠️ Auto-alojamiento, Ruso y Nuevas Herramientas",
         content:
@@ -917,6 +922,10 @@ export default {
     friday: "Viernes",
     saturday: "Sábado",
     sunday: "Domingo",
+    added_to_favorites: "Agregado a favoritos",
+    add_to_favorites: "Agregar a favoritos",
+    remove_from_favorites: "Eliminar de favoritos",
+    favorites: "Favoritos",
   },
   tools: {
     try_now: "Probar ahora",
@@ -1790,5 +1799,32 @@ export default {
         multidisciplinary: "Enfoque multidisciplinario con equipo médico",
       },
     },
+  },
+  heatmap: {
+    week_days_short: {
+      sunday: "D", // domingo
+      monday: "L", // lunes
+      tuesday: "M", // martes
+      wednesday: "M", // miércoles
+      thursday: "J", // jueves
+      friday: "V", // viernes
+      saturday: "S", // sábado
+    },
+    month_names_short: {
+      january: "Ene", // enero
+      february: "Feb", // febrero
+      march: "Mar", // marzo
+      april: "Abr", // abril
+      may: "May", // mayo (same)
+      june: "Jun", // junio
+      july: "Jul", // julio
+      august: "Ago", // agosto
+      september: "Sep", // septiembre
+      october: "Oct", // octubre
+      november: "Nov", // noviembre
+      december: "Dic", // diciembre
+    },
+    "workout#one": "entrenamiento",
+    "workout#other": "entrenamientos",
   },
 } as const;

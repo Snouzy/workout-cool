@@ -4,6 +4,8 @@ import Link from "next/link";
 import { getI18n } from "locales/server";
 import { ScrollToTopButton } from "app/[locale]/(app)/tools/heart-rate-zones/ui/components/ScrollToTopButton";
 import { FAQAccordion } from "app/[locale]/(app)/tools/heart-rate-zones/ui/components/FAQAccordion";
+import { env } from "@/env";
+import { InArticle } from "@/components/ads";
 
 export async function SEOOptimizedContentServer() {
   const t = await getI18n();
@@ -62,6 +64,7 @@ export async function SEOOptimizedContentServer() {
           <p className="text-gray-700 dark:text-gray-300 leading-relaxed mt-4">{t("tools.heart-rate-zones.guide.text2")}</p>
         </div>
       </section>
+      {env.NEXT_PUBLIC_IN_ARTICLE_HEART_ZONES_AD_SLOT_1 && <InArticle adSlot={env.NEXT_PUBLIC_IN_ARTICLE_HEART_ZONES_AD_SLOT_1} />}
 
       {/* Tableau de référence par âge */}
       <section className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-3xl p-8">
@@ -272,7 +275,7 @@ export async function SEOOptimizedContentServer() {
           </div>
         </div>
       </section>
-
+      {env.NEXT_PUBLIC_IN_ARTICLE_HEART_ZONES_AD_SLOT_2 && <InArticle adSlot={env.NEXT_PUBLIC_IN_ARTICLE_HEART_ZONES_AD_SLOT_2} />}
       {/* Conseils d'entraînement */}
       <section className="bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-3xl p-3 sm:p-8">
         <h2 className="text-3xl font-bold mb-8 text-gray-900 dark:text-white">{t("tools.heart-rate-zones.training_tips.title")}</h2>

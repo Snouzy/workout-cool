@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import { Calculator } from "lucide-react";
 
 import { useI18n } from "locales/client";
+import { env } from "@/env";
+import { HorizontalBottomBanner } from "@/components/ads";
 
 import { BodyFatInput } from "./components/BodyFatInput";
 import {
@@ -96,6 +98,10 @@ export function CalorieCalculatorClient({ config }: CalorieCalculatorClientProps
               <GoalSelector onChange={setGoal} value={goal} />
             </div>
 
+            {env.NEXT_PUBLIC_BOTTOM_CALORIE_CALCULATOR_AD_SLOT && (
+              <HorizontalBottomBanner adSlot={env.NEXT_PUBLIC_BOTTOM_CALORIE_CALCULATOR_AD_SLOT} />
+            )}
+
             <button
               className={`w-full py-4 px-6 rounded-2xl font-bold text-white transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] shadow-lg flex items-center justify-center gap-3 ${
                 isCalculating ? "opacity-75 cursor-not-allowed" : ""
@@ -107,6 +113,7 @@ export function CalorieCalculatorClient({ config }: CalorieCalculatorClientProps
               }}
             >
               <Calculator className="w-6 h-6" />
+
               <span className="text-lg">
                 {isCalculating ? t("tools.calorie-calculator.calculating") : t("tools.calorie-calculator.calculate")}
               </span>

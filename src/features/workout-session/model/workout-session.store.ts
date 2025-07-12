@@ -52,6 +52,7 @@ interface WorkoutSessionState {
   getTotalVolume: () => number;
   getTotalVolumeInUnit: (unit: WeightUnit) => number;
   loadSessionFromLocal: () => void;
+  addExerciseToSession: (exercise: ExerciseWithAttributes) => void;
 }
 
 export const useWorkoutSessionStore = create<WorkoutSessionState>((set, get) => ({
@@ -416,5 +417,48 @@ export const useWorkoutSessionStore = create<WorkoutSessionState>((set, get) => 
         });
       }
     }
+  },
+
+  addExerciseToSession: (exercise) => {
+    const { session } = get();
+
+    if (!session) {
+      return;
+    }
+
+    // Create new exercise with default sets
+    const newExercise: WorkoutSessionExercise = {
+      ...exercise,
+      order: session.exercises.length,
+      sets: [
+        {
+          id: `${exercise.id}-set-1`,
+          setIndex: 0,
+          types: ["REPS", "WEIGHT"],
+          valuesInt: [],
+          valuesSec: [],
+          units: [],
+          completed: false,
+        },
+      ],
+    };
+
+    // Check if exercise already exists to avoid duplicates
+    const exerciseExists = session.exercises.some((ex) => ex.id === exercise.id);
+    if (exerciseExists) {
+      console.log("🟡 [WORKOUT-SESSION] Exercise already exists in session, skipping add");
+      return;
+    }
+
+    const updatedExercises = [...session.exercises, newExercise];
+    const updatedSession = { ...session, exercises: updatedExercises };
+
+    // Update local storage
+    workoutSessionLocal.update(session.id, { exercises: updatedExercises });
+
+    // Update state
+    set({ session: updatedSession });
+
+    console.log("🟡 [WORKOUT-SESSION] Exercise added successfully to session");
   },
 }));

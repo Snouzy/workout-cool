@@ -1,17 +1,14 @@
 import React, { useRef, useEffect, useState } from "react";
 import dayjs from "dayjs";
 
+import { useI18n, useCurrentLocale } from "locales/client";
+
 interface Props {
-  weekNames?: string[];
-  monthNames?: string[];
   panelColors?: string[];
   values: { [date: string]: number };
   until: string;
-  dateFormat?: string;
 }
 
-const DEFAULT_WEEK_NAMES = ["L", "M", "M", "J", "V", "S", "D"]; // TODO i18n
-const DEFAULT_MONTH_NAMES = ["Jan", "Fév", "Mar", "Avr", "Mai", "Juin", "Juil", "Août", "Sep", "Oct", "Nov", "Déc"]; // TODO i18n
 const DEFAULT_PANEL_COLORS = [
   "var(--color-base-300)", // 0: empty
   "var(--color-success)", // 1: low activity
@@ -19,7 +16,6 @@ const DEFAULT_PANEL_COLORS = [
   "var(--color-success-content)", // 3: high activity
   "var(--color-success-content)", // 4: max activity
 ];
-const DEFAULT_DATE_FORMAT = "YYYY-MM-DD";
 
 const PANEL_SIZE = 18;
 const PANEL_MARGIN = 2;
@@ -28,14 +24,9 @@ const MONTH_LABEL_HEIGHT = 18;
 const MIN_COLUMNS = 10;
 const MAX_COLUMNS = 53;
 
-export const WorkoutSessionHeatmap: React.FC<Props> = ({
-  weekNames = DEFAULT_WEEK_NAMES,
-  monthNames = DEFAULT_MONTH_NAMES,
-  panelColors = DEFAULT_PANEL_COLORS,
-  values,
-  until,
-  dateFormat = DEFAULT_DATE_FORMAT,
-}) => {
+export const WorkoutSessionHeatmap: React.FC<Props> = ({ panelColors = DEFAULT_PANEL_COLORS, values, until }) => {
+  const t = useI18n();
+  const currentLocale = useCurrentLocale();
   const containerRef = useRef<HTMLDivElement>(null);
   const [columns, setColumns] = useState(MAX_COLUMNS);
   const [hovered, setHovered] = useState<null | {
@@ -45,6 +36,43 @@ export const WorkoutSessionHeatmap: React.FC<Props> = ({
     mouseX: number;
     mouseY: number;
   }>(null);
+
+  // Create a locale-specific date formatter for tooltips
+  const formatDate = (date: dayjs.Dayjs) => {
+    return new Intl.DateTimeFormat(currentLocale, {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    }).format(date.toDate());
+  };
+
+  // Use ISO format for internal date calculations and storage
+  const ISO_DATE_FORMAT = "YYYY-MM-DD";
+
+  // Use localized translations for week and month names
+  const weekNames = [
+    t("heatmap.week_days_short.sunday"),
+    t("heatmap.week_days_short.monday"),
+    t("heatmap.week_days_short.tuesday"),
+    t("heatmap.week_days_short.wednesday"),
+    t("heatmap.week_days_short.thursday"),
+    t("heatmap.week_days_short.friday"),
+    t("heatmap.week_days_short.saturday"),
+  ];
+  const monthNames = [
+    t("heatmap.month_names_short.january"),
+    t("heatmap.month_names_short.february"),
+    t("heatmap.month_names_short.march"),
+    t("heatmap.month_names_short.april"),
+    t("heatmap.month_names_short.may"),
+    t("heatmap.month_names_short.june"),
+    t("heatmap.month_names_short.july"),
+    t("heatmap.month_names_short.august"),
+    t("heatmap.month_names_short.september"),
+    t("heatmap.month_names_short.october"),
+    t("heatmap.month_names_short.november"),
+    t("heatmap.month_names_short.december"),
+  ];
 
   //   responsive: adapt the number of columns to the width
   useEffect(() => {
@@ -62,7 +90,7 @@ export const WorkoutSessionHeatmap: React.FC<Props> = ({
 
   //   matrix of contributions
   function makeCalendarData(history: { [k: string]: number }, lastDay: string, columns: number) {
-    const d = dayjs(lastDay, dateFormat);
+    const d = dayjs(lastDay, ISO_DATE_FORMAT);
     const lastWeekend = d.endOf("week");
     const endDate = d.endOf("day");
     const result: ({ value: number; month: number } | null)[][] = [];
@@ -72,7 +100,7 @@ export const WorkoutSessionHeatmap: React.FC<Props> = ({
         const date = lastWeekend.subtract((columns - i - 1) * 7 + (6 - j), "day");
         if (date <= endDate) {
           result[i][j] = {
-            value: history[date.format(dateFormat)] || 0,
+            value: history[date.format(ISO_DATE_FORMAT)] || 0,
             month: date.month(),
           };
         } else {
@@ -94,22 +122,20 @@ export const WorkoutSessionHeatmap: React.FC<Props> = ({
       const y = MONTH_LABEL_HEIGHT + (PANEL_SIZE + PANEL_MARGIN) * j;
       const numOfColors = panelColors.length;
       const color = contribution.value >= numOfColors ? panelColors[numOfColors - 1] : panelColors[contribution.value];
-      // TODO i18n
-      const d = dayjs(until, dateFormat)
+      const d = dayjs(until, ISO_DATE_FORMAT)
         .endOf("week")
         .subtract((columns - i - 1) * 7 + (6 - j), "day");
-      const dateStr = d.format(dateFormat);
-      const tooltip =
-        contribution.value > 0 ? (
-          <div className="text-xs text-slate-50">
-            {dateStr} : <br />
-            {contribution.value} workout{contribution.value > 1 ? "s" : ""}
-          </div>
-        ) : (
-          <div className="text-xs text-slate-50">
-            {dateStr} : <br /> No workout
-          </div>
-        );
+      const dateStr = formatDate(d);
+
+      // Create tooltip content based on workout count
+      const createTooltip = (workoutCount: number, date: string) => (
+        <div className="text-xs text-slate-50">
+          {date} : <br />
+          {workoutCount} {t("heatmap.workout", { count: workoutCount })}
+        </div>
+      );
+
+      const tooltip = createTooltip(contribution.value, dateStr);
       innerDom.push(
         <rect
           fill={color}

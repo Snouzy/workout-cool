@@ -1369,6 +1369,11 @@ export default {
     title: "Novidades",
     release_notes: "Notas de Lançamento",
     notes: {
+      note_2025_07_09: {
+        title: "🎯 Seleção de Exercícios, Favoritos e Novas Ferramentas",
+        content:
+          "<li>Nova <strong>seleção de exercícios</strong> durante a criação de treinos (passo 3)</li><li>Sistema de <strong>exercícios favoritos</strong> para marcar os seus movimentos preferidos</li><li>Novas <em>ferramentas de fitness</em>: calculadora de IMC e zonas de frequência cardíaca</li><li>Cartões de programas melhorados</li><li>Novos colaboradores juntam-se ao projeto! 🚀</li>",
+      },
       note_2025_07_02: {
         title: "🛠️ Auto-hospedagem, Russo e Novas Ferramentas",
         content:
@@ -1790,5 +1795,36 @@ export default {
     friday: "Sexta-feira",
     saturday: "Sábado",
     sunday: "Domingo",
+    added_to_favorites: "Adicionado aos favoritos",
+    add_to_favorites: "Adicionar aos favoritos",
+    remove_from_favorites: "Remover dos favoritos",
+    favorites: "Favoritos",
+  },
+  heatmap: {
+    week_days_short: {
+      sunday: "D",
+      monday: "S",
+      tuesday: "T",
+      wednesday: "Q",
+      thursday: "Q",
+      friday: "S",
+      saturday: "S",
+    },
+    month_names_short: {
+      january: "Jan",
+      february: "Fev",
+      march: "Mar",
+      april: "Abr",
+      may: "Mai",
+      june: "Jun",
+      july: "Jul",
+      august: "Ago",
+      september: "Set",
+      october: "Out",
+      november: "Nov",
+      december: "Dez",
+    },
+    "workout#one": "treino",
+    "workout#other": "treinos",
   },
 } as const;

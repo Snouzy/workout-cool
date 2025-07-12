@@ -7,6 +7,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useI18n } from "locales/client";
 import "./styles.css";
+import { env } from "@/env";
+import { InArticle } from "@/components/ads";
 
 const simpleHeartRateSchema = z.object({
   age: z.coerce.number().min(1).max(120),
@@ -229,7 +231,7 @@ export function HeartRateZonesCalculatorClient({ defaultAge = 30, defaultResults
               ))}
             </div>
           </div>
-
+          {env.NEXT_PUBLIC_IN_ARTICLE_HEART_ZONES_AD_SLOT_3 && <InArticle adSlot={env.NEXT_PUBLIC_IN_ARTICLE_HEART_ZONES_AD_SLOT_3} />}
           {/* Simple tips */}
           <div className="bg-blue-50 dark:bg-blue-900/20 rounded-3xl p-3 sm:p-8">
             <div className="text-center mb-6">

@@ -27,6 +27,12 @@ export const Header = () => {
     logout.mutate();
   };
 
+  const handleCloseDropdown = () => {
+    const element = document.activeElement as HTMLElement;
+    if (!element) return;
+    element.blur();
+  };
+
   return (
     <div className="navbar bg-base-100 dark:bg-black dark:text-gray-200 px-4 rounded-tl-lg rounded-tr-lg">
       {/* Logo and Title */}
@@ -70,19 +76,22 @@ export const Header = () => {
         <LanguageSelector />
 
         <div className="dropdown dropdown-end ml-1">
-          <div className="btn btn-ghost btn-circle avatar relative" role="button" tabIndex={0}>
-            <div className="w-8 rounded-full bg-primary text-primary-content !flex items-center justify-center text-sm font-medium">
-              {userAvatar || <User className="w-4 h-4" />}
-            </div>
-            {isPremium && (
-              <div className="absolute -top-1 -right-1 w-4 h-4 bg-amber-400 rounded-full !flex items-center justify-center">
-                <Crown className="w-2.5 h-2.5 text-amber-900" />
+          <div className="tooltip tooltip-bottom" data-tip={t("commons.profile")}>
+            <div className="btn btn-ghost btn-circle avatar relative" role="button" tabIndex={0}>
+              <div className="w-8 rounded-full bg-primary text-primary-content !flex items-center justify-center text-sm font-medium">
+                {userAvatar || <User className="w-4 h-4" />}
               </div>
-            )}
+              {isPremium && (
+                <div className="absolute -top-1 -right-1 w-4 h-4 bg-amber-400 rounded-full !flex items-center justify-center">
+                  <Crown className="w-2.5 h-2.5 text-amber-900" />
+                </div>
+              )}
+            </div>
           </div>
 
           <ul
             className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 dark:bg-black dark:text-gray-200 rounded-box w-52 border border-slate-200 dark:border-gray-800"
+            onClick={handleCloseDropdown}
             tabIndex={0}
           >
             <li>

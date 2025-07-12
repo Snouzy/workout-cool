@@ -1360,6 +1360,11 @@ export default {
     title: "What's New",
     release_notes: "Release Notes",
     notes: {
+      note_2025_07_09: {
+        title: "🎯 Exercise Selection, Favorites & New Tools",
+        content:
+          "<li>New <strong>exercise selection</strong> during workout creation (step 3)</li><li><strong>Favorite exercises</strong> system to mark your preferred movements</li><li>New <em>fitness tools</em>: BMI calculator and heart rate zones</li><li>Improved program cards</li><li>New contributors join the project! 🚀</li>",
+      },
       note_2025_07_02: {
         title: "🛠️ Self-Hosting, Russian & New Tools",
         content:
@@ -1780,5 +1785,39 @@ export default {
     friday: "Friday",
     saturday: "Saturday",
     sunday: "Sunday",
+    added_to_favorites: "Added to favorites",
+    add_to_favorites: "Add to favorites",
+    remove_from_favorites: "Remove from favorites",
+    favorites: "Favorites",
+  },
+  heatmap: {
+    week_days_short: {
+      sunday: "S",
+      monday: "M",
+      tuesday: "T",
+      wednesday: "W",
+      thursday: "T",
+      friday: "F",
+      saturday: "S",
+    },
+    month_names_short: {
+      january: "Jan",
+      february: "Feb",
+      march: "Mar",
+      april: "Apr",
+      may: "May",
+      june: "Jun",
+      july: "Jul",
+      august: "Aug",
+      september: "Sep",
+      october: "Oct",
+      november: "Nov",
+      december: "Dec",
+    },
+    no_workout: "No workout",
+    one_workout_unit: "workout",
+    multiple_workouts_unit: "workouts",
+    "workout#one": "workout",
+    "workout#other": "workouts",
   },
 } as const;

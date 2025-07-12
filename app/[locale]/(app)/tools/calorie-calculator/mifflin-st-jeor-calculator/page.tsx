@@ -7,7 +7,9 @@ import { getI18n } from "locales/server";
 import { CalorieCalculatorClient } from "app/[locale]/(app)/tools/calorie-calculator/shared/CalorieCalculatorClient";
 import { calculatorConfigs } from "app/[locale]/(app)/tools/calorie-calculator/shared/calculator-configs";
 import { getServerUrl } from "@/shared/lib/server-url";
+import { env } from "@/env";
 import { generateSEOMetadata, SEOScripts } from "@/components/seo/SEOHead";
+import { HorizontalTopBanner } from "@/components/ads";
 
 import "../styles.css";
 
@@ -71,6 +73,9 @@ export default async function MifflinStJeorCalculatorPage({ params }: { params: 
         title={t("tools.mifflin-st-jeor.meta.title")}
       />
       <div className="light:bg-white dark:bg-base-200/20">
+        {env.NEXT_PUBLIC_TOP_MIFFLIN_ST_JEOR_CALCULATOR_AD_SLOT && (
+          <HorizontalTopBanner adSlot={env.NEXT_PUBLIC_TOP_MIFFLIN_ST_JEOR_CALCULATOR_AD_SLOT} />
+        )}
         <div className="container mx-auto px-2 sm:px-4 py-4 sm:py-8 max-w-4xl">
           {/* Back to hub */}
           <Link

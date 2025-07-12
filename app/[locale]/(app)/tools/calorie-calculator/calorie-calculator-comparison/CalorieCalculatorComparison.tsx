@@ -18,6 +18,8 @@ import {
   CalorieCalculatorInputs,
   CalorieResults,
 } from "app/[locale]/(app)/tools/calorie-calculator/shared/calorie-formulas.utils";
+import { env } from "@/env";
+import { HorizontalBottomBanner } from "@/components/ads";
 
 interface FormulaResult {
   name: string;
@@ -145,6 +147,9 @@ export function CalorieCalculatorComparison() {
 
           <GoalSelector onChange={(goal) => updateInput("goal", goal)} value={inputs.goal} />
 
+          {env.NEXT_PUBLIC_BOTTOM_CALORIE_CALCULATOR_COMPARISON_AD_SLOT && (
+            <HorizontalBottomBanner adSlot={env.NEXT_PUBLIC_BOTTOM_CALORIE_CALCULATOR_COMPARISON_AD_SLOT} />
+          )}
           {/* Calculate Button */}
           <button
             aria-label={t("tools.calorie-calculator.calculate")}

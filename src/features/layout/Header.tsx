@@ -12,6 +12,7 @@ import { ReleaseNotesDialog } from "@/features/release-notes";
 import { useLogout } from "@/features/auth/model/useLogout";
 import { useSession } from "@/features/auth/lib/auth-client";
 import { Link } from "@/components/ui/link";
+import WorkoutStreakHeader from "@/features/layout/workout-streak-header";
 
 export const Header = () => {
   const session = useSession();
@@ -60,6 +61,7 @@ export const Header = () => {
 
       {/* User Menu */}
       <div className="navbar-end">
+        <WorkoutStreakHeader className="hidden sm:flex gap-2 mr-2" />
         <div className="tooltip tooltip-bottom" data-tip={t("commons.home")}>
           <Link
             aria-label={t("commons.home")}

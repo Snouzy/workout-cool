@@ -3,7 +3,9 @@ import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
 import dayjs from "dayjs";
 
+import { useCurrentLocale } from "locales/client";
 import { cn } from "@/shared/lib/utils";
+import { formatDate } from "@/shared/lib/date";
 import { useWorkoutSessions } from "@/features/workout-session/model/use-workout-sessions";
 
 // Configure dayjs with timezone support
@@ -56,7 +58,7 @@ export interface StreakData {
  */
 export default function WorkoutStreakHeader({ className, streakCount = DEFAULT_STREAK_COUNT }: WorkoutStreakHeaderProps) {
   const { data: sessions, isLoading: sessionsLoading, error: sessionsError } = useWorkoutSessions();
-
+  const locale = useCurrentLocale();
   // Get user's timezone for accurate date calculations (memoized for performance)
   const userTimezone = useMemo(() => {
     try {
@@ -113,8 +115,9 @@ export default function WorkoutStreakHeader({ className, streakCount = DEFAULT_S
           }
         });
 
+        const date = formatDate(targetDate.toDate(), locale);
         return {
-          date: targetDate.format("YYYY-MM-DD"),
+          date,
           hasWorkout: !!session,
           session: session || undefined,
         };

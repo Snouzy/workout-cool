@@ -11,14 +11,14 @@ export function ThemeToggle() {
   return (
     <div className="tooltip tooltip-bottom" data-tip={resolvedTheme === "light" ? "Dark mode" : "Light mode"}>
       <Button
-        className="hover:bg-slate-200 rounded-full p-2 pr-2"
+        className="hover:bg-slate-200 rounded-full p-1 pr-1 sm:p-2 sm:pr-2"
         onClick={() => setTheme(resolvedTheme === "light" ? "dark" : "light")}
         variant="ghost"
       >
         {resolvedTheme === "light" ? (
-          <MoonIcon className="text-blue-500 dark:text-blue-400" />
+          <MoonIcon className="text-blue-500 dark:text-blue-400 h-6 w-6" />
         ) : (
-          <SunIcon className="text-blue-500 dark:text-blue-400" />
+          <SunIcon className="text-blue-500 dark:text-blue-400 h-6 w-6" />
         )}
       </Button>
     </div>

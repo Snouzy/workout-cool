@@ -49,7 +49,7 @@ export function ReleaseNotesDialog({ onOpen, onClose, showNotificationBadge = tr
             <Button aria-label={t("release_notes.release_notes")} className="rounded-full hover:bg-slate-200" size="small" variant="ghost">
               <Bell className="text-blue-500 dark:text-blue-400 h-6 w-6" />
             </Button>
-            {showNotificationBadge && <ChangelogNotificationBadge show={showBadge} size="medium" variant="primary" />}
+            {showNotificationBadge && <ChangelogNotificationBadge show={showBadge} size="small" variant="primary" />}
           </div>
         </div>
       </DialogTrigger>

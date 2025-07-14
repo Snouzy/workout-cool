@@ -1,7 +1,13 @@
 import { useMemo } from "react";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
 import dayjs from "dayjs";
 
 import { useWorkoutSessions } from "@/features/workout-session/model/use-workout-sessions";
+
+// Configure dayjs with timezone support
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 import type { WorkoutSession } from "@/shared/lib/workout-session/types/workout-session";
 
@@ -61,6 +67,16 @@ export default function WorkoutStreakHeader({
 }: WorkoutStreakHeaderProps) {
   const { data: sessions, isLoading: sessionsLoading, error: sessionsError } = useWorkoutSessions();
 
+  // Get user's timezone for accurate date calculations (memoized for performance)
+  const userTimezone = useMemo(() => {
+    try {
+      return dayjs.tz.guess();
+    } catch (error) {
+      console.warn("Failed to detect timezone, falling back to UTC:", error);
+      return "UTC";
+    }
+  }, []);
+
   // Calculate recent sessions within the streak period
   const recentSessions = useMemo(() => {
     if (!sessions) return [];
@@ -69,31 +85,61 @@ export default function WorkoutStreakHeader({
       // Only include sessions that have ended (completed workouts)
       if (!s.endedAt) return false;
 
-      const endDate = dayjs(s.endedAt).toDate();
-      const cutoffDate = dayjs().subtract(streakCount, "day").toDate();
-      return endDate > cutoffDate;
+      try {
+        // Convert session end time to user's timezone for accurate day comparison
+        const endDate = dayjs(s.endedAt).tz(userTimezone);
+        const cutoffDate = dayjs().tz(userTimezone).subtract(streakCount, "day").startOf("day");
+
+        return endDate.isAfter(cutoffDate);
+      } catch (error) {
+        console.warn("Error processing session date:", error, s);
+        return false;
+      }
     });
 
     // Sort from oldest to most recent
     recentSessions.sort((a, b) => dayjs(a.endedAt).diff(dayjs(b.endedAt)));
     return recentSessions;
-  }, [sessions, streakCount]);
+  }, [sessions, streakCount, userTimezone]);
 
   // Generate streak data for each day in the period
   const streakData = useMemo<StreakData>(() => {
     const days: DayStreakData[] = [...Array(streakCount)].map((_, i) => {
-      const targetDate = dayjs()
-        .subtract(streakCount - 1 - i, "day")
-        .startOf("day");
+      try {
+        // Calculate target date in user's timezone
+        const targetDate = dayjs()
+          .tz(userTimezone)
+          .subtract(streakCount - 1 - i, "day")
+          .startOf("day");
 
-      // Find the most recent session for this day
-      const session = recentSessions.findLast((session) => dayjs(session.endedAt).isSame(targetDate, "day"));
+        // Find the most recent session for this day in user's timezone
+        const session = recentSessions.findLast((session) => {
+          try {
+            const sessionDate = dayjs(session.endedAt).tz(userTimezone);
+            return sessionDate.isSame(targetDate, "day");
+          } catch (error) {
+            console.warn("Error comparing session date:", error, session);
+            return false;
+          }
+        });
 
-      return {
-        date: targetDate.format("YYYY-MM-DD"),
-        hasWorkout: !!session,
-        session: session || undefined,
-      };
+        return {
+          date: targetDate.format("YYYY-MM-DD"),
+          hasWorkout: !!session,
+          session: session || undefined,
+        };
+      } catch (error) {
+        console.warn("Error calculating streak data for day:", error, i);
+        // Return fallback data for this day
+        const fallbackDate = dayjs()
+          .subtract(streakCount - 1 - i, "day")
+          .format("YYYY-MM-DD");
+        return {
+          date: fallbackDate,
+          hasWorkout: false,
+          session: undefined,
+        };
+      }
     });
 
     // Calculate current streak (consecutive days from the end)
@@ -114,7 +160,7 @@ export default function WorkoutStreakHeader({
       currentStreak,
       totalWorkouts,
     };
-  }, [recentSessions, streakCount]);
+  }, [recentSessions, streakCount, userTimezone]);
 
   // Notify parent component when streak data changes
   useMemo(() => {

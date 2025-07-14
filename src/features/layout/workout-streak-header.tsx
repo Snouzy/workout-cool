@@ -1,14 +1,16 @@
 import { useEffect, useState, useMemo } from "react";
-import type { WorkoutSession } from "@/shared/lib/workout-session/types/workout-session";
-import { workoutSessionLocal } from "@/shared/lib/workout-session/workout-session.local";
 import dayjs from "dayjs";
 
+import { workoutSessionLocal } from "@/shared/lib/workout-session/workout-session.local";
+
+import type { WorkoutSession } from "@/shared/lib/workout-session/types/workout-session";
+
 interface WorkoutSessionProps {
-  streakCount?: number;
   className?: string;
+  streakCount?: number;
 }
 
-export default function WorkoutStreakHeader({ streakCount = 5, className }: WorkoutSessionProps) {
+export default function WorkoutStreakHeader({ className, streakCount = 5 }: WorkoutSessionProps) {
   const [sessions, setSessions] = useState<WorkoutSession[] | null>(null);
 
   const recentSessions = useMemo(() => {
@@ -43,7 +45,7 @@ export default function WorkoutStreakHeader({ streakCount = 5, className }: Work
   return (
     <div className={className}>
       {squares.map((session, i) => (
-        <div key={i} className={`w-5 h-5 rounded-md ${session ? "bg-green-500" : "bg-gray-300 border border-gray-400"}`} />
+        <div className={`w-5 h-5 rounded-md ${session ? "bg-green-500" : "bg-gray-300 border border-gray-400"}`} key={i} />
       ))}
     </div>
   );

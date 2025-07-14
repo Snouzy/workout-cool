@@ -9,10 +9,10 @@ import { LanguageSelector } from "@/widgets/language-selector/language-selector"
 import { usePremiumStatus } from "@/shared/lib/premium/use-premium";
 import { ThemeToggle } from "@/features/theme/ThemeToggle";
 import { ReleaseNotesDialog } from "@/features/release-notes";
+import WorkoutStreakHeader from "@/features/layout/workout-streak-header";
 import { useLogout } from "@/features/auth/model/useLogout";
 import { useSession } from "@/features/auth/lib/auth-client";
 import { Link } from "@/components/ui/link";
-import WorkoutStreakHeader from "@/features/layout/workout-streak-header";
 
 export const Header = () => {
   const session = useSession();

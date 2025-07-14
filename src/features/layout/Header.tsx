@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Home, LogIn, UserPlus, LogOut, User, Crown, CreditCard } from "lucide-react";
+import { LogIn, UserPlus, LogOut, User, Crown, CreditCard } from "lucide-react";
 
 import { useI18n } from "locales/client";
 import Logo from "@public/logo.png";
@@ -61,16 +61,7 @@ export const Header = () => {
 
       {/* User Menu */}
       <div className="navbar-end">
-        <WorkoutStreakHeader className="hidden sm:flex gap-2 mr-2" />
-        <div className="tooltip tooltip-bottom" data-tip={t("commons.home")}>
-          <Link
-            aria-label={t("commons.home")}
-            className="hover:bg-slate-200 dark:hover:bg-gray-800 rounded-full p-2 transition flex"
-            href="/"
-          >
-            <Home className="w-6 h-6 text-blue-500 dark:text-blue-400" />
-          </Link>
-        </div>
+        <WorkoutStreakHeader className="hidden sm:flex gap-1 mr-2" />
 
         <ReleaseNotesDialog />
 

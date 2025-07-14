@@ -22,12 +22,14 @@ const sessionSchema = z.object({
   titleEn: z.string().min(1, "Le titre en anglais est requis"),
   titleEs: z.string().min(1, "Le titre en espagnol est requis"),
   titlePt: z.string().min(1, "Le titre en portugais est requis"),
+  titleUa: z.string().min(1, "Le titre en ukrainien est requis"),
   titleRu: z.string().min(1, "Le titre en russe est requis"),
   titleZhCn: z.string().min(1, "Le titre en chinois est requis"),
   description: z.string().min(1, "La description est requise"),
   descriptionEn: z.string().min(1, "La description en anglais est requise"),
   descriptionEs: z.string().min(1, "La description en espagnol est requise"),
   descriptionPt: z.string().min(1, "La description en portugais est requise"),
+  descriptionUa: z.string().min(1, "La description en ukrainien est requise"),
   descriptionRu: z.string().min(1, "La description en russe est requise"),
   descriptionZhCn: z.string().min(1, "La description en chinois est requise"),
   estimatedMinutes: z.number().min(5, "Au moins 5 minutes"),
@@ -72,12 +74,14 @@ export function AddSessionModal({ open, onOpenChange, weekId, nextSessionNumber 
       titleEn: `Session ${nextSessionNumber}`,
       titleEs: `Sesión ${nextSessionNumber}`,
       titlePt: `Sessão ${nextSessionNumber}`,
+      titleUa: `Сесія ${nextSessionNumber}`,
       titleRu: `Сессия ${nextSessionNumber}`,
       titleZhCn: `第${nextSessionNumber}节`,
       description: `Description de la séance ${nextSessionNumber}`,
       descriptionEn: `Description of session ${nextSessionNumber}`,
       descriptionEs: `Descripción de la sesión ${nextSessionNumber}`,
       descriptionPt: `Descrição da sessão ${nextSessionNumber}`,
+      descriptionUa: `Опис сесії ${nextSessionNumber}`,
       descriptionRu: `Описание сессии ${nextSessionNumber}`,
       descriptionZhCn: `第${nextSessionNumber}节课程描述`,
       estimatedMinutes: 30,
@@ -104,6 +108,7 @@ export function AddSessionModal({ open, onOpenChange, weekId, nextSessionNumber 
         titleEn: data.titleEn,
         titleEs: data.titleEs,
         titlePt: data.titlePt,
+        titleUa: data.titleUa,
         titleRu: data.titleRu,
         titleZhCn: data.titleZhCn,
       });
@@ -155,6 +160,9 @@ export function AddSessionModal({ open, onOpenChange, weekId, nextSessionNumber 
             </button>
             <button className={`tab ${activeTab === "pt" ? "tab-active" : ""}`} onClick={() => setActiveTab("pt")} type="button">
               🇵🇹 PT
+            </button>
+            <button className={`tab ${activeTab === "ua" ? "tab-active" : ""}`} onClick={() => setActiveTab("ua")} type="button">
+              🇺🇦 UA
             </button>
             <button className={`tab ${activeTab === "ru" ? "tab-active" : ""}`} onClick={() => setActiveTab("ru")} type="button">
               🇷🇺 RU
@@ -227,6 +235,22 @@ export function AddSessionModal({ open, onOpenChange, weekId, nextSessionNumber 
               </div>
             </div>
           )}
+
+          {/* Ukrainian Fields */}
+          {activeTab === "ua" && (
+            <div className="space-y-4">
+              <div>
+                <Label htmlFor="titleUa">Назва (Українська)</Label>
+                <Input id="titleUa" {...register("titleUa")} placeholder={`Сесія ${nextSessionNumber}`} />
+                {errors.titleUa && <p className="text-sm text-red-500 mt-1">{errors.titleUa.message}</p>}
+              </div>
+              <div>
+                <Label htmlFor="descriptionUa">Опис (Українська)</Label>
+                <Textarea id="descriptionUa" {...register("descriptionUa")} placeholder="Опис сесії..." rows={3} />
+                {errors.descriptionUa && <p className="text-sm text-red-500 mt-1">{errors.descriptionUa.message}</p>}
+              </div>
+            </div>
+          )} 
 
           {/* Russian Fields */}
           {activeTab === "ru" && (

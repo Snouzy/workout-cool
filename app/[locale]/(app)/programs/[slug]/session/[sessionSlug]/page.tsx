@@ -47,7 +47,7 @@ export async function generateMetadata({ params }: SessionDetailPageProps): Prom
           alt: sessionMetadata.title,
         },
       ],
-      locale: locale === "zh-CN" ? "zh_CN" : locale.replace("-", "_"),
+      locale: locale === "ua" ? "uk_UA" : locale === "zh-CN" ? "zh_CN" : locale.replace("-", "_"),
       type: "website",
     },
     twitter: {
@@ -64,6 +64,7 @@ export async function generateMetadata({ params }: SessionDetailPageProps): Prom
         "en-US": `https://www.workout.cool/en/programs/${slug}/session/${sessionSlug}`,
         "es-ES": `https://www.workout.cool/es/programs/${slug}/session/${sessionSlug}`,
         "pt-PT": `https://www.workout.cool/pt/programs/${slug}/session/${sessionSlug}`,
+        "ua-UA": `https://www.workout.cool/ua/programs/${slug}/session/${sessionSlug}`,
         "ru-RU": `https://www.workout.cool/ru/programs/${slug}/session/${sessionSlug}`,
         "zh-CN": `https://www.workout.cool/zh-CN/programs/${slug}/session/${sessionSlug}`,
         "x-default": `https://www.workout.cool/programs/${slug}/session/${sessionSlug}`,

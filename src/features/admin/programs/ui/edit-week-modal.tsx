@@ -14,12 +14,14 @@ interface EditWeekModalProps {
     titleEn: string;
     titleEs: string;
     titlePt: string;
+    titleUa: string;
     titleRu: string;
     titleZhCn: string;
     description: string;
     descriptionEn: string;
     descriptionEs: string;
     descriptionPt: string;
+    descriptionUa: string;
     descriptionRu: string;
     descriptionZhCn: string;
   };
@@ -35,12 +37,14 @@ export function EditWeekModal({ week, open, onOpenChange }: EditWeekModalProps) 
     titleEn: week.titleEn,
     titleEs: week.titleEs,
     titlePt: week.titlePt,
+    titleUa: week.titleUa,
     titleRu: week.titleRu,
     titleZhCn: week.titleZhCn,
     description: week.description,
     descriptionEn: week.descriptionEn,
     descriptionEs: week.descriptionEs,
-    descriptionPt: week.descriptionPt,
+    descriptionPt: week.descriptionPt,  
+    descriptionUa: week.descriptionUa,
     descriptionRu: week.descriptionRu,
     descriptionZhCn: week.descriptionZhCn,
   });
@@ -94,6 +98,9 @@ export function EditWeekModal({ week, open, onOpenChange }: EditWeekModalProps) 
               </button>
               <button className={`tab ${activeTab === "pt" ? "tab-active" : ""}`} onClick={() => setActiveTab("pt")} type="button">
                 🇵🇹 PT
+              </button>
+              <button className={`tab ${activeTab === "ua" ? "tab-active" : ""}`} onClick={() => setActiveTab("ua")} type="button">
+                🇺🇦 UA
               </button>
               <button className={`tab ${activeTab === "ru" ? "tab-active" : ""}`} onClick={() => setActiveTab("ru")} type="button">
                 🇷🇺 RU
@@ -226,6 +233,38 @@ export function EditWeekModal({ week, open, onOpenChange }: EditWeekModalProps) 
                     onChange={(e) => setFormData({ ...formData, descriptionPt: e.target.value })}
                     placeholder="Descrição da semana..."
                     value={formData.descriptionPt}
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* Ukrainian Fields */}
+            {activeTab === "ua" && (
+              <div className="space-y-4">
+                <div>
+                  <label className="label">
+                    <span className="label-text">Назва (Українська)</span>
+                  </label>
+                  <input
+                    className="input input-bordered w-full"
+                    disabled={isSaving}
+                    onChange={(e) => setFormData({ ...formData, titleUa: e.target.value })}
+                    placeholder="Назва тижня"
+                    required
+                    type="text"
+                    value={formData.titleUa}
+                  />
+                </div>
+                <div>
+                  <label className="label">
+                    <span className="label-text">Опис (Українська)</span>
+                  </label>
+                  <textarea
+                    className="textarea textarea-bordered w-full h-24"
+                    disabled={isSaving}
+                    onChange={(e) => setFormData({ ...formData, descriptionUa: e.target.value })}
+                    placeholder="Опис тижня..."
+                    value={formData.descriptionUa}
                   />
                 </div>
               </div>

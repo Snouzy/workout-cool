@@ -14,12 +14,14 @@ interface AddWeekData {
   titleEn: string;
   titleEs: string;
   titlePt: string;
+  titleUa: string;
   titleRu: string;
   titleZhCn: string;
   description?: string;
   descriptionEn?: string;
   descriptionEs?: string;
   descriptionPt?: string;
+  descriptionUa?: string;
   descriptionRu?: string;
   descriptionZhCn?: string;
 }
@@ -56,11 +58,13 @@ export async function addWeekToProgram(data: AddWeekData) {
       titleEn: data.titleEn,
       titleEs: data.titleEs,
       titlePt: data.titlePt,
+      titleUa: data.titleUa,
       titleRu: data.titleRu,
       titleZhCn: data.titleZhCn,
       description: data.description || "",
       descriptionEn: data.descriptionEn || "",
       descriptionEs: data.descriptionEs || "",
+      descriptionUa: data.descriptionUa || "",
       descriptionPt: data.descriptionPt || "",
       descriptionRu: data.descriptionRu || "",
       descriptionZhCn: data.descriptionZhCn || "",

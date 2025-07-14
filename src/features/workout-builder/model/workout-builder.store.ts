@@ -91,6 +91,8 @@ export const useWorkoutBuilderStore = create<WorkoutBuilderState>((set, get) => 
   },
 
   setExercisesOrder: (order) => set({ exercisesOrder: order }),
+  
+  setExercisesByMuscle: (exercisesByMuscle) => set({ exercisesByMuscle }),
 
   setExercisesByMuscle: (exercisesByMuscle) => set({ exercisesByMuscle }),
 

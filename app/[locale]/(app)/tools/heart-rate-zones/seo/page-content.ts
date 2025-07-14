@@ -21,6 +21,9 @@ export const HEART_RATE_ZONES_CONTENT: Record<Locale, PageContent> = {
     heroSubtitle:
       "Descubra suas zonas de treino personalizadas para otimizar o desempenho, queimar mais gordura e melhorar sua condição cardiovascular",
   },
+  ua: {
+    heroSubtitle: "Відкрийте для себе персоналізовані тренувальні зони, щоб оптимізувати продуктивність, спалювати більше жиру та покращити стан серцево-судинної системи",
+  },
   ru: {
     heroSubtitle:
       "Откройте персональные тренировочные зоны для оптимизации результатов, сжигания жира и улучшения сердечно-сосудистой системы",

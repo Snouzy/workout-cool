@@ -18,7 +18,7 @@ function detectUserLocale(request: NextRequest): string {
     .sort((a, b) => b.quality - a.quality);
 
   // Map browser locales to supported locales
-  const supportedLocales = ["en", "fr", "es", "zh-cn", "ru", "pt"];
+  const supportedLocales = ["en", "fr", "es", "zh-cn", "ua", "ru", "pt"];
 
   for (const { locale } of languages) {
     // Exact match
@@ -42,7 +42,7 @@ function detectUserLocale(request: NextRequest): string {
 }
 
 const I18nMiddleware = createI18nMiddleware({
-  locales: ["en", "fr", "es", "zh-CN", "ru", "pt"],
+  locales: ["en", "fr", "es", "zh-CN", "ua", "ru", "pt"],
   defaultLocale: "en",
   urlMappingStrategy: "rewrite",
 });

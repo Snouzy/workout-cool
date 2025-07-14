@@ -19,10 +19,13 @@ export function generateSessionSEOKeywords(session: ProgramSessionWithExercises,
         return ex.exercise.nameEs || ex.exercise.nameEn;
       case "pt":
         return ex.exercise.namePt || ex.exercise.nameEn;
+      case "ua":
+        return ex.exercise.nameUa || ex.exercise.nameEn;
       case "ru":
         return ex.exercise.nameRu || ex.exercise.nameEn;
       case "zh-CN":
         return ex.exercise.nameZhCn || ex.exercise.nameEn;
+
       default:
         return ex.exercise.name;
     }
@@ -35,11 +38,13 @@ export function generateSessionSEOKeywords(session: ProgramSessionWithExercises,
         ? "sesión de entrenamiento"
         : locale === "pt"
           ? "sessão de treino"
-          : locale === "ru"
-            ? "тренировочная сессия"
-            : locale === "zh-CN"
-              ? "训练课程"
-              : "séance d'entraînement";
+          : locale === "ua"
+            ? "сесія тренування"
+            : locale === "ru"
+              ? "тренировочная сессия"
+              : locale === "zh-CN"
+                ? "训练课程"
+                : "séance d'entraînement";
 
   return [
     ...baseData.keywords,
@@ -69,8 +74,10 @@ export function generateSessionMetadata(session: ProgramSessionWithExercises, pr
         ? `Sesión de entrenamiento ${sessionTitle} del programa ${programTitle}. ${session.exercises.length} ejercicios, ~${Math.round(session.exercises.length * 3)} minutos.`
         : locale === "pt"
           ? `Sessão de treino ${sessionTitle} do programa ${programTitle}. ${session.exercises.length} exercícios, ~${Math.round(session.exercises.length * 3)} minutos.`
-          : locale === "ru"
-            ? `Тренировочная сессия ${sessionTitle} из программы ${programTitle}. ${session.exercises.length} упражнений, ~${Math.round(session.exercises.length * 3)} минут.`
+          : locale === "ua"
+            ? `Сесія тренування ${sessionTitle} з програми ${programTitle}. ${session.exercises.length} вправ, ~${Math.round(session.exercises.length * 3)} хв.`
+            : locale === "ru"
+              ? `Тренировочная сессия ${sessionTitle} из программы ${programTitle}. ${session.exercises.length} упражнений, ~${Math.round(session.exercises.length * 3)} минут.`
             : locale === "zh-CN"
               ? `${programTitle}计划中的${sessionTitle}训练课程。${session.exercises.length}个练习，约${Math.round(session.exercises.length * 3)}分钟。`
               : `Séance d'entraînement ${sessionTitle} du programme ${programTitle}. ${session.exercises.length} exercices, ~${Math.round(session.exercises.length * 3)} minutes.`);

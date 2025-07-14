@@ -93,11 +93,13 @@ export function generateSEOMetadata({
             ? "es_ES"
             : locale === "pt"
               ? "pt_PT"
-              : locale === "ru"
-                ? "ru_RU"
-                : locale === "zh-CN"
-                  ? "zh_CN"
-                  : "fr_FR",
+              : locale === "ua"
+                ? "uk_UA"
+                : locale === "ru"
+                  ? "ru_RU"
+                  : locale === "zh-CN"
+                    ? "zh_CN"
+                    : "fr_FR",
       alternateLocale: [
         "fr_FR",
         "fr_CA",
@@ -128,11 +130,13 @@ export function generateSEOMetadata({
               ? "es_ES"
               : locale === "pt"
                 ? "pt_PT"
-                : locale === "ru"
-                  ? "ru_RU"
-                  : locale === "zh-CN"
-                    ? "zh_CN"
-                    : "fr_FR"),
+                : locale === "ua"
+                  ? "uk_UA"
+                  : locale === "ru"
+                    ? "ru_RU"
+                    : locale === "zh-CN"
+                      ? "zh_CN"
+                      : "fr_FR"),
       ),
       images: [
         {
@@ -205,6 +209,7 @@ export function SEOScripts({
       <link href={`${baseUrl}/es${hreflangPath}`} hrefLang="es" rel="alternate" />
       <link href={`${baseUrl}/fr${hreflangPath}`} hrefLang="fr" rel="alternate" />
       <link href={`${baseUrl}/pt${hreflangPath}`} hrefLang="pt" rel="alternate" />
+      <link href={`${baseUrl}/ua${hreflangPath}`} hrefLang="ua" rel="alternate" />
       <link href={`${baseUrl}/ru${hreflangPath}`} hrefLang="ru" rel="alternate" />
       <link href={`${baseUrl}/zh-CN${hreflangPath}`} hrefLang="zh-CN" rel="alternate" />
       <link href={`${baseUrl}/en${hreflangPath}`} hrefLang="x-default" rel="alternate" />

@@ -83,6 +83,8 @@ export function generateStructuredData({
           ? "es-ES"
           : locale === "pt"
             ? "pt-PT"
+            : locale === "ua"
+              ? "uk-UA"
             : locale === "ru"
               ? "ru-RU"
               : locale === "zh-CN"
@@ -148,6 +150,14 @@ export function generateStructuredData({
                     "Segmentação de grupos musculares",
                     "Filtragem baseada em equipamentos",
                   ]
+                : locale === "ua"
+                  ? [
+                      "Персоналізований конструктор тренувань",
+                      "Повна база даних вправ",
+                      "Відстеження прогресу",
+                      "Націлення на м'язові групи",
+                      "Фільтрація за обладнанням",
+                    ]
                 : locale === "ru"
                   ? [
                       "Персонализированный конструктор тренировок",
@@ -189,7 +199,7 @@ export function generateStructuredData({
           "@type": "ContactPoint",
           telephone: "+33-1-00-00-00-00",
           contactType: "customer service",
-          availableLanguage: ["French", "English", "Spanish", "Portuguese", "Russian", "Chinese"],
+          availableLanguage: ["French", "English", "Spanish", "Portuguese", "Ukrainian", "Russian", "Chinese"],
         },
         sameAs: [SiteConfig.maker.twitter],
         foundingDate: "2024",
@@ -211,6 +221,8 @@ export function generateStructuredData({
               ? "La última actualización incluye una base de datos de ejercicios mejorada y una mejor experiencia de usuario"
               : locale === "pt"
                 ? "A atualização mais recente inclui base de dados de exercícios melhorada e melhor experiência do usuário"
+                : locale === "ua"
+                  ? "Останнє оновлення включає покращену базу даних вправ і кращу користувацьку роботу"
                 : locale === "ru"
                   ? "Последнее обновление включает улучшенную базу данных упражнений и лучший пользовательский опыт"
                   : locale === "zh-CN"
@@ -280,6 +292,8 @@ export function generateStructuredData({
               ? "Técnicas de fitness y entrenamiento"
               : locale === "pt"
                 ? "Técnicas de fitness e treino"
+                : locale === "ua"
+                  ? "Техніки фітнесу та тренувань"
                 : locale === "ru"
                   ? "Фитнес и техники тренировок"
                   : locale === "zh-CN"
@@ -325,6 +339,8 @@ export function generateStructuredData({
               ? "es-ES"
               : locale === "pt"
                 ? "pt-PT"
+                : locale === "ua"
+                  ? "uk-UA"
                 : locale === "ru"
                   ? "ru-RU"
                   : locale === "zh-CN"
@@ -341,6 +357,8 @@ export function generateStructuredData({
                   ? `${courseData.totalSessions} sesiones de entrenamiento`
                   : locale === "pt"
                     ? `${courseData.totalSessions} sessões de treino`
+                    : locale === "ua"
+                      ? `${courseData.totalSessions} тренувань`
                     : locale === "ru"
                       ? `${courseData.totalSessions} тренировочных сессий`
                       : locale === "zh-CN"
@@ -353,6 +371,8 @@ export function generateStructuredData({
                   ? `Programa completo de ${courseData.durationWeeks} semanas con ${courseData.sessionsPerWeek} sesiones por semana`
                   : locale === "pt"
                     ? `Programa completo de ${courseData.durationWeeks} semanas com ${courseData.sessionsPerWeek} sessões por semana`
+                    : locale === "ua"
+                      ? `Повний ${courseData.durationWeeks}-тижневий курс з ${courseData.sessionsPerWeek} тренувань на тиждень`
                     : locale === "ru"
                       ? `Полная программа на ${courseData.durationWeeks} недель с ${courseData.sessionsPerWeek} сессиями в неделю`
                       : locale === "zh-CN"
@@ -399,6 +419,8 @@ export function generateStructuredData({
               ? "sesión de entrenamiento"
               : locale === "pt"
                 ? "sessão de treino"
+                : locale === "ua"
+                  ? "сесія тренування"
                 : locale === "ru"
                   ? "тренировочная сессия"
                   : locale === "zh-CN"
@@ -415,6 +437,8 @@ export function generateStructuredData({
               ? "es-ES"
               : locale === "pt"
                 ? "pt-PT"
+                : locale === "ua"
+                  ? "uk-UA"
                 : locale === "ru"
                   ? "ru-RU"
                   : locale === "zh-CN"
@@ -437,6 +461,7 @@ export function generateStructuredData({
           fr: ["calculateur calories", "calculateur TDEE", "calculateur BMR", "besoins caloriques", "perte de poids", "Cal mascotte"],
           es: ["calculadora calorías", "calculadora TDEE", "calculadora BMR", "necesidades calóricas", "pérdida peso", "Cal mascota"],
           pt: ["calculadora calorias", "calculadora TDEE", "calculadora BMR", "necessidades calóricas", "perda peso", "Cal mascote"],
+          ua: ["калькулятор калорій", "калькулятор TDEE", "калькулятор BMR", "потреба в калоріях", "втрата ваги", "Кал маскот"],
           ru: ["калькулятор калорий", "калькулятор TDEE", "калькулятор BMR", "потребность калории", "похудение", "Кал маскот"],
           "zh-CN": ["卡路里计算器", "TDEE计算器", "BMR计算器", "每日卡路里需求", "减重计算器", "Cal吉祥物"],
         },
@@ -445,6 +470,7 @@ export function generateStructuredData({
           fr: ["one rep max", "calculateur one rep max", "formule one rep max", "calcul one rep max", "calculateur one rep max"],
           es: ["one rep max", "calculadora one rep max", "fórmula one rep max", "calculo one rep max", "calculadora one rep max"],
           pt: ["one rep max", "calculadora one rep max", "fórmula one rep max", "calculo one rep max", "calculadora one rep max"],
+          ua: ["one rep max", "калькулятор one rep max", "формула one rep max", "розрахунок one rep max", "калькулятор one rep max"],
           ru: ["one rep max", "калькулятор one rep max", "формула one rep max", "расчет one rep max", "калькулятор one rep max"],
           "zh-CN": ["一次最大重复次数", "一次最大重复次数计算器", "一次最大重复次数公式", "一次最大重复次数计算", "一次最大重复次数计算器"],
         },
@@ -471,6 +497,13 @@ export function generateStructuredData({
             "calculo timer de repos",
             "calculadora timer de repos",
           ],
+          ua: [
+            "таймер відпочинку",
+            "калькулятор таймера відпочинку",
+            "формула таймера відпочинку",
+            "розрахунок таймера відпочинку",
+            "калькулятор таймера відпочинку",
+          ],
           ru: [
             "timer de repos",
             "калькулятор timer de repos",
@@ -485,6 +518,7 @@ export function generateStructuredData({
           fr: ["calculateur macros", "calculateur macros", "formule macros", "calcul macros", "calculateur macros"],
           es: ["calculadora macros", "calculadora macros", "fórmula macros", "calculo macros", "calculadora macros"],
           pt: ["calculadora macros", "calculadora macros", "fórmula macros", "calculo macros", "calculadora macros"],
+          ua: ["калькулятор макросів", "калькулятор макросів", "формула макросів", "розрахунок макросів", "калькулятор макросів"],
           ru: ["калькулятор макросов", "калькулятор макросов", "формула макросов", "расчет макросов", "калькулятор макросов"],
           "zh-CN": ["宏计算器", "宏计算器", "宏公式", "宏计算", "宏计算器"],
         },
@@ -493,6 +527,7 @@ export function generateStructuredData({
           fr: ["calculateur bmi", "formule bmi", "calcul bmi", "calculateur bmi"],
           es: ["calculadora bmi", "fórmula bmi", "calculo bmi", "calculadora bmi"],
           pt: ["calculadora bmi", "fórmula bmi", "calculo bmi", "calculadora bmi"],
+          ua: ["калькулятор ІМТ", "формула ІМТ", "розрахунок ІМТ", "калькулятор ІМТ"],
           ru: ["калькулятор ИМТ", "формула ИМТ", "расчет ИМТ", "калькулятор ИМТ"],
           "zh-CN": ["BMI计算器", "BMI公式", "BMI计算", "BMI计算器"],
         },
@@ -516,6 +551,7 @@ export function generateStructuredData({
             "calculo frequência cardíaca",
             "calculadora frequência cardíaca",
           ],
+          ua: ["калькулятор частоти пульсу", "формула частоти пульсу", "розрахунок частоти пульсу", "калькулятор частоти пульсу"],
           ru: ["калькулятор частоты пульса", "формула частоты пульса", "расчет частоты пульса", "калькулятор частоты пульса"],
           "zh-CN": ["心率计算器", "心率公式", "心率计算", "心率计算器"],
         },
@@ -536,6 +572,7 @@ export function generateStructuredData({
             "zona VO2 máx",
           ],
           pt: ["calculadora zonas frequência cardíaca", "frequência cardíaca alvo", "zonas de treino", "fórmula Karvonen", "zona VO2 máx"],
+          ua: ["калькулятор зон пульсу", "цільовий пульс", "тренировочні зони", "формула Карвонена", "зона VO2 max"],
           ru: ["калькулятор зон пульса", "целевой пульс", "тренировочные зоны", "формула Карвонена", "зона VO2 max"],
           "zh-CN": ["心率区间计算器", "目标心率", "训练区间", "卡沃宁公式", "VO2最大值区间"],
         },
@@ -596,6 +633,8 @@ export function generateStructuredData({
               ? "es-ES"
               : locale === "pt"
                 ? "pt-PT"
+                : locale === "ua"
+                  ? "uk-UA"
                 : locale === "ru"
                   ? "ru-RU"
                   : locale === "zh-CN"
@@ -680,6 +719,8 @@ export function generateStructuredData({
                   ? "Calcular Calorías"
                   : locale === "pt"
                     ? "Calcular Calorias"
+                    : locale === "ua"
+                      ? "Розрахувати Калорії"
                     : locale === "ru"
                       ? "Рассчитать Калории"
                       : "计算卡路里",

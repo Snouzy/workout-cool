@@ -12,12 +12,14 @@ const weekSchema = z.object({
   titleEn: z.string().min(1, "Le titre en anglais est requis"),
   titleEs: z.string().min(1, "Le titre en espagnol est requis"),
   titlePt: z.string().min(1, "Le titre en portugais est requis"),
+  titleUa: z.string().min(1, "Le titre en ukrainien est requis"),
   titleRu: z.string().min(1, "Le titre en russe est requis"),
   titleZhCn: z.string().min(1, "Le titre en chinois est requis"),
   description: z.string().optional(),
   descriptionEn: z.string().optional(),
   descriptionEs: z.string().optional(),
   descriptionPt: z.string().optional(),
+  descriptionUa: z.string().optional(),
   descriptionRu: z.string().optional(),
   descriptionZhCn: z.string().optional(),
 });
@@ -39,12 +41,14 @@ export function AddWeekModal({ open, onOpenChange, programId, nextWeekNumber }: 
     titleEn: `Week ${nextWeekNumber}`,
     titleEs: `Semana ${nextWeekNumber}`,
     titlePt: `Semana ${nextWeekNumber}`,
+    titleUa: `Тиждень ${nextWeekNumber}`,
     titleRu: `Неделя ${nextWeekNumber}`,
     titleZhCn: `第${nextWeekNumber}周`,
     description: "",
     descriptionEn: "",
     descriptionEs: "",
     descriptionPt: "",
+    descriptionUa: "",
     descriptionRu: "",
     descriptionZhCn: "",
   });
@@ -102,6 +106,7 @@ export function AddWeekModal({ open, onOpenChange, programId, nextWeekNumber }: 
               <button className={`tab ${activeTab === "pt" ? "tab-active" : ""}`} onClick={() => setActiveTab("pt")} type="button">
                 🇵🇹 PT
               </button>
+              <button className={`tab ${activeTab === "ua" ? "tab-active" : ""}`} onClick={() => setActiveTab("ua")} type="button"></button>
               <button className={`tab ${activeTab === "ru" ? "tab-active" : ""}`} onClick={() => setActiveTab("ru")} type="button">
                 🇷🇺 RU
               </button>
@@ -233,6 +238,38 @@ export function AddWeekModal({ open, onOpenChange, programId, nextWeekNumber }: 
                     onChange={(e) => setFormData({ ...formData, descriptionPt: e.target.value })}
                     placeholder="Descrição da semana..."
                     value={formData.descriptionPt}
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* Ukrainian Fields */}
+            {activeTab === "ua" && (
+              <div className="space-y-4">
+                <div>
+                  <label className="label">
+                    <span className="label-text">Назва (Українська)</span>
+                  </label>
+                  <input
+                    className="input input-bordered w-full"
+                    disabled={isLoading}
+                    onChange={(e) => setFormData({ ...formData, titleUa: e.target.value })}
+                    placeholder={`Тиждень ${nextWeekNumber}`}
+                    required
+                    type="text"
+                    value={formData.titleUa}
+                  />
+                </div>
+                <div>
+                  <label className="label">
+                    <span className="label-text">Descrição (Português)</span>
+                  </label>
+                  <textarea
+                    className="textarea textarea-bordered w-full h-24"
+                    disabled={isLoading}
+                    onChange={(e) => setFormData({ ...formData, descriptionUa: e.target.value })}
+                    placeholder="Опис тижня..."
+                    value={formData.descriptionUa}
                   />
                 </div>
               </div>

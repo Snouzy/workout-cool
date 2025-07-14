@@ -46,6 +46,7 @@ export function generateSlugsForAllLanguages(titles: {
   titleEn: string;
   titleEs: string;
   titlePt: string;
+  titleUa: string;
   titleRu: string;
   titleZhCn: string;
 }) {
@@ -54,6 +55,7 @@ export function generateSlugsForAllLanguages(titles: {
     slugEn: generateSlug(titles.titleEn),
     slugEs: generateSlug(titles.titleEs),
     slugPt: generateSlug(titles.titlePt),
+    slugUa: generateSlug(titles.titleUa),
     slugRu: generateSlug(titles.titleRu),
     slugZhCn: generateSlug(titles.titleZhCn),
   };

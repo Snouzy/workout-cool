@@ -17,12 +17,14 @@ interface EditProgramModalProps {
     titleEn: string;
     titleEs: string;
     titlePt: string;
+    titleUa: string;
     titleRu: string;
     titleZhCn: string;
     description: string;
     descriptionEn: string;
     descriptionEs: string;
     descriptionPt: string;
+    descriptionUa: string;
     descriptionRu: string;
     descriptionZhCn: string;
     category: string;
@@ -54,12 +56,14 @@ export function EditProgramModal({ program, open, onOpenChange }: EditProgramMod
     titleEn: program.titleEn,
     titleEs: program.titleEs,
     titlePt: program.titlePt,
+    titleUa: program.titleUa,
     titleRu: program.titleRu,
     titleZhCn: program.titleZhCn,
     description: program.description,
     descriptionEn: program.descriptionEn,
     descriptionEs: program.descriptionEs,
     descriptionPt: program.descriptionPt,
+    descriptionUa: program.descriptionUa,
     descriptionRu: program.descriptionRu,
     descriptionZhCn: program.descriptionZhCn,
     category: program.category,
@@ -144,6 +148,9 @@ export function EditProgramModal({ program, open, onOpenChange }: EditProgramMod
             </button>
             <button className={`tab ${activeTab === "pt" ? "tab-active" : ""}`} onClick={() => setActiveTab("pt")} type="button">
               🇵🇹 PT
+            </button>
+            <button className={`tab ${activeTab === "ua" ? "tab-active" : ""}`} onClick={() => setActiveTab("ua")} type="button">
+              🇺🇦 UA
             </button>
             <button className={`tab ${activeTab === "ru" ? "tab-active" : ""}`} onClick={() => setActiveTab("ru")} type="button">
               🇷🇺 RU
@@ -269,7 +276,37 @@ export function EditProgramModal({ program, open, onOpenChange }: EditProgramMod
             </div>
           )}
 
-          {/* Russian Fields */}
+          {/* Ukrainian Fields */}
+
+          {activeTab === "ua" && (
+            <div className="space-y-4">
+              <div>
+                <label className="label">
+                  <span className="label-text">Назва (Українська)</span>
+                </label>
+                <input
+                  className="input input-bordered w-full"
+                  disabled={isSaving}
+                  onChange={(e) => setFormData({ ...formData, titleUa: e.target.value })}
+                  type="text"
+                  value={formData.titleUa}
+                />
+              </div>
+              <div>
+                <label className="label">
+                  <span className="label-text">Опис (Українська)</span>
+                </label>
+                <textarea
+                  className="textarea textarea-bordered w-full h-24"
+                  disabled={isSaving}
+                  onChange={(e) => setFormData({ ...formData, descriptionUa: e.target.value })}
+                  value={formData.descriptionUa}
+                />
+              </div>
+            </div>
+          )}
+
+            {/* Russian Fields */}
           {activeTab === "ru" && (
             <div className="space-y-4">
               <div>

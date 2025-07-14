@@ -159,7 +159,7 @@ export default function WorkoutStreakHeader({
         <div
           aria-label={`${day.date}: ${day.hasWorkout ? "Workout completed" : "No workout"}`}
           className={`w-5 h-5 rounded-sm transition-colors duration-200 tooltip tooltip-bottom ${
-            day.hasWorkout ? "bg-success dark:bg-success" : "bg-gray-400 dark:bg-gray-600 border border-gray-400 dark:border-gray-500"
+            day.hasWorkout ? "bg-success dark:bg-success" : "bg-gray-400 dark:bg-slate-600 border border-gray-500/20 dark:border-slate-500"
           }`}
           data-tip={`${day.date}: ${day.hasWorkout ? "✅️" : "❌️"}`}
           key={day.date}

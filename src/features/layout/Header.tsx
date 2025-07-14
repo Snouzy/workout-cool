@@ -61,7 +61,7 @@ export const Header = () => {
 
       {/* User Menu */}
       <div className="navbar-end">
-        <WorkoutStreakHeader className="hidden sm:flex gap-1 mr-2" />
+        <WorkoutStreakHeader />
 
         <ReleaseNotesDialog />
 

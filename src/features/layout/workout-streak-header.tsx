@@ -12,20 +12,15 @@ dayjs.extend(timezone);
 
 import type { WorkoutSession } from "@/shared/lib/workout-session/types/workout-session";
 
+const DEFAULT_STREAK_COUNT = 5;
+
 /**
  * Props for WorkoutStreakHeader component
  */
 export interface WorkoutStreakHeaderProps {
-  /** Additional CSS classes to apply to the component */
   className?: string;
   /** Number of days to display in the streak (default: 5) */
   streakCount?: number;
-  /** Whether to show loading state */
-  isLoading?: boolean;
-  /** Whether to show error state */
-  hasError?: boolean;
-  /** Optional callback when streak data changes */
-  onStreakChange?: (streakData: StreakData) => void;
 }
 
 /**
@@ -36,7 +31,7 @@ export interface DayStreakData {
   date: string;
   /** Whether the user worked out on this day */
   hasWorkout: boolean;
-  /** The workout session for this day (if any) */
+  /** The workout session for this day (if any, maybe we could redirect to the session page in the future) */
   session?: WorkoutSession;
 }
 
@@ -59,13 +54,7 @@ export interface StreakData {
  * @param props - Component props
  * @returns JSX element representing the workout streak
  */
-export default function WorkoutStreakHeader({
-  className,
-  streakCount = 5,
-  isLoading = false,
-  hasError = false,
-  onStreakChange,
-}: WorkoutStreakHeaderProps) {
+export default function WorkoutStreakHeader({ className, streakCount = DEFAULT_STREAK_COUNT }: WorkoutStreakHeaderProps) {
   const { data: sessions, isLoading: sessionsLoading, error: sessionsError } = useWorkoutSessions();
 
   // Get user's timezone for accurate date calculations (memoized for performance)
@@ -163,21 +152,14 @@ export default function WorkoutStreakHeader({
     };
   }, [recentSessions, streakCount, userTimezone]);
 
-  // Notify parent component when streak data changes
-  useMemo(() => {
-    if (onStreakChange) {
-      onStreakChange(streakData);
-    }
-  }, [streakData, onStreakChange]);
-
   // Handle loading state
-  if (isLoading || sessionsLoading) {
+  if (sessionsLoading) {
     return (
       <div aria-label="Loading workout streak" className={`flex gap-1 ${className}`} role="status">
         {[...Array(streakCount)].map((_, i) => (
           <div
             aria-hidden="true"
-            className="w-5 h-5 rounded-sm sm:rounded-md bg-base-300 animate-pulse transition-colors duration-200"
+            className="w-4 h-4 sm:w-6 sm:h-6 rounded-sm sm:rounded-md bg-base-300 animate-pulse transition-colors duration-200"
             key={i}
           />
         ))}
@@ -186,13 +168,13 @@ export default function WorkoutStreakHeader({
   }
 
   // Handle error state
-  if (hasError || sessionsError) {
+  if (sessionsError) {
     return (
       <div aria-label="Error loading workout streak" className={`flex gap-1 ${className}`} role="alert">
         {[...Array(streakCount)].map((_, i) => (
           <div
             aria-hidden="true"
-            className="w-5 h-5 rounded-sm sm:rounded-md bg-error/20 border border-error/30 transition-colors duration-200"
+            className="w-4 h-4 sm:w-6 sm:h-6 rounded-sm sm:rounded-md bg-error/20 border border-error/30 transition-colors duration-200"
             key={i}
           />
         ))}
@@ -206,21 +188,25 @@ export default function WorkoutStreakHeader({
       className={cn("flex gap-1 sm:mr-2", className)}
       role="img"
     >
-      {streakData.days.map((day) => (
-        <div
-          aria-label={`${day.date}: ${day.hasWorkout ? "Workout completed" : "No workout"}`}
-          className={`w-4 h-4 sm:w-6 sm:h-6 rounded-sm sm:rounded-md transition-all duration-200 ease-in-out tooltip tooltip-bottom hover:scale-110 cursor-pointer focus:ring-2 focus:ring-offset-1 focus:outline-none ${
-            day.hasWorkout
-              ? "bg-emerald-400 dark:bg-emerald-500 shadow-sm hover:shadow-md hover:brightness-110 focus:ring-emerald-300"
-              : "bg-gray-300 dark:bg-gray-600 border border-gray-400 dark:border-gray-500 hover:bg-gray-400 dark:hover:bg-gray-500 focus:ring-gray-300 dark:focus:ring-gray-400"
-          }`}
-          data-tip={`${day.date}: ${day.hasWorkout ? "✅️" : "❌️"}`}
-          key={day.date}
-          role="button"
-          tabIndex={0}
-          title={`${day.date}: ${day.hasWorkout ? "✅️" : "❌️"}`}
-        />
-      ))}
+      {streakData.days.map((day) => {
+        const title = `${day.date}: ${day.hasWorkout ? "✅️" : "❌️"}`;
+
+        return (
+          <div
+            aria-label={`${day.date}: ${day.hasWorkout ? "Workout completed" : "No workout"}`}
+            className={`w-4 h-4 sm:w-6 sm:h-6 rounded-sm sm:rounded-md transition-all duration-200 ease-in-out tooltip tooltip-bottom hover:scale-110 cursor-pointer focus:ring-2 focus:ring-offset-1 focus:outline-none ${
+              day.hasWorkout
+                ? "bg-emerald-400 dark:bg-emerald-500 shadow-sm hover:shadow-md hover:brightness-110 focus:ring-emerald-300"
+                : "bg-gray-300 dark:bg-gray-600 border border-gray-400 dark:border-gray-500 hover:bg-gray-400 dark:hover:bg-gray-500 focus:ring-gray-300 dark:focus:ring-gray-400"
+            }`}
+            data-tip={title}
+            key={day.date}
+            role="button"
+            tabIndex={0}
+            title={title}
+          />
+        );
+      })}
     </div>
   );
 }

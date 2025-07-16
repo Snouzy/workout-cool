@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
+    "test:cy": "pnpm cypress open",
     "build": "next build",
     "email": "email dev",
     "start": "next start",
@@ -104,6 +105,7 @@
     "@eslint/js": "^9.28.0",
     "@next/bundle-analyzer": "^15.3.4",
     "@next/eslint-plugin-next": "^15.2.4",
+    "@testing-library/cypress": "^10.0.3",
     "@types/canvas-confetti": "^1.9.0",
     "@types/node": "^20",
     "@types/nodemailer": "^6.4.17",
@@ -114,6 +116,7 @@
     "@typescript-eslint/eslint-plugin": "^8.29.0",
     "@typescript-eslint/parser": "^8.29.0",
     "autoprefixer": "^10.4.21",
+    "cypress": "^14.5.1",
     "env-cmd": "^10.1.0",
     "eslint": "^9.23.0",
     "eslint-config-next": "15.2.3",

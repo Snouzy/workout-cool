@@ -98,6 +98,7 @@ export function BottomNavigation() {
                 )}
                 href={tab.href}
                 key={tab.id}
+                data-testid ={`bottom-nav-${tab.id}`}
               >
                 {/* Active top indicator */}
                 {isActive && (

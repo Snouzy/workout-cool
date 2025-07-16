@@ -52,7 +52,7 @@ export const SignUpForm = () => {
               <FormItem>
                 <FormLabel>{t("commons.first_name")}</FormLabel>
                 <FormControl>
-                  <Input placeholder="John" {...field} />
+                  <Input data-testid="signup-form-firstName" placeholder="John" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -66,7 +66,7 @@ export const SignUpForm = () => {
               <FormItem>
                 <FormLabel>{t("commons.last_name")}</FormLabel>
                 <FormControl>
-                  <Input placeholder="Doe" {...field} />
+                  <Input data-testid="signup-form-lastName" placeholder="Doe" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -81,7 +81,7 @@ export const SignUpForm = () => {
             <FormItem>
               <FormLabel>{t("commons.email")}</FormLabel>
               <FormControl>
-                <Input placeholder="john@doe.com" {...field} />
+                <Input data-testid="signup-form-email" placeholder="john@doe.com" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -95,7 +95,7 @@ export const SignUpForm = () => {
             <FormItem>
               <FormLabel>{t("commons.password")}</FormLabel>
               <FormControl>
-                <Input type="password" {...field} />
+                <Input data-testid="signup-form-password" type="password" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -109,14 +109,14 @@ export const SignUpForm = () => {
             <FormItem>
               <FormLabel>{t("commons.verify_password")}</FormLabel>
               <FormControl>
-                <Input type="password" {...field} />
+                <Input data-testid="signup-form-verifyPassword" type="password" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
 
-        <Button className="w-full" size="large" type="submit">
+        <Button className="w-full" data-testid="signup-form-submit" size="large" type="submit">
           {t("commons.submit")}
         </Button>
 

@@ -5,7 +5,6 @@ import { useI18n } from "locales/client";
 import { WorkoutSessionList } from "@/features/workout-session/ui/workout-session-list";
 import { WorkoutSessionHeatmap } from "@/features/workout-session/ui/workout-session-heatmap";
 import { useWorkoutSessions } from "@/features/workout-session/model/use-workout-sessions";
-import { ExerciseStatisticsTab } from "@/features/statistics/components";
 import { env } from "@/env";
 import { useCurrentSession } from "@/entities/user/model/useCurrentSession";
 import { LocalAlert } from "@/components/ui/local-alert";
@@ -40,7 +39,6 @@ export default function ProfilePage() {
           </div>
         </div>
       )}
-      <ExerciseStatisticsTab exerciseId="1" exerciseName="Bench Press" />
 
       <div className="mt-4">
         <WorkoutSessionHeatmap until={until} values={values} />

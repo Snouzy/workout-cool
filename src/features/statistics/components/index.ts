@@ -1,4 +1,4 @@
-export { ExerciseStatisticsTab } from "./ExerciseStatisticsTab";
+export { ExerciseCharts } from "./ExerciseStatisticsTab";
 export { WeightProgressionChart } from "./WeightProgressionChart";
 export { OneRepMaxChart } from "./OneRepMaxChart";
 export { VolumeChart } from "./VolumeChart";

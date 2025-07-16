@@ -2,17 +2,19 @@
 
 import React, { useState, useCallback, useMemo } from "react";
 import Image from "next/image";
-import { Search, X, Plus } from "lucide-react";
+import { Search, X } from "lucide-react";
 import debounce from "lodash.debounce";
 import { useQuery } from "@tanstack/react-query";
 
 import { useI18n } from "locales/client";
 import { getAttributeValueLabel } from "@/shared/lib/attribute-value-translation";
-import { ExerciseWithAttributes } from "@/entities/exercise/types/exercise.types";
-import { getPrimaryMuscle } from "@/entities/exercise/shared/muscles";
-import { EQUIPMENT_CONFIG } from "@/features/workout-builder/model/equipment-config";
+import { StatisticsTimeframe } from "@/shared/constants/statistics";
 import { ExerciseVideoModal } from "@/features/workout-builder/ui/exercise-video-modal";
 import { ExerciseWithAttributes as WorkoutBuilderExerciseWithAttributes } from "@/features/workout-builder/types";
+import { EQUIPMENT_CONFIG } from "@/features/workout-builder/model/equipment-config";
+import { ExerciseCharts } from "@/features/statistics/components/ExerciseStatisticsTab";
+import { ExerciseWithAttributes } from "@/entities/exercise/types/exercise.types";
+import { getPrimaryMuscle } from "@/entities/exercise/shared/muscles";
 
 interface ExercisesBrowserProps {
   onExerciseSelect: (exercise: ExerciseWithAttributes) => void;
@@ -86,13 +88,14 @@ const ExerciseSelectionModal: React.FC<{
     error,
   } = useQuery({
     queryKey: ["exercises", searchQuery, selectedEquipment, selectedMuscle],
-    queryFn: () => fetchExercises({ 
-      page: 1, 
-      limit: 50, 
-      search: searchQuery || undefined,
-      muscle: selectedMuscle,
-      equipment: selectedEquipment,
-    }),
+    queryFn: () =>
+      fetchExercises({
+        page: 1,
+        limit: 50,
+        search: searchQuery || undefined,
+        muscle: selectedMuscle,
+        equipment: selectedEquipment,
+      }),
     enabled: isOpen,
   });
 
@@ -112,9 +115,7 @@ const ExerciseSelectionModal: React.FC<{
 
   const getExercisePrimaryMuscle = (exercise: ExerciseWithAttributes) => {
     const primaryMuscle = getPrimaryMuscle(exercise.attributes);
-    return typeof primaryMuscle?.attributeValue === "string" 
-      ? primaryMuscle?.attributeValue 
-      : primaryMuscle?.attributeValue?.value || null;
+    return typeof primaryMuscle?.attributeValue === "string" ? primaryMuscle?.attributeValue : primaryMuscle?.attributeValue?.value || null;
   };
 
   if (!isOpen) return null;
@@ -126,10 +127,6 @@ const ExerciseSelectionModal: React.FC<{
         <div className="flex items-center justify-between p-4 border-b">
           <h2 className="text-2xl font-bold">Select Exercise</h2>
           <div className="flex items-center gap-4">
-            <button className="btn btn-ghost btn-sm text-primary">
-              <Plus className="h-4 w-4 mr-2" />
-              Custom Exercise
-            </button>
             <button className="btn btn-ghost btn-sm" onClick={onClose}>
               <X className="h-4 w-4" />
             </button>
@@ -140,7 +137,7 @@ const ExerciseSelectionModal: React.FC<{
         <div className="p-4 space-y-4">
           {/* Equipment Filter */}
           <div className="form-control">
-            <select 
+            <select
               className="select select-bordered w-full"
               onChange={(e) => setSelectedEquipment(e.target.value)}
               value={selectedEquipment}
@@ -156,11 +153,7 @@ const ExerciseSelectionModal: React.FC<{
 
           {/* Muscle Filter */}
           <div className="form-control">
-            <select 
-              className="select select-bordered w-full"
-              onChange={(e) => setSelectedMuscle(e.target.value)}
-              value={selectedMuscle}
-            >
+            <select className="select select-bordered w-full" onChange={(e) => setSelectedMuscle(e.target.value)} value={selectedMuscle}>
               <option value="ALL">All Muscles</option>
               {MUSCLE_GROUPS.map((muscle) => (
                 <option key={muscle.value} value={muscle.value}>
@@ -215,13 +208,7 @@ const ExerciseSelectionModal: React.FC<{
                 >
                   <div className="w-12 h-12 bg-base-200 rounded-full flex items-center justify-center overflow-hidden">
                     {exercise.fullVideoImageUrl && (
-                      <Image
-                        alt={exercise.name}
-                        className="object-cover"
-                        height={48}
-                        src={exercise.fullVideoImageUrl}
-                        width={48}
-                      />
+                      <Image alt={exercise.name} className="object-cover" height={48} src={exercise.fullVideoImageUrl} width={48} />
                     )}
                   </div>
                   <div className="flex-1">
@@ -239,41 +226,30 @@ const ExerciseSelectionModal: React.FC<{
 };
 
 // Stats Chart Component with real data handling
-const StatsChart: React.FC<{ title: string; data: any[]; isLoading?: boolean; error?: any }> = ({ 
-  title, 
-  data: _data, 
-  isLoading = false, 
-  error = null 
-}) => (
+const EmptyChart: React.FC<{ title: string }> = ({ title }) => (
   <div className="bg-base-100 rounded-lg p-4">
     <h3 className="font-semibold mb-4">{title}</h3>
     <div className="h-48 bg-base-200 rounded-lg flex items-center justify-center">
-      {isLoading ? (
-        <span className="loading loading-spinner loading-lg"></span>
-      ) : error ? (
-        <div className="text-center">
-          <p className="font-medium text-lg text-error">Error loading data</p>
-          <p className="text-sm text-gray-500 mt-1">
-            {error.message || "Failed to load statistics"}
-          </p>
-        </div>
-      ) : (
-        <div className="text-center">
-          <p className="font-medium text-lg">Data not available</p>
-          <p className="text-sm text-gray-500 mt-1">
-            There is no data available for the selected timeframe.
-          </p>
-        </div>
-      )}
+      <div className="text-center">
+        <p className="font-medium text-lg">Data not available</p>
+        <p className="text-sm text-gray-500 mt-1">There is no data available for the selected timeframe.</p>
+      </div>
     </div>
   </div>
 );
+
+const TIMEFRAME_OPTIONS: { value: StatisticsTimeframe; label: string }[] = [
+  { value: "4weeks", label: "4 Weeks" },
+  { value: "8weeks", label: "8 Weeks" },
+  { value: "12weeks", label: "12 Weeks" },
+  { value: "1year", label: "1 Year" },
+];
 
 export const ExercisesBrowser: React.FC<ExercisesBrowserProps> = ({ onExerciseSelect }) => {
   const [selectedExercise, setSelectedExercise] = useState<ExerciseWithAttributes | null>(null);
   const [showExerciseModal, setShowExerciseModal] = useState(false);
   const [showVideoModal, setShowVideoModal] = useState(false);
-  const [selectedTimeframe, setSelectedTimeframe] = useState("TWELVE_WEEKS");
+  const [selectedTimeframe, setSelectedTimeframe] = useState<StatisticsTimeframe>("8weeks");
   const t = useI18n();
 
   // Fetch statistics when exercise is selected
@@ -311,15 +287,13 @@ export const ExercisesBrowser: React.FC<ExercisesBrowserProps> = ({ onExerciseSe
 
   const getExercisePrimaryMuscle = (exercise: ExerciseWithAttributes) => {
     const primaryMuscle = getPrimaryMuscle(exercise.attributes);
-    return typeof primaryMuscle?.attributeValue === "string" 
-      ? primaryMuscle?.attributeValue 
-      : primaryMuscle?.attributeValue?.value || null;
+    return typeof primaryMuscle?.attributeValue === "string" ? primaryMuscle?.attributeValue : primaryMuscle?.attributeValue?.value || null;
   };
 
   // Convert exercise to workout builder format
   const convertToWorkoutBuilderFormat = (exercise: ExerciseWithAttributes): WorkoutBuilderExerciseWithAttributes => {
     // Convert attributes to the expected format
-    const convertedAttributes = exercise.attributes.map(attr => ({
+    const convertedAttributes = exercise.attributes.map((attr) => ({
       id: attr.id || "",
       exerciseId: exercise.id,
       attributeNameId: "",
@@ -366,12 +340,9 @@ export const ExercisesBrowser: React.FC<ExercisesBrowserProps> = ({ onExerciseSe
         {/* Header */}
         <div>
           <h1 className="text-3xl font-bold mb-6">Exercise</h1>
-          
+
           {/* Exercise Selection Button */}
-          <button 
-            className="btn btn-primary w-full mb-6"
-            onClick={openExerciseSelection}
-          >
+          <button className="btn btn-primary w-full mb-6" onClick={openExerciseSelection}>
             Select Exercise
           </button>
         </div>
@@ -380,7 +351,7 @@ export const ExercisesBrowser: React.FC<ExercisesBrowserProps> = ({ onExerciseSe
         {selectedExercise && (
           <div className="bg-base-100 rounded-lg p-6">
             <h2 className="text-2xl font-bold mb-4">{selectedExercise.name}</h2>
-            
+
             <div className="flex flex-col gap-2 mb-4">
               <div className="flex items-center gap-2">
                 <span className="text-sm text-gray-500">Equipment:</span>
@@ -389,7 +360,7 @@ export const ExercisesBrowser: React.FC<ExercisesBrowserProps> = ({ onExerciseSe
               <div className="flex items-center gap-2">
                 <span className="text-sm text-gray-500">Primary Muscle Group:</span>
                 <span className="text-sm">
-                  {getExercisePrimaryMuscle(selectedExercise) 
+                  {getExercisePrimaryMuscle(selectedExercise)
                     ? getAttributeValueLabel(getExercisePrimaryMuscle(selectedExercise)!, t)
                     : "Unknown"}
                 </span>
@@ -423,38 +394,30 @@ export const ExercisesBrowser: React.FC<ExercisesBrowserProps> = ({ onExerciseSe
           {/* Time period selector */}
           <div className="flex items-center justify-between bg-base-100 rounded-lg p-4">
             <span className="font-semibold">Statistics</span>
-            <select 
+            <select
               className="select select-bordered select-sm"
-              onChange={(e) => setSelectedTimeframe(e.target.value)}
+              onChange={(e) => setSelectedTimeframe(e.target.value as StatisticsTimeframe)}
               value={selectedTimeframe}
             >
-              <option value="FOUR_WEEKS">Last 4 weeks</option>
-              <option value="EIGHT_WEEKS">Last 8 weeks</option>
-              <option value="TWELVE_WEEKS">Last 12 weeks</option>
-              <option value="ONE_YEAR">Last year</option>
+              {TIMEFRAME_OPTIONS.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
             </select>
           </div>
 
           {/* Stats Charts */}
           <div className="space-y-4">
-            <StatsChart 
-              data={statisticsData?.statistics?.weightProgression || []} 
-              error={statsError}
-              isLoading={isLoadingStats}
-              title="Weight" 
-            />
-            <StatsChart 
-              data={statisticsData?.statistics?.estimatedOneRepMax || []} 
-              error={statsError}
-              isLoading={isLoadingStats}
-              title="One Rep Max" 
-            />
-            <StatsChart 
-              data={statisticsData?.statistics?.volume || []} 
-              error={statsError}
-              isLoading={isLoadingStats}
-              title="Set Volume" 
-            />
+            {selectedExercise ? (
+              <ExerciseCharts exerciseId={selectedExercise.id} exerciseName={selectedExercise.name} timeframe={selectedTimeframe} />
+            ) : (
+              <>
+                <EmptyChart title="Weight" />
+                <EmptyChart title="One Rep Max" />
+                <EmptyChart title="Set Volume" />
+              </>
+            )}
           </div>
         </div>
 

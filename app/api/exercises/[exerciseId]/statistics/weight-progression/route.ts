@@ -67,7 +67,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     }
 
     const { exerciseId } = await params;
-    
+
     // Fetch weight progression data
     const workoutSessionExercises = await prisma.workoutSessionExercise.findMany({
       where: {
@@ -107,6 +107,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
 
     // Group by session and find max weight per session
     const sessionMaxWeights = new Map<string, { date: Date; maxWeight: number }>();
+    console.log("sessionMaxWeights:", sessionMaxWeights);
 
     workoutSessionExercises.forEach((sessionExercise) => {
       const sessionDate = sessionExercise.workoutSession.startedAt.toISOString().split("T")[0];

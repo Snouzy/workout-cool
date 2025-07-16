@@ -3,7 +3,7 @@ import { BarChart3 } from "lucide-react";
 import { useCurrentLocale, useI18n } from "locales/client";
 import { getYouTubeEmbedUrl } from "@/shared/lib/youtube";
 import { getAttributeValueLabel } from "@/shared/lib/attribute-value-translation";
-import { ExerciseStatisticsTab } from "@/features/statistics/components/ExerciseStatisticsTab";
+import { ExerciseCharts } from "@/features/statistics/components/ExerciseStatisticsTab";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 import type { ExerciseWithAttributes } from "../types";
@@ -105,16 +105,14 @@ export function ExerciseVideoModal({ open, onOpenChange, exercise }: ExerciseVid
             dangerouslySetInnerHTML={{ __html: description }}
           />
         )}
-        
+
         {/* Statistics */}
         <div className="px-6 pt-4 pb-6 border-t border-slate-200 dark:border-slate-800 mt-2">
           <div className="flex items-center gap-2 mb-4">
             <BarChart3 className="text-blue-600 dark:text-blue-400" size={20} />
-            <h3 className="text-lg font-semibold text-slate-700 dark:text-slate-200">
-              {t("statistics.title") || "Statistiques"}
-            </h3>
+            <h3 className="text-lg font-semibold text-slate-700 dark:text-slate-200">{t("statistics.title") || "Statistiques"}</h3>
           </div>
-          <ExerciseStatisticsTab exerciseId={exercise.id} />
+          <ExerciseCharts exerciseId={exercise.id} />
         </div>
       </DialogContent>
     </Dialog>

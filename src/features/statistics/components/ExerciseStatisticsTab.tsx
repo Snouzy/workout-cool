@@ -1,14 +1,12 @@
 "use client";
 
 import React from "react";
-import { AlertCircle, RefreshCw } from "lucide-react";
+import { AlertCircle } from "lucide-react";
 
 import { useI18n } from "locales/client";
-import { StatisticsTimeframe } from "@/shared/types/statistics.types";
 import { cn } from "@/shared/lib/utils";
 import { PremiumGate } from "@/components/ui/premium-gate";
 import { Loader } from "@/components/ui/loader";
-import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
 import { useWeightProgression, useOneRepMax, useVolumeData } from "../hooks/use-exercise-statistics";
@@ -42,16 +40,6 @@ export function ExerciseCharts({ timeframe, exerciseId, exerciseName, unit = "kg
   return (
     <PremiumGate className={className} feature="exercise-statistics" upgradeMessage={t("statistics.premium_required")}>
       <div className={cn("space-y-6", className)}>
-        {/* Header */}
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex items-center gap-4">
-            <Button className="gap-2" disabled={isLoading} onClick={handleRefresh} size="small" variant="outline">
-              <RefreshCw className={cn("h-4 w-4", isLoading && "animate-spin")} />
-              {t("commons.refresh")}
-            </Button>
-          </div>
-        </div>
-
         {/* Error State */}
         {hasError && (
           <Alert variant="error">

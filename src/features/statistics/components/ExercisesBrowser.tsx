@@ -36,18 +36,6 @@ const fetchExercises = async (params: { page?: number; limit?: number; search?: 
   return response.json();
 };
 
-// API service for fetching exercise statistics
-const fetchExerciseStatistics = async (exerciseId: string, timeframe: string) => {
-  const searchParams = new URLSearchParams();
-  searchParams.append("timeframe", timeframe);
-
-  const response = await fetch(`/api/exercises/${exerciseId}/statistics?${searchParams}`);
-  if (!response.ok) {
-    throw new Error("Failed to fetch exercise statistics");
-  }
-  return response.json();
-};
-
 // Available muscle groups
 const MUSCLE_GROUPS = [
   { value: "CHEST", label: "Chest" },
@@ -118,23 +106,19 @@ const ExerciseSelectionModal: React.FC<{
     return typeof primaryMuscle?.attributeValue === "string" ? primaryMuscle?.attributeValue : primaryMuscle?.attributeValue?.value || null;
   };
 
-  if (!isOpen) return null;
-
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
-      <div className="bg-base-100 w-full max-w-2xl h-full max-h-screen flex flex-col">
+    <div className={`modal ${isOpen ? "modal-open" : ""}`}>
+      <div className="modal-box mt-32 w-full max-w-2xl h-full max-h-screen flex flex-col p-4 sm:p-6">
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b">
+        <div className="flex items-center justify-between mb-4">
           <h2 className="text-2xl font-bold">Select Exercise</h2>
-          <div className="flex items-center gap-4">
-            <button className="btn btn-ghost btn-sm" onClick={onClose}>
-              <X className="h-4 w-4" />
-            </button>
-          </div>
+          <button className="btn btn-ghost btn-sm" onClick={onClose}>
+            <X className="h-4 w-4" />
+          </button>
         </div>
 
         {/* Filters */}
-        <div className="p-4 space-y-4">
+        <div className="space-y-4 mb-4">
           {/* Equipment Filter */}
           <div className="form-control">
             <select
@@ -167,7 +151,7 @@ const ExerciseSelectionModal: React.FC<{
           <div className="relative">
             <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
             <input
-              className="input input-bordered w-full pl-10"
+              className="input input-bordered w-ful placeholder:text-gray-500 dark:placeholder:text-gray-600 w-full"
               onChange={(e) => handleSearch(e.target.value)}
               placeholder="Search Exercises"
             />
@@ -175,7 +159,7 @@ const ExerciseSelectionModal: React.FC<{
         </div>
 
         {/* Exercise List */}
-        <div className="flex-1 overflow-y-auto p-4">
+        <div className="flex-1 overflow-y-auto">
           {isLoading && (
             <div className="flex justify-center py-8">
               <span className="loading loading-spinner loading-lg"></span>
@@ -195,7 +179,6 @@ const ExerciseSelectionModal: React.FC<{
           )}
 
           <div className="space-y-2">
-            <h3 className="text-lg font-semibold text-gray-500 mb-4">Popular Exercises</h3>
             {exercises.map((exercise: ExerciseWithAttributes) => {
               const primaryMuscle = getExercisePrimaryMuscle(exercise);
               const primaryMuscleLabel = primaryMuscle ? getAttributeValueLabel(primaryMuscle, t) : "";
@@ -221,6 +204,7 @@ const ExerciseSelectionModal: React.FC<{
           </div>
         </div>
       </div>
+      <div className="modal-backdrop" onClick={onClose}></div>
     </div>
   );
 };
@@ -251,17 +235,6 @@ export const ExercisesBrowser: React.FC<ExercisesBrowserProps> = ({ onExerciseSe
   const [showVideoModal, setShowVideoModal] = useState(false);
   const [selectedTimeframe, setSelectedTimeframe] = useState<StatisticsTimeframe>("8weeks");
   const t = useI18n();
-
-  // Fetch statistics when exercise is selected
-  const {
-    data: statisticsData,
-    isLoading: isLoadingStats,
-    error: statsError,
-  } = useQuery({
-    queryKey: ["exercise-statistics", selectedExercise?.id, selectedTimeframe],
-    queryFn: () => fetchExerciseStatistics(selectedExercise!.id, selectedTimeframe),
-    enabled: !!selectedExercise,
-  });
 
   const handleExerciseSelect = (exercise: ExerciseWithAttributes) => {
     setSelectedExercise(exercise);
@@ -335,108 +308,109 @@ export const ExercisesBrowser: React.FC<ExercisesBrowserProps> = ({ onExerciseSe
   };
 
   return (
-    <div className="min-h-screen bg-base-300 p-4">
-      <div className="max-w-2xl mx-auto space-y-6">
-        {/* Header */}
-        <div>
-          <h1 className="text-3xl font-bold mb-6">Exercise</h1>
+    <>
+      <div className="min-h-screen bg-base-300 p-4">
+        <div className="max-w-2xl mx-auto space-y-6">
+          {/* Header */}
+          <div>
+            <h1 className="text-3xl font-bold mb-6">Exercise</h1>
 
-          {/* Exercise Selection Button */}
-          <button className="btn btn-primary w-full mb-6" onClick={openExerciseSelection}>
-            Select Exercise
-          </button>
-        </div>
-
-        {/* Selected Exercise Info */}
-        {selectedExercise && (
-          <div className="bg-base-100 rounded-lg p-6">
-            <h2 className="text-2xl font-bold mb-4">{selectedExercise.name}</h2>
-
-            <div className="flex flex-col gap-2 mb-4">
-              <div className="flex items-center gap-2">
-                <span className="text-sm text-gray-500">Equipment:</span>
-                <span className="text-sm">{getExerciseEquipment(selectedExercise) || "Unknown"}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-sm text-gray-500">Primary Muscle Group:</span>
-                <span className="text-sm">
-                  {getExercisePrimaryMuscle(selectedExercise)
-                    ? getAttributeValueLabel(getExercisePrimaryMuscle(selectedExercise)!, t)
-                    : "Unknown"}
-                </span>
-              </div>
-            </div>
-
-            {/* Exercise Image */}
-            <div className="bg-base-200 rounded-lg p-4 mb-4">
-              <div className="h-48 bg-base-200 rounded-lg flex items-center justify-center overflow-hidden">
-                {selectedExercise.fullVideoImageUrl ? (
-                  <Image
-                    alt={selectedExercise.name}
-                    className="object-cover cursor-pointer"
-                    height={200}
-                    onClick={openVideoModal}
-                    src={selectedExercise.fullVideoImageUrl}
-                    width={300}
-                  />
-                ) : (
-                  <div className="text-center">
-                    <p className="text-gray-500">No image available</p>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Statistics Section */}
-        <div className="space-y-4">
-          {/* Time period selector */}
-          <div className="flex items-center justify-between bg-base-100 rounded-lg p-4">
-            <span className="font-semibold">Statistics</span>
-            <select
-              className="select select-bordered select-sm"
-              onChange={(e) => setSelectedTimeframe(e.target.value as StatisticsTimeframe)}
-              value={selectedTimeframe}
-            >
-              {TIMEFRAME_OPTIONS.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
+            {/* Exercise Selection Button */}
+            <button className="btn btn-primary w-full mb-6" onClick={openExerciseSelection}>
+              Select Exercise
+            </button>
           </div>
 
-          {/* Stats Charts */}
+          {/* Selected Exercise Info */}
+          {selectedExercise && (
+            <div className="bg-base-100 rounded-lg p-6">
+              <h2 className="text-2xl font-bold mb-4">{selectedExercise.name}</h2>
+
+              <div className="flex flex-col gap-2 mb-4">
+                <div className="flex items-center gap-2">
+                  <span className="text-sm text-gray-500">Equipment:</span>
+                  <span className="text-sm">{getExerciseEquipment(selectedExercise) || "Unknown"}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-sm text-gray-500">Primary Muscle Group:</span>
+                  <span className="text-sm">
+                    {getExercisePrimaryMuscle(selectedExercise)
+                      ? getAttributeValueLabel(getExercisePrimaryMuscle(selectedExercise)!, t)
+                      : "Unknown"}
+                  </span>
+                </div>
+              </div>
+
+              {/* Exercise Image */}
+              <div className="bg-base-200 rounded-lg p-4 mb-4">
+                <div className="h-48 bg-base-200 rounded-lg flex items-center justify-center overflow-hidden">
+                  {selectedExercise.fullVideoImageUrl ? (
+                    <Image
+                      alt={selectedExercise.name}
+                      className="object-cover cursor-pointer"
+                      height={200}
+                      onClick={openVideoModal}
+                      src={selectedExercise.fullVideoImageUrl}
+                      width={300}
+                    />
+                  ) : (
+                    <div className="text-center">
+                      <p className="text-gray-500">No image available</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Statistics Section */}
           <div className="space-y-4">
-            {selectedExercise ? (
-              <ExerciseCharts exerciseId={selectedExercise.id} exerciseName={selectedExercise.name} timeframe={selectedTimeframe} />
-            ) : (
-              <>
-                <EmptyChart title="Weight" />
-                <EmptyChart title="One Rep Max" />
-                <EmptyChart title="Set Volume" />
-              </>
-            )}
+            {/* Time period selector */}
+            <div className="flex items-center justify-between bg-base-100 rounded-lg p-4">
+              <span className="font-semibold">Statistics</span>
+              <select
+                className="select select-bordered select-sm"
+                onChange={(e) => setSelectedTimeframe(e.target.value as StatisticsTimeframe)}
+                value={selectedTimeframe}
+              >
+                {TIMEFRAME_OPTIONS.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Stats Charts */}
+            <div className="space-y-4">
+              {selectedExercise ? (
+                <ExerciseCharts exerciseId={selectedExercise.id} exerciseName={selectedExercise.name} timeframe={selectedTimeframe} />
+              ) : (
+                <>
+                  <EmptyChart title="Weight" />
+                  <EmptyChart title="One Rep Max" />
+                  <EmptyChart title="Set Volume" />
+                </>
+              )}
+            </div>
           </div>
         </div>
-
-        {/* Exercise Selection Modal */}
-        <ExerciseSelectionModal
-          isOpen={showExerciseModal}
-          onClose={() => setShowExerciseModal(false)}
-          onSelectExercise={handleExerciseSelect}
-        />
-
-        {/* Video Modal */}
-        {selectedExercise && (
-          <ExerciseVideoModal
-            exercise={convertToWorkoutBuilderFormat(selectedExercise)}
-            onOpenChange={setShowVideoModal}
-            open={showVideoModal}
-          />
-        )}
       </div>
-    </div>
+
+      {/* Modals - Outside the main container */}
+      <ExerciseSelectionModal
+        isOpen={showExerciseModal}
+        onClose={() => setShowExerciseModal(false)}
+        onSelectExercise={handleExerciseSelect}
+      />
+
+      {selectedExercise && (
+        <ExerciseVideoModal
+          exercise={convertToWorkoutBuilderFormat(selectedExercise)}
+          onOpenChange={setShowVideoModal}
+          open={showVideoModal}
+        />
+      )}
+    </>
   );
 };

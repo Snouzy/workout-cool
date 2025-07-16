@@ -161,6 +161,10 @@
   @apply text-black;
 }
 
+:where(.\!modal[open], .modal-open, .modal-toggle:checked + .\!modal):not(.modal-start, .modal-end) {
+  scrollbar-gutter: auto !important;
+}
+
 @layer components {
   .sidebar .nav-link {
     @apply mx-[2px] mt-1 flex items-center gap-2.5 border border-transparent px-5 py-2.5 text-sm font-medium leading-tight text-gray transition hover:text-black dark:text-gray-500 dark:hover:text-white;

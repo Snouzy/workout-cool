@@ -16,7 +16,7 @@ export interface ChangelogNotificationBadgeProps {
 }
 
 const sizeClasses = {
-  small: "w-2 h-2",
+  small: "w-2 h-2 sm:w-3 sm:h-3",
   medium: "w-3 h-3",
   large: "w-4 h-4",
 };

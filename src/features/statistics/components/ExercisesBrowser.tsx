@@ -307,6 +307,8 @@ export const ExercisesBrowser: React.FC<ExercisesBrowserProps> = ({ onExerciseSe
     };
   };
 
+  console.log("selectedExercise:", selectedExercise);
+
   return (
     <>
       <div className="min-h-screen bg-base-300 p-4">
@@ -343,11 +345,11 @@ export const ExercisesBrowser: React.FC<ExercisesBrowserProps> = ({ onExerciseSe
 
               {/* Exercise Image */}
               <div className="bg-base-200 rounded-lg p-4 mb-4">
-                <div className="h-48 bg-base-200 rounded-lg flex items-center justify-center overflow-hidden">
+                <div className="max-h-48 bg-base-200 rounded-lg flex items-center justify-center overflow-hidden aspect-video border border-gray-400 dark:border-gray-700 rounded-lg">
                   {selectedExercise.fullVideoImageUrl ? (
                     <Image
                       alt={selectedExercise.name}
-                      className="object-cover cursor-pointer"
+                      className="object-cover cursor-pointer aspect-video scale-115 justify-center place-self-center"
                       height={200}
                       onClick={openVideoModal}
                       src={selectedExercise.fullVideoImageUrl}

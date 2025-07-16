@@ -16,8 +16,8 @@ export interface ExerciseAttribute {
   exerciseId: string;
   attributeNameId: string;
   attributeValueId: string;
-  attributeName: ExerciseAttributeNameEnum;
-  attributeValue: ExerciseAttributeValueEnum;
+  attributeName: ExerciseAttributeNameEnum | { name: ExerciseAttributeNameEnum; id: string };
+  attributeValue: ExerciseAttributeValueEnum | { value: ExerciseAttributeValueEnum; id: string };
 }
 
 // Exercise with attributes

@@ -34,11 +34,14 @@ export async function GET(request: NextRequest) {
 
     const parsed = paginationSchema.safeParse(params);
     if (!parsed.success) {
-      return NextResponse.json({ 
-        error: "INVALID_PARAMETERS", 
-        message: "Invalid query parameters",
-        details: parsed.error.format()
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          error: "INVALID_PARAMETERS",
+          message: "Invalid query parameters",
+          details: parsed.error.format(),
+        },
+        { status: 400 },
+      );
     }
 
     const { page, limit, search, muscle, equipment } = parsed.data;
@@ -46,13 +49,10 @@ export async function GET(request: NextRequest) {
 
     // Build where clause for filtering
     const whereClause: any = {};
-    
+
     // Search by exercise name
     if (search) {
-      whereClause.OR = [
-        { name: { contains: search, mode: "insensitive" } },
-        { nameEn: { contains: search, mode: "insensitive" } },
-      ];
+      whereClause.OR = [{ name: { contains: search, mode: "insensitive" } }, { nameEn: { contains: search, mode: "insensitive" } }];
     }
 
     // Filter by muscle group
@@ -81,11 +81,21 @@ export async function GET(request: NextRequest) {
     // Fetch exercises with pagination
     const exercises = await prisma.exercise.findMany({
       where: whereClause,
-      include: {
+      select: {
+        id: true,
+        name: true,
+        nameEn: true,
+        fullVideoUrl: true,
+        fullVideoImageUrl: true,
         attributes: {
-          include: {
-            attributeName: true,
-            attributeValue: true,
+          select: {
+            id: true,
+            attributeName: {
+              select: { name: true },
+            },
+            attributeValue: {
+              select: { value: true },
+            },
           },
         },
       },
@@ -116,12 +126,14 @@ export async function GET(request: NextRequest) {
     headers.set("Cache-Control", "public, max-age=300, stale-while-revalidate=600");
 
     return NextResponse.json(response, { headers });
-
   } catch (error) {
     console.error("Error fetching exercises:", error);
-    return NextResponse.json({ 
-      error: "INTERNAL_SERVER_ERROR", 
-      message: "Failed to fetch exercises" 
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        error: "INTERNAL_SERVER_ERROR",
+        message: "Failed to fetch exercises",
+      },
+      { status: 500 },
+    );
   }
 }

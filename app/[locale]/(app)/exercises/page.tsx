@@ -58,12 +58,6 @@ export default function ExercisesPage() {
         </div>
       ) : (
         <div className="space-y-6">
-          {/* Header */}
-          <div className="text-center">
-            <h1 className="text-3xl font-bold mb-2">Exercices</h1>
-            <p className="text-gray-600">Sélectionnez un exercice pour voir ses statistiques de performance</p>
-          </div>
-
           {/* Premium Gate for non-premium users */}
           {!isPremium && (
             <Card className="p-6">

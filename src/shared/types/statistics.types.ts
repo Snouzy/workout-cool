@@ -1,4 +1,5 @@
 import { StatisticsTimeframe } from "@/shared/constants/statistics";
+import { ExerciseWithAttributes } from "@/entities/exercise/types/exercise.types";
 
 // Weight Progression Types
 export interface WeightProgressionPoint {
@@ -82,17 +83,8 @@ export interface ExerciseAttribute {
   };
 }
 
-export interface ExerciseForStatistics {
-  id: string;
-  name: string;
-  nameEn: string | null;
-  fullVideoImageUrl: string | null;
-  fullVideoUrl: string | null;
-  attributes: ExerciseAttribute[];
-}
-
 export interface ExercisesPaginationResponse {
-  data: ExerciseForStatistics[];
+  data: ExerciseWithAttributes[];
   pagination: {
     page: number;
     limit: number;

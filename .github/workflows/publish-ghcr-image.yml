@@ -40,14 +40,16 @@ jobs:
             echo "tag=${{ github.event.inputs.version }}" >> $GITHUB_OUTPUT
           fi
 
-      - name: Build Docker image
-        run: |
-          docker build --no-cache . \
-                    --tag ghcr.io/snouzy/workout-cool:${{ steps.vars.outputs.tag }} \
-                    --tag ghcr.io/snouzy/workout-cool:latest
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
-      - name: Push Docker image (release tag)
-        run: docker push ghcr.io/snouzy/workout-cool:${{ steps.vars.outputs.tag }}
-
-      - name: Push Docker image (latest tag)
-        run: docker push ghcr.io/snouzy/workout-cool:latest
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: |
+            ghcr.io/snouzy/workout-cool:${{ steps.vars.outputs.tag }}
+            ghcr.io/snouzy/workout-cool:latest
+          platforms: linux/amd64,linux/arm64

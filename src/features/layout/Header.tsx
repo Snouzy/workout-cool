@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Home, LogIn, UserPlus, LogOut, User, Crown, CreditCard } from "lucide-react";
+import { LogIn, UserPlus, LogOut, User, Crown, CreditCard } from "lucide-react";
 
 import { useI18n } from "locales/client";
 import Logo from "@public/logo.png";
@@ -9,6 +9,7 @@ import { LanguageSelector } from "@/widgets/language-selector/language-selector"
 import { usePremiumStatus } from "@/shared/lib/premium/use-premium";
 import { ThemeToggle } from "@/features/theme/ThemeToggle";
 import { ReleaseNotesDialog } from "@/features/release-notes";
+import WorkoutStreakHeader from "@/features/layout/workout-streak-header";
 import { useLogout } from "@/features/auth/model/useLogout";
 import { useSession } from "@/features/auth/lib/auth-client";
 import { Link } from "@/components/ui/link";
@@ -34,7 +35,7 @@ export const Header = () => {
   };
 
   return (
-    <div className="navbar bg-base-100 dark:bg-black dark:text-gray-200 px-4 rounded-tl-lg rounded-tr-lg">
+    <div className="navbar bg-base-100 dark:bg-black dark:text-gray-200 px-2 sm:px-4 rounded-tl-lg rounded-tr-lg">
       {/* Logo and Title */}
       <div className="navbar-start flex items-center gap-2">
         <Link
@@ -60,18 +61,8 @@ export const Header = () => {
 
       {/* User Menu */}
       <div className="navbar-end">
-        <div className="tooltip tooltip-bottom" data-tip={t("commons.home")}>
-          <Link
-            aria-label={t("commons.home")}
-            className="hover:bg-slate-200 dark:hover:bg-gray-800 rounded-full p-2 transition flex"
-            href="/"
-          >
-            <Home className="w-6 h-6 text-blue-500 dark:text-blue-400" />
-          </Link>
-        </div>
-
+        <WorkoutStreakHeader />
         <ReleaseNotesDialog />
-
         <ThemeToggle />
         <LanguageSelector />
 

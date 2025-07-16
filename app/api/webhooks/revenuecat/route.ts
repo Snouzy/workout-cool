@@ -1,5 +1,4 @@
 /* eslint-disable no-case-declarations */
-import crypto from "crypto";
 
 import { NextRequest, NextResponse } from "next/server";
 
@@ -17,7 +16,7 @@ import { prisma } from "@/shared/lib/prisma";
 interface RevenueCatWebhookEvent {
   event: {
     type: string;
-    timestamp: number;
+    event_timestamp_ms: number;
     app_user_id: string;
     original_app_user_id?: string;
     aliases?: string[];
@@ -46,15 +45,16 @@ interface RevenueCatWebhookEvent {
 }
 
 /**
- * Verify RevenueCat webhook signature
+ * Verify RevenueCat webhook authorization header
+ * RevenueCat uses a simple authorization header verification, not HMAC signatures
  */
-function verifyWebhookSignature(payload: string, signature: string, secret: string): boolean {
+function verifyWebhookAuthorization(authHeader: string, expectedSecret: string): boolean {
   try {
-    const expectedSignature = crypto.createHmac("sha256", secret).update(payload).digest("hex");
-
-    return crypto.timingSafeEqual(Buffer.from(signature, "hex"), Buffer.from(expectedSignature, "hex"));
+    // RevenueCat sends the authorization header as "Bearer <your_secret>"
+    const receivedSecret = authHeader.replace("Bearer ", "");
+    return receivedSecret === expectedSecret;
   } catch (error) {
-    console.error("Error verifying webhook signature:", error);
+    console.error("Error verifying webhook authorization:", error);
     return false;
   }
 }
@@ -63,11 +63,12 @@ function verifyWebhookSignature(payload: string, signature: string, secret: stri
  * Log webhook event for debugging and monitoring
  */
 async function logWebhookEvent(event: RevenueCatWebhookEvent, success: boolean, processingError?: string) {
+  console.log("event:", event);
   try {
     await prisma.revenueCatWebhookEvent.create({
       data: {
         eventType: event.event.type,
-        eventTimestamp: new Date(event.event.timestamp * 1000),
+        eventTimestamp: new Date(event.event.event_timestamp_ms),
         appUserId: event.event.app_user_id,
         environment: event.event.environment,
         productId: event.event.product_id,
@@ -76,7 +77,7 @@ async function logWebhookEvent(event: RevenueCatWebhookEvent, success: boolean, 
         entitlementIds: event.event.entitlement_ids ? JSON.stringify(event.event.entitlement_ids) : null,
         processed: success,
         processingError: processingError,
-        rawEventData: event,
+        rawEventData: JSON.stringify(event),
       },
     });
 
@@ -87,7 +88,7 @@ async function logWebhookEvent(event: RevenueCatWebhookEvent, success: boolean, 
         appUserId: event.event.app_user_id,
         environment: event.event.environment,
         success,
-        timestamp: new Date(event.event.timestamp * 1000).toISOString(),
+        timestamp: new Date(event.event.event_timestamp_ms * 1000).toISOString(),
       });
     }
   } catch (error) {
@@ -228,20 +229,21 @@ export async function POST(request: NextRequest) {
     // Check if RevenueCat is configured
     if (!RevenueCatConfig.isConfigured()) {
       console.warn("RevenueCat webhook received but not configured");
+      console.log(RevenueCatConfig.getWebhookConfig());
       return NextResponse.json({ error: "RevenueCat not configured" }, { status: 503 });
     }
 
-    // Get raw body for signature verification
+    // Get raw body and authorization header
     const body = await request.text();
-    const signature = request.headers.get("Authorization")?.replace("Bearer ", "") || "";
+    const authHeader = request.headers.get("Authorization") || "";
 
-    // Verify webhook signature
+    // Verify webhook authorization
     const webhookConfig = RevenueCatConfig.getWebhookConfig();
-    const isValidSignature = verifyWebhookSignature(body, signature, webhookConfig.secret);
+    const isValidAuth = verifyWebhookAuthorization(authHeader, webhookConfig.secret);
 
-    if (!isValidSignature) {
-      console.error("Invalid RevenueCat webhook signature");
-      return NextResponse.json({ error: "Invalid signature" }, { status: 401 });
+    if (!isValidAuth) {
+      console.error("Invalid RevenueCat webhook authorization");
+      return NextResponse.json({ error: "Invalid authorization" }, { status: 401 });
     }
 
     // Parse webhook event

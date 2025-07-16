@@ -2,7 +2,7 @@ import { env } from "@/env";
 
 /**
  * RevenueCat Configuration Service
- * 
+ *
  * Centralized configuration for RevenueCat integration
  * Follows KISS principle - simple and easy to maintain
  */
@@ -44,11 +44,7 @@ export class RevenueCatConfig {
    * Check if RevenueCat is properly configured
    */
   static isConfigured(): boolean {
-    return !!(
-      env.REVENUECAT_SECRET_KEY &&
-      env.REVENUECAT_WEBHOOK_SECRET &&
-      env.REVENUECAT_PROJECT_ID
-    );
+    return !!(env.REVENUECAT_SECRET_KEY && env.REVENUECAT_WEBHOOK_SECRET && env.REVENUECAT_PROJECT_ID);
   }
 
   /**
@@ -64,7 +60,7 @@ export class RevenueCatConfig {
   static getApiHeaders(): Record<string, string> {
     return {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${this.getSecretKey()}`,
+      Authorization: `Bearer ${this.getSecretKey()}`,
       "X-Platform": "server",
     };
   }

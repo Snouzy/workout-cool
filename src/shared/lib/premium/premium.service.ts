@@ -1,5 +1,6 @@
 import { PaymentProcessor, Platform } from "@prisma/client";
 
+import { revenueCatApi } from "@/shared/lib/revenuecat";
 import { prisma } from "@/shared/lib/prisma";
 
 import type { PremiumStatus, UserSubscription } from "@/shared/types/premium.types";
@@ -147,6 +148,8 @@ export class PremiumService {
    * Links RevenueCat user ID to BetterAuth user account
    */
   static async assignRevenueCatUserId(userId: string, revenueCatUserId: string): Promise<void> {
+    console.log(`Assigning RevenueCat user ID ${revenueCatUserId} to user ${userId}`);
+
     // Check if RevenueCat user ID is already assigned to another user
     const existingUser = await prisma.user.findFirst({
       where: {
@@ -204,16 +207,25 @@ export class PremiumService {
         revenueCatUserId,
       },
     });
+
+    // After assigning the RevenueCat user ID, sync the current subscription status
+    // This ensures the user's premium status is accurate based on current entitlements
+    try {
+      await this.syncRevenueCatStatus(userId, revenueCatUserId);
+    } catch (error) {
+      console.error("Error syncing RevenueCat status after assignment:", error);
+      // Don't throw here to avoid breaking the assignment flow
+      // The sync failure will be logged but won't prevent assignment
+    }
   }
 
   /**
    * Link anonymous RevenueCat user to authenticated BetterAuth user
    * Migrates subscription data from anonymous to authenticated user
    */
-  static async linkRevenueCatUser(
-    authenticatedUserId: string,
-    anonymousRevenueCatUserId: string
-  ): Promise<void> {
+  static async linkRevenueCatUser(authenticatedUserId: string, anonymousRevenueCatUserId: string): Promise<void> {
+    console.log(`Linking anonymous RevenueCat user ${anonymousRevenueCatUserId} to authenticated user ${authenticatedUserId}`);
+
     await prisma.$transaction(async (tx) => {
       // Find subscriptions with the anonymous RevenueCat user ID
       const anonymousSubscriptions = await tx.subscription.findMany({
@@ -221,6 +233,8 @@ export class PremiumService {
           revenueCatUserId: anonymousRevenueCatUserId,
         },
       });
+
+      console.log(`Found ${anonymousSubscriptions.length} anonymous subscriptions to transfer`);
 
       // Transfer subscriptions to authenticated user
       for (const subscription of anonymousSubscriptions) {
@@ -234,9 +248,7 @@ export class PremiumService {
       }
 
       // Update user premium status if any active subscriptions exist
-      const hasActiveSubscriptions = anonymousSubscriptions.some(
-        (sub) => sub.status === "ACTIVE"
-      );
+      const hasActiveSubscriptions = anonymousSubscriptions.some((sub) => sub.status === "ACTIVE");
 
       if (hasActiveSubscriptions) {
         await tx.user.update({
@@ -245,6 +257,16 @@ export class PremiumService {
         });
       }
     });
+
+    // After linking, sync the current RevenueCat subscription status
+    // This ensures the user's premium status is accurate based on current entitlements
+    try {
+      await this.syncRevenueCatStatus(authenticatedUserId, anonymousRevenueCatUserId);
+    } catch (error) {
+      console.error("Error syncing RevenueCat status after linking:", error);
+      // Don't throw here to avoid breaking the linking flow
+      // The sync failure will be logged but won't prevent account linking
+    }
   }
 
   /**
@@ -336,70 +358,6 @@ export class PremiumService {
   }
 
   /**
-   * Check premium status specifically from RevenueCat entitlements
-   */
-  static async checkRevenueCatPremiumStatus(userId: string): Promise<PremiumStatus> {
-    const user = await prisma.user.findUnique({
-      where: { id: userId },
-      select: {
-        isPremium: true,
-        subscriptions: {
-          where: {
-            status: "ACTIVE",
-            revenueCatUserId: { not: null },
-          },
-          select: {
-            currentPeriodEnd: true,
-            revenueCatUserId: true,
-            revenueCatEntitlement: true,
-            revenueCatTransactionId: true,
-            plan: {
-              select: { id: true },
-            },
-          },
-          orderBy: { createdAt: "desc" },
-        },
-      },
-    });
-
-    if (!user) {
-      return { isPremium: false };
-    }
-
-    // Check for active RevenueCat subscriptions
-    const activeRevenueCatSubscriptions = user.subscriptions.filter(sub => {
-      // Must have RevenueCat data
-      if (!sub.revenueCatUserId || !sub.revenueCatEntitlement) {
-        return false;
-      }
-
-      // Check expiry if available
-      if (sub.currentPeriodEnd) {
-        return sub.currentPeriodEnd > new Date();
-      }
-
-      // If no expiry date, assume active (lifetime or ongoing)
-      return true;
-    });
-
-    const isPremium = activeRevenueCatSubscriptions.length > 0;
-
-    return {
-      isPremium,
-      subscriptions: activeRevenueCatSubscriptions.map((sub): UserSubscription => ({
-        id: sub.plan.id,
-        expiryDate: sub.currentPeriodEnd || null,
-        isActive: true,
-        revenueCatData: {
-          userId: sub.revenueCatUserId!,
-          entitlement: sub.revenueCatEntitlement!,
-          transactionId: sub.revenueCatTransactionId,
-        },
-      })),
-    };
-  }
-
-  /**
    * Validate RevenueCat entitlement for specific features
    */
   static async validateRevenueCatEntitlement(userId: string, requiredEntitlement: string): Promise<boolean> {
@@ -424,10 +382,114 @@ export class PremiumService {
     }
 
     // Check if any subscription has the required entitlement and is not expired
-    return user.subscriptions.some(sub => {
+    return user.subscriptions.some((sub) => {
       const hasEntitlement = sub.revenueCatEntitlement?.includes(requiredEntitlement);
       const isNotExpired = !sub.currentPeriodEnd || sub.currentPeriodEnd > new Date();
       return hasEntitlement && isNotExpired;
     });
+  }
+
+  /**
+   * Fetch current subscription status from RevenueCat API
+   * This method queries RevenueCat directly to get the most up-to-date subscription status
+   */
+  static async fetchRevenueCatSubscriptionStatus(revenueCatUserId: string): Promise<{
+    isPremium: boolean;
+    expiresAt: Date | null;
+    entitlementIds: string[];
+    error?: string;
+  }> {
+    try {
+      console.log(`Fetching RevenueCat subscription status for user: ${revenueCatUserId}`);
+
+      // Check if user has active entitlements
+      const hasActiveEntitlements = await revenueCatApi.hasActiveEntitlements(revenueCatUserId);
+
+      if (!hasActiveEntitlements) {
+        console.log(`No active entitlements found for RevenueCat user: ${revenueCatUserId}`);
+        return {
+          isPremium: false,
+          expiresAt: null,
+          entitlementIds: [],
+        };
+      }
+
+      // Get entitlement details
+      const [expiresAt, entitlementIds] = await Promise.all([
+        revenueCatApi.getLatestExpirationDate(revenueCatUserId),
+        revenueCatApi.getActiveEntitlementIds(revenueCatUserId),
+      ]);
+
+      console.log(`RevenueCat subscription status for ${revenueCatUserId}:`, {
+        isPremium: true,
+        expiresAt,
+        entitlementIds,
+      });
+
+      return {
+        isPremium: true,
+        expiresAt,
+        entitlementIds,
+      };
+    } catch (error) {
+      console.error("Error fetching RevenueCat subscription status:", error);
+
+      const errorMessage = error instanceof Error ? error.message : "Unknown error";
+
+      return {
+        isPremium: false,
+        expiresAt: null,
+        entitlementIds: [],
+        error: errorMessage,
+      };
+    }
+  }
+
+  /**
+   * Sync user's premium status with RevenueCat
+   * Updates the database with the current RevenueCat subscription status
+   */
+  static async syncRevenueCatStatus(userId: string, revenueCatUserId: string): Promise<void> {
+    try {
+      console.log(`Syncing RevenueCat status for user ${userId} with RevenueCat user ${revenueCatUserId}`);
+
+      // Fetch current status from RevenueCat
+      const revenueCatStatus = await this.fetchRevenueCatSubscriptionStatus(revenueCatUserId);
+
+      if (revenueCatStatus.error) {
+        console.warn(`Failed to fetch RevenueCat status, skipping sync: ${revenueCatStatus.error}`);
+        return;
+      }
+
+      // Update user's premium status in database
+      await prisma.$transaction(async (tx) => {
+        // Update user's isPremium flag
+        await tx.user.update({
+          where: { id: userId },
+          data: { isPremium: revenueCatStatus.isPremium },
+        });
+
+        // Update subscription records
+        await tx.subscription.updateMany({
+          where: {
+            userId: userId,
+            revenueCatUserId: revenueCatUserId,
+          },
+          data: {
+            status: revenueCatStatus.isPremium ? "ACTIVE" : "EXPIRED",
+            currentPeriodEnd: revenueCatStatus.expiresAt,
+            revenueCatEntitlement: revenueCatStatus.entitlementIds.join(","),
+            updatedAt: new Date(),
+          },
+        });
+      });
+
+      console.log(`Successfully synced RevenueCat status for user ${userId}: isPremium=${revenueCatStatus.isPremium}`);
+    } catch (error) {
+      console.error("Error syncing RevenueCat status:", error);
+
+      // Don't throw here to avoid breaking the user flow
+      // The sync failure will be logged but won't prevent account linking
+    }
   }
 }

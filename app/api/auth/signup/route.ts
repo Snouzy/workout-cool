@@ -1,7 +1,8 @@
+import { z } from "zod";
 import { NextRequest, NextResponse } from "next/server";
 import { UserRole } from "@prisma/client";
+
 import { auth } from "@/features/auth/lib/better-auth";
-import { z } from "zod";
 
 const signUpSchema = z.object({
   email: z.string().email(),

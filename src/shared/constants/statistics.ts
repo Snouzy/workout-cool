@@ -1,0 +1,30 @@
+export const STATISTICS_TIMEFRAMES = {
+  FOUR_WEEKS: "4weeks",
+  EIGHT_WEEKS: "8weeks", 
+  TWELVE_WEEKS: "12weeks",
+  ONE_YEAR: "1year",
+} as const;
+
+export type StatisticsTimeframe = typeof STATISTICS_TIMEFRAMES[keyof typeof STATISTICS_TIMEFRAMES];
+
+export const DEFAULT_TIMEFRAME = STATISTICS_TIMEFRAMES.EIGHT_WEEKS;
+
+export const TIMEFRAME_DAYS = {
+  [STATISTICS_TIMEFRAMES.FOUR_WEEKS]: 28,
+  [STATISTICS_TIMEFRAMES.EIGHT_WEEKS]: 56,
+  [STATISTICS_TIMEFRAMES.TWELVE_WEEKS]: 84,
+  [STATISTICS_TIMEFRAMES.ONE_YEAR]: 365,
+} as const;
+
+export const TIMEFRAME_LABELS = {
+  [STATISTICS_TIMEFRAMES.FOUR_WEEKS]: "4 Weeks",
+  [STATISTICS_TIMEFRAMES.EIGHT_WEEKS]: "8 Weeks",
+  [STATISTICS_TIMEFRAMES.TWELVE_WEEKS]: "12 Weeks",
+  [STATISTICS_TIMEFRAMES.ONE_YEAR]: "1 Year",
+} as const;
+
+// Cache TTL for statistics data (1 hour in seconds)
+export const STATISTICS_CACHE_TTL = 3600;
+
+// Lombardi formula constant
+export const LOMBARDI_DIVISOR = 30;

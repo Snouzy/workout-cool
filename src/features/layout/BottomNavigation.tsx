@@ -3,7 +3,7 @@
 import React from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { Dumbbell, Crown, User, Grid, Hammer } from "lucide-react";
+import { Dumbbell, Crown, User, Grid, Hammer, Activity } from "lucide-react";
 
 import { useCurrentLocale, useI18n } from "locales/client";
 import { cn } from "@/shared/lib/utils";
@@ -37,6 +37,17 @@ export function BottomNavigation() {
       emoji: "WorkoutCoolSwag.png",
       description: t("bottom_navigation.programs_tooltip"),
       isActive: pathname.includes(paths.programs),
+    },
+    {
+      id: "exercises",
+      label: t("bottom_navigation.exercises"),
+      shortLabel: t("bottom_navigation.exercises"),
+      mobileLabel: t("bottom_navigation.exercises"),
+      href: `/${locale}/exercises`,
+      icon: Activity,
+      emoji: "WorkoutCoolBiceps.png",
+      description: t("bottom_navigation.exercises_tooltip"),
+      isActive: pathname.includes("/exercises"),
     },
     {
       id: "premium",

@@ -390,6 +390,11 @@ export default {
     conversion_flow_title: "Redirection en cours...",
     conversion_flow_message: "Vous avez été connecté avec succès ! Redirection vers le checkout...",
     redirecting_to_checkout: "Redirection vers le checkout",
+
+    // Premium Gate
+    premium_feature: "Fonctionnalité Premium",
+    upgrade_to_access_feature: "Passez à premium pour accéder à cette fonctionnalité",
+    unlock_all_features: "Débloquez toutes les fonctionnalités et soutenez le développement",
   },
   breadcrumbs: {
     home: "Accueil",
@@ -1691,6 +1696,7 @@ export default {
     },
   },
   commons: {
+    refresh: "Actualiser",
     signup_with: "S'inscrire avec {provider}",
     signin_with: "Se connecter avec {provider}",
     signup: "S'inscrire",

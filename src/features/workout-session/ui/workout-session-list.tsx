@@ -130,7 +130,7 @@ export function WorkoutSessionList() {
                   <div className="flex flex-wrap gap-1 mt-1 justify-center">
                     {session.muscles.map((muscle, idx) => (
                       <span
-                        // eslint-disable-next-line max-len
+                         
                         className={`inline-block border rounded-full px-2 py-0.5 text-xs font-semibold ${BADGE_COLORS[idx % BADGE_COLORS.length]}`}
                         key={muscle}
                       >

@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import Image from "next/image";
-import { Play, Shuffle, Trash2, GripVertical, Loader2 } from "lucide-react";
+import { Play, Shuffle, Trash2, GripVertical, Loader2, BarChart3 } from "lucide-react";
 import { CSS } from "@dnd-kit/utilities";
 import { useSortable } from "@dnd-kit/sortable";
 
@@ -94,7 +94,7 @@ export const ExerciseListItem = React.memo(function ExerciseListItem({
       )}
 
       <div
-        // eslint-disable-next-line max-len
+         
         className={`tooltip tooltip-bottom w-5 h-5 rounded text-white text-xs font-bold flex items-center justify-center shrink-0 cursor-pointer ${muscleColor}`}
         data-tip={muscleTitle}
       >
@@ -115,13 +115,13 @@ export const ExerciseListItem = React.memo(function ExerciseListItem({
         {isShuffling ? <Loader2 className="h-4 w-4 sm:h-3.5 sm:w-3.5 animate-spin" /> : <Shuffle className="h-4 w-4 sm:h-3.5 sm:w-3.5" />}
         <span className="hidden sm:inline ml-1">{t("workout_builder.exercise.shuffle")}</span>
       </Button>
-      {/* <button
-        className="p-2 text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100"
-        disabled={isShuffling}
-        onClick={handleShuffle}
+
+      <button
+        className="p-2 text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
+        onClick={playVideo.setTrue}
       >
-        {isShuffling ? <Loader2 className="h-4 w-4 animate-spin" /> : <Shuffle className="h-4 w-4" />}
-      </button> */}
+        <BarChart3 className="h-4 w-4" />
+      </button>
 
       <button
         className="p-2 text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300"

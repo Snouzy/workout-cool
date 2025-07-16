@@ -1,10 +1,13 @@
 "use client";
 
-import React, { useMemo } from "react";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
+import React from "react";
 
 import { useI18n } from "locales/client";
 import { VolumePoint } from "@/shared/types/statistics.types";
 import { cn } from "@/shared/lib/utils";
+
+import { useChartTheme } from "../hooks/use-chart-theme";
 
 interface VolumeChartProps {
   data: VolumePoint[];
@@ -13,50 +16,9 @@ interface VolumeChartProps {
   className?: string;
 }
 
-const CHART_PADDING = { top: 20, right: 20, bottom: 60, left: 60 };
-const BAR_GAP = 4;
-const GRID_LINES = 5;
-
-export function VolumeChart({
-  data,
-  width = 600,
-  height = 300,
-  className,
-}: VolumeChartProps) {
+export function VolumeChart({ data, height = 300, className }: VolumeChartProps) {
   const t = useI18n();
-  
-  const chartDimensions = useMemo(() => {
-    const chartWidth = width - CHART_PADDING.left - CHART_PADDING.right;
-    const chartHeight = height - CHART_PADDING.top - CHART_PADDING.bottom;
-    return { chartWidth, chartHeight };
-  }, [width, height]);
-
-  const { chartWidth, chartHeight } = chartDimensions;
-
-  // Calculate scales and bar dimensions
-  const { xScale, yScale, yAxisValues, barWidth } = useMemo(() => {
-    if (data.length === 0) {
-      return { xScale: () => 0, yScale: () => 0, yAxisValues: [], barWidth: 0 };
-    }
-
-    const volumes = data.map(d => d.totalVolume);
-    const maxVolume = Math.max(...volumes);
-    const volumePadding = maxVolume * 0.1 || 100;
-    
-    const yMax = maxVolume + volumePadding;
-    
-    // Create nice round numbers for y-axis
-    const yStep = Math.ceil(yMax / GRID_LINES);
-    const yAxisValues = Array.from({ length: GRID_LINES + 1 }, (_, i) => 
-      Math.round(i * yStep)
-    );
-
-    const barWidth = Math.max(10, (chartWidth - (data.length - 1) * BAR_GAP) / data.length);
-    const xScale = (index: number) => index * (barWidth + BAR_GAP);
-    const yScale = (value: number) => chartHeight - (value / yMax) * chartHeight;
-
-    return { xScale, yScale, yAxisValues, barWidth };
-  }, [data, chartWidth, chartHeight]);
+  const { colors } = useChartTheme();
 
   // Format week label
   const formatWeek = (week: string) => {
@@ -75,134 +37,122 @@ export function VolumeChart({
     return volume.toString();
   };
 
-  if (data.length === 0) {
-    return (
-      <div className={cn("rounded-lg bg-white p-8 shadow-sm", className)}>
-        <div className="flex flex-col items-center justify-center text-center">
-          <p className="text-lg font-semibold text-gray-700">
-            {t("statistics.no_volume_data")}
+  // Generate skeleton data for empty state
+  const generateSkeletonData = () => {
+    const now = new Date();
+    const skeletonData = [];
+    for (let i = 7; i >= 0; i--) {
+      const date = new Date(now);
+      date.setDate(date.getDate() - i * 7);
+      const year = date.getFullYear();
+      const weekNumber = Math.ceil((date.getTime() - new Date(year, 0, 1).getTime()) / (7 * 24 * 60 * 60 * 1000));
+      const week = `${year}-W${weekNumber.toString().padStart(2, '0')}`;
+      const volume = Math.floor(Math.random() * 5000) + 1000; // Random volume between 1000-6000
+      
+      skeletonData.push({
+        week,
+        totalVolume: volume,
+        setCount: Math.floor(volume / 100), // Rough estimate of sets
+        formattedWeek: formatWeek(week),
+        formattedVolume: formatVolume(volume),
+      });
+    }
+    return skeletonData;
+  };
+
+  // Use real data or skeleton data
+  const hasData = data.length > 0;
+  const chartData = hasData 
+    ? data.map((point) => ({
+        ...point,
+        formattedWeek: formatWeek(point.week),
+        formattedVolume: formatVolume(point.totalVolume),
+      }))
+    : generateSkeletonData();
+
+  // Custom tooltip
+  const CustomTooltip = ({ active, payload, label }: any) => {
+    if (active && payload && payload.length && hasData) {
+      const data = payload[0].payload;
+      return (
+        <div
+          className="p-3 rounded-lg shadow-lg border"
+          style={{
+            backgroundColor: colors.tooltipBackground,
+            borderColor: colors.tooltipBorder,
+            color: colors.text,
+          }}
+        >
+          <p className="font-medium">{label}</p>
+          <p className="text-green-600">
+            {t("statistics.volume")}: {data.formattedVolume}
           </p>
-          <p className="mt-2 text-sm text-gray-500">
-            {t("statistics.complete_workouts")}
+          <p className="text-sm" style={{ color: colors.textSecondary }}>
+            {data.setCount} sets
           </p>
         </div>
-      </div>
-    );
-  }
+      );
+    }
+    return null;
+  };
 
   return (
-    <div 
+    <div
       aria-label={t("statistics.volume_chart")}
-      className={cn("rounded-lg bg-white p-4 shadow-sm", className)}
+      className={cn("rounded-lg p-4 shadow-sm relative", className)}
       role="img"
+      style={{ backgroundColor: colors.cardBackground }}
     >
-      <h3 className="mb-4 text-lg font-semibold text-gray-800">
+      <h3 className="mb-4 text-lg font-semibold" style={{ color: colors.text }}>
         {t("statistics.weekly_volume")}
       </h3>
-      
-      <svg 
-        className="w-full h-auto" 
-        height={height - 30}
-        viewBox={`0 0 ${width} ${height - 30}`}
-        width={width}
-      >
-        {/* Grid lines */}
-        {yAxisValues.map((value, index) => {
-          const y = yScale(value) + CHART_PADDING.top;
-          return (
-            <g key={`grid-${index}`}>
-              <line
-                stroke="#E5E7EB"
-                strokeDasharray="2,2"
-                strokeWidth="1"
-                x1={CHART_PADDING.left}
-                x2={CHART_PADDING.left + chartWidth}
-                y1={y}
-                y2={y}
-              />
-              <text
-                fill="#6B7280"
-                fontSize="12"
-                textAnchor="end"
-                x={CHART_PADDING.left - 10}
-                y={y + 4}
-              >
-                {formatVolume(value)}
-              </text>
-            </g>
-          );
-        })}
 
-        {/* Bars */}
-        {data.map((point, index) => {
-          const x = xScale(index) + CHART_PADDING.left;
-          const barHeight = (point.totalVolume / Math.max(...yAxisValues)) * chartHeight;
-          const y = CHART_PADDING.top + chartHeight - barHeight;
-          
-          return (
-            <g key={`bar-${index}`}>
-              <rect
-                className="cursor-pointer transition-opacity hover:opacity-80"
-                fill="#10B981"
-                height={barHeight}
-                rx={4}
-                ry={4}
-                width={barWidth}
-                x={x}
-                y={y}
-              >
-                <title>
-                  {formatWeek(point.week)}: {formatVolume(point.totalVolume)} ({point.setCount} sets)
-                </title>
-              </rect>
-              
-              {/* Week label */}
-              <text
-                fill="#6B7280"
-                fontSize="10"
-                textAnchor="middle"
-                transform={`rotate(-45, ${x + barWidth / 2}, ${height - 30 - CHART_PADDING.bottom + 20})`}
-                x={x + barWidth / 2}
-                y={height - 30 - CHART_PADDING.bottom + 20}
-              >
-                {formatWeek(point.week)}
-              </text>
-              
-              {/* Value on top of bar */}
-              {barHeight > 20 && (
-                <text
-                  fill="#374151"
-                  fontSize="10"
-                  fontWeight="600"
-                  textAnchor="middle"
-                  x={x + barWidth / 2}
-                  y={y - 5}
-                >
-                  {formatVolume(point.totalVolume)}
-                </text>
-              )}
-            </g>
-          );
-        })}
+      <div style={{ opacity: hasData ? 1 : 0.2 }}>
+        <ResponsiveContainer height={height} width="100%">
+          <BarChart data={chartData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+            <CartesianGrid stroke={colors.grid} strokeDasharray="3 3" />
+            <XAxis
+              axisLine={{ stroke: colors.border }}
+              dataKey="formattedWeek"
+              tick={{ fontSize: 12, fill: colors.textMuted }}
+              tickLine={{ stroke: colors.border }}
+            />
+            <YAxis
+              axisLine={{ stroke: colors.border }}
+              label={{
+                value: t("statistics.volume"),
+                angle: -90,
+                position: "insideLeft",
+                style: { textAnchor: "middle", fill: colors.text },
+              }}
+              tick={{ fontSize: 12, fill: colors.textMuted }}
+              tickFormatter={formatVolume}
+              tickLine={{ stroke: colors.border }}
+            />
+            <Tooltip content={<CustomTooltip />} />
+            <Bar dataKey="totalVolume" fill="#10B981" radius={[4, 4, 0, 0]} />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
 
-        {/* Y-axis label */}
-        <text
-          fill="#374151"
-          fontSize="14"
-          textAnchor="middle"
-          transform={`rotate(-90, 15, ${(height - 30) / 2})`}
-          x={15}
-          y={(height - 30) / 2}
-        >
-          {t("statistics.volume")}
-        </text>
-      </svg>
-      
       <div className="mt-4 text-center">
-        <p className="text-xs text-gray-500">
+        <p className="text-xs" style={{ color: colors.textSecondary }}>
           {t("statistics.volume_calculation")}
         </p>
       </div>
+
+      {!hasData && (
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="text-center">
+            <p className="text-lg font-semibold" style={{ color: colors.text }}>
+              {t("statistics.no_volume_data")}
+            </p>
+            <p className="mt-2 text-sm" style={{ color: colors.textSecondary }}>
+              {t("statistics.complete_workouts")}
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

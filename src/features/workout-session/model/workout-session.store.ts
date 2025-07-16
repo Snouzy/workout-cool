@@ -137,6 +137,13 @@ export const useWorkoutSessionStore = create<WorkoutSessionState>((set, get) => 
 
     if (session) {
       workoutSessionLocal.update(session.id, { status: "completed", endedAt: new Date().toISOString() });
+      console.log({
+        session: { ...session, status: "completed", endedAt: new Date().toISOString() },
+        progress: {},
+        elapsedTime: 0,
+        isTimerRunning: false,
+        isWorkoutActive: false,
+      });
       set({
         session: { ...session, status: "completed", endedAt: new Date().toISOString() },
         progress: {},

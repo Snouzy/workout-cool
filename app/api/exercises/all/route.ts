@@ -49,30 +49,49 @@ export async function GET(request: NextRequest) {
 
     // Build where clause for filtering
     const whereClause: any = {};
+    const conditions = [];
 
     // Search by exercise name
     if (search) {
-      whereClause.OR = [{ name: { contains: search, mode: "insensitive" } }, { nameEn: { contains: search, mode: "insensitive" } }];
+      conditions.push({
+        OR: [
+          { name: { contains: search, mode: "insensitive" } }, 
+          { nameEn: { contains: search, mode: "insensitive" } }
+        ]
+      });
     }
 
+    // Build attribute filters array
+    const attributeFilters = [];
+    
     // Filter by muscle group
     if (muscle) {
-      whereClause.attributes = {
-        some: {
-          attributeName: { name: "PRIMARY_MUSCLE" },
-          attributeValue: { value: muscle },
-        },
-      };
+      attributeFilters.push({
+        attributeName: { name: "PRIMARY_MUSCLE" },
+        attributeValue: { value: muscle },
+      });
     }
 
     // Filter by equipment
     if (equipment) {
-      whereClause.attributes = {
-        some: {
-          attributeName: { name: "EQUIPMENT" },
-          attributeValue: { value: equipment },
-        },
-      };
+      attributeFilters.push({
+        attributeName: { name: "EQUIPMENT" },
+        attributeValue: { value: equipment },
+      });
+    }
+
+    // Apply attribute filters (AND logic - exercise must have ALL specified attributes)
+    if (attributeFilters.length > 0) {
+      conditions.push(...attributeFilters.map(filter => ({
+        attributes: {
+          some: filter
+        }
+      })));
+    }
+
+    // Combine all conditions with AND logic
+    if (conditions.length > 0) {
+      whereClause.AND = conditions;
     }
 
     // Get total count for pagination

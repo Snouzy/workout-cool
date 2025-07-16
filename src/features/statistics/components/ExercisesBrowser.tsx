@@ -18,12 +18,14 @@ interface ExercisesBrowserProps {
   onExerciseSelect: (exercise: ExerciseWithAttributes) => void;
 }
 
-// Mock service - replace with actual API call
-const fetchExercises = async (params: { page?: number; limit?: number; search?: string }) => {
+// API service for fetching exercises
+const fetchExercises = async (params: { page?: number; limit?: number; search?: string; muscle?: string; equipment?: string }) => {
   const searchParams = new URLSearchParams();
   if (params.page) searchParams.append("page", params.page.toString());
   if (params.limit) searchParams.append("limit", params.limit.toString());
   if (params.search) searchParams.append("search", params.search);
+  if (params.muscle && params.muscle !== "ALL") searchParams.append("muscle", params.muscle);
+  if (params.equipment && params.equipment !== "ALL") searchParams.append("equipment", params.equipment);
 
   const response = await fetch(`/api/exercises/all?${searchParams}`);
   if (!response.ok) {
@@ -32,11 +34,16 @@ const fetchExercises = async (params: { page?: number; limit?: number; search?: 
   return response.json();
 };
 
-// Mock statistics data
-const mockStatsData = {
-  weight: [],
-  oneRepMax: [],
-  setVolume: []
+// API service for fetching exercise statistics
+const fetchExerciseStatistics = async (exerciseId: string, timeframe: string) => {
+  const searchParams = new URLSearchParams();
+  searchParams.append("timeframe", timeframe);
+
+  const response = await fetch(`/api/exercises/${exerciseId}/statistics?${searchParams}`);
+  if (!response.ok) {
+    throw new Error("Failed to fetch exercise statistics");
+  }
+  return response.json();
 };
 
 // Available muscle groups
@@ -78,8 +85,14 @@ const ExerciseSelectionModal: React.FC<{
     isLoading,
     error,
   } = useQuery({
-    queryKey: ["exercises", searchQuery],
-    queryFn: () => fetchExercises({ page: 1, limit: 50, search: searchQuery || undefined }),
+    queryKey: ["exercises", searchQuery, selectedEquipment, selectedMuscle],
+    queryFn: () => fetchExercises({ 
+      page: 1, 
+      limit: 50, 
+      search: searchQuery || undefined,
+      muscle: selectedMuscle,
+      equipment: selectedEquipment,
+    }),
     enabled: isOpen,
   });
 
@@ -196,8 +209,8 @@ const ExerciseSelectionModal: React.FC<{
 
               return (
                 <div
-                  key={exercise.id}
                   className="flex items-center gap-4 p-3 hover:bg-base-200 rounded-lg cursor-pointer"
+                  key={exercise.id}
                   onClick={() => handleExerciseSelect(exercise)}
                 >
                   <div className="w-12 h-12 bg-base-200 rounded-full flex items-center justify-center overflow-hidden">
@@ -225,17 +238,33 @@ const ExerciseSelectionModal: React.FC<{
   );
 };
 
-// Stats Chart Component (placeholder)
-const StatsChart: React.FC<{ title: string; data: any[] }> = ({ title, data: _data }) => (
+// Stats Chart Component with real data handling
+const StatsChart: React.FC<{ title: string; data: any[]; isLoading?: boolean; error?: any }> = ({ 
+  title, 
+  data: _data, 
+  isLoading = false, 
+  error = null 
+}) => (
   <div className="bg-base-100 rounded-lg p-4">
     <h3 className="font-semibold mb-4">{title}</h3>
     <div className="h-48 bg-base-200 rounded-lg flex items-center justify-center">
-      <div className="text-center">
-        <p className="font-medium text-lg">Data not available</p>
-        <p className="text-sm text-gray-500 mt-1">
-          There is no data available for the selected timeframe.
-        </p>
-      </div>
+      {isLoading ? (
+        <span className="loading loading-spinner loading-lg"></span>
+      ) : error ? (
+        <div className="text-center">
+          <p className="font-medium text-lg text-error">Error loading data</p>
+          <p className="text-sm text-gray-500 mt-1">
+            {error.message || "Failed to load statistics"}
+          </p>
+        </div>
+      ) : (
+        <div className="text-center">
+          <p className="font-medium text-lg">Data not available</p>
+          <p className="text-sm text-gray-500 mt-1">
+            There is no data available for the selected timeframe.
+          </p>
+        </div>
+      )}
     </div>
   </div>
 );
@@ -244,8 +273,19 @@ export const ExercisesBrowser: React.FC<ExercisesBrowserProps> = ({ onExerciseSe
   const [selectedExercise, setSelectedExercise] = useState<ExerciseWithAttributes | null>(null);
   const [showExerciseModal, setShowExerciseModal] = useState(false);
   const [showVideoModal, setShowVideoModal] = useState(false);
-  const [selectedTimeframe, setSelectedTimeframe] = useState("Last 12 weeks");
+  const [selectedTimeframe, setSelectedTimeframe] = useState("TWELVE_WEEKS");
   const t = useI18n();
+
+  // Fetch statistics when exercise is selected
+  const {
+    data: statisticsData,
+    isLoading: isLoadingStats,
+    error: statsError,
+  } = useQuery({
+    queryKey: ["exercise-statistics", selectedExercise?.id, selectedTimeframe],
+    queryFn: () => fetchExerciseStatistics(selectedExercise!.id, selectedTimeframe),
+    enabled: !!selectedExercise,
+  });
 
   const handleExerciseSelect = (exercise: ExerciseWithAttributes) => {
     setSelectedExercise(exercise);
@@ -278,8 +318,35 @@ export const ExercisesBrowser: React.FC<ExercisesBrowserProps> = ({ onExerciseSe
 
   // Convert exercise to workout builder format
   const convertToWorkoutBuilderFormat = (exercise: ExerciseWithAttributes): WorkoutBuilderExerciseWithAttributes => {
+    // Convert attributes to the expected format
+    const convertedAttributes = exercise.attributes.map(attr => ({
+      id: attr.id || "",
+      exerciseId: exercise.id,
+      attributeNameId: "",
+      attributeValueId: "",
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      attributeName: {
+        id: "",
+        name: typeof attr.attributeName === "string" ? attr.attributeName : attr.attributeName.name,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      attributeValue: {
+        id: "",
+        value: typeof attr.attributeValue === "string" ? attr.attributeValue : attr.attributeValue.value,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        attributeNameId: "",
+      },
+    }));
+
     return {
-      ...exercise,
+      id: exercise.id,
+      name: exercise.name,
+      nameEn: exercise.nameEn || null,
+      description: exercise.description || null,
+      descriptionEn: exercise.descriptionEn || null,
       fullVideoUrl: exercise.fullVideoUrl || null,
       fullVideoImageUrl: exercise.fullVideoImageUrl || null,
       introduction: null,
@@ -287,6 +354,9 @@ export const ExercisesBrowser: React.FC<ExercisesBrowserProps> = ({ onExerciseSe
       order: 0,
       slug: null,
       slugEn: null,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      attributes: convertedAttributes,
     };
   };
 
@@ -358,18 +428,33 @@ export const ExercisesBrowser: React.FC<ExercisesBrowserProps> = ({ onExerciseSe
               onChange={(e) => setSelectedTimeframe(e.target.value)}
               value={selectedTimeframe}
             >
-              <option>Last 12 weeks</option>
-              <option>Last 6 months</option>
-              <option>Last year</option>
-              <option>All time</option>
+              <option value="FOUR_WEEKS">Last 4 weeks</option>
+              <option value="EIGHT_WEEKS">Last 8 weeks</option>
+              <option value="TWELVE_WEEKS">Last 12 weeks</option>
+              <option value="ONE_YEAR">Last year</option>
             </select>
           </div>
 
           {/* Stats Charts */}
           <div className="space-y-4">
-            <StatsChart data={mockStatsData.weight} title="Weight" />
-            <StatsChart data={mockStatsData.oneRepMax} title="One Rep Max" />
-            <StatsChart data={mockStatsData.setVolume} title="Set Volume" />
+            <StatsChart 
+              data={statisticsData?.statistics?.weightProgression || []} 
+              error={statsError}
+              isLoading={isLoadingStats}
+              title="Weight" 
+            />
+            <StatsChart 
+              data={statisticsData?.statistics?.estimatedOneRepMax || []} 
+              error={statsError}
+              isLoading={isLoadingStats}
+              title="One Rep Max" 
+            />
+            <StatsChart 
+              data={statisticsData?.statistics?.volume || []} 
+              error={statsError}
+              isLoading={isLoadingStats}
+              title="Set Volume" 
+            />
           </div>
         </div>
 

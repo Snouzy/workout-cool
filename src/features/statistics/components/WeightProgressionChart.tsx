@@ -48,7 +48,7 @@ export function WeightProgressionChart({ data, height = 300, unit = "kg", classN
 
   // Use real data or skeleton data
   const hasData = data.length > 0;
-  const chartData = hasData 
+  const chartData = hasData
     ? data.map((point) => ({
         ...point,
         formattedDate: formatDate(point.date),
@@ -80,7 +80,7 @@ export function WeightProgressionChart({ data, height = 300, unit = "kg", classN
   return (
     <div
       aria-label={t("statistics.weight_progression_chart")}
-      className={cn("rounded-lg p-4 shadow-sm relative", className)}
+      className={cn("rounded-lg p-4 shadow-sm relative border border-gray-400 dark:border-gray-600", className)}
       role="img"
       style={{ backgroundColor: colors.cardBackground }}
     >
@@ -121,7 +121,7 @@ export function WeightProgressionChart({ data, height = 300, unit = "kg", classN
           </LineChart>
         </ResponsiveContainer>
       </div>
-      
+
       {!hasData && (
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="text-center">

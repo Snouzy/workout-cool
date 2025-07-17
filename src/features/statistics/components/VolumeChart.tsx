@@ -46,9 +46,9 @@ export function VolumeChart({ data, height = 300, className }: VolumeChartProps)
       date.setDate(date.getDate() - i * 7);
       const year = date.getFullYear();
       const weekNumber = Math.ceil((date.getTime() - new Date(year, 0, 1).getTime()) / (7 * 24 * 60 * 60 * 1000));
-      const week = `${year}-W${weekNumber.toString().padStart(2, '0')}`;
+      const week = `${year}-W${weekNumber.toString().padStart(2, "0")}`;
       const volume = Math.floor(Math.random() * 5000) + 1000; // Random volume between 1000-6000
-      
+
       skeletonData.push({
         week,
         totalVolume: volume,
@@ -62,7 +62,7 @@ export function VolumeChart({ data, height = 300, className }: VolumeChartProps)
 
   // Use real data or skeleton data
   const hasData = data.length > 0;
-  const chartData = hasData 
+  const chartData = hasData
     ? data.map((point) => ({
         ...point,
         formattedWeek: formatWeek(point.week),
@@ -99,7 +99,7 @@ export function VolumeChart({ data, height = 300, className }: VolumeChartProps)
   return (
     <div
       aria-label={t("statistics.volume_chart")}
-      className={cn("rounded-lg p-4 shadow-sm relative", className)}
+      className={cn("rounded-lg p-4 shadow-sm relative border border-gray-400 dark:border-gray-600", className)}
       role="img"
       style={{ backgroundColor: colors.cardBackground }}
     >

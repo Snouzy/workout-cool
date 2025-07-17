@@ -1796,6 +1796,43 @@ export default {
     remove_from_favorites: "Remove from favorites",
     favorites: "Favorites",
   },
+  statistics: {
+    // Chart titles and labels
+    weight: "Weight",
+    volume: "Volume",
+    weight_progression: "Weight Progression",
+    weight_progression_chart: "Weight progression chart",
+    weekly_volume: "Weekly Volume",
+    volume_chart: "Volume chart",
+    estimated_1rm: "Estimated 1 Rep Max (1RM)",
+    one_rep_max_chart: "One rep max chart",
+
+    // Form and controls
+    timeframe: "Timeframe",
+    timeframe_selector: "Timeframe selector",
+
+    // Error messages
+    error_loading_data: "Error loading data",
+    error_loading_weight_progression: "Error loading weight progression",
+    error_loading_1rm: "Error loading 1RM data",
+    error_loading_volume: "Error loading volume data",
+
+    // Empty states
+    no_data_yet: "No data yet",
+    start_tracking: "Start tracking to see your progress",
+    no_1rm_data: "No 1RM data available",
+    complete_sets_with_weight: "Complete sets with weight to see your 1 Rep Max (1RM)",
+    no_volume_data: "No volume data available",
+    complete_workouts: "Complete workouts to see your volume",
+
+    // Info and tooltips
+    "1rm_formula_info": "1RM formula information",
+    volume_calculation: "Volume = Weight × Reps × Sets",
+    last_updated: "Last updated: {date}",
+
+    // Premium
+    premium_required: "Premium required to access statistics",
+  },
   heatmap: {
     week_days_short: {
       sunday: "S",

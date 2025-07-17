@@ -12,6 +12,9 @@ import { StatisticsTimeframe } from "@/shared/constants/statistics";
 import { ExerciseVideoModal } from "@/features/workout-builder/ui/exercise-video-modal";
 import { ExerciseWithAttributes as WorkoutBuilderExerciseWithAttributes } from "@/features/workout-builder/types";
 import { EQUIPMENT_CONFIG } from "@/features/workout-builder/model/equipment-config";
+import { WeightProgressionChart } from "@/features/statistics/components/WeightProgressionChart";
+import { VolumeChart } from "@/features/statistics/components/VolumeChart";
+import { OneRepMaxChart } from "@/features/statistics/components/OneRepMaxChart";
 import { ExerciseCharts } from "@/features/statistics/components/ExerciseStatisticsTab";
 import { ExerciseWithAttributes } from "@/entities/exercise/types/exercise.types";
 import { getPrimaryMuscle } from "@/entities/exercise/shared/muscles";
@@ -189,9 +192,15 @@ const ExerciseSelectionModal: React.FC<{
                   key={exercise.id}
                   onClick={() => handleExerciseSelect(exercise)}
                 >
-                  <div className="w-12 h-12 bg-base-200 rounded-full flex items-center justify-center overflow-hidden">
+                  <div className="w-16 h-16 bg-base-200 rounded-full flex items-center justify-center overflow-hidden border border-gray-400 dark:border-gray-600">
                     {exercise.fullVideoImageUrl && (
-                      <Image alt={exercise.name} className="object-cover" height={48} src={exercise.fullVideoImageUrl} width={48} />
+                      <Image
+                        alt={exercise.name}
+                        className="object-cover h-full w-full scale-150"
+                        height={64}
+                        src={exercise.fullVideoImageUrl}
+                        width={64}
+                      />
                     )}
                   </div>
                   <div className="flex-1">
@@ -208,19 +217,6 @@ const ExerciseSelectionModal: React.FC<{
     </div>
   );
 };
-
-// Stats Chart Component with real data handling
-const EmptyChart: React.FC<{ title: string }> = ({ title }) => (
-  <div className="bg-base-100 rounded-lg p-4">
-    <h3 className="font-semibold mb-4">{title}</h3>
-    <div className="h-48 bg-base-200 rounded-lg flex items-center justify-center">
-      <div className="text-center">
-        <p className="font-medium text-lg">Data not available</p>
-        <p className="text-sm text-gray-500 mt-1">There is no data available for the selected timeframe.</p>
-      </div>
-    </div>
-  </div>
-);
 
 const TIMEFRAME_OPTIONS: { value: StatisticsTimeframe; label: string }[] = [
   { value: "4weeks", label: "4 Weeks" },
@@ -311,7 +307,7 @@ export const ExercisesBrowser: React.FC<ExercisesBrowserProps> = ({ onExerciseSe
 
   return (
     <>
-      <div className="min-h-screen bg-base-300 p-4">
+      <div className="min-h-screen">
         <div className="max-w-2xl mx-auto space-y-6">
           {/* Header */}
           <div>
@@ -334,7 +330,7 @@ export const ExercisesBrowser: React.FC<ExercisesBrowserProps> = ({ onExerciseSe
                   <span className="text-sm">{getExerciseEquipment(selectedExercise) || "Unknown"}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-sm text-gray-500">Primary Muscle Group:</span>
+                  <span className="text-sm text-gray-500">Primary Muscle:</span>
                   <span className="text-sm">
                     {getExercisePrimaryMuscle(selectedExercise)
                       ? getAttributeValueLabel(getExercisePrimaryMuscle(selectedExercise)!, t)
@@ -369,7 +365,7 @@ export const ExercisesBrowser: React.FC<ExercisesBrowserProps> = ({ onExerciseSe
           <div className="space-y-4">
             {/* Time period selector */}
             <div className="flex items-center justify-between bg-base-100 rounded-lg p-4">
-              <span className="font-semibold">Statistics</span>
+              <span className="hidden sm:block font-semibold">Statistics</span>
               <select
                 className="select select-bordered select-sm"
                 onChange={(e) => setSelectedTimeframe(e.target.value as StatisticsTimeframe)}
@@ -386,12 +382,12 @@ export const ExercisesBrowser: React.FC<ExercisesBrowserProps> = ({ onExerciseSe
             {/* Stats Charts */}
             <div className="space-y-4">
               {selectedExercise ? (
-                <ExerciseCharts exerciseId={selectedExercise.id} exerciseName={selectedExercise.name} timeframe={selectedTimeframe} />
+                <ExerciseCharts exerciseId={selectedExercise.id} timeframe={selectedTimeframe} />
               ) : (
                 <>
-                  <EmptyChart title="Weight" />
-                  <EmptyChart title="One Rep Max" />
-                  <EmptyChart title="Set Volume" />
+                  <WeightProgressionChart data={[]} height={250} unit="kg" />
+                  <OneRepMaxChart data={[]} formula="Lombardi" formulaDescription="Classic 1RM estimation formula" height={250} unit="kg" />
+                  <VolumeChart data={[]} height={250} />
                 </>
               )}
             </div>

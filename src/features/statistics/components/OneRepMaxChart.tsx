@@ -8,6 +8,7 @@ import { useI18n } from "locales/client";
 import { OneRepMaxPoint } from "@/shared/types/statistics.types";
 import { cn } from "@/shared/lib/utils";
 import { Tooltip as UITooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+
 import { useChartTheme } from "../hooks/use-chart-theme";
 
 interface OneRepMaxChartProps {
@@ -51,7 +52,7 @@ export function OneRepMaxChart({ data, formula, formulaDescription, height = 300
 
   // Use real data or skeleton data
   const hasData = data.length > 0;
-  const chartData = hasData 
+  const chartData = hasData
     ? data.map((point) => ({
         ...point,
         formattedDate: formatDate(point.date),
@@ -62,12 +63,12 @@ export function OneRepMaxChart({ data, formula, formulaDescription, height = 300
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length && hasData) {
       return (
-        <div 
+        <div
           className="p-3 rounded-lg shadow-lg border"
-          style={{ 
+          style={{
             backgroundColor: colors.tooltipBackground,
             borderColor: colors.tooltipBorder,
-            color: colors.text
+            color: colors.text,
           }}
         >
           <p className="font-medium">{label}</p>
@@ -81,9 +82,9 @@ export function OneRepMaxChart({ data, formula, formulaDescription, height = 300
   };
 
   return (
-    <div 
-      aria-label={t("statistics.one_rep_max_chart")} 
-      className={cn("rounded-lg p-4 shadow-sm relative", className)} 
+    <div
+      aria-label={t("statistics.one_rep_max_chart")}
+      className={cn("rounded-lg p-4 shadow-sm relative border border-gray-400 dark:border-gray-600", className)}
       role="img"
       style={{ backgroundColor: colors.cardBackground }}
     >
@@ -94,10 +95,7 @@ export function OneRepMaxChart({ data, formula, formulaDescription, height = 300
         <TooltipProvider>
           <UITooltip>
             <TooltipTrigger asChild>
-              <button 
-                aria-label={t("statistics.1rm_formula_info")} 
-                className="rounded-full p-1 hover:bg-gray-100 transition-colors"
-              >
+              <button aria-label={t("statistics.1rm_formula_info")} className="rounded-full p-1 hover:bg-gray-100 transition-colors">
                 <Info className="h-4 w-4" style={{ color: colors.textSecondary }} />
               </button>
             </TooltipTrigger>

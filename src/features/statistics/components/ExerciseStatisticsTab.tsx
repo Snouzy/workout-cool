@@ -5,6 +5,7 @@ import { AlertCircle } from "lucide-react";
 
 import { useI18n } from "locales/client";
 import { cn } from "@/shared/lib/utils";
+import { StatisticsTimeframe } from "@/features/statistics/types";
 import { PremiumGate } from "@/components/ui/premium-gate";
 import { Loader } from "@/components/ui/loader";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -16,23 +17,18 @@ import { OneRepMaxChart } from "./OneRepMaxChart";
 
 interface ExerciseStatisticsTabProps {
   exerciseId: string;
-  exerciseName: string;
   unit?: "kg" | "lbs";
   className?: string;
   timeframe: StatisticsTimeframe;
 }
 
-export function ExerciseCharts({ timeframe, exerciseId, exerciseName, unit = "kg", className }: ExerciseStatisticsTabProps) {
+export function ExerciseCharts({ timeframe, exerciseId, unit = "kg", className }: ExerciseStatisticsTabProps) {
   const t = useI18n();
 
   // Fetch data for all charts
   const weightProgressionQuery = useWeightProgression(exerciseId, timeframe);
   const oneRepMaxQuery = useOneRepMax(exerciseId, timeframe);
   const volumeQuery = useVolumeData(exerciseId, timeframe);
-
-  const handleRefresh = async () => {
-    await Promise.all([weightProgressionQuery.refetch(), oneRepMaxQuery.refetch(), volumeQuery.refetch()]);
-  };
 
   const isLoading = weightProgressionQuery.isLoading || oneRepMaxQuery.isLoading || volumeQuery.isLoading;
   const hasError = weightProgressionQuery.isError || oneRepMaxQuery.isError || volumeQuery.isError;
@@ -49,9 +45,9 @@ export function ExerciseCharts({ timeframe, exerciseId, exerciseName, unit = "kg
         )}
 
         {/* Charts Grid */}
-        <div className="grid gap-6 lg:grid-cols-2">
+        <div className="grid gap-6">
           {/* Weight Progression Chart */}
-          <div className="lg:col-span-2">
+          <div className="">
             {weightProgressionQuery.isLoading ? (
               <div className="flex h-[300px] items-center justify-center rounded-lg bg-white shadow-sm">
                 <Loader />

@@ -111,6 +111,7 @@
     "@next/eslint-plugin-next": "^15.2.4",
     "@types/canvas-confetti": "^1.9.0",
     "@types/crypto-js": "^4.2.2",
+    "@types/lodash.debounce": "^4.0.9",
     "@types/node": "^20",
     "@types/nodemailer": "^6.4.17",
     "@types/nprogress": "^0.2.3",

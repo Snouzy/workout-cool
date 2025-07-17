@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useCallback, useMemo } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Search, X } from "lucide-react";
 import debounce from "lodash.debounce";
@@ -14,8 +15,10 @@ import { ExerciseWithAttributes as WorkoutBuilderExerciseWithAttributes } from "
 import { EQUIPMENT_CONFIG } from "@/features/workout-builder/model/equipment-config";
 import { WeightProgressionChart } from "@/features/statistics/components/WeightProgressionChart";
 import { VolumeChart } from "@/features/statistics/components/VolumeChart";
+import { StatisticsPreviewOverlay } from "@/features/statistics/components/StatisticsPreviewOverlay";
 import { OneRepMaxChart } from "@/features/statistics/components/OneRepMaxChart";
 import { ExerciseCharts } from "@/features/statistics/components/ExerciseStatisticsTab";
+import { useUserSubscription } from "@/features/ads/hooks/useUserSubscription";
 import { ExerciseWithAttributes } from "@/entities/exercise/types/exercise.types";
 import { getPrimaryMuscle } from "@/entities/exercise/shared/muscles";
 
@@ -117,7 +120,6 @@ const ExerciseSelectionModal: React.FC<{
             <X className="h-4 w-4" />
           </button>
         </div>
-
         {/* Filters */}
         <div className="space-y-4 mb-4">
           {/* Equipment Filter */}
@@ -228,6 +230,7 @@ export const ExercisesBrowser: React.FC<ExercisesBrowserProps> = () => {
   const [showExerciseModal, setShowExerciseModal] = useState(false);
   const [showVideoModal, setShowVideoModal] = useState(false);
   const [selectedTimeframe, setSelectedTimeframe] = useState<StatisticsTimeframe>("8weeks");
+  const { isPremium } = useUserSubscription();
   const t = useI18n();
 
   const handleExerciseSelect = (exercise: ExerciseWithAttributes) => {
@@ -300,19 +303,27 @@ export const ExercisesBrowser: React.FC<ExercisesBrowserProps> = () => {
     };
   };
 
-  console.log("selectedExercise:", selectedExercise);
+  const router = useRouter();
+
+  const handleUpgrade = () => {
+    router.push("/premium");
+    console.log("Upgrade clicked");
+  };
 
   return (
     <>
+      {/* Conversion Banner */}
+
       <div className="min-h-screen">
         <div className="max-w-2xl mx-auto space-y-6">
           {/* Header */}
-          <div>
-            {/* Exercise Selection Button */}
-            <button className="btn btn-primary w-full mb-6" onClick={openExerciseSelection}>
-              {t("statistics.select_exercise")}
-            </button>
-          </div>
+          {isPremium && (
+            <div>
+              <button className="btn btn-primary w-full mb-6" onClick={openExerciseSelection}>
+                {t("statistics.select_exercise")}
+              </button>
+            </div>
+          )}
 
           {/* Selected Exercise Info */}
           {selectedExercise && (
@@ -379,11 +390,12 @@ export const ExercisesBrowser: React.FC<ExercisesBrowserProps> = () => {
               {selectedExercise ? (
                 <ExerciseCharts exerciseId={selectedExercise.id} timeframe={selectedTimeframe} />
               ) : (
-                <>
+                <div className="relative gap-y-4 flex flex-col">
                   <WeightProgressionChart data={[]} height={250} unit="kg" />
                   <OneRepMaxChart data={[]} formula="Lombardi" formulaDescription="Classic 1RM estimation formula" height={250} unit="kg" />
                   <VolumeChart data={[]} height={250} />
-                </>
+                  <StatisticsPreviewOverlay isVisible={!isPremium} onUpgrade={handleUpgrade} />
+                </div>
               )}
             </div>
           </div>

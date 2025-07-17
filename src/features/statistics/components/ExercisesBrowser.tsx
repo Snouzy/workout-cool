@@ -19,9 +19,7 @@ import { ExerciseCharts } from "@/features/statistics/components/ExerciseStatist
 import { ExerciseWithAttributes } from "@/entities/exercise/types/exercise.types";
 import { getPrimaryMuscle } from "@/entities/exercise/shared/muscles";
 
-interface ExercisesBrowserProps {
-  onExerciseSelect: (exercise: ExerciseWithAttributes) => void;
-}
+interface ExercisesBrowserProps {}
 
 // API service for fetching exercises
 const fetchExercises = async (params: { page?: number; limit?: number; search?: string; muscle?: string; equipment?: string }) => {
@@ -225,7 +223,7 @@ const TIMEFRAME_OPTIONS: { value: StatisticsTimeframe; label: string }[] = [
   { value: "1year", label: "1 Year" },
 ];
 
-export const ExercisesBrowser: React.FC<ExercisesBrowserProps> = ({ onExerciseSelect }) => {
+export const ExercisesBrowser: React.FC<ExercisesBrowserProps> = () => {
   const [selectedExercise, setSelectedExercise] = useState<ExerciseWithAttributes | null>(null);
   const [showExerciseModal, setShowExerciseModal] = useState(false);
   const [showVideoModal, setShowVideoModal] = useState(false);
@@ -234,7 +232,6 @@ export const ExercisesBrowser: React.FC<ExercisesBrowserProps> = ({ onExerciseSe
 
   const handleExerciseSelect = (exercise: ExerciseWithAttributes) => {
     setSelectedExercise(exercise);
-    onExerciseSelect(exercise);
   };
 
   const openExerciseSelection = () => {
@@ -311,11 +308,9 @@ export const ExercisesBrowser: React.FC<ExercisesBrowserProps> = ({ onExerciseSe
         <div className="max-w-2xl mx-auto space-y-6">
           {/* Header */}
           <div>
-            <h1 className="text-3xl font-bold mb-6">Exercise</h1>
-
             {/* Exercise Selection Button */}
             <button className="btn btn-primary w-full mb-6" onClick={openExerciseSelection}>
-              Select Exercise
+              {t("statistics.select_exercise")}
             </button>
           </div>
 

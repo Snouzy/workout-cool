@@ -398,6 +398,8 @@ export default {
     home: "Home",
   },
   bottom_navigation: {
+    statistics: "Statistics",
+    statistics_tooltip: "View your statistics",
     programs: "Programs",
     programs_tooltip: "Browse programs",
     workouts: "Workouts",
@@ -1797,6 +1799,8 @@ export default {
     favorites: "Favorites",
   },
   statistics: {
+    title: "Statistics",
+    select_exercise: "Select Exercise",
     // Chart titles and labels
     weight: "Weight",
     volume: "Volume",

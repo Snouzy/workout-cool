@@ -12,7 +12,7 @@ const languageFlags: Record<string, string> = {
   es: "🇪🇸",
   "zh-CN": "🇨🇳",
   ru: "🇷🇺",
-  pt: "🇵🇹"
+  pt: "🇵🇹",
 };
 
 export function LanguageSelector() {
@@ -45,7 +45,7 @@ export function LanguageSelector() {
       case "ru":
         return "Русский";
       case "pt":
-        return "Português"
+        return "Português";
       default:
         return language;
     }

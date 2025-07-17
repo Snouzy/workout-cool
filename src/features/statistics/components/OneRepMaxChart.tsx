@@ -7,7 +7,6 @@ import { Info } from "lucide-react";
 import { useI18n } from "locales/client";
 import { OneRepMaxPoint } from "@/shared/types/statistics.types";
 import { cn } from "@/shared/lib/utils";
-import { Tooltip as UITooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 import { useChartTheme } from "../hooks/use-chart-theme";
 
@@ -21,7 +20,14 @@ interface OneRepMaxChartProps {
   className?: string;
 }
 
-export function OneRepMaxChart({ data, formula, formulaDescription, height = 300, unit = "kg", className }: OneRepMaxChartProps) {
+export function OneRepMaxChart({
+  data,
+  formula,
+  formulaDescription: _formulaDescription,
+  height = 300,
+  unit = "kg",
+  className,
+}: OneRepMaxChartProps) {
   const t = useI18n();
   const { colors } = useChartTheme();
 
@@ -92,19 +98,11 @@ export function OneRepMaxChart({ data, formula, formulaDescription, height = 300
         <h3 className="text-lg font-semibold" style={{ color: colors.text }}>
           {t("statistics.estimated_1rm")}
         </h3>
-        <TooltipProvider>
-          <UITooltip>
-            <TooltipTrigger asChild>
-              <button aria-label={t("statistics.1rm_formula_info")} className="rounded-full p-1 hover:bg-gray-100 transition-colors">
-                <Info className="h-4 w-4" style={{ color: colors.textSecondary }} />
-              </button>
-            </TooltipTrigger>
-            <TooltipContent className="max-w-xs">
-              <p className="font-medium">{formula} Formula</p>
-              <p className="mt-1 text-sm">{formulaDescription}</p>
-            </TooltipContent>
-          </UITooltip>
-        </TooltipProvider>
+        <div className="tooltip tooltip-left z-50" data-tip={`${formula} Formula: 1RM = Weight × (1 + (Reps ÷ 30))`}>
+          <button aria-label={t("statistics.1rm_formula_info")} className="rounded-full p-1 hover:bg-gray-100 transition-colors">
+            <Info className="h-4 w-4" style={{ color: colors.textSecondary }} />
+          </button>
+        </div>
       </div>
 
       <div style={{ opacity: hasData ? 1 : 0.2 }}>

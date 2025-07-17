@@ -53,7 +53,7 @@ export function ExerciseCharts({ timeframe, exerciseId, unit = "kg", className }
                 <Loader />
               </div>
             ) : weightProgressionQuery.isError ? (
-              <Alert variant="destructive">
+              <Alert variant="error">
                 <AlertDescription>{t("statistics.error_loading_weight_progression")}</AlertDescription>
               </Alert>
             ) : (

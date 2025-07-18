@@ -7,6 +7,12 @@ export interface BaseExercise extends I18nName, I18nField<"description"> {
   id: string;
   fullVideoUrl?: string | null;
   fullVideoImageUrl?: string | null;
+  introduction: string | null;
+  introductionEn: string | null;
+  name: string | null;
+  nameEn: string | null;
+  description: string | null;
+  descriptionEn: string | null;
   createdAt: Date;
   updatedAt: Date;
 }

@@ -1,12 +1,14 @@
 import { BarChart3 } from "lucide-react";
+import { ExerciseAttributeNameEnum, ExerciseAttributeValueEnum } from "@prisma/client";
 
 import { useCurrentLocale, useI18n } from "locales/client";
 import { getYouTubeEmbedUrl } from "@/shared/lib/youtube";
 import { getAttributeValueLabel } from "@/shared/lib/attribute-value-translation";
 import { ExerciseCharts } from "@/features/statistics/components/ExerciseStatisticsTab";
+import { getExerciseAttributesValueOf } from "@/entities/exercise/shared/muscles";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
-import type { ExerciseWithAttributes } from "../types";
+import type { ExerciseWithAttributes } from "@/entities/exercise/types/exercise.types";
 
 interface ExerciseVideoModalProps {
   open: boolean;
@@ -23,12 +25,11 @@ export function ExerciseVideoModal({ open, onOpenChange, exercise }: ExerciseVid
   const videoUrl = exercise.fullVideoUrl;
   const youTubeEmbedUrl = getYouTubeEmbedUrl(videoUrl ?? "");
 
-  const getAttr = (name: string) => exercise.attributes.find((a) => a.attributeName.name === name)?.attributeValue.value;
-  const type = getAttr("TYPE");
-  const primaryMuscle = getAttr("PRIMARY_MUSCLE");
-  const secondaryMuscle = getAttr("SECONDARY_MUSCLE");
-  const equipment = exercise.attributes.filter((a) => a.attributeName.name === "EQUIPMENT").map((a) => a.attributeValue.value);
-  const mechanics = getAttr("MECHANICS_TYPE");
+  const type = getExerciseAttributesValueOf(exercise, ExerciseAttributeNameEnum.TYPE);
+  const pMuscles = getExerciseAttributesValueOf(exercise, ExerciseAttributeNameEnum.PRIMARY_MUSCLE);
+  const sMuscles = getExerciseAttributesValueOf(exercise, ExerciseAttributeNameEnum.SECONDARY_MUSCLE);
+  const equipment = getExerciseAttributesValueOf(exercise, ExerciseAttributeNameEnum.EQUIPMENT);
+  const mechanics = getExerciseAttributesValueOf(exercise, ExerciseAttributeNameEnum.MECHANICS_TYPE);
 
   // Couleurs pour les badges
   const badgeColors: Record<string, string> = {
@@ -39,6 +40,14 @@ export function ExerciseVideoModal({ open, onOpenChange, exercise }: ExerciseVid
     MECHANICS_TYPE: "bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-100",
   };
 
+  const renderBadge = (value: ExerciseAttributeValueEnum, color: string) => {
+    return (
+      <span className={`px-2 py-0.5 rounded text-xs font-medium ${color}`} key={value}>
+        {getAttributeValueLabel(value, t)}
+      </span>
+    );
+  };
+
   return (
     <Dialog onOpenChange={onOpenChange} open={open}>
       <DialogContent className="max-w-2xl p-0 max-h-[80vh]">
@@ -46,33 +55,15 @@ export function ExerciseVideoModal({ open, onOpenChange, exercise }: ExerciseVid
           <DialogTitle className="text-lg md:text-xl font-bold flex flex-col gap-2">
             <span className="text-slate-700 dark:text-slate-200 pr-10 text-left">{title}</span>
             <div className="flex flex-wrap gap-2 mt-2">
-              {type && (
-                <span className={`px-2 py-0.5 rounded text-xs font-medium ${badgeColors.TYPE}`}>{getAttributeValueLabel(type, t)}</span>
-              )}
-              {primaryMuscle && (
-                <span className={`px-2 py-0.5 rounded text-xs font-medium ${badgeColors.PRIMARY_MUSCLE}`}>
-                  {getAttributeValueLabel(primaryMuscle, t)}
-                </span>
-              )}
-              {secondaryMuscle && (
-                <span className={`px-2 py-0.5 rounded text-xs font-medium ${badgeColors.SECONDARY_MUSCLE}`}>
-                  {getAttributeValueLabel(secondaryMuscle, t)}
-                </span>
-              )}
-              {equipment.length > 0 &&
-                equipment.map((eq) => (
-                  <span className={`px-2 py-0.5 rounded text-xs font-medium ${badgeColors.EQUIPMENT}`} key={eq}>
-                    {getAttributeValueLabel(eq, t)}
-                  </span>
-                ))}
-              {mechanics && (
-                <span className={`px-2 py-0.5 rounded text-xs font-medium ${badgeColors.MECHANICS_TYPE}`}>
-                  {getAttributeValueLabel(mechanics, t)}
-                </span>
-              )}
+              {type.map((type) => renderBadge(type, badgeColors.TYPE))}
+              {pMuscles.map((pMuscle) => renderBadge(pMuscle, badgeColors.PRIMARY_MUSCLE))}
+              {sMuscles.map((sMuscle) => renderBadge(sMuscle, badgeColors.SECONDARY_MUSCLE))}
+              {equipment.map((eq) => renderBadge(eq, badgeColors.EQUIPMENT))}
+              {mechanics.map((mechanic) => renderBadge(mechanic, badgeColors.MECHANICS_TYPE))}
             </div>
           </DialogTitle>
         </DialogHeader>
+
         {/* Introduction */}
         {introduction && (
           <div
@@ -80,6 +71,7 @@ export function ExerciseVideoModal({ open, onOpenChange, exercise }: ExerciseVid
             dangerouslySetInnerHTML={{ __html: introduction }}
           />
         )}
+
         {/* Vidéo */}
         <div className="w-full aspect-video bg-black flex items-center justify-center">
           {videoUrl ? (
@@ -89,7 +81,7 @@ export function ExerciseVideoModal({ open, onOpenChange, exercise }: ExerciseVid
                 allowFullScreen
                 className="w-full h-full border-0"
                 src={youTubeEmbedUrl}
-                title={title}
+                title={title ?? ""}
               />
             ) : (
               <video autoPlay className="w-full h-full object-contain bg-black" controls poster="" src={videoUrl} />
@@ -98,6 +90,7 @@ export function ExerciseVideoModal({ open, onOpenChange, exercise }: ExerciseVid
             <div className="text-white text-center p-8">{t("workout_builder.exercise.no_video_available")}</div>
           )}
         </div>
+
         {/* Instructions (description) */}
         {description && (
           <div
@@ -112,7 +105,7 @@ export function ExerciseVideoModal({ open, onOpenChange, exercise }: ExerciseVid
             <BarChart3 className="text-blue-600 dark:text-blue-400" size={20} />
             <h3 className="text-lg font-semibold text-slate-700 dark:text-slate-200">{t("statistics.title") || "Statistiques"}</h3>
           </div>
-          <ExerciseCharts exerciseId={exercise.id} />
+          <ExerciseCharts exerciseId={exercise.id} timeframe={""} />
         </div>
       </DialogContent>
     </Dialog>

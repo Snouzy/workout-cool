@@ -1,6 +1,6 @@
 import { ExerciseAttributeNameEnum } from "@prisma/client";
 
-import { ExerciseAttribute } from "@/entities/exercise/types/exercise.types";
+import { ExerciseAttribute, ExerciseWithAttributes } from "@/entities/exercise/types/exercise.types";
 
 export const getPrimaryMuscle = (attributes: ExerciseAttribute[]): ExerciseAttribute | undefined => {
   return attributes.find((attr) => {
@@ -20,4 +20,28 @@ export const getSecondaryMuscles = (attributes: ExerciseAttribute[]) => {
       return attr.attributeName.name === ExerciseAttributeNameEnum.SECONDARY_MUSCLE;
     }
   });
+};
+
+export const getExerciseAttributesValueOf = (exercise: ExerciseWithAttributes, name: ExerciseAttributeNameEnum) => {
+  const base = exercise.attributes.filter((a) => {
+    if (typeof a.attributeName === "string") {
+      return a.attributeName === name;
+    }
+
+    return a.attributeName.name === name;
+  });
+
+  let result = null;
+
+  if (base.length > 0) {
+    result = base.map((a) => {
+      if (typeof a.attributeValue === "string") {
+        return a.attributeValue;
+      }
+
+      return a.attributeValue.value;
+    });
+  }
+
+  return result || [];
 };

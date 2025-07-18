@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "test:cy": "pnpm cypress open",
+    "test:cy": "pnpm cypress run",
     "build": "next build",
     "email": "email dev",
     "start": "next start",

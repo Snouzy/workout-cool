@@ -1,0 +1,14 @@
+{
+  "basic_user": {
+    "first_name": "Jake",
+    "last_name": "Hunter",
+    "email": "huntingJake@fakeemail.com",
+    "password": "Password123"
+  },
+  "registered_user": {
+    "first_name": "Kenneth",
+    "last_name": "Mallek",
+    "email": "KennethM@fakeemail.com",
+    "password": "Password123"
+  }
+}

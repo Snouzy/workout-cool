@@ -5,6 +5,7 @@ import { registered_user } from "./cypress/fixtures/accountInfo.json"
 const prisma = new PrismaClient()
 
 export default defineConfig({
+  reporter: 'cypress-mochawesome-reporter',
   blockHosts: [
     ".google"
   ],
@@ -13,6 +14,7 @@ export default defineConfig({
   viewportWidth: 1200,
   e2e: {
     setupNodeEvents(on, config) {
+      require('cypress-mochawesome-reporter/plugin')(on);
       on('task', {
         async findUserByEmail(email:string) {
           const user = await prisma.user.findUnique({

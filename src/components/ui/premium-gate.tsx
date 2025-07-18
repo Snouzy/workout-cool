@@ -37,7 +37,6 @@ export function PremiumGate({
   className,
 }: PremiumGateProps) {
   const { isPremium, isPending } = useUserSubscription();
-  const t = useI18n();
 
   // Show loading state while checking premium status
   if (isPending) {
@@ -60,14 +59,7 @@ export function PremiumGate({
 
   // Show upgrade prompt if enabled
   if (showUpgradePrompt) {
-    return (
-      <PremiumUpgradePrompt
-        className={className}
-        feature={feature}
-        message={upgradeMessage}
-        onUpgradePress={onUpgradePress}
-      />
-    );
+    return <PremiumUpgradePrompt className={className} feature={feature} message={upgradeMessage} onUpgradePress={onUpgradePress} />;
   }
 
   // Default: hide content
@@ -81,12 +73,7 @@ interface PremiumUpgradePromptProps {
   className?: string;
 }
 
-function PremiumUpgradePrompt({ 
-  feature, 
-  message, 
-  onUpgradePress,
-  className 
-}: PremiumUpgradePromptProps) {
+function PremiumUpgradePrompt({ feature, message, onUpgradePress, className }: PremiumUpgradePromptProps) {
   const t = useI18n();
   const defaultMessage = message || t("premium.upgrade_to_access_feature");
 
@@ -110,12 +97,8 @@ function PremiumUpgradePrompt({
             <Crown className="h-8 w-8 text-white" />
           </div>
         </div>
-        <CardTitle className="text-2xl font-bold">
-          {t("premium.premium_feature")}
-        </CardTitle>
-        <CardDescription className="text-base mt-2">
-          {defaultMessage}
-        </CardDescription>
+        <CardTitle className="text-2xl font-bold">{t("premium.premium_feature")}</CardTitle>
+        <CardDescription className="text-base mt-2">{defaultMessage}</CardDescription>
       </CardHeader>
       <CardContent className="text-center">
         <div className="flex flex-col gap-4">
@@ -123,13 +106,10 @@ function PremiumUpgradePrompt({
             <Sparkles className="h-4 w-4" />
             <span>{t("premium.unlock_all_features")}</span>
           </div>
-          
+
           <Link href="/premium" onClick={handleUpgradePress}>
-            <Button 
-              className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700" 
-              size="lg"
-            >
-              {t("premium.upgrade_to_premium")}
+            <Button className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700" size="large">
+              {t("commons.upgrade_to_premium")}
             </Button>
           </Link>
         </div>
@@ -139,13 +119,7 @@ function PremiumUpgradePrompt({
 }
 
 // Utility component for inline premium indicators
-export function PremiumBadge({ 
-  size = "small",
-  className 
-}: { 
-  size?: "small" | "medium" | "large";
-  className?: string;
-}) {
+export function PremiumBadge({ size = "small", className }: { size?: "small" | "medium" | "large"; className?: string }) {
   const sizeClasses = {
     small: "px-2 py-0.5 text-xs",
     medium: "px-3 py-1 text-sm",
@@ -153,16 +127,14 @@ export function PremiumBadge({
   };
 
   return (
-    <span 
+    <span
       className={cn(
         "inline-flex items-center gap-1 rounded-md bg-gradient-to-r from-yellow-400 to-orange-500 text-white font-semibold",
         sizeClasses[size],
-        className
+        className,
       )}
     >
-      <Crown className={cn(
-        size === "small" ? "h-3 w-3" : size === "medium" ? "h-4 w-4" : "h-5 w-5"
-      )} />
+      <Crown className={cn(size === "small" ? "h-3 w-3" : size === "medium" ? "h-4 w-4" : "h-5 w-5")} />
       PREMIUM
     </span>
   );
@@ -171,7 +143,7 @@ export function PremiumBadge({
 // Higher-order component for premium feature gating
 export function withPremiumGate<P extends object>(
   WrappedComponent: React.ComponentType<P>,
-  gateOptions?: Omit<PremiumGateProps, "children">
+  gateOptions?: Omit<PremiumGateProps, "children">,
 ) {
   return function PremiumGatedComponent(props: P) {
     return (

@@ -1671,6 +1671,7 @@ export default {
     },
   },
   commons: {
+    upgrade_to_premium: "Upgrade to Premium",
     refresh: "Refresh",
     signup_with: "Sign up with {provider}",
     signin_with: "Sign in with {provider}",

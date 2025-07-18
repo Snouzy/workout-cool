@@ -43,7 +43,8 @@ describe('Account creation tests', function () {
     cy.get('[data-testid="signup-form-submit"]').click()
 
     //Wait for signup flow to complete
-    cy.wait(5000)
+    cy.intercept('/profile').as('profile')
+    cy.wait('@profile')
 
     //Cypres task to find the user information in the prisma database
     //and confirm the user has been created

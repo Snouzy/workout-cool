@@ -41,8 +41,10 @@ describe('Account login tests', function () {
     cy.get('[data-testid="signup-form-password"]').type(accountInfo.basic_user.password)
     cy.get('[data-testid="signup-form-verifyPassword"]').type(accountInfo.basic_user.password)
     cy.get('[data-testid="signup-form-submit"]').click()
-    //Wait to ensure signup has been processed
-    cy.wait(5000)
+
+    //Wait for signup flow to complete
+    cy.intercept('/profile').as('profile')
+    cy.wait('@profile')
   })
   
   it('TC_005 - Able to login to user account', function () {
@@ -53,7 +55,8 @@ describe('Account login tests', function () {
     cy.get('[data-testid="login-form-submit"]').click()
 
     //Enusre login has been processed
-    cy.wait(5000)
+    cy.intercept('/?signin=true').as('signin')
+    cy.wait('@signin')
   })
 
   it('TC_006 - Unable to login with incorrect password', function () {

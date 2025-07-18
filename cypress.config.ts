@@ -5,6 +5,9 @@ import { registered_user } from "./cypress/fixtures/accountInfo.json"
 const prisma = new PrismaClient()
 
 export default defineConfig({
+  blockHosts: [
+    ".google"
+  ],
   defaultCommandTimeout:10000,
   viewportHeight: 1300,
   viewportWidth: 1200,

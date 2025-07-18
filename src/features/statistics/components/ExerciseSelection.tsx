@@ -4,9 +4,11 @@ import React, { useState, useCallback } from "react";
 import Image from "next/image";
 import { Search, BarChart3 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
+import { ExerciseAttributeNameEnum } from "@prisma/client";
 
 import { ExerciseVideoModal } from "@/features/workout-builder/ui/exercise-video-modal";
 import { ExerciseWithAttributes } from "@/entities/exercise/types/exercise.types";
+import { getExerciseAttributesValueOf, getPrimaryMuscle } from "@/entities/exercise/shared/muscles";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Input } from "@/components/ui/input";
@@ -58,13 +60,13 @@ export const ExerciseSelection: React.FC<ExerciseSelectionProps> = ({ open, onOp
     [selectedMuscle],
   );
 
-  const handleExercisePress = useCallback((exercise: ExerciseForStatistics) => {
+  const handleExercisePress = useCallback((exercise: ExerciseWithAttributes) => {
     setSelectedExercise(exercise);
     setShowVideoModal(true);
   }, []);
 
   const handleSelectForStats = useCallback(
-    (exercise: ExerciseForStatistics) => {
+    (exercise: ExerciseWithAttributes) => {
       onSelectExercise(exercise);
       onOpenChange(false);
     },
@@ -72,8 +74,8 @@ export const ExerciseSelection: React.FC<ExerciseSelectionProps> = ({ open, onOp
   );
 
   const renderExerciseItem = useCallback(
-    (exercise: ExerciseForStatistics) => {
-      const primaryMuscle = exercise.attributes.find((attr) => attr.attributeName.name === "PRIMARY_MUSCLE")?.attributeValue.value;
+    (exercise: ExerciseWithAttributes) => {
+      const primaryMuscle = getPrimaryMuscle(exercise.attributes);
 
       return (
         <div
@@ -89,14 +91,14 @@ export const ExerciseSelection: React.FC<ExerciseSelectionProps> = ({ open, onOp
             <div className="flex-1">
               <h3 className="font-medium text-slate-900 dark:text-slate-100 mb-1">{exercise.name}</h3>
               {primaryMuscle && (
-                <Badge className="text-xs" variant="secondary">
-                  {primaryMuscle.charAt(0).toUpperCase() + primaryMuscle.slice(1).toLowerCase()}
+                <Badge className="text-xs" variant="success">
+                  {getExerciseAttributesValueOf(exercise, ExerciseAttributeNameEnum.PRIMARY_MUSCLE)}
                 </Badge>
               )}
             </div>
           </div>
 
-          <Button className="shrink-0" onClick={() => handleSelectForStats(exercise)} size="sm" variant="outline">
+          <Button className="shrink-0" onClick={() => handleSelectForStats(exercise)} size="small" variant="outline">
             <BarChart3 className="h-4 w-4 mr-2" />
             Voir les stats
           </Button>

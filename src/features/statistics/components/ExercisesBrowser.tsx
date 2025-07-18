@@ -11,7 +11,7 @@ import { useI18n } from "locales/client";
 import { getAttributeValueLabel } from "@/shared/lib/attribute-value-translation";
 import { StatisticsTimeframe } from "@/shared/constants/statistics";
 import { ExerciseVideoModal } from "@/features/workout-builder/ui/exercise-video-modal";
-import { ExerciseWithAttributes as WorkoutBuilderExerciseWithAttributes } from "@/features/workout-builder/types";
+import { WorkoutBuilderExerciseWithAttributes } from "@/features/workout-builder/types";
 import { EQUIPMENT_CONFIG } from "@/features/workout-builder/model/equipment-config";
 import { WeightProgressionChart } from "@/features/statistics/components/WeightProgressionChart";
 import { VolumeChart } from "@/features/statistics/components/VolumeChart";
@@ -195,7 +195,7 @@ const ExerciseSelectionModal: React.FC<{
                   <div className="w-16 h-16 bg-base-200 rounded-full flex items-center justify-center overflow-hidden border border-gray-400 dark:border-gray-600">
                     {exercise.fullVideoImageUrl && (
                       <Image
-                        alt={exercise.name}
+                        alt={exercise.name || ""}
                         className="object-cover h-full w-full scale-150"
                         height={64}
                         src={exercise.fullVideoImageUrl}
@@ -288,15 +288,13 @@ export const ExercisesBrowser: React.FC<ExercisesBrowserProps> = () => {
       id: exercise.id,
       name: exercise.name,
       nameEn: exercise.nameEn || null,
-      description: exercise.description || null,
+      description: exercise.description,
       descriptionEn: exercise.descriptionEn || null,
       fullVideoUrl: exercise.fullVideoUrl || null,
       fullVideoImageUrl: exercise.fullVideoImageUrl || null,
       introduction: null,
       introductionEn: null,
       order: 0,
-      slug: null,
-      slugEn: null,
       createdAt: new Date(),
       updatedAt: new Date(),
       attributes: convertedAttributes,

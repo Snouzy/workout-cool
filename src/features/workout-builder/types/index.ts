@@ -1,12 +1,7 @@
 import { StaticImageData } from "next/image";
-import {
-  ExerciseAttributeValueEnum,
-  Exercise,
-  ExerciseAttribute,
-  ExerciseAttributeName,
-  ExerciseAttributeValue,
-  WorkoutSet,
-} from "@prisma/client";
+import { ExerciseAttributeValueEnum, WorkoutSet } from "@prisma/client";
+
+import { ExerciseWithAttributes } from "@/entities/exercise/types/exercise.types";
 
 export interface WorkoutBuilderState {
   currentStep: number;
@@ -34,12 +29,8 @@ export interface EquipmentItem {
 }
 
 // Types pour les exercices avec leurs attributs
-export type ExerciseWithAttributes = Exercise & {
+export type WorkoutBuilderExerciseWithAttributes = ExerciseWithAttributes & {
   order: number;
-  attributes: (ExerciseAttribute & {
-    attributeName: ExerciseAttributeName;
-    attributeValue: ExerciseAttributeValue;
-  })[];
 };
 
 export type ExerciseWithAttributesAndSets = ExerciseWithAttributes & {

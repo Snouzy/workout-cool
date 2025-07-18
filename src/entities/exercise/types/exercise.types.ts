@@ -1,17 +1,17 @@
 import { ExerciseAttributeNameEnum, ExerciseAttributeValueEnum } from "@prisma/client";
 
-import { I18nName, I18nField } from "@/shared/types/i18n.types";
+// import { I18nName, I18nField } from "@/shared/types/i18n.types";
 
 // Base exercise type
-export interface BaseExercise extends I18nName, I18nField<"description"> {
+export interface BaseExercise {
   id: string;
   fullVideoUrl?: string | null;
   fullVideoImageUrl?: string | null;
   introduction: string | null;
   introductionEn: string | null;
-  name: string | null;
+  name: string;
   nameEn: string | null;
-  description: string | null;
+  description: string;
   descriptionEn: string | null;
   createdAt: Date;
   updatedAt: Date;

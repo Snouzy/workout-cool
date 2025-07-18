@@ -1,4 +1,4 @@
-import { ExerciseWithAttributes } from "@/features/workout-builder/types";
+import { ExerciseWithAttributes } from "@/entities/exercise/types/exercise.types";
 
 export type WorkoutSetType = "TIME" | "WEIGHT" | "REPS" | "BODYWEIGHT" | "NA";
 export type WorkoutSetUnit = "kg" | "lbs";

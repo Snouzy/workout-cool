@@ -400,6 +400,8 @@ export default {
     home: "Accueil",
   },
   bottom_navigation: {
+    statistics: "Statistiques",
+    statistics_tooltip: "Voir vos statistiques",
     programs: "Programmes",
     programs_tooltip: "Parcourir les programmes",
     workouts: "Entraînements",

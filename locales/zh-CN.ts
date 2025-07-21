@@ -421,6 +421,8 @@ export default {
     home: "首页",
   },
   bottom_navigation: {
+    statistics: "统计",
+    statistics_tooltip: "查看您的统计",
     programs: "课程",
     programs_tooltip: "浏览课程",
     workouts: "锻炼",
@@ -1743,13 +1745,13 @@ export default {
     active_daily_users: "每日活跃用户",
     success_rate: "成功率",
     user_rating: "用户评分",
-    
+
     // Tabs
     tabs: {
       video: "视频",
       statistics: "统计数据",
     },
-    
+
     // Chart titles and labels
     weight: "重量",
     volume: "训练量",
@@ -1764,7 +1766,7 @@ export default {
     // Form and controls
     timeframe: "时间范围",
     timeframe_selector: "时间范围选择器",
-    
+
     // Timeframes
     timeframes: {
       "4weeks": "4周",
@@ -1794,7 +1796,7 @@ export default {
 
     // Premium
     premium_required: "需要高级版才能访问统计数据",
-    
+
     // StatisticsPreviewOverlay
     premium_statistics: "高级统计",
     premium_statistics_description: "通过每个练习的高级分析，获得关于您健身之旅的详细见解。",
@@ -1808,7 +1810,7 @@ export default {
     preview_notice: "这只是预览！👀",
     preview_description: "解锁完整访问权限，获得详细分析、进度跟踪和个性化见解。",
     get_premium_access: "获得高级访问权限",
-    
+
     // ExercisesBrowser
     all_equipment: "所有器械",
     all_muscles: "所有肌肉",

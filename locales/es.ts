@@ -419,6 +419,8 @@ export default {
     home: "Inicio",
   },
   bottom_navigation: {
+    statistics: "Estadísticas",
+    statistics_tooltip: "Ver tus estadísticas",
     programs: "Programas",
     programs_tooltip: "Explorar programas",
     workouts: "Entrenamientos",
@@ -1807,13 +1809,13 @@ export default {
     active_daily_users: "Usuarios Activos Diarios",
     success_rate: "Tasa de Éxito",
     user_rating: "Calificación de Usuario",
-    
+
     // Tabs
     tabs: {
       video: "Video",
       statistics: "Estadísticas",
     },
-    
+
     // Chart titles and labels
     weight: "Peso",
     volume: "Volumen",
@@ -1828,7 +1830,7 @@ export default {
     // Form and controls
     timeframe: "Período de Tiempo",
     timeframe_selector: "Selector de período de tiempo",
-    
+
     // Timeframes
     timeframes: {
       "4weeks": "4 Semanas",
@@ -1858,7 +1860,7 @@ export default {
 
     // Premium
     premium_required: "Se requiere Premium para acceder a las estadísticas",
-    
+
     // StatisticsPreviewOverlay
     premium_statistics: "Estadísticas Premium",
     premium_statistics_description: "Obtén información detallada sobre tu viaje fitness con análisis avanzados para cada ejercicio.",
@@ -1872,7 +1874,7 @@ export default {
     preview_notice: "¡Esto es solo una vista previa! 👀",
     preview_description: "Desbloquea el acceso completo a análisis detallados, seguimiento de progreso e información personalizada.",
     get_premium_access: "Obtener Acceso Premium",
-    
+
     // ExercisesBrowser
     all_equipment: "Todo el Equipo",
     all_muscles: "Todos los Músculos",

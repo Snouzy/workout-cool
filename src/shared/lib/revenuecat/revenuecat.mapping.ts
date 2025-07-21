@@ -35,7 +35,7 @@ export class RevenueCatMapping {
         planId_provider_region: {
           planId,
           provider: PaymentProcessor.REVENUECAT,
-          region: region || null,
+          region: region || "",
         },
       },
       update: {

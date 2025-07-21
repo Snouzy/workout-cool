@@ -10,7 +10,7 @@ const ratingSchema = z.object({
   ratingComment: z.string().optional(),
 });
 
-export async function POST(request: NextRequest, { params }: { params: { sessionId: string } }) {
+export async function POST(request: NextRequest, { params }: { params: Promise<{ sessionId: string }> }) {
   try {
     // Check authentication
     const session = await getMobileCompatibleSession(request);
@@ -28,10 +28,13 @@ export async function POST(request: NextRequest, { params }: { params: { session
 
     const { rating, ratingComment } = parsed.data;
 
+    // Await params
+    const { sessionId } = await params;
+
     // Verify the workout session exists and belongs to the user
     const workoutSession = await prisma.workoutSession.findFirst({
       where: {
-        id: params.sessionId,
+        id: sessionId,
         userId: session.user.id,
       },
     });
@@ -42,7 +45,7 @@ export async function POST(request: NextRequest, { params }: { params: { session
 
     // Update the workout session with rating
     const updatedSession = await prisma.workoutSession.update({
-      where: { id: params.sessionId },
+      where: { id: sessionId },
       data: {
         rating,
         ratingComment,

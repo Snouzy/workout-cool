@@ -147,6 +147,10 @@ export async function getSessionBySlug(
             descriptionZhCn: ex.exercise.descriptionEn || "",
             fullVideoUrl: ex.exercise.fullVideoUrl,
             fullVideoImageUrl: ex.exercise.fullVideoImageUrl,
+            introduction: null,
+            introductionEn: null,
+            slug: null,
+            slugEn: null,
             createdAt: ex.exercise.createdAt,
             updatedAt: ex.exercise.updatedAt,
             attributes: ex.exercise.attributes.map((attr) => ({

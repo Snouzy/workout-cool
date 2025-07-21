@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/shared/lib/prisma";
 import { getMobileCompatibleSession } from "@/shared/api/mobile-auth";
 
-export async function GET(request: NextRequest, { params }: { params: { sessionId: string } }) {
+export async function GET(request: NextRequest, { params }: { params: Promise<{ sessionId: string }> }) {
   try {
     // Check authentication
     const session = await getMobileCompatibleSession(request);
@@ -11,10 +11,13 @@ export async function GET(request: NextRequest, { params }: { params: { sessionI
       return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
     }
 
+    // Await params
+    const { sessionId } = await params;
+
     // Get the workout session with all related data
     const workoutSession = await prisma.workoutSession.findFirst({
       where: {
-        id: params.sessionId,
+        id: sessionId,
         userId: session.user.id,
       },
       include: {

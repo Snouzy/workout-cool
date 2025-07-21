@@ -3,6 +3,9 @@ import { ExerciseAttributeValueEnum, WorkoutSet } from "@prisma/client";
 
 import { ExerciseWithAttributes } from "@/entities/exercise/types/exercise.types";
 
+// Re-export the type for consistency
+export type { ExerciseWithAttributes };
+
 export interface WorkoutBuilderState {
   currentStep: number;
   selectedEquipment: ExerciseAttributeValueEnum[];

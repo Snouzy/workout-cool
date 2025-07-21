@@ -63,11 +63,9 @@ export async function updateUserPassword(
 
 export const updatePasswordAction = mobileAuthenticatedActionClient
   .schema(UpdatePasswordSchema)
-  .action(
-    async ({ parsedInput, ctx }: { parsedInput: z.infer<typeof UpdatePasswordSchema>; ctx: { user: { id: string; email: string } } }) => {
+  .action(async ({ parsedInput, ctx }) => {
       const { confirmPassword, currentPassword, newPassword } = parsedInput;
-      const { user } = ctx;
+      const { user } = ctx as { user: any };
 
       return updateUserPassword(user.id, currentPassword, newPassword, confirmPassword);
-    },
-  );
+    });

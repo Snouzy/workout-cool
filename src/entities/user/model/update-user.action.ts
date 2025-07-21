@@ -7,7 +7,7 @@ import { mobileAuthenticatedActionClient } from "@/shared/api/mobile-safe-action
 import { updateUserSchema } from "@/entities/user/schemas/update-user.schema";
 
 export const updateUserAction = mobileAuthenticatedActionClient.schema(updateUserSchema).action(async ({ parsedInput, ctx }) => {
-  const { user } = ctx;
+  const { user } = ctx as { user: any };
 
   if (!user) {
     throw new Error("Unauthenticated");

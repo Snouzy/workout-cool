@@ -16,13 +16,13 @@ export function generateSessionSEOKeywords(session: ProgramSessionWithExercises,
       case "en":
         return ex.exercise.nameEn || ex.exercise.name;
       case "es":
-        return ex.exercise.nameEs || ex.exercise.nameEn;
+        return ex.exercise.nameEn || ex.exercise.name; // Using nameEn as fallback since nameEs doesn't exist
       case "pt":
-        return ex.exercise.namePt || ex.exercise.nameEn;
+        return ex.exercise.nameEn || ex.exercise.name; // Using nameEn as fallback since namePt doesn't exist
       case "ru":
-        return ex.exercise.nameRu || ex.exercise.nameEn;
+        return ex.exercise.nameEn || ex.exercise.name; // Using nameEn as fallback since nameRu doesn't exist
       case "zh-CN":
-        return ex.exercise.nameZhCn || ex.exercise.nameEn;
+        return ex.exercise.nameEn || ex.exercise.name; // Using nameEn as fallback since nameZhCn doesn't exist
       default:
         return ex.exercise.name;
     }

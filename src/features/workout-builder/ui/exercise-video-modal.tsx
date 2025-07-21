@@ -105,7 +105,8 @@ export function ExerciseVideoModal({ open, onOpenChange, exercise }: ExerciseVid
             <BarChart3 className="text-blue-600 dark:text-blue-400" size={20} />
             <h3 className="text-lg font-semibold text-slate-700 dark:text-slate-200">{t("statistics.title") || "Statistiques"}</h3>
           </div>
-          <ExerciseCharts exerciseId={exercise.id} timeframe={""} />
+          {/* TODO: Change this */}
+          <ExerciseCharts exerciseId={exercise.id} timeframe={"8weeks"} />
         </div>
       </DialogContent>
     </Dialog>

@@ -1,8 +1,10 @@
 import { useState } from "react";
 import Image from "next/image";
 import { Play, Shuffle, MoreVertical, Trash2, Info, Target } from "lucide-react";
+import { ExerciseAttributeNameEnum } from "@prisma/client";
 
 import { useI18n } from "locales/client";
+import { getExerciseAttributesValueOf } from "@/entities/exercise/shared/muscles";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -27,13 +29,9 @@ export function ExerciseCard({ exercise, muscle, onShuffle, onPick, onDelete }: 
   const [showVideo, setShowVideo] = useState(false);
 
   // Extraire les attributs utiles
-  const equipmentAttributes =
-    exercise.attributes?.filter((attr) => attr.attributeName.name === "EQUIPMENT").map((attr) => attr.attributeValue.value) || [];
-
-  const typeAttributes =
-    exercise.attributes?.filter((attr) => attr.attributeName.name === "TYPE").map((attr) => attr.attributeValue.value) || [];
-
-  const mechanicsType = exercise.attributes?.find((attr) => attr.attributeName.name === "MECHANICS_TYPE")?.attributeValue.value;
+  const equipmentAttributes = getExerciseAttributesValueOf(exercise, ExerciseAttributeNameEnum.EQUIPMENT);
+  const typeAttributes = getExerciseAttributesValueOf(exercise, ExerciseAttributeNameEnum.TYPE);
+  const mechanicsTypeValue = getExerciseAttributesValueOf(exercise, ExerciseAttributeNameEnum.MECHANICS_TYPE);
 
   const handlePlayVideo = () => {
     setShowVideo(true);
@@ -114,9 +112,9 @@ export function ExerciseCard({ exercise, muscle, onShuffle, onPick, onDelete }: 
               <TooltipContent className="max-w-xs" side="left">
                 <div className="space-y-2">
                   <p className="text-sm">{exercise.introduction}</p>
-                  {mechanicsType && (
+                  {mechanicsTypeValue && (
                     <p className="text-xs text-slate-500">
-                      <strong>Type:</strong> {mechanicsType}
+                      <strong>Type:</strong> {mechanicsTypeValue.map((mt) => mt.replace("_", " ")).join(", ")}
                     </p>
                   )}
                 </div>

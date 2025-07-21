@@ -2,11 +2,11 @@ import { ExerciseAttributeNameEnum } from "@prisma/client";
 
 import { ExerciseAttribute, ExerciseWithAttributes } from "@/entities/exercise/types/exercise.types";
 
-const getAttributeName = (attr: ExerciseAttribute) => {
+export const getAttributeName = (attr: ExerciseAttribute) => {
   return typeof attr.attributeName === "string" ? attr.attributeName : attr.attributeName.name;
 };
 
-const getAttributeValue = (attr: ExerciseAttribute) => {
+export const getAttributeValue = (attr: ExerciseAttribute) => {
   return typeof attr.attributeValue === "string" ? attr.attributeValue : attr.attributeValue.value;
 };
 

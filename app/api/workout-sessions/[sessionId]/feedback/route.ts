@@ -10,7 +10,7 @@ const feedbackSchema = z.object({
   feedbackText: z.string().max(200).optional(),
 });
 
-export async function POST(request: NextRequest, { params }: { params: { sessionId: string } }) {
+export async function POST(request: NextRequest, { params }: { params: Promise<{ sessionId: string }> }) {
   try {
     // Check authentication
     const session = await getMobileCompatibleSession(request);
@@ -28,10 +28,13 @@ export async function POST(request: NextRequest, { params }: { params: { session
 
     const { feedbackEmoji, feedbackText } = parsed.data;
 
+    // Await params
+    const { sessionId } = await params;
+
     // Verify the workout session exists and belongs to the user
     const workoutSession = await prisma.workoutSession.findFirst({
       where: {
-        id: params.sessionId,
+        id: sessionId,
         userId: session.user.id,
       },
     });
@@ -40,20 +43,19 @@ export async function POST(request: NextRequest, { params }: { params: { session
       return NextResponse.json({ error: "Workout session not found or unauthorized" }, { status: 404 });
     }
 
-    // Update the workout session with feedback
+    // Update the workout session with feedback (map to existing fields)
     const updatedSession = await prisma.workoutSession.update({
-      where: { id: params.sessionId },
+      where: { id: sessionId },
       data: {
-        feedbackEmoji,
-        feedbackText,
+        ratingComment: feedbackText || null,
       },
     });
 
     return NextResponse.json({
       success: true,
       data: {
-        feedbackEmoji: updatedSession.feedbackEmoji,
-        feedbackText: updatedSession.feedbackText,
+        feedbackEmoji: feedbackEmoji || null,
+        feedbackText: updatedSession.ratingComment,
       },
     });
   } catch (error) {

@@ -1,8 +1,10 @@
 import { useEffect, useRef } from "react";
 import Image from "next/image";
 import { X, Play } from "lucide-react";
+import { ExerciseAttributeNameEnum } from "@prisma/client";
 
 import { useCurrentLocale, useI18n } from "locales/client";
+import { getExerciseAttributesValueOf } from "@/entities/exercise/shared/muscles";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
@@ -50,13 +52,9 @@ export function ExercisePickModal({ exercise, muscle, isOpen, onClose, onConfirm
   const exerciseDescription = locale === "fr" ? exercise.description : exercise.descriptionEn;
 
   // Extraire les attributs utiles
-  const equipmentAttributes =
-    exercise.attributes?.filter((attr) => attr.attributeName.name === "EQUIPMENT").map((attr) => attr.attributeValue.value) || [];
-
-  const typeAttributes =
-    exercise.attributes?.filter((attr) => attr.attributeName.name === "TYPE").map((attr) => attr.attributeValue.value) || [];
-
-  const mechanicsType = exercise.attributes?.find((attr) => attr.attributeName.name === "MECHANICS_TYPE")?.attributeValue.value;
+  const equipmentAttributes = getExerciseAttributesValueOf(exercise, ExerciseAttributeNameEnum.EQUIPMENT);
+  const typeAttributes = getExerciseAttributesValueOf(exercise, ExerciseAttributeNameEnum.TYPE);
+  const mechanicsTypeValue = getExerciseAttributesValueOf(exercise, ExerciseAttributeNameEnum.MECHANICS_TYPE);
 
   const handleConfirm = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -75,9 +73,9 @@ export function ExercisePickModal({ exercise, muscle, isOpen, onClose, onConfirm
               <Badge className="bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-100" variant="outline">
                 {t(`workout_builder.muscles.${muscle.toLowerCase()}` as keyof typeof t)}
               </Badge>
-              {mechanicsType && (
+              {mechanicsTypeValue && (
                 <Badge className="text-xs" variant="outline">
-                  {mechanicsType}
+                  {mechanicsTypeValue.map((value) => value.replace("_", " "))}
                 </Badge>
               )}
             </div>

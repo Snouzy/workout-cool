@@ -43,7 +43,9 @@ export const useWorkoutSessionService = () => {
       }));
       const localSessions = workoutSessionLocal.getAll().filter((s) => s.status !== "synced");
 
-      return [...localSessions, ...serverSessions].sort((a, b) => new Date(b.startedAt).getTime() - new Date(a.startedAt).getTime());
+      return [...localSessions, ...(serverSessions as any)].sort(
+        (a, b) => new Date(b.startedAt).getTime() - new Date(a.startedAt).getTime(),
+      );
     }
 
     return workoutSessionLocal.getAll().sort((a, b) => {

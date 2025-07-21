@@ -1,10 +1,12 @@
 import { useRouter } from "next/navigation";
 import { Play, Repeat2, Trash2 } from "lucide-react";
+import { ExerciseAttributeNameEnum } from "@prisma/client";
 
 import { useCurrentLocale, useI18n } from "locales/client";
 import { useWorkoutSessionService } from "@/shared/lib/workout-session/use-workout-session.service";
 import { useWorkoutSessions } from "@/features/workout-session/model/use-workout-sessions";
 import { useWorkoutBuilderStore } from "@/features/workout-builder/model/workout-builder.store";
+import { getExerciseAttributesValueOf, getPrimaryMuscle, getAttributeValue } from "@/entities/exercise/shared/muscles";
 import { Link } from "@/components/ui/link";
 import { Button } from "@/components/ui/button";
 
@@ -47,11 +49,7 @@ export function WorkoutSessionList() {
 
     const allEquipment = Array.from(
       new Set(
-        sessionToCopy.exercises
-          .flatMap((ex) =>
-            ex.attributes?.filter((attr) => attr.attributeName?.name === "EQUIPMENT").map((attr) => attr.attributeValue.value),
-          )
-          .filter(Boolean),
+        sessionToCopy.exercises.flatMap((ex) => getExerciseAttributesValueOf(ex, ExerciseAttributeNameEnum.EQUIPMENT)).filter(Boolean),
       ),
     );
 
@@ -62,9 +60,7 @@ export function WorkoutSessionList() {
         : Array.from(
             new Set(
               sessionToCopy.exercises
-                .flatMap((ex) =>
-                  ex.attributes?.filter((attr) => attr.attributeName?.name === "PRIMARY_MUSCLE").map((attr) => attr.attributeValue.value),
-                )
+                .flatMap((ex) => getExerciseAttributesValueOf(ex, ExerciseAttributeNameEnum.PRIMARY_MUSCLE))
                 .filter(Boolean),
             ),
           );
@@ -72,9 +68,10 @@ export function WorkoutSessionList() {
     const exercisesByMuscle = allMuscles.map((muscle) => ({
       muscle,
       exercises: sessionToCopy.exercises
-        .filter((ex) =>
-          ex.attributes?.some((attr) => attr.attributeName?.name === "PRIMARY_MUSCLE" && attr.attributeValue.value === muscle),
-        )
+        .filter((ex) => {
+          const primaryMuscle = getPrimaryMuscle(ex.attributes || []);
+          return primaryMuscle && getAttributeValue(primaryMuscle) === muscle;
+        })
         .map((ex) => ({
           ...ex,
           id: ex.id,
@@ -130,7 +127,6 @@ export function WorkoutSessionList() {
                   <div className="flex flex-wrap gap-1 mt-1 justify-center">
                     {session.muscles.map((muscle, idx) => (
                       <span
-                         
                         className={`inline-block border rounded-full px-2 py-0.5 text-xs font-semibold ${BADGE_COLORS[idx % BADGE_COLORS.length]}`}
                         key={muscle}
                       >

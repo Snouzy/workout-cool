@@ -1826,17 +1826,17 @@ export default {
   statistics: {
     title: "Statistiques",
     page_subtitle: "Suivez votre parcours fitness avec des analyses avancées et des informations personnalisées.",
-    select_exercise: "Sélectionner un Exercice",
-    active_daily_users: "Utilisateurs Actifs Quotidiens",
-    success_rate: "Taux de Réussite",
-    user_rating: "Note des Utilisateurs",
-    
+    select_exercise: "Sélectionner un exercice",
+    active_daily_users: "Utilisateurs actifs quotidiens",
+    success_rate: "Taux de réussite",
+    user_rating: "Note des utilisateurs",
+
     // Tabs
     tabs: {
       video: "Vidéo",
       statistics: "Statistiques",
     },
-    
+
     // Chart titles and labels
     weight: "Poids",
     volume: "Volume",
@@ -1851,7 +1851,7 @@ export default {
     // Form and controls
     timeframe: "Période",
     timeframe_selector: "Sélecteur de période",
-    
+
     // Timeframes
     timeframes: {
       "4weeks": "4 Semaines",
@@ -1881,10 +1881,11 @@ export default {
 
     // Premium
     premium_required: "Premium requis pour accéder aux statistiques",
-    
+
     // StatisticsPreviewOverlay
     premium_statistics: "Statistiques Premium",
-    premium_statistics_description: "Obtenez des informations détaillées sur votre parcours fitness avec des analyses avancées pour chaque exercice.",
+    premium_statistics_description:
+      "Obtenez des informations détaillées sur votre parcours fitness avec des analyses avancées pour chaque exercice.",
     total_volume: "Volume Total",
     pr_increase: "Augmentation PR",
     weight_progress: "Progression du Poids",
@@ -1895,15 +1896,15 @@ export default {
     preview_notice: "Ceci n'est qu'un aperçu ! 👀",
     preview_description: "Débloquez l'accès complet aux analyses détaillées, au suivi des progrès et aux informations personnalisées.",
     get_premium_access: "Obtenir l'Accès Premium",
-    
+
     // ExercisesBrowser
-    all_equipment: "Tout l'Équipement",
-    all_muscles: "Tous les Muscles",
-    search_exercises: "Rechercher des Exercices",
+    all_equipment: "Tous les équipements",
+    all_muscles: "Tous les muscles",
+    search_exercises: "Rechercher des exercices",
     error_loading_exercises: "Erreur lors du chargement des exercices",
     no_exercises_found: "Aucun exercice trouvé",
-    equipment_label: "Équipement :",
-    primary_muscle_label: "Muscle Principal :",
+    equipment_label: "Équipement",
+    primary_muscle_label: "Muscle principal",
     unknown: "Inconnu",
     no_image_available: "Aucune image disponible",
   },

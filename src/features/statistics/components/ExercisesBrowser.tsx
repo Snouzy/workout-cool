@@ -6,7 +6,7 @@ import Image from "next/image";
 import { Search, X } from "lucide-react";
 import debounce from "lodash.debounce";
 import { useQuery } from "@tanstack/react-query";
-import { ExerciseAttributeNameEnum } from "@prisma/client";
+import { ExerciseAttributeNameEnum, ExerciseAttributeValueEnum } from "@prisma/client";
 
 import { useI18n } from "locales/client";
 import { getAttributeValueLabel } from "@/shared/lib/attribute-value-translation";
@@ -42,16 +42,21 @@ const fetchExercises = async (params: { page?: number; limit?: number; search?: 
 
 // Available muscle groups - will be translated dynamically
 const MUSCLE_GROUPS = [
-  { value: "CHEST", labelKey: "workout_builder.muscles.CHEST" },
-  { value: "BACK", labelKey: "workout_builder.muscles.BACK" },
-  { value: "SHOULDERS", labelKey: "workout_builder.muscles.SHOULDERS" },
-  { value: "BICEPS", labelKey: "workout_builder.muscles.BICEPS" },
-  { value: "TRICEPS", labelKey: "workout_builder.muscles.TRICEPS" },
-  { value: "LEGS", labelKey: "workout_builder.muscles.LEGS" },
-  { value: "ABDOMINALS", labelKey: "workout_builder.muscles.ABDOMINALS" },
-  { value: "GLUTES", labelKey: "workout_builder.muscles.GLUTES" },
-  { value: "CALVES", labelKey: "workout_builder.muscles.CALVES" },
-  { value: "FOREARMS", labelKey: "workout_builder.muscles.FOREARMS" },
+  { value: "CHEST", labelKey: "workout_builder.muscles.chest" },
+  { value: "BACK", labelKey: "workout_builder.muscles.back" },
+  { value: "SHOULDERS", labelKey: "workout_builder.muscles.shoulders" },
+  { value: "BICEPS", labelKey: "workout_builder.muscles.biceps" },
+  { value: "TRICEPS", labelKey: "workout_builder.muscles.triceps" },
+  { value: "QUADRICEPS", labelKey: "workout_builder.muscles.quadriceps" },
+  { value: "HAMSTRINGS", labelKey: "workout_builder.muscles.hamstrings" },
+  { value: "ABDOMINALS", labelKey: "workout_builder.muscles.abdominals" },
+  { value: "OBLIQUES", labelKey: "workout_builder.muscles.obliques" },
+  { value: "GLUTES", labelKey: "workout_builder.muscles.glutes" },
+  { value: "CALVES", labelKey: "workout_builder.muscles.calves" },
+  { value: "FOREARMS", labelKey: "workout_builder.muscles.forearms" },
+  { value: "TRAPS", labelKey: "workout_builder.muscles.traps" },
+  { value: "ADDUCTORS", labelKey: "workout_builder.muscles.adductors" },
+  { value: "ABDUCTORS", labelKey: "workout_builder.muscles.abductors" },
 ];
 
 // Exercise Selection Modal Component
@@ -127,7 +132,7 @@ const ExerciseSelectionModal: React.FC<{
               <option value="ALL">{t("statistics.all_equipment")}</option>
               {EQUIPMENT_CONFIG.map((equipment) => (
                 <option key={equipment.value} value={equipment.value}>
-                  {equipment.label}
+                  {getAttributeValueLabel(equipment.value as ExerciseAttributeValueEnum, t)}
                 </option>
               ))}
             </select>
@@ -139,7 +144,7 @@ const ExerciseSelectionModal: React.FC<{
               <option value="ALL">{t("statistics.all_muscles")}</option>
               {MUSCLE_GROUPS.map((muscle) => (
                 <option key={muscle.value} value={muscle.value}>
-                  {t(muscle.labelKey as keyof typeof t)}
+                  {getAttributeValueLabel(muscle.value as ExerciseAttributeValueEnum, t)}
                 </option>
               ))}
             </select>

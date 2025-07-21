@@ -1,7 +1,5 @@
-import { StatisticsTimeframe } from "@/shared/constants/statistics";
-
 // Export the type for use in other modules
-export type { StatisticsTimeframe };
+import { StatisticsTimeframe } from "@/shared/constants/statistics";
 import { ExerciseWithAttributes } from "@/entities/exercise/types/exercise.types";
 
 // Weight Progression Types

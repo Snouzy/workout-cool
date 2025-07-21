@@ -23,6 +23,7 @@ import { ExerciseCharts } from "@/features/statistics/components/ExerciseStatist
 import { useUserSubscription } from "@/features/ads/hooks/useUserSubscription";
 import { ExerciseWithAttributes } from "@/entities/exercise/types/exercise.types";
 import { getExerciseAttributesValueOf } from "@/entities/exercise/shared/muscles";
+import { SimpleSelect, SelectOption } from "@/components/ui/simple-select";
 
 // API service for fetching exercises
 const fetchExercises = async (params: { page?: number; limit?: number; search?: string; muscle?: string; equipment?: string }) => {
@@ -69,6 +70,24 @@ const ExerciseSelectionModal: React.FC<{
   const [selectedEquipment, setSelectedEquipment] = useState<string>("ALL");
   const [selectedMuscle, setSelectedMuscle] = useState<string>("ALL");
   const t = useI18n();
+
+  // Prepare equipment options
+  const equipmentOptions: SelectOption[] = [
+    { value: "ALL", label: t("statistics.all_equipment") },
+    ...EQUIPMENT_CONFIG.map((equipment) => ({
+      value: equipment.value,
+      label: getAttributeValueLabel(equipment.value as ExerciseAttributeValueEnum, t),
+    })),
+  ];
+
+  // Prepare muscle options
+  const muscleOptions: SelectOption[] = [
+    { value: "ALL", label: t("statistics.all_muscles") },
+    ...MUSCLE_GROUPS.map((muscle) => ({
+      value: muscle.value,
+      label: getAttributeValueLabel(muscle.value as ExerciseAttributeValueEnum, t),
+    })),
+  ];
 
   // Debounced search
   const debouncedSearch = useMemo(
@@ -123,32 +142,22 @@ const ExerciseSelectionModal: React.FC<{
         {/* Filters */}
         <div className="space-y-4 mb-4">
           {/* Equipment Filter */}
-          <div className="form-control">
-            <select
-              className="select select-bordered w-full"
-              onChange={(e) => setSelectedEquipment(e.target.value)}
-              value={selectedEquipment}
-            >
-              <option value="ALL">{t("statistics.all_equipment")}</option>
-              {EQUIPMENT_CONFIG.map((equipment) => (
-                <option key={equipment.value} value={equipment.value}>
-                  {getAttributeValueLabel(equipment.value as ExerciseAttributeValueEnum, t)}
-                </option>
-              ))}
-            </select>
-          </div>
+          <SimpleSelect
+            aria-label="Filter by equipment"
+            className="w-full"
+            onValueChange={setSelectedEquipment}
+            options={equipmentOptions}
+            value={selectedEquipment}
+          />
 
           {/* Muscle Filter */}
-          <div className="form-control">
-            <select className="select select-bordered w-full" onChange={(e) => setSelectedMuscle(e.target.value)} value={selectedMuscle}>
-              <option value="ALL">{t("statistics.all_muscles")}</option>
-              {MUSCLE_GROUPS.map((muscle) => (
-                <option key={muscle.value} value={muscle.value}>
-                  {getAttributeValueLabel(muscle.value as ExerciseAttributeValueEnum, t)}
-                </option>
-              ))}
-            </select>
-          </div>
+          <SimpleSelect
+            aria-label="Filter by muscle group"
+            className="w-full"
+            onValueChange={setSelectedMuscle}
+            options={muscleOptions}
+            value={selectedMuscle}
+          />
 
           {/* Search */}
           <div className="relative">

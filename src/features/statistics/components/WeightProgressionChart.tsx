@@ -3,9 +3,10 @@
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import React from "react";
 
-import { useI18n } from "locales/client";
+import { useI18n, useCurrentLocale } from "locales/client";
 import { WeightProgressionPoint } from "@/shared/types/statistics.types";
 import { cn } from "@/shared/lib/utils";
+import { formatDate } from "@/shared/lib/date";
 
 import { useChartTheme } from "../hooks/use-chart-theme";
 
@@ -19,15 +20,12 @@ interface WeightProgressionChartProps {
 
 export function WeightProgressionChart({ data, height = 300, unit = "kg", className }: WeightProgressionChartProps) {
   const t = useI18n();
+  const locale = useCurrentLocale();
   const { colors } = useChartTheme();
 
   // Format date for display
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return new Intl.DateTimeFormat("default", {
-      month: "short",
-      day: "numeric",
-    }).format(date);
+  const formatChartDate = (dateString: string) => {
+    return formatDate(dateString, locale, "MMM D");
   };
 
   // Generate skeleton data for empty state
@@ -40,7 +38,7 @@ export function WeightProgressionChart({ data, height = 300, unit = "kg", classN
       skeletonData.push({
         date: date.toISOString(),
         weight: 30 + Math.random() * 40, // Random weight between 30-70
-        formattedDate: formatDate(date.toISOString()),
+        formattedDate: formatChartDate(date.toISOString()),
       });
     }
     return skeletonData;
@@ -51,7 +49,7 @@ export function WeightProgressionChart({ data, height = 300, unit = "kg", classN
   const chartData = hasData
     ? data.map((point) => ({
         ...point,
-        formattedDate: formatDate(point.date),
+        formattedDate: formatChartDate(point.date),
       }))
     : generateSkeletonData();
 

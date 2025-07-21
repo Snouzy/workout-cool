@@ -3,8 +3,9 @@
 import React from "react";
 import { AlertCircle } from "lucide-react";
 
-import { useI18n } from "locales/client";
+import { useI18n, useCurrentLocale } from "locales/client";
 import { cn } from "@/shared/lib/utils";
+import { formatDate } from "@/shared/lib/date";
 import { StatisticsTimeframe } from "@/features/statistics/types";
 import { PremiumGate } from "@/components/ui/premium-gate";
 import { Loader } from "@/components/ui/loader";
@@ -24,6 +25,7 @@ interface ExerciseStatisticsTabProps {
 
 export function ExerciseCharts({ timeframe, exerciseId, unit = "kg", className }: ExerciseStatisticsTabProps) {
   const t = useI18n();
+  const locale = useCurrentLocale();
 
   // Fetch data for all charts
   const weightProgressionQuery = useWeightProgression(exerciseId, timeframe);
@@ -102,7 +104,7 @@ export function ExerciseCharts({ timeframe, exerciseId, unit = "kg", className }
         {/* Footer */}
         <div className="text-center text-sm text-gray-500">
           {t("statistics.last_updated", {
-            date: new Date().toLocaleDateString(),
+            date: formatDate(new Date(), locale),
           })}
         </div>
       </div>

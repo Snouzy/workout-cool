@@ -1,6 +1,5 @@
 "use server";
 
-import { z } from "zod";
 
 import { prisma } from "@/shared/lib/prisma";
 import { ERROR_MESSAGES } from "@/shared/constants/errors";

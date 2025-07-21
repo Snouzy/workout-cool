@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { Lock, Eye, TrendingUp, Zap, Star, Crown, ArrowRight, RotateCcw } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
-import { useI18n } from "locales/client";
+import { useI18n, useCurrentLocale } from "locales/client";
 import { cn } from "@/shared/lib/utils";
 
 interface StatisticsPreviewOverlayProps {
@@ -101,6 +101,7 @@ const AnimatedChart: React.FC = () => {
 // Composant pour les métriques qui s'animent
 const AnimatedMetrics: React.FC = () => {
   const t = useI18n();
+  const locale = useCurrentLocale();
 
   const [metrics, setMetrics] = useState({
     totalVolume: 2450,
@@ -123,7 +124,7 @@ const AnimatedMetrics: React.FC = () => {
   return (
     <div className="grid grid-cols-3 gap-4">
       <motion.div className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-lg p-3 text-center" whileHover={{ scale: 1.05 }}>
-        <p className="text-2xl font-bold text-purple-600 dark:text-purple-400">{metrics.totalVolume.toLocaleString()}</p>
+        <p className="text-2xl font-bold text-purple-600 dark:text-purple-400">{metrics.totalVolume.toLocaleString(locale)}</p>
         <p className="text-xs text-black dark:text-gray-400">{t("statistics.total_volume")}</p>
       </motion.div>
 

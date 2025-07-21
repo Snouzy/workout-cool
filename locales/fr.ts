@@ -1854,10 +1854,10 @@ export default {
 
     // Timeframes
     timeframes: {
-      "4weeks": "4 Semaines",
-      "8weeks": "8 Semaines",
-      "12weeks": "12 Semaines",
-      "1year": "1 An",
+      "4weeks": "4 semaines",
+      "8weeks": "8 semaines",
+      "12weeks": "12 semaines",
+      "1year": "1 an",
     },
 
     // Error messages

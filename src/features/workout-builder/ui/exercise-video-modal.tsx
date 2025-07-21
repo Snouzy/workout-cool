@@ -1,11 +1,15 @@
-import { BarChart3 } from "lucide-react";
+import { useState } from "react";
+import { BarChart3, Play } from "lucide-react";
 import { ExerciseAttributeNameEnum, ExerciseAttributeValueEnum } from "@prisma/client";
 
 import { useCurrentLocale, useI18n } from "locales/client";
 import { getYouTubeEmbedUrl } from "@/shared/lib/youtube";
 import { getAttributeValueLabel } from "@/shared/lib/attribute-value-translation";
+import { StatisticsTimeframe } from "@/features/statistics/types";
 import { ExerciseCharts } from "@/features/statistics/components/ExerciseStatisticsTab";
 import { getExerciseAttributesValueOf } from "@/entities/exercise/shared/muscles";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 import type { ExerciseWithAttributes } from "@/entities/exercise/types/exercise.types";
@@ -16,9 +20,19 @@ interface ExerciseVideoModalProps {
   exercise: ExerciseWithAttributes;
 }
 
+const TIMEFRAME_OPTIONS: { value: StatisticsTimeframe; label: string }[] = [
+  { value: "4weeks", label: "4 Weeks" },
+  { value: "8weeks", label: "8 Weeks" },
+  { value: "12weeks", label: "12 Weeks" },
+  { value: "1year", label: "1 Year" },
+];
+
 export function ExerciseVideoModal({ open, onOpenChange, exercise }: ExerciseVideoModalProps) {
   const t = useI18n();
   const locale = useCurrentLocale();
+  const [activeTab, setActiveTab] = useState("video");
+  const [selectedTimeframe, setSelectedTimeframe] = useState<StatisticsTimeframe>("8weeks");
+
   const title = locale === "fr" ? exercise.name : exercise.nameEn || exercise.name;
   const introduction = locale === "fr" ? exercise.introduction : exercise.introductionEn || exercise.introduction;
   const description = locale === "fr" ? exercise.description : exercise.descriptionEn || exercise.description;
@@ -64,50 +78,79 @@ export function ExerciseVideoModal({ open, onOpenChange, exercise }: ExerciseVid
           </DialogTitle>
         </DialogHeader>
 
-        {/* Introduction */}
-        {introduction && (
-          <div
-            className="px-6 pt-2 pb-2 text-slate-700 dark:text-slate-200 text-sm md:text-base prose dark:prose-invert max-w-none"
-            dangerouslySetInnerHTML={{ __html: introduction }}
-          />
-        )}
+        <Tabs className="flex-1" onValueChange={setActiveTab} value={activeTab}>
+          <TabsList className="grid w-full grid-cols-2 mx-4" style={{ width: "calc(100% - 2rem)" }}>
+            <TabsTrigger className="flex items-center gap-2" value="video">
+              <Play size={16} />
+              {"Video"}
+            </TabsTrigger>
+            <TabsTrigger className="flex items-center gap-2" value="statistics">
+              <BarChart3 size={16} />
+              {t("statistics.title") || "Statistics"}
+            </TabsTrigger>
+          </TabsList>
 
-        {/* Vidéo */}
-        <div className="w-full aspect-video bg-black flex items-center justify-center">
-          {videoUrl ? (
-            youTubeEmbedUrl ? (
-              <iframe
-                allow="autoplay; encrypted-media"
-                allowFullScreen
-                className="w-full h-full border-0"
-                src={youTubeEmbedUrl}
-                title={title ?? ""}
+          <TabsContent className="mt-0" value="video">
+            {/* Introduction */}
+            {introduction && (
+              <div
+                className="px-6 pt-2 pb-2 text-slate-700 dark:text-slate-200 text-sm md:text-base prose dark:prose-invert max-w-none"
+                dangerouslySetInnerHTML={{ __html: introduction }}
               />
-            ) : (
-              <video autoPlay className="w-full h-full object-contain bg-black" controls poster="" src={videoUrl} />
-            )
-          ) : (
-            <div className="text-white text-center p-8">{t("workout_builder.exercise.no_video_available")}</div>
-          )}
-        </div>
+            )}
 
-        {/* Instructions (description) */}
-        {description && (
-          <div
-            className="px-6 pt-4 pb-6 text-slate-700 dark:text-slate-200 text-sm md:text-base prose dark:prose-invert max-w-none border-t border-slate-200 dark:border-slate-800 mt-2"
-            dangerouslySetInnerHTML={{ __html: description }}
-          />
-        )}
+            {/* Vidéo */}
+            <div className="w-full aspect-video bg-black flex items-center justify-center">
+              {videoUrl ? (
+                youTubeEmbedUrl ? (
+                  <iframe
+                    allow="autoplay; encrypted-media"
+                    allowFullScreen
+                    className="w-full h-full border-0"
+                    src={youTubeEmbedUrl}
+                    title={title ?? ""}
+                  />
+                ) : (
+                  <video autoPlay className="w-full h-full object-contain bg-black" controls poster="" src={videoUrl} />
+                )
+              ) : (
+                <div className="text-white text-center p-8">{t("workout_builder.exercise.no_video_available")}</div>
+              )}
+            </div>
 
-        {/* Statistics */}
-        <div className="px-6 pt-4 pb-6 border-t border-slate-200 dark:border-slate-800 mt-2">
-          <div className="flex items-center gap-2 mb-4">
-            <BarChart3 className="text-blue-600 dark:text-blue-400" size={20} />
-            <h3 className="text-lg font-semibold text-slate-700 dark:text-slate-200">{t("statistics.title") || "Statistiques"}</h3>
-          </div>
-          {/* TODO: Change this */}
-          <ExerciseCharts exerciseId={exercise.id} timeframe={"8weeks"} />
-        </div>
+            {/* Instructions (description) */}
+            {description && (
+              <div
+                className="px-6 pt-4 pb-6 text-slate-700 dark:text-slate-200 text-sm md:text-base prose dark:prose-invert max-w-none border-t border-slate-200 dark:border-slate-800 mt-2"
+                dangerouslySetInnerHTML={{ __html: description }}
+              />
+            )}
+          </TabsContent>
+
+          <TabsContent className="mt-0 px-2 md:px-6 pt-4 pb-6" value="statistics">
+            <div className="space-y-4">
+              {/* Timeframe selector */}
+              <div className="flex items-center justify-between flex-col sm:flex-row">
+                <h3 className="text-lg font-semibold text-slate-700 dark:text-slate-200">{"Performance over..."}</h3>
+                <Select onValueChange={(value) => setSelectedTimeframe(value as StatisticsTimeframe)} value={selectedTimeframe}>
+                  <SelectTrigger className="w-32">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {TIMEFRAME_OPTIONS.map((option) => (
+                      <SelectItem key={option.value} value={option.value}>
+                        {option.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Charts */}
+              <ExerciseCharts exerciseId={exercise.id} timeframe={selectedTimeframe} />
+            </div>
+          </TabsContent>
+        </Tabs>
       </DialogContent>
     </Dialog>
   );

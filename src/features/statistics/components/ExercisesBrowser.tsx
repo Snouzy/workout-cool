@@ -6,6 +6,7 @@ import Image from "next/image";
 import { Search, X } from "lucide-react";
 import debounce from "lodash.debounce";
 import { useQuery } from "@tanstack/react-query";
+import { ExerciseAttributeNameEnum } from "@prisma/client";
 
 import { useI18n } from "locales/client";
 import { getAttributeValueLabel } from "@/shared/lib/attribute-value-translation";
@@ -15,14 +16,13 @@ import { WorkoutBuilderExerciseWithAttributes } from "@/features/workout-builder
 import { EQUIPMENT_CONFIG } from "@/features/workout-builder/model/equipment-config";
 import { WeightProgressionChart } from "@/features/statistics/components/WeightProgressionChart";
 import { VolumeChart } from "@/features/statistics/components/VolumeChart";
+import { TimeframeSelector } from "@/features/statistics/components/TimeframeSelector";
 import { StatisticsPreviewOverlay } from "@/features/statistics/components/StatisticsPreviewOverlay";
 import { OneRepMaxChart } from "@/features/statistics/components/OneRepMaxChart";
 import { ExerciseCharts } from "@/features/statistics/components/ExerciseStatisticsTab";
 import { useUserSubscription } from "@/features/ads/hooks/useUserSubscription";
 import { ExerciseWithAttributes } from "@/entities/exercise/types/exercise.types";
-import { getPrimaryMuscle } from "@/entities/exercise/shared/muscles";
-
-interface ExercisesBrowserProps {}
+import { getExerciseAttributesValueOf } from "@/entities/exercise/shared/muscles";
 
 // API service for fetching exercises
 const fetchExercises = async (params: { page?: number; limit?: number; search?: string; muscle?: string; equipment?: string }) => {
@@ -105,11 +105,6 @@ const ExerciseSelectionModal: React.FC<{
     onClose();
   };
 
-  const getExercisePrimaryMuscle = (exercise: ExerciseWithAttributes) => {
-    const primaryMuscle = getPrimaryMuscle(exercise.attributes);
-    return typeof primaryMuscle?.attributeValue === "string" ? primaryMuscle?.attributeValue : primaryMuscle?.attributeValue?.value || null;
-  };
-
   return (
     <div className={`modal ${isOpen ? "modal-open" : ""}`}>
       <div className="modal-box mt-32 w-full max-w-2xl h-full max-h-screen flex flex-col p-4 sm:p-6">
@@ -183,8 +178,8 @@ const ExerciseSelectionModal: React.FC<{
 
           <div className="space-y-2">
             {exercises.map((exercise: ExerciseWithAttributes) => {
-              const primaryMuscle = getExercisePrimaryMuscle(exercise);
-              const primaryMuscleLabel = primaryMuscle ? getAttributeValueLabel(primaryMuscle, t) : "";
+              const primaryMuscles = getExerciseAttributesValueOf(exercise, ExerciseAttributeNameEnum.PRIMARY_MUSCLE);
+              const primaryMuscleLabel = primaryMuscles.map((muscle) => getAttributeValueLabel(muscle, t)).join(", ");
 
               return (
                 <div
@@ -218,14 +213,7 @@ const ExerciseSelectionModal: React.FC<{
   );
 };
 
-const TIMEFRAME_OPTIONS = [
-  { value: "4weeks" as StatisticsTimeframe, labelKey: "statistics.timeframes.4weeks" },
-  { value: "8weeks" as StatisticsTimeframe, labelKey: "statistics.timeframes.8weeks" },
-  { value: "12weeks" as StatisticsTimeframe, labelKey: "statistics.timeframes.12weeks" },
-  { value: "1year" as StatisticsTimeframe, labelKey: "statistics.timeframes.1year" },
-];
-
-export const ExercisesBrowser: React.FC<ExercisesBrowserProps> = () => {
+export const ExercisesBrowser = () => {
   const [selectedExercise, setSelectedExercise] = useState<ExerciseWithAttributes | null>(null);
   const [showExerciseModal, setShowExerciseModal] = useState(false);
   const [showVideoModal, setShowVideoModal] = useState(false);
@@ -246,17 +234,13 @@ export const ExercisesBrowser: React.FC<ExercisesBrowserProps> = () => {
   };
 
   const getExerciseEquipment = (exercise: ExerciseWithAttributes) => {
-    const equipment = exercise.attributes?.filter((attr) => {
-      const name = typeof attr.attributeName === "string" ? attr.attributeName : attr.attributeName.name;
-      return name === "EQUIPMENT";
-    });
-    const value = equipment?.[0]?.attributeValue;
-    return typeof value === "string" ? value : value?.value || null;
+    const equipments = getExerciseAttributesValueOf(exercise, ExerciseAttributeNameEnum.EQUIPMENT);
+    return equipments.map((equipment) => getAttributeValueLabel(equipment, t));
   };
 
-  const getExercisePrimaryMuscle = (exercise: ExerciseWithAttributes) => {
-    const primaryMuscle = getPrimaryMuscle(exercise.attributes);
-    return typeof primaryMuscle?.attributeValue === "string" ? primaryMuscle?.attributeValue : primaryMuscle?.attributeValue?.value || null;
+  const getExercisePrimaryMuscles = (exercise: ExerciseWithAttributes) => {
+    const primaryMuscles = getExerciseAttributesValueOf(exercise, ExerciseAttributeNameEnum.PRIMARY_MUSCLE);
+    return primaryMuscles.map((muscle) => getAttributeValueLabel(muscle, t));
   };
 
   // Convert exercise to workout builder format
@@ -331,15 +315,11 @@ export const ExercisesBrowser: React.FC<ExercisesBrowserProps> = () => {
               <div className="flex flex-col gap-2 mb-4">
                 <div className="flex items-center gap-2">
                   <span className="text-sm text-gray-500">{t("statistics.equipment_label")}</span>
-                  <span className="text-sm">{getExerciseEquipment(selectedExercise) || t("statistics.unknown")}</span>
+                  <span className="text-sm">{getExerciseEquipment(selectedExercise).join(", ")}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-sm text-gray-500">{t("statistics.primary_muscle_label")}</span>
-                  <span className="text-sm">
-                    {getExercisePrimaryMuscle(selectedExercise)
-                      ? getAttributeValueLabel(getExercisePrimaryMuscle(selectedExercise)!, t)
-                      : t("statistics.unknown")}
-                  </span>
+                  <span className="text-sm">{getExercisePrimaryMuscles(selectedExercise).join(", ")}</span>
                 </div>
               </div>
 
@@ -370,17 +350,7 @@ export const ExercisesBrowser: React.FC<ExercisesBrowserProps> = () => {
             {/* Time period selector */}
             <div className="flex items-center justify-between bg-base-100 rounded-lg p-4">
               <span className="hidden sm:block font-semibold">{t("statistics.title")}</span>
-              <select
-                className="select select-bordered select-sm"
-                onChange={(e) => setSelectedTimeframe(e.target.value as StatisticsTimeframe)}
-                value={selectedTimeframe}
-              >
-                {TIMEFRAME_OPTIONS.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {t(option.labelKey as keyof typeof t)}
-                  </option>
-                ))}
-              </select>
+              <TimeframeSelector className="bg-white" onSelect={setSelectedTimeframe} selected={selectedTimeframe} />
             </div>
 
             {/* Stats Charts */}

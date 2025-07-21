@@ -7,9 +7,9 @@ import { getYouTubeEmbedUrl } from "@/shared/lib/youtube";
 import { getAttributeValueLabel } from "@/shared/lib/attribute-value-translation";
 import { StatisticsTimeframe } from "@/features/statistics/types";
 import { ExerciseCharts } from "@/features/statistics/components/ExerciseStatisticsTab";
+import { TimeframeSelector } from "@/features/statistics/components";
 import { getExerciseAttributesValueOf } from "@/entities/exercise/shared/muscles";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 import type { ExerciseWithAttributes } from "@/entities/exercise/types/exercise.types";
@@ -19,13 +19,6 @@ interface ExerciseVideoModalProps {
   onOpenChange: (open: boolean) => void;
   exercise: ExerciseWithAttributes;
 }
-
-const TIMEFRAME_OPTIONS = [
-  { value: "4weeks" as StatisticsTimeframe, labelKey: "statistics.timeframes.4weeks" },
-  { value: "8weeks" as StatisticsTimeframe, labelKey: "statistics.timeframes.8weeks" },
-  { value: "12weeks" as StatisticsTimeframe, labelKey: "statistics.timeframes.12weeks" },
-  { value: "1year" as StatisticsTimeframe, labelKey: "statistics.timeframes.1year" },
-];
 
 export function ExerciseVideoModal({ open, onOpenChange, exercise }: ExerciseVideoModalProps) {
   const t = useI18n();
@@ -132,18 +125,7 @@ export function ExerciseVideoModal({ open, onOpenChange, exercise }: ExerciseVid
               {/* Timeframe selector */}
               <div className="flex items-center justify-between flex-col sm:flex-row">
                 <h3 className="text-lg font-semibold text-slate-700 dark:text-slate-200">{t("statistics.performance_over_time")}</h3>
-                <Select onValueChange={(value) => setSelectedTimeframe(value as StatisticsTimeframe)} value={selectedTimeframe}>
-                  <SelectTrigger className="w-32">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {TIMEFRAME_OPTIONS.map((option) => (
-                      <SelectItem key={option.value} value={option.value}>
-                        {t(option.labelKey as any)}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <TimeframeSelector onSelect={setSelectedTimeframe} selected={selectedTimeframe} />
               </div>
 
               {/* Charts */}

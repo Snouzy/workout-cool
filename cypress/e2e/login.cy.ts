@@ -1,5 +1,9 @@
 /// <reference types="cypress" />
 
+import { LoginForm } from "cypress/pageManager/pages/loginPage.util";
+import { ProfilePage } from "cypress/pageManager/pages/profilePage.util";
+import { SignupForm } from "cypress/pageManager/pages/signup.util";
+
 interface BasicUser {
   first_name: string;
   last_name: string;
@@ -14,6 +18,9 @@ interface AccountInfo {
 
 describe('Account login tests', function () {
   let accountInfo: AccountInfo;
+  const signupForm = new SignupForm();
+  const profilePage = new ProfilePage();
+  const loginForm = new LoginForm();
 
   //Creates a new user and sets up access for fixture data
   before(() => {
@@ -34,13 +41,10 @@ describe('Account login tests', function () {
 
   it("Test prep", function () {
     cy.get('[data-testid="bottom-nav-profile"]').click()
-    cy.get('a[href="auth/signup"]',).click()
-    cy.get('[data-testid="signup-form-firstName"]').type(accountInfo.basic_user.first_name)
-    cy.get('[data-testid="signup-form-lastName"]').type(accountInfo.basic_user.last_name)
-    cy.get('[data-testid="signup-form-email"]').type(accountInfo.basic_user.email)
-    cy.get('[data-testid="signup-form-password"]').type(accountInfo.basic_user.password)
-    cy.get('[data-testid="signup-form-verifyPassword"]').type(accountInfo.basic_user.password)
-    cy.get('[data-testid="signup-form-submit"]').click()
+
+    profilePage.createNewAccount();
+    signupForm.fill(accountInfo.basic_user);
+    signupForm.submit();
 
     //Wait for signup flow to complete
     cy.intercept('/profile').as('profile')
@@ -49,24 +53,25 @@ describe('Account login tests', function () {
   
   it('TC_005 - Able to login to user account', function () {
     cy.get('[data-testid="bottom-nav-profile"]').click()
-    cy.get('a[href="auth/signin"]',).click()
-    cy.get('[data-testid="login-form-email"]').type(accountInfo.basic_user.email)
-    cy.get('[data-testid="login-form-password"]').type(accountInfo.basic_user.password)
-    cy.get('[data-testid="login-form-submit"]').click()
+    profilePage.login()
+    loginForm.fill(accountInfo.basic_user)
+    loginForm.submit()
 
-    //Enusre login has been processed
+    //Ensure login has been processed
     cy.intercept('/?signin=true').as('signin')
     cy.wait('@signin')
   })
 
   it('TC_006 - Unable to login with incorrect password', function () {
     cy.get('[data-testid="bottom-nav-profile"]').click()
-    cy.get('a[href="auth/signin"]',).click()
-    cy.get('[data-testid="login-form-email"]').type(accountInfo.basic_user.email)
-    cy.get('[data-testid="login-form-password"]').type(accountInfo.basic_user.password+1)
-    cy.get('[data-testid="login-form-submit"]').click()
+    profilePage.login()
+    loginForm.fill({
+      email: accountInfo.basic_user.email,
+      password: accountInfo.basic_user.password + '1',
+    })
+    loginForm.submit()
 
-    //Enusre login has been processed
+    //Ensure login has been processed
     cy.wait(5000)
 
     expect(cy.contains("Invalid credentials or account does not exist")).to.exist
@@ -74,12 +79,14 @@ describe('Account login tests', function () {
 
   it('TC_007 - Unable to login with incorrect email', function () {
     cy.get('[data-testid="bottom-nav-profile"]').click()
-    cy.get('a[href="auth/signin"]',).click()
-    cy.get('[data-testid="login-form-email"]').type(accountInfo.registered_user.email)
-    cy.get('[data-testid="login-form-password"]').type(accountInfo.basic_user.password)
-    cy.get('[data-testid="login-form-submit"]').click()
+    profilePage.login()
+    loginForm.fill({
+      email: accountInfo.registered_user.email,
+      password: accountInfo.basic_user.password,
+    })
+    loginForm.submit()
 
-    //Enusre login has been processed
+    //Ensure login has been processed
     cy.wait(5000)
 
     expect(cy.contains("Invalid credentials or account does not exist")).to.exist

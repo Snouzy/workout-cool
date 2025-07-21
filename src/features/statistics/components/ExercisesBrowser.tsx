@@ -40,18 +40,18 @@ const fetchExercises = async (params: { page?: number; limit?: number; search?: 
   return response.json();
 };
 
-// Available muscle groups
+// Available muscle groups - will be translated dynamically
 const MUSCLE_GROUPS = [
-  { value: "CHEST", label: "Chest" },
-  { value: "BACK", label: "Back" },
-  { value: "SHOULDERS", label: "Shoulders" },
-  { value: "BICEPS", label: "Biceps" },
-  { value: "TRICEPS", label: "Triceps" },
-  { value: "LEGS", label: "Legs" },
-  { value: "ABDOMINALS", label: "Abdominals" },
-  { value: "GLUTES", label: "Glutes" },
-  { value: "CALVES", label: "Calves" },
-  { value: "FOREARMS", label: "Forearms" },
+  { value: "CHEST", labelKey: "workout_builder.muscles.CHEST" },
+  { value: "BACK", labelKey: "workout_builder.muscles.BACK" },
+  { value: "SHOULDERS", labelKey: "workout_builder.muscles.SHOULDERS" },
+  { value: "BICEPS", labelKey: "workout_builder.muscles.BICEPS" },
+  { value: "TRICEPS", labelKey: "workout_builder.muscles.TRICEPS" },
+  { value: "LEGS", labelKey: "workout_builder.muscles.LEGS" },
+  { value: "ABDOMINALS", labelKey: "workout_builder.muscles.ABDOMINALS" },
+  { value: "GLUTES", labelKey: "workout_builder.muscles.GLUTES" },
+  { value: "CALVES", labelKey: "workout_builder.muscles.CALVES" },
+  { value: "FOREARMS", labelKey: "workout_builder.muscles.FOREARMS" },
 ];
 
 // Exercise Selection Modal Component
@@ -115,7 +115,7 @@ const ExerciseSelectionModal: React.FC<{
       <div className="modal-box mt-32 w-full max-w-2xl h-full max-h-screen flex flex-col p-4 sm:p-6">
         {/* Header */}
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-2xl font-bold">Select Exercise</h2>
+          <h2 className="text-2xl font-bold">{t("statistics.select_exercise")}</h2>
           <button className="btn btn-ghost btn-sm" onClick={onClose}>
             <X className="h-4 w-4" />
           </button>
@@ -129,7 +129,7 @@ const ExerciseSelectionModal: React.FC<{
               onChange={(e) => setSelectedEquipment(e.target.value)}
               value={selectedEquipment}
             >
-              <option value="ALL">All Equipment</option>
+              <option value="ALL">{t("statistics.all_equipment")}</option>
               {EQUIPMENT_CONFIG.map((equipment) => (
                 <option key={equipment.value} value={equipment.value}>
                   {equipment.label}
@@ -141,10 +141,10 @@ const ExerciseSelectionModal: React.FC<{
           {/* Muscle Filter */}
           <div className="form-control">
             <select className="select select-bordered w-full" onChange={(e) => setSelectedMuscle(e.target.value)} value={selectedMuscle}>
-              <option value="ALL">All Muscles</option>
+              <option value="ALL">{t("statistics.all_muscles")}</option>
               {MUSCLE_GROUPS.map((muscle) => (
                 <option key={muscle.value} value={muscle.value}>
-                  {muscle.label}
+                  {t(muscle.labelKey as keyof typeof t)}
                 </option>
               ))}
             </select>
@@ -156,7 +156,7 @@ const ExerciseSelectionModal: React.FC<{
             <input
               className="input input-bordered w-ful placeholder:text-gray-500 dark:placeholder:text-gray-600 w-full"
               onChange={(e) => handleSearch(e.target.value)}
-              placeholder="Search Exercises"
+              placeholder={t("statistics.search_exercises")}
             />
           </div>
         </div>
@@ -171,13 +171,13 @@ const ExerciseSelectionModal: React.FC<{
 
           {error && (
             <div className="text-center py-8">
-              <p className="text-error">Error loading exercises</p>
+              <p className="text-error">{t("statistics.error_loading_exercises")}</p>
             </div>
           )}
 
           {!isLoading && exercises.length === 0 && (
             <div className="text-center py-8">
-              <p className="text-gray-500">No exercises found</p>
+              <p className="text-gray-500">{t("statistics.no_exercises_found")}</p>
             </div>
           )}
 
@@ -218,11 +218,11 @@ const ExerciseSelectionModal: React.FC<{
   );
 };
 
-const TIMEFRAME_OPTIONS: { value: StatisticsTimeframe; label: string }[] = [
-  { value: "4weeks", label: "4 Weeks" },
-  { value: "8weeks", label: "8 Weeks" },
-  { value: "12weeks", label: "12 Weeks" },
-  { value: "1year", label: "1 Year" },
+const TIMEFRAME_OPTIONS = [
+  { value: "4weeks" as StatisticsTimeframe, labelKey: "statistics.timeframes.4weeks" },
+  { value: "8weeks" as StatisticsTimeframe, labelKey: "statistics.timeframes.8weeks" },
+  { value: "12weeks" as StatisticsTimeframe, labelKey: "statistics.timeframes.12weeks" },
+  { value: "1year" as StatisticsTimeframe, labelKey: "statistics.timeframes.1year" },
 ];
 
 export const ExercisesBrowser: React.FC<ExercisesBrowserProps> = () => {
@@ -330,15 +330,15 @@ export const ExercisesBrowser: React.FC<ExercisesBrowserProps> = () => {
 
               <div className="flex flex-col gap-2 mb-4">
                 <div className="flex items-center gap-2">
-                  <span className="text-sm text-gray-500">Equipment:</span>
-                  <span className="text-sm">{getExerciseEquipment(selectedExercise) || "Unknown"}</span>
+                  <span className="text-sm text-gray-500">{t("statistics.equipment_label")}</span>
+                  <span className="text-sm">{getExerciseEquipment(selectedExercise) || t("statistics.unknown")}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-sm text-gray-500">Primary Muscle:</span>
+                  <span className="text-sm text-gray-500">{t("statistics.primary_muscle_label")}</span>
                   <span className="text-sm">
                     {getExercisePrimaryMuscle(selectedExercise)
                       ? getAttributeValueLabel(getExercisePrimaryMuscle(selectedExercise)!, t)
-                      : "Unknown"}
+                      : t("statistics.unknown")}
                   </span>
                 </div>
               </div>
@@ -357,7 +357,7 @@ export const ExercisesBrowser: React.FC<ExercisesBrowserProps> = () => {
                     />
                   ) : (
                     <div className="text-center">
-                      <p className="text-gray-500">No image available</p>
+                      <p className="text-gray-500">{t("statistics.no_image_available")}</p>
                     </div>
                   )}
                 </div>
@@ -369,7 +369,7 @@ export const ExercisesBrowser: React.FC<ExercisesBrowserProps> = () => {
           <div className="space-y-4">
             {/* Time period selector */}
             <div className="flex items-center justify-between bg-base-100 rounded-lg p-4">
-              <span className="hidden sm:block font-semibold">Statistics</span>
+              <span className="hidden sm:block font-semibold">{t("statistics.title")}</span>
               <select
                 className="select select-bordered select-sm"
                 onChange={(e) => setSelectedTimeframe(e.target.value as StatisticsTimeframe)}
@@ -377,7 +377,7 @@ export const ExercisesBrowser: React.FC<ExercisesBrowserProps> = () => {
               >
                 {TIMEFRAME_OPTIONS.map((option) => (
                   <option key={option.value} value={option.value}>
-                    {option.label}
+                    {t(option.labelKey as keyof typeof t)}
                   </option>
                 ))}
               </select>

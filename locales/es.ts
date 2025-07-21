@@ -1800,6 +1800,90 @@ export default {
       },
     },
   },
+  statistics: {
+    title: "Estadísticas",
+    page_subtitle: "Sigue tu viaje fitness con análisis avanzados y perspectivas personalizadas.",
+    select_exercise: "Seleccionar Ejercicio",
+    active_daily_users: "Usuarios Activos Diarios",
+    success_rate: "Tasa de Éxito",
+    user_rating: "Calificación de Usuario",
+    
+    // Tabs
+    tabs: {
+      video: "Video",
+      statistics: "Estadísticas",
+    },
+    
+    // Chart titles and labels
+    weight: "Peso",
+    volume: "Volumen",
+    weight_progression: "Progresión de Peso",
+    weight_progression_chart: "Gráfico de progresión de peso",
+    weekly_volume: "Volumen Semanal",
+    volume_chart: "Gráfico de volumen",
+    estimated_1rm: "1 Rep Máx Estimado (1RM)",
+    one_rep_max_chart: "Gráfico de repetición máxima",
+    performance_over_time: "Rendimiento a lo Largo del Tiempo",
+
+    // Form and controls
+    timeframe: "Período de Tiempo",
+    timeframe_selector: "Selector de período de tiempo",
+    
+    // Timeframes
+    timeframes: {
+      "4weeks": "4 Semanas",
+      "8weeks": "8 Semanas",
+      "12weeks": "12 Semanas",
+      "1year": "1 Año",
+    },
+
+    // Error messages
+    error_loading_data: "Error al cargar datos",
+    error_loading_weight_progression: "Error al cargar la progresión de peso",
+    error_loading_1rm: "Error al cargar datos de 1RM",
+    error_loading_volume: "Error al cargar datos de volumen",
+
+    // Empty states
+    no_data_yet: "Sin datos aún",
+    start_tracking: "Comienza a registrar para ver tu progreso",
+    no_1rm_data: "Sin datos de 1RM disponibles",
+    complete_sets_with_weight: "Completa series con peso para ver tu 1 Rep Máx (1RM)",
+    no_volume_data: "Sin datos de volumen disponibles",
+    complete_workouts: "Completa entrenamientos para ver tu volumen",
+
+    // Info and tooltips
+    "1rm_formula_info": "Información de fórmula 1RM",
+    volume_calculation: "Volumen = Peso × Reps × Series",
+    last_updated: "Última actualización: {date}",
+
+    // Premium
+    premium_required: "Se requiere Premium para acceder a las estadísticas",
+    
+    // StatisticsPreviewOverlay
+    premium_statistics: "Estadísticas Premium",
+    premium_statistics_description: "Obtén información detallada sobre tu viaje fitness con análisis avanzados para cada ejercicio.",
+    total_volume: "Volumen Total",
+    pr_increase: "Aumento de PR",
+    weight_progress: "Progreso de Peso",
+    upgrade_now: "Actualizar Ahora",
+    rating: "Calificación 4.8/5",
+    no_ads: "Sin anuncios",
+    cancel_anytime: "Cancelar en cualquier momento",
+    preview_notice: "¡Esto es solo una vista previa! 👀",
+    preview_description: "Desbloquea el acceso completo a análisis detallados, seguimiento de progreso e información personalizada.",
+    get_premium_access: "Obtener Acceso Premium",
+    
+    // ExercisesBrowser
+    all_equipment: "Todo el Equipo",
+    all_muscles: "Todos los Músculos",
+    search_exercises: "Buscar Ejercicios",
+    error_loading_exercises: "Error al cargar ejercicios",
+    no_exercises_found: "No se encontraron ejercicios",
+    equipment_label: "Equipo:",
+    primary_muscle_label: "Músculo Principal:",
+    unknown: "Desconocido",
+    no_image_available: "No hay imagen disponible",
+  },
   heatmap: {
     week_days_short: {
       sunday: "D", // domingo

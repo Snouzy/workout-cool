@@ -1736,6 +1736,90 @@ export default {
       },
     },
   },
+  statistics: {
+    title: "统计数据",
+    page_subtitle: "通过高级分析和个性化洞察，追踪您的健身之旅。",
+    select_exercise: "选择练习",
+    active_daily_users: "每日活跃用户",
+    success_rate: "成功率",
+    user_rating: "用户评分",
+    
+    // Tabs
+    tabs: {
+      video: "视频",
+      statistics: "统计数据",
+    },
+    
+    // Chart titles and labels
+    weight: "重量",
+    volume: "训练量",
+    weight_progression: "重量进展",
+    weight_progression_chart: "重量进展图表",
+    weekly_volume: "每周训练量",
+    volume_chart: "训练量图表",
+    estimated_1rm: "估计最大单次重量 (1RM)",
+    one_rep_max_chart: "最大单次重量图表",
+    performance_over_time: "随时间的表现",
+
+    // Form and controls
+    timeframe: "时间范围",
+    timeframe_selector: "时间范围选择器",
+    
+    // Timeframes
+    timeframes: {
+      "4weeks": "4周",
+      "8weeks": "8周",
+      "12weeks": "12周",
+      "1year": "1年",
+    },
+
+    // Error messages
+    error_loading_data: "加载数据时出错",
+    error_loading_weight_progression: "加载重量进展时出错",
+    error_loading_1rm: "加载1RM数据时出错",
+    error_loading_volume: "加载训练量数据时出错",
+
+    // Empty states
+    no_data_yet: "暂无数据",
+    start_tracking: "开始跟踪以查看您的进展",
+    no_1rm_data: "没有可用的1RM数据",
+    complete_sets_with_weight: "完成带重量的组数以查看您的最大单次重量 (1RM)",
+    no_volume_data: "没有可用的训练量数据",
+    complete_workouts: "完成训练以查看您的训练量",
+
+    // Info and tooltips
+    "1rm_formula_info": "1RM公式信息",
+    volume_calculation: "训练量 = 重量 × 次数 × 组数",
+    last_updated: "最后更新：{date}",
+
+    // Premium
+    premium_required: "需要高级版才能访问统计数据",
+    
+    // StatisticsPreviewOverlay
+    premium_statistics: "高级统计",
+    premium_statistics_description: "通过每个练习的高级分析，获得关于您健身之旅的详细见解。",
+    total_volume: "总训练量",
+    pr_increase: "PR 增加",
+    weight_progress: "重量进展",
+    upgrade_now: "立即升级",
+    rating: "4.8/5 评分",
+    no_ads: "无广告",
+    cancel_anytime: "随时取消",
+    preview_notice: "这只是预览！👀",
+    preview_description: "解锁完整访问权限，获得详细分析、进度跟踪和个性化见解。",
+    get_premium_access: "获得高级访问权限",
+    
+    // ExercisesBrowser
+    all_equipment: "所有器械",
+    all_muscles: "所有肌肉",
+    search_exercises: "搜索练习",
+    error_loading_exercises: "加载练习错误",
+    no_exercises_found: "未找到练习",
+    equipment_label: "器械：",
+    primary_muscle_label: "主要肌肉：",
+    unknown: "未知",
+    no_image_available: "无可用图像",
+  },
   heatmap: {
     week_days_short: {
       sunday: "日",

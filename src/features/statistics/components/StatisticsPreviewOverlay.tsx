@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { Lock, Eye, TrendingUp, Zap, Star, Crown, ArrowRight, RotateCcw } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
+import { useI18n } from "locales/client";
 import { cn } from "@/shared/lib/utils";
 
 interface StatisticsPreviewOverlayProps {
@@ -99,6 +100,8 @@ const AnimatedChart: React.FC = () => {
 
 // Composant pour les métriques qui s'animent
 const AnimatedMetrics: React.FC = () => {
+  const t = useI18n();
+
   const [metrics, setMetrics] = useState({
     totalVolume: 2450,
     prIncrease: 15,
@@ -121,23 +124,24 @@ const AnimatedMetrics: React.FC = () => {
     <div className="grid grid-cols-3 gap-4">
       <motion.div className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-lg p-3 text-center" whileHover={{ scale: 1.05 }}>
         <p className="text-2xl font-bold text-purple-600 dark:text-purple-400">{metrics.totalVolume.toLocaleString()}</p>
-        <p className="text-xs text-black dark:text-gray-400">Total Volume</p>
+        <p className="text-xs text-black dark:text-gray-400">{t("statistics.total_volume")}</p>
       </motion.div>
 
       <motion.div className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-lg p-3 text-center" whileHover={{ scale: 1.05 }}>
         <p className="text-2xl font-bold text-green-600 dark:text-green-400">+{metrics.prIncrease}%</p>
-        <p className="text-xs text-black dark:text-gray-400">PR Increase</p>
+        <p className="text-xs text-black dark:text-gray-400">{t("statistics.pr_increase")}</p>
       </motion.div>
 
       <motion.div className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-lg p-3 text-center" whileHover={{ scale: 1.05 }}>
         <p className="text-2xl font-bold text-blue-600 dark:text-blue-400">{metrics.weightProgression}%</p>
-        <p className="text-xs text-black dark:text-gray-400">Weight Progress</p>
+        <p className="text-xs text-black dark:text-gray-400">{t("statistics.weight_progress")}</p>
       </motion.div>
     </div>
   );
 };
 
 export const StatisticsPreviewOverlay: React.FC<StatisticsPreviewOverlayProps> = ({ className, onUpgrade, isVisible = true }) => {
+  const t = useI18n();
   const [isPlaying] = useState(true);
   const [showTeaserModal, setShowTeaserModal] = useState(false);
 
@@ -187,7 +191,7 @@ export const StatisticsPreviewOverlay: React.FC<StatisticsPreviewOverlayProps> =
         initial={{ y: 20, opacity: 0 }}
         transition={{ delay: 0.2 }}
       >
-        Premium Statistics
+        {t("statistics.premium_statistics")}
       </motion.h3>
 
       <motion.p
@@ -196,7 +200,7 @@ export const StatisticsPreviewOverlay: React.FC<StatisticsPreviewOverlayProps> =
         initial={{ y: 20, opacity: 0 }}
         transition={{ delay: 0.3 }}
       >
-        Get detailed insights into your fitness journey with advanced analytics for each exercise.
+        {t("statistics.premium_statistics_description")}
       </motion.p>
 
       {/* Aperçu des données animées */}
@@ -230,7 +234,7 @@ export const StatisticsPreviewOverlay: React.FC<StatisticsPreviewOverlayProps> =
           <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
           <div className="relative flex items-center gap-2">
             <Zap className="w-5 h-5" />
-            <span>Upgrade Now</span>
+            <span>{t("statistics.upgrade_now")}</span>
             <ArrowRight className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" />
           </div>
         </motion.button>
@@ -245,15 +249,15 @@ export const StatisticsPreviewOverlay: React.FC<StatisticsPreviewOverlayProps> =
       >
         <div className="flex items-center gap-1">
           <Star className="w-4 h-4 text-yellow-400" />
-          <span>4.8/5 rating</span>
+          <span>{t("statistics.rating")}</span>
         </div>
         <div className="flex items-center gap-1">
           <Eye className="w-4 h-4" />
-          <span>No ads</span>
+          <span>{t("statistics.no_ads")}</span>
         </div>
         <div className="flex items-center gap-1">
           <RotateCcw className="w-4 h-4" />
-          <span>Cancel anytime</span>
+          <span>{t("statistics.cancel_anytime")}</span>
         </div>
       </motion.div>
 
@@ -267,10 +271,8 @@ export const StatisticsPreviewOverlay: React.FC<StatisticsPreviewOverlayProps> =
             initial={{ opacity: 0, scale: 0.8 }}
           >
             <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-2xl max-w-sm mx-4">
-              <h4 className="text-xl font-bold text-center mb-4">This is just a preview! 👀</h4>
-              <p className="text-gray-600 dark:text-gray-300 text-center mb-6">
-                Unlock full access to detailed analytics, progress tracking, and personalized insights.
-              </p>
+              <h4 className="text-xl font-bold text-center mb-4">{t("statistics.preview_notice")}</h4>
+              <p className="text-gray-600 dark:text-gray-300 text-center mb-6">{t("statistics.preview_description")}</p>
               <button
                 className="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white font-bold py-3 rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all duration-300"
                 onClick={() => {
@@ -278,7 +280,7 @@ export const StatisticsPreviewOverlay: React.FC<StatisticsPreviewOverlayProps> =
                   onUpgrade?.();
                 }}
               >
-                Get Premium Access
+                {t("statistics.get_premium_access")}
               </button>
             </div>
           </motion.div>

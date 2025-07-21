@@ -20,11 +20,11 @@ interface ExerciseVideoModalProps {
   exercise: ExerciseWithAttributes;
 }
 
-const TIMEFRAME_OPTIONS: { value: StatisticsTimeframe; label: string }[] = [
-  { value: "4weeks", label: "4 Weeks" },
-  { value: "8weeks", label: "8 Weeks" },
-  { value: "12weeks", label: "12 Weeks" },
-  { value: "1year", label: "1 Year" },
+const TIMEFRAME_OPTIONS = [
+  { value: "4weeks" as StatisticsTimeframe, labelKey: "statistics.timeframes.4weeks" },
+  { value: "8weeks" as StatisticsTimeframe, labelKey: "statistics.timeframes.8weeks" },
+  { value: "12weeks" as StatisticsTimeframe, labelKey: "statistics.timeframes.12weeks" },
+  { value: "1year" as StatisticsTimeframe, labelKey: "statistics.timeframes.1year" },
 ];
 
 export function ExerciseVideoModal({ open, onOpenChange, exercise }: ExerciseVideoModalProps) {
@@ -82,7 +82,7 @@ export function ExerciseVideoModal({ open, onOpenChange, exercise }: ExerciseVid
           <TabsList className="grid w-full grid-cols-2 mx-4" style={{ width: "calc(100% - 2rem)" }}>
             <TabsTrigger className="flex items-center gap-2" value="video">
               <Play size={16} />
-              {"Video"}
+              {t("statistics.tabs.video")}
             </TabsTrigger>
             <TabsTrigger className="flex items-center gap-2" value="statistics">
               <BarChart3 size={16} />
@@ -131,7 +131,7 @@ export function ExerciseVideoModal({ open, onOpenChange, exercise }: ExerciseVid
             <div className="space-y-4">
               {/* Timeframe selector */}
               <div className="flex items-center justify-between flex-col sm:flex-row">
-                <h3 className="text-lg font-semibold text-slate-700 dark:text-slate-200">{"Performance over..."}</h3>
+                <h3 className="text-lg font-semibold text-slate-700 dark:text-slate-200">{t("statistics.performance_over_time")}</h3>
                 <Select onValueChange={(value) => setSelectedTimeframe(value as StatisticsTimeframe)} value={selectedTimeframe}>
                   <SelectTrigger className="w-32">
                     <SelectValue />
@@ -139,7 +139,7 @@ export function ExerciseVideoModal({ open, onOpenChange, exercise }: ExerciseVid
                   <SelectContent>
                     {TIMEFRAME_OPTIONS.map((option) => (
                       <SelectItem key={option.value} value={option.value}>
-                        {option.label}
+                        {t(option.labelKey as any)}
                       </SelectItem>
                     ))}
                   </SelectContent>

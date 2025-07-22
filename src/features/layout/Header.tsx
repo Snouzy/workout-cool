@@ -67,7 +67,7 @@ export const Header = () => {
         <LanguageSelector />
 
         <div className="dropdown dropdown-end ml-1">
-          <div className="tooltip tooltip-bottom" data-tip={t("commons.profile")}>
+          <div className="tooltip tooltip-bottom" data-tip={t("commons.profile")} data-testid={"header-nav-profile"}>
             <div className="btn btn-ghost btn-circle avatar relative" role="button" tabIndex={0}>
               <div className="w-8 rounded-full bg-primary text-primary-content !flex items-center justify-center text-sm font-medium">
                 {userAvatar || <User className="w-4 h-4" />}
@@ -86,7 +86,7 @@ export const Header = () => {
             tabIndex={0}
           >
             <li>
-              <Link className="!no-underline" href="/profile" size="base" variant="nav">
+              <Link className="!no-underline" href="/profile" data-testid={"profile-dropdown-profile"} size="base" variant="nav">
                 <User className="w-4 h-4 text-gray-700 dark:text-gray-300" />
                 {t("commons.profile")}
               </Link>
@@ -96,6 +96,7 @@ export const Header = () => {
             <li>
               <Link
                 className="!no-underline"
+                data-testid={"profile-dropdown-premium"}
                 href={isPremium ? "/api/premium/billing-portal" : "/premium"}
                 size="base"
                 variant="nav"
@@ -137,13 +138,13 @@ export const Header = () => {
             {!session.data && !session.isPending ? (
               <>
                 <li>
-                  <Link className="!no-underline" href="/auth/signin" size="base" variant="nav">
+                  <Link className="!no-underline" href="/auth/signin" data-testid={"profile-dropdown-login"} size="base" variant="nav">
                     <LogIn className="w-4 h-4 text-gray-700 dark:text-gray-300" />
                     {t("commons.login")}
                   </Link>
                 </li>
                 <li>
-                  <Link className="!no-underline" href="/auth/signup" size="base" variant="nav">
+                  <Link className="!no-underline" href="/auth/signup" data-testid={"profile-dropdown-signup"} size="base" variant="nav">
                     <UserPlus className="w-4 h-4 text-gray-700 dark:text-gray-300" />
                     {t("commons.register")}
                   </Link>
@@ -153,6 +154,7 @@ export const Header = () => {
               <li>
                 <button
                   className="flex items-center gap-2 text-base text-gray-700 dark:text-gray-300 hover:bg-slate-200 dark:hover:bg-gray-800 rounded-lg px-3 py-2 transition-colors"
+                  data-testid={"profile-dropdown-logout"}
                   onClick={handleSignOut}
                 >
                   <LogOut className="w-4 h-4" />

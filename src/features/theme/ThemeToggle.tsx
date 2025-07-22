@@ -9,7 +9,7 @@ export function ThemeToggle() {
   const { setTheme, resolvedTheme } = useTheme();
 
   return (
-    <div className="tooltip tooltip-bottom" data-tip={resolvedTheme === "light" ? "Dark mode" : "Light mode"}>
+    <div className="tooltip tooltip-bottom" data-tip={resolvedTheme === "light" ? "Dark mode" : "Light mode"} data-testid={"header-nav-light/dark-mode"}>
       <Button
         className="hover:bg-slate-200 rounded-full p-1 pr-1 sm:p-2 sm:pr-2"
         onClick={() => setTheme(resolvedTheme === "light" ? "dark" : "light")}

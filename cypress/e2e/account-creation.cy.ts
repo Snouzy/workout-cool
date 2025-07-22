@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 import { SignupForm } from "cypress/pageManager/pages/signup.util";
-import { ProfilePage } from "cypress/pageManager/pages/profilePage.util";
+import { AccountFlow } from "cypress/pageManager/utils/accountFlow.util";
 
 interface BasicUser {
   first_name: string;
@@ -17,7 +17,7 @@ interface AccountInfo {
 describe('Account creation tests', function () {
   let accountInfo: AccountInfo;
   const signupForm = new SignupForm();
-  const profilePage = new ProfilePage();
+  const accountFlow = new AccountFlow();
 
   // Creates a new user and sets up access for fixture data
   before(() => {
@@ -26,9 +26,12 @@ describe('Account creation tests', function () {
       accountInfo = data
     });
   });
+
+  // Navigate to the home page using "baseURL" from cypress.config.ts
+  // then to the account creation page
   beforeEach(function () {
-    // Navigate to the home page using "baseURL" from cypress.config.ts
     cy.visit("/");
+    accountFlow.createNewAccount()
   });
 
   //Cleans up prep user data
@@ -37,9 +40,6 @@ describe('Account creation tests', function () {
   });
 
   it('TC_001 - Able to register a new user account', function () {
-    cy.get('[data-testid="bottom-nav-profile"]').click();
-
-    profilePage.createNewAccount();
     signupForm.fill(accountInfo.basic_user);
     signupForm.submit();
 
@@ -59,19 +59,13 @@ describe('Account creation tests', function () {
   })
 
   it('TC_002 - Unable to register an account with a used email', function () {
-    cy.get('[data-testid="bottom-nav-profile"]').click();
-
-    profilePage.createNewAccount();
     signupForm.fill(accountInfo.registered_user);
     signupForm.submit();
 
-    expect(cy.contains("Email already exists")).to.exist
+    cy.contains("Email already exists").should('exist')
   })
 
   it('TC_003 - Unable to register an account with missing information', function () {
-    cy.get('[data-testid="bottom-nav-profile"]').click();
-
-    profilePage.createNewAccount();
     signupForm.fill({
       first_name: accountInfo.basic_user.first_name,
       email: accountInfo.basic_user.email,
@@ -79,25 +73,19 @@ describe('Account creation tests', function () {
     });
     signupForm.submit();
 
-    expect(cy.contains("Required")).to.exist
+    cy.contains("Required").should('exist')
   })
 
   it('TC_004 - Unable to register an account mismatching passwords', function () {
-    cy.get('[data-testid="bottom-nav-profile"]').click();
-    
-    profilePage.createNewAccount();
     signupForm.fill({
       ...accountInfo.basic_user,
       verifyPassword: accountInfo.basic_user.password + '1',
     });
     signupForm.submit();
 
-    expect(cy.contains("Password does not match")).to.exist
+    cy.contains("Password does not match").should('exist')
   })
   it('TC_005 - Unable to register an account with incorrect password length', function () {
-    cy.get('[data-testid="bottom-nav-profile"]').click()
-    
-    profilePage.createNewAccount();
     signupForm.fill({
       ...accountInfo.basic_user,
       password: 'Pass',
@@ -105,6 +93,6 @@ describe('Account creation tests', function () {
     });
     signupForm.submit();
 
-    expect(cy.contains("String must contain at least 8 character(s)")).to.exist
+    cy.contains("String must contain at least 8 character(s)").should('exist')
   })
 })

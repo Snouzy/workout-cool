@@ -1,5 +1,6 @@
 /// <reference types="cypress" />
 
+import { BottomNavigation } from "cypress/pageManager/navigation/bottomNavigation.util";
 import { LoginForm } from "cypress/pageManager/pages/loginPage.util";
 import { ProfilePage } from "cypress/pageManager/pages/profilePage.util";
 import { SignupForm } from "cypress/pageManager/pages/signup.util";
@@ -21,6 +22,7 @@ describe('Account login tests', function () {
   const signupForm = new SignupForm();
   const profilePage = new ProfilePage();
   const loginForm = new LoginForm();
+  const bottomNavigation = new BottomNavigation();
 
   //Creates a new user and sets up access for fixture data
   before(() => {
@@ -32,6 +34,7 @@ describe('Account login tests', function () {
   beforeEach(function () {
     //navigate to the home page using "baseURL" from cypress.config.ts
     cy.visit("/");
+    bottomNavigation.profile()
   })
 
   //Cleans up prep user data
@@ -40,8 +43,6 @@ describe('Account login tests', function () {
   })
 
   it("Test prep", function () {
-    cy.get('[data-testid="bottom-nav-profile"]').click()
-
     profilePage.createNewAccount();
     signupForm.fill(accountInfo.basic_user);
     signupForm.submit();
@@ -52,7 +53,6 @@ describe('Account login tests', function () {
   })
   
   it('TC_005 - Able to login to user account', function () {
-    cy.get('[data-testid="bottom-nav-profile"]').click()
     profilePage.login()
     loginForm.fill(accountInfo.basic_user)
     loginForm.submit()
@@ -63,7 +63,6 @@ describe('Account login tests', function () {
   })
 
   it('TC_006 - Unable to login with incorrect password', function () {
-    cy.get('[data-testid="bottom-nav-profile"]').click()
     profilePage.login()
     loginForm.fill({
       email: accountInfo.basic_user.email,
@@ -78,7 +77,6 @@ describe('Account login tests', function () {
   })
 
   it('TC_007 - Unable to login with incorrect email', function () {
-    cy.get('[data-testid="bottom-nav-profile"]').click()
     profilePage.login()
     loginForm.fill({
       email: accountInfo.registered_user.email,

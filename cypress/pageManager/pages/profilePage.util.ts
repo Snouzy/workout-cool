@@ -1,8 +1,8 @@
 export class ProfilePage {
     createNewAccount() {
-        cy.get('a[href="auth/signup"]',).click()
+        cy.get('[data-testid="profile-page-signup"]').click()
     }
     login() {
-        cy.get('a[href="auth/signin"]',).click()
+        cy.get('[data-testid="profile-page-login"]').click()
     }
 }

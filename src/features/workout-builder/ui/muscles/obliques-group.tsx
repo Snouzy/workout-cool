@@ -9,7 +9,7 @@ export const ObliquesGroup = ({
   getMuscleClasses: (muscle: ExerciseAttributeValueEnum) => string;
 }) => {
   return (
-    <g className="group cursor-pointer" onClick={() => onToggleMuscle(ExerciseAttributeValueEnum.OBLIQUES)}>
+    <g className="group cursor-pointer" onClick={() => onToggleMuscle(ExerciseAttributeValueEnum.OBLIQUES)} data-testid="muscle-selection-obliques">
       <path
         className={getMuscleClasses(ExerciseAttributeValueEnum.OBLIQUES)}
         d="M 134.28,178.67

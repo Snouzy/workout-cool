@@ -8,7 +8,7 @@ export const BicepsGroup = ({
   getMuscleClasses: (muscle: ExerciseAttributeValueEnum) => string;
 }) => {
   return (
-    <g className="group cursor-pointer" onClick={() => onToggleMuscle(ExerciseAttributeValueEnum.BICEPS)}>
+    <g className="group cursor-pointer" onClick={() => onToggleMuscle(ExerciseAttributeValueEnum.BICEPS)} data-testid="muscle-selection-biceps">
       <path
         className="fill-transparent"
         d="M 49.25,117.25

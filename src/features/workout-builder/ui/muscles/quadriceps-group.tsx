@@ -8,7 +8,7 @@ export const QuadricepsGroup = ({
   getMuscleClasses: (muscle: ExerciseAttributeValueEnum) => string;
 }) => {
   return (
-    <g className="group cursor-pointer" onClick={() => onToggleMuscle(ExerciseAttributeValueEnum.QUADRICEPS)}>
+    <g className="group cursor-pointer" onClick={() => onToggleMuscle(ExerciseAttributeValueEnum.QUADRICEPS)} data-testid="muscle-selection-quadriceps">
       <path
         className="fill-transparent"
         d="M 77.00,190.50

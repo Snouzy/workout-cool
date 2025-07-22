@@ -8,7 +8,7 @@ export const BackGroup = ({
   getMuscleClasses: (muscle: ExerciseAttributeValueEnum) => string;
 }) => {
   return (
-    <g className="group cursor-pointer" onClick={() => onToggleMuscle(ExerciseAttributeValueEnum.BACK)}>
+    <g className="group cursor-pointer" onClick={() => onToggleMuscle(ExerciseAttributeValueEnum.BACK)} data-testid="muscle-selection-back">
       <path
         className={getMuscleClasses(ExerciseAttributeValueEnum.BACK)}
         d="M 392.64,149.10

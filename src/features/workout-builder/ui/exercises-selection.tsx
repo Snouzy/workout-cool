@@ -144,7 +144,7 @@ export const ExercisesSelection = ({
         </div>
       ) : (
         <div className="text-center py-20">
-          <p className="text-slate-600 dark:text-slate-400">{t("workout_builder.no_exercises_found")}</p>
+          <p className="text-slate-600 dark:text-slate-400" data-testid="exercise-selection-error">{t("workout_builder.no_exercises_found")}</p>
         </div>
       )}
 

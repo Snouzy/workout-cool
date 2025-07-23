@@ -10,17 +10,20 @@ export class AccountFlow {
     private profilePage = new ProfilePage();
 
     login() {
-        if (randomNumber === 0) 
+        if (randomNumber === 0) {
             this.bottomNavigation.profile();
             this.profilePage.login();
+        }
         if (randomNumber === 1)
             this.headerNavigation.profileDropdown("login")
     }
     createNewAccount() {
-        if (randomNumber === 0) 
-            this.bottomNavigation.profile();
+        if (randomNumber === 0) {
+            cy.get('[data-testid="bottom-nav-profile"]').click()
             this.profilePage.createNewAccount();
-        if (randomNumber === 1)
+        } else if (randomNumber === 1){
+            cy.get('[data-testid="header-nav-profile"]').click()
             this.headerNavigation.profileDropdown("register")
+        }
     }
 }

@@ -1,32 +1,32 @@
 export class WorkoutPage {
-    bodyweight() {
+    selectBodyweight() {
         cy.get('[data-testid="equipment-select-bodyweight"]').click()
     }
-    dumbbell() {
+    selectDumbbell() {
         cy.get('[data-testid="equipment-select-dumbbell"]').click()
     }
-    barbell() {
+    selectBarbell() {
         cy.get('[data-testid="equipment-select-barbell"]').click()
     }
-    kettlebell() {
+    selectKettlebell() {
         cy.get('[data-testid="equipment-select-kettlebell"]').click()
     }
-    band() {
+    selectBand() {
         cy.get('[data-testid="equipment-select-band"]').click()
     }
-    plate() {
+    selectPlate() {
         cy.get('[data-testid="equipment-select-plate"]').click()
     }
-    pullupBar() {
+    selectPullupBar() {
         cy.get('[data-testid="equipment-select-pull-up bar"]').click()
     }
-    bench() {
+    selectBench() {
         cy.get('[data-testid="equipment-select-bench"]').click()
     }
-    continue() {
+    selectContinue() {
         cy.get('[data-testid="workout-builder-continue"]').click()
     }
-    previous() {
+    selectPrevious() {
         cy.get('[data-testid="workout-builder-previous"]').click()
     }
     muscleSelection(...muscles: string[]) {
@@ -49,10 +49,72 @@ export class WorkoutPage {
         muscles.forEach(muscle => {
             const testId = muscleTestIds[muscle];
             if (testId) {
-                cy.get(`[data-testid="${testId}"]`).click();
+                cy.get(`[data-testid="${testId}"]`).click({force: true});
             } else {
                 cy.log(`Unknown muscle: ${muscle}`);
             }
         });
+    }
+    exerciseSelection(...muscles: string[]) {
+        muscles.forEach(muscle => {
+            if (muscle) {
+                cy.get(`[data-testid="exercise-"${muscle}]`)
+                    .should('exist')
+            } else {
+                cy.log(`No exercises found for: ${muscle}`)
+            }
+        });        
+    }
+    getAllExerciseNames(): Cypress.Chainable<string[]> {
+        return cy.get('[data-testid="exercise-selection-name"]').then($els => {
+            const names = Cypress._.map($els, el => el.innerText.trim());
+            return names;
+        });
+    }
+    deleteAllExercises() {
+        cy.get('[data-testid="exercise-selection-exercises"]')
+            .should('have.length.greaterThan', 0)
+            .each((exercise) => {
+                cy.get('[data-testid="exercise-selection-delete"]').click()
+            })
+    }
+    deleteExercise(exerciseName: string) {
+        cy.get('[data-testid="exercise-selection-exercises"]')
+            .then(() => 
+                cy.get('[data-testid="exercise-selection-name"]')
+                    .contains(exerciseName)
+                    .then(() => 
+                        cy.get('[data-testid="exercise-selection-delete"]').click()
+                    )
+            )
+    }
+    shuffleExercise(exerciseName: string) {
+        cy.get('[data-testid="exercise-selection-exercises"]')
+            .then(() => 
+                cy.get('[data-testid="exercise-selection-name"]')
+                    .contains(exerciseName)
+                    .then(() => 
+                        cy.get('[data-testid="exercise-selection-shuffle"]').click()
+                    )
+            )
+    }
+    exerciseVideo(exerciseName: string) {
+        cy.get('[data-testid="exercise-selection-exercises"]')
+            .then(() => 
+                cy.get('[data-testid="exercise-selection-name"]')
+                    .contains(exerciseName)
+                    .then(() => 
+                        cy.get('[data-testid="exercise-selection-video"]').click()
+                    )
+            )
+    }
+    confirmExerciseIsNotThere(exerciseName: string) {
+        cy.get('[data-testid="exercise-selection-name"]')
+            .contains(exerciseName)
+            .should('not.exist')
+    }
+    exerciseSelectionError() {
+        cy.get('[data-testid="exercise-selection-error"]')
+            .should('have.text', 'No exercises found')
     }
 }

@@ -9,7 +9,6 @@ export class HeaderNavigation {
         cy.get('[data-testid="header-nav-language"]').click()
     }
     profileDropdown(option: string) {
-        cy.get('[data-testid="header-nav-profile"]').click()
         if (option === "profile")
             cy.get('[data-testid="profile-dropdown-profile"]').click()
         if (option === "premium")

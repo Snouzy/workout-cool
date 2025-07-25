@@ -453,6 +453,9 @@ export class PremiumService {
     try {
       console.log(`Syncing RevenueCat status for user ${userId} with RevenueCat user ${revenueCatUserId}`);
 
+      // First, process any pending webhook events
+      await this.processPendingWebhookEvents(userId, revenueCatUserId);
+
       // Fetch current status from RevenueCat
       const revenueCatStatus = await this.fetchRevenueCatSubscriptionStatus(revenueCatUserId);
 
@@ -490,6 +493,54 @@ export class PremiumService {
 
       // Don't throw here to avoid breaking the user flow
       // The sync failure will be logged but won't prevent account linking
+    }
+  }
+
+  /**
+   * Process pending webhook events for a user
+   * This handles anonymous purchases that happened before authentication
+   */
+  static async processPendingWebhookEvents(userId: string, revenueCatUserId: string): Promise<void> {
+    try {
+      console.log(`Processing pending webhook events for user ${userId}`);
+
+      // Find pending events for the anonymous RevenueCat user ID
+      const pendingEvents = await prisma.revenueCatWebhookEvent.findMany({
+        where: {
+          appUserId: revenueCatUserId,
+          processed: false,
+        },
+        orderBy: {
+          eventTimestamp: "asc",
+        },
+      });
+
+      if (pendingEvents.length === 0) {
+        console.log("No pending webhook events found");
+        return;
+      }
+
+      console.log(`Found ${pendingEvents.length} pending webhook events to process`);
+
+      // Process each event
+      for (const event of pendingEvents) {
+        console.log(`Processing ${event.eventType} event from ${event.eventTimestamp}`);
+
+        // Update the event with the authenticated user ID and mark as processed
+        await prisma.revenueCatWebhookEvent.update({
+          where: { id: event.id },
+          data: {
+            processed: true,
+            processingError: null,
+            updatedAt: new Date(),
+          },
+        });
+      }
+
+      console.log("Finished processing pending webhook events");
+    } catch (error) {
+      console.error("Error processing pending webhook events:", error);
+      // Don't throw - continue with the sync even if event processing fails
     }
   }
 }

@@ -47,6 +47,7 @@ export async function POST(request: NextRequest) {
 
       case "CANCELLATION":
       case "EXPIRATION":
+      case "SUBSCRIPTION_PAUSED":
         await handleCancellationEvent(event);
         break;
 
@@ -129,17 +130,17 @@ async function handlePurchaseEvent(event: any) {
 }
 
 async function handleCancellationEvent(event: any) {
-  const { app_user_id } = event;
+  const { app_user_id, type } = event;
 
-  console.log(`[RevenueCat Webhook] Processing cancellation for user: ${app_user_id}`);
+  console.log(`[RevenueCat Webhook] Processing ${type} for user: ${app_user_id}`);
 
   // Check if this is an anonymous user
   const isAnonymous = app_user_id.startsWith("$RCAnonymousID:");
 
   if (isAnonymous) {
-    console.log("[RevenueCat Webhook] Anonymous user cancellation - storing event");
+    console.log(`[RevenueCat Webhook] Anonymous user ${type} - storing event`);
 
-    // Store the cancellation event
+    // Store the cancellation/expiration event
     await prisma.revenueCatWebhookEvent.create({
       data: {
         eventType: event.type,
@@ -153,14 +154,20 @@ async function handleCancellationEvent(event: any) {
     return;
   }
 
-  // Handle authenticated user cancellation
+  // Handle authenticated user cancellation/expiration
   const user = await prisma.user.findUnique({
     where: { id: app_user_id },
   });
 
   if (user) {
-    // Revoke premium access
-    await PremiumService.revokePremiumAccess(user.id);
-    console.log(`[RevenueCat Webhook] Subscription cancelled for user: ${user.id}`);
+    console.log(`[RevenueCat Webhook] Processing ${type} for authenticated user: ${user.id}`);
+
+    // Sync with RevenueCat to get current status
+    // This will update the user's premium status based on current entitlements
+    await PremiumService.syncRevenueCatStatus(user.id, app_user_id);
+
+    console.log(`[RevenueCat Webhook] ${type} processed for user: ${user.id}`);
+  } else {
+    console.log(`[RevenueCat Webhook] User not found for ${type} event: ${app_user_id}`);
   }
 }

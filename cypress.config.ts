@@ -16,6 +16,18 @@ export default defineConfig({
     setupNodeEvents(on, config) {
       require('cypress-mochawesome-reporter/plugin')(on);
       on('task', {
+        // Does not appear to be working
+        // Premium is turned on for the user
+        // but it is not reflected on the program
+        async makePremium(email:string) {
+          const user = await prisma.user.update({
+            where: {email},
+            data: {
+              isPremium: true,
+            },
+          })
+          return user
+        },
         async findUserByEmail(email:string) {
           const user = await prisma.user.findUnique({
             where: {email},

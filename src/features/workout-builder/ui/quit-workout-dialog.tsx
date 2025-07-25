@@ -57,6 +57,7 @@ export function QuitWorkoutDialog({ isOpen, onClose, onQuitWithoutSave, exercise
           {/* Quit without saving */}
           <Button
             className="w-full bg-red-500/10 border-red-500/30 text-red-400 hover:bg-red-500/10 hover:border-red-500"
+            data-testid="session-page-quit-no-save"
             onClick={onQuitWithoutSave}
             size="large"
             variant="default"
@@ -66,7 +67,7 @@ export function QuitWorkoutDialog({ isOpen, onClose, onQuitWithoutSave, exercise
           </Button>
 
           {/* Cancel */}
-          <Button className="w-full text-slate-400 hover:text-white hover:bg-slate-800" onClick={onClose} size="large" variant="ghost">
+          <Button className="w-full text-slate-400 hover:text-white hover:bg-slate-800" onClick={onClose} size="large" variant="ghost" data-testid="session-page-continue-workout">
             {t("workout_builder.session.continue_workout")}
           </Button>
         </div>

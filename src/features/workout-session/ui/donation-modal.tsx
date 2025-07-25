@@ -58,7 +58,7 @@ export function DonationModal({ isOpen, onClose }: DonationModalProps) {
             <h3 className="font-bold text-lg text-slate-900 dark:text-slate-100">{t("donation_modal.title")}</h3>
           </div>
           <form method="dialog">
-            <Button className="p-1" size="small" variant="ghost">
+            <Button className="p-1" size="small" variant="ghost" data-testid="donation-modal-close">
               <X className="h-4 w-4" />
             </Button>
           </form>

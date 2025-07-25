@@ -42,7 +42,7 @@ export function ExerciseVideoModal({ open, onOpenChange, exercise }: ExerciseVid
         <DialogHeader className="flex flex-row items-center justify-between px-4 pt-4 pb-2">
           <DialogTitle className="text-lg md:text-xl font-bold flex flex-col gap-2">
             <span className="text-slate-700 dark:text-slate-200 pr-10 text-left" data-testid="exercise-video-name">{title}</span>
-            <div className="flex flex-wrap gap-2 mt-2">
+            <div className="flex flex-wrap gap-2 mt-2" data-testid="exercise-video-tags">
               {type && (
                 <span className={`px-2 py-0.5 rounded text-xs font-medium ${badgeColors.TYPE}`}>{getAttributeValueLabel(type, t)}</span>
               )}

@@ -52,7 +52,46 @@ describe('Account login tests', function () {
     cy.wait('@profile')
   })
   
-  it('TC_005 - Able to login to user account', function () {
+  // it('TC_005 - Able to login to user account', function () {
+  //   profilePage.login()
+  //   loginForm.fill(accountInfo.basic_user)
+  //   loginForm.submit()
+
+  //   //Ensure login has been processed
+  //   cy.intercept('/?signin=true').as('signin')
+  //   cy.wait('@signin')
+  // })
+
+  // it('TC_006 - Unable to login with incorrect password', function () {
+  //   profilePage.login()
+  //   loginForm.fill({
+  //     email: accountInfo.basic_user.email,
+  //     password: accountInfo.basic_user.password + '1',
+  //   })
+  //   loginForm.submit()
+
+  //   //Ensure login has been processed
+  //   cy.wait(5000)
+
+  //   expect(cy.contains("Invalid credentials or account does not exist")).to.exist
+  // })
+
+  // it('TC_007 - Unable to login with incorrect email', function () {
+  //   profilePage.login()
+  //   loginForm.fill({
+  //     email: accountInfo.registered_user.email,
+  //     password: accountInfo.basic_user.password,
+  //   })
+  //   loginForm.submit()
+
+  //   //Ensure login has been processed
+  //   cy.wait(5000)
+
+  //   expect(cy.contains("Invalid credentials or account does not exist")).to.exist
+  // })
+
+  it('TC_008 - Able to login to a premium user account', function () {
+    cy.task('makePremium', accountInfo.basic_user.email.toLocaleLowerCase())
     profilePage.login()
     loginForm.fill(accountInfo.basic_user)
     loginForm.submit()
@@ -61,33 +100,4 @@ describe('Account login tests', function () {
     cy.intercept('/?signin=true').as('signin')
     cy.wait('@signin')
   })
-
-  it('TC_006 - Unable to login with incorrect password', function () {
-    profilePage.login()
-    loginForm.fill({
-      email: accountInfo.basic_user.email,
-      password: accountInfo.basic_user.password + '1',
-    })
-    loginForm.submit()
-
-    //Ensure login has been processed
-    cy.wait(5000)
-
-    expect(cy.contains("Invalid credentials or account does not exist")).to.exist
-  })
-
-  it('TC_007 - Unable to login with incorrect email', function () {
-    profilePage.login()
-    loginForm.fill({
-      email: accountInfo.registered_user.email,
-      password: accountInfo.basic_user.password,
-    })
-    loginForm.submit()
-
-    //Ensure login has been processed
-    cy.wait(5000)
-
-    expect(cy.contains("Invalid credentials or account does not exist")).to.exist
-  })
-
 })

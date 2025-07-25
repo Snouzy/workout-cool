@@ -15,6 +15,7 @@ import { serverRequiredUser } from "@/entities/user/model/get-server-session-use
 
 const assignUserIdSchema = z.object({
   revenueCatUserId: z.string().min(1, "RevenueCat user ID is required"),
+  userId: z.string().min(1, "User ID is required"),
 });
 
 export async function POST(request: NextRequest) {
@@ -24,10 +25,10 @@ export async function POST(request: NextRequest) {
 
     // Parse and validate request body
     const body = await request.json();
-    const { revenueCatUserId } = assignUserIdSchema.parse(body);
+    const { revenueCatUserId, userId } = assignUserIdSchema.parse(body);
 
     // Check if user already has a RevenueCat user ID
-    const existingRevenueCatId = await PremiumService.getUserRevenueCatId(user.id);
+    const existingRevenueCatId = await PremiumService.getUserRevenueCatId(userId);
 
     if (existingRevenueCatId) {
       // If it's the same ID, return success
@@ -44,10 +45,10 @@ export async function POST(request: NextRequest) {
     }
 
     // Assign the RevenueCat user ID
-    await PremiumService.assignRevenueCatUserId(user.id, revenueCatUserId);
+    await PremiumService.assignRevenueCatUserId(userId, revenueCatUserId);
 
     // Get updated premium status
-    const premiumStatus = await PremiumService.checkUserPremiumStatus(user.id);
+    const premiumStatus = await PremiumService.checkUserPremiumStatus(userId);
 
     return NextResponse.json({
       success: true,

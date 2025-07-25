@@ -2,7 +2,6 @@ import { z } from "zod";
 import { NextRequest, NextResponse } from "next/server";
 
 import { prisma } from "@/shared/lib/prisma";
-import { getMobileCompatibleSession } from "@/shared/api/mobile-auth";
 
 const paginationSchema = z.object({
   page: z.coerce.number().min(1).default(1),
@@ -15,12 +14,12 @@ const paginationSchema = z.object({
 export async function GET(request: NextRequest) {
   try {
     // Get user session for authentication
-    const session = await getMobileCompatibleSession(request);
-    const user = session?.user;
+    // const session = await getMobileCompatibleSession(request);
+    // const user = session?.user;
 
-    if (!user) {
-      return NextResponse.json({ error: "UNAUTHORIZED", message: "Authentication required" }, { status: 401 });
-    }
+    // if (!user) {
+    //   return NextResponse.json({ error: "UNAUTHORIZED", message: "Authentication required" }, { status: 401 });
+    // }
 
     // Parse query parameters
     const { searchParams } = new URL(request.url);
@@ -54,16 +53,13 @@ export async function GET(request: NextRequest) {
     // Search by exercise name
     if (search) {
       conditions.push({
-        OR: [
-          { name: { contains: search, mode: "insensitive" } }, 
-          { nameEn: { contains: search, mode: "insensitive" } }
-        ]
+        OR: [{ name: { contains: search, mode: "insensitive" } }, { nameEn: { contains: search, mode: "insensitive" } }],
       });
     }
 
     // Build attribute filters array
     const attributeFilters = [];
-    
+
     // Filter by muscle group
     if (muscle) {
       attributeFilters.push({
@@ -82,11 +78,13 @@ export async function GET(request: NextRequest) {
 
     // Apply attribute filters (AND logic - exercise must have ALL specified attributes)
     if (attributeFilters.length > 0) {
-      conditions.push(...attributeFilters.map(filter => ({
-        attributes: {
-          some: filter
-        }
-      })));
+      conditions.push(
+        ...attributeFilters.map((filter) => ({
+          attributes: {
+            some: filter,
+          },
+        })),
+      );
     }
 
     // Combine all conditions with AND logic

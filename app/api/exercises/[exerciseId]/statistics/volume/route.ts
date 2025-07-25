@@ -73,7 +73,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
 
     const timeframe = timeframeParsed.data;
 
-    // Calculate date range
+    // Calculate date range (ensuring we're working with UTC dates to avoid timezone issues)
     const endDate = new Date();
     const startDate = new Date();
 
@@ -83,6 +83,10 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     } else {
       startDate.setDate(startDate.getDate() - daysToSubtract);
     }
+
+    // Set time to start and end of day in UTC
+    startDate.setUTCHours(0, 0, 0, 0);
+    endDate.setUTCHours(23, 59, 59, 999);
 
     const { exerciseId } = await params;
 
@@ -175,9 +179,13 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
       calculationNote: "Volume = sets × reps × weight (or reps for bodyweight, or seconds for time-based)",
     };
 
-    // Add cache headers - 1 hour cache
+    // Add cache headers - 1 hour cache (disabled for debugging)
     const headers = new Headers();
-    headers.set("Cache-Control", "private, max-age=3600, stale-while-revalidate=86400");
+    // Temporarily disable cache for debugging
+    headers.set("Cache-Control", "no-store, no-cache, must-revalidate");
+    headers.set("Pragma", "no-cache");
+    headers.set("Expires", "0");
+    // Original: headers.set("Cache-Control", "private, max-age=3600, stale-while-revalidate=86400");
 
     return NextResponse.json(response, { headers });
   } catch (error) {

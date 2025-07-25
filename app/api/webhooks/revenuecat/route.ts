@@ -23,7 +23,7 @@ interface RevenueCatWebhookEvent {
     product_id?: string;
     period_type?: "NORMAL" | "TRIAL" | "INTRO";
     purchased_at?: number;
-    expiration_at?: number;
+    expiration_at_ms?: number;
     environment: "SANDBOX" | "PRODUCTION";
     entitlement_id?: string;
     entitlement_ids?: string[];
@@ -99,9 +99,9 @@ async function logWebhookEvent(event: RevenueCatWebhookEvent, success: boolean, 
 /**
  * Process subscription events
  */
-async function processSubscriptionEvent(event: RevenueCatWebhookEvent) {
+async function processSubscriptionEvent(webhook: RevenueCatWebhookEvent) {
   // eslint-disable-next-line @typescript-eslint/naming-convention
-  const { type, app_user_id, entitlement_ids, expiration_at, product_id, transaction_id, original_transaction_id } = event.event;
+  const { type, app_user_id, entitlement_ids, expiration_at_ms, product_id, transaction_id, original_transaction_id } = webhook.event;
 
   // Find user by RevenueCat user ID
   const user = await prisma.user.findFirst({
@@ -131,8 +131,7 @@ async function processSubscriptionEvent(event: RevenueCatWebhookEvent) {
     }
   }
 
-  const hasActiveEntitlements = entitlement_ids && entitlement_ids.length > 0;
-  const expirationDate = expiration_at ? new Date(expiration_at * 1000) : null;
+  const expirationDate = expiration_at_ms ? new Date(expiration_at_ms) : null;
 
   switch (type) {
     case "INITIAL_PURCHASE":

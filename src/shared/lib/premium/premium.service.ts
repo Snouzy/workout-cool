@@ -474,14 +474,12 @@ export class PremiumService {
 
         // Update subscription records
         await tx.subscription.updateMany({
-          where: {
-            userId: userId,
-            revenueCatUserId: revenueCatUserId,
-          },
+          where: { userId, revenueCatUserId },
           data: {
             status: revenueCatStatus.isPremium ? "ACTIVE" : "EXPIRED",
             currentPeriodEnd: revenueCatStatus.expiresAt,
             revenueCatEntitlement: revenueCatStatus.entitlementIds.join(","),
+            revenueCatUserId,
             updatedAt: new Date(),
           },
         });

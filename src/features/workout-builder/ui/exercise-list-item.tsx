@@ -66,7 +66,7 @@ export const ExerciseListItem = React.memo(function ExerciseListItem({
       }}
     >
       <div
-        className="cursor-grab active:cursor-grabbing touch-none select-none p-1 -m-1"
+        className="cursor-grab active:cursor-grabbing touch-none select-none p-3 flex items-center justify-center"
         style={{ touchAction: "none" }}
         {...attributes}
         {...listeners}

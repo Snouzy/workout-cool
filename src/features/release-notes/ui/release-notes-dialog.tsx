@@ -44,7 +44,7 @@ export function ReleaseNotesDialog({ onOpen, onClose, showNotificationBadge = tr
   return (
     <Dialog onOpenChange={handleOpenChange} open={open}>
       <DialogTrigger asChild>
-        <div className="tooltip tooltip-bottom z-10" data-tip={t("commons.changelog")}>
+        <div className="tooltip tooltip-bottom z-10" data-tip={t("commons.changelog")} data-testid={"header-nav-changelog"}>
           <div className="relative">
             <Button aria-label={t("release_notes.release_notes")} className="rounded-full hover:bg-slate-200" size="small" variant="ghost">
               <Bell className="text-blue-500 dark:text-blue-400 h-6 w-6" />

@@ -8,7 +8,7 @@ export const TrapsGroup = ({
   getMuscleClasses: (muscle: ExerciseAttributeValueEnum) => string;
 }) => {
   return (
-    <g className="group cursor-pointer" onClick={() => onToggleMuscle(ExerciseAttributeValueEnum.TRAPS)}>
+    <g className="group cursor-pointer" onClick={() => onToggleMuscle(ExerciseAttributeValueEnum.TRAPS)} data-testid="muscle-selection-traps">
       <path
         className="fill-transparent"
         d="M 85.67,85.05

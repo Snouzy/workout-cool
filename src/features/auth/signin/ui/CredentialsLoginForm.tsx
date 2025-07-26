@@ -47,7 +47,7 @@ export function CredentialsLoginForm({ className, ...props }: React.ComponentPro
         <div className="grid gap-6">
           <div className="grid gap-2">
             <Label htmlFor="email">Email</Label>
-            <Input id="email" placeholder="m@example.com" type="email" {...register("email")} aria-invalid={!!errors.email} />
+            <Input id="email" placeholder="m@example.com" data-testid="login-form-email" type="email" {...register("email")} aria-invalid={!!errors.email} />
             {errors.email && <p className="text-sm text-red-500">{errors.email.message}</p>}
           </div>
           <div className="grid gap-2">
@@ -57,10 +57,10 @@ export function CredentialsLoginForm({ className, ...props }: React.ComponentPro
                 {t("commons.password_forgot")}
               </a>
             </div>
-            <Input id="password" type="password" {...register("password")} aria-invalid={!!errors.password} />
+            <Input id="password" data-testid="login-form-password" type="password" {...register("password")} aria-invalid={!!errors.password} />
             {errors.password && <p className="text-sm text-red-500">{errors.password.message}</p>}
           </div>
-          <Button className="w-full" disabled={isSubmitting} size="large" type="submit">
+          <Button className="w-full" disabled={isSubmitting} size="large" data-testid="login-form-submit" type="submit">
             {isSubmitting ? t("commons.connecting") : t("commons.login")}
           </Button>
         </div>

@@ -55,6 +55,7 @@ export const ExerciseListItem = React.memo(function ExerciseListItem({
     <div
       className={`flex items-center gap-3 p-3 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700 select-none ${isDragging ? "shadow-lg" : ""}`}
       ref={setNodeRef}
+      data-testid="exercise-selection-exercises"
       style={{
         transform: CSS.Transform.toString(transform),
         zIndex: isDragging ? 1000 : 1,
@@ -87,7 +88,7 @@ export const ExerciseListItem = React.memo(function ExerciseListItem({
             src={exercise.fullVideoImageUrl}
             width={32}
           />
-          <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
+          <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity" data-testid="exercise-selection-video">
             <Play className="h-3 w-3 text-white fill-current" />
           </div>
         </div>
@@ -97,16 +98,18 @@ export const ExerciseListItem = React.memo(function ExerciseListItem({
         // eslint-disable-next-line max-len
         className={`tooltip tooltip-bottom w-5 h-5 rounded text-white text-xs font-bold flex items-center justify-center shrink-0 cursor-pointer ${muscleColor}`}
         data-tip={muscleTitle}
+        data-testid={"exercise-selection-"+ muscleTitle.toLowerCase()}
       >
         {muscle.charAt(0)}
       </div>
 
       <div className="flex-1 min-w-0">
-        <span className="text-sm font-medium text-slate-900 dark:text-slate-100 md:truncate">{exerciseName}</span>
+        <span className="text-sm font-medium text-slate-900 dark:text-slate-100 md:truncate" data-testid="exercise-selection-name">{exerciseName}</span>
       </div>
 
       <Button
         className="p-2 sm:p-2 min-h-[44px] min-w-[44px] sm:min-h-min sm:min-w-min touch-manipulation"
+        data-testid="exercise-selection-shuffle"
         disabled={isShuffling}
         onClick={handleShuffle}
         size="small"
@@ -126,6 +129,7 @@ export const ExerciseListItem = React.memo(function ExerciseListItem({
       <button
         className="p-2 text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300"
         onClick={() => onDelete(exercise.id, muscle)}
+        data-testid="exercise-selection-delete"
       >
         <Trash2 className="h-4 w-4" />
       </button>

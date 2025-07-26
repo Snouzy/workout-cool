@@ -50,6 +50,7 @@ function EquipmentCard({ equipment, isSelected, onToggle }: EquipmentCardProps) 
         // Hover effects
         !isSelected && "hover:border-slate-300 dark:hover:border-slate-600",
       )}
+      data-testid={"equipment-select-"+ equipment.label.toLowerCase()}
       onClick={onToggle}
     >
       <CardContent className="p-2 sm:p-4 h-auto flex flex-col justify-center items-center relative">

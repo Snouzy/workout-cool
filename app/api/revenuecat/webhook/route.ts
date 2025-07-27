@@ -1,62 +1,115 @@
-/* eslint-disable @typescript-eslint/naming-convention */
+import crypto from "crypto";
+
 import { z } from "zod";
 import { NextRequest, NextResponse } from "next/server";
+import { Platform } from "@prisma/client";
 
 import { prisma } from "@/shared/lib/prisma";
-import { PremiumService } from "@/shared/lib/premium/premium.service";
 
 /**
  * RevenueCat Webhook Handler
  *
  * POST /api/revenuecat/webhook
  *
- * Handles RevenueCat webhook events for subscription updates
- * This ensures anonymous purchases are tracked in our database
+ * Handles RevenueCat webhook events for subscription status changes.
+ * Events: https://www.revenuecat.com/docs/webhooks
  */
 
+// RevenueCat webhook event schema
 const webhookEventSchema = z.object({
+  api_version: z.string(),
   event: z.object({
-    type: z.string(),
     app_user_id: z.string(),
     aliases: z.array(z.string()).optional(),
-    product_id: z.string().optional(),
+    country_code: z.string().optional(),
+    currency: z.string().optional(),
     entitlement_id: z.string().optional(),
+    entitlement_ids: z.array(z.string()).optional(),
+    environment: z.enum(["SANDBOX", "PRODUCTION"]),
+    event_timestamp_ms: z.number(),
     expiration_at_ms: z.number().optional(),
-    purchased_at_ms: z.number().optional(),
+    id: z.string(),
     is_family_share: z.boolean().optional(),
+    offer_code: z.string().optional().nullable(),
+    original_app_user_id: z.string(),
+    original_transaction_id: z.string().optional(),
+    period_type: z.string().optional(),
+    presented_offering_id: z.string().optional().nullable(),
+    price: z.number().optional(),
+    price_in_purchased_currency: z.number().optional(),
+    product_id: z.string(),
+    purchased_at_ms: z.number().optional(),
+    store: z.enum(["APP_STORE", "MAC_APP_STORE", "PLAY_STORE", "STRIPE", "PROMOTIONAL", "UNKNOWN"]),
+    subscriber_attributes: z.record(z.any()).optional(),
+    takehome_percentage: z.number().optional(),
+    tax_percentage: z.number().optional(),
+    transaction_id: z.string().optional(),
+    type: z.string(),
   }),
 });
 
+// Verify webhook signature
+function verifyWebhookSignature(request: Request, body: string, secret: string): boolean {
+  const signature = request.headers.get("X-RevenueCat-Signature");
+  if (!signature) {
+    return false;
+  }
+
+  const hmac = crypto.createHmac("sha256", secret);
+  hmac.update(body);
+  const expectedSignature = hmac.digest("hex");
+
+  return crypto.timingSafeEqual(Buffer.from(signature, "hex"), Buffer.from(expectedSignature, "hex"));
+}
+
 export async function POST(request: NextRequest) {
   try {
-    console.log("[RevenueCat Webhook] Received event");
+    // Get webhook secret from environment
+    const webhookSecret = process.env.REVENUECAT_WEBHOOK_SECRET;
+    if (!webhookSecret) {
+      console.error("[RevenueCat Webhook] No webhook secret configured");
+      return NextResponse.json({ error: "Webhook not configured" }, { status: 500 });
+    }
 
-    // Parse webhook body
-    const body = await request.json();
-    console.log("[RevenueCat Webhook] Event data:", JSON.stringify(body, null, 2));
+    // Get raw body for signature verification
+    const rawBody = await request.text();
 
-    const { event } = webhookEventSchema.parse(body);
+    // Verify webhook signature
+    if (!verifyWebhookSignature(request, rawBody, webhookSecret)) {
+      console.error("[RevenueCat Webhook] Invalid signature");
+      return NextResponse.json({ error: "Invalid signature" }, { status: 401 });
+    }
+
+    // Parse webhook event
+    const body = JSON.parse(rawBody);
+    const webhookEvent = webhookEventSchema.parse(body);
+    const { event } = webhookEvent;
+
+    console.log(`[RevenueCat Webhook] Received event: ${event.type} for user: ${event.app_user_id}`);
 
     // Handle different event types
     switch (event.type) {
       case "INITIAL_PURCHASE":
       case "RENEWAL":
-      case "PRODUCT_CHANGE":
-        await handlePurchaseEvent(event);
+      case "UNCANCELLATION":
+        await handleSubscriptionActive(event);
         break;
 
       case "CANCELLATION":
       case "EXPIRATION":
-      case "SUBSCRIPTION_PAUSED":
-        await handleCancellationEvent(event);
+        await handleSubscriptionInactive(event);
         break;
 
       case "BILLING_ISSUE":
-        console.log("[RevenueCat Webhook] Billing issue for user:", event.app_user_id);
+        await handleBillingIssue(event);
+        break;
+
+      case "PRODUCT_CHANGE":
+        await handleProductChange(event);
         break;
 
       default:
-        console.log("[RevenueCat Webhook] Unhandled event type:", event.type);
+        console.log(`[RevenueCat Webhook] Unhandled event type: ${event.type}`);
     }
 
     return NextResponse.json({ success: true });
@@ -71,103 +124,119 @@ export async function POST(request: NextRequest) {
   }
 }
 
-async function handlePurchaseEvent(event: any) {
-  const { app_user_id, product_id, entitlement_id, purchased_at_ms } = event;
+// Handle subscription becoming active
+async function handleSubscriptionActive(event: z.infer<typeof webhookEventSchema>["event"]) {
+  const userId = event.app_user_id;
+  const expirationDate = event.expiration_at_ms ? new Date(event.expiration_at_ms) : null;
 
-  console.log(`[RevenueCat Webhook] Processing purchase for user: ${app_user_id}`);
-
-  // Check if this is an anonymous user
-  const isAnonymous = app_user_id.startsWith("$RCAnonymousID:");
-
-  if (isAnonymous) {
-    console.log("[RevenueCat Webhook] Anonymous user purchase detected");
-
-    // Store the webhook event for later processing when user authenticates
-    await prisma.revenueCatWebhookEvent.create({
-      data: {
-        eventType: event.type,
-        eventTimestamp: new Date(purchased_at_ms || Date.now()),
-        appUserId: app_user_id,
-        environment: "PRODUCTION", // Adjust based on your webhook configuration
-        productId: product_id,
-        entitlementIds: entitlement_id ? JSON.stringify([entitlement_id]) : null,
-        rawEventData: event,
-        processed: false, // Will be processed when user authenticates
-      },
-    });
-
-    console.log("[RevenueCat Webhook] Stored anonymous purchase event for later processing");
-    return;
-  }
-
-  // Handle authenticated user purchases
-  console.log(`[RevenueCat Webhook] Processing purchase for authenticated user: ${app_user_id}`);
-
-  // Find user by their authenticated ID (not RevenueCat ID)
-  const user = await prisma.user.findUnique({
-    where: { id: app_user_id },
+  // Update user premium status
+  await prisma.user.update({
+    where: { id: userId },
+    data: { isPremium: true },
   });
 
-  if (!user) {
-    console.log(`[RevenueCat Webhook] User not found for ID: ${app_user_id}`);
-    return;
-  }
-
-  // Sync the purchase status
-  await PremiumService.syncRevenueCatStatus(user.id, app_user_id);
-
-  // Mark any pending anonymous events as processed
-  await prisma.revenueCatWebhookEvent.updateMany({
+  // Update or create subscription record
+  const subscription = await prisma.subscription.findUnique({
     where: {
-      appUserId: app_user_id,
-      processed: false,
+      userId_platform: {
+        userId,
+        platform: Platform.ANDROID || Platform.IOS,
+      },
+    },
+  });
+
+  if (subscription) {
+    await prisma.subscription.update({
+      where: { id: subscription.id },
+      data: {
+        status: "ACTIVE",
+        currentPeriodEnd: expirationDate,
+        revenueCatUserId: event.original_app_user_id,
+        updatedAt: new Date(),
+      },
+    });
+  } else {
+    // Find a default plan
+    const plan = await prisma.subscriptionPlan.findFirst({
+      where: { isActive: true },
+    });
+
+    if (plan) {
+      await prisma.subscription.create({
+        data: {
+          userId,
+          planId: plan.id,
+          revenueCatUserId: event.original_app_user_id,
+          status: "ACTIVE",
+          platform: Platform.ANDROID || Platform.IOS,
+          startedAt: new Date(event.purchased_at_ms || Date.now()),
+          currentPeriodEnd: expirationDate,
+        },
+      });
+    }
+  }
+}
+
+// Handle subscription becoming inactive
+async function handleSubscriptionInactive(event: z.infer<typeof webhookEventSchema>["event"]) {
+  const userId = event.app_user_id;
+
+  // Update user premium status
+  await prisma.user.update({
+    where: { id: userId },
+    data: { isPremium: false },
+  });
+
+  // Update subscription status
+  await prisma.subscription.updateMany({
+    where: {
+      userId,
+      platform: Platform.ANDROID || Platform.IOS,
+      status: "ACTIVE",
     },
     data: {
-      processed: true,
+      status: event.type === "CANCELLATION" ? "CANCELLED" : "EXPIRED",
+      cancelledAt: new Date(),
       updatedAt: new Date(),
     },
   });
 }
 
-async function handleCancellationEvent(event: any) {
-  const { app_user_id, type } = event;
+// Handle billing issues
+async function handleBillingIssue(event: z.infer<typeof webhookEventSchema>["event"]) {
+  const userId = event.app_user_id;
 
-  console.log(`[RevenueCat Webhook] Processing ${type} for user: ${app_user_id}`);
-
-  // Check if this is an anonymous user
-  const isAnonymous = app_user_id.startsWith("$RCAnonymousID:");
-
-  if (isAnonymous) {
-    console.log(`[RevenueCat Webhook] Anonymous user ${type} - storing event`);
-
-    // Store the cancellation/expiration event
-    await prisma.revenueCatWebhookEvent.create({
-      data: {
-        eventType: event.type,
-        eventTimestamp: new Date(),
-        appUserId: app_user_id,
-        environment: "PRODUCTION",
-        rawEventData: event,
-        processed: false,
-      },
-    });
-    return;
-  }
-
-  // Handle authenticated user cancellation/expiration
-  const user = await prisma.user.findUnique({
-    where: { id: app_user_id },
+  // Update subscription status to indicate billing issue
+  await prisma.subscription.updateMany({
+    where: {
+      userId,
+      platform: Platform.ANDROID || Platform.IOS,
+      status: "ACTIVE",
+    },
+    data: {
+      status: "EXPIRED",
+      updatedAt: new Date(),
+    },
   });
+}
 
-  if (user) {
-    console.log(`[RevenueCat Webhook] Processing ${type} for authenticated user: ${user.id}`);
+// Handle product changes
+async function handleProductChange(event: z.infer<typeof webhookEventSchema>["event"]) {
+  const userId = event.app_user_id;
 
-    // Sync with RevenueCat to get current status
-    // This will update the user's premium status based on current entitlements
-    await PremiumService.syncRevenueCatStatus(user.id, app_user_id);
+  // For now, just update the expiration date
+  // In a more complex system, you might update the plan as well
+  const expirationDate = event.expiration_at_ms ? new Date(event.expiration_at_ms) : null;
 
-    console.log(`[RevenueCat Webhook] ${type} processed for user: ${user.id}`);
-  } else {
-    console.log(`[RevenueCat Webhook] User not found for ${type} event: ${app_user_id}`);
-  }
+  await prisma.subscription.updateMany({
+    where: {
+      userId,
+      platform: Platform.ANDROID || Platform.IOS,
+      status: "ACTIVE",
+    },
+    data: {
+      currentPeriodEnd: expirationDate,
+      updatedAt: new Date(),
+    },
+  });
 }

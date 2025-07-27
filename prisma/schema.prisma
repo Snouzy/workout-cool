@@ -411,11 +411,8 @@ model Subscription {
   planId String
   plan   SubscriptionPlan @relation(fields: [planId], references: [id])
 
-  // RevenueCat data
-  revenueCatUserId         String?
-  revenueCatEntitlement    String?
-  revenueCatTransactionId  String? // Original transaction ID from RevenueCat
-  revenueCatProductId      String? // Product ID from RevenueCat
+  // RevenueCat data (simplified)
+  revenueCatUserId String? // The RevenueCat user ID for sync
 
   // Status
   status SubscriptionStatus

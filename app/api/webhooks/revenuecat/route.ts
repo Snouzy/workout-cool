@@ -1,10 +1,11 @@
-/* eslint-disable no-case-declarations */
+/* eslint-disable @typescript-eslint/naming-convention */
 
 import { NextRequest, NextResponse } from "next/server";
 
 import { RevenueCatMapping } from "@/shared/lib/revenuecat/revenuecat.mapping";
 import { RevenueCatConfig } from "@/shared/lib/revenuecat/revenuecat.config";
 import { prisma } from "@/shared/lib/prisma";
+import { PremiumService } from "@/shared/lib/premium/premium.service";
 
 /**
  * RevenueCat Webhook Handler
@@ -26,6 +27,7 @@ interface RevenueCatWebhookEvent {
     expiration_at_ms?: number;
     environment: "SANDBOX" | "PRODUCTION";
     entitlement_id?: string;
+    purchased_at_ms?: number;
     entitlement_ids?: string[];
     price?: number;
     currency?: string;
@@ -100,7 +102,6 @@ async function logWebhookEvent(event: RevenueCatWebhookEvent, success: boolean, 
  * Process subscription events
  */
 async function processSubscriptionEvent(webhook: RevenueCatWebhookEvent) {
-  // eslint-disable-next-line @typescript-eslint/naming-convention
   const { type, app_user_id, entitlement_ids, expiration_at_ms, product_id, transaction_id, original_transaction_id } = webhook.event;
 
   // Find user by RevenueCat user ID
@@ -108,7 +109,7 @@ async function processSubscriptionEvent(webhook: RevenueCatWebhookEvent) {
     where: {
       subscriptions: {
         some: {
-          revenueCatUserId: app_user_id,
+          OR: [{ userId: app_user_id }, { revenueCatUserId: app_user_id }],
         },
       },
     },
@@ -137,61 +138,13 @@ async function processSubscriptionEvent(webhook: RevenueCatWebhookEvent) {
     case "INITIAL_PURCHASE":
     case "RENEWAL":
     case "PRODUCT_CHANGE":
-      // Grant premium access
-      await prisma.user.update({
-        where: { id: user.id },
-        data: { isPremium: true },
-      });
-
-      // Update subscription record
-      await prisma.subscription.updateMany({
-        where: {
-          userId: user.id,
-          revenueCatUserId: app_user_id,
-        },
-        data: {
-          status: "ACTIVE",
-          currentPeriodEnd: expirationDate,
-          revenueCatEntitlement: entitlement_ids?.join(","),
-          revenueCatTransactionId: original_transaction_id || transaction_id,
-          revenueCatProductId: product_id,
-          updatedAt: new Date(),
-        },
-      });
+      await handlePurchaseEvent(webhook);
       break;
 
     case "CANCELLATION":
     case "EXPIRATION":
     case "BILLING_ISSUE":
-      // Check if user has other active subscriptions
-      const otherActiveSubscriptions = await prisma.subscription.count({
-        where: {
-          userId: user.id,
-          status: "ACTIVE",
-          revenueCatUserId: { not: app_user_id },
-        },
-      });
-
-      // Only revoke premium if no other active subscriptions
-      if (otherActiveSubscriptions === 0) {
-        await prisma.user.update({
-          where: { id: user.id },
-          data: { isPremium: false },
-        });
-      }
-
-      // Update subscription status
-      await prisma.subscription.updateMany({
-        where: {
-          userId: user.id,
-          revenueCatUserId: app_user_id,
-        },
-        data: {
-          status: type === "CANCELLATION" ? "CANCELLED" : "EXPIRED",
-          cancelledAt: type === "CANCELLATION" ? new Date() : null,
-          updatedAt: new Date(),
-        },
-      });
+      await handleCancellationEvent(webhook);
       break;
 
     case "UNCANCELLATION":
@@ -216,6 +169,50 @@ async function processSubscriptionEvent(webhook: RevenueCatWebhookEvent) {
 
     default:
       console.log(`Unhandled RevenueCat event type: ${type}`);
+  }
+}
+
+async function handleCancellationEvent(webhook: RevenueCatWebhookEvent) {
+  const { app_user_id, type } = webhook.event;
+
+  console.log(`[RevenueCat Webhook] Processing ${type} for user: ${app_user_id}`);
+
+  // Check if this is an anonymous user
+  const isAnonymous = app_user_id.startsWith("$RCAnonymousID:");
+
+  if (isAnonymous) {
+    console.log(`[RevenueCat Webhook] Anonymous user ${type} - storing event`);
+
+    // Store the cancellation/expiration event
+    await prisma.revenueCatWebhookEvent.create({
+      data: {
+        eventType: webhook.event.type,
+        eventTimestamp: new Date(),
+        appUserId: app_user_id,
+        environment: webhook.event.environment,
+        rawEventData: JSON.stringify(webhook.event),
+        processed: false,
+      },
+    });
+
+    return;
+  }
+
+  // Handle authenticated user cancellation/expiration
+  const user = await prisma.user.findUnique({
+    where: { id: app_user_id },
+  });
+
+  if (user) {
+    console.log(`[RevenueCat Webhook] Processing ${type} for authenticated user: ${user.id}`);
+
+    // Sync with RevenueCat to get current status
+    // This will update the user's premium status based on current entitlements
+    await PremiumService.syncRevenueCatStatus(user.id, app_user_id);
+
+    console.log(`[RevenueCat Webhook] ${type} processed for user: ${user.id}`);
+  } else {
+    console.log(`[RevenueCat Webhook] User not found for ${type} event: ${app_user_id}`);
   }
 }
 
@@ -282,5 +279,63 @@ export async function GET() {
     status: "RevenueCat webhook endpoint active",
     configured: RevenueCatConfig.isConfigured(),
     environment: RevenueCatConfig.isDevelopment() ? "development" : "production",
+  });
+}
+
+async function handlePurchaseEvent(webhook: RevenueCatWebhookEvent) {
+  const { app_user_id, product_id, entitlement_id, purchased_at_ms } = webhook.event;
+
+  console.log(`[RevenueCat Webhook] Processing purchase for user: ${app_user_id}`);
+
+  // Check if this is an anonymous user
+  const isAnonymous = app_user_id.startsWith("$RCAnonymousID:");
+
+  if (isAnonymous) {
+    console.log("[RevenueCat Webhook] Anonymous user purchase detected");
+
+    // Store the webhook event for later processing when user authenticates
+    await prisma.revenueCatWebhookEvent.create({
+      data: {
+        eventType: webhook.event.type,
+        eventTimestamp: new Date(purchased_at_ms || Date.now()),
+        appUserId: app_user_id,
+        environment: webhook.event.environment,
+        productId: product_id,
+        entitlementIds: entitlement_id ? JSON.stringify([entitlement_id]) : null,
+        rawEventData: JSON.stringify(webhook.event),
+        processed: false, // Will be processed when user authenticates
+      },
+    });
+
+    console.log("[RevenueCat Webhook] Stored anonymous purchase event for later processing");
+    return;
+  }
+
+  // Handle authenticated user purchases
+  console.log(`[RevenueCat Webhook] Processing purchase for authenticated user: ${app_user_id}`);
+
+  // Find user by their authenticated ID (not RevenueCat ID)
+  const user = await prisma.user.findUnique({
+    where: { id: app_user_id },
+  });
+
+  if (!user) {
+    console.log(`[RevenueCat Webhook] User not found for ID: ${app_user_id}`);
+    return;
+  }
+
+  // Sync the purchase status
+  await PremiumService.syncRevenueCatStatus(user.id, app_user_id);
+
+  // Mark any pending anonymous events as processed
+  await prisma.revenueCatWebhookEvent.updateMany({
+    where: {
+      appUserId: app_user_id,
+      processed: false,
+    },
+    data: {
+      processed: true,
+      updatedAt: new Date(),
+    },
   });
 }

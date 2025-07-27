@@ -91,6 +91,8 @@ export class PremiumService {
       planId?: string;
       platform?: Platform;
       paymentProcessor?: PaymentProcessor;
+      revenueCatEntitlement?: string;
+      revenueCatUserId?: string;
     },
   ): Promise<void> {
     // Get default premium plan if not specified
@@ -137,6 +139,8 @@ export class PremiumService {
             status: "ACTIVE",
             startedAt: new Date(),
             currentPeriodEnd: expiresAt,
+            revenueCatEntitlement: options?.revenueCatEntitlement,
+            revenueCatUserId: options?.revenueCatUserId,
           },
         });
       }
@@ -458,6 +462,7 @@ export class PremiumService {
 
       // Fetch current status from RevenueCat
       const revenueCatStatus = await this.fetchRevenueCatSubscriptionStatus(revenueCatUserId);
+      console.log("revenueCatStatus before sync:", revenueCatStatus);
 
       if (revenueCatStatus.error) {
         console.warn(`Failed to fetch RevenueCat status, skipping sync: ${revenueCatStatus.error}`);

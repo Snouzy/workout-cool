@@ -44,7 +44,7 @@ export default function ProfilePage() {
       </div>
       <WorkoutSessionList />
       <div className="mt-8 flex justify-center">
-        <Button onClick={() => router.push("/")} size="large">
+        <Button onClick={() => router.push("/")} size="large" data-testid="profile-page-new-workout">
           {t("profile.new_workout")}
         </Button>
       </div>

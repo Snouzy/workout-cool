@@ -32,6 +32,7 @@ describe('Account login tests', function () {
 
   })
   beforeEach(function () {
+    cy.intercept({ resourceType: /xhr|fetch/ }, { log: false })
     //navigate to the home page using "baseURL" from cypress.config.ts
     cy.visit("/");
     bottomNavigation.profile()

@@ -30,6 +30,7 @@ describe('Account creation tests', function () {
   // Navigate to the home page using "baseURL" from cypress.config.ts
   // then to the account creation page
   beforeEach(function () {
+    cy.intercept({ resourceType: /xhr|fetch/ }, { log: false })
     cy.visit("/");
     accountFlow.createNewAccount()
   });

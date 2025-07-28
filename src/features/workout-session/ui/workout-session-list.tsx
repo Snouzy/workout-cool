@@ -102,7 +102,7 @@ export function WorkoutSessionList() {
         {t("workout_builder.session.history", { count: sessions.length })}
       </h2>
       {sessions.length === 0 && <div className="text-slate-500 dark:text-slate-400">{t("workout_builder.session.no_workout_yet")}</div>}
-      <ul className="divide-y divide-slate-200 dark:divide-slate-700/50">
+      <ul className="divide-y divide-slate-200 dark:divide-slate-700/50" data-testid="profile-page-workout-history">
         {sessions.map((session) => {
           const isActive = session.status === "active";
           return (
@@ -127,7 +127,7 @@ export function WorkoutSessionList() {
                   </span>
                 )}
                 {session.muscles && session.muscles.length > 0 && (
-                  <div className="flex flex-wrap gap-1 mt-1 justify-center">
+                  <div className="flex flex-wrap gap-1 mt-1 justify-center" data-testid="profile-page-workout-history-exercise-muscle">
                     {session.muscles.map((muscle, idx) => (
                       <span
                         // eslint-disable-next-line max-len
@@ -148,7 +148,7 @@ export function WorkoutSessionList() {
                   </div>
                 )}
               </div>
-              <div className="flex flex-wrap gap-2 flex-1">
+              <div className="flex flex-wrap gap-2 flex-1" data-testid="profile-page-workout-history-exercise-name">
                 {session.exercises?.map((ex, idx) => {
                   const exerciseName = locale === "fr" ? ex.name : ex.nameEn;
                   return (
@@ -175,6 +175,7 @@ export function WorkoutSessionList() {
                     data-tip={
                       activeSession ? t("workout_builder.session.already_have_a_active_session") : t("workout_builder.session.repeat")
                     }
+                    data-testid="profile-page-workout-history-repeat"
                   >
                     <Button
                       aria-label={t("workout_builder.session.repeat")}
@@ -190,7 +191,7 @@ export function WorkoutSessionList() {
                 )}
 
                 {!isActive && (
-                  <div className="tooltip" data-tip={t("workout_builder.session.delete")}>
+                  <div className="tooltip" data-tip={t("workout_builder.session.delete")} data-testid="profile-page-workout-history-delete">
                     <Button
                       aria-label={t("workout_builder.session.delete")}
                       onClick={() => handleDelete(session.id)}

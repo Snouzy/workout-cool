@@ -13,6 +13,7 @@ dayjs.extend(utc);
 dayjs.extend(timezone);
 
 import type { WorkoutSession } from "@/shared/lib/workout-session/types/workout-session";
+import { data } from "node_modules/cypress/types/jquery";
 
 const DEFAULT_STREAK_COUNT = 5;
 
@@ -189,6 +190,7 @@ export default function WorkoutStreakHeader({ className, streakCount = DEFAULT_S
     <div
       aria-label={`Workout streak: ${streakData.currentStreak} day${streakData.currentStreak !== 1 ? "s" : ""}, ${streakData.totalWorkouts} workouts in last ${streakCount} days`}
       className={cn("flex gap-1 sm:mr-2", className)}
+      data-testid="workout-streak"
       role="img"
     >
       {streakData.days.map((day) => {
@@ -197,6 +199,7 @@ export default function WorkoutStreakHeader({ className, streakCount = DEFAULT_S
         return (
           <div
             aria-label={`${day.date}: ${day.hasWorkout ? "Workout completed" : "No workout"}`}
+            data-testid={"workout-streak-"+day.hasWorkout}
             className={`w-4 h-4 sm:w-6 sm:h-6 rounded-sm sm:rounded-md transition-all duration-200 ease-in-out tooltip tooltip-bottom hover:scale-110 cursor-pointer focus:ring-2 focus:ring-offset-1 focus:outline-none ${
               day.hasWorkout
                 ? "bg-emerald-400 dark:bg-emerald-500 shadow-sm hover:shadow-md hover:brightness-110 focus:ring-emerald-300"

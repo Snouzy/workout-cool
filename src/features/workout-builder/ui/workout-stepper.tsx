@@ -189,7 +189,7 @@ export function WorkoutStepper() {
           <Image alt="Trophée" className="w-56 h-56" src={Trophy} />
           <h2 className="text-2xl font-bold mb-2 text-center">{t("workout_builder.session.congrats")}</h2>
           <p className="text-lg text-slate-600 mb-6">{t("workout_builder.session.congrats_subtitle")}</p>
-          <Button onClick={goToProfile}>{t("commons.go_to_profile")}</Button>
+          <Button onClick={goToProfile} data-testid="workout-finished-profile">{t("commons.go_to_profile")}</Button>
         </div>
         {/* Donation Modal */}
         <DonationModal isOpen={showModal} onClose={closeModal} />

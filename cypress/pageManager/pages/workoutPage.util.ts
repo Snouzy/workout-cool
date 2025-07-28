@@ -120,7 +120,4 @@ export class WorkoutPage {
     modalClose() {
         cy.get('[data-testid="modal-close"]').click()
     }
-    confirmWorkoutFinished() {
-        cy.get('[data-testid="workout-finished"]').contains('workout finished')
-    }
 }

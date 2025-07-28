@@ -310,6 +310,9 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 ## Deployment / Self-hosting
 
 > 📖 **For detailed self-hosting instructions, see our [Complete Self-hosting Guide](docs/SELF-HOSTING.md)**
+>
+> 📺 **You can also watch a [3-minute video guide on self-hosting Workout.Cool](https://www.youtube.com/watch?v=HQecjb0CfAo).**
+
 
 To seed the database with the sample exercises, set the `SEED_SAMPLE_DATA` env variable to `true`.
 

@@ -19,48 +19,27 @@ export class PremiumService {
   static async checkUserPremiumStatus(userId: string): Promise<PremiumStatus> {
     const user = await prisma.user.findUnique({
       where: { id: userId },
-      select: {
-        isPremium: true,
-        subscriptions: {
-          where: { status: "ACTIVE" },
-          select: {
-            currentPeriodEnd: true,
-            plan: {
-              select: { id: true },
-            },
-          },
-          orderBy: { createdAt: "desc" },
-          take: 1,
-        },
-      },
+      // select: {
+      //   isPremium: true,
+      //   subscriptions: {
+      //     where: { status: "ACTIVE" },
+      //     select: {
+      //       currentPeriodEnd: true,
+      //       plan: {
+      //         select: { id: true },
+      //       },
+      //     },
+      //     orderBy: { createdAt: "desc" },
+      //     take: 1,
+      //   },
+      // },
     });
 
-    if (!user) {
+    if (!user || !user.isPremium) {
       return { isPremium: false };
     }
 
-    // Quick check on isPremium flag
-    if (!user.isPremium) {
-      return { isPremium: false };
-    }
-
-    // Verify with active subscription for expiry date
-    const activeSubscription = user.subscriptions[0];
-    if (activeSubscription?.currentPeriodEnd) {
-      const isExpired = activeSubscription.currentPeriodEnd < new Date();
-
-      if (!isExpired) {
-        return {
-          isPremium: true,
-          expiresAt: activeSubscription.currentPeriodEnd,
-          provider: "stripe", // Default for now
-        };
-      }
-    }
-
-    // If isPremium is true but no active subscription, it's inconsistent
-    // Should update isPremium to false (data cleanup)
-    return { isPremium: false };
+    return { isPremium: true };
   }
 
   /**

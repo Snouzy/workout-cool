@@ -1,7 +1,7 @@
 import { prisma } from "../src/shared/lib/prisma";
 
 // Configuration
-const USER_ID = "1ZlCQo11hTMul22wMxOdZ64Y3e1jX92f";
+const USER_ID = "bwZuBQO4cJgBX6NiZaXgv81vKfgBQcFe";
 const BENCH_PRESS_ID = "cmbw9xso904p69kv1vwuadhx6"; // Développé couché à la barre prise large
 
 interface WorkoutPattern {

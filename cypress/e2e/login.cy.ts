@@ -3,7 +3,7 @@
 import { BottomNavigation } from "cypress/pageManager/navigation/bottomNavigation.util";
 import { LoginForm } from "cypress/pageManager/pages/loginPage.util";
 import { ProfilePage } from "cypress/pageManager/pages/profilePage.util";
-import { SignupForm } from "cypress/pageManager/pages/signup.util";
+import { SignupForm } from "cypress/pageManager/pages/signupPage.util";
 
 interface BasicUser {
   first_name: string;

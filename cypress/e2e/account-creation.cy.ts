@@ -1,5 +1,5 @@
 /// <reference types="cypress" />
-import { SignupForm } from "cypress/pageManager/pages/signup.util";
+import { SignupForm } from "cypress/pageManager/pages/signupPage.util";
 import { AccountFlow } from "cypress/pageManager/utils/accountFlow.util";
 
 interface BasicUser {

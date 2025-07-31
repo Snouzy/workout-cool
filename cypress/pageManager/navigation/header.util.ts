@@ -26,7 +26,6 @@ export class HeaderNavigation {
             elements.each((_,element) => {
                 const workoutStreakAttribute = Cypress.$(element).filter('[data-testid="workout-streak-true"]').attr('data-testid')
                 if(workoutStreakAttribute === 'workout-streak-true') {
-                    // console.log(Cypress.$(element).filter('[data-testid="workout-streak-true"]').attr('data-testid'));
                     streakArr.push(Cypress.$(element))
                 }
                 

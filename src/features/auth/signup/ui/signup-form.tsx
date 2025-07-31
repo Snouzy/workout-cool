@@ -129,7 +129,7 @@ export const SignUpForm = () => {
           </div>
         </div>
       </Form>
-      <div className="mt-2 flex flex-col gap-2">
+      <div className="mt-2 flex flex-col gap-2" data-testid="signup-form-google">
         <ProviderButton action="signup" providerId="google" variant="default" />
       </div>
       
@@ -138,6 +138,7 @@ export const SignUpForm = () => {
         <Link 
           className="underline underline-offset-4" 
           href={`/${paths.signIn}${redirectUrl ? `?redirect=${encodeURIComponent(redirectUrl)}` : ""}`}
+          data-testid="signup-form-login"
         >
           {t("commons.login")}
         </Link>

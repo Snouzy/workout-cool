@@ -109,6 +109,7 @@ export function WorkoutSessionList() {
             <li
               className="px-2 flex flex-col sm:flex-row items-start sm:items-center justify-between py-4 gap-2 sm:gap-0 hover:bg-slate-50 dark:hover:bg-slate-800/70 rounded-lg space-x-4"
               key={session.id}
+              data-testid="profile-page-workout-session"
             >
               <div className="flex items-center flex-col">
                 <span className="font-bold text-base tabular-nums text-slate-900 dark:text-slate-200">

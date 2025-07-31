@@ -21,26 +21,45 @@ describe('Workout flow', function () {
 
 
     it('Successfully progresses through the workout flow', function () {
+        let exerciseNames: string [] = [];
+        let exerciseHistory: string [] = [];
         headerNavigation.checkWorkoutStreak().should('equal', 0)
         workoutPage.selectBarbell()
         workoutPage.selectContinue()
         workoutPage.muscleSelection('quadriceps')
         workoutPage.selectContinue()
-        workoutPage.getAllExerciseNames().then((exerciseNames) => {
-            const exercise = JSON.stringify(exerciseNames[0]).replace(/[\]\["]/g, '')
-            workoutPage.exerciseVideo(exercise)
-            cy.get('[data-testid="exercise-video-name"]').contains(exercise)
-        })
-        cy.get('[data-testid="exercise-video-tags"]').contains('Quadriceps')
-        workoutPage.modalClose()
-        workoutPage.selectContinue()
-        sessionPage.finishWorkoutSession()
-        sessionPage.closeDonationModal()
-        finishedWorkoutPage.confirmWorkoutFinished()
-        finishedWorkoutPage.gotToProfile()
-        headerNavigation.checkWorkoutStreak().should('equal', 1)
+        workoutPage.getAllExerciseNames()
+            .then((exercises) => {
+                exercises.forEach((exercise) => {
+                    const exerciseName = JSON.stringify(exercise).replace(/[\]\["]/g, '')
+                    exerciseNames.push(exerciseName)
+                })
+                exerciseNames.forEach((exerciseName) => {
+                    workoutPage.exerciseVideo(exerciseName)
+                    cy.get('[data-testid="exercise-video-name"]').contains(exerciseName)
+                    workoutPage.modalClose()
+                })
+                workoutPage.selectContinue()
+                sessionPage.finishWorkoutSession()
+                sessionPage.closeDonationModal()
+                finishedWorkoutPage.confirmWorkoutFinished()
+                finishedWorkoutPage.gotToProfile()
+            })
+            .then( () => {
+                headerNavigation.checkWorkoutStreak().should('equal', 1)
+                profilePage.getWorkoutSessionExercises().then(workoutSessions => {
+                    exerciseHistory = workoutSessions
+                })
+            })
+            .then(() => {
+                exerciseNames.forEach((exerciseName) => {
+                    expect(exerciseHistory).to.include(exerciseName.toLowerCase())
+                })
+            })
     })
     it('Successfully completes the workout flow from the "New Workout" option', () => {
+        let exerciseNames: string [] = [];
+        let exerciseHistory: string [] = [];
         headerNavigation.profileDropdown('profile')
         headerNavigation.checkWorkoutStreak().should('equal', 0)
         profilePage.newWorkout()
@@ -48,18 +67,108 @@ describe('Workout flow', function () {
         workoutPage.selectContinue()
         workoutPage.muscleSelection('quadriceps')
         workoutPage.selectContinue()
-        workoutPage.getAllExerciseNames().then((exerciseNames) => {
-            const exercise = JSON.stringify(exerciseNames[0]).replace(/[\]\["]/g, '')
-            workoutPage.exerciseVideo(exercise)
-            cy.get('[data-testid="exercise-video-name"]').contains(exercise)
-        })
-        cy.get('[data-testid="exercise-video-tags"]').contains('Quadriceps')
-        workoutPage.modalClose()
+        workoutPage.getAllExerciseNames()
+            .then((exercises) => {
+                exercises.forEach((exercise) => {
+                    const exerciseName = JSON.stringify(exercise).replace(/[\]\["]/g, '')
+                    exerciseNames.push(exerciseName)
+                })
+                exerciseNames.forEach((exerciseName) => {
+                    workoutPage.exerciseVideo(exerciseName)
+                    cy.get('[data-testid="exercise-video-name"]').contains(exerciseName)
+                    workoutPage.modalClose()
+                })
+                workoutPage.selectContinue()
+                sessionPage.finishWorkoutSession()
+                sessionPage.closeDonationModal()
+                finishedWorkoutPage.confirmWorkoutFinished()
+                finishedWorkoutPage.gotToProfile()
+            })
+            .then( () => {
+                headerNavigation.checkWorkoutStreak().should('equal', 1)
+                profilePage.getWorkoutSessionExercises().then(workoutSessions => {
+                    exerciseHistory = workoutSessions
+                })               
+            })
+            .then(() => {
+                exerciseNames.forEach((exerciseName) => {
+                    expect(exerciseHistory).to.include(exerciseName.toLowerCase())
+                })
+            })
+    })
+    it('Successfully deletes a workout from the history', function () {
+        let exerciseNames: string [] = [];
+        workoutPage.selectBarbell()
         workoutPage.selectContinue()
-        sessionPage.finishWorkoutSession()
-        sessionPage.closeDonationModal()
-        finishedWorkoutPage.confirmWorkoutFinished()
-        finishedWorkoutPage.gotToProfile()
-        headerNavigation.checkWorkoutStreak().should('equal', 1)
+        workoutPage.muscleSelection('quadriceps')
+        workoutPage.selectContinue()
+        workoutPage.getAllExerciseNames()
+            .then((exercises) => {
+                exercises.forEach((exercise) => {
+                    const exerciseName = JSON.stringify(exercise).replace(/[\]\["]/g, '')
+                    exerciseNames.push(exerciseName)
+                })
+                exerciseNames.forEach((exerciseName) => {
+                    workoutPage.exerciseVideo(exerciseName)
+                    cy.get('[data-testid="exercise-video-name"]').contains(exerciseName)
+                    workoutPage.modalClose()
+                })
+                workoutPage.selectContinue()
+                sessionPage.finishWorkoutSession()
+                sessionPage.closeDonationModal()
+                finishedWorkoutPage.confirmWorkoutFinished()
+                finishedWorkoutPage.gotToProfile()
+            })
+            .then( () => {
+                exerciseNames.forEach((exerciseName) => {
+                    profilePage.deleteWorkout(exerciseName)
+                })
+            })
+            .then(() => {
+                headerNavigation.checkWorkoutStreak().should('equal', 0)
+            })
+    })
+    it('Successfully repeats an exercise from the history', function () {
+        let firstExercise: string = "";
+        let exerciseCount: number = 0;
+        workoutPage.selectBarbell()
+        workoutPage.selectContinue()
+        workoutPage.muscleSelection('quadriceps')
+        workoutPage.selectContinue()
+        workoutPage.getAllExerciseNames()
+            .then((exercise) => {
+                const exerciseName = JSON.stringify(exercise).replace(/[\]\["]/g, '')
+                firstExercise = exerciseName
+                workoutPage.exerciseVideo(exerciseName)
+                cy.get('[data-testid="exercise-video-name"]').contains(exerciseName)
+                workoutPage.modalClose()
+                workoutPage.selectContinue()
+                sessionPage.finishWorkoutSession()
+                sessionPage.closeDonationModal()
+                finishedWorkoutPage.confirmWorkoutFinished()
+                finishedWorkoutPage.gotToProfile()
+            })
+            .then(() => {
+                profilePage.repeatWorkout(firstExercise)
+                workoutPage.exerciseVideo(firstExercise)
+                cy.get('[data-testid="exercise-video-name"]').contains(firstExercise)
+                workoutPage.modalClose()
+                workoutPage.selectContinue()
+                sessionPage.finishWorkoutSession()
+                sessionPage.closeDonationModal()
+                finishedWorkoutPage.confirmWorkoutFinished()
+                finishedWorkoutPage.gotToProfile()
+            })
+            .then(() => {
+                cy.wait(5000)
+                profilePage.getWorkoutSessionExercises().then(exerciseHistory => {
+                    exerciseHistory.forEach(exercise => {
+                        if (exercise.toLowerCase() === firstExercise.toLowerCase()) exerciseCount += 1
+                    })
+                })
+            })
+            .then(() => {
+                expect(exerciseCount).to.equal(2)
+            })
     })
 })

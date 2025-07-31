@@ -28,5 +28,11 @@ export class SignupForm {
     submit() {
         cy.get('[data-testid="signup-form-submit"]').click();
     }
+    googleSignup() {
+        cy.get('[data-testid="signup-form-google"]').click();
+    }
+    login() {
+        cy.get('[data-testid="signup-form-login"]').click();
+    }
 }
 

@@ -4,5 +4,6 @@ export class FinishedWorkoutPage {
     }
     gotToProfile() {
         cy.get('[data-testid="workout-finished-profile"]').click()
+        cy.wait(1000)
     }
 }

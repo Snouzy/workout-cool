@@ -25,13 +25,26 @@ export function WorkoutSessionSet({ set, setIndex, onChange, onFinish, onRemove 
     onChange(setIndex, { types: newTypes });
   };
 
-  const handleValueIntChange = (columnIndex: number) => (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleValueFloatChange = (columnIndex: number) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.target.value = e.target.value === "" ? "" : String(Number(e.target.value)) || "0";
+    let value = e.target.value ? parseFloat(e.target.value) : 0;
+  
+    // Truncate to 2 decimal places
+    if (!Number.isNaN(value)) {
+      const parts = e.target.value.split(".");
+      if (parts.length === 2) {
+        // Keep only first 2 digits after decimal
+        value = parseFloat(parts[0] + "." + parts[1].slice(0, 2));
+      }
+    }
+  
     const newValuesInt = Array.isArray(set.valuesInt) ? [...set.valuesInt] : [];
-    newValuesInt[columnIndex] = e.target.value ? parseInt(e.target.value, 10) : 0;
+    newValuesInt[columnIndex] = value;
     onChange(setIndex, { valuesInt: newValuesInt });
   };
 
   const handleValueSecChange = (columnIndex: number) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.target.value = e.target.value === "" ? "" : String(Number(e.target.value)) || "0";
     const newValuesSec = Array.isArray(set.valuesSec) ? [...set.valuesSec] : [];
     newValuesSec[columnIndex] = e.target.value ? parseInt(e.target.value, 10) : 0;
     onChange(setIndex, { valuesSec: newValuesSec });
@@ -84,7 +97,7 @@ export function WorkoutSessionSet({ set, setIndex, onChange, onFinish, onRemove 
               className="border border-black rounded px-1 py-2 w-1/2 text-base text-center font-bold dark:bg-slate-800 dark:placeholder:text-slate-500"
               disabled={set.completed}
               min={0}
-              onChange={handleValueIntChange(columnIndex)}
+              onChange={handleValueFloatChange(columnIndex)}
               pattern="[0-9]*"
               placeholder="min"
               type="number"
@@ -110,7 +123,7 @@ export function WorkoutSessionSet({ set, setIndex, onChange, onFinish, onRemove 
               className="border border-black rounded px-1 py-2 w-1/2 text-base text-center font-bold dark:bg-slate-800"
               disabled={set.completed}
               min={0}
-              onChange={handleValueIntChange(columnIndex)}
+              onChange={handleValueFloatChange(columnIndex)}
               pattern="[0-9]*"
               placeholder=""
               type="number"
@@ -133,7 +146,7 @@ export function WorkoutSessionSet({ set, setIndex, onChange, onFinish, onRemove 
             className="border border-black rounded px-1 py-2 w-full text-base text-center font-bold dark:bg-slate-800"
             disabled={set.completed}
             min={0}
-            onChange={handleValueIntChange(columnIndex)}
+            onChange={handleValueFloatChange(columnIndex)}
             pattern="[0-9]*"
             placeholder=""
             type="number"

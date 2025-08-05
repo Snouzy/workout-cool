@@ -5,8 +5,10 @@ import { prisma } from "@/shared/lib/prisma";
 import { enrollInProgram } from "@/features/programs/actions/enroll-program.action";
 import { auth } from "@/features/auth/lib/better-auth";
 
-export async function POST(req: NextRequest, { params }: { params: { slug: string } }) {
+export async function POST(req: NextRequest, { params }: { params: Promise<{ slug: string }> }) {
   try {
+    const { slug } = await params;
+
     const session = await auth.api.getSession({
       headers: await headers(),
     });
@@ -16,7 +18,7 @@ export async function POST(req: NextRequest, { params }: { params: { slug: strin
     }
 
     const program = await prisma.program.findUnique({
-      where: { slug: params.slug },
+      where: { slug },
       select: { id: true, participantCount: true },
     });
 
@@ -47,11 +49,13 @@ export async function POST(req: NextRequest, { params }: { params: { slug: strin
   }
 }
 
-export async function GET(req: NextRequest, { params }: { params: { slug: string } }) {
+export async function GET(req: NextRequest, { params }: { params: Promise<{ slug: string }> }) {
   try {
     const session = await auth.api.getSession({
       headers: await headers(),
     });
+
+    const { slug } = await params;
 
     if (!session) {
       return NextResponse.json({ error: "Unauthorized", code: "UNAUTHORIZED" }, { status: 401 });
@@ -63,7 +67,7 @@ export async function GET(req: NextRequest, { params }: { params: { slug: string
     }
 
     const program = await prisma.program.findUnique({
-      where: { slug: params.slug },
+      where: { slug },
       select: { id: true },
     });
 

@@ -50,7 +50,7 @@ export default function LeaderboardPage() {
           {topUsers && topUsers.length > 0 && (
             <div className="divide-y divide-gray-200 dark:divide-gray-700">
               {topUsers.map((user, index) => (
-                <LeaderboardItem key={user.userId} rank={index + 1} t={t} user={user} />
+                <LeaderboardItem key={user.userId} rank={index + 1} user={user} />
               ))}
             </div>
           )}

@@ -10,15 +10,12 @@ export interface UseTopWorkoutUsersOptions {
 }
 
 export function useTopWorkoutUsers(options: UseTopWorkoutUsersOptions = {}) {
-  const { limit = 10, refetchInterval } = options;
+  const { limit = 20, refetchInterval } = options;
 
   return useQuery({
     queryKey: ["top-workout-users", limit],
     queryFn: async () => {
-      const result = await getTopWorkoutUsersAction({
-        limit,
-      });
-
+      const result = await getTopWorkoutUsersAction();
       return result?.data || [];
     },
     staleTime: 5 * 60 * 1000, // 5 minutes

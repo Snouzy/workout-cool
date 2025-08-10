@@ -3,7 +3,7 @@
 import React from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { Dumbbell, Crown, User, Grid, Hammer } from "lucide-react";
+import { Dumbbell, Crown, User, Grid, Trophy } from "lucide-react";
 
 import { useCurrentLocale, useI18n } from "locales/client";
 import { cn } from "@/shared/lib/utils";
@@ -50,14 +50,14 @@ export function BottomNavigation() {
       isActive: pathname.includes("/premium"),
     },
     {
-      id: "tools",
-      label: t("bottom_navigation.tools"),
-      shortLabel: t("bottom_navigation.tools"),
-      mobileLabel: t("bottom_navigation.tools"),
-      href: `/${locale}/tools`,
-      icon: Hammer,
-      description: t("bottom_navigation.tools_tooltip"),
-      isActive: pathname.includes("/tools"),
+      id: "leaderboard",
+      label: t("bottom_navigation.leaderboard"),
+      shortLabel: t("bottom_navigation.leaderboard"),
+      mobileLabel: t("bottom_navigation.leaderboard"),
+      href: `/${locale}${paths.leaderboard}`,
+      icon: Trophy,
+      description: t("bottom_navigation.leaderboard_tooltip"),
+      isActive: pathname.includes(paths.leaderboard),
     },
     {
       id: "profile",

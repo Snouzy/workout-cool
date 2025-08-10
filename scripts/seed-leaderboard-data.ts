@@ -1,6 +1,6 @@
 #!/usr/bin/env ts-node
 
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, ExerciseAttributeValueEnum } from "@prisma/client";
 import dayjs from "dayjs";
 
 const prisma = new PrismaClient();
@@ -115,7 +115,7 @@ async function seedLeaderboardData() {
           startedAt: startTime.toDate(),
           endedAt: startTime.add(sessionDuration, 'minutes').toDate(), // Always set endedAt for completed sessions
           duration: sessionDuration * 60, // Convert to seconds
-          muscles: ["CHEST", "SHOULDERS", "TRICEPS"], // Sample muscle groups
+          muscles: [ExerciseAttributeValueEnum.CHEST, ExerciseAttributeValueEnum.SHOULDERS, ExerciseAttributeValueEnum.TRICEPS], // Sample muscle groups
         });
       }
 

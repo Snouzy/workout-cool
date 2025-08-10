@@ -813,6 +813,7 @@ export default {
     },
   },
   commons: {
+    just_now: "刚刚",
     signup_with: "使用 {provider} 注册",
     signin_with: "使用 {provider} 登录",
     signup: "注册",

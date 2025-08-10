@@ -1691,6 +1691,7 @@ export default {
   },
 
   commons: {
+    just_now: "agora mesmo",
     signup_with: "Inscrever com {provider}",
     signin_with: "Entrar com {provider}",
     signup: "Inscrever-se",

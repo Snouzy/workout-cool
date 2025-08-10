@@ -64,21 +64,26 @@ export const formatDateShort = (date: string | Date, locale: string = "en"): str
 /**
  * Format relative time (e.g., "2 hours ago", "3 days ago")
  */
-export const formatRelativeTime = (date: string | Date | null, locale: string = "en"): string | null => {
+export const formatRelativeTime = (
+  date: string | Date | null,
+  locale: string = "en",
+  justNowText: string = "just now"
+): string | null => {
   if (!date) return null;
 
   const target = dayjs(date).locale(locale);
   const now = dayjs().locale(locale);
 
+
   // Safety check: if date is in the future, treat as "just now"
   if (target.isAfter(now)) {
     console.warn("date is in the future:", target.format(), "treating as \"just now\"");
-    return "just now";
+    return justNowText;
   }
 
   // If less than 1 minute ago, show "just now" instead of "in a few seconds"
   if (now.diff(target, "minute") < 1) {
-    return "just now";
+    return justNowText;
   }
 
   return target.fromNow();

@@ -1682,6 +1682,7 @@ export default {
     },
   },
   commons: {
+    just_now: "только что",
     signup_with: "Регистрация через {provider}",
     signin_with: "Вход через {provider}",
     signup: "Регистрация",

@@ -1681,6 +1681,7 @@ export default {
     },
   },
   commons: {
+    just_now: "just now",
     signup_with: "Sign up with {provider}",
     signin_with: "Sign in with {provider}",
     signup: "Sign up",

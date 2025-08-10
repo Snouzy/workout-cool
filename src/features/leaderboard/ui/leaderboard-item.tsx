@@ -2,8 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import { Trophy, Medal, Award } from "lucide-react";
-
+import {Trophy, Medal, Award} from "lucide-react"
 
 import { useCurrentLocale, useI18n } from "locales/client";
 import { formatDateShort, formatRelativeTime } from "@/shared/lib/date";
@@ -12,54 +11,37 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 
-const getRankIcon = (rank: number) => {
-  switch (rank) {
-    case 1:
-      return <Trophy className="w-6 h-6 text-yellow-500" />;
-    case 2:
-      return <Medal className="w-6 h-6 text-gray-400" />;
-    case 3:
-      return <Award className="w-6 h-6 text-amber-600" />;
-    default:
-      return <span className="w-6 h-6 flex items-center justify-center text-sm font-bold text-gray-500">#{rank}</span>;
-  }
-};
-
-const getRankBadge = (rank: number, t: any) => {
-  switch (rank) {
-    case 1:
-      return <Badge className="bg-yellow-500 text-white border-yellow-600">{t("leaderboard.champion_badge")}</Badge>;
-    case 2:
-      return <Badge className="bg-slate-500 text-white border-slate-600">{t("leaderboard.runner_up_badge")}</Badge>;
-    case 3:
-      return <Badge className="bg-amber-600 text-white border-amber-700">{t("leaderboard.third_place_badge")}</Badge>;
-    default:
-      return null;
-  }
-};
-
-
 const LeaderboardItem: React.FC<{ user: TopWorkoutUser; rank: number }> = ({ user, rank }) => {
   const t = useI18n();
   const locale = useCurrentLocale();
+  const dicebearUrl = `https://api.dicebear.com/7.x/micah/svg?seed=${encodeURIComponent(user.userId)}&backgroundColor=b6e3f4,c0aede,d1d4f9,ffd5dc,ffdfbf`;
 
-   const generateAvatarUrl = (seed: string) => {
-     return `https://api.dicebear.com/7.x/micah/svg?seed=${encodeURIComponent(seed)}&backgroundColor=b6e3f4,c0aede,d1d4f9,ffd5dc,ffdfbf`;
-   };
+  const getRankIcon = (rank: number) => {
+    switch (rank) {
+      case 1:
+        return <Trophy className="w-6 h-6 text-yellow-500" />;
+      case 2:
+        return <Medal className="w-6 h-6 text-gray-400" />;
+      case 3:
+        return <Award className="w-6 h-6 text-amber-600" />;
+      default:
+        return <span className="w-6 h-6 flex items-center justify-center text-sm font-bold text-gray-500">#{rank}</span>;
+    }
+  };
 
-   // Use userId as seed for consistency, fallback to userName or email
-   const avatarSeed = user.userId || user.userName || user.userEmail;
-   const dicebearUrl = generateAvatarUrl(avatarSeed);
+  const getRankBadge = (rank: number) => {
+    switch (rank) {
+      case 1:
+        return <Badge className="bg-yellow-500 text-white border-yellow-600">{t("leaderboard.champion_badge")}</Badge>;
+      case 2:
+        return <Badge className="bg-slate-500 text-white border-slate-600">{t("leaderboard.runner_up_badge")}</Badge>;
+      case 3:
+        return <Badge className="bg-amber-600 text-white border-amber-700">{t("leaderboard.third_place_badge")}</Badge>;
+      default:
+        return null;
+    }
+  };
 
-
-    const formatMemberSince = (date: Date) => {
-      return formatDateShort(date, locale);
-    };
-
-    const formatLastWorkout = (date: Date | null) => {
-      if (!date) return null
-      return formatRelativeTime(date, locale);
-    };
 
   return (
     <div className="flex items-center gap-4 p-6 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
@@ -94,15 +76,15 @@ const LeaderboardItem: React.FC<{ user: TopWorkoutUser; rank: number }> = ({ use
           <h3 className="font-semibold text-gray-900 dark:text-gray-100 truncate">
             {user.userName}
           </h3>
-          {rank <= 3 && getRankBadge(rank, t)}
+          {rank <= 3 && getRankBadge(rank)}
         </div>
         <div className="space-y-0.5">
           <p className="text-xs text-slate-400 dark:text-gray-300 truncate">
-            {t("leaderboard.member_since")} {formatMemberSince(user.memberSince)}
+            {t("leaderboard.member_since")} {formatDateShort(user.memberSince, locale)}
           </p>
           {user.lastWorkoutAt && (
             <p className="text-xs text-slate-300 dark:text-gray-400 truncate">
-              {t("leaderboard.last_workout")} {formatLastWorkout(user.lastWorkoutAt)}
+              {t("leaderboard.last_workout")} {formatRelativeTime(user.lastWorkoutAt, locale, t("commons.just_now"))}
             </p>
           )}
         </div>

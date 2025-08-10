@@ -818,6 +818,7 @@ export default {
     },
   },
   commons: {
+    just_now: "ahora mismo",
     signup_with: "Registrarse con {provider}",
     signin_with: "Iniciar sesión con {provider}",
     signup: "Registrarse",

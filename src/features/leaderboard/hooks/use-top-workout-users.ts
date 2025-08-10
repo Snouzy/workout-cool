@@ -5,15 +5,14 @@ import { useQuery } from "@tanstack/react-query";
 import { getTopWorkoutUsersAction } from "../actions/get-top-workout-users.action";
 
 export interface UseTopWorkoutUsersOptions {
-  limit?: number;
   refetchInterval?: number;
 }
 
 export function useTopWorkoutUsers(options: UseTopWorkoutUsersOptions = {}) {
-  const { limit = 20, refetchInterval } = options;
+  const { refetchInterval } = options;
 
   return useQuery({
-    queryKey: ["top-workout-users", limit],
+    queryKey: ["top-workout-users"],
     queryFn: async () => {
       const result = await getTopWorkoutUsersAction();
       return result?.data || [];

@@ -1707,6 +1707,7 @@ export default {
     },
   },
   commons: {
+    just_now: "à l'instant",
     signup_with: "S'inscrire avec {provider}",
     signin_with: "Se connecter avec {provider}",
     signup: "S'inscrire",

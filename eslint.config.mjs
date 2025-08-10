@@ -29,6 +29,7 @@ const config = [
       "plugin:react/jsx-runtime",
       "plugin:react-hooks/recommended",
       "plugin:prettier/recommended",
+      "plugin:import/recommended",
       "plugin:import/typescript",
       "next/core-web-vitals",
     ),

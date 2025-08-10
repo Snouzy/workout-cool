@@ -1,4 +1,8 @@
 export default {
+  leaderboard: {
+    title: "Classification",
+    description: "Voir qui domine les séries les plus longues!",
+  },
   programs: {
     available_programs: "Programmes disponibles",
     exercises_in_session: "Exercices dans la séance",

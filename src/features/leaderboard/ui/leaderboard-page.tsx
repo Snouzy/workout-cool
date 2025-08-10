@@ -1,18 +1,17 @@
 "use client";
 
 import React from "react";
-import { Trophy, Medal, Award, Flame, Calendar, Dumbbell } from "lucide-react";
+import { Trophy, Medal, Award } from "lucide-react";
 
 import { useI18n } from "locales/client";
-import { cn } from "@/shared/lib/utils";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Skeleton } from "@/components/ui/skeleton";
-import PageHeading from "@/features/layout/page-heading";
 
-import { useWorkoutStreaks } from "../hooks/use-workout-streaks";
-import type { UserWorkoutStreak } from "../actions/get-workout-streaks.action";
+import { useTopWorkoutUsers } from "../hooks/use-top-workout-users";
+
+import type { TopWorkoutUser } from "../actions/get-top-workout-users.action";
 
 const getRankIcon = (rank: number) => {
   switch (rank) {
@@ -40,7 +39,7 @@ const getRankBadge = (rank: number) => {
   }
 };
 
-const LeaderboardItem: React.FC<{ user: UserWorkoutStreak; rank: number }> = ({ user, rank }) => {
+const LeaderboardItem: React.FC<{ user: TopWorkoutUser; rank: number }> = ({ user, rank }) => {
   const getUserInitials = (name: string, email: string) => {
     if (name && name.length >= 2) {
       return name.substring(0, 2).toUpperCase();
@@ -48,48 +47,47 @@ const LeaderboardItem: React.FC<{ user: UserWorkoutStreak; rank: number }> = ({ 
     return email.substring(0, 2).toUpperCase();
   };
 
-  const isTopThree = rank <= 3;
-
   return (
-    <div
-      className={cn(
-        "flex items-center space-x-4 p-4 rounded-lg transition-all duration-200 hover:shadow-md",
-        isTopThree
-          ? "bg-gradient-to-r from-yellow-50 to-orange-50 dark:from-yellow-950/20 dark:to-orange-950/20 border border-yellow-200 dark:border-yellow-800/30"
-          : "bg-gray-50 dark:bg-gray-800/30 hover:bg-gray-100 dark:hover:bg-gray-800/50",
-      )}
-    >
+    <div className="flex items-center gap-4 p-6 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
       {/* Rank */}
-      <div className="flex-shrink-0 flex items-center justify-center w-10 h-10">{getRankIcon(rank)}</div>
+      <div className="flex-shrink-0 w-8 text-center">
+        {rank <= 3 ? (
+          getRankIcon(rank)
+        ) : (
+          <span className="text-lg font-bold text-gray-400 dark:text-gray-500">
+            {rank}
+          </span>
+        )}
+      </div>
 
       {/* User Avatar */}
-      <Avatar className="h-12 w-12">
-        <AvatarImage src={user.userImage || undefined} alt={user.userName} />
-        <AvatarFallback className="bg-primary text-primary-foreground">{getUserInitials(user.userName, user.userEmail)}</AvatarFallback>
+      <Avatar className="h-12 w-12 ring-2 ring-gray-200 dark:ring-gray-700">
+        <AvatarImage alt={user.userName} src={user.userImage || undefined} />
+        <AvatarFallback className="bg-gradient-to-br from-blue-500 to-purple-600 text-white font-semibold">
+          {getUserInitials(user.userName, user.userEmail)}
+        </AvatarFallback>
       </Avatar>
 
       {/* User Info */}
       <div className="flex-1 min-w-0">
-        <div className="flex items-center space-x-2">
-          <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100 truncate">{user.userName}</h3>
-          {getRankBadge(rank)}
+        <div className="flex items-center gap-2 mb-1">
+          <h3 className="font-semibold text-gray-900 dark:text-gray-100 truncate">
+            {user.userName}
+          </h3>
+          {rank <= 3 && getRankBadge(rank)}
         </div>
-        <p className="text-xs text-gray-500 dark:text-gray-400 truncate">{user.userEmail}</p>
+        <p className="text-sm text-gray-500 dark:text-gray-400 truncate">
+          {user.userEmail}
+        </p>
       </div>
 
-      {/* Stats */}
-      <div className="flex-shrink-0 text-right space-y-1">
-        <div className="flex items-center space-x-1 text-orange-600 dark:text-orange-400">
-          <Flame className="w-4 h-4" />
-          <span className="text-sm font-bold">{user.currentStreak}</span>
-          <span className="text-xs text-gray-500">current</span>
+      {/* Workout Count */}
+      <div className="flex-shrink-0 text-right">
+        <div className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+          {user.totalWorkouts}
         </div>
-        <div className="flex items-center space-x-1 text-gray-600 dark:text-gray-400 text-xs">
-          <Calendar className="w-3 h-3" />
-          <span>{user.longestStreak} max</span>
-          <span>•</span>
-          <Dumbbell className="w-3 h-3" />
-          <span>{user.totalWorkouts} total</span>
+        <div className="text-xs text-gray-500 dark:text-gray-400">
+          workouts
         </div>
       </div>
     </div>
@@ -97,18 +95,18 @@ const LeaderboardItem: React.FC<{ user: UserWorkoutStreak; rank: number }> = ({ 
 };
 
 const LeaderboardSkeleton: React.FC = () => (
-  <div className="space-y-3">
+  <div className="divide-y divide-gray-200 dark:divide-gray-700">
     {[...Array(5)].map((_, i) => (
-      <div key={i} className="flex items-center space-x-4 p-4 rounded-lg bg-gray-50 dark:bg-gray-800/30">
-        <Skeleton className="w-10 h-10 rounded-full" />
+      <div className="flex items-center gap-4 p-6" key={i}>
+        <Skeleton className="w-8 h-6" />
         <Skeleton className="h-12 w-12 rounded-full" />
         <div className="flex-1 space-y-2">
-          <Skeleton className="h-4 w-32" />
-          <Skeleton className="h-3 w-48" />
+          <Skeleton className="h-5 w-32" />
+          <Skeleton className="h-4 w-48" />
         </div>
-        <div className="space-y-1 text-right">
-          <Skeleton className="h-4 w-16" />
-          <Skeleton className="h-3 w-20" />
+        <div className="text-right space-y-1">
+          <Skeleton className="h-8 w-12 ml-auto" />
+          <Skeleton className="h-3 w-16 ml-auto" />
         </div>
       </div>
     ))}
@@ -117,109 +115,52 @@ const LeaderboardSkeleton: React.FC = () => (
 
 export default function LeaderboardPage() {
   const t = useI18n();
-  const { data: userStreaks, isLoading, error } = useWorkoutStreaks({ limit: 20 });
+  const { data: topUsers, isLoading, error } = useTopWorkoutUsers({ limit: 10 });
+
+  console.log("UI: topUsers", topUsers);
+  console.log("UI: isLoading", isLoading);
+  console.log("UI: error", error);
 
   return (
-    <div className="container max-w-4xl mx-auto p-4 space-y-6">
-      <PageHeading
-        title="🏆 Workout Streak Leaderboard"
-        description="See who's dominating their fitness journey with the longest workout streaks!"
-      />
-
-      {/* Stats Cards */}
-      {userStreaks && userStreaks.length > 0 && (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-          <Card>
-            <CardHeader className="pb-3">
-              <CardTitle className="text-lg flex items-center space-x-2">
-                <Trophy className="w-5 h-5 text-yellow-500" />
-                <span>Top Streak</span>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold text-orange-600 dark:text-orange-400">{userStreaks[0]?.currentStreak || 0} days</div>
-              <p className="text-sm text-gray-500 dark:text-gray-400">by {userStreaks[0]?.userName || "No one yet"}</p>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader className="pb-3">
-              <CardTitle className="text-lg flex items-center space-x-2">
-                <Flame className="w-5 h-5 text-red-500" />
-                <span>All-Time Best</span>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold text-red-600 dark:text-red-400">
-                {Math.max(...(userStreaks.map((u) => u.longestStreak) || [0]))} days
-              </div>
-              <p className="text-sm text-gray-500 dark:text-gray-400">longest streak ever</p>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader className="pb-3">
-              <CardTitle className="text-lg flex items-center space-x-2">
-                <Dumbbell className="w-5 h-5 text-blue-500" />
-                <span>Total Workouts</span>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
-                {userStreaks.reduce((sum, user) => sum + user.totalWorkouts, 0)}
-              </div>
-              <p className="text-sm text-gray-500 dark:text-gray-400">by all users combined</p>
-            </CardContent>
-          </Card>
+    <div className="container max-w-3xl mx-auto p-4 space-y-8">
+      {/* Header */}
+      <div className="text-center space-y-3">
+        <div className="flex items-center justify-center gap-3">
+          <Trophy className="w-8 h-8 text-yellow-500" />
+          <h1 className="text-3xl font-bold">Leaderboard</h1>
         </div>
-      )}
+        <p className="text-gray-600 dark:text-gray-400 text-lg">
+          Top workout champions
+        </p>
+      </div>
 
-      {/* Main Leaderboard */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center space-x-2">
-            <Trophy className="w-6 h-6 text-yellow-500" />
-            <span>Leaderboard Rankings</span>
-          </CardTitle>
-          <CardDescription>Users are ranked by their current workout streak. Keep it up! 💪</CardDescription>
-        </CardHeader>
-        <CardContent>
+      {/* Leaderboard */}
+      <Card className="overflow-hidden">
+        <CardContent className="p-0">
           {isLoading && <LeaderboardSkeleton />}
 
           {error && (
-            <div className="text-center py-8 text-gray-500 dark:text-gray-400">
-              <p>Failed to load leaderboard data</p>
-              <p className="text-sm mt-2">Please try again later</p>
+            <div className="text-center py-12 text-gray-500 dark:text-gray-400">
+              <p>Unable to load leaderboard</p>
+              <p className="text-sm mt-1">Please try again later</p>
             </div>
           )}
 
-          {userStreaks && userStreaks.length === 0 && !isLoading && (
-            <div className="text-center py-8 text-gray-500 dark:text-gray-400">
-              <Trophy className="w-16 h-16 mx-auto mb-4 text-gray-300 dark:text-gray-600" />
-              <p>No workout streaks found</p>
-              <p className="text-sm mt-2">Start your first workout to appear on the leaderboard!</p>
+          {topUsers && topUsers.length === 0 && !isLoading && (
+            <div className="text-center py-12 text-gray-500 dark:text-gray-400">
+              <Trophy className="w-12 h-12 mx-auto mb-4 text-gray-300 dark:text-gray-600" />
+              <p className="text-lg">No champions yet</p>
+              <p className="text-sm mt-1">Complete your first workout to claim the throne!</p>
             </div>
           )}
 
-          {userStreaks && userStreaks.length > 0 && (
-            <div className="space-y-3">
-              {userStreaks.map((user, index) => (
-                <LeaderboardItem key={user.userId} user={user} rank={index + 1} />
+          {topUsers && topUsers.length > 0 && (
+            <div className="divide-y divide-gray-200 dark:divide-gray-700">
+              {topUsers.map((user, index) => (
+                <LeaderboardItem key={user.userId} rank={index + 1} user={user} />
               ))}
             </div>
           )}
-        </CardContent>
-      </Card>
-
-      {/* Motivation Card */}
-      <Card className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-950/20 dark:to-purple-950/20 border-blue-200 dark:border-blue-800/30">
-        <CardContent className="p-6">
-          <div className="text-center">
-            <h3 className="text-lg font-semibold text-blue-900 dark:text-blue-100 mb-2">💪 Keep Your Streak Alive!</h3>
-            <p className="text-blue-700 dark:text-blue-300 text-sm">
-              Consistency is key to building lasting fitness habits. Every workout counts towards your streak!
-            </p>
-          </div>
         </CardContent>
       </Card>
     </div>

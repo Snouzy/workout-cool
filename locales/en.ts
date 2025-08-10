@@ -1,4 +1,8 @@
 export default {
+  leaderboard: {
+    title: "Leaderboard",
+    description: "See who's dominating their fitness journey with the longest workout streaks!",
+  },
   programs: {
     available_programs: "Available programs",
     exercises_in_session: "Exercises in session",

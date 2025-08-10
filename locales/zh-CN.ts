@@ -1,4 +1,8 @@
 export default {
+  leaderboard: {
+    title: "排行榜",
+    description: "查看谁在健身之旅中拥有最长的锻炼连续性！",
+  },
   programs: {
     available_programs: "可用的课程",
     workout_programs: "锻炼程序",
@@ -431,6 +435,8 @@ export default {
     tools_tooltip: "浏览工具",
     profile: "个人资料",
     profile_tooltip: "查看您的个人资料",
+    leaderboard: "排行榜",
+    leaderboard_tooltip: "查看排行榜",
   },
   levels: {
     BEGINNER: "初学者",

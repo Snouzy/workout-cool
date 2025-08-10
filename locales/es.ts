@@ -1,4 +1,8 @@
 export default {
+  leaderboard: {
+    title: "Clasificación",
+    description: "Ver quién domina las series más largas!",
+  },
   programs: {
     available_programs: "Programas disponibles",
     exercises_in_session: "Ejercicios en sesión",
@@ -427,7 +431,6 @@ export default {
     premium_tooltip: "Torne-se Premium",
     leaderboard: "Clasificación",
     leaderboard_tooltip: "Ver ranking de rachas de entrenamiento",
-    profile: "Perfil",
     profile_tooltip: "Ver tu perfil",
   },
   levels: {

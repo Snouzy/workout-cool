@@ -1,4 +1,8 @@
 export default {
+  leaderboard: {
+    title: "Рейтинг",
+    description: "Посмотреть, кто ведет тренировки с самой длинной серию!",
+  },
   programs: {
     available_programs: "Доступные программы",
     exercises_in_session: "Упражнение в сессии",
@@ -428,6 +432,8 @@ export default {
     tools_tooltip: "Просмотр инструментов",
     profile: "Профиль",
     profile_tooltip: "Просмотр профиля",
+    leaderboard: "Рейтинг",
+    leaderboard_tooltip: "Просмотр рейтинга",
   },
   tools: {
     try_now: "Попробовать сейчас",

@@ -4,19 +4,12 @@ import { z } from "zod";
 
 import { prisma } from "@/shared/lib/prisma";
 import { actionClient } from "@/shared/api/safe-actions";
+import { TopWorkoutUser } from "@/features/leaderboard/models/types";
 
 const getTopWorkoutUsersSchema = z.object({
   limit: z.number().min(1).max(50).optional().default(10),
 });
 
-export interface TopWorkoutUser {
-  userId: string;
-  userName: string;
-  userEmail: string;
-  userImage: string | null;
-  totalWorkouts: number;
-  lastWorkoutAt: Date | null;
-}
 
 export const getTopWorkoutUsersAction = actionClient.schema(getTopWorkoutUsersSchema).action(async ({ parsedInput }) => {
   try {
@@ -57,8 +50,6 @@ export const getTopWorkoutUsersAction = actionClient.schema(getTopWorkoutUsersSc
       take: limit,
     });
 
-    console.log(`Found ${topUsers.length} users with workout sessions`);
-
     const users: TopWorkoutUser[] = topUsers.map((user) => ({
       userId: user.id,
       userName: user.name,
@@ -67,8 +58,6 @@ export const getTopWorkoutUsersAction = actionClient.schema(getTopWorkoutUsersSc
       totalWorkouts: user._count.WorkoutSession,
       lastWorkoutAt: user.WorkoutSession[0]?.endedAt || null,
     }));
-
-    console.log("Mapped users:", users);
 
     return users;
   } catch (error) {

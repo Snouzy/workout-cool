@@ -1,7 +1,15 @@
 export default {
   leaderboard: {
     title: "排行榜",
-    description: "查看谁在健身之旅中拥有最长的锻炼连续性！",
+    description: "锻炼冠军",
+    champion_badge: "🏆 冠军",
+    runner_up_badge: "🥈 亚军",
+    third_place_badge: "🥉 第三名",
+    workouts: "次锻炼",
+    unable_to_load: "无法加载排行榜",
+    try_again_later: "请稍后再试",
+    no_champions_yet: "还没有冠军",
+    complete_first_workout: "完成您的第一次锻炼来夺取王座！",
   },
   programs: {
     available_programs: "可用的课程",

@@ -1,7 +1,15 @@
 export default {
   leaderboard: {
     title: "Leaderboard",
-    description: "See who's dominating their fitness journey with the longest workout streaks!",
+    description: "Top workout champions",
+    champion_badge: "🏆 Champion",
+    runner_up_badge: "🥈 Runner-up",
+    third_place_badge: "🥉 Third Place",
+    workouts: "workouts",
+    unable_to_load: "Unable to load leaderboard",
+    try_again_later: "Please try again later",
+    no_champions_yet: "No champions yet",
+    complete_first_workout: "Complete your first workout to claim the throne!",
   },
   programs: {
     available_programs: "Available programs",

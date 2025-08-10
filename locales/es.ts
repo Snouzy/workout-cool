@@ -1,7 +1,15 @@
 export default {
   leaderboard: {
     title: "Clasificación",
-    description: "Ver quién domina las series más largas!",
+    description: "Campeones de entrenamientos",
+    champion_badge: "🏆 Campeón",
+    runner_up_badge: "🥈 Subcampeón",
+    third_place_badge: "🥉 Tercer lugar",
+    workouts: "entrenamientos",
+    unable_to_load: "No se pudo cargar la clasificación",
+    try_again_later: "Inténtalo de nuevo más tarde",
+    no_champions_yet: "Aún no hay campeones",
+    complete_first_workout: "¡Completa tu primer entrenamiento para reclamar el trono!",
   },
   programs: {
     available_programs: "Programas disponibles",

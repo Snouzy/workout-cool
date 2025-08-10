@@ -3,14 +3,14 @@
 help:
 	@echo "🚀 Workout Cool Development Commands"
 	@echo ""
-	@echo "  dev                - Start full dev environment (DB, migrate, seed, Next.js dev server)"
-	@echo "  up                 - Start PostgreSQL database using Docker Compose"
-	@echo "  down               - Stop all Docker Compose services"
-	@echo "  db-migrate         - Run Prisma migrations"
-	@echo "  db-generate        - Generate Prisma client"
-	@echo "  db-seed            - Seed database with exercises"
+	@echo "  dev                 - Start full dev environment (DB, migrate, seed, Next.js dev server)"
+	@echo "  up                  - Start PostgreSQL database using Docker Compose"
+	@echo "  down                - Stop all Docker Compose services"
+	@echo "  db-migrate          - Run Prisma migrations"
+	@echo "  db-generate         - Generate Prisma client"
+	@echo "  db-seed             - Seed database with exercises"
 	@echo "  db-seed-leaderboard - Seed database with leaderboard sample data"
-	@echo "  db-seed-all        - Seed everything (exercises + leaderboard)"
+	@echo "  db-seed-all         - Seed everything (exercises + leaderboard)"
 	@echo ""
 
 

@@ -10,6 +10,9 @@ export default {
     try_again_later: "Please try again later",
     no_champions_yet: "No champions yet",
     complete_first_workout: "Complete your first workout to claim the throne!",
+    member_since: "Member since",
+    workouts_per_week: "workouts/week",
+    last_workout: "Last workout"
   },
   programs: {
     available_programs: "Available programs",
@@ -412,7 +415,9 @@ export default {
     premium: "Premium",
     premium_tooltip: "Upgrade to Premium",
     leaderboard: "Leaderboard",
-    leaderboard_tooltip: "View workout streaks rankings",
+    leaderboard_tooltip: "View workout rankings",
+    tools: "Tools",
+    tools_tooltip: "Browse tools",
     profile: "Profile",
     profile_tooltip: "View your profile",
   },

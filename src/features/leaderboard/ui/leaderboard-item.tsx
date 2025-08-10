@@ -1,11 +1,16 @@
+"use client"
 
 import React from "react";
+import Image from "next/image";
 import { Trophy, Medal, Award } from "lucide-react";
 
-import { useI18n } from "locales/client";
+
+import { useCurrentLocale, useI18n } from "locales/client";
+import { formatDateShort, formatRelativeTime } from "@/shared/lib/date";
 import { TopWorkoutUser } from "@/features/leaderboard/models/types";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+
 
 const getRankIcon = (rank: number) => {
   switch (rank) {
@@ -34,15 +39,27 @@ const getRankBadge = (rank: number, t: any) => {
 };
 
 
-const LeaderboardItem: React.FC<{ user: TopWorkoutUser; rank: number}> = ({ user, rank }) => {
+const LeaderboardItem: React.FC<{ user: TopWorkoutUser; rank: number }> = ({ user, rank }) => {
   const t = useI18n();
+  const locale = useCurrentLocale();
 
-  const getUserInitials = (name: string, email: string) => {
-    if (name && name.length >= 2) {
-      return name.substring(0, 2).toUpperCase();
-    }
-    return email.substring(0, 2).toUpperCase();
-  };
+   const generateAvatarUrl = (seed: string) => {
+     return `https://api.dicebear.com/7.x/micah/svg?seed=${encodeURIComponent(seed)}&backgroundColor=b6e3f4,c0aede,d1d4f9,ffd5dc,ffdfbf`;
+   };
+
+   // Use userId as seed for consistency, fallback to userName or email
+   const avatarSeed = user.userId || user.userName || user.userEmail;
+   const dicebearUrl = generateAvatarUrl(avatarSeed);
+
+
+    const formatMemberSince = (date: Date) => {
+      return formatDateShort(date, locale);
+    };
+
+    const formatLastWorkout = (date: Date | null) => {
+      if (!date) return null
+      return formatRelativeTime(date, locale);
+    };
 
   return (
     <div className="flex items-center gap-4 p-6 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
@@ -59,9 +76,15 @@ const LeaderboardItem: React.FC<{ user: TopWorkoutUser; rank: number}> = ({ user
 
       {/* User Avatar */}
       <Avatar className="h-12 w-12 ring-2 ring-gray-200 dark:ring-gray-700">
-        <AvatarImage alt={user.userName} src={user.userImage || undefined} />
-        <AvatarFallback className="bg-gradient-to-br from-blue-500 to-purple-600 text-white font-semibold">
-          {getUserInitials(user.userName, user.userEmail)}
+        <AvatarImage alt={user.userName} src={user.userImage || dicebearUrl} />
+        <AvatarFallback className="bg-gradient-to-br from-blue-500 to-purple-600">
+          <Image
+              alt={user.userName}
+              className="w-full h-full"
+              height={48}
+              src={dicebearUrl}
+              width={48}
+            />
         </AvatarFallback>
       </Avatar>
 
@@ -73,9 +96,16 @@ const LeaderboardItem: React.FC<{ user: TopWorkoutUser; rank: number}> = ({ user
           </h3>
           {rank <= 3 && getRankBadge(rank, t)}
         </div>
-        <p className="text-sm text-gray-500 dark:text-gray-400 truncate">
-          {user.userEmail}
-        </p>
+        <div className="space-y-0.5">
+          <p className="text-xs text-slate-400 dark:text-gray-300 truncate">
+            {t("leaderboard.member_since")} {formatMemberSince(user.memberSince)}
+          </p>
+          {user.lastWorkoutAt && (
+            <p className="text-xs text-slate-300 dark:text-gray-400 truncate">
+              {t("leaderboard.last_workout")} {formatLastWorkout(user.lastWorkoutAt)}
+            </p>
+          )}
+        </div>
       </div>
 
       {/* Workout Count */}

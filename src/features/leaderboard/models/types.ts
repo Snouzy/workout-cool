@@ -5,4 +5,6 @@ export interface TopWorkoutUser {
   userImage: string | null;
   totalWorkouts: number;
   lastWorkoutAt: Date | null;
+  averageWorkoutsPerWeek: number;
+  memberSince: Date;
 }

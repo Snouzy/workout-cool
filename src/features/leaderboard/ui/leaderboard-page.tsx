@@ -12,7 +12,7 @@ import  LeaderboardItem  from "./leaderboard-item";
 
 export default function LeaderboardPage() {
   const t = useI18n();
-  const { data: topUsers, isLoading, error } = useTopWorkoutUsers({ limit: 10 });
+  const { data: topUsers, isLoading, error } = useTopWorkoutUsers();
 
   return (
     <div className="container max-w-3xl mx-auto p-4 space-y-8">
@@ -50,7 +50,7 @@ export default function LeaderboardPage() {
           {topUsers && topUsers.length > 0 && (
             <div className="divide-y divide-gray-200 dark:divide-gray-700">
               {topUsers.map((user, index) => (
-                <LeaderboardItem key={user.userId} rank={index + 1} user={user} />
+                <LeaderboardItem key={user.userId}rank={index + 1} user={user} />
               ))}
             </div>
           )}

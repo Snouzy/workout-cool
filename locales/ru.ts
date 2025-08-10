@@ -10,6 +10,9 @@ export default {
     try_again_later: "Попробуйте еще раз позже",
     no_champions_yet: "Пока нет чемпионов",
     complete_first_workout: "Завершите первую тренировку, чтобы занять трон!",
+    member_since: "Мембер с",
+    workouts_per_week: "тренировок/неделя",
+    last_workout: "Последняя тренировка"
   },
   programs: {
     available_programs: "Доступные программы",

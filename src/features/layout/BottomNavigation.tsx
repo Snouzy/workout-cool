@@ -3,7 +3,7 @@
 import React from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { Dumbbell, Crown, User, Grid, Trophy } from "lucide-react";
+import { Dumbbell, User, Grid, Trophy, Hammer, Crown } from "lucide-react";
 
 import { useCurrentLocale, useI18n } from "locales/client";
 import { cn } from "@/shared/lib/utils";
@@ -39,17 +39,6 @@ export function BottomNavigation() {
       isActive: pathname.includes(paths.programs),
     },
     {
-      id: "premium",
-      label: t("bottom_navigation.premium"),
-      shortLabel: t("bottom_navigation.premium"),
-      mobileLabel: t("bottom_navigation.premium"),
-      href: `/${locale}/premium`,
-      icon: Crown,
-      emoji: "WorkoutCoolRich.png",
-      description: t("bottom_navigation.premium_tooltip"),
-      isActive: pathname.includes("/premium"),
-    },
-    {
       id: "leaderboard",
       label: t("bottom_navigation.leaderboard"),
       shortLabel: t("bottom_navigation.leaderboard"),
@@ -68,6 +57,27 @@ export function BottomNavigation() {
       icon: User,
       description: t("bottom_navigation.profile_tooltip"),
       isActive: pathname.includes("/profile"),
+    },
+    {
+        id: "tools",
+        label: t("bottom_navigation.tools"),
+        shortLabel: t("bottom_navigation.tools"),
+        mobileLabel: t("bottom_navigation.tools"),
+        href: `/${locale}/tools`,
+        icon: Hammer,
+        description: t("bottom_navigation.tools_tooltip"),
+        isActive: pathname.includes("/tools"),
+    },
+    {
+      id: "premium",
+      label: t("bottom_navigation.premium"),
+      shortLabel: t("bottom_navigation.premium"),
+      mobileLabel: t("bottom_navigation.premium"),
+      href: `/${locale}/premium`,
+      icon: Crown,
+      emoji: "WorkoutCoolRich.png",
+      description: t("bottom_navigation.premium_tooltip"),
+      isActive: pathname.includes("/premium"),
     },
   ];
 

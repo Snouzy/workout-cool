@@ -1,21 +1,14 @@
 "use server";
 
-import { z } from "zod";
 
 import { prisma } from "@/shared/lib/prisma";
 import { actionClient } from "@/shared/api/safe-actions";
 import { TopWorkoutUser } from "@/features/leaderboard/models/types";
 
-const getTopWorkoutUsersSchema = z.object({
-  limit: z.number().min(1).max(50).optional().default(10),
-});
+const LIMIT_TOP_USERS = 20;
 
-
-export const getTopWorkoutUsersAction = actionClient.schema(getTopWorkoutUsersSchema).action(async ({ parsedInput }) => {
+export const getTopWorkoutUsersAction = actionClient.action(async () => {
   try {
-    const { limit } = parsedInput;
-
-    // Get top users by workout count using efficient aggregation
     const topUsers = await prisma.user.findMany({
       where: {
         WorkoutSession: {
@@ -27,6 +20,7 @@ export const getTopWorkoutUsersAction = actionClient.schema(getTopWorkoutUsersSc
         name: true,
         email: true,
         image: true,
+        createdAt: true,
         _count: {
           select: {
             WorkoutSession: true,
@@ -35,11 +29,12 @@ export const getTopWorkoutUsersAction = actionClient.schema(getTopWorkoutUsersSc
         WorkoutSession: {
           select: {
             endedAt: true,
+            startedAt: true,
           },
           orderBy: {
             startedAt: "desc",
           },
-          take: 1, // Just get the most recent session for lastWorkoutAt
+          take: 1,
         },
       },
       orderBy: {
@@ -47,17 +42,35 @@ export const getTopWorkoutUsersAction = actionClient.schema(getTopWorkoutUsersSc
           _count: "desc",
         },
       },
-      take: limit,
+      take: LIMIT_TOP_USERS,
     });
 
-    const users: TopWorkoutUser[] = topUsers.map((user) => ({
-      userId: user.id,
-      userName: user.name,
-      userEmail: user.email,
-      userImage: user.image,
-      totalWorkouts: user._count.WorkoutSession,
-      lastWorkoutAt: user.WorkoutSession[0]?.endedAt || null,
-    }));
+    const users: TopWorkoutUser[] = topUsers.map((user) => {
+      const totalWorkouts = user._count.WorkoutSession;
+      const firstWorkout = user.WorkoutSession[0];
+      const lastWorkout = user.WorkoutSession[0];
+      const lastWorkoutAt = lastWorkout?.endedAt || lastWorkout?.startedAt || null;
+
+      // Calculate weeks since first workout or account creation
+      const startDate = firstWorkout?.startedAt || user.createdAt;
+      const now = new Date();
+      const weeksSinceStart = Math.max(1, Math.ceil((now.getTime() - startDate.getTime()) / (7 * 24 * 60 * 60 * 1000)));
+
+      // Calculate average workouts per week
+      const averageWorkoutsPerWeek = Math.round((totalWorkouts / weeksSinceStart) * 10) / 10; // Round to 1 decimal
+
+      return {
+        userId: user.id,
+        userName: user.name,
+        userEmail: user.email,
+        userImage: user.image,
+        totalWorkouts,
+        lastWorkoutAt: lastWorkoutAt,
+        averageWorkoutsPerWeek,
+        memberSince: user.createdAt,
+      };
+    });
+
 
     return users;
   } catch (error) {

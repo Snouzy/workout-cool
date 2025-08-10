@@ -10,6 +10,9 @@ export default {
     try_again_later: "请稍后再试",
     no_champions_yet: "还没有冠军",
     complete_first_workout: "完成您的第一次锻炼来夺取王座！",
+    member_since: "会员自",
+    workouts_per_week: "次/周",
+    last_workout: "上次锻炼"
   },
   programs: {
     available_programs: "可用的课程",

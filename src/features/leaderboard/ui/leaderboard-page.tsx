@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
+import { useQueryState } from "nuqs";
 import Image from "next/image";
 import { Trophy } from "lucide-react";
 
@@ -13,7 +14,17 @@ import LeaderboardItem from "./leaderboard-item";
 
 export default function LeaderboardPage() {
   const t = useI18n();
-  const [selectedPeriod, setSelectedPeriod] = useState<LeaderboardPeriod>("all-time");
+
+  // Use nuqs to manage period in URL
+  const [selectedPeriod, setSelectedPeriod] = useQueryState<LeaderboardPeriod>("period", {
+    defaultValue: "all-time",
+    parse: (value) => {
+      if (value === "weekly" || value === "monthly" || value === "all-time") {
+        return value as LeaderboardPeriod;
+      }
+      return "all-time";
+    },
+  });
 
   const { data: topUsers, isLoading, error } = useTopWorkoutUsers({ period: selectedPeriod });
 
@@ -28,7 +39,7 @@ export default function LeaderboardPage() {
 
   return (
     <div className="min-h-screen">
-      <div className="container max-w-2xl mx-auto px-2 py-4 sm:px-4 sm:py-8">
+      <div className="container max-w-2xl mx-auto px-2 py-4 sm:px-4 sm:py-8 pb-24">
         {/* Period Tabs */}
         <div className="flex justify-center mb-6">
           <div className="tabs tabs-boxed bg-base-200 dark:bg-gray-800">

@@ -5,6 +5,7 @@ import { TFunction } from "locales/client";
 import { cn } from "@/shared/lib/utils";
 import { paths } from "@/shared/constants/paths";
 import { WorkoutSessionTimer } from "@/features/workout-session/ui/workout-session-timer";
+import UserLeaderboardPosition from "@/features/leaderboard/ui/user-leaderboard-position";
 import { Link } from "@/components/ui/link";
 import { DiscordSvg } from "@/components/svg/DiscordSvg";
 
@@ -42,7 +43,7 @@ export const Footer = async () => {
   return (
     <footer className="relative border-t border-base-300 dark:border-gray-800 bg-base-100 dark:bg-black px-2 sm:px-6 py-2 rounded-b-lg">
       <WorkoutSessionTimer />
-
+      <UserLeaderboardPosition period="all-time" />
       <div className="flex sm:flex-row justify-between items-center gap-4">
         {/* Social Icons */}
         <div className="flex gap-0 sm:gap-2">

@@ -32,9 +32,9 @@ export default function LeaderboardPage() {
   const topThree = topUsers?.slice(0, 3) || [];
 
   const tabs = [
-    { id: "all-time" as LeaderboardPeriod, label: "All Time" },
-    { id: "monthly" as LeaderboardPeriod, label: "Monthly" },
-    { id: "weekly" as LeaderboardPeriod, label: "Weekly" },
+    { id: "all-time" as LeaderboardPeriod, label: t("leaderboard.period_all_time") },
+    { id: "monthly" as LeaderboardPeriod, label: t("leaderboard.period_monthly") },
+    { id: "weekly" as LeaderboardPeriod, label: t("leaderboard.period_weekly") },
   ];
 
   return (
@@ -47,10 +47,10 @@ export default function LeaderboardPage() {
               <Trophy className="w-8 h-8 text-white" />
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold mb-2 bg-gradient-to-r from-yellow-500 to-orange-600 bg-clip-text text-transparent">
-              Classement des Champions
+              {t("leaderboard.page_title")}
             </h1>
             <p className="text-base-content/70 dark:text-gray-400 max-w-md mx-auto">
-              Grimpez au sommet et devenez une légende Workout.cool
+              {t("leaderboard.page_subtitle")}
             </p>
           </div>
         </div>
@@ -93,7 +93,7 @@ export default function LeaderboardPage() {
                 </div>
               </div>
               <h3 className="font-medium text-sm mt-4">{topThree[1].userName}</h3>
-              <p className="text-xs text-base-content/60">{topThree[1].totalWorkouts} séances</p>
+              <p className="text-xs text-base-content/60">{topThree[1].totalWorkouts} {t("leaderboard.workouts")}</p>
             </div>
 
             {/* 1st Place */}
@@ -115,7 +115,7 @@ export default function LeaderboardPage() {
                 </div>
               </div>
               <h3 className="font-medium text-base mt-4">{topThree[0].userName}</h3>
-              <p className="text-sm text-base-content/60">{topThree[0].totalWorkouts} séances</p>
+              <p className="text-sm text-base-content/60">{topThree[0].totalWorkouts} {t("leaderboard.workouts")}</p>
             </div>
 
             {/* 3rd Place */}
@@ -136,7 +136,7 @@ export default function LeaderboardPage() {
                 </div>
               </div>
               <h3 className="font-medium text-sm mt-4">{topThree[2].userName}</h3>
-              <p className="text-xs text-base-content/60">{topThree[2].totalWorkouts} séances</p>
+              <p className="text-xs text-base-content/60">{topThree[2].totalWorkouts} {t("leaderboard.workouts")}</p>
             </div>
           </div>
         )}
@@ -159,8 +159,8 @@ export default function LeaderboardPage() {
                 {selectedPeriod === "all-time"
                   ? t("leaderboard.no_champions_yet")
                   : selectedPeriod === "weekly"
-                    ? "Aucune séance cette semaine"
-                    : "Aucune séance ce mois"}
+                    ? t("leaderboard.no_sessions_this_week")
+                    : t("leaderboard.no_sessions_this_month")}
               </p>
               <p className="text-sm text-base-content/50 dark:text-gray-500 mt-1">{t("leaderboard.complete_first_workout")}</p>
             </div>
@@ -184,9 +184,9 @@ export default function LeaderboardPage() {
                 </div>
               </div>
               <div className="flex-1">
-                <h3 className="font-semibold text-sm mb-1">Membres inscrits uniquement</h3>
+                <h3 className="font-semibold text-sm mb-1">{t("leaderboard.registered_members_only")}</h3>
                 <p className="text-xs text-base-content/60 dark:text-gray-500">
-                  Créez un compte pour apparaître dans le classement et apparaître
+                  {t("leaderboard.registered_members_description")}
                 </p>
               </div>
             </div>
@@ -200,9 +200,9 @@ export default function LeaderboardPage() {
                 </div>
               </div>
               <div className="flex-1">
-                <h3 className="font-semibold text-sm mb-1">Réinitialisation Europe/Paris</h3>
+                <h3 className="font-semibold text-sm mb-1">{t("leaderboard.reset_timezone")}</h3>
                 <p className="text-xs text-base-content/60 dark:text-gray-500">
-                  Les classements hebdo et mensuel se réinitialisent à minuit, heure de Paris
+                  {t("leaderboard.reset_timezone_description")}
                 </p>
               </div>
             </div>

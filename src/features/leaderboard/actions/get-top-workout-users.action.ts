@@ -1,21 +1,77 @@
 "use server";
 
 import dayjs from "dayjs";
+import timezone from "dayjs/plugin/timezone";
+import utc from "dayjs/plugin/utc";
+import { z } from "zod";
 
 import { prisma } from "@/shared/lib/prisma";
 import { actionClient } from "@/shared/api/safe-actions";
 import { TopWorkoutUser } from "@/features/leaderboard/models/types";
 
-const LIMIT_TOP_USERS = 20;
+// Initialize dayjs plugins
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
-export const getTopWorkoutUsersAction = actionClient.action(async () => {
-  try {
-    const topUsers = await prisma.user.findMany({
-      where: {
+const LIMIT_TOP_USERS = 20;
+const PARIS_TZ = "Europe/Paris";
+
+export type LeaderboardPeriod = "all-time" | "weekly" | "monthly";
+
+const inputSchema = z.object({
+  period: z.enum(["all-time", "weekly", "monthly"]).default("all-time"),
+});
+
+function getDateRangeForPeriod(period: LeaderboardPeriod): { startDate: Date | undefined; endDate: Date } {
+  const now = dayjs().tz(PARIS_TZ);
+  
+  switch (period) {
+    case "weekly": {
+      // Start of current week (Monday) in Paris timezone
+      const startOfWeek = now.startOf("week").add(1, "day"); // dayjs week starts on Sunday, add 1 for Monday
+      return {
+        startDate: startOfWeek.toDate(),
+        endDate: now.toDate(),
+      };
+    }
+    case "monthly": {
+      // Start of current month in Paris timezone
+      const startOfMonth = now.startOf("month");
+      return {
+        startDate: startOfMonth.toDate(),
+        endDate: now.toDate(),
+      };
+    }
+    case "all-time":
+    default:
+      return {
+        startDate: undefined,
+        endDate: now.toDate(),
+      };
+  }
+}
+
+export const getTopWorkoutUsersAction = actionClient
+  .schema(inputSchema)
+  .action(async ({ parsedInput }) => {
+    const { period } = parsedInput;
+    
+    try {
+      const { startDate, endDate } = getDateRangeForPeriod(period);
+      
+      const whereClause = {
         WorkoutSession: {
-          some: {},
+          some: startDate ? {
+            startedAt: {
+              gte: startDate,
+              lte: endDate,
+            },
+          } : {},
         },
-      },
+      };
+
+      const topUsers = await prisma.user.findMany({
+        where: whereClause,
       select: {
         id: true,
         name: true,
@@ -24,10 +80,23 @@ export const getTopWorkoutUsersAction = actionClient.action(async () => {
         createdAt: true,
         _count: {
           select: {
-            WorkoutSession: true,
+            WorkoutSession: startDate ? {
+              where: {
+                startedAt: {
+                  gte: startDate,
+                  lte: endDate,
+                },
+              },
+            } : true,
           },
         },
         WorkoutSession: {
+          where: startDate ? {
+            startedAt: {
+              gte: startDate,
+              lte: endDate,
+            },
+          } : undefined,
           select: {
             endedAt: true,
             startedAt: true,

@@ -1,4 +1,19 @@
 export default {
+  leaderboard: {
+    title: "排行榜",
+    description: "锻炼冠军",
+    champion_badge: "🏆 冠军",
+    runner_up_badge: "🥈 亚军",
+    third_place_badge: "🥉 第三名",
+    workouts: "次锻炼",
+    unable_to_load: "无法加载排行榜",
+    try_again_later: "请稍后再试",
+    no_champions_yet: "还没有冠军",
+    complete_first_workout: "完成您的第一次锻炼来夺取王座！",
+    member_since: "会员自",
+    workouts_per_week: "次/周",
+    last_workout: "上次锻炼"
+  },
   programs: {
     available_programs: "可用的课程",
     workout_programs: "锻炼程序",
@@ -433,6 +448,8 @@ export default {
     tools_tooltip: "浏览工具",
     profile: "个人资料",
     profile_tooltip: "查看您的个人资料",
+    leaderboard: "排行榜",
+    leaderboard_tooltip: "查看排行榜",
   },
   levels: {
     BEGINNER: "初学者",
@@ -798,6 +815,7 @@ export default {
     },
   },
   commons: {
+    just_now: "刚刚",
     signup_with: "使用 {provider} 注册",
     signin_with: "使用 {provider} 登录",
     signup: "注册",

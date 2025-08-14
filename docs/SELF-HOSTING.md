@@ -30,7 +30,16 @@ Before you begin, ensure your server meets these requirements:
 
 ---
 
+
 ## 🚀 Quick Start
+
+**Prefer watching?** Watch our [3-minute video guide on self-hosting Workout.Cool](https://www.youtube.com/watch?v=HQecjb0CfAo):
+
+<p align="center">
+  <a href="https://www.youtube.com/watch?v=HQecjb0CfAo">
+    <img src="https://img.youtube.com/vi/HQecjb0CfAo/maxresdefault.jpg" alt="Self-Host Workout.Cool in 3 Minutes Video Guide" style="max-width: 400px;">
+  </a>
+</p>
 
 ### Common Setup Steps
 
@@ -93,7 +102,7 @@ POSTGRES_DB=workout-cool
 DB_HOST=postgres
 DB_PORT=5432
 
-DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${DB_HOST}:${DB_PORT}/${POSTGRES_DB}
+DATABASE_URL=postgresql://username:password@postgres:5432/workout-cool
 ```
 
 **Deploy:**
@@ -116,7 +125,7 @@ Use this option if you have an existing PostgreSQL database.
 
 ```bash
 # Database Configuration (External Database)
-DATABASE_URL=postgresql://username:password@your-db-host:5432/workout_cool
+DATABASE_URL=postgresql://username:password@your-db-host:5432/workout-cool
 ```
 
 **Deploy:**
@@ -323,4 +332,4 @@ If you encounter issues:
 
 ---
 
-*Last updated: June 2025*
+*Last updated: July 2025*

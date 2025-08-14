@@ -16,8 +16,9 @@
     "db:seed": "pnpm run import:exercises-full ./data/sample-exercises.csv",
     "db:seed-plans": "tsx scripts/seed-subscription-plans-simple.ts",
     "db:seed-workout-advanced": "tsx scripts/seed-workout-data-advanced.ts",
-    "migrate:prod": "env-cmd -f .env.production prisma migrate deploy",
-    "lint:fix": "next lint --fix"
+    "lint:fix": "next lint --fix",
+    "db:seed-leaderboard": "tsx scripts/seed-leaderboard-data.ts",
+    "migrate:prod": "env-cmd -f .env.production prisma migrate deploy"
   },
   "resolutions": {
     "prettier": "^3.4.2"

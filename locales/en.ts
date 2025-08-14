@@ -1,4 +1,19 @@
 export default {
+  leaderboard: {
+    title: "Leaderboard",
+    description: "Top workout champions",
+    champion_badge: "🏆 Champion",
+    runner_up_badge: "🥈 Runner-up",
+    third_place_badge: "🥉 Third Place",
+    workouts: "workouts",
+    unable_to_load: "Unable to load leaderboard",
+    try_again_later: "Please try again later",
+    no_champions_yet: "No champions yet",
+    complete_first_workout: "Complete your first workout to claim the throne!",
+    member_since: "Member since",
+    workouts_per_week: "workouts/week",
+    last_workout: "Last workout"
+  },
   programs: {
     available_programs: "Available programs",
     exercises_in_session: "Exercises in session",
@@ -406,6 +421,8 @@ export default {
     workouts_tooltip: "Create your own workout",
     premium: "Premium",
     premium_tooltip: "Upgrade to Premium",
+    leaderboard: "Leaderboard",
+    leaderboard_tooltip: "View workout rankings",
     tools: "Tools",
     tools_tooltip: "Browse tools",
     profile: "Profile",
@@ -1673,6 +1690,7 @@ export default {
   commons: {
     upgrade_to_premium: "Upgrade to Premium",
     refresh: "Refresh",
+    just_now: "just now",
     signup_with: "Sign up with {provider}",
     signin_with: "Sign in with {provider}",
     signup: "Sign up",

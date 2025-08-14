@@ -3,10 +3,9 @@
 import React from "react";
 import { useQueryState } from "nuqs";
 import Image from "next/image";
-import { Trophy } from "lucide-react";
+import { Trophy, Users, Calendar } from "lucide-react";
 
 import { useI18n } from "locales/client";
-import { useSession } from "@/features/auth/lib/auth-client";
 
 import { useTopWorkoutUsers } from "../hooks/use-top-workout-users";
 import { LeaderboardPeriod } from "../actions/get-top-workout-users.action";
@@ -15,8 +14,6 @@ import LeaderboardItem from "./leaderboard-item";
 
 export default function LeaderboardPage() {
   const t = useI18n();
-  const { data: session } = useSession();
-  const isAuthenticated = !!session?.user;
 
   // Use nuqs to manage period in URL
   const [selectedPeriod, setSelectedPeriod] = useQueryState<LeaderboardPeriod>("period", {
@@ -43,6 +40,21 @@ export default function LeaderboardPage() {
   return (
     <div className="min-h-screen">
       <div className="container max-w-2xl mx-auto px-2 py-4 sm:px-4 sm:py-8 pb-24">
+        {/* Header Section */}
+        <div className="mb-8">
+          <div className="text-center mb-6">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full mb-4 shadow-lg">
+              <Trophy className="w-8 h-8 text-white" />
+            </div>
+            <h1 className="text-2xl sm:text-3xl font-bold mb-2 bg-gradient-to-r from-yellow-500 to-orange-600 bg-clip-text text-transparent">
+              Classement des Champions
+            </h1>
+            <p className="text-base-content/70 dark:text-gray-400 max-w-md mx-auto">
+              Grimpez au sommet et devenez une légende Workout.cool
+            </p>
+          </div>
+        </div>
+
         {/* Period Tabs */}
         <div className="flex justify-center mb-6">
           <div className="tabs tabs-boxed bg-base-200 dark:bg-gray-800">
@@ -161,6 +173,40 @@ export default function LeaderboardPage() {
               ))}
             </div>
           )}
+        </div>
+
+        <div className="grid sm:grid-cols-2 gap-3 max-w-xl mx-auto px-4 my-4 pb-16">
+          <div className="card bg-base-100 dark:bg-gray-800/50 border border-base-200 dark:border-gray-700">
+            <div className="card-body p-4 flex-row items-start gap-3">
+              <div className="flex-shrink-0">
+                <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center">
+                  <Users className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                </div>
+              </div>
+              <div className="flex-1">
+                <h3 className="font-semibold text-sm mb-1">Membres inscrits uniquement</h3>
+                <p className="text-xs text-base-content/60 dark:text-gray-500">
+                  Créez un compte pour apparaître dans le classement et apparaître
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="card bg-base-100 dark:bg-gray-800/50 border border-base-200 dark:border-gray-700">
+            <div className="card-body p-4 flex-row items-start gap-3">
+              <div className="flex-shrink-0">
+                <div className="w-10 h-10 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center">
+                  <Calendar className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+                </div>
+              </div>
+              <div className="flex-1">
+                <h3 className="font-semibold text-sm mb-1">Réinitialisation Europe/Paris</h3>
+                <p className="text-xs text-base-content/60 dark:text-gray-500">
+                  Les classements hebdo et mensuel se réinitialisent à minuit, heure de Paris
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

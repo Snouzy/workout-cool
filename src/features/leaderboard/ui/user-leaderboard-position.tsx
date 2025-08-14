@@ -2,6 +2,7 @@
 
 import React from "react";
 import { useQueryState } from "nuqs";
+import { usePathname } from "next/navigation";
 
 import { useSession } from "@/features/auth/lib/auth-client";
 
@@ -30,7 +31,9 @@ export default function UserLeaderboardPosition() {
     enabled: isAuthenticated,
   });
 
-  if (!isAuthenticated || isLoading || !userPosition) {
+  const pathnameIncludesLeaderboard = usePathname().includes("/leaderboard");
+
+  if (!isAuthenticated || isLoading || !userPosition || !pathnameIncludesLeaderboard) {
     return null;
   }
 

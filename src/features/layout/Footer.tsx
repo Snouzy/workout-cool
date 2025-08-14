@@ -43,7 +43,7 @@ export const Footer = async () => {
   return (
     <footer className="relative border-t border-base-300 dark:border-gray-800 bg-base-100 dark:bg-black px-2 sm:px-6 py-2 rounded-b-lg">
       <WorkoutSessionTimer />
-      <UserLeaderboardPosition period="all-time" />
+      <UserLeaderboardPosition />
       <div className="flex sm:flex-row justify-between items-center gap-4">
         {/* Social Icons */}
         <div className="flex gap-0 sm:gap-2">

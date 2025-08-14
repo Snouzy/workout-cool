@@ -106,7 +106,7 @@ export async function ProgramsPage({ locale }: ProgramsPageProps) {
                     animationFillMode: "both",
                   }}
                 >
-                  <ProgramCard featured={false} locale={locale} program={program} size={index === 0 ? "medium" : "medium"} />
+                  <ProgramCard locale={locale} program={program} size={index === 0 ? "medium" : "medium"} />
                 </article>
               ))}
             </div>

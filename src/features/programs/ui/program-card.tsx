@@ -12,12 +12,11 @@ import { PublicProgram } from "../actions/get-public-programs.action";
 
 interface ProgramCardProps {
   program: PublicProgram;
-  featured?: boolean;
   size?: "small" | "medium" | "large";
   locale: Locale;
 }
 
-export async function ProgramCard({ program, featured = false, size = "medium", locale }: ProgramCardProps) {
+export async function ProgramCard({ program, size = "medium", locale }: ProgramCardProps) {
   const isLocked = program.isPremium;
   const t = await getI18n();
   const title = getProgramTitle(program, locale);

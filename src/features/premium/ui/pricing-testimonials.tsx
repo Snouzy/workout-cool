@@ -4,8 +4,6 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, Star, TrendingUp, Users } from "lucide-react";
 
-import { useI18n } from "locales/client";
-
 interface Testimonial {
   quote: string;
   author: string;
@@ -18,7 +16,6 @@ interface Testimonial {
 
 // TODO: Add testimonials
 export function PricingTestimonials() {
-  const t = useI18n();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 

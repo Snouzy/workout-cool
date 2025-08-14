@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import { LogEvents } from "@/shared/lib/analytics/events";
-import { getMobileCompatibleSession } from "@/shared/api/mobile-auth";
 
 /**
  * POST /api/analytics/premium
@@ -11,10 +10,7 @@ import { getMobileCompatibleSession } from "@/shared/api/mobile-auth";
  */
 export async function POST(request: NextRequest) {
   try {
-    const session = await getMobileCompatibleSession(request);
-    const user = session?.user;
-
-    const { event, metadata } = await request.json();
+    const { event } = await request.json();
 
     // Validate event type
     const validEvents = ["discovery", "paywall_viewed", "paywall_purchased", "paywall_cancelled", "paywall_restored"];

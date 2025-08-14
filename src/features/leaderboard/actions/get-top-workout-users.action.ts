@@ -1,9 +1,9 @@
 "use server";
 
-import dayjs from "dayjs";
-import timezone from "dayjs/plugin/timezone";
-import utc from "dayjs/plugin/utc";
 import { z } from "zod";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+import dayjs from "dayjs";
 
 import { prisma } from "@/shared/lib/prisma";
 import { actionClient } from "@/shared/api/safe-actions";
@@ -24,7 +24,7 @@ const inputSchema = z.object({
 
 function getDateRangeForPeriod(period: LeaderboardPeriod): { startDate: Date | undefined; endDate: Date } {
   const now = dayjs().tz(PARIS_TZ);
-  
+
   switch (period) {
     case "weekly": {
       // Start of current week (Monday) in Paris timezone
@@ -51,27 +51,27 @@ function getDateRangeForPeriod(period: LeaderboardPeriod): { startDate: Date | u
   }
 }
 
-export const getTopWorkoutUsersAction = actionClient
-  .schema(inputSchema)
-  .action(async ({ parsedInput }) => {
-    const { period } = parsedInput;
-    
-    try {
-      const { startDate, endDate } = getDateRangeForPeriod(period);
-      
-      const whereClause = {
-        WorkoutSession: {
-          some: startDate ? {
-            startedAt: {
-              gte: startDate,
-              lte: endDate,
-            },
-          } : {},
-        },
-      };
+export const getTopWorkoutUsersAction = actionClient.schema(inputSchema).action(async ({ parsedInput }) => {
+  const { period } = parsedInput;
 
-      const topUsers = await prisma.user.findMany({
-        where: whereClause,
+  try {
+    const { startDate, endDate } = getDateRangeForPeriod(period);
+
+    const whereClause = {
+      WorkoutSession: {
+        some: startDate
+          ? {
+              startedAt: {
+                gte: startDate,
+                lte: endDate,
+              },
+            }
+          : {},
+      },
+    };
+
+    const topUsers = await prisma.user.findMany({
+      where: whereClause,
       select: {
         id: true,
         name: true,
@@ -80,23 +80,27 @@ export const getTopWorkoutUsersAction = actionClient
         createdAt: true,
         _count: {
           select: {
-            WorkoutSession: startDate ? {
-              where: {
+            WorkoutSession: startDate
+              ? {
+                  where: {
+                    startedAt: {
+                      gte: startDate,
+                      lte: endDate,
+                    },
+                  },
+                }
+              : true,
+          },
+        },
+        WorkoutSession: {
+          where: startDate
+            ? {
                 startedAt: {
                   gte: startDate,
                   lte: endDate,
                 },
-              },
-            } : true,
-          },
-        },
-        WorkoutSession: {
-          where: startDate ? {
-            startedAt: {
-              gte: startDate,
-              lte: endDate,
-            },
-          } : undefined,
+              }
+            : undefined,
           select: {
             endedAt: true,
             startedAt: true,
@@ -135,7 +139,6 @@ export const getTopWorkoutUsersAction = actionClient
         memberSince: user.createdAt,
       };
     });
-
 
     return users;
   } catch (error) {

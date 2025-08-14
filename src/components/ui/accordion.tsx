@@ -2,7 +2,6 @@
 
 import * as React from "react";
 import { ChevronDown } from "lucide-react";
-import clsx from "clsx";
 import * as AccordionPrimitive from "@radix-ui/react-accordion";
 
 import { cn } from "@/shared/lib/utils";
@@ -31,7 +30,7 @@ const AccordionTrigger = React.forwardRef<
     >
       <span>{children}</span>
       <ChevronDown
-        className={clsx(
+        className={cn(
           "ml-2 size-5 shrink-0 transition-transform duration-200 ease-linear",
           "group-data-[state=closed]:rotate-0 group-data-[state=open]:rotate-180",
           "text-current",

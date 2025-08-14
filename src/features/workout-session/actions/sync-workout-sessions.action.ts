@@ -39,7 +39,7 @@ const syncWorkoutSessionSchema = z.object({
   }),
 });
 
-export const syncWorkoutSessionAction = actionClient.schema(syncWorkoutSessionSchema).action(async ({ parsedInput, ctx }) => {
+export const syncWorkoutSessionAction = actionClient.schema(syncWorkoutSessionSchema).action(async ({ parsedInput }) => {
   try {
     const { session } = parsedInput;
 

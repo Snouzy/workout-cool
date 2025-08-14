@@ -14,31 +14,6 @@ const LeaderboardItem: React.FC<{ user: TopWorkoutUser; rank: number }> = ({ use
   const [imageError, setImageError] = React.useState(false);
   const dicebearUrl = `https://api.dicebear.com/7.x/micah/svg?seed=${encodeURIComponent(user.userId)}&backgroundColor=b6e3f4,c0aede,d1d4f9,ffd5dc,ffdfbf`;
 
-  const getRankBadge = (rank: number) => {
-    if (rank === 1) {
-      return (
-        <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-yellow-500 rounded-full flex items-center justify-center">
-          <span className="text-xs font-bold text-white">1</span>
-        </div>
-      );
-    }
-    if (rank === 2) {
-      return (
-        <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-gray-400 rounded-full flex items-center justify-center">
-          <span className="text-xs font-bold text-white">2</span>
-        </div>
-      );
-    }
-    if (rank === 3) {
-      return (
-        <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-amber-600 rounded-full flex items-center justify-center">
-          <span className="text-xs font-bold text-white">3</span>
-        </div>
-      );
-    }
-    return null;
-  };
-
   return (
     <div className="flex items-center gap-2 sm:gap-4 p-3 sm:p-4 hover:bg-base-200/50 dark:hover:bg-gray-800/30 transition-colors duration-150">
       {/* Rank number */}

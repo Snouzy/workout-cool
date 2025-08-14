@@ -1690,6 +1690,8 @@ export default {
     },
   },
   commons: {
+    last_activity: "Last activity",
+    registered_on: "Registered on",
     upgrade_to_premium: "Upgrade to Premium",
     refresh: "Refresh",
     just_now: "just now",

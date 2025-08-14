@@ -1717,6 +1717,8 @@ export default {
     },
   },
   commons: {
+    last_activity: "Dernière activité",
+    registered_on: "Inscrit le",
     refresh: "Actualiser",
     just_now: "à l'instant",
     signup_with: "S'inscrire avec {provider}",

@@ -1686,6 +1686,8 @@ export default {
     },
   },
   commons: {
+    last_activity: "Последняя активность",
+    registered_on: "Зарегистрирован",
     just_now: "только что",
     signup_with: "Регистрация через {provider}",
     signin_with: "Вход через {provider}",

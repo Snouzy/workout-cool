@@ -822,6 +822,8 @@ export default {
     },
   },
   commons: {
+    last_activity: "Última actividad",
+    registered_on: "Inscrito el",
     just_now: "ahora mismo",
     signup_with: "Registrarse con {provider}",
     signin_with: "Iniciar sesión con {provider}",

@@ -817,6 +817,8 @@ export default {
     },
   },
   commons: {
+    last_activity: "最近活动",
+    registered_on: "注册于",
     just_now: "刚刚",
     signup_with: "使用 {provider} 注册",
     signin_with: "使用 {provider} 登录",

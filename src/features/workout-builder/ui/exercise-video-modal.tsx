@@ -5,7 +5,7 @@ import { ExerciseAttributeNameEnum, ExerciseAttributeValueEnum } from "@prisma/c
 import { useCurrentLocale, useI18n } from "locales/client";
 import { getYouTubeEmbedUrl } from "@/shared/lib/youtube";
 import { getAttributeValueLabel } from "@/shared/lib/attribute-value-translation";
-import { StatisticsTimeframe } from "@/features/statistics/types";
+import { StatisticsTimeframe } from "@/shared/constants/statistics";
 import { ExerciseCharts } from "@/features/statistics/components/ExerciseStatisticsTab";
 import { TimeframeSelector } from "@/features/statistics/components";
 import { getExerciseAttributesValueOf } from "@/entities/exercise/shared/muscles";

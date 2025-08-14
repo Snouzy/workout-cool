@@ -2,7 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 
-import { StatisticsTimeframe } from "@/features/statistics/types";
+import { StatisticsTimeframe } from "@/shared/constants/statistics";
 
 // Query keys
 export const STATISTICS_QUERY_KEYS = {

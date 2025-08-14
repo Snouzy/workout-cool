@@ -6,7 +6,7 @@ import { AlertCircle } from "lucide-react";
 import { useI18n, useCurrentLocale } from "locales/client";
 import { cn } from "@/shared/lib/utils";
 import { formatDate } from "@/shared/lib/date";
-import { StatisticsTimeframe } from "@/features/statistics/types";
+import { StatisticsTimeframe } from "@/shared/constants/statistics";
 import { PremiumGate } from "@/components/ui/premium-gate";
 import { Loader } from "@/components/ui/loader";
 import { Alert, AlertDescription } from "@/components/ui/alert";

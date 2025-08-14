@@ -68,7 +68,6 @@ export function BottomNavigation() {
       description: t("bottom_navigation.leaderboard_tooltip"),
       isActive: pathname.includes(paths.leaderboard),
     },
-
     {
       id: "premium",
       label: t("bottom_navigation.premium"),

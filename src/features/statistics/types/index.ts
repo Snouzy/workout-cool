@@ -1,6 +1,5 @@
 // Re-export types from shared
 export type {
-  StatisticsTimeframe,
   WeightProgressionPoint,
   WeightProgressionResponse,
   OneRepMaxPoint,

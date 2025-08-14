@@ -2,12 +2,13 @@ import { NextResponse } from "next/server";
 
 import { getSessionBySlug } from "@/features/programs/actions/get-session-by-slug.action";
 
-export async function GET(request: Request, { params }: { params: { slug: string; sessionSlug: string } }) {
+export async function GET(request: Request, { params }: { params: Promise<{ slug: string; sessionSlug: string }> }) {
   try {
     const { searchParams } = new URL(request.url);
     const locale = searchParams.get("locale") || "fr";
 
-    const sessionDetail = await getSessionBySlug(params.slug, params.sessionSlug, locale as any);
+    const { slug, sessionSlug } = await params;
+    const sessionDetail = await getSessionBySlug(slug, sessionSlug, locale as any);
 
     if (!sessionDetail) {
       return NextResponse.json({ error: "Session not found" }, { status: 404 });

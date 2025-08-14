@@ -2,9 +2,11 @@ import { NextResponse } from "next/server";
 
 import { getProgramProgressBySlug } from "@/features/programs/actions/get-program-progress-by-slug.action";
 
-export async function GET(request: Request, { params }: { params: { slug: string } }) {
+export async function GET(request: Request, { params }: { params: Promise<{ slug: string }> }) {
   try {
-    const progress = await getProgramProgressBySlug(params.slug);
+    const { slug } = await params;
+
+    const progress = await getProgramProgressBySlug(slug);
 
     if (!progress) {
       return NextResponse.json({ error: "Program progress not found" }, { status: 404 });

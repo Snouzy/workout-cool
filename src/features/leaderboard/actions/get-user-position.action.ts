@@ -1,52 +1,15 @@
 "use server";
 
 import { z } from "zod";
-import utc from "dayjs/plugin/utc";
-import timezone from "dayjs/plugin/timezone";
-import dayjs from "dayjs";
 
 import { prisma } from "@/shared/lib/prisma";
 import { actionClient } from "@/shared/api/safe-actions";
-
-import { LeaderboardPeriod } from "./get-top-workout-users.action";
-
-// Initialize dayjs plugins
-dayjs.extend(utc);
-dayjs.extend(timezone);
-
-const PARIS_TZ = "Europe/Paris";
+import { getDateRangeForPeriod } from "@/features/leaderboard/lib/utils";
 
 const inputSchema = z.object({
   userId: z.string(),
   period: z.enum(["all-time", "weekly", "monthly"]).default("all-time"),
 });
-
-function getDateRangeForPeriod(period: LeaderboardPeriod): { startDate: Date | undefined; endDate: Date } {
-  const now = dayjs().tz(PARIS_TZ);
-
-  switch (period) {
-    case "weekly": {
-      const startOfWeek = now.startOf("week").add(1, "day");
-      return {
-        startDate: startOfWeek.toDate(),
-        endDate: now.toDate(),
-      };
-    }
-    case "monthly": {
-      const startOfMonth = now.startOf("month");
-      return {
-        startDate: startOfMonth.toDate(),
-        endDate: now.toDate(),
-      };
-    }
-    case "all-time":
-    default:
-      return {
-        startDate: undefined,
-        endDate: now.toDate(),
-      };
-  }
-}
 
 export const getUserPositionAction = actionClient.schema(inputSchema).action(async ({ parsedInput }) => {
   const { userId, period } = parsedInput;

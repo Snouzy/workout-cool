@@ -1,55 +1,20 @@
 "use server";
 
 import { z } from "zod";
-import utc from "dayjs/plugin/utc";
-import timezone from "dayjs/plugin/timezone";
 import dayjs from "dayjs";
 
 import { prisma } from "@/shared/lib/prisma";
 import { actionClient } from "@/shared/api/safe-actions";
 import { TopWorkoutUser } from "@/features/leaderboard/models/types";
-
-// Initialize dayjs plugins
-dayjs.extend(utc);
-dayjs.extend(timezone);
+import { getDateRangeForPeriod, type LeaderboardPeriod } from "@/features/leaderboard/lib/utils";
 
 const LIMIT_TOP_USERS = 20;
-const PARIS_TZ = "Europe/Paris";
 
-export type LeaderboardPeriod = "all-time" | "weekly" | "monthly";
+export type { LeaderboardPeriod };
 
 const inputSchema = z.object({
   period: z.enum(["all-time", "weekly", "monthly"]).default("all-time"),
 });
-
-function getDateRangeForPeriod(period: LeaderboardPeriod): { startDate: Date | undefined; endDate: Date } {
-  const now = dayjs().tz(PARIS_TZ);
-
-  switch (period) {
-    case "weekly": {
-      // Start of current week (Monday) in Paris timezone
-      const startOfWeek = now.startOf("week").add(1, "day"); // dayjs week starts on Sunday, add 1 for Monday
-      return {
-        startDate: startOfWeek.toDate(),
-        endDate: now.toDate(),
-      };
-    }
-    case "monthly": {
-      // Start of current month in Paris timezone
-      const startOfMonth = now.startOf("month");
-      return {
-        startDate: startOfMonth.toDate(),
-        endDate: now.toDate(),
-      };
-    }
-    case "all-time":
-    default:
-      return {
-        startDate: undefined,
-        endDate: now.toDate(),
-      };
-  }
-}
 
 export const getTopWorkoutUsersAction = actionClient.schema(inputSchema).action(async ({ parsedInput }) => {
   const { period } = parsedInput;

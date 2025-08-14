@@ -6,6 +6,7 @@ import Image from "next/image";
 import { Trophy } from "lucide-react";
 
 import { useI18n } from "locales/client";
+import { useSession } from "@/features/auth/lib/auth-client";
 
 import { useTopWorkoutUsers } from "../hooks/use-top-workout-users";
 import { LeaderboardPeriod } from "../actions/get-top-workout-users.action";
@@ -14,6 +15,8 @@ import LeaderboardItem from "./leaderboard-item";
 
 export default function LeaderboardPage() {
   const t = useI18n();
+  const { data: session } = useSession();
+  const isAuthenticated = !!session?.user;
 
   // Use nuqs to manage period in URL
   const [selectedPeriod, setSelectedPeriod] = useQueryState<LeaderboardPeriod>("period", {

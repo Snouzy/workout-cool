@@ -12,7 +12,7 @@ export default function UserLeaderboardPosition() {
   const { data: session } = useSession();
   const isAuthenticated = !!session?.user;
   const userId = session?.user?.id;
-  
+
   // Get period from URL using nuqs
   const [period] = useQueryState<LeaderboardPeriod>("period", {
     defaultValue: "all-time",
@@ -36,9 +36,33 @@ export default function UserLeaderboardPosition() {
 
   const { position, totalWorkouts, totalUsers } = userPosition;
 
-  // Don't show if user has no workouts
+  // Show motivational message if user has no workouts
   if (totalWorkouts === 0) {
-    return null;
+    return (
+      <div className="absolute bottom-32 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-md z-40">
+        <div className="bg-base-100 dark:bg-[#1A1A1A] border border-base-300 dark:border-gray-700 rounded-2xl shadow-lg px-4 py-3">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              {/* Motivational Icon */}
+              <div className="flex items-center justify-center w-10 h-10 rounded-full bg-base-300 dark:bg-gray-700">
+                <span className="text-2xl">🫵</span>
+              </div>
+
+              {/* Motivational Message */}
+              <div className="flex-1">
+                <p className="text-sm font-medium text-base-content dark:text-gray-100">Pas encore classé</p>
+                <p className="text-xs text-base-content/60 dark:text-gray-400">Commencez votre première séance !</p>
+              </div>
+            </div>
+
+            {/* Call to Action */}
+            <div className="text-right">
+              <p className="text-2xl">🚀</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (

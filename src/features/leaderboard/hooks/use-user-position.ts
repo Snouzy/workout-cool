@@ -1,8 +1,9 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { LeaderboardPeriod } from "../actions/get-top-workout-users.action";
+
 import { getUserPositionAction } from "../actions/get-user-position.action";
+import { LeaderboardPeriod } from "../actions/get-top-workout-users.action";
 
 interface UseUserPositionOptions {
   userId: string | undefined;

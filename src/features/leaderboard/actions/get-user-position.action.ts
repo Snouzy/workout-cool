@@ -67,25 +67,6 @@ export const getUserPositionAction = actionClient.schema(inputSchema).action(asy
       },
     });
 
-    // Get users with more workouts
-    const usersAhead = await prisma.user.count({
-      where: {
-        WorkoutSession: {
-          some: startDate
-            ? {
-                startedAt: {
-                  gte: startDate,
-                  lte: endDate,
-                },
-              }
-            : {},
-        },
-        NOT: {
-          id: userId,
-        },
-      },
-    });
-
     // Calculate real position
     const totalUsersWithWorkouts = await prisma.user.count({
       where: {

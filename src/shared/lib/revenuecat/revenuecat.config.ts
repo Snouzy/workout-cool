@@ -30,21 +30,10 @@ export class RevenueCatConfig {
   }
 
   /**
-   * Get RevenueCat project ID
-   */
-  static getProjectId(): string {
-    const projectId = env.REVENUECAT_PROJECT_ID;
-    if (!projectId) {
-      throw new Error("REVENUECAT_PROJECT_ID environment variable is required");
-    }
-    return projectId;
-  }
-
-  /**
    * Check if RevenueCat is properly configured
    */
   static isConfigured(): boolean {
-    return !!(env.REVENUECAT_SECRET_KEY && env.REVENUECAT_WEBHOOK_SECRET && env.REVENUECAT_PROJECT_ID);
+    return !!(env.REVENUECAT_SECRET_KEY && env.REVENUECAT_WEBHOOK_SECRET);
   }
 
   /**

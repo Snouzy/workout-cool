@@ -106,7 +106,6 @@ jobs:
           STRIPE_SECRET_KEY: test_secret_key
           REVENUECAT_SECRET_KEY: test_secret_key
           REVENUECAT_WEBHOOK_SECRET: test_webhook_secret
-          REVENUECAT_PROJECT_ID: test_project_id
           STRIPE_WEBHOOK_SECRET: test_webhook_secret
           NEXT_PUBLIC_SHOW_ADS: false
           NEXT_PUBLIC_AD_CLIENT: test_client_id

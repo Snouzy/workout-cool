@@ -30,8 +30,7 @@ export async function POST(request: NextRequest) {
 
     // Parse and validate request body
     const body = await request.json();
-    console.log("body:", body);
-    const { userId, isPremium, originalAppUserId, entitlements, platform, expirationDate } = syncStatusSchema.parse(body);
+    const { userId, isPremium, originalAppUserId, platform, expirationDate } = syncStatusSchema.parse(body);
 
     // Verify the userId matches the authenticated user
     if (userId !== user.id) {

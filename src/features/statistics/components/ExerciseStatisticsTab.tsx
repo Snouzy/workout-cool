@@ -32,7 +32,6 @@ export function ExerciseCharts({ timeframe, exerciseId, unit = "kg", className }
   const oneRepMaxQuery = useOneRepMax(exerciseId, timeframe);
   const volumeQuery = useVolumeData(exerciseId, timeframe);
 
-  const isLoading = weightProgressionQuery.isLoading || oneRepMaxQuery.isLoading || volumeQuery.isLoading;
   const hasError = weightProgressionQuery.isError || oneRepMaxQuery.isError || volumeQuery.isError;
 
   return (

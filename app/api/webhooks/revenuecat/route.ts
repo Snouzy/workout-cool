@@ -102,7 +102,7 @@ async function logWebhookEvent(event: RevenueCatWebhookEvent, success: boolean, 
  * Process subscription events
  */
 async function processSubscriptionEvent(webhook: RevenueCatWebhookEvent) {
-  const { type, app_user_id, entitlement_ids, expiration_at_ms, product_id, transaction_id, original_transaction_id } = webhook.event;
+  const { type, app_user_id, expiration_at_ms, product_id } = webhook.event;
 
   // Find user by RevenueCat user ID
   const user = await prisma.user.findFirst({

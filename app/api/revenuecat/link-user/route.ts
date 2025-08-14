@@ -1,25 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
 /**
- * DEPRECATED: This endpoint is no longer needed
- *
- * RevenueCat handles user linking automatically when using logIn():
- * - Anonymous purchases are automatically transferred to authenticated users
- * - No manual linking is required
- *
- * The sync is handled by the /api/revenuecat/sync-status endpoint
- */
-
-export async function POST() {
-  return NextResponse.json(
-    {
-      error: "This endpoint is deprecated. RevenueCat handles user linking automatically via logIn()",
-    },
-    { status: 410 }, // 410 Gone
-  );
-}
-
-/**
  * Get Premium Status
  *
  * GET /api/revenuecat/link-user

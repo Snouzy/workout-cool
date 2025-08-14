@@ -2,6 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
+import { ClockIcon } from "lucide-react";
 
 import { useI18n, useCurrentLocale } from "locales/client";
 import { formatDateShort, formatRelativeTime } from "@/shared/lib/date";
@@ -39,9 +40,9 @@ const LeaderboardItem: React.FC<{ user: TopWorkoutUser; rank: number }> = ({ use
   };
 
   return (
-    <div className="hover:bg-gray-400/50 flex items-center gap-3 sm:gap-4 p-2 sm:p-4 hover:bg-base-200/50 dark:hover:bg-gray-800/30 transition-colors duration-150">
+    <div className="flex items-center gap-2 sm:gap-4 p-3 sm:p-4 hover:bg-base-200/50 dark:hover:bg-gray-800/30 transition-colors duration-150">
       {/* Rank number */}
-      <div className="w-6 sm:w-8 text-center">
+      <div className="w-3 sm:w-8 text-center">
         <span
           className={`font-semibold ${rank <= 3 ? "text-lg" : "text-base"} ${
             rank === 1
@@ -50,7 +51,7 @@ const LeaderboardItem: React.FC<{ user: TopWorkoutUser; rank: number }> = ({ use
                 ? "text-gray-500 dark:text-gray-400"
                 : rank === 3
                   ? "text-amber-600 dark:text-amber-500"
-                  : "text-base-content/50 dark:text-gray-500"
+                  : "text-gray-600 dark:text-gray-500"
           }`}
         >
           {rank}
@@ -76,39 +77,32 @@ const LeaderboardItem: React.FC<{ user: TopWorkoutUser; rank: number }> = ({ use
             )}
           </div>
         </div>
-        {getRankBadge(rank)}
       </div>
 
       {/* User Info */}
       <div className="flex-1 min-w-0">
-        <div className="flex items-start justify-between">
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-1">
-              <h3 className="font-medium text-sm sm:text-base text-base-content dark:text-gray-100 truncate">{user.userName}</h3>
-              <span className="hidden sm:flex items-center gap-1 text-gray-600 dark:text-gray-600">
-                <span className="text-xs">{t("commons.registered_on")}</span>
-                <span className="text-xs">{formatDateShort(user.memberSince, locale)}</span>
-              </span>
-            </div>
-            <div className="flex flex-col sm:flex-row sm:items-center sm:gap-1 text-xs text-base-content/50 dark:text-gray-500">
-              <span className="font-medium text-sm text-base-content/70 dark:text-gray-400">
-                {user.totalWorkouts} {t("leaderboard.workouts").toLowerCase()}
-              </span>
-              <span className="flex sm:hidden items-center gap-1 text-gray-600 dark:text-gray-600">
-                <span className="text-xs">{t("commons.registered_on")}</span>
-                <span className="text-xs">{formatDateShort(user.memberSince, locale)}</span>
-              </span>
-
-              <span className="hidden sm:flex text-xs">-</span>
-              {user.lastWorkoutAt && (
-                <span className="flex items-center gap-1 text-gray-600 dark:text-gray-600">
-                  <span className="text-xs">{t("commons.last_activity")}</span>
-                  {formatRelativeTime(user.lastWorkoutAt, locale, t("commons.just_now"))}
+        <h3 className="font-medium text-sm sm:text-base text-base-content dark:text-gray-100 truncate">{user.userName}</h3>
+        <div className="flex flex-col sm:flex-row sm:items-center sm:gap-1 text-xs text-gray-600 dark:text-gray-500">
+          <span className="text-base-content/60 dark:text-gray-400 text-[11px]">
+            {t("leaderboard.member_since")} {formatDateShort(user.memberSince, locale)}
+          </span>
+          {user.lastWorkoutAt && (
+            <>
+              <span className="hidden sm:flex">-</span>
+              <span className="gap-1 text-gray-600 dark:text-gray-600">
+                <span className="flex text-[11px] items-center">
+                  <ClockIcon className="w-3 h-3 mr-1" /> {formatRelativeTime(user.lastWorkoutAt, locale, t("commons.just_now"))}
                 </span>
-              )}
-            </div>
-          </div>
+              </span>
+            </>
+          )}
         </div>
+      </div>
+
+      {/* Workout Score - Right aligned on desktop */}
+      <div className="flex flex-col items-end">
+        <div className="text-xl sm:text-2xl font-bold text-[#4F8EF7] dark:text-[#4F8EF7]">{user.totalWorkouts}</div>
+        <div className="text-xs text-gray-600 dark:text-gray-500">{t("leaderboard.workouts").toLowerCase()}</div>
       </div>
     </div>
   );

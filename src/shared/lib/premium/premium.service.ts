@@ -70,7 +70,6 @@ export class PremiumService {
       planId?: string;
       platform?: Platform;
       paymentProcessor?: PaymentProcessor;
-      revenueCatEntitlement?: string;
       revenueCatUserId?: string;
     },
   ): Promise<void> {
@@ -118,7 +117,6 @@ export class PremiumService {
             status: "ACTIVE",
             startedAt: new Date(),
             currentPeriodEnd: expiresAt,
-            revenueCatEntitlement: options?.revenueCatEntitlement,
             revenueCatUserId: options?.revenueCatUserId,
           },
         });
@@ -341,38 +339,6 @@ export class PremiumService {
   }
 
   /**
-   * Validate RevenueCat entitlement for specific features
-   */
-  static async validateRevenueCatEntitlement(userId: string, requiredEntitlement: string): Promise<boolean> {
-    const user = await prisma.user.findUnique({
-      where: { id: userId },
-      select: {
-        subscriptions: {
-          where: {
-            status: "ACTIVE",
-            revenueCatEntitlement: { contains: requiredEntitlement },
-          },
-          select: {
-            currentPeriodEnd: true,
-            revenueCatEntitlement: true,
-          },
-        },
-      },
-    });
-
-    if (!user) {
-      return false;
-    }
-
-    // Check if any subscription has the required entitlement and is not expired
-    return user.subscriptions.some((sub) => {
-      const hasEntitlement = sub.revenueCatEntitlement?.includes(requiredEntitlement);
-      const isNotExpired = !sub.currentPeriodEnd || sub.currentPeriodEnd > new Date();
-      return hasEntitlement && isNotExpired;
-    });
-  }
-
-  /**
    * Fetch current subscription status from RevenueCat API
    * This method queries RevenueCat directly to get the most up-to-date subscription status
    */
@@ -462,7 +428,6 @@ export class PremiumService {
           data: {
             status: revenueCatStatus.isPremium ? "ACTIVE" : "EXPIRED",
             currentPeriodEnd: revenueCatStatus.expiresAt,
-            revenueCatEntitlement: revenueCatStatus.entitlementIds.join(","),
             revenueCatUserId,
             updatedAt: new Date(),
           },

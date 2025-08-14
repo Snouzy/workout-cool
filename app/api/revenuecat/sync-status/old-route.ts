@@ -46,7 +46,6 @@ export async function POST(request: NextRequest) {
       await PremiumService.grantPremiumAccess(userId, new Date(expirationDate), {
         platform: platform === "ios" ? Platform.IOS : Platform.ANDROID,
         paymentProcessor: PaymentProcessor.REVENUECAT,
-        revenueCatEntitlement: "premium",
         revenueCatUserId: originalAppUserId,
       });
     } else {

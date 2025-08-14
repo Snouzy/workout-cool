@@ -6,13 +6,15 @@ export default {
     runner_up_badge: "🥈 Vice-campeão",
     third_place_badge: "🥉 Terceiro lugar",
     workouts: "treinos",
+    second_place: "2º lugar",
+    third_place: "3º lugar",
     unable_to_load: "Não foi possível carregar a classificação",
     try_again_later: "Tente novamente mais tarde",
     no_champions_yet: "Ainda não há campeões",
     complete_first_workout: "Complete o seu primeiro treino para reivindicar o trono!",
     member_since: "Membro desde",
     workouts_per_week: "treinos/semana",
-    last_workout: "Último treino"
+    last_workout: "Último treino",
   },
   programs: {
     available_programs: "Programas disponíveis",

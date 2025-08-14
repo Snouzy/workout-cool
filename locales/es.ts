@@ -5,6 +5,8 @@ export default {
     champion_badge: "🏆 Campeón",
     runner_up_badge: "🥈 Subcampeón",
     third_place_badge: "🥉 Tercer lugar",
+    second_place: "2do lugar",
+    third_place: "3er lugar",
     workouts: "entrenamientos",
     unable_to_load: "No se pudo cargar la clasificación",
     try_again_later: "Inténtalo de nuevo más tarde",
@@ -12,7 +14,7 @@ export default {
     complete_first_workout: "¡Completa tu primer entrenamiento para reclamar el trono!",
     member_since: "Miembro desde",
     workouts_per_week: "entrenamientos/semana",
-    last_workout: "Último entrenamiento"
+    last_workout: "Último entrenamiento",
   },
   programs: {
     available_programs: "Programas disponibles",

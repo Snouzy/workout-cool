@@ -5,6 +5,8 @@ export default {
     champion_badge: "🏆 冠军",
     runner_up_badge: "🥈 亚军",
     third_place_badge: "🥉 第三名",
+    second_place: "第二名",
+    third_place: "第三名",
     workouts: "次锻炼",
     unable_to_load: "无法加载排行榜",
     try_again_later: "请稍后再试",
@@ -12,7 +14,7 @@ export default {
     complete_first_workout: "完成您的第一次锻炼来夺取王座！",
     member_since: "会员自",
     workouts_per_week: "次/周",
-    last_workout: "上次锻炼"
+    last_workout: "上次锻炼",
   },
   programs: {
     available_programs: "可用的课程",

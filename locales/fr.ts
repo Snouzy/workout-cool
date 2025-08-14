@@ -5,6 +5,8 @@ export default {
     champion_badge: "🏆 Champion",
     runner_up_badge: "🥈 Finaliste",
     third_place_badge: "🥉 Troisième place",
+    second_place: "2ème place",
+    third_place: "3ème place",
     workouts: "séances",
     unable_to_load: "Impossible de charger le classement",
     try_again_later: "Veuillez réessayer plus tard",

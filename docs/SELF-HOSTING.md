@@ -82,9 +82,9 @@ NEXT_PUBLIC_APP_URL=http://your-server-ip:3000
 BETTER_AUTH_SECRET=your-secure-random-secret-here
 
 # Database (auto-configured for Docker Compose)
-POSTGRES_USER=your_username
-POSTGRES_PASSWORD=your_secure_password
-POSTGRES_DB=workout_cool
+POSTGRES_USER=username
+POSTGRES_PASSWORD=password
+POSTGRES_DB=workout-cool
 
 # Optional: Seed sample data on first run
 SEED_SAMPLE_DATA=true
@@ -123,9 +123,9 @@ If you want to customize database credentials or other settings, create a `.env`
 
 ```bash
 # Only needed if you want to change defaults
-POSTGRES_USER=my_custom_user
-POSTGRES_PASSWORD=my_secure_password
-POSTGRES_DB=workout_cool
+POSTGRES_USER=username
+POSTGRES_PASSWORD=password
+POSTGRES_DB=workout-cool
 BETTER_AUTH_SECRET=your-secure-secret-here
 ```
 

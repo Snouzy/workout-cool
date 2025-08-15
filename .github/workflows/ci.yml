@@ -128,3 +128,15 @@ jobs:
           BETTER_AUTH_URL: http://localhost:3000
           BETTER_AUTH_SECRET: ci_test_secret_key_32_chars_minimum
           DATABASE_URL: postgresql://test:test@localhost:5432/test_db
+          # Google OAuth placeholders
+          GOOGLE_CLIENT_ID: test_google_client_id
+          GOOGLE_CLIENT_SECRET: test_google_client_secret
+          # Additional required placeholders
+          RESEND_API_KEY: test_resend_key
+          OPENPANEL_SECRET_KEY: test_openpanel_secret
+          NEXT_PUBLIC_OPENPANEL_CLIENT_ID: test_openpanel_client
+          STRIPE_SECRET_KEY: sk_test_placeholder
+          STRIPE_WEBHOOK_SECRET: whsec_placeholder
+          NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: pk_test_placeholder
+          REVENUECAT_SECRET_KEY: test_revenuecat_secret
+          REVENUECAT_WEBHOOK_SECRET: test_revenuecat_webhook

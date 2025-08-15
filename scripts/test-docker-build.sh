@@ -35,7 +35,7 @@ docker images workout-cool-test
 
 echo -e "${YELLOW}🏃 Testing container environment setup...${NC}"
 if docker run --rm \
-    -e DATABASE_URL="postgresql://test:test@localhost:5432/test" \
+    -e DATABASE_URL="postgresql://username:password@localhost:5432/workout-cool" \
     -e BETTER_AUTH_SECRET="test-secret-key-32-chars-minimum" \
     -e BETTER_AUTH_URL="http://localhost:3000" \
     -e SKIP_DB_OPERATIONS="true" \

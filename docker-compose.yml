@@ -7,11 +7,11 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
     environment:
-      POSTGRES_USER: ${POSTGRES_USER:-workout_user}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-workout_password}
-      POSTGRES_DB: ${POSTGRES_DB:-workout_cool}
+      POSTGRES_USER: ${POSTGRES_USER:-username}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
+      POSTGRES_DB: ${POSTGRES_DB:-workout-cool}
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-workout_user} -d ${POSTGRES_DB:-workout_cool}"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-username} -d ${POSTGRES_DB:-workout-cool}"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -31,10 +31,10 @@ services:
       # Database connection (auto-configured for docker-compose)
       DB_HOST: postgres
       DB_PORT: 5432
-      POSTGRES_USER: ${POSTGRES_USER:-workout_user}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-workout_password}
-      POSTGRES_DB: ${POSTGRES_DB:-workout_cool}
-      DATABASE_URL: postgresql://${POSTGRES_USER:-workout_user}:${POSTGRES_PASSWORD:-workout_password}@postgres:5432/${POSTGRES_DB:-workout_cool}
+      POSTGRES_USER: ${POSTGRES_USER:-username}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
+      POSTGRES_DB: ${POSTGRES_DB:-workout-cool}
+      DATABASE_URL: postgresql://${POSTGRES_USER:-username}:${POSTGRES_PASSWORD:-password}@postgres:5432/${POSTGRES_DB:-workout-cool}
       
       # Application settings
       BETTER_AUTH_URL: ${BETTER_AUTH_URL:-http://localhost:3000}

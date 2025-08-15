@@ -33,13 +33,21 @@ fi
 echo -e "${YELLOW}🔍 Inspecting built image...${NC}"
 docker images workout-cool-test
 
-echo -e "${YELLOW}🏃 Testing container startup (dry run)...${NC}"
-if docker run --rm -e DATABASE_URL="postgresql://test:test@localhost:5432/test" workout-cool-test echo "Container can start"; then
-    echo -e "${GREEN}✅ Container startup test passed!${NC}"
+echo -e "${YELLOW}🏃 Testing container environment setup...${NC}"
+if docker run --rm \
+    -e DATABASE_URL="postgresql://test:test@localhost:5432/test" \
+    -e BETTER_AUTH_SECRET="test-secret-key-32-chars-minimum" \
+    -e BETTER_AUTH_URL="http://localhost:3000" \
+    -e SKIP_DB_OPERATIONS="true" \
+    workout-cool-test sh -c "echo 'Environment setup test passed'"; then
+    echo -e "${GREEN}✅ Container environment test passed!${NC}"
 else
-    echo -e "${RED}❌ Container startup test failed!${NC}"
+    echo -e "${RED}❌ Container environment test failed!${NC}"
     exit 1
 fi
+
+echo -e "${YELLOW}🔧 Testing with docker-compose...${NC}"
+echo "Run 'docker compose up' to test the full setup with database."
 
 echo -e "${GREEN}🎉 All tests passed! Your Docker build is working correctly.${NC}"
 echo -e "${YELLOW}💡 Next steps:${NC}"

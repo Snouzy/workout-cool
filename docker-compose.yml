@@ -1,26 +1,52 @@
 services:
   postgres:
-    image: postgres:15
+    image: postgres:15-alpine
+    restart: unless-stopped
     ports:
       - "${DB_PORT:-5432}:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-workout_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-workout_password}
+      POSTGRES_DB: ${POSTGRES_DB:-workout_cool}
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
-      interval: 5s
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-workout_user} -d ${POSTGRES_DB:-workout_cool}"]
+      interval: 10s
       timeout: 5s
       retries: 5
-    env_file: .env
+      start_period: 30s
 
   workout_cool:
     build:
       context: .
       dockerfile: Dockerfile
+    restart: unless-stopped
     ports:
       - "${APP_PORT:-3000}:3000"
     depends_on:
       postgres:
         condition: service_healthy
-    env_file: .env
+    environment:
+      # Database connection (auto-configured for docker-compose)
+      DB_HOST: postgres
+      DB_PORT: 5432
+      POSTGRES_USER: ${POSTGRES_USER:-workout_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-workout_password}
+      POSTGRES_DB: ${POSTGRES_DB:-workout_cool}
+      DATABASE_URL: postgresql://${POSTGRES_USER:-workout_user}:${POSTGRES_PASSWORD:-workout_password}@postgres:5432/${POSTGRES_DB:-workout_cool}
+      
+      # Application settings
+      BETTER_AUTH_URL: ${BETTER_AUTH_URL:-http://localhost:3000}
+      BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET:-please-change-this-secret-key-32-chars-minimum}
+      NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL:-http://localhost:3000}
+      
+      # Optional: Seed sample data on first run
+      SEED_SAMPLE_DATA: ${SEED_SAMPLE_DATA:-true}
+      
+      # Optional: Google OAuth (leave empty if not using)
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET:-}
+
 volumes:
   pgdata:

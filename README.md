@@ -326,14 +326,24 @@ docker build -t yourusername/workout-cool .
 docker run -p 3000:3000 --env-file .env.production yourusername/workout-cool
 ```
 
-### Using Docker Compose
+### Using Docker Compose (Recommended)
 
-#### DATABASE_URL
-
-Update the `host` to point to the `postgres` service instead of `localhost`
-`DATABASE_URL=postgresql://username:password@postgres:5432/workout_cool`
+**Quick start with zero configuration:**
 
 ```bash
+# Clone and start - that's it!
+git clone https://github.com/Snouzy/workout-cool.git
+cd workout-cool
+docker compose up -d
+```
+
+The setup includes everything you need with sensible defaults. Visit `http://localhost:3000` when ready.
+
+**Optional customization:**
+```bash
+# Only if you want to change defaults
+cp .env.example .env
+# Edit .env with your preferences
 docker compose up -d
 ```
 

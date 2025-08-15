@@ -60,19 +60,31 @@ git clone https://github.com/Snouzy/workout-cool.git
 cd workout-cool
 ```
 
-#### 3. Configure Environment Variables
+#### 3. Configure Environment Variables (Optional)
+
+The Docker setup now works with **sensible defaults**, so configuration is optional for basic usage.
+
+**For customization, create a `.env` file:**
 
 ```bash
 cp .env.example .env
 nano .env
 ```
 
-**Essential Environment Variables:**
+**Key Settings to Update:**
 
 ```bash
-# Application Configuration (Required for both options)
+# Application URL (important for production)
 BETTER_AUTH_URL=http://your-server-ip:3000
-BETTER_AUTH_SECRET=your-secret-key-here
+NEXT_PUBLIC_APP_URL=http://your-server-ip:3000
+
+# Security (IMPORTANT: Change in production!)
+BETTER_AUTH_SECRET=your-secure-random-secret-here
+
+# Database (auto-configured for Docker Compose)
+POSTGRES_USER=your_username
+POSTGRES_PASSWORD=your_secure_password
+POSTGRES_DB=workout_cool
 
 # Optional: Seed sample data on first run
 SEED_SAMPLE_DATA=true
@@ -88,32 +100,34 @@ nano data/sample-exercises.csv
 
 ---
 
-### Option 1: Docker Compose (All-in-One)
+### Option 1: Docker Compose (All-in-One) - **Recommended**
 
-This option automatically sets up both the application and PostgreSQL database.
+This option automatically sets up both the application and PostgreSQL database with **zero configuration required**.
 
-**Additional Environment Variables:**
-
-```bash
-# Database Configuration (Docker Compose)
-POSTGRES_USER=my-user
-POSTGRES_PASSWORD=my-password
-POSTGRES_DB=workout-cool
-DB_HOST=postgres
-DB_PORT=5432
-
-DATABASE_URL=postgresql://username:password@postgres:5432/workout-cool
-```
-
-**Deploy:**
+**Quick Start:**
 
 ```bash
+# Just run this - everything is pre-configured!
 docker compose up -d
 ```
 
-**Access:**
+**That's it!** The setup includes:
+- ✅ PostgreSQL database with default credentials
+- ✅ Automatic database migrations
+- ✅ Sample exercise data (if enabled)
+- ✅ Application ready at `http://your-server-ip:3000`
 
-Visit `http://your-server-ip:3000`
+**Optional Customization:**
+
+If you want to customize database credentials or other settings, create a `.env` file first:
+
+```bash
+# Only needed if you want to change defaults
+POSTGRES_USER=my_custom_user
+POSTGRES_PASSWORD=my_secure_password
+POSTGRES_DB=workout_cool
+BETTER_AUTH_SECRET=your-secure-secret-here
+```
 
 ---
 
@@ -121,23 +135,30 @@ Visit `http://your-server-ip:3000`
 
 Use this option if you have an existing PostgreSQL database.
 
-**Additional Environment Variables:**
-
-```bash
-# Database Configuration (External Database)
-DATABASE_URL=postgresql://username:password@your-db-host:5432/workout-cool
-```
-
 **Deploy:**
 
 ```bash
+# Build the image
 docker build -t workout-cool .
-docker run -d --name workout-cool -p 3000:3000 --env-file .env workout-cool
+
+# Run with your database connection
+docker run -d --name workout-cool -p 3000:3000 \
+  -e DATABASE_URL="postgresql://username:password@your-db-host:5432/workout-cool" \
+  -e BETTER_AUTH_SECRET="your-secure-secret-here" \
+  -e BETTER_AUTH_URL="http://your-server-ip:3000" \
+  workout-cool
 ```
 
-**Access:**
+**Or using a .env file:**
 
-Visit `http://your-server-ip:3000`
+```bash
+# Create .env with your database settings
+echo "DATABASE_URL=postgresql://username:password@your-db-host:5432/workout-cool" > .env
+echo "BETTER_AUTH_SECRET=your-secure-secret-here" >> .env
+
+# Run with env file
+docker run -d --name workout-cool -p 3000:3000 --env-file .env workout-cool
+```
 
 ---
 

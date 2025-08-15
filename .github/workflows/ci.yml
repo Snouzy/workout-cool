@@ -6,8 +6,52 @@ on:
   pull_request:
     branches: [main]
 
+env:
+  NODE_VERSION: "20"
+  PNPM_VERSION: 9
+
 jobs:
+  # Setup shared dependencies - runs once, used by other jobs
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      pnpm-cache-key: ${{ steps.cache-key.outputs.key }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - name: Generate cache key
+        id: cache-key
+        run: echo "key=${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}" >> $GITHUB_OUTPUT
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ steps.cache-key.outputs.key }}
+          restore-keys: ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Generate Prisma client
+        run: pnpm prisma generate
+
   lint:
+    needs: setup
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -15,25 +59,22 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 9
+          version: ${{ env.PNPM_VERSION }}
 
       - name: Get pnpm store directory
         shell: bash
-        run: |
-          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+        run: echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
 
-      - name: Setup pnpm cache
+      - name: Restore pnpm cache
         uses: actions/cache@v4
         with:
           path: ${{ env.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
+          key: ${{ needs.setup.outputs.pnpm-cache-key }}
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -45,6 +86,7 @@ jobs:
         run: pnpm lint
 
   build:
+    needs: setup
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -52,25 +94,22 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 9
+          version: ${{ env.PNPM_VERSION }}
 
       - name: Get pnpm store directory
         shell: bash
-        run: |
-          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+        run: echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
 
-      - name: Setup pnpm cache
+      - name: Restore pnpm cache
         uses: actions/cache@v4
         with:
           path: ${{ env.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
+          key: ${{ needs.setup.outputs.pnpm-cache-key }}
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -81,6 +120,7 @@ jobs:
       - name: Build project
         run: pnpm build
         env:
+          SKIP_DB_OPERATIONS: true
           BETTER_AUTH_URL: http://localhost:3000
           DATABASE_URL: postgresql://user:password@localhost:5432/test_db
           GOOGLE_CLIENT_ID: test_client_id
@@ -146,11 +186,6 @@ jobs:
           NEXT_PUBLIC_TOP_CUNNINGHAM_CALCULATOR_AD_SLOT: 1234567890
           NEXT_PUBLIC_TOP_CALORIE_CALCULATOR_COMPARISON_AD_SLOT: 1234567890
           NEXT_PUBLIC_BOTTOM_CALORIE_CALCULATOR_COMPARISON_AD_SLOT: 1234567890
-
-  docker-build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
 
       - name: Test Docker build
         run: ./scripts/test-docker-build.sh --ci

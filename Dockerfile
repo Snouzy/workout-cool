@@ -14,9 +14,9 @@ FROM base AS builder
 COPY --from=deps /app/node_modules ./node_modules
 COPY --from=deps /app/prisma ./prisma
 COPY . .
-COPY .env.example .env
+COPY .env.build .env
 
-RUN pnpm run build
+RUN pnpm run build:docker
 
 # Production image, copy only necessary files
 FROM base AS runner

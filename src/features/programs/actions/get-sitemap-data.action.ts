@@ -27,6 +27,12 @@ export interface SitemapProgramData {
 }
 
 export async function getSitemapData(): Promise<SitemapProgramData[]> {
+  // Skip database operations during build time
+  if (process.env.SKIP_DB_OPERATIONS === "true") {
+    console.log("Skipping database operations during build");
+    return [];
+  }
+
   try {
     const programs = await prisma.program.findMany({
       where: {

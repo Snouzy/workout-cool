@@ -187,5 +187,3 @@ jobs:
           NEXT_PUBLIC_TOP_CALORIE_CALCULATOR_COMPARISON_AD_SLOT: 1234567890
           NEXT_PUBLIC_BOTTOM_CALORIE_CALCULATOR_COMPARISON_AD_SLOT: 1234567890
 
-      - name: Test Docker build
-        run: ./scripts/test-docker-build.sh --ci

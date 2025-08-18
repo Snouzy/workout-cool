@@ -84,26 +84,28 @@ export const getTopWorkoutUsersAction = actionClient.schema(inputSchema).action(
       take: LIMIT_TOP_USERS,
     });
 
-    const users: TopWorkoutUser[] = topUsers.map((user) => {
-      const totalWorkouts = user._count.WorkoutSession;
-      const lastWorkout = user.WorkoutSession[0];
-      const lastWorkoutAt = lastWorkout?.endedAt || lastWorkout?.startedAt || null;
+    const users: TopWorkoutUser[] = topUsers
+      .map((user) => {
+        const totalWorkouts = user._count.WorkoutSession;
+        const lastWorkout = user.WorkoutSession[0];
+        const lastWorkoutAt = lastWorkout?.endedAt || lastWorkout?.startedAt || null;
 
-      const startDate = user.createdAt;
-      const weeksSinceStart = Math.max(1, Math.ceil(dayjs().diff(dayjs(startDate), "week", true)));
+        const startDate = user.createdAt;
+        const weeksSinceStart = Math.max(1, Math.ceil(dayjs().diff(dayjs(startDate), "week", true)));
 
-      const averageWorkoutsPerWeek = Math.round((totalWorkouts / weeksSinceStart) * 10) / 10;
+        const averageWorkoutsPerWeek = Math.round((totalWorkouts / weeksSinceStart) * 10) / 10;
 
-      return {
-        userId: user.id,
-        userName: user.name,
-        userImage: user.image,
-        totalWorkouts,
-        lastWorkoutAt: lastWorkoutAt,
-        averageWorkoutsPerWeek,
-        memberSince: user.createdAt,
-      };
-    });
+        return {
+          userId: user.id,
+          userName: user.name,
+          userImage: user.image,
+          totalWorkouts,
+          lastWorkoutAt: lastWorkoutAt,
+          averageWorkoutsPerWeek,
+          memberSince: user.createdAt,
+        };
+      })
+      .sort((a, b) => b.totalWorkouts - a.totalWorkouts);
 
     return users;
   } catch (error) {

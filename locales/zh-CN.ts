@@ -530,6 +530,11 @@ export default {
     title: "新功能",
     release_notes: "更新日志",
     notes: {
+      note_2025_08_18: {
+        title: "🏆 新排行榜功能！",
+        content:
+          "<li>新的<strong>排行榜</strong>功能，与其他训练冠军竞争</li><li>按<strong>历史总榜、月榜和周榜</strong>查看排名</li><li>跟踪您在顶级表现者中的位置</li><li>激励自己攀登排行榜！🚀</li>",
+      },
       note_2025_07_09: {
         title: "🎯 运动选择、收藏和新工具",
         content:

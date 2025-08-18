@@ -528,6 +528,11 @@ export default {
     title: "Novedades",
     release_notes: "Notas",
     notes: {
+      note_2025_08_18: {
+        title: "🏆 ¡Nueva Funcionalidad de Clasificación!",
+        content:
+          "<li>Nueva <strong>clasificación</strong> para competir con otros campeones de entrenamiento</li><li>Ver rankings por períodos <strong>todos los tiempos, mensual y semanal</strong></li><li>Rastrea tu posición entre los mejores performers</li><li>¡Motívate para subir en la clasificación! 🚀</li>",
+      },
       note_2025_07_09: {
         title: "🎯 Selección de Ejercicios, Favoritos y Nuevas Herramientas",
         content:

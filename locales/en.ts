@@ -1397,6 +1397,11 @@ export default {
     title: "What's New",
     release_notes: "Release Notes",
     notes: {
+      note_2025_08_18: {
+        title: "🏆 New Leaderboard Feature!",
+        content:
+          "<li>New <strong>leaderboard</strong> to compete with other workout champions</li><li>View rankings by <strong>all-time, monthly, and weekly</strong> periods</li><li>Track your position among the top performers</li><li>Motivate yourself to climb the rankings! 🚀</li>",
+      },
       note_2025_07_09: {
         title: "🎯 Exercise Selection, Favorites & New Tools",
         content:

@@ -1355,6 +1355,7 @@ export default {
     password_forgot_success: "Письмо отправлено",
     reset_password_success: "Пароль успешно сброшен",
     password_updated_successfully: "Пароль успешно обновлен",
+    settings_updated_successfully: "Настройки успешно обновлены",
   },
 
   error: {

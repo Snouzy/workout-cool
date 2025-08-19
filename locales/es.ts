@@ -495,6 +495,7 @@ export default {
     password_forgot_success: "Email enviado",
     reset_password_success: "Contraseña restablecida exitosamente",
     password_updated_successfully: "Contraseña actualizada exitosamente",
+    settings_updated_successfully: "Configuración actualizada exitosamente",
   },
 
   error: {

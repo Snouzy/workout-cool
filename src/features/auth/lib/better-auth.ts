@@ -27,6 +27,8 @@ export const auth = betterAuth({
           email: true,
           emailVerified: true,
           name: true,
+          username: true,
+          isProfilePublic: true,
           firstName: true,
           lastName: true,
           image: true,

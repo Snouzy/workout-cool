@@ -1368,6 +1368,7 @@ export default {
     password_forgot_success: "Email enviado",
     reset_password_success: "Palavra-passe redefinida com sucesso",
     password_updated_successfully: "Palavra-passe atualizada com sucesso",
+    settings_updated_successfully: "Definições atualizadas com sucesso",
   },
 
   error: {

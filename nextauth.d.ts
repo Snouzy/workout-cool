@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/consistent-type-definitions */
 import type { DefaultSession } from "next-auth";
 
 declare module "next-auth" {
@@ -6,6 +5,8 @@ declare module "next-auth" {
     user: DefaultSession["user"] & {
       id: string;
       email: string;
+      username?: string;
+      isProfilePublic?: boolean;
       name?: string;
       image?: string;
     };

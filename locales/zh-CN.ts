@@ -497,6 +497,7 @@ export default {
     password_forgot_success: "邮件已发送",
     reset_password_success: "密码重置成功",
     password_updated_successfully: "密码更新成功",
+    settings_updated_successfully: "设置更新成功",
   },
 
   error: {

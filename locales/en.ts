@@ -1364,6 +1364,7 @@ export default {
     password_forgot_success: "Email sent",
     reset_password_success: "Password reset successfully",
     password_updated_successfully: "Password updated successfully",
+    settings_updated_successfully: "Settings updated successfully",
   },
 
   error: {

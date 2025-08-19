@@ -1389,6 +1389,7 @@ export default {
     password_forgot_success: "Email envoyé",
     reset_password_success: "Mot de passe réinitialisé avec succès",
     password_updated_successfully: "Mot de passe mis à jour avec succès",
+    settings_updated_successfully: "Paramètres mis à jour avec succès",
   },
 
   error: {

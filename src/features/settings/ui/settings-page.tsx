@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { User, CheckCircle } from "lucide-react";
+import { useEffect } from "react";
 
 import { useI18n } from "locales/client";
 import { settingsSchema, type SettingsFormData } from "@/features/settings/schema/settings.schema";
@@ -70,9 +69,7 @@ export const SettingsPage = () => {
               name="username"
               render={({ field }) => (
                 <FormItem className="space-y-3">
-                  <FormLabel className="text-sm font-medium text-gray-900 dark:text-white">
-                    Username
-                  </FormLabel>
+                  <FormLabel className="text-sm font-medium text-gray-900 dark:text-white">Username</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
@@ -81,9 +78,7 @@ export const SettingsPage = () => {
                     />
                   </FormControl>
                   <FormMessage />
-                  <p className="text-xs text-gray-500 dark:text-gray-400">
-                    Leave empty to use your email
-                  </p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">Leave empty to use your email</p>
                 </FormItem>
               )}
             />
@@ -99,12 +94,8 @@ export const SettingsPage = () => {
                 <FormItem>
                   <div className="flex items-center justify-between">
                     <div className="space-y-1">
-                      <FormLabel className="text-sm font-medium text-gray-900 dark:text-white">
-                        Public Profile
-                      </FormLabel>
-                      <p className="text-xs text-gray-500 dark:text-gray-400">
-                        Make your profile visible to other users
-                      </p>
+                      <FormLabel className="text-sm font-medium text-gray-900 dark:text-white">Public Profile</FormLabel>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">Make your profile visible to other users</p>
                     </div>
                     <FormControl>
                       <Switch checked={field.value} onCheckedChange={field.onChange} />
@@ -118,9 +109,7 @@ export const SettingsPage = () => {
           {/* Footer */}
           <div className="px-6 py-4 bg-gray-50 dark:bg-gray-700/50 border-t border-gray-200 dark:border-gray-700 rounded-b-lg">
             <div className="flex items-center justify-between">
-              <span className="text-xs text-gray-500 dark:text-gray-400">
-                Workout.cool v1.3.1
-              </span>
+              <span className="text-xs text-gray-500 dark:text-gray-400">Workout.cool v1.3.1</span>
               <Button
                 className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg shadow-sm transition-colors disabled:opacity-50"
                 disabled={form.formState.isSubmitting}

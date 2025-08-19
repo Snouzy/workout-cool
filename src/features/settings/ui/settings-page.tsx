@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 
 import { useI18n } from "locales/client";
+import { useSession } from "@/features/auth/lib/auth-client";
 import { settingsSchema, type SettingsFormData } from "@/features/settings/schema/settings.schema";
 import { updateSettingsAction } from "@/features/settings/actions/update-settings.action";
 import { getUserSettingsAction } from "@/features/settings/actions/get-user-settings.action";
@@ -14,6 +15,7 @@ import { Button } from "@/components/ui/button";
 
 export const SettingsPage = () => {
   const t = useI18n();
+  const { refetch: refetchSession } = useSession();
 
   const form = useZodForm({
     schema: settingsSchema,
@@ -46,6 +48,9 @@ export const SettingsPage = () => {
         return;
       }
 
+      // Refetch the session to update the cache with new user data
+      await refetchSession();
+      
       brandedToast({ title: t("success.settings_updated_successfully"), variant: "success" });
     } catch (error) {
       brandedToast({ title: t("error.generic_error"), variant: "error" });

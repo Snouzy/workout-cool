@@ -43,7 +43,9 @@ export async function updateSettingsAction(input: SettingsFormData) {
       },
     });
 
+    // Revalidate both settings and profile pages
     revalidatePath("/settings");
+    revalidatePath("/profile");
     return { success: true };
     
   } catch (error) {

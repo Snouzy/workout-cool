@@ -966,6 +966,7 @@ export default {
     add_to_favorites: "Agregar a favoritos",
     remove_from_favorites: "Eliminar de favoritos",
     favorites: "Favoritos",
+    settings: "Configuraciones",
   },
   tools: {
     try_now: "Probar ahora",

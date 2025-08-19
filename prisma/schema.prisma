@@ -42,6 +42,10 @@ model User {
   licenses      License[]
   isPremium     Boolean?       @default(false)
 
+  // Public profile fields
+  username          String?
+  isProfilePublic   Boolean        @default(true)
+
   // Training programs
   programEnrollments UserProgramEnrollment[]
 

@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { LogIn, UserPlus, LogOut, User, Crown, CreditCard } from "lucide-react";
+import { LogIn, UserPlus, LogOut, User, Crown, CreditCard, Cog } from "lucide-react";
 
 import { useI18n } from "locales/client";
 import Logo from "@public/logo.png";
@@ -89,6 +89,13 @@ export const Header = () => {
               <Link className="!no-underline" href="/profile" size="base" variant="nav">
                 <User className="w-4 h-4 text-gray-700 dark:text-gray-300" />
                 {t("commons.profile")}
+              </Link>
+            </li>
+
+            <li>
+              <Link className="!no-underline" href="/settings" size="base" variant="nav">
+                <Cog className="w-4 h-4 text-gray-700 dark:text-gray-300" />
+                {t("commons.settings")}
               </Link>
             </li>
 

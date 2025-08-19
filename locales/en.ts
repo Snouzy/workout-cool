@@ -1836,6 +1836,7 @@ export default {
     add_to_favorites: "Add to favorites",
     remove_from_favorites: "Remove from favorites",
     favorites: "Favorites",
+    settings: "Settings",
   },
   statistics: {
     title: "Statistics",

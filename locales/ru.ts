@@ -1830,6 +1830,7 @@ export default {
     add_to_favorites: "Добавить в избранное",
     remove_from_favorites: "Удалить из избранного",
     favorites: "Избранное",
+    settings: "Настройки",
   },
   statistics: {
     title: "Статистика",

@@ -961,6 +961,7 @@ export default {
     add_to_favorites: "添加到收藏夹",
     remove_from_favorites: "从收藏夹中删除",
     favorites: "收藏夹",
+    settings: "设置",
   },
   tools: {
     try_now: "立即试用",

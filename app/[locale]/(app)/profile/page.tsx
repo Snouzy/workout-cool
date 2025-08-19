@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, Eye, EyeOff } from "lucide-react";
 
 import { useI18n } from "locales/client";
 import { WorkoutSessionList } from "@/features/workout-session/ui/workout-session-list";
@@ -43,22 +43,47 @@ export default function ProfilePage() {
       {session && (
         <div className="mt-4">
           <div className="flex items-center justify-between flex-wrap gap-4">
-            <h2 className="text-2xl font-bold">Hello, {session.user?.name} 👋</h2>
-            {session.user?.isProfilePublic && (
-              <Button
-                className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors flex items-center gap-2 shadow-sm"
-                onClick={() => router.push(getPublicProfileUrl() || "#")}
-              >
-                <ExternalLink className="size-4" />
-                View Public Profile
-              </Button>
-            )}
-          </div>
-          {session.user?.isProfilePublic && (
-            <div className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-              Your profile is public and can be viewed at: {getPublicProfileUrl()}
+            <div>
+              <h2 className="text-2xl font-bold">Hello, {session.user?.name} 👋</h2>
+              <div className="mt-2 flex items-center gap-3">
+                {/* Profile Visibility Indicator */}
+                <div
+                  className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-medium ${
+                    session.user?.isProfilePublic
+                      ? "bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 border border-green-200 dark:border-green-800"
+                      : "bg-gray-100 dark:bg-gray-800/50 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700"
+                  }`}
+                >
+                  {session.user?.isProfilePublic ? (
+                    <>
+                      <Eye className="size-4" />
+                      Public Profile
+                    </>
+                  ) : (
+                    <>
+                      <EyeOff className="size-4" />
+                      Private Profile
+                    </>
+                  )}
+                </div>
+
+                {/* Public Profile Link */}
+                {session.user?.isProfilePublic && (
+                  <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+                    <span>View at: {getPublicProfileUrl()}</span>
+                    <Button
+                      className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 p-1 rounded transition-colors"
+                      onClick={() => router.push(getPublicProfileUrl() || "#")}
+                      size="small"
+                      variant="ghost"
+                    >
+                      <ExternalLink className="size-4" />
+                    </Button>
+                  </div>
+                )}
+              </div>
             </div>
-          )}
+          </div>
         </div>
       )}
 

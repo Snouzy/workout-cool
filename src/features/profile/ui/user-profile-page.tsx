@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { Calendar, Copy, Share2, Target, TrendingUp } from "lucide-react";
 import relativeTime from "dayjs/plugin/relativeTime";
 import dayjs from "dayjs";
@@ -54,6 +55,8 @@ export const UserProfilePage = ({ profile }: UserProfileProps) => {
 
   const displayName = profile.name || profile.username || profile.email.split("@")[0];
   const username = profile.username || profile.email;
+
+  const dicebearUrl = `https://api.dicebear.com/7.x/micah/svg?seed=${encodeURIComponent(profile.id)}&backgroundColor=b6e3f4,c0aede,d1d4f9,ffd5dc,ffdfbf`;
 
   const handleShare = async () => {
     const url = `${window.location.origin}/u/${username}`;
@@ -111,19 +114,19 @@ export const UserProfilePage = ({ profile }: UserProfileProps) => {
       <div className="flex-1 overflow-auto flex flex-col">
         <div className="px-2 sm:px-6 py-4 flex-1">
           {/* Profile Header */}
-          <div className="text-center mb-6">
+          <div className="text-center mb-6 pb-6 border-b border-gray-100 dark:border-gray-800">
             {/* Avatar */}
             <div className="flex justify-center mb-4">
               {profile.image ? (
-                <img
+                <Image
                   alt={displayName}
-                  className="w-20 h-20 rounded-full object-cover border-4 border-gray-200 dark:border-gray-700"
+                  className="rounded-full object-cover border-4 border-gray-200 dark:border-gray-700"
+                  height={80}
                   src={profile.image}
+                  width={80}
                 />
               ) : (
-                <div className="w-20 h-20 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white text-2xl font-bold border-4 border-gray-200 dark:border-gray-700">
-                  {displayName.charAt(0).toUpperCase()}
-                </div>
+                <Image alt={profile.username as string} className="rounded-full" height={80} src={dicebearUrl} width={80} />
               )}
             </div>
 
@@ -138,16 +141,16 @@ export const UserProfilePage = ({ profile }: UserProfileProps) => {
             </div>
 
             {/* Stats */}
-            <div className="grid grid-cols-3 gap-6 mb-6">
-              <div className="text-center">
+            <div className="grid grid-cols-3 gap-6 mb-6 p-4 bg-gray-50/50 dark:bg-gray-800/30 rounded-lg border border-gray-100 dark:border-gray-700/50">
+              <div className="text-center py-2 border-r border-gray-200 dark:border-gray-700 last:border-r-0">
                 <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">{profile.stats.totalWorkouts}</div>
                 <div className="text-sm text-gray-500 dark:text-gray-400">Workouts</div>
               </div>
-              <div className="text-center">
+              <div className="text-center py-2 border-r border-gray-200 dark:border-gray-700 last:border-r-0">
                 <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">{profile.stats.totalExercises}</div>
                 <div className="text-sm text-gray-500 dark:text-gray-400">Exercises</div>
               </div>
-              <div className="text-center">
+              <div className="text-center py-2">
                 <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">1</div>
                 <div className="text-sm text-gray-500 dark:text-gray-400">Days Active</div>
               </div>
@@ -156,8 +159,9 @@ export const UserProfilePage = ({ profile }: UserProfileProps) => {
             {/* Share Button */}
             {!profile.isOwnProfile && (
               <Button
-                className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors flex items-center gap-2 mx-auto"
+                className="px-4 py-2 text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg transition-colors flex items-center gap-2 mx-auto"
                 onClick={handleShare}
+                variant="outline"
               >
                 <Share2 className="size-4" />
                 Share
@@ -167,13 +171,13 @@ export const UserProfilePage = ({ profile }: UserProfileProps) => {
 
           {/* Recent Workouts Section */}
           <div className="mb-4">
-            <div className="flex items-center gap-2 mb-4">
+            <div className="flex items-center gap-2 mb-4 pb-2 border-b border-gray-100 dark:border-gray-800">
               <TrendingUp className="size-5 text-blue-600 dark:text-blue-400" />
               <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Recent Workouts</h2>
             </div>
 
             {profile.recentWorkouts.length === 0 ? (
-              <div className="text-center py-12">
+              <div className="text-center py-12 border border-gray-100 dark:border-gray-700/50 rounded-lg bg-gray-50/30 dark:bg-gray-800/20">
                 <Target className="size-12 text-gray-400 dark:text-gray-500 mx-auto mb-4" />
                 <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">No workouts completed yet</h3>
                 <p className="text-gray-500 dark:text-gray-400">
@@ -186,7 +190,7 @@ export const UserProfilePage = ({ profile }: UserProfileProps) => {
               <div className="space-y-4">
                 {profile.recentWorkouts.map((workout) => (
                   <div
-                    className="p-4 bg-gray-50 dark:bg-gray-800/50 rounded-lg border border-gray-200 dark:border-gray-700"
+                    className="p-4 bg-gray-50/70 dark:bg-gray-800/50 rounded-lg border border-gray-200/70 dark:border-gray-700/70 hover:border-gray-300 dark:hover:border-gray-600 transition-colors"
                     key={workout.id}
                   >
                     <div className="flex items-start justify-between">
@@ -244,8 +248,9 @@ export const UserProfilePage = ({ profile }: UserProfileProps) => {
                       {!profile.isOwnProfile && (
                         <div className="flex gap-2 ml-4">
                           <Button
-                            className="px-3 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors flex items-center gap-2 text-sm"
+                            className="px-3 py-2 text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-green-300 hover:bg-green-50 dark:hover:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg transition-colors flex items-center gap-2 text-sm"
                             onClick={() => handleCopyWorkout(workout.id)}
+                            variant="outline"
                           >
                             <Copy className="size-4" />
                             Copy Workout

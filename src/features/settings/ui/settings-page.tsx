@@ -111,7 +111,7 @@ export const SettingsPage = () => {
             <div className="flex items-center justify-between">
               <span className="text-xs text-gray-500 dark:text-gray-400">Workout.cool v1.3.1</span>
               <Button
-                className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg shadow-sm transition-colors disabled:opacity-50"
+                className="px-6 py-2 text-sm font-medium bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm hover:shadow-md"
                 disabled={form.formState.isSubmitting}
                 type="submit"
               >

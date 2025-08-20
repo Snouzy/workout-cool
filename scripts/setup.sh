@@ -10,7 +10,7 @@ if [ "$SEED_SAMPLE_DATA" = "true"  ]; then
   echo "Seed sample data enabled, importing sample data..."
     # Import exercises if CSV exists
     if [ -f "./data/sample-exercises.csv" ]; then
-        npx tsx import-exercises-with-attributes.ts ./data/sample-exercises.csv
+        npx tsx scripts/import-exercises-with-attributes.ts ./data/sample-exercises.csv
     else
         echo "No exercises sample data found, skipping import."
     fi

@@ -103,7 +103,6 @@ async function seedLeaderboardData() {
 
       // Create workout sessions to match the total sessions count
       for (let i = 0; i < userData.totalSessions; i++) {
-
         const daysAgo = Math.floor(Math.random() * 59) + 1; // 1-60 days ago
         const sessionDate = dayjs().subtract(daysAgo, "days");
 
@@ -129,8 +128,6 @@ async function seedLeaderboardData() {
         });
       }
     }
-
-    console.log("✅ Leaderboard data seeded successfully!");
     console.log(`
 📊 Summary:
 - Created ${usersData.length} sample users with workout sessions
@@ -139,14 +136,7 @@ async function seedLeaderboardData() {
   🥇 Sarah Warrior: 150 workouts
   🥈 Mary Consistency: 120 workouts
   🥉 Alex Thunder: 90 workouts
-
-🎯 Next steps:
-1. Navigate to /leaderboard to see the rankings
-2. The leaderboard shows users ranked by total completed workout sessions
-
-💡 All workout sessions have proper startedAt and endedAt timestamps for realistic data!
     `);
-
   } catch (error) {
     console.error("❌ Error seeding leaderboard data:", error);
     throw error;
@@ -159,7 +149,7 @@ async function seedLeaderboardData() {
 if (require.main === module) {
   seedLeaderboardData()
     .then(() => {
-      console.log("🎉 Leaderboard seeding completed!");
+      console.log("🎉 Leaderboard data seeded successfully!\n");
       process.exit(0);
     })
     .catch((error) => {

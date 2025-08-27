@@ -35,7 +35,7 @@ export function ResetPasswordForm() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 py-10">
       <div className="space-y-2 text-center">
         <h1 className="text-2xl font-semibold tracking-tight">Réinitialisation du mot de passe</h1>
         <p className="text-muted-foreground text-sm">Veuillez choisir un nouveau mot de passe</p>

@@ -36,7 +36,7 @@ export const ForgotPasswordForm = () => {
 
   if (isEmailSent) {
     return (
-      <Alert variant="success">
+      <Alert className="w-full h-full" variant="success">
         <AlertDescription>{t("success.password_forgot_success")}</AlertDescription>
       </Alert>
     );

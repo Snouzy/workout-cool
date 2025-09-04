@@ -30,33 +30,11 @@ export function NutripureAffiliateBanner() {
   const affiliateUrl = "https://c3po.link/QVupuZ8DYw";
   const [currentVariant, setCurrentVariant] = useState(0);
   const bannerRef = useRef<HTMLDivElement>(null);
-  const impressionTracked = useRef(false);
 
   useEffect(() => {
     const randomIndex = Math.floor(Math.random() * messageVariants.length);
     setCurrentVariant(randomIndex);
   }, []);
-
-  useEffect(() => {
-    if (!impressionTracked.current && typeof window !== "undefined" && (window as any).gtag) {
-      (window as any).gtag("event", "view_item", {
-        event_category: "affiliate",
-        event_label: `nutripure_banner_impression_variant_${currentVariant}`,
-        value: 1,
-      });
-      impressionTracked.current = true;
-    }
-  }, [currentVariant]);
-
-  const handleClick = () => {
-    if (typeof window !== "undefined" && (window as any).gtag) {
-      (window as any).gtag("event", "click", {
-        event_category: "affiliate",
-        event_label: `nutripure_banner_click_variant_${currentVariant}`,
-        value: 1,
-      });
-    }
-  };
 
   const message = messageVariants[currentVariant];
 
@@ -74,13 +52,7 @@ export function NutripureAffiliateBanner() {
       >
         <div className="py-1 flex justify-center w-full">
           <div className="responsive-nutripure-container">
-            <Link
-              className="block w-full h-full"
-              href={affiliateUrl}
-              onClick={handleClick}
-              rel="noopener noreferrer sponsored"
-              target="_blank"
-            >
+            <Link className="block w-full h-full" href={affiliateUrl} rel="noopener noreferrer sponsored" target="_blank">
               <div className="nutripure-banner">
                 {/* Mobile Layout */}
                 <div className="mobile-layout">

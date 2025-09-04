@@ -148,7 +148,7 @@ export function NutripureAffiliateBanner({ context = "general", position = "midd
           width: 100%;
           height: 100%;
           background: linear-gradient(135deg, #000 0%, #b8e0ff 100%);
-          border: 2px solid #000;
+          border: 1px solid #000;
           border-radius: 0;
           overflow: hidden;
           transition: all 0.3s ease;
@@ -159,7 +159,7 @@ export function NutripureAffiliateBanner({ context = "general", position = "midd
         @media (prefers-color-scheme: dark) {
           .nutripure-banner {
             background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
-            border: 2px solid #000;
+            border: 1px solid #000;
             box-shadow: 0 2px 8px rgba(160, 211, 243, 0.2);
           }
         }
@@ -270,6 +270,29 @@ export function NutripureAffiliateBanner({ context = "general", position = "midd
           white-space: nowrap;
           flex-shrink: 0;
           box-shadow: 0 2px 4px rgba(30, 58, 95, 0.2);
+          position: relative;
+          overflow: hidden;
+        }
+
+        .mobile-layout .cta::before {
+          content: "";
+          position: absolute;
+          top: -50%;
+          left: -100%;
+          width: 200%;
+          height: 200%;
+          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+          transform: rotate(45deg);
+          animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+          0% {
+            left: -100%;
+          }
+          100% {
+            left: 100%;
+          }
         }
 
         @media (prefers-color-scheme: dark) {
@@ -325,6 +348,34 @@ export function NutripureAffiliateBanner({ context = "general", position = "midd
           .mobile-layout .cta {
             font-size: 13px;
             padding: 8px 14px;
+            position: relative;
+            overflow: hidden;
+          }
+
+          .mobile-layout .cta::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            transform: translate(-50%, -50%);
+            animation: pulse-ring 2s infinite;
+          }
+
+          @keyframes pulse-ring {
+            0% {
+              width: 0;
+              height: 0;
+              opacity: 1;
+            }
+            100% {
+              width: 100px;
+              height: 100px;
+              opacity: 0;
+            }
           }
 
           @media (prefers-color-scheme: dark) {
@@ -438,12 +489,72 @@ export function NutripureAffiliateBanner({ context = "general", position = "midd
             font-weight: 600;
             transition: all 0.3s ease;
             box-shadow: 0 4px 12px rgba(30, 58, 95, 0.3);
+            position: relative;
+            overflow: hidden;
+            animation: gentle-glow 4s ease-in-out infinite;
+          }
+
+          @keyframes gentle-glow {
+            0%,
+            100% {
+              box-shadow: 0 4px 12px rgba(30, 58, 95, 0.3);
+            }
+            50% {
+              box-shadow: 0 4px 20px rgba(30, 58, 95, 0.5);
+            }
+          }
+
+          .desktop-layout .cta::before {
+            content: "";
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+            background-size: 200% 200%;
+            animation: shimmer 3s linear infinite;
+            border-radius: 25px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+          }
+
+          .desktop-layout .cta:hover::before {
+            opacity: 1;
+          }
+
+          @keyframes shimmer {
+            0% {
+              background-position: 200% 50%;
+            }
+            100% {
+              background-position: -200% 50%;
+            }
           }
 
           .desktop-layout .cta:hover {
             background: linear-gradient(135deg, #2c4f70 0%, #3a5f85 100%);
-            transform: scale(1.05);
-            box-shadow: 0 6px 16px rgba(30, 58, 95, 0.4);
+            transform: scale(1.05) translateY(-1px);
+            box-shadow: 0 8px 20px rgba(30, 58, 95, 0.4);
+          }
+
+          .desktop-layout .arrow-icon {
+            transition: transform 0.3s ease;
+          }
+
+          .desktop-layout .cta:hover .arrow-icon {
+            transform: translateX(3px);
+            animation: arrow-bounce 1s ease-in-out infinite;
+          }
+
+          @keyframes arrow-bounce {
+            0%,
+            100% {
+              transform: translateX(3px);
+            }
+            50% {
+              transform: translateX(6px);
+            }
           }
 
           @media (prefers-color-scheme: dark) {
@@ -451,6 +562,10 @@ export function NutripureAffiliateBanner({ context = "general", position = "midd
               background: #a0d3f3;
               color: #000000;
               box-shadow: 0 4px 12px rgba(160, 211, 243, 0.3);
+            }
+
+            .desktop-layout .cta::before {
+              background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.3) 50%, transparent 70%);
             }
 
             .desktop-layout .cta:hover {

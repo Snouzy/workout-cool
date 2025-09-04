@@ -362,20 +362,6 @@ export function NutripureAffiliateBanner({ context = "general", position = "midd
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.5);
             transform: translate(-50%, -50%);
-            animation: pulse-ring 2s infinite;
-          }
-
-          @keyframes pulse-ring {
-            0% {
-              width: 0;
-              height: 0;
-              opacity: 1;
-            }
-            100% {
-              width: 100px;
-              height: 100px;
-              opacity: 0;
-            }
           }
 
           @media (prefers-color-scheme: dark) {

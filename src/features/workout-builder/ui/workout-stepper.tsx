@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { ExerciseAttributeValueEnum } from "@prisma/client";
 
-import { useI18n } from "locales/client";
+import { useCurrentLocale, useI18n } from "locales/client";
 import Trophy from "@public/images/trophy.png";
 import useBoolean from "@/shared/hooks/useBoolean";
 import { WorkoutSessionSets } from "@/features/workout-session/ui/workout-session-sets";
@@ -16,6 +16,7 @@ import { useDonationModal } from "@/features/workout-session/hooks/use-donation-
 import { WorkoutBuilderFooter } from "@/features/workout-builder/ui/workout-stepper-footer";
 import { env } from "@/env";
 import { Button } from "@/components/ui/button";
+import { NutripureAffiliateBanner } from "@/components/ads/nutripure-affiliate-banner";
 import { HorizontalTopBanner } from "@/components/ads";
 
 import { StepperStepProps } from "../types";
@@ -57,7 +58,7 @@ export function WorkoutStepper() {
     goToStep,
     deleteExercise,
   } = useWorkoutStepper();
-
+  const locale = useCurrentLocale();
   useEffect(() => {
     loadSessionFromLocal();
   }, []);
@@ -271,17 +272,41 @@ export function WorkoutStepper() {
     }
   };
 
+  const renderTopBanner = () => {
+    if (currentStep === 1) {
+      if (locale === "fr") {
+        return <NutripureAffiliateBanner />;
+      }
+
+      if (env.NEXT_PUBLIC_TOP_STEPPER_STEP_1_BANNER_AD_SLOT) {
+        return <HorizontalTopBanner adSlot={env.NEXT_PUBLIC_TOP_STEPPER_STEP_1_BANNER_AD_SLOT} />;
+      }
+    }
+
+    if (currentStep === 2) {
+      if (locale === "fr") {
+        return <NutripureAffiliateBanner />;
+      }
+
+      if (env.NEXT_PUBLIC_TOP_STEPPER_STEP_2_BANNER_AD_SLOT) {
+        return <HorizontalTopBanner adSlot={env.NEXT_PUBLIC_TOP_STEPPER_STEP_2_BANNER_AD_SLOT} />;
+      }
+    }
+
+    if (currentStep === 3) {
+      if (locale === "fr") {
+        return <NutripureAffiliateBanner />;
+      }
+
+      if (env.NEXT_PUBLIC_TOP_STEPPER_STEP_3_BANNER_AD_SLOT) {
+        return <HorizontalTopBanner adSlot={env.NEXT_PUBLIC_TOP_STEPPER_STEP_3_BANNER_AD_SLOT} />;
+      }
+    }
+  };
+
   return (
     <div className="w-full max-w-6xl mx-auto h-full">
-      {currentStep === 1 && env.NEXT_PUBLIC_TOP_STEPPER_STEP_1_BANNER_AD_SLOT && (
-        <HorizontalTopBanner adSlot={env.NEXT_PUBLIC_TOP_STEPPER_STEP_1_BANNER_AD_SLOT} />
-      )}
-      {currentStep === 2 && env.NEXT_PUBLIC_TOP_STEPPER_STEP_2_BANNER_AD_SLOT && (
-        <HorizontalTopBanner adSlot={env.NEXT_PUBLIC_TOP_STEPPER_STEP_2_BANNER_AD_SLOT} />
-      )}
-      {currentStep === 3 && env.NEXT_PUBLIC_TOP_STEPPER_STEP_3_BANNER_AD_SLOT && (
-        <HorizontalTopBanner adSlot={env.NEXT_PUBLIC_TOP_STEPPER_STEP_3_BANNER_AD_SLOT} />
-      )}
+      {renderTopBanner()}
 
       <StepperHeader currentStep={currentStep} onStepClick={handleStepClick} steps={steps} />
 

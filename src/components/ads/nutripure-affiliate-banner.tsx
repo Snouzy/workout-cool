@@ -6,35 +6,70 @@ import Image from "next/image";
 import { AdWrapper } from "./AdWrapper";
 
 const messageVariants = [
+  // {
+  //   title: "Nutrition sportive naturelle",
+  //   description: "Des milliers de sportifs nous font confiance",
+  //   cta: "Découvrir",
+  //   badge: "🇫🇷 Made in France",
+  //   socialProof: true,
+  // },
   {
-    title: "Nutrition sportive premium",
-    description: "Compléments naturels pour maximiser vos performances",
-    cta: "Découvrir",
-    badge: "🇫🇷 Made in France",
-  },
-  {
-    title: "Whey protéine de qualité",
-    description: "Sans additifs, 100% traçable pour votre récupération",
+    title: "Whey protéine sans additifs",
+    description: "100% traçable pour optimiser votre récupération",
     cta: "En savoir plus",
-    badge: "⭐ 4.8/5",
+    badge: "⭐ 4.8/5 (1k+ avis)",
+    socialProof: true,
   },
   {
-    title: "Pack découverte Nutripure",
-    description: "Multi-vitamines, Omega 3 et Magnésium haute qualité",
-    cta: "Commander",
-    badge: "⚡ Nouveau",
+    title: "Compléments haute qualité",
+    description: "Multi-vitamines, Omega 3 et Magnésium pour athlètes",
+    cta: "Explorer",
+    badge: "🌿 100% Naturel",
+  },
+  {
+    title: "Recommandé par les coachs",
+    description: "La référence française en nutrition sportive naturelle",
+    cta: "Voir les produits",
+    badge: "🏆 Qualité premium",
+    socialProof: true,
   },
 ];
 
-export function NutripureAffiliateBanner() {
+interface NutripureAffiliateBannerProps {
+  context?: "workout" | "nutrition" | "recovery" | "general";
+  position?: "top" | "middle" | "bottom";
+}
+
+export function NutripureAffiliateBanner({ context = "general", position = "middle" }: NutripureAffiliateBannerProps) {
   const affiliateUrl = "https://c3po.link/QVupuZ8DYw";
   const [currentVariant, setCurrentVariant] = useState(0);
   const bannerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const randomIndex = Math.floor(Math.random() * messageVariants.length);
-    setCurrentVariant(randomIndex);
-  }, []);
+    let filteredVariants = messageVariants;
+
+    // Personnalisation selon le contexte
+    if (context === "workout" || context === "recovery") {
+      // Prioriser les messages avec protéines et récupération
+      filteredVariants = messageVariants.filter((_, index) => [1, 3].includes(index));
+    } else if (context === "nutrition") {
+      // Prioriser les compléments et vitamines
+      filteredVariants = messageVariants.filter((_, index) => [2, 3].includes(index));
+    }
+
+    // Pour le placement en haut, prioriser les messages avec preuve sociale
+    if (position === "top") {
+      const socialProofMessages = filteredVariants.filter((msg) => msg.socialProof);
+      if (socialProofMessages.length > 0) {
+        filteredVariants = socialProofMessages;
+      }
+    }
+
+    const randomIndex = Math.floor(Math.random() * filteredVariants.length);
+    const selectedMessage = filteredVariants[randomIndex];
+    const originalIndex = messageVariants.indexOf(selectedMessage);
+    setCurrentVariant(originalIndex);
+  }, [context, position]);
 
   const message = messageVariants[currentVariant];
 
@@ -57,19 +92,22 @@ export function NutripureAffiliateBanner() {
                 {/* Mobile Layout */}
                 <div className="mobile-layout">
                   <div className="image-section">
-                    <Image alt="Nutripure" className="object-cover rounded-l" fill sizes="50px" src="/images/nutripure-gellules.png" />
+                    <Image alt="Nutripure" className="object-contain max-h-[90%]" fill sizes="50px" src="/images/nutripure-logo.webp" />
                   </div>
                   <div className="content-section">
-                    <span className="badge">{message.badge}</span>
-                    <h4 className="title">{message.title}</h4>
-                    <span className="cta">{message.cta} →</span>
+                    <div className="text-wrapper">
+                      <span className="badge">{message.badge}</span>
+                      <h4 className="title">{message.title}</h4>
+                      <p className="description">{message.description}</p>
+                    </div>
+                    <span className="cta">{message.cta}</span>
                   </div>
                 </div>
 
                 {/* Tablet/Desktop Layout */}
                 <div className="desktop-layout">
                   <div className="image-section">
-                    <Image alt="Nutripure" className="object-cover rounded-l-lg" fill sizes="90px" src="/images/nutripure-gellules.png" />
+                    <Image alt="Nutripure" className="object-contain p-2" fill sizes="90px" src="/images/nutripure-logo.webp" />
                   </div>
                   <div className="content-section">
                     <div className="badge-wrapper">
@@ -98,24 +136,25 @@ export function NutripureAffiliateBanner() {
       <style jsx>{`
         .responsive-nutripure-container {
           width: 100%;
-          max-width: 320px;
-          height: 50px;
+          height: 80px;
         }
 
         .nutripure-banner {
           width: 100%;
           height: 100%;
-          background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
-          border: 1px solid #86efac;
-          border-radius: 8px;
+          background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
+          border: 1px solid #a0d3f3;
+          border-radius: 12px;
           overflow: hidden;
           transition: all 0.3s ease;
           position: relative;
+          box-shadow: 0 2px 8px rgba(160, 211, 243, 0.2);
         }
 
         .nutripure-banner:hover {
           transform: translateY(-2px);
-          box-shadow: 0 4px 12px rgba(34, 197, 94, 0.15);
+          box-shadow: 0 6px 16px rgba(160, 211, 243, 0.3);
+          border-color: #a0d3f3;
         }
 
         /* Mobile Layout (default) */
@@ -128,39 +167,69 @@ export function NutripureAffiliateBanner() {
 
         .mobile-layout .image-section {
           position: relative;
-          width: 50px;
-          height: 50px;
+          width: 70px;
+          height: 80px;
           flex-shrink: 0;
+          background: white;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
 
         .mobile-layout .content-section {
           flex: 1;
-          padding: 0 8px;
+          padding: 8px 10px;
           display: flex;
           align-items: center;
           justify-content: space-between;
-          gap: 8px;
+          gap: 10px;
+        }
+
+        .mobile-layout .text-wrapper {
+          flex: 1;
+          min-width: 0;
         }
 
         .mobile-layout .badge {
-          display: none;
+          display: inline-block;
+          font-size: 10px;
+          background: #000000;
+          color: white;
+          padding: 2px 5px;
+          border-radius: 4px;
+          font-weight: 600;
+          margin-bottom: 3px;
+          white-space: nowrap;
         }
 
         .mobile-layout .title {
-          font-size: 12px;
-          font-weight: 600;
-          color: #15803d;
-          white-space: nowrap;
+          font-size: 13px;
+          font-weight: 700;
+          color: #000000;
+          line-height: 1.2;
+          margin-bottom: 2px;
+        }
+
+        .mobile-layout .description {
+          font-size: 11px;
+          color: #555555;
+          line-height: 1.3;
           overflow: hidden;
           text-overflow: ellipsis;
-          flex: 1;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
         }
 
         .mobile-layout .cta {
-          font-size: 11px;
+          font-size: 12px;
           font-weight: 600;
-          color: #16a34a;
+          color: white;
+          background: #a0d3f3;
+          padding: 8px 12px;
+          border-radius: 6px;
           white-space: nowrap;
+          flex-shrink: 0;
         }
 
         /* Tablet/Desktop Layout (hidden by default) */
@@ -178,23 +247,30 @@ export function NutripureAffiliateBanner() {
           .mobile-layout .image-section {
             width: 90px;
             height: 90px;
+            background: white;
           }
 
           .mobile-layout .title {
-            font-size: 13px;
+            font-size: 14px;
+          }
+
+          .mobile-layout .description {
+            font-size: 12px;
           }
 
           .mobile-layout .badge {
             display: inline-block;
-            font-size: 10px;
-            background: #16a34a;
+            font-size: 11px;
+            background: #000000;
             color: white;
-            padding: 2px 6px;
-            border-radius: 4px;
+            padding: 3px 7px;
+            border-radius: 6px;
+            font-weight: 600;
           }
 
           .mobile-layout .cta {
-            font-size: 12px;
+            font-size: 13px;
+            padding: 8px 14px;
           }
         }
 
@@ -221,6 +297,7 @@ export function NutripureAffiliateBanner() {
             width: 90px;
             height: 90px;
             flex-shrink: 0;
+            background: white;
           }
 
           .desktop-layout .content-section {
@@ -236,13 +313,14 @@ export function NutripureAffiliateBanner() {
           }
 
           .desktop-layout .badge {
-            font-size: 11px;
-            background: linear-gradient(135deg, #16a34a, #15803d);
+            font-size: 12px;
+            background: #000000;
             color: white;
-            padding: 4px 8px;
-            border-radius: 6px;
+            padding: 5px 10px;
+            border-radius: 8px;
             font-weight: 600;
             white-space: nowrap;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
           }
 
           .desktop-layout .text-content {
@@ -252,14 +330,15 @@ export function NutripureAffiliateBanner() {
           .desktop-layout .title {
             font-size: 16px;
             font-weight: 700;
-            color: #15803d;
-            margin-bottom: 2px;
+            color: #000000;
+            margin-bottom: 4px;
           }
 
           .desktop-layout .description {
-            font-size: 13px;
-            color: #166534;
-            line-height: 1.3;
+            font-size: 12px;
+            color: #333333;
+            line-height: 1.4;
+            font-weight: 400;
           }
 
           .desktop-layout .cta-wrapper {
@@ -269,18 +348,21 @@ export function NutripureAffiliateBanner() {
           .desktop-layout .cta {
             display: inline-flex;
             align-items: center;
-            gap: 4px;
-            background: #16a34a;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 13px;
+            gap: 6px;
+            background: #a0d3f3;
+            color: #000000;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 14px;
             font-weight: 600;
-            transition: background 0.3s ease;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(160, 211, 243, 0.3);
           }
 
           .desktop-layout .cta:hover {
-            background: #15803d;
+            background: #8bc4e6;
+            transform: scale(1.05);
+            box-shadow: 0 6px 16px rgba(160, 211, 243, 0.4);
           }
 
           .arrow-icon {

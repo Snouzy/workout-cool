@@ -280,6 +280,10 @@ export default async function RootLayout({ params, children }: RootLayoutProps) 
           {/* Theme color for PWA */}
           <meta content="#FF5722" name="theme-color" />
 
+          {/* Impact site verification */}
+          {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+          {/* @ts-ignore */}
+          <meta name="impact-site-verification" value="e6afc3fc-0dcd-4625-a8cd-282991d40164" />
           {/* Structured Data */}
           <StructuredDataScript data={websiteStructuredData} />
           <StructuredDataScript data={organizationStructuredData} />

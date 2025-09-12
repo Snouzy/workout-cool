@@ -254,6 +254,23 @@ export default async function RootLayout({ params, children }: RootLayoutProps) 
             src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${env.NEXT_PUBLIC_AD_CLIENT}`}
           />
 
+          {/* Ezoic Privacy Scripts */}
+          {/* eslint-disable-next-line @next/next/no-sync-scripts */}
+          <script data-cfasync="false" src="https://cmp.gatekeeperconsent.com/min.js" />
+          {/* eslint-disable-next-line @next/next/no-sync-scripts */}
+          <script data-cfasync="false" src="https://the.gatekeeperconsent.com/cmp.min.js" />
+
+          {/* Ezoic Header Script */}
+          <script async src="//www.ezojs.com/ezoic/sa.min.js" />
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+                window.ezstandalone = window.ezstandalone || {};
+                ezstandalone.cmd = ezstandalone.cmd || [];
+              `,
+            }}
+          />
+
           {/* PWA Meta Tags */}
           <meta content="yes" name="apple-mobile-web-app-capable" />
           <meta content="default" name="apple-mobile-web-app-status-bar-style" />

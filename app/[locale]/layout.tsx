@@ -301,6 +301,24 @@ export default async function RootLayout({ params, children }: RootLayoutProps) 
           {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
           {/* @ts-ignore */}
           <meta name="impact-site-verification" value="e6afc3fc-0dcd-4625-a8cd-282991d40164" />
+
+          {/* Google Analytics 4 */}
+          {env.NEXT_PUBLIC_GA4_MEASUREMENT_ID && (
+            <>
+              <script async src={`https://www.googletagmanager.com/gtag/js?id=${env.NEXT_PUBLIC_GA4_MEASUREMENT_ID}`} />
+              <script
+                dangerouslySetInnerHTML={{
+                  __html: `
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){dataLayer.push(arguments);}
+                    gtag('js', new Date());
+                    gtag('config', '${env.NEXT_PUBLIC_GA4_MEASUREMENT_ID}');
+                  `,
+                }}
+              />
+            </>
+          )}
+
           {/* Structured Data */}
           <StructuredDataScript data={websiteStructuredData} />
           <StructuredDataScript data={organizationStructuredData} />

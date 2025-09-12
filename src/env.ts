@@ -95,6 +95,8 @@ export const env = createEnv({
     NEXT_PUBLIC_AD_PROVIDER: z.enum(["adsense", "ezoic"]).optional().default("adsense"),
     NEXT_PUBLIC_EZOIC_VERTICAL_LEFT_PLACEMENT_ID: z.string().optional(),
     NEXT_PUBLIC_EZOIC_VERTICAL_RIGHT_PLACEMENT_ID: z.string().optional(),
+    // GA4
+    NEXT_PUBLIC_GA4_MEASUREMENT_ID: z.string().optional(),
   },
 
   experimental__runtimeEnv: {
@@ -155,5 +157,6 @@ export const env = createEnv({
     NEXT_PUBLIC_AD_PROVIDER: process.env.NEXT_PUBLIC_AD_PROVIDER,
     NEXT_PUBLIC_EZOIC_VERTICAL_LEFT_PLACEMENT_ID: process.env.NEXT_PUBLIC_EZOIC_VERTICAL_LEFT_PLACEMENT_ID,
     NEXT_PUBLIC_EZOIC_VERTICAL_RIGHT_PLACEMENT_ID: process.env.NEXT_PUBLIC_EZOIC_VERTICAL_RIGHT_PLACEMENT_ID,
+    NEXT_PUBLIC_GA4_MEASUREMENT_ID: process.env.NEXT_PUBLIC_GA4_MEASUREMENT_ID,
   },
 });

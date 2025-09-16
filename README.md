@@ -4,8 +4,11 @@
 <h3><em>Modern fitness coaching platform with comprehensive exercise database</em></h3>
 <p>
 <a href="https://github.com/Snouzy/workout-cool/graphs/contributors"><img src="https://img.shields.io/github/contributors/Snouzy/workout-cool?style=plastic" alt="Contributors">
+<a href="https://github.com/Snouzy/workout-cool/network/members">  
 <img src="https://img.shields.io/github/forks/Snouzy/workout-cool" alt="Forks">
+<a href="https://github.com/Snouzy/workout-cool/stargazers">
 <img src="https://img.shields.io/github/stars/Snouzy/workout-cool" alt="Stars">
+<a href="https://github.com/Snouzy/workout-cool/issues">  
 <img src="https://img.shields.io/github/issues/Snouzy/workout-cool" alt="Issues">
 <img src="https://img.shields.io/github/repo-size/Snouzy/workout-cool" alt="Repository Size">
 <a href="LICENSE">

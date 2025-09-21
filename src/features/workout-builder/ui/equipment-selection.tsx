@@ -145,8 +145,11 @@ export function EquipmentSelection({ onToggleEquipment, selectedEquipment }: Equ
       {locale === "fr" ? (
         <NutripureAffiliateBanner />
       ) : (
-        env.NEXT_PUBLIC_EQUIPMENT_SELECTION_BANNER_AD_SLOT && (
-          <HorizontalBottomBanner adSlot={env.NEXT_PUBLIC_EQUIPMENT_SELECTION_BANNER_AD_SLOT} />
+        (env.NEXT_PUBLIC_EQUIPMENT_SELECTION_BANNER_AD_SLOT || env.NEXT_PUBLIC_EZOIC_EQUIPMENT_SELECTION_PLACEMENT_ID) && (
+          <HorizontalBottomBanner
+            adSlot={env.NEXT_PUBLIC_EQUIPMENT_SELECTION_BANNER_AD_SLOT}
+            ezoicPlacementId={env.NEXT_PUBLIC_EZOIC_EQUIPMENT_SELECTION_PLACEMENT_ID}
+          />
         )
       )}
       {/* <ActionBar onClearEquipment={onClearEquipment} selectedCount={selectedEquipment.length} /> */}

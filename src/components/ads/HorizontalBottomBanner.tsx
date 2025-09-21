@@ -1,6 +1,12 @@
 "use client";
-import { ResponsiveAdBanner } from "./ResponsiveAdBanner";
 
-export function HorizontalBottomBanner({ adSlot }: { adSlot: string }) {
-  return <ResponsiveAdBanner adSlot={adSlot} />;
+import { HorizontalAdBanner } from "@/components/ads/HorizontalAdBanner";
+
+interface HorizontalBottomBannerProps {
+  adSlot?: string;
+  ezoicPlacementId?: string;
+}
+
+export function HorizontalBottomBanner({ adSlot, ezoicPlacementId }: HorizontalBottomBannerProps) {
+  return <HorizontalAdBanner adSlot={adSlot} ezoicPlacementId={ezoicPlacementId} />;
 }

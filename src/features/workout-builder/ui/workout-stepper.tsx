@@ -274,12 +274,17 @@ export function WorkoutStepper() {
 
   const renderTopBanner = () => {
     if (currentStep === 1) {
-      if (locale === "fr") {
-        return <NutripureAffiliateBanner />;
-      }
+      // if (locale === "fr") {
+      //   return <NutripureAffiliateBanner />;
+      // }
 
-      if (env.NEXT_PUBLIC_TOP_STEPPER_STEP_1_BANNER_AD_SLOT) {
-        return <HorizontalTopBanner adSlot={env.NEXT_PUBLIC_TOP_STEPPER_STEP_1_BANNER_AD_SLOT} />;
+      if (env.NEXT_PUBLIC_TOP_STEPPER_STEP_1_BANNER_AD_SLOT || env.NEXT_PUBLIC_EZOIC_TOP_STEPPER_STEP_1_PLACEMENT_ID) {
+        return (
+          <HorizontalTopBanner
+            adSlot={env.NEXT_PUBLIC_TOP_STEPPER_STEP_1_BANNER_AD_SLOT}
+            ezoicPlacementId={env.NEXT_PUBLIC_EZOIC_TOP_STEPPER_STEP_1_PLACEMENT_ID}
+          />
+        );
       }
     }
 
@@ -288,8 +293,13 @@ export function WorkoutStepper() {
         return <NutripureAffiliateBanner />;
       }
 
-      if (env.NEXT_PUBLIC_TOP_STEPPER_STEP_2_BANNER_AD_SLOT) {
-        return <HorizontalTopBanner adSlot={env.NEXT_PUBLIC_TOP_STEPPER_STEP_2_BANNER_AD_SLOT} />;
+      if (env.NEXT_PUBLIC_TOP_STEPPER_STEP_2_BANNER_AD_SLOT || env.NEXT_PUBLIC_EZOIC_TOP_STEPPER_STEP_2_PLACEMENT_ID) {
+        return (
+          <HorizontalTopBanner
+            adSlot={env.NEXT_PUBLIC_TOP_STEPPER_STEP_2_BANNER_AD_SLOT}
+            ezoicPlacementId={env.NEXT_PUBLIC_EZOIC_TOP_STEPPER_STEP_2_PLACEMENT_ID}
+          />
+        );
       }
     }
 
@@ -298,8 +308,13 @@ export function WorkoutStepper() {
         return <NutripureAffiliateBanner />;
       }
 
-      if (env.NEXT_PUBLIC_TOP_STEPPER_STEP_3_BANNER_AD_SLOT) {
-        return <HorizontalTopBanner adSlot={env.NEXT_PUBLIC_TOP_STEPPER_STEP_3_BANNER_AD_SLOT} />;
+      if (env.NEXT_PUBLIC_TOP_STEPPER_STEP_3_BANNER_AD_SLOT || env.NEXT_PUBLIC_EZOIC_TOP_STEPPER_STEP_3_PLACEMENT_ID) {
+        return (
+          <HorizontalTopBanner
+            adSlot={env.NEXT_PUBLIC_TOP_STEPPER_STEP_3_BANNER_AD_SLOT}
+            ezoicPlacementId={env.NEXT_PUBLIC_EZOIC_TOP_STEPPER_STEP_3_PLACEMENT_ID}
+          />
+        );
       }
     }
   };

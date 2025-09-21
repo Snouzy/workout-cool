@@ -944,6 +944,7 @@ export default {
     subscription: "订阅",
     manage_subscription: "管理订阅",
     become_premium: "成为高级",
+    remove_ads: "移除广告",
     coming_soon: "即将推出",
     in_progress: "进行中",
     close: "关闭",

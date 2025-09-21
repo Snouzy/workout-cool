@@ -1815,6 +1815,7 @@ export default {
     subscription: "Подписка",
     manage_subscription: "Управление подпиской",
     become_premium: "Стань Премиум",
+    remove_ads: "Убрать рекламу",
     coming_soon: "Скоро",
     premium: "Премиум",
     free: "Бесплатно",

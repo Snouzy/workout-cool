@@ -1839,6 +1839,7 @@ export default {
     subscription: "Abonnement",
     manage_subscription: "Gérer abonnement",
     become_premium: "Devenir Premium",
+    remove_ads: "Supprimer les pubs",
     coming_soon: "Bientôt disponible",
     extremely_dissatisfied: "Très insatisfait",
     somewhat_dissatisfied: "Insatisfait",

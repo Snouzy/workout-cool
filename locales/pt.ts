@@ -1825,6 +1825,7 @@ export default {
     subscription: "Abonamento",
     manage_subscription: "Gerir abonamento",
     become_premium: "Torne-se Premium",
+    remove_ads: "Remover anúncios",
     coming_soon: "Em breve",
     free: "Gratuito",
     new: "Novo",

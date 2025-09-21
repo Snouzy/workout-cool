@@ -949,6 +949,7 @@ export default {
     subscription: "Suscripción",
     manage_subscription: "Gestionar suscripción",
     become_premium: "Torne-se Premium",
+    remove_ads: "Eliminar anuncios",
     in_progress: "En progreso",
     close: "Cerrar",
     premium: "Premium",

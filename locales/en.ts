@@ -1813,6 +1813,7 @@ export default {
     subscription: "Subscription",
     manage_subscription: "Manage subscription",
     become_premium: "Become Premium",
+    remove_ads: "Remove Ads",
     extremely_dissatisfied: "Extremely dissatisfied",
     somewhat_dissatisfied: "Somewhat dissatisfied",
     neutral: "Neutral",

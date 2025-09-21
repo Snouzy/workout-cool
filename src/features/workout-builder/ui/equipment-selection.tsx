@@ -9,7 +9,6 @@ import { cn } from "@/shared/lib/utils";
 import { env } from "@/env";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { NutripureAffiliateBanner } from "@/components/ads/nutripure-affiliate-banner";
 import { HorizontalBottomBanner } from "@/components/ads";
 
 import { EQUIPMENT_CONFIG } from "../model/equipment-config";
@@ -141,8 +140,14 @@ export function EquipmentSelection({ onToggleEquipment, selectedEquipment }: Equ
           </div>
         ))}
       </div>
+      {(env.NEXT_PUBLIC_EQUIPMENT_SELECTION_BANNER_AD_SLOT || env.NEXT_PUBLIC_EZOIC_EQUIPMENT_SELECTION_PLACEMENT_ID) && (
+        <HorizontalBottomBanner
+          adSlot={env.NEXT_PUBLIC_EQUIPMENT_SELECTION_BANNER_AD_SLOT}
+          ezoicPlacementId={env.NEXT_PUBLIC_EZOIC_EQUIPMENT_SELECTION_PLACEMENT_ID}
+        />
+      )}
 
-      {locale === "fr" ? (
+      {/* {locale === "fr" ? (
         <NutripureAffiliateBanner />
       ) : (
         (env.NEXT_PUBLIC_EQUIPMENT_SELECTION_BANNER_AD_SLOT || env.NEXT_PUBLIC_EZOIC_EQUIPMENT_SELECTION_PLACEMENT_ID) && (
@@ -151,7 +156,7 @@ export function EquipmentSelection({ onToggleEquipment, selectedEquipment }: Equ
             ezoicPlacementId={env.NEXT_PUBLIC_EZOIC_EQUIPMENT_SELECTION_PLACEMENT_ID}
           />
         )
-      )}
+      )} */}
       {/* <ActionBar onClearEquipment={onClearEquipment} selectedCount={selectedEquipment.length} /> */}
     </div>
   );

@@ -4,11 +4,14 @@ import { useState } from "react";
 import { CheckCircle } from "lucide-react";
 
 import { CreateProgramForm } from "./create-program-form";
+import { useRouter } from "next/navigation";
 
 interface CreateProgramModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
+
+const router = useRouter();
 
 const STEPS = [
   { id: 1, title: "Informations générales", description: "Titre, description, niveau..." },
@@ -40,7 +43,7 @@ export function CreateProgramModal({ open, onOpenChange }: CreateProgramModalPro
   const handleSuccess = () => {
     handleClose();
     // Refresh the page to show the new program
-    window.location.reload();
+    router.refresh();
   };
 
   return (

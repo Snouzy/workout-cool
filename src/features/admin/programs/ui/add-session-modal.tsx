@@ -17,6 +17,8 @@ import { Badge } from "@/components/ui/badge";
 
 import { addSessionToWeek } from "../actions/add-session.action";
 
+import { useRouter } from "next/navigation";
+
 const sessionSchema = z.object({
   title: z.string().min(1, "Le titre est requis"),
   titleEn: z.string().min(1, "Le titre en anglais est requis"),
@@ -44,6 +46,7 @@ interface AddSessionModalProps {
   nextSessionNumber: number;
 }
 
+const router = useRouter();
 const EQUIPMENT_OPTIONS = [
   { value: ExerciseAttributeValueEnum.BODY_ONLY, label: "Poids du corps" },
   { value: ExerciseAttributeValueEnum.DUMBBELL, label: "Haltères" },
@@ -118,7 +121,7 @@ export function AddSessionModal({ open, onOpenChange, weekId, nextSessionNumber 
       reset();
       setSelectedEquipment([]);
       onOpenChange(false);
-      window.location.reload(); // Refresh to show new session
+      router.refresh(); // Refresh to show new session
     } catch (error) {
       console.error("Error adding session:", error);
       alert("Erreur lors de l'ajout de la séance");

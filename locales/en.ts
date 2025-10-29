@@ -1397,6 +1397,11 @@ export default {
     title: "What's New",
     release_notes: "Release Notes",
     notes: {
+      note_2025_10_29: {
+        title: "🍑 New Booty Program Released!",
+        content:
+          "<li>A brand new <a href='/programs/booty-pump' class='text-blue-500 hover:underline'>Booty program</a> is now available!</li><li>Target and strengthen your glutes with specialized workouts</li><li>Designed for maximum results and muscle growth</li><li>Join the program today! 💪</li>",
+      },
       note_2025_08_18: {
         title: "🏆 New Leaderboard Feature!",
         content:

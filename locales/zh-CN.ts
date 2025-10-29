@@ -530,6 +530,11 @@ export default {
     title: "新功能",
     release_notes: "更新日志",
     notes: {
+      note_2025_10_29: {
+        title: "🍑 新的臀部训练计划发布！",
+        content:
+          "<li>全新的<a href='/programs/booty-pump' class='text-blue-500 hover:underline'>臀部训练计划</a>现已推出！</li><li>通过专门的训练来锻炼和强化您的臀部肌肉</li><li>专为获得最佳效果和肌肉增长而设计</li><li>立即加入计划！💪</li>",
+      },
       note_2025_08_18: {
         title: "🏆 新排行榜功能！",
         content:

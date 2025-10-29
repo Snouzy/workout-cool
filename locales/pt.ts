@@ -1401,6 +1401,11 @@ export default {
     title: "Novidades",
     release_notes: "Notas de Lançamento",
     notes: {
+      note_2025_10_29: {
+        title: "🍑 Novo Programa Booty Lançado!",
+        content:
+          "<li>Um novo <a href='/programs/booty-pump' class='text-blue-500 hover:underline'>programa Booty</a> já está disponível!</li><li>Trabalhe e fortaleça os seus glúteos com treinos especializados</li><li>Desenhado para resultados máximos e crescimento muscular</li><li>Junte-se ao programa hoje! 💪</li>",
+      },
       note_2025_08_18: {
         title: "🏆 Nova Funcionalidade de Classificação!",
         content:

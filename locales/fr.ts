@@ -1422,6 +1422,11 @@ export default {
     title: "Nouveautés",
     release_notes: "Notes",
     notes: {
+      note_2025_10_29: {
+        title: "🍑 Nouveau Programme Booty Disponible !",
+        content:
+          "<li>Un tout nouveau <a href='/programs/booty-pump' class='text-blue-500 hover:underline'>programme Booty</a> est maintenant disponible !</li><li>Ciblez et renforcez vos fessiers avec des entraînements spécialisés</li><li>Conçu pour des résultats maximaux et une croissance musculaire</li><li>Rejoignez le programme dès aujourd'hui ! 💪</li>",
+      },
       note_2025_08_18: {
         title: "🏆 Nouvelle Fonctionnalité Classement !",
         content:

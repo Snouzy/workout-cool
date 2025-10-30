@@ -7,9 +7,11 @@ import { useI18n } from "locales/client";
 import { SignUpSchema } from "@/features/auth/signup/schema/signup.schema";
 import { signUpAction } from "@/features/auth/signup/model/signup.action";
 import { brandedToast } from "@/components/ui/toast";
+import { useRouter } from "next/navigation";
 
 export const useSignUp = () => {
   const t = useI18n();
+  const router = useRouter();
   const searchParams = useSearchParams();
 
   const mutation = useMutation({
@@ -30,7 +32,7 @@ export const useSignUp = () => {
     onSuccess: async () => {
       const redirectUrl = searchParams.get("redirect");
       const destination = redirectUrl || "/profile";
-      window.location.href = destination;
+      router.push(destination);
       // router.push(`/${paths.verifyEmail}?signin=true`);
     },
 

@@ -131,20 +131,37 @@ export const useWorkoutSessionStore = create<WorkoutSessionState>((set, get) => 
     });
   },
 
-  completeWorkout: () => {
+  completeWorkout: async () => {
     const { session } = get();
 
     if (session) {
-      workoutSessionLocal.update(session.id, { status: "completed", endedAt: new Date().toISOString() });
+      const completedData = { status: "completed", endedAt: new Date().toISOString() };
+      
+      // Update local storage first
+      workoutSessionLocal.update(session.id, completedData);
+      
+      // Try to complete via API if user is logged in
+      try {
+        const { workoutSessionApi } = await import("@/shared/lib/workout-session/workout-session.api");
+        console.log("🔄 Attempting to complete workout via API with session ID:", session.id);
+        await workoutSessionApi.complete(session.id, {
+          endedAt: completedData.endedAt,
+          duration: Math.floor((Date.now() - new Date(session.startedAt).getTime()) / 1000),
+        });
+        console.log("✅ Workout completed via API");
+      } catch (error) {
+        console.log("⚠️ API completion failed, using local storage only:", error);
+      }
+      
       console.log({
-        session: { ...session, status: "completed", endedAt: new Date().toISOString() },
+        session: { ...session, ...completedData },
         progress: {},
         elapsedTime: 0,
         isTimerRunning: false,
         isWorkoutActive: false,
       });
       set({
-        session: { ...session, status: "completed", endedAt: new Date().toISOString() },
+        session: { ...session, ...completedData },
         progress: {},
         elapsedTime: 0,
         isTimerRunning: false,

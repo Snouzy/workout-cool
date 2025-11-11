@@ -1,5 +1,6 @@
 "use client";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 import { useI18n } from "locales/client";
 import { Button } from "@/components/ui/button";
@@ -20,6 +21,7 @@ export function WorkoutBuilderFooter({
   onStartWorkout?: VoidFunction;
 }) {
   const t = useI18n();
+  const router = useRouter();
   const isFirstStep = currentStep === 1;
   const isFinalStep = currentStep === totalSteps;
 
@@ -32,7 +34,13 @@ export function WorkoutBuilderFooter({
         {/* Navigation buttons */}
         <div className="mt-4 min-h-12 flex items-center justify-between gap-3 bg-white dark:bg-slate-900 w-full p-0.5 border border-slate-400 dark:border-slate-700 rounded-full">
           {/* Previous button */}
-          <Button className="flex-1 rounded-full min-h-12" disabled={isFirstStep} onClick={onPrevious} size="default" variant="ghost">
+          <Button
+            className="flex-1 rounded-full min-h-12"
+            disabled={isFirstStep}
+            onClick={() => router.back()}
+            size="default"
+            variant="ghost"
+          >
             <div className="flex items-center gap-2">
               <ArrowLeft className="h-4 w-4" />
               <span className="font-medium">{t("workout_builder.navigation.previous")}</span>

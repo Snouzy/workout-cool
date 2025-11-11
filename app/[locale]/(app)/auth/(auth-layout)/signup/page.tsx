@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getI18n } from "locales/server";
 import { paths } from "@/shared/constants/paths";
 import { SignUpForm } from "@/features/auth/signup/ui/signup-form";
+import { isGoogleOAuthEnabled } from "@/features/auth/lib/is-google-oauth-enabled";
 
 export const metadata = {
   title: "Sign Up - Workout.cool",
@@ -11,6 +12,7 @@ export const metadata = {
 
 export default async function AuthSignUpPage() {
   const t = await getI18n();
+  const googleOAuthEnabled = isGoogleOAuthEnabled();
 
   return (
     <div className="container mx-auto max-w-lg px-4 py-8">
@@ -19,7 +21,7 @@ export default async function AuthSignUpPage() {
         <p className="text-muted-foreground">{t("register_description")}</p>
       </div>
 
-      <SignUpForm />
+      <SignUpForm googleOAuthEnabled={googleOAuthEnabled} />
 
       <div className="text-muted-foreground mt-6 text-center text-sm">
         <p>

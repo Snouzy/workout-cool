@@ -2,6 +2,7 @@ import { PaymentProcessor, Platform } from "@prisma/client";
 
 import { revenueCatApi } from "@/shared/lib/revenuecat";
 import { prisma } from "@/shared/lib/prisma";
+import { BillingConfig } from "@/shared/lib/billing-config";
 
 import type { PremiumStatus, UserSubscription } from "@/shared/types/premium.types";
 
@@ -11,12 +12,19 @@ import type { PremiumStatus, UserSubscription } from "@/shared/types/premium.typ
  * Single responsibility: Determine if a user has premium access
  * Provider agnostic: Works with any payment system
  * Type safe: Strict TypeScript to prevent errors
+ * Respects billing mode for self-hosted instances
  */
 export class PremiumService {
   /**
    * Check if user has premium access
+   * Respects billing mode configuration for self-hosted instances
    */
   static async checkUserPremiumStatus(userId: string): Promise<PremiumStatus> {
+    // If billing is disabled or freemium, grant free premium access
+    if (BillingConfig.shouldGrantFreeAccess()) {
+      return { isPremium: true };
+    }
+
     const user = await prisma.user.findUnique({
       where: { id: userId },
       // select: {

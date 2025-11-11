@@ -6,6 +6,7 @@ import { Crown, Sparkles } from "lucide-react";
 
 import { useI18n } from "locales/client";
 import { cn } from "@/shared/lib/utils";
+import { useBillingConfig } from "@/shared/hooks/use-billing-config";
 import { useUserSubscription } from "@/features/ads/hooks/useUserSubscription";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -26,6 +27,7 @@ interface PremiumGateProps {
  *
  * Gates content behind premium subscription status
  * Shows upgrade prompt or custom fallback for non-premium users
+ * Respects billing mode - always grants access when billing is disabled/freemium
  */
 export function PremiumGate({
   children,
@@ -37,6 +39,12 @@ export function PremiumGate({
   className,
 }: PremiumGateProps) {
   const { isPremium, isPending } = useUserSubscription();
+  const { shouldShowPremiumGates } = useBillingConfig();
+
+  // If billing is disabled or freemium, always show content
+  if (!shouldShowPremiumGates) {
+    return <>{children}</>;
+  }
 
   // Show loading state while checking premium status
   if (isPending) {
@@ -119,7 +127,15 @@ function PremiumUpgradePrompt({ feature, message, onUpgradePress, className }: P
 }
 
 // Utility component for inline premium indicators
+// Only shown when billing is enabled
 export function PremiumBadge({ size = "small", className }: { size?: "small" | "medium" | "large"; className?: string }) {
+  const { shouldShowPremiumGates } = useBillingConfig();
+
+  // Don't show badge if billing is disabled or freemium
+  if (!shouldShowPremiumGates) {
+    return null;
+  }
+
   const sizeClasses = {
     small: "px-2 py-0.5 text-xs",
     medium: "px-3 py-1 text-sm",

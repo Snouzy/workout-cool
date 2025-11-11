@@ -76,6 +76,10 @@ BETTER_AUTH_SECRET=your-secret-key-here
 
 # Optional: Seed sample data on first run
 SEED_SAMPLE_DATA=true
+
+# Optional: Google OAuth (can be omitted if not using Google sign-in)
+# GOOGLE_CLIENT_ID="your-google-client-id.apps.googleusercontent.com"
+# GOOGLE_CLIENT_SECRET="your-google-client-secret"
 ```
 
 #### 4. Customize Sample Data (Optional)

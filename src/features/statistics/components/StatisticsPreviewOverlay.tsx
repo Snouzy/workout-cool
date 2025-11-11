@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 import { useI18n, useCurrentLocale } from "locales/client";
 import { cn } from "@/shared/lib/utils";
+import { useBillingConfig } from "@/shared/hooks/use-billing-config";
 
 interface StatisticsPreviewOverlayProps {
   className?: string;
@@ -145,8 +146,10 @@ export const StatisticsPreviewOverlay: React.FC<StatisticsPreviewOverlayProps> =
   const t = useI18n();
   const [isPlaying] = useState(true);
   const [showTeaserModal, setShowTeaserModal] = useState(false);
+  const { shouldShowPremiumGates } = useBillingConfig();
 
-  if (!isVisible) return null;
+  // Don't show overlay if billing is disabled or freemium
+  if (!shouldShowPremiumGates || !isVisible) return null;
 
   return (
     <motion.div

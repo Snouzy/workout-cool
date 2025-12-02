@@ -16,7 +16,11 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
-export function CredentialsLoginForm({ className, ...props }: React.ComponentPropsWithoutRef<"form">) {
+type CredentialsLoginFormProps = React.ComponentPropsWithoutRef<"form"> & {
+  googleOAuthEnabled?: boolean;
+};
+
+export function CredentialsLoginForm({ className, googleOAuthEnabled = false, ...props }: CredentialsLoginFormProps) {
   const t = useI18n();
   const searchParams = useSearchParams();
   const isResetSuccess = searchParams.get("reset") === "success";
@@ -66,16 +70,20 @@ export function CredentialsLoginForm({ className, ...props }: React.ComponentPro
         </div>
       </form>
 
-      <div className="relative">
-        <div className="absolute inset-0 flex items-center">
-          <span className="w-full border-t" />
-        </div>
-        <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-background text-muted-foreground px-2">{t("commons.or")}</span>
-        </div>
-      </div>
+      {googleOAuthEnabled && (
+        <>
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <span className="w-full border-t" />
+            </div>
+            <div className="relative flex justify-center text-xs uppercase">
+              <span className="bg-background text-muted-foreground px-2">{t("commons.or")}</span>
+            </div>
+          </div>
 
-      <ProviderButton action="signin" className="w-full" providerId="google" variant="outline" />
+          <ProviderButton action="signin" className="w-full" providerId="google" variant="outline" />
+        </>
+      )}
 
       <div className="text-center text-sm">
         {t("commons.dont_have_account")}{" "}

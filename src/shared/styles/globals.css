@@ -102,6 +102,15 @@
   }
 }
 
+[data-ezoic-incontent-sticky] {
+  overflow: auto !important;
+  overflow-y: auto !important;
+}
+
+.card.max-h-\[90vh\] {
+  overflow-y: auto !important;
+}
+
 .dark {
   --color-base-100: oklch(25.33% 0.016 252.42);
   --color-base-200: oklch(23.26% 0.014 253.1);

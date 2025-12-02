@@ -31,6 +31,11 @@ export const env = createEnv({
     // RevenueCat configuration
     REVENUECAT_SECRET_KEY: z.string().optional(),
     REVENUECAT_WEBHOOK_SECRET: z.string().optional(),
+
+    // Billing mode configuration for self-hosted instances
+    DEFAULT_BILLING_MODE: z
+      .enum(["DISABLED", "LICENSE_KEY", "SUBSCRIPTION", "FREEMIUM"])
+      .default("DISABLED"),
   },
   /**
    * If you add `client` environment variables, you need to add them to
@@ -101,6 +106,11 @@ export const env = createEnv({
     NEXT_PUBLIC_EZOIC_TOP_STEPPER_STEP_3_PLACEMENT_ID: z.string().optional(),
     // GA4
     NEXT_PUBLIC_GA4_MEASUREMENT_ID: z.string().optional(),
+
+    // Billing mode exposed to client for UI decisions
+    NEXT_PUBLIC_BILLING_MODE: z
+      .enum(["DISABLED", "LICENSE_KEY", "SUBSCRIPTION", "FREEMIUM"])
+      .default("DISABLED"),
   },
 
   experimental__runtimeEnv: {
@@ -166,5 +176,6 @@ export const env = createEnv({
     NEXT_PUBLIC_EZOIC_TOP_STEPPER_STEP_2_PLACEMENT_ID: process.env.NEXT_PUBLIC_EZOIC_TOP_STEPPER_STEP_2_PLACEMENT_ID,
     NEXT_PUBLIC_EZOIC_TOP_STEPPER_STEP_3_PLACEMENT_ID: process.env.NEXT_PUBLIC_EZOIC_TOP_STEPPER_STEP_3_PLACEMENT_ID,
     NEXT_PUBLIC_GA4_MEASUREMENT_ID: process.env.NEXT_PUBLIC_GA4_MEASUREMENT_ID,
+    NEXT_PUBLIC_BILLING_MODE: process.env.NEXT_PUBLIC_BILLING_MODE || process.env.DEFAULT_BILLING_MODE,
   },
 });

@@ -2,12 +2,17 @@
 
 import Script from "next/script";
 
+import { useBillingConfig } from "@/shared/hooks/use-billing-config";
 import { useUserSubscription } from "@/features/ads/hooks/useUserSubscription";
 
 export function AdBlockerForPremium() {
   const { isPremium, isPending } = useUserSubscription();
+  const { billingMode } = useBillingConfig();
 
-  if (isPending || !isPremium) {
+  // Block ads if user is premium or if billing is disabled (self-hosted)
+  const shouldBlockAds = isPremium || billingMode === "DISABLED";
+
+  if (isPending || !shouldBlockAds) {
     return null;
   }
 

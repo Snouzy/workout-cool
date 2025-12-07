@@ -15,7 +15,11 @@ import { signUpSchema } from "../schema/signup.schema";
 
 import type { SignUpSchema } from "../schema/signup.schema";
 
-export const SignUpForm = () => {
+type SignUpFormProps = {
+  googleOAuthEnabled?: boolean;
+};
+
+export const SignUpForm = ({ googleOAuthEnabled = false }: SignUpFormProps) => {
   const t = useI18n();
   const searchParams = useSearchParams();
   const redirectUrl = searchParams.get("redirect");
@@ -120,18 +124,22 @@ export const SignUpForm = () => {
           {t("commons.submit")}
         </Button>
 
-        <div className="relative">
-          <div className="absolute inset-0 flex items-center">
-            <span className="w-full border-t" />
+        {googleOAuthEnabled && (
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <span className="w-full border-t" />
+            </div>
+            <div className="relative flex justify-center text-xs uppercase">
+              <span className="bg-background text-muted-foreground px-2">{t("commons.or")}</span>
+            </div>
           </div>
-          <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-background text-muted-foreground px-2">{t("commons.or")}</span>
-          </div>
-        </div>
+        )}
       </Form>
-      <div className="mt-2 flex flex-col gap-2">
-        <ProviderButton action="signup" providerId="google" variant="default" />
-      </div>
+      {googleOAuthEnabled && (
+        <div className="mt-2 flex flex-col gap-2">
+          <ProviderButton action="signup" providerId="google" variant="default" />
+        </div>
+      )}
       
       <div className="mt-4 text-center text-sm">
         {t("commons.already_have_account")}{" "}

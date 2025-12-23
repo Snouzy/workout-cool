@@ -5,6 +5,7 @@ import { AVAILABLE_WORKOUT_SET_TYPES, MAX_WORKOUT_SET_COLUMNS } from "@/shared/c
 import { WorkoutSet, WorkoutSetType, WorkoutSetUnit } from "@/features/workout-session/types/workout-set";
 import { getWorkoutSetTypeLabels } from "@/features/workout-session/lib/workout-set-labels";
 import { Button } from "@/components/ui/button";
+import { normalizeInteger, normalizeDecimal } from "@/shared/lib/number/normalize";
 
 interface WorkoutSetRowProps {
   set: WorkoutSet;
@@ -18,6 +19,21 @@ export function WorkoutSessionSet({ set, setIndex, onChange, onFinish, onRemove 
   const t = useI18n();
   const types = set.types || [];
   const typeLabels = getWorkoutSetTypeLabels(t);
+
+  // Store weight as deci-units (x10). Example: "2.5" -> 25; "7,5" -> 75.
+  const parseWeightToDeci = (raw: string) => {
+    const n = parseFloat(String(raw).replace(",", "."));
+    if (!Number.isFinite(n) || n < 0) return 0;
+    // tiny epsilon avoids cases like 1.3 * 10 = 12.999999...
+    return Math.trunc(n * 10 + 1e-8);
+  };
+
+  // Show stored deci back with at most 1 decimal. 25 -> "2.5", 20 -> "2"
+  const formatDeciToDisplay = (val?: number) => {
+    if (val === undefined || val === null) return "";
+    const num = val / 10;
+    return Number.isInteger(num) ? String(num) : num.toFixed(1);
+  };
 
   const handleTypeChange = (columnIndex: number) => (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newTypes = [...types];
@@ -35,6 +51,13 @@ export function WorkoutSessionSet({ set, setIndex, onChange, onFinish, onRemove 
     const newValuesSec = Array.isArray(set.valuesSec) ? [...set.valuesSec] : [];
     newValuesSec[columnIndex] = e.target.value ? parseInt(e.target.value, 10) : 0;
     onChange(setIndex, { valuesSec: newValuesSec });
+  };
+
+  // Weight accepts decimals; store as deci-units inside valuesInt
+  const handleValueWeightChange = (columnIndex: number) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValuesInt = Array.isArray(set.valuesInt) ? [...set.valuesInt] : [];
+    newValuesInt[columnIndex] = parseWeightToDeci(e.target.value);
+    onChange(setIndex, { valuesInt: newValuesInt });
   };
 
   const handleUnitChange = (columnIndex: number) => (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -85,7 +108,9 @@ export function WorkoutSessionSet({ set, setIndex, onChange, onFinish, onRemove 
               disabled={set.completed}
               min={0}
               onChange={handleValueIntChange(columnIndex)}
+              onBlur={(e) => { e.currentTarget.value = normalizeInteger(e.currentTarget.value); }}
               pattern="[0-9]*"
+              inputMode="numeric"
               placeholder="min"
               type="number"
               value={valuesInt[columnIndex] ?? ""}
@@ -96,7 +121,9 @@ export function WorkoutSessionSet({ set, setIndex, onChange, onFinish, onRemove 
               max={59}
               min={0}
               onChange={handleValueSecChange(columnIndex)}
+              onBlur={(e) => { e.currentTarget.value = normalizeInteger(e.currentTarget.value); }}
               pattern="[0-9]*"
+              inputMode="numeric"
               placeholder="sec"
               type="number"
               value={valuesSec[columnIndex] ?? ""}
@@ -110,11 +137,19 @@ export function WorkoutSessionSet({ set, setIndex, onChange, onFinish, onRemove 
               className="border border-black rounded px-1 py-2 w-1/2 text-base text-center font-bold dark:bg-slate-800"
               disabled={set.completed}
               min={0}
-              onChange={handleValueIntChange(columnIndex)}
-              pattern="[0-9]*"
+              step="0.5"
+              inputMode="decimal"
+              onChange={handleValueWeightChange(columnIndex)}
+              onBlur={(e) => {
+                e.currentTarget.value = normalizeDecimal(e.currentTarget.value, { maxDecimals: 1 });
+              }}
               placeholder=""
               type="number"
-              value={valuesInt[columnIndex] ?? ""}
+              value={
+                valuesInt[columnIndex] !== undefined
+                  ? formatDeciToDisplay(valuesInt[columnIndex])
+                  : ""
+              }
             />
             <select
               className="border border-black rounded px-1 py-2 w-1/2 text-base font-bold bg-white dark:bg-slate-800 dark:text-gray-200 h-10 "
@@ -134,7 +169,9 @@ export function WorkoutSessionSet({ set, setIndex, onChange, onFinish, onRemove 
             disabled={set.completed}
             min={0}
             onChange={handleValueIntChange(columnIndex)}
+            onBlur={(e) => { e.currentTarget.value = normalizeInteger(e.currentTarget.value); }}
             pattern="[0-9]*"
+            inputMode="numeric"
             placeholder=""
             type="number"
             value={valuesInt[columnIndex] ?? ""}

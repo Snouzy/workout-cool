@@ -241,7 +241,7 @@ export function ProgramSessionClient({ program, week, session, isAuthenticated, 
                 <h2 className="text-lg font-semibold text-gray-900 dark:text-white">{t("programs.exercises_in_session")}</h2>
                 <div className="grid gap-3">
                   {session.exercises.map((exercise, index) => {
-                    const exerciseName = locale === "fr" ? exercise.exercise.name : exercise.exercise.nameEn;
+                    const exerciseName = locale === "zh-CN" ? exercise.exercise.name : exercise.exercise.nameEn;
                     return (
                       <div className="flex items-center p-4 bg-gray-50 dark:bg-gray-700 rounded-lg" key={exercise.id}>
                         <div className="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-bold mr-4">

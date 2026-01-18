@@ -26,9 +26,9 @@ export function ExerciseVideoModal({ open, onOpenChange, exercise }: ExerciseVid
   const [activeTab, setActiveTab] = useState("video");
   const [selectedTimeframe, setSelectedTimeframe] = useState<StatisticsTimeframe>("8weeks");
 
-  const title = locale === "fr" ? exercise.name : exercise.nameEn || exercise.name;
-  const introduction = locale === "fr" ? exercise.introduction : exercise.introductionEn || exercise.introduction;
-  const description = locale === "fr" ? exercise.description : exercise.descriptionEn || exercise.description;
+  const title = locale === "zh-CN" ? exercise.name : exercise.nameEn || exercise.name;
+  const introduction = locale === "zh-CN" ? exercise.introduction : exercise.introductionEn || exercise.introduction;
+  const description = locale === "zh-CN" ? exercise.description : exercise.descriptionEn || exercise.description;
   const videoUrl = exercise.fullVideoUrl;
   const youTubeEmbedUrl = getYouTubeEmbedUrl(videoUrl ?? "");
 

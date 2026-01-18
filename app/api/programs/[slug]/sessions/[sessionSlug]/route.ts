@@ -5,7 +5,7 @@ import { getSessionBySlug } from "@/features/programs/actions/get-session-by-slu
 export async function GET(request: Request, { params }: { params: Promise<{ slug: string; sessionSlug: string }> }) {
   try {
     const { searchParams } = new URL(request.url);
-    const locale = searchParams.get("locale") || "fr";
+    const locale = searchParams.get("locale") || "zh-CN";
 
     const { slug, sessionSlug } = await params;
     const sessionDetail = await getSessionBySlug(slug, sessionSlug, locale as any);

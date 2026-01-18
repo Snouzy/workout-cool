@@ -132,7 +132,7 @@ export function WorkoutSessionSets({
       <ol className="relative border-l-2 ml-2 border-slate-200 dark:border-slate-700">
         {session.exercises.map((ex, idx) => {
           const allSetsCompleted = ex.sets.length > 0 && ex.sets.every((set) => set.completed);
-          const exerciseName = locale === "fr" ? ex.name : ex.nameEn;
+          const exerciseName = locale === "zh-CN" ? ex.name : ex.nameEn;
 
           const details = exerciseDetailsMap[ex.id];
           return (

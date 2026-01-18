@@ -222,7 +222,7 @@ export const AddExerciseModal = ({ isOpen, onClose, selectedEquipment }: AddExer
                               {/* Nom de l'exercice */}
                               <div className="flex-1">
                                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-yellow-600 dark:group-hover:text-yellow-400 transition-colors leading-tight">
-                                  {locale === "fr" ? exercise.name : exercise.nameEn || exercise.name}
+                                  {locale === "zh-CN" ? exercise.name : exercise.nameEn || exercise.name}
                                 </h3>
                               </div>
 
@@ -331,7 +331,7 @@ export const AddExerciseModal = ({ isOpen, onClose, selectedEquipment }: AddExer
                               {/* Nom de l'exercice */}
                               <div className="flex-1">
                                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors leading-tight">
-                                  {locale === "fr" ? exercise.name : exercise.nameEn || exercise.name}
+                                  {locale === "zh-CN" ? exercise.name : exercise.nameEn || exercise.name}
                                 </h3>
                               </div>
 

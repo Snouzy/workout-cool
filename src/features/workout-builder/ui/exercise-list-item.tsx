@@ -43,7 +43,7 @@ export const ExerciseListItem = React.memo(function ExerciseListItem({
 
   const { attributes, listeners, setNodeRef, transform, isDragging } = useSortable({ id: exercise.id });
 
-  const exerciseName = locale === "fr" ? exercise.name : exercise.nameEn;
+  const exerciseName = locale === "zh-CN" ? exercise.name : exercise.nameEn;
   const muscleColor = MUSCLE_CONFIGS[muscle] || "bg-gray-500";
   const muscleTitle = t(("workout_builder.muscles." + muscle.toLowerCase()) as keyof typeof t);
 

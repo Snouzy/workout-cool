@@ -149,6 +149,79 @@ enum ExercisePrivacy {
   PRIVATE
 }
 
+// ========================================
+// CALISTHENICS ENUMS
+// ========================================
+
+enum ExerciseCategory {
+  push_horizontal
+  push_vertical
+  pull_horizontal
+  pull_vertical
+  core_anterior
+  core_posterior
+  core_stability
+  legs
+  skills
+  mobility
+}
+
+enum DifficultyLevel {
+  beginner
+  intermediate
+  advanced
+  elite
+}
+
+enum MeasurementType {
+  reps
+  time
+  reps_each_side
+  time_each_side
+}
+
+enum MuscleGroup {
+  chest
+  anterior_deltoid
+  triceps
+  serratus_anterior
+  latissimus_dorsi
+  rhomboids
+  rear_deltoid
+  biceps
+  brachialis
+  forearms
+  rectus_abdominis
+  obliques
+  transverse_abdominis
+  hip_flexors
+  erector_spinae
+  quadratus_lumborum
+  quadriceps
+  hamstrings
+  glutes
+  calves
+  hip_adductors
+  hip_abductors
+}
+
+enum EquipmentType {
+  bar
+  parallels
+  rings
+  band
+  wall
+  floor
+  box
+  bench
+}
+
+enum EquipmentHeight {
+  low
+  medium
+  high
+}
+
 model WorkoutSession {
   id        String                       @id @default(cuid())
   userId    String

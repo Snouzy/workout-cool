@@ -45,6 +45,10 @@ model User {
   // Training programs
   programEnrollments UserProgramEnrollment[]
 
+  // Calisthenics progression tracking
+  progressions  UserProgression[]
+  userEquipment UserEquipment[]
+
   @@map("user")
 }
 
@@ -170,7 +174,8 @@ model ProgressionFamily {
   updatedAt   DateTime         @updatedAt
 
   // Relations
-  levels ProgressionLevel[]
+  levels           ProgressionLevel[]
+  userProgressions UserProgression[]
 
   @@map("progression_families")
 }
@@ -190,6 +195,21 @@ model ProgressionLevel {
   @@map("progression_levels")
 }
 
+model UserProgression {
+  id                  String    @id @default(cuid())
+  userId              String
+  progressionFamilyId String
+  currentLevel        Int       @default(1)
+  unlockedAt          DateTime  @default(now())
+  lastAssessedAt      DateTime?
+
+  user              User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  progressionFamily ProgressionFamily @relation(fields: [progressionFamilyId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, progressionFamilyId])
+  @@map("user_progressions")
+}
+
 // ========================================
 // EQUIPMENT MODELS
 // ========================================
@@ -204,7 +224,8 @@ model Equipment {
   updatedAt     DateTime         @updatedAt
 
   // Relations
-  exercises ExerciseEquipment[]
+  exercises     ExerciseEquipment[]
+  userEquipment UserEquipment[]
 
   @@map("equipment")
 }
@@ -219,6 +240,18 @@ model ExerciseEquipment {
 
   @@unique([exerciseId, equipmentId])
   @@map("exercise_equipment")
+}
+
+model UserEquipment {
+  id          String @id @default(cuid())
+  userId      String
+  equipmentId String
+
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  equipment Equipment @relation(fields: [equipmentId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, equipmentId])
+  @@map("user_equipment")
 }
 
 // Enums

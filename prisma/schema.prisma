@@ -48,6 +48,7 @@ model User {
   // Calisthenics progression tracking
   progressions  UserProgression[]
   userEquipment UserEquipment[]
+  assessments   Assessment[]
 
   @@map("user")
 }
@@ -156,6 +157,7 @@ model Exercise {
   favoritesByUsers       UserFavoriteExercise[]
   equipmentRequired      ExerciseEquipment[]
   progressionLevels      ProgressionLevel[]
+  assessments            Assessment[]
 
   @@map("exercises")
 }
@@ -176,6 +178,7 @@ model ProgressionFamily {
   // Relations
   levels           ProgressionLevel[]
   userProgressions UserProgression[]
+  assessments      Assessment[]
 
   @@map("progression_families")
 }
@@ -208,6 +211,25 @@ model UserProgression {
 
   @@unique([userId, progressionFamilyId])
   @@map("user_progressions")
+}
+
+model Assessment {
+  id                  String      @id @default(cuid())
+  userId              String
+  progressionFamilyId String
+  exerciseTestedId    String
+  date                DateTime    @default(now())
+  repsCompleted       Int?
+  holdTimeSeconds     Int?
+  formQuality         FormQuality
+  rpe                 Int?        // Rate of Perceived Exertion (1-10)
+  passed              Boolean
+
+  user              User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  progressionFamily ProgressionFamily @relation(fields: [progressionFamilyId], references: [id], onDelete: Cascade)
+  exerciseTested    Exercise          @relation(fields: [exerciseTestedId], references: [id], onDelete: Cascade)
+
+  @@map("assessments")
 }
 
 // ========================================
@@ -331,6 +353,13 @@ enum EquipmentHeight {
   low
   medium
   high
+}
+
+enum FormQuality {
+  poor
+  acceptable
+  good
+  excellent
 }
 
 model WorkoutSession {

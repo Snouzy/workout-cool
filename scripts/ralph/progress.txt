@@ -1,3 +1,49 @@
+## Codebase Patterns
+- Ads were used via `@/components/ads` barrel export and `env.NEXT_PUBLIC_*_AD_SLOT` env vars
+- Navigation tabs defined in `src/features/layout/BottomNavigation.tsx` and `src/features/layout/Header.tsx`
+- Premium system was in `src/shared/lib/premium/`, `src/features/premium/`, `src/components/premium/`
+- The project uses a linter that auto-removes unused imports on save
+- Use `pnpm exec tsc --noEmit` for typecheck (need `pnpm install` first if no node_modules)
+- Pre-existing typecheck errors exist in `.next/types/validator.ts` (layout type mismatches) and `@public` image imports — these are not regressions
+- Env vars defined in `src/env.ts` using `@t3-oss/env-nextjs` with zod schemas
+- Sitemap is in `app/sitemap.ts`
+- Use `NEXT_TURBOPACK=0 npx next build` for reliable builds on Windows
+- The `import/order` eslint rule: no empty lines within groups, one empty line between groups
+
 # Ralph Progress Log
 Started: Tue, Jan 27, 2026 11:16:24 PM
+---
+
+## 2026-01-28 - US-001
+- Removed BMI calculator, calorie calculator, heart-rate zones tool pages and all sub-components
+- Removed entire `app/[locale]/(app)/tools/` directory
+- Removed `src/components/ads/` (16 ad components)
+- Removed premium/license system: `app/[locale]/(app)/premium/`, `app/api/premium/`, `app/api/billing/`, `app/api/webhooks/stripe/`, `app/api/revenuecat/`, `src/features/premium/`, `src/shared/lib/premium/`, `src/components/premium/`, `src/shared/lib/revenuecat/`
+- Cleaned up ad imports from: layout.tsx, profile page, workout-session-sets, programs-page, program-detail-page, premium-upsell-alert
+- Removed tools and premium tabs from BottomNavigation and premium menu from Header
+- Removed ad/stripe/revenuecat env vars from `src/env.ts`
+- Removed ad scripts (AdSense, Ezoic) from root layout `<head>`
+- Updated sitemap to remove calculator/tools routes
+- Removed heart-rate-zones screenshot assets
+- Files changed: 134 files, ~16k lines removed
+- **Learnings for future iterations:**
+  - The linter auto-removes unused imports, so many files get cleaned up automatically
+  - Pre-existing TS errors exist in validator.ts and @public module imports — don't treat as regressions
+  - `pnpm install` needed before typecheck if node_modules missing
+  - `premium-upsell-alert.tsx` was simplified to remove AdWrapper dependency but still exports PremiumUpsellAlert (unused, could be removed later)
+---
+
+## 2026-01-28 - US-001 (fix)
+- Deleted remaining `premium-upsell-alert.tsx` and `ads.txt/route.ts` that were missed
+- Fixed import order lint errors in profile/page.tsx, Header.tsx, program-detail-page.tsx
+- Removed `useIsPremium` import from program-detail-page (replaced with `const isPremium = false`)
+- Removed remaining premium check blocks from API statistics routes
+- Removed remaining ad banner JSX usages from workout-builder components
+- Removed `useUserSubscription` usage from ExercisesBrowser.tsx
+- Removed `PremiumGate` wrapper from statistics pages
+- Build compiles and lint/typecheck passes
+- **Learnings for future iterations:**
+  - Use `NEXT_TURBOPACK=0 npx next build` to avoid Turbopack panics on Windows
+  - Build env var errors (NEXT_PUBLIC_APP_URL) are runtime config, not code errors
+  - The `import/order` eslint rule requires no empty lines within import groups and empty lines between groups
 ---

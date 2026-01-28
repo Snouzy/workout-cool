@@ -21,7 +21,6 @@ import {
 } from "lucide-react";
 
 import { useCurrentLocale, useI18n } from "locales/client";
-
 import { getSlugForLocale } from "@/shared/lib/locale-slug";
 import { ATTRIBUTE_VALUE_TRANSLATION_KEYS, getAttributeValueLabel } from "@/shared/lib/attribute-value-translation";
 import { WelcomeModal } from "@/features/programs/ui/welcome-modal";
@@ -35,9 +34,7 @@ import {
   getWeekDescription,
   getWeekTitle,
 } from "@/features/programs/lib/translations-mapper";
-
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
-
 
 import { getProgramProgress } from "../actions/get-program-progress.action";
 import { ProgramDetail } from "../actions/get-program-by-slug.action";

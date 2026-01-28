@@ -1,0 +1,40 @@
+## Codebase Patterns
+- Feature-Sliced Design (FSD) is used for code organization: features/, entities/, shared/
+- Bottom navigation tabs are defined in src/features/layout/BottomNavigation.tsx
+- API routes live under app/api/ and may import from feature directories
+- Exercise statistics API routes are under app/api/exercises/[exerciseId]/statistics/
+- When removing a feature directory, check for API routes that import from it and preserve unrelated routes in the same directory
+- Stale .next/types can cause phantom TS errors after deleting routes — delete .next/types to clear them
+- ExerciseAttributeValueEnum was used by Program.type, Program.equipment, ProgramSession.equipment, WorkoutSession.muscles — all changed to String/String[]
+- attribute-value-translation.ts and equipment-config.ts define local string-based translations/configs that replaced Prisma enum imports
+
+---
+
+## 2026-01-28 - US-002
+- What was implemented: Stripped the workout-builder feature (3-step equipment → muscles → generate workflow)
+- Files changed:
+  - Deleted: src/features/workout-builder/ (entire directory, 49 files, ~7700 lines)
+  - Deleted: app/api/exercises/route.ts, app/api/exercises/shuffle/route.ts
+  - Modified: app/[locale]/(app)/page.tsx (removed WorkoutStepper, added placeholder)
+  - Modified: src/features/layout/BottomNavigation.tsx (Dumbbell → Home icon, id change)
+  - Preserved: app/api/exercises/[exerciseId]/statistics/*, app/api/exercises/all/ (used by statistics feature)
+- **Learnings for future iterations:**
+  - app/api/exercises/ contains both workout-builder routes AND statistics routes — don't blindly delete the whole directory
+  - The home page (app/[locale]/(app)/page.tsx) was the workout builder entry point
+  - BottomNavigation uses translation keys like bottom_navigation.workouts — the label wasn't changed, just the icon and id
+  - .next/types/ caches route type definitions; deleting routes requires clearing this cache for clean typecheck
+---
+
+## 2026-01-28 - US-003
+- What was implemented: Removed EAV exercise attribute system from Prisma schema
+- Files changed:
+  - Modified: prisma/schema.prisma (removed 3 models, 2 enums, changed enum references to String)
+  - Deleted: data/sample-exercises.csv, scripts/import-exercises-with-attributes.ts
+  - Modified: 8+ TS files to remove ExerciseAttributeNameEnum/ValueEnum imports
+  - Created: src/entities/exercise/model/equipment-config.ts (moved from workout-builder)
+  - Created: Several workout-session files that were moved from workout-builder
+- **Learnings for future iterations:**
+  - Program.type and Program.equipment now use String/String[] instead of enums
+  - WorkoutSession.muscles and ProgramSession.equipment also changed to String[]
+  - Migration not generated (no DB available in this env) — will need to run prisma migrate when DB is set up
+---

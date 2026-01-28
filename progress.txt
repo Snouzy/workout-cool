@@ -90,3 +90,17 @@
   - Unique constraints on (familyId, level) and (familyId, exerciseId) prevent duplicate levels and duplicate exercise assignments
   - unlockCriteria is a JSON field with schema: { minReps, minSets, minHoldTime, minFormQuality, consistencyWeeks }
 ---
+
+## 2026-01-28 - US-008
+- What was implemented: Added UserProgression and UserEquipment models to Prisma schema
+- Files changed:
+  - Modified: prisma/schema.prisma (added UserProgression and UserEquipment models)
+  - Added progressions and userEquipment relations on User model
+  - Added userProgressions relation on ProgressionFamily model
+  - Added userEquipment relation on Equipment model
+- **Learnings for future iterations:**
+  - UserProgression tracks each user's current level in each progression family with unique constraint on (userId, progressionFamilyId)
+  - UserEquipment is a join table for the many-to-many relationship between User and Equipment with unique constraint on (userId, equipmentId)
+  - Both models use onDelete: Cascade so deleting a user removes their progression and equipment records
+  - Table names are mapped to snake_case (user_progressions, user_equipment) for consistency with other models
+---

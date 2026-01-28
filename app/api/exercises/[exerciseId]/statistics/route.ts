@@ -2,7 +2,6 @@ import { z } from "zod";
 import { NextRequest, NextResponse } from "next/server";
 
 import { ExerciseStatisticsResponse, StatisticsErrorResponse } from "@/shared/types/statistics.types";
-import { PremiumService } from "@/shared/lib/premium/premium.service";
 import { STATISTICS_TIMEFRAMES, DEFAULT_TIMEFRAME } from "@/shared/constants/statistics";
 import { getMobileCompatibleSession } from "@/shared/api/mobile-auth";
 
@@ -33,18 +32,6 @@ export async function GET(
         message: "Authentication required" 
       };
       return NextResponse.json(errorResponse, { status: 401 });
-    }
-
-    // Check premium status
-    const premiumStatus = await PremiumService.checkUserPremiumStatus(user.id);
-    
-    if (!premiumStatus.isPremium) {
-      const errorResponse: StatisticsErrorResponse = { 
-        error: "PREMIUM_REQUIRED", 
-        message: "Exercise statistics is a premium feature",
-        isPremium: false 
-      };
-      return NextResponse.json(errorResponse, { status: 403 });
     }
 
     const { exerciseId } = await params;

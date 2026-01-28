@@ -3,7 +3,6 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { WeightProgressionResponse, StatisticsErrorResponse } from "@/shared/types/statistics.types";
 import { prisma } from "@/shared/lib/prisma";
-import { PremiumService } from "@/shared/lib/premium/premium.service";
 import { STATISTICS_TIMEFRAMES, DEFAULT_TIMEFRAME, TIMEFRAME_DAYS } from "@/shared/constants/statistics";
 import { getMobileCompatibleSession } from "@/shared/api/mobile-auth";
 
@@ -26,18 +25,6 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
         message: "Authentication required",
       };
       return NextResponse.json(errorResponse, { status: 401 });
-    }
-
-    // Check premium status
-    const premiumStatus = await PremiumService.checkUserPremiumStatus(user.id);
-
-    if (!premiumStatus.isPremium) {
-      const errorResponse: StatisticsErrorResponse = {
-        error: "PREMIUM_REQUIRED",
-        message: "Exercise statistics is a premium feature",
-        isPremium: false,
-      };
-      return NextResponse.json(errorResponse, { status: 403 });
     }
 
     // Parse timeframe

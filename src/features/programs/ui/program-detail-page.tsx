@@ -21,7 +21,7 @@ import {
 } from "lucide-react";
 
 import { useCurrentLocale, useI18n } from "locales/client";
-import { useIsPremium } from "@/shared/lib/premium/use-premium";
+
 import { getSlugForLocale } from "@/shared/lib/locale-slug";
 import { ATTRIBUTE_VALUE_TRANSLATION_KEYS, getAttributeValueLabel } from "@/shared/lib/attribute-value-translation";
 import { WelcomeModal } from "@/features/programs/ui/welcome-modal";
@@ -35,9 +35,9 @@ import {
   getWeekDescription,
   getWeekTitle,
 } from "@/features/programs/lib/translations-mapper";
-import { env } from "@/env";
+
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
-import { HorizontalBottomBanner, HorizontalTopBanner } from "@/components/ads";
+
 
 import { getProgramProgress } from "../actions/get-program-progress.action";
 import { ProgramDetail } from "../actions/get-program-by-slug.action";
@@ -59,7 +59,7 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
   const searchParams = useSearchParams();
   const router = useRouter();
   const currentLocale = useCurrentLocale();
-  const isPremium = useIsPremium();
+  const isPremium = false;
   const programTitle = getProgramTitle(program, currentLocale);
   const programDescription = getProgramDescription(program, currentLocale);
   const currentWeekFull = program.weeks.find((w) => w.weekNumber === selectedWeek);
@@ -178,9 +178,6 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
     <div className="flex-1 flex flex-col overflow-hidden relative">
       <div className="flex-1 overflow-y-auto overflow-x-hidden pb-20">
         <Breadcrumbs items={breadcrumbItems} />
-        {env.NEXT_PUBLIC_TOP_PROGRAM_DETAILS_BANNER_AD_SLOT && (
-          <HorizontalTopBanner adSlot={env.NEXT_PUBLIC_TOP_PROGRAM_DETAILS_BANNER_AD_SLOT} />
-        )}
         {/* Hero Image Section with Gamification */}
         <div className="relative h-40 sm:h-64 bg-gradient-to-br from-[#4F8EF7] to-[#25CB78]">
           <Image alt={programTitle} className="absolute inset-0 object-cover opacity-30" fill src={program.image} />
@@ -531,9 +528,6 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
                     });
                   })()}
                 </div>
-                {env.NEXT_PUBLIC_BOTTOM_PROGRAM_DETAILS_BANNER_AD_SLOT && (
-                  <HorizontalBottomBanner adSlot={env.NEXT_PUBLIC_BOTTOM_PROGRAM_DETAILS_BANNER_AD_SLOT} />
-                )}
               </div>
             </div>
           )}

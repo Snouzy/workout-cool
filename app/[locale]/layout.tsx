@@ -16,7 +16,6 @@ import { Version } from "@/components/version";
 import { TailwindIndicator } from "@/components/utils/TailwindIndicator";
 import { NextTopLoader } from "@/components/ui/next-top-loader";
 import { ServiceWorkerRegistration } from "@/components/pwa/ServiceWorkerRegistration";
-import { VerticalLeftBanner, VerticalRightBanner, AdBlockerForPremium } from "@/components/ads";
 
 import type { ReactElement } from "react";
 import type { Metadata } from "next";
@@ -246,31 +245,6 @@ export default async function RootLayout({ params, children }: RootLayoutProps) 
         <head>
           <meta charSet="UTF-8" />
           <meta content="width=device-width, initial-scale=1, maximum-scale=1 viewport-fit=cover" name="viewport" />
-          <meta content={env.NEXT_PUBLIC_AD_CLIENT} name="google-adsense-account" />
-
-          <script
-            async
-            crossOrigin="anonymous"
-            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${env.NEXT_PUBLIC_AD_CLIENT}`}
-          />
-
-          {/* Ezoic Privacy Scripts */}
-          {/* eslint-disable-next-line @next/next/no-sync-scripts */}
-          <script data-cfasync="false" src="https://cmp.gatekeeperconsent.com/min.js" />
-          {/* eslint-disable-next-line @next/next/no-sync-scripts */}
-          <script data-cfasync="false" src="https://the.gatekeeperconsent.com/cmp.min.js" />
-
-          {/* Ezoic Header Script */}
-          <script async src="//www.ezojs.com/ezoic/sa.min.js" />
-          <script
-            dangerouslySetInnerHTML={{
-              __html: `
-                window.ezstandalone = window.ezstandalone || {};
-                ezstandalone.cmd = ezstandalone.cmd || [];
-              `,
-            }}
-          />
-
           {/* PWA Meta Tags */}
           <meta content="yes" name="apple-mobile-web-app-capable" />
           <meta content="default" name="apple-mobile-web-app-status-bar-style" />
@@ -341,15 +315,11 @@ export default async function RootLayout({ params, children }: RootLayoutProps) 
             <FavoriteExercisesSynchronizer />
             <WorkoutSessionsSynchronizer />
             <ThemeSynchronizer />
-            {/* <AdSenseAutoAds /> */}
-            <AdBlockerForPremium />
             <NextTopLoader color="#FF5722" delay={100} showSpinner={false} />
 
             <div className="flex flex-col w-full">
               <div className="flex justify-center items-start gap-4 w-full">
-                <VerticalLeftBanner />
                 {children}
-                <VerticalRightBanner />
               </div>
             </div>
             <Version />

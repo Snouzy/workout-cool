@@ -3,13 +3,11 @@ import Image from "next/image";
 import { Check } from "lucide-react";
 import { ExerciseAttributeValueEnum } from "@prisma/client";
 
-import { useI18n, useCurrentLocale } from "locales/client";
+import { useI18n } from "locales/client";
 import { getEquipmentTranslation } from "@/shared/lib/workout-session/equipments";
 import { cn } from "@/shared/lib/utils";
-import { env } from "@/env";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { HorizontalBottomBanner } from "@/components/ads";
 
 import { EQUIPMENT_CONFIG } from "../model/equipment-config";
 
@@ -118,8 +116,6 @@ function EquipmentCard({ equipment, isSelected, onToggle }: EquipmentCardProps) 
 }
 
 export function EquipmentSelection({ onToggleEquipment, selectedEquipment }: EquipmentSelectionProps) {
-  const locale = useCurrentLocale();
-
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -140,23 +136,6 @@ export function EquipmentSelection({ onToggleEquipment, selectedEquipment }: Equ
           </div>
         ))}
       </div>
-      {(env.NEXT_PUBLIC_EQUIPMENT_SELECTION_BANNER_AD_SLOT || env.NEXT_PUBLIC_EZOIC_EQUIPMENT_SELECTION_PLACEMENT_ID) && (
-        <HorizontalBottomBanner
-          adSlot={env.NEXT_PUBLIC_EQUIPMENT_SELECTION_BANNER_AD_SLOT}
-          ezoicPlacementId={env.NEXT_PUBLIC_EZOIC_EQUIPMENT_SELECTION_PLACEMENT_ID}
-        />
-      )}
-
-      {/* {locale === "fr" ? (
-        <NutripureAffiliateBanner />
-      ) : (
-        (env.NEXT_PUBLIC_EQUIPMENT_SELECTION_BANNER_AD_SLOT || env.NEXT_PUBLIC_EZOIC_EQUIPMENT_SELECTION_PLACEMENT_ID) && (
-          <HorizontalBottomBanner
-            adSlot={env.NEXT_PUBLIC_EQUIPMENT_SELECTION_BANNER_AD_SLOT}
-            ezoicPlacementId={env.NEXT_PUBLIC_EZOIC_EQUIPMENT_SELECTION_PLACEMENT_ID}
-          />
-        )
-      )} */}
       {/* <ActionBar onClearEquipment={onClearEquipment} selectedCount={selectedEquipment.length} /> */}
     </div>
   );

@@ -20,7 +20,6 @@ import { TimeframeSelector } from "@/features/statistics/components/TimeframeSel
 import { StatisticsPreviewOverlay } from "@/features/statistics/components/StatisticsPreviewOverlay";
 import { OneRepMaxChart } from "@/features/statistics/components/OneRepMaxChart";
 import { ExerciseCharts } from "@/features/statistics/components/ExerciseStatisticsTab";
-import { useUserSubscription } from "@/features/ads/hooks/useUserSubscription";
 import { ExerciseWithAttributes } from "@/entities/exercise/types/exercise.types";
 import { getExerciseAttributesValueOf } from "@/entities/exercise/shared/muscles";
 import { SimpleSelect, SelectOption } from "@/components/ui/simple-select";
@@ -232,7 +231,7 @@ export const ExercisesBrowser = () => {
   const [showExerciseModal, setShowExerciseModal] = useState(false);
   const [showVideoModal, setShowVideoModal] = useState(false);
   const [selectedTimeframe, setSelectedTimeframe] = useState<StatisticsTimeframe>("8weeks");
-  const { isPremium } = useUserSubscription();
+  const isPremium = false;
   const t = useI18n();
 
   const handleExerciseSelect = (exercise: ExerciseWithAttributes) => {

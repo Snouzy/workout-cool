@@ -66,3 +66,15 @@
   - get-session-by-slug.action.ts had references to old fields (fullVideoUrl, fullVideoImageUrl, descriptionEn) that no longer exist — these needed to be mapped to new field names
   - Run `pnpm lint:fix` to auto-fix import order issues rather than manually reordering
 ---
+
+## 2026-01-28 - US-006
+- What was implemented: Added Equipment and ExerciseEquipment models to Prisma schema
+- Files changed:
+  - Modified: prisma/schema.prisma (added Equipment model and ExerciseEquipment join model in a new "EQUIPMENT MODELS" section)
+  - Added equipmentRequired relation on Exercise model pointing to ExerciseEquipment
+- **Learnings for future iterations:**
+  - The Equipment model uses EquipmentType and EquipmentHeight enums from US-004
+  - ExerciseEquipment creates a many-to-many relationship with unique constraint on (exerciseId, equipmentId)
+  - Both models use onDelete: Cascade so deleting an exercise or equipment removes the join records
+  - Table names are mapped to snake_case (equipment, exercise_equipment) for consistency
+---

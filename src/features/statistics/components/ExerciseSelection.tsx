@@ -1,14 +1,13 @@
 "use client";
 
 import React, { useState, useCallback } from "react";
-import Image from "next/image";
 import { Search, BarChart3 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
-import { ExerciseAttributeNameEnum } from "@prisma/client";
 
+import { useI18n } from "locales/client";
+import { getAttributeValueLabel } from "@/shared/lib/attribute-value-translation";
 import { ExerciseVideoModal } from "@/features/workout-session/ui/exercise-video-modal";
-import { ExerciseWithAttributes } from "@/entities/exercise/types/exercise.types";
-import { getExerciseAttributesValueOf, getPrimaryMuscle } from "@/entities/exercise/shared/muscles";
+import { BaseExercise } from "@/entities/exercise/types/exercise.types";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Input } from "@/components/ui/input";
@@ -18,7 +17,6 @@ import { Badge } from "@/components/ui/badge";
 
 const exerciseService = {
   async getAllExercises(params: { page?: number; limit?: number; search?: string; muscle?: string }) {
-    // This would be replaced with actual API call
     const response = await fetch(`/api/exercises/all?${new URLSearchParams(params as any)}`);
     return response.json();
   },
@@ -27,16 +25,17 @@ const exerciseService = {
 interface ExerciseSelectionProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onSelectExercise: (exercise: ExerciseWithAttributes) => void;
+  onSelectExercise: (exercise: BaseExercise) => void;
 }
 
-const MUSCLES = ["CHEST", "BACK", "SHOULDERS", "BICEPS", "TRICEPS", "LEGS", "ABDOMINALS"];
+const MUSCLES = ["chest", "latissimus_dorsi", "anterior_deltoid", "biceps", "triceps", "quadriceps", "rectus_abdominis"];
 
 export const ExerciseSelection: React.FC<ExerciseSelectionProps> = ({ open, onOpenChange, onSelectExercise }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedMuscle, setSelectedMuscle] = useState<string | undefined>();
-  const [selectedExercise, setSelectedExercise] = useState<ExerciseWithAttributes | null>(null);
+  const [selectedExercise, setSelectedExercise] = useState<BaseExercise | null>(null);
   const [showVideoModal, setShowVideoModal] = useState(false);
+  const t = useI18n();
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["exercises", "all", searchQuery, selectedMuscle],
@@ -60,13 +59,13 @@ export const ExerciseSelection: React.FC<ExerciseSelectionProps> = ({ open, onOp
     [selectedMuscle],
   );
 
-  const handleExercisePress = useCallback((exercise: ExerciseWithAttributes) => {
+  const handleExercisePress = useCallback((exercise: BaseExercise) => {
     setSelectedExercise(exercise);
     setShowVideoModal(true);
   }, []);
 
   const handleSelectForStats = useCallback(
-    (exercise: ExerciseWithAttributes) => {
+    (exercise: BaseExercise) => {
       onSelectExercise(exercise);
       onOpenChange(false);
     },
@@ -74,8 +73,8 @@ export const ExerciseSelection: React.FC<ExerciseSelectionProps> = ({ open, onOp
   );
 
   const renderExerciseItem = useCallback(
-    (exercise: ExerciseWithAttributes) => {
-      const primaryMuscle = getPrimaryMuscle(exercise.attributes);
+    (exercise: BaseExercise) => {
+      const primaryMuscleLabel = (exercise.primaryMuscles || []).map((m: string) => getAttributeValueLabel(m, t)).join(", ");
 
       return (
         <div
@@ -83,16 +82,11 @@ export const ExerciseSelection: React.FC<ExerciseSelectionProps> = ({ open, onOp
           key={exercise.id}
         >
           <div className="flex-1 flex items-center gap-4 cursor-pointer" onClick={() => handleExercisePress(exercise)}>
-            {exercise.fullVideoImageUrl && (
-              <div className="relative w-16 h-16 rounded-lg overflow-hidden bg-slate-100 dark:bg-slate-700">
-                <Image alt={exercise.name} className="object-cover" fill src={exercise.fullVideoImageUrl} />
-              </div>
-            )}
             <div className="flex-1">
               <h3 className="font-medium text-slate-900 dark:text-slate-100 mb-1">{exercise.name}</h3>
-              {primaryMuscle && (
+              {primaryMuscleLabel && (
                 <Badge className="text-xs" variant="success">
-                  {getExerciseAttributesValueOf(exercise, ExerciseAttributeNameEnum.PRIMARY_MUSCLE)}
+                  {primaryMuscleLabel}
                 </Badge>
               )}
             </div>
@@ -105,7 +99,7 @@ export const ExerciseSelection: React.FC<ExerciseSelectionProps> = ({ open, onOp
         </div>
       );
     },
-    [handleExercisePress, handleSelectForStats],
+    [handleExercisePress, handleSelectForStats, t],
   );
 
   const renderMuscleFilters = useCallback(
@@ -121,12 +115,12 @@ export const ExerciseSelection: React.FC<ExerciseSelectionProps> = ({ open, onOp
             key={muscle}
             onClick={() => handleMuscleSelect(muscle)}
           >
-            {muscle}
+            {getAttributeValueLabel(muscle, t)}
           </button>
         ))}
       </div>
     ),
-    [selectedMuscle, handleMuscleSelect],
+    [selectedMuscle, handleMuscleSelect, t],
   );
 
   const renderContent = useCallback(() => {

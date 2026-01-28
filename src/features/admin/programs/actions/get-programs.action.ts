@@ -84,16 +84,7 @@ export async function getProgramById(id: string): Promise<ProgramWithFullDetails
             include: {
               exercises: {
                 include: {
-                  exercise: {
-                    include: {
-                      attributes: {
-                        include: {
-                          attributeName: true,
-                          attributeValue: true,
-                        },
-                      },
-                    },
-                  },
+                  exercise: true,
                   suggestedSets: {
                     orderBy: { setIndex: "asc" },
                   },

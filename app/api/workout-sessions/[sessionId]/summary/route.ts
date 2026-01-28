@@ -27,12 +27,6 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
               select: {
                 name: true,
                 nameEn: true,
-                attributes: {
-                  include: {
-                    attributeName: true,
-                    attributeValue: true,
-                  },
-                },
               },
             },
             sets: true,

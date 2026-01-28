@@ -9,14 +9,14 @@ import confetti from "canvas-confetti";
 import { useCurrentLocale, useI18n } from "locales/client";
 import TrophyImg from "@public/images/trophy.png";
 import { cn } from "@/shared/lib/utils";
+import { ExerciseVideoModal } from "@/features/workout-session/ui/exercise-video-modal";
 import { useWorkoutSession } from "@/features/workout-session/model/use-workout-session";
 import { useSyncWorkoutSessions } from "@/features/workout-session/model/use-sync-workout-sessions";
-import { ExerciseVideoModal } from "@/features/workout-session/ui/exercise-video-modal";
 import { useSyncFavoriteExercises } from "@/features/workout-session/hooks/use-sync-favorite-exercises";
 import { Button } from "@/components/ui/button";
 
-import { FavoriteExerciseButton } from "./favorite-exercise-button";
 import { WorkoutSessionSet } from "./workout-session-set";
+import { FavoriteExerciseButton } from "./favorite-exercise-button";
 
 export function WorkoutSessionSets({
   showCongrats,
@@ -147,7 +147,7 @@ export function WorkoutSessionSets({
               </span>
               {/* Image + nom de l'exercice */}
               <div className="flex items-center gap-3 ml-2 hover:opacity-80">
-                {details?.fullVideoImageUrl && (
+                {details?.imageUrls?.[0] && (
                   <div
                     className="relative aspect-video max-w-24 rounded-lg overflow-hidden shrink-0 bg-slate-200 dark:bg-slate-800 border border-slate-200 dark:border-slate-700/50 cursor-pointer"
                     onClick={(e) => {
@@ -159,7 +159,7 @@ export function WorkoutSessionSets({
                       alt={exerciseName || "Exercise image"}
                       className="w-full h-full object-cover scale-[1.35]"
                       height={48}
-                      src={details.fullVideoImageUrl}
+                      src={details.imageUrls?.[0]}
                       width={48}
                     />
                     <div className="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-200">
@@ -178,7 +178,7 @@ export function WorkoutSessionSets({
                   )}
                 >
                   <span className="text-xl leading-[1.3] flex-1">{exerciseName}</span>
-                  {details?.introduction && (
+                  {details?.instructions?.length && (
                     <span
                       className="flex text-xs mt-1 text-slate-500 dark:text-slate-400 underline cursor-pointer hover:text-blue-600"
                       onClick={(e) => {
@@ -192,7 +192,7 @@ export function WorkoutSessionSets({
                 </div>
               </div>
               {/* Modale vidéo */}
-              {details && details.fullVideoUrl && videoModal.open && videoModal.exerciseId === ex.id && (
+              {details && details.videoUrl && videoModal.open && videoModal.exerciseId === ex.id && (
                 <ExerciseVideoModal
                   exercise={details}
                   onOpenChange={(open) => setVideoModal({ open, exerciseId: open ? ex.id : undefined })}

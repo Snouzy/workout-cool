@@ -70,16 +70,7 @@ export async function getSessionBySlug(
         },
         exercises: {
           include: {
-            exercise: {
-              include: {
-                attributes: {
-                  include: {
-                    attributeName: true,
-                    attributeValue: true,
-                  },
-                },
-              },
-            },
+            exercise: true,
             suggestedSets: {
               orderBy: { setIndex: "asc" },
             },
@@ -135,32 +126,27 @@ export async function getSessionBySlug(
             id: ex.exercise.id,
             name: ex.exercise.name,
             nameEn: ex.exercise.nameEn || "",
-            nameEs: ex.exercise.nameEn || "", // TODO: Fix when DB has proper values
-            namePt: ex.exercise.nameEn || "",
-            nameRu: ex.exercise.nameEn || "",
-            nameZhCn: ex.exercise.nameEn || "",
+            slug: ex.exercise.slug,
             description: ex.exercise.description || "",
-            descriptionEn: ex.exercise.descriptionEn || "",
-            descriptionEs: ex.exercise.descriptionEn || "", // TODO: Fix when DB has proper values
-            descriptionPt: ex.exercise.descriptionEn || "",
-            descriptionRu: ex.exercise.descriptionEn || "",
-            descriptionZhCn: ex.exercise.descriptionEn || "",
-            fullVideoUrl: ex.exercise.fullVideoUrl,
-            fullVideoImageUrl: ex.exercise.fullVideoImageUrl,
-            introduction: null,
-            introductionEn: null,
-            slug: null,
-            slugEn: null,
+            instructions: ex.exercise.instructions,
+            cues: ex.exercise.cues,
+            commonMistakes: ex.exercise.commonMistakes,
+            videoUrl: ex.exercise.videoUrl,
+            imageUrls: ex.exercise.imageUrls,
+            difficultyLevel: ex.exercise.difficultyLevel,
+            measurementType: ex.exercise.measurementType,
+            defaultSets: ex.exercise.defaultSets,
+            defaultReps: ex.exercise.defaultReps,
+            defaultHoldTime: ex.exercise.defaultHoldTime,
+            restBetweenSets: ex.exercise.restBetweenSets,
+            category: ex.exercise.category,
+            subcategory: ex.exercise.subcategory,
+            primaryMuscles: ex.exercise.primaryMuscles,
+            secondaryMuscles: ex.exercise.secondaryMuscles,
+            bandAssistance: ex.exercise.bandAssistance,
+            bandResistance: ex.exercise.bandResistance,
             createdAt: ex.exercise.createdAt,
             updatedAt: ex.exercise.updatedAt,
-            attributes: ex.exercise.attributes.map((attr) => ({
-              id: attr.id,
-              exerciseId: attr.exerciseId,
-              attributeNameId: attr.attributeNameId,
-              attributeValueId: attr.attributeValueId,
-              attributeName: attr.attributeName.name,
-              attributeValue: attr.attributeValue.value,
-            })),
           },
           suggestedSets: ex.suggestedSets.map((set) => ({
             id: set.id,

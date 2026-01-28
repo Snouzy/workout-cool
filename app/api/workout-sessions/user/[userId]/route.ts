@@ -32,27 +32,6 @@ export async function GET(request: NextRequest) {
           ...sessionExercise.exercise,
           createdAt: sessionExercise.exercise.createdAt.toISOString(),
           updatedAt: sessionExercise.exercise.updatedAt.toISOString(),
-          attributes: sessionExercise.exercise.attributes.map((attr) => ({
-            id: attr.id,
-            exerciseId: attr.exerciseId,
-            attributeNameId: attr.attributeNameId,
-            attributeValueId: attr.attributeValueId,
-            createdAt: attr.createdAt.toISOString(),
-            updatedAt: attr.updatedAt.toISOString(),
-            attributeName: {
-              id: attr.attributeName.id,
-              name: attr.attributeName.name,
-              createdAt: attr.attributeName.createdAt.toISOString(),
-              updatedAt: attr.attributeName.updatedAt.toISOString(),
-            },
-            attributeValue: {
-              id: attr.attributeValue.id,
-              attributeNameId: attr.attributeValue.attributeNameId,
-              value: attr.attributeValue.value,
-              createdAt: attr.attributeValue.createdAt.toISOString(),
-              updatedAt: attr.attributeValue.updatedAt.toISOString(),
-            },
-          })),
         },
         sets: sessionExercise.sets.map((set) => ({
           id: set.id,

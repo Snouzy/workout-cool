@@ -121,19 +121,30 @@ model Feedbacks {
 }
 
 model Exercise {
-  id                String   @id @default(cuid())
-  name              String
-  nameEn            String?
-  description       String?  @db.Text
-  descriptionEn     String?  @db.Text
-  fullVideoUrl      String?  @db.Text
-  fullVideoImageUrl String?  @db.Text
-  introduction      String?  @db.Text
-  introductionEn    String?  @db.Text
-  slug              String?  @unique
-  slugEn            String?  @unique
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  id              String   @id @default(cuid())
+  name            String   // French name (default)
+  nameEn          String?  // English name
+  slug            String   @unique
+  description     String   @db.Text
+  instructions    String[] @default([])
+  cues            String[] @default([])
+  commonMistakes  String[] @default([])
+  videoUrl        String?  @db.Text
+  imageUrls       String[] @default([])
+  difficultyLevel DifficultyLevel
+  measurementType MeasurementType
+  defaultSets     Int
+  defaultReps     Int?
+  defaultHoldTime Int?     // in seconds
+  restBetweenSets Int      // in seconds
+  category        ExerciseCategory
+  subcategory     String
+  primaryMuscles  MuscleGroup[]
+  secondaryMuscles MuscleGroup[]
+  bandAssistance  Boolean  @default(false)
+  bandResistance  Boolean  @default(false)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 
   // Relations
   WorkoutSessionExercise WorkoutSessionExercise[]

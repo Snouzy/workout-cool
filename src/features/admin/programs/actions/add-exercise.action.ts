@@ -102,14 +102,6 @@ export async function getExercises(search?: string): Promise<ExerciseWithAttribu
 
   const exercises = await prisma.exercise.findMany({
     where,
-    include: {
-      attributes: {
-        include: {
-          attributeName: true,
-          attributeValue: true,
-        },
-      },
-    },
     orderBy: { name: "asc" },
     take: 50,
   });

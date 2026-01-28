@@ -3,7 +3,7 @@
 import React from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { Dumbbell, Grid, Activity, Trophy } from "lucide-react";
+import { Home, Grid, Activity, Trophy } from "lucide-react";
 
 import { useCurrentLocale, useI18n } from "locales/client";
 import { cn } from "@/shared/lib/utils";
@@ -16,12 +16,12 @@ export function BottomNavigation() {
 
   const tabs = [
     {
-      id: "workout-builder",
+      id: "home",
       label: t("bottom_navigation.workouts"),
       shortLabel: t("bottom_navigation.workouts"),
       mobileLabel: t("bottom_navigation.workouts"),
       href: paths.root,
-      icon: Dumbbell,
+      icon: Home,
       emoji: "WorkoutCoolHappy.png",
       description: t("bottom_navigation.workouts_tooltip"),
       isActive: pathname === paths.root || pathname === `/${locale}`,

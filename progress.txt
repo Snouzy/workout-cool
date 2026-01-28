@@ -104,3 +104,16 @@
   - Both models use onDelete: Cascade so deleting a user removes their progression and equipment records
   - Table names are mapped to snake_case (user_progressions, user_equipment) for consistency with other models
 ---
+
+## 2026-01-28 - US-009
+- What was implemented: Added Assessment model to record level-up test attempts and results
+- Files changed:
+  - Modified: prisma/schema.prisma
+    - Added FormQuality enum: poor, acceptable, good, excellent
+    - Added Assessment model with fields: id, userId, progressionFamilyId, exerciseTestedId, date, repsCompleted, holdTimeSeconds, formQuality, rpe, passed
+    - Added assessments relations to User, ProgressionFamily, and Exercise models
+- **Learnings for future iterations:**
+  - Assessment model captures level-up test data: what exercise was tested, how the user performed (reps/hold time), form quality rating, RPE, and whether they passed
+  - FormQuality enum is reused in both Assessment (for level-up tests) and will be used in WorkoutSet (for regular training feedback) in US-010
+  - The rpe field stores Rate of Perceived Exertion (1-10 scale) which helps track training intensity
+---

@@ -11,9 +11,9 @@ import { ExerciseAttributeNameEnum, ExerciseAttributeValueEnum } from "@prisma/c
 import { useI18n } from "locales/client";
 import { getAttributeValueLabel } from "@/shared/lib/attribute-value-translation";
 import { StatisticsTimeframe } from "@/shared/constants/statistics";
-import { ExerciseVideoModal } from "@/features/workout-builder/ui/exercise-video-modal";
-import { WorkoutBuilderExerciseWithAttributes } from "@/features/workout-builder/types";
-import { EQUIPMENT_CONFIG } from "@/features/workout-builder/model/equipment-config";
+import { ExerciseVideoModal } from "@/features/workout-session/ui/exercise-video-modal";
+import { ExerciseWithAttributes as WorkoutBuilderExerciseWithAttributes } from "@/entities/exercise/types/exercise.types";
+import { EQUIPMENT_CONFIG } from "@/entities/exercise/model/equipment-config";
 import { WeightProgressionChart } from "@/features/statistics/components/WeightProgressionChart";
 import { VolumeChart } from "@/features/statistics/components/VolumeChart";
 import { TimeframeSelector } from "@/features/statistics/components/TimeframeSelector";
@@ -291,7 +291,7 @@ export const ExercisesBrowser = () => {
       fullVideoImageUrl: exercise.fullVideoImageUrl || null,
       introduction: null,
       introductionEn: null,
-      order: 0,
+
       createdAt: new Date(),
       updatedAt: new Date(),
       attributes: convertedAttributes,

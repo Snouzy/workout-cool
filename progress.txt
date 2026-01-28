@@ -47,3 +47,22 @@
   - Pre-existing typecheck errors from US-003 EAV removal still present — expected until new Exercise model is built
   - Prisma generate works with new enums without running migration
 ---
+
+## 2026-01-28 - US-005
+- What was implemented: Added new Exercise model with calisthenics-specific fields to Prisma schema
+- Files changed:
+  - Modified: prisma/schema.prisma (updated Exercise model with new fields: name, nameEn, slug, description, instructions[], cues[], commonMistakes[], videoUrl, imageUrls[], difficultyLevel, measurementType, defaultSets/Reps/HoldTime, restBetweenSets, category, subcategory, primaryMuscles[], secondaryMuscles[], bandAssistance, bandResistance)
+  - Modified: app/api/workout-sessions/[sessionId]/summary/route.ts (removed attributes include)
+  - Modified: app/api/workout-sessions/user/[userId]/route.ts (removed attributes mapping)
+  - Modified: scripts/seed-leaderboard-data.ts (replaced ExerciseAttributeValueEnum with string values)
+  - Modified: src/features/admin/programs/actions/add-exercise.action.ts (removed attributes include)
+  - Modified: src/features/admin/programs/actions/get-programs.action.ts (removed attributes include)
+  - Modified: src/features/programs/actions/get-session-by-slug.action.ts (rewrote to use new Exercise model fields)
+  - Modified: src/features/programs/actions/start-program-session.action.ts (removed attributes include)
+  - Fixed lint import order in 3 statistics/workout-session files
+- **Learnings for future iterations:**
+  - The Exercise model already had some new fields from previous work; just needed to verify and fix TS errors
+  - When removing EAV attributes, all Prisma includes that had `attributes: { include: { attributeName: true, attributeValue: true } }` must be updated
+  - get-session-by-slug.action.ts had references to old fields (fullVideoUrl, fullVideoImageUrl, descriptionEn) that no longer exist — these needed to be mapped to new field names
+  - Run `pnpm lint:fix` to auto-fix import order issues rather than manually reordering
+---

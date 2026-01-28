@@ -150,8 +150,40 @@ model Exercise {
   WorkoutSessionExercise WorkoutSessionExercise[]
   ProgramSessionExercise ProgramSessionExercise[]
   favoritesByUsers       UserFavoriteExercise[]
+  equipmentRequired      ExerciseEquipment[]
 
   @@map("exercises")
+}
+
+// ========================================
+// EQUIPMENT MODELS
+// ========================================
+
+model Equipment {
+  id            String           @id @default(cuid())
+  name          String
+  type          EquipmentType
+  heightVariant EquipmentHeight?
+  portable      Boolean          @default(false)
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+
+  // Relations
+  exercises ExerciseEquipment[]
+
+  @@map("equipment")
+}
+
+model ExerciseEquipment {
+  id          String   @id @default(cuid())
+  exerciseId  String
+  equipmentId String
+
+  exercise  Exercise  @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
+  equipment Equipment @relation(fields: [equipmentId], references: [id], onDelete: Cascade)
+
+  @@unique([exerciseId, equipmentId])
+  @@map("exercise_equipment")
 }
 
 // Enums

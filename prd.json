@@ -1,0 +1,567 @@
+{
+  "project": "CaliGym",
+  "branchName": "ralph/caligym-mvp",
+  "description": "Calisthenics progression training app — fork workout-cool and transform it into a progression-focused calisthenics platform with exercise families, level tracking, assessments, and program templates.",
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Strip gym-specific pages and tools",
+      "description": "As a developer, I need to remove gym-specific pages (BMI calculator, calorie calculator, heart-rate zones) and ads components from the forked workout-cool codebase.",
+      "acceptanceCriteria": [
+        "Remove BMI calculator page and all related components/logic under tools/bmi-calculator",
+        "Remove calorie calculator page and all related components/logic under tools/calorie-calculator",
+        "Remove heart-rate zones page and all related components/logic under tools/heart-rate-zones",
+        "Remove ads components from src/components/ads",
+        "Remove license system models, routes, and UI",
+        "Remove any navigation links or references to removed pages",
+        "App builds without errors",
+        "Typecheck passes"
+      ],
+      "priority": 1,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-002",
+      "title": "Strip workout builder feature",
+      "description": "As a developer, I need to remove the 3-step workout builder (equipment → muscles → generate) since it will be replaced by calisthenics program templates.",
+      "acceptanceCriteria": [
+        "Remove the workout-builder feature directory (src/features/workout-builder)",
+        "Remove any pages/routes that use the workout builder",
+        "Remove navigation links to the workout builder",
+        "Keep the workout-session feature (logging/tracking) intact",
+        "App builds without errors",
+        "Typecheck passes"
+      ],
+      "priority": 2,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-003",
+      "title": "Remove EAV exercise attribute system from Prisma schema",
+      "description": "As a developer, I need to remove the existing EAV (Entity-Attribute-Value) exercise attribute models to make room for the new rigid calisthenics schema.",
+      "acceptanceCriteria": [
+        "Remove ExerciseAttribute, ExerciseAttributeName, ExerciseAttributeValue models from prisma/schema.prisma",
+        "Remove ExerciseAttributeNameEnum and ExerciseAttributeValueEnum enums from prisma/schema.prisma",
+        "Remove any relations to these models from the Exercise model",
+        "Remove the existing sample-exercises.csv seed data and import scripts that use the old attribute system",
+        "Generate and run migration successfully",
+        "Typecheck passes"
+      ],
+      "priority": 3,
+      "passes": false,
+      "notes": "This will temporarily break exercise-related features until the new schema is in place. That is expected."
+    },
+    {
+      "id": "US-004",
+      "title": "Add calisthenics enums to Prisma schema",
+      "description": "As a developer, I need the enum types that the new calisthenics exercise schema will use.",
+      "acceptanceCriteria": [
+        "Add ExerciseCategory enum: push_horizontal, push_vertical, pull_horizontal, pull_vertical, core_anterior, core_posterior, core_stability, legs, skills, mobility",
+        "Add DifficultyLevel enum: beginner, intermediate, advanced, elite",
+        "Add MeasurementType enum: reps, time, reps_each_side, time_each_side",
+        "Add MuscleGroup enum with values: chest, anterior_deltoid, triceps, serratus_anterior, latissimus_dorsi, rhomboids, rear_deltoid, biceps, brachialis, forearms, rectus_abdominis, obliques, transverse_abdominis, hip_flexors, erector_spinae, quadratus_lumborum, quadriceps, hamstrings, glutes, calves, hip_adductors, hip_abductors",
+        "Add EquipmentType enum: bar, parallels, rings, band, wall, floor, box, bench",
+        "Add EquipmentHeight enum: low, medium, high",
+        "Generate and run migration successfully",
+        "Typecheck passes"
+      ],
+      "priority": 4,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-005",
+      "title": "Add new Exercise model to Prisma schema",
+      "description": "As a developer, I need the new Exercise model with calisthenics-specific fields replacing the old EAV approach.",
+      "acceptanceCriteria": [
+        "Modify Exercise model to include: name_en (String), name_fr (String), slug (String, unique), description (String), instructions (String[]), cues (String[]), commonMistakes (String[]), videoUrl (String, optional), imageUrls (String[]), difficultyLevel (DifficultyLevel enum), measurementType (MeasurementType enum), defaultSets (Int), defaultReps (Int, optional), defaultHoldTime (Int, optional), restBetweenSets (Int), category (ExerciseCategory enum), subcategory (String), primaryMuscles (MuscleGroup[]), secondaryMuscles (MuscleGroup[]), bandAssistance (Boolean, default false), bandResistance (Boolean, default false)",
+        "Keep existing relations to WorkoutSessionExercise and UserFavoriteExercise",
+        "Generate and run migration successfully",
+        "Typecheck passes"
+      ],
+      "priority": 5,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-006",
+      "title": "Add Equipment and ExerciseEquipment models",
+      "description": "As a developer, I need Equipment and ExerciseEquipment models to track what equipment each exercise requires.",
+      "acceptanceCriteria": [
+        "Add Equipment model: id (String, cuid), name (String), type (EquipmentType enum), heightVariant (EquipmentHeight, optional), portable (Boolean, default false)",
+        "Add ExerciseEquipment join model linking Exercise to Equipment (many-to-many)",
+        "Generate and run migration successfully",
+        "Typecheck passes"
+      ],
+      "priority": 6,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-007",
+      "title": "Add ProgressionFamily and ProgressionLevel models",
+      "description": "As a developer, I need models to represent progression families (e.g., Push-Up Family) and their ordered levels linking to exercises.",
+      "acceptanceCriteria": [
+        "Add ProgressionFamily model: id (String, cuid), name (String), slug (String, unique), description (String), category (ExerciseCategory enum)",
+        "Add ProgressionLevel model: id (String, cuid), familyId (relation to ProgressionFamily), exerciseId (relation to Exercise), level (Int), unlockCriteria (Json — schema: { minReps, minSets, minHoldTime, minFormQuality, consistencyWeeks })",
+        "Add unique constraint on (familyId, level) to prevent duplicate levels",
+        "Add unique constraint on (familyId, exerciseId) to prevent duplicate exercise assignments",
+        "Generate and run migration successfully",
+        "Typecheck passes"
+      ],
+      "priority": 7,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-008",
+      "title": "Add UserProgression and UserEquipment models",
+      "description": "As a developer, I need models to track each user's current progression level per family and their available equipment.",
+      "acceptanceCriteria": [
+        "Add UserProgression model: id (String, cuid), userId (relation to User), progressionFamilyId (relation to ProgressionFamily), currentLevel (Int, default 1), unlockedAt (DateTime, default now), lastAssessedAt (DateTime, optional)",
+        "Add unique constraint on (userId, progressionFamilyId)",
+        "Add UserEquipment join model: userId (relation to User), equipmentId (relation to Equipment)",
+        "Add unique constraint on (userId, equipmentId)",
+        "Generate and run migration successfully",
+        "Typecheck passes"
+      ],
+      "priority": 8,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-009",
+      "title": "Add Assessment model",
+      "description": "As a developer, I need an Assessment model to record level-up test attempts and results.",
+      "acceptanceCriteria": [
+        "Add Assessment model: id (String, cuid), userId (relation to User), progressionFamilyId (relation to ProgressionFamily), exerciseTestedId (relation to Exercise), date (DateTime, default now), repsCompleted (Int, optional), holdTimeSeconds (Int, optional), formQuality (FormQuality enum: poor/acceptable/good/excellent), rpe (Int, optional), passed (Boolean)",
+        "Add FormQuality enum if not already present",
+        "Generate and run migration successfully",
+        "Typecheck passes"
+      ],
+      "priority": 9,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-010",
+      "title": "Modify WorkoutSet model for calisthenics",
+      "description": "As a developer, I need to adapt the WorkoutSet model to track calisthenics-specific data instead of gym weight data.",
+      "acceptanceCriteria": [
+        "Remove weight-related fields from WorkoutSet (types, intValues, secondValues, units arrays or equivalent weight tracking)",
+        "Add holdTimeSeconds (Int, optional) to WorkoutSet",
+        "Add formQuality (FormQuality enum, optional) to WorkoutSet",
+        "Add BandLevel enum: none, light, medium, heavy, extra_heavy",
+        "Add bandUsed (BandLevel, optional, default none) to WorkoutSet",
+        "Add rpe (Int, optional) to WorkoutSet",
+        "Keep reps field (Int, optional) on WorkoutSet",
+        "Generate and run migration successfully",
+        "Typecheck passes"
+      ],
+      "priority": 10,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-011",
+      "title": "Seed equipment data",
+      "description": "As a developer, I need to seed the equipment table with standard calisthenics equipment.",
+      "acceptanceCriteria": [
+        "Create seed script at scripts/seed-equipment.ts (or add to existing seed file)",
+        "Seed 8+ equipment items: pull-up bar (high), parallel bars low, parallel bars medium, parallel bars high, gymnastic rings, resistance bands, wall, floor, box/bench",
+        "Seed is idempotent (uses upsert or checks for existing records)",
+        "Seed runs successfully via npx prisma db seed or a script command",
+        "Typecheck passes"
+      ],
+      "priority": 11,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-012",
+      "title": "Seed push-up and pull-up progression families with exercises",
+      "description": "As a developer, I need to seed the first two progression families (Push-Up and Pull-Up) with their exercises and levels.",
+      "acceptanceCriteria": [
+        "Seed Push-Up Family with 10 levels: Wall Push-Ups (L1), Incline Push-Ups High (L2), Incline Push-Ups Low (L3), Knee Push-Ups (L4), Full Push-Ups (L5), Diamond Push-Ups (L6), Archer Push-Ups (L7), Pseudo Planche Push-Ups (L8), One-Arm Push-Up Assisted (L9), One-Arm Push-Up (L10)",
+        "Seed Pull-Up Family with 10 levels: Dead Hang (L1), Scapular Pulls (L2), Negative Pull-Ups (L3), Band-Assisted Pull-Ups (L4), Full Pull-Ups (L5), Wide/Close/Chin-Ups (L6), L-Sit Pull-Ups (L7), Weighted Pull-Ups (L8), Archer Pull-Ups (L9), One-Arm Pull-Up (L10)",
+        "Each exercise has: name (en/fr), slug, description, instructions, cues, commonMistakes, category, muscles, difficulty, measurementType, defaults, equipment links",
+        "Each ProgressionLevel has unlock criteria JSON (minReps, minSets, minHoldTime, minFormQuality as applicable)",
+        "Seed is idempotent",
+        "Typecheck passes"
+      ],
+      "priority": 12,
+      "passes": false,
+      "notes": "This is a large seed but it's data entry, not complex logic. Each exercise needs detailed content."
+    },
+    {
+      "id": "US-013",
+      "title": "Seed dip and squat progression families with exercises",
+      "description": "As a developer, I need to seed the Dip and Squat progression families with their exercises and levels.",
+      "acceptanceCriteria": [
+        "Seed Dip Family with 8-10 levels from bench dips through ring dips",
+        "Seed Squat Family with 8-10 levels from assisted squats through pistol squats",
+        "Each exercise has full content (name en/fr, slug, description, instructions, cues, commonMistakes, category, muscles, difficulty, measurementType, defaults, equipment links)",
+        "Each ProgressionLevel has unlock criteria JSON",
+        "Seed is idempotent",
+        "Typecheck passes"
+      ],
+      "priority": 13,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-014",
+      "title": "Seed L-sit and front lever progression families with exercises",
+      "description": "As a developer, I need to seed the L-Sit and Front Lever progression families with their exercises and levels.",
+      "acceptanceCriteria": [
+        "Seed L-Sit Family with 8-10 levels from tucked hold through V-sit",
+        "Seed Front Lever Family with 10 levels from dead hang through front lever pull-ups",
+        "Each exercise has full content (name en/fr, slug, description, instructions, cues, commonMistakes, category, muscles, difficulty, measurementType, defaults, equipment links)",
+        "Each ProgressionLevel has unlock criteria JSON",
+        "Seed is idempotent",
+        "Typecheck passes"
+      ],
+      "priority": 14,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-015",
+      "title": "Seed remaining standalone exercises",
+      "description": "As a developer, I need to seed additional calisthenics exercises that are not part of the 6 progression families but are used in programs and general training.",
+      "acceptanceCriteria": [
+        "Seed 40-60 additional exercises covering: core work (planks, hollow body, dragon flags), mobility (shoulder dislocates, pike stretches, bridges), warm-up movements, supplementary push/pull/leg exercises",
+        "Each exercise has full content fields populated",
+        "Equipment relationships set correctly",
+        "Seed is idempotent",
+        "Typecheck passes"
+      ],
+      "priority": 15,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-016",
+      "title": "Add user experience level and goals to User model",
+      "description": "As a developer, I need to extend the User model with calisthenics-specific profile fields.",
+      "acceptanceCriteria": [
+        "Add ExperienceLevel enum: complete_beginner, some_experience, intermediate, advanced",
+        "Add experienceLevel (ExperienceLevel, optional) to User model",
+        "Add trainingGoals (String[], default []) to User model for storing goal identifiers like 'first_pull_up', 'muscle_up', 'front_lever', 'general_fitness', 'pistol_squat', 'handstand'",
+        "Generate and run migration successfully",
+        "Typecheck passes"
+      ],
+      "priority": 16,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-017",
+      "title": "Create progression server actions and queries",
+      "description": "As a developer, I need server actions to query and update user progression data.",
+      "acceptanceCriteria": [
+        "Create src/features/progression-system/ directory following Feature-Sliced Design",
+        "Implement getUserProgressions(userId) — returns all progression family statuses with current level, exercise name, next level info",
+        "Implement getProgressionFamily(familySlug) — returns family with all levels and exercises",
+        "Implement advanceUserLevel(userId, familyId) — validates unlock criteria met and advances level",
+        "Implement initializeUserProgressions(userId) — creates level 1 entries for all families (called on account creation)",
+        "All actions use Prisma and are server-side",
+        "Typecheck passes"
+      ],
+      "priority": 17,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-018",
+      "title": "Create equipment server actions and queries",
+      "description": "As a developer, I need server actions to manage user equipment selections.",
+      "acceptanceCriteria": [
+        "Create src/features/equipment-setup/ directory following Feature-Sliced Design",
+        "Implement getAllEquipment() — returns all available equipment items",
+        "Implement getUserEquipment(userId) — returns user's selected equipment",
+        "Implement updateUserEquipment(userId, equipmentIds[]) — replaces user's equipment selection",
+        "All actions use Prisma and are server-side",
+        "Typecheck passes"
+      ],
+      "priority": 18,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-019",
+      "title": "Create exercise server actions and queries",
+      "description": "As a developer, I need server actions to query exercises with the new schema.",
+      "acceptanceCriteria": [
+        "Update or create src/entities/exercise/ to work with new Exercise model",
+        "Implement getExercises(filters) — returns exercises filtered by category, muscle, equipment, difficulty, with search by name",
+        "Implement getExerciseBySlug(slug) — returns full exercise details including progression family/level info",
+        "Implement getExercisesForUserEquipment(userId) — returns only exercises matching user's equipment",
+        "All actions use Prisma and are server-side",
+        "Typecheck passes"
+      ],
+      "priority": 19,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-020",
+      "title": "Create assessment server actions",
+      "description": "As a developer, I need server actions to handle level-up assessment attempts.",
+      "acceptanceCriteria": [
+        "Create src/features/assessment/ directory following Feature-Sliced Design",
+        "Implement submitAssessment(userId, familyId, exerciseId, { reps, holdTime, formQuality, rpe }) — evaluates against unlock criteria, saves result, advances level if passed",
+        "Implement getAssessmentHistory(userId, familyId) — returns past assessment attempts for a family",
+        "Assessment evaluation logic compares submitted values against ProgressionLevel.unlockCriteria JSON",
+        "Typecheck passes"
+      ],
+      "priority": 20,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-021",
+      "title": "Build equipment selection UI component",
+      "description": "As a user, I want a multi-select UI for choosing my available equipment with icons.",
+      "acceptanceCriteria": [
+        "Create equipment selector component in src/features/equipment-setup/ui/",
+        "Shows all equipment items as selectable cards/chips with icons (use lucide-react icons)",
+        "Multi-select: user can toggle each equipment item on/off",
+        "Calls updateUserEquipment server action on save",
+        "Uses existing shadcn/ui and DaisyUI components for styling",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 21,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-022",
+      "title": "Add equipment selection to onboarding flow",
+      "description": "As a new user, I want to select my equipment during onboarding so the app is personalized from the start.",
+      "acceptanceCriteria": [
+        "Add equipment selection step to existing onboarding flow (after account creation)",
+        "Reuses the equipment selector component from US-021",
+        "Equipment selection is saved to database via server action",
+        "User can proceed without selecting any equipment (defaults to floor + wall)",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 22,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-023",
+      "title": "Add experience level and goals to onboarding flow",
+      "description": "As a new user, I want to set my experience level and training goals during onboarding.",
+      "acceptanceCriteria": [
+        "Add experience level step to onboarding: radio/card select with options complete_beginner, some_experience, intermediate, advanced",
+        "Add goals step: multi-select cards for goals (first pull-up, muscle-up, front lever, general fitness, pistol squat, handstand)",
+        "Save experience level and goals to user model via server action",
+        "Initialize user progressions after onboarding completes (call initializeUserProgressions)",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 23,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-024",
+      "title": "Add equipment selection to profile/settings page",
+      "description": "As a user, I want to update my equipment from my profile settings.",
+      "acceptanceCriteria": [
+        "Add equipment section to existing profile/settings page",
+        "Reuses the equipment selector component from US-021",
+        "Shows currently selected equipment on load",
+        "Save button updates equipment via server action",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 24,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-025",
+      "title": "Build exercise browse/search page",
+      "description": "As a user, I want to browse and search the exercise library with filters.",
+      "acceptanceCriteria": [
+        "Create exercise list page at /[locale]/(app)/exercises",
+        "Filter dropdowns for: category, primary muscle, equipment, difficulty level",
+        "Text search input for exercise name",
+        "Filters persist in URL params (use nuqs)",
+        "Toggle to show only exercises matching user's equipment",
+        "Exercise cards show: name, category badge, difficulty badge, primary muscles",
+        "Clicking a card navigates to /exercises/[slug]",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 25,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-026",
+      "title": "Build exercise detail page",
+      "description": "As a user, I want to view full details of an exercise including video, instructions, and progression context.",
+      "acceptanceCriteria": [
+        "Create exercise detail page at /[locale]/(app)/exercises/[slug]",
+        "Displays: name, YouTube video embed (if videoUrl exists), description, step-by-step instructions list, form cues list, common mistakes list, category, muscles worked (primary + secondary), difficulty badge, required equipment",
+        "If exercise belongs to a progression family, shows: family name, current level, previous/next exercise links",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 26,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-027",
+      "title": "Build progression dashboard page",
+      "description": "As a user, I want a page showing my current level in each progression family.",
+      "acceptanceCriteria": [
+        "Create progression page at /[locale]/(app)/progression",
+        "Shows 6 progression family cards in a grid",
+        "Each card displays: family name, current level number, current exercise name, next exercise name, progress bar (level X/10)",
+        "Each card shows unlock criteria for next level",
+        "Clicking a card navigates to /progression/[familySlug]",
+        "Add navigation link to progression page in app sidebar/nav",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 27,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-028",
+      "title": "Build progression family detail page",
+      "description": "As a user, I want to see all levels in a progression family with my current position.",
+      "acceptanceCriteria": [
+        "Create detail page at /[locale]/(app)/progression/[familySlug]",
+        "Shows all levels as a vertical list/timeline",
+        "Unlocked levels (at or below current) visually distinct (e.g., colored, checkmark)",
+        "Current level highlighted prominently",
+        "Locked levels shown greyed with unlock criteria text",
+        "Each level shows exercise name and links to exercise detail page",
+        "Includes 'Test My Level' button for the next locked level",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 28,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-029",
+      "title": "Build assessment/level-up flow UI",
+      "description": "As a user, I want to take a level-up test from the progression detail page.",
+      "acceptanceCriteria": [
+        "'Test My Level' button opens assessment modal/page",
+        "Shows the target exercise name and unlock criteria (e.g., '3 sets of 8 reps with good form')",
+        "Form inputs for: reps completed (if rep-based), hold time in seconds (if time-based), form quality selector (poor/acceptable/good/excellent), RPE slider (1-10)",
+        "Submit button calls submitAssessment server action",
+        "On pass: success message with celebration (can use canvas-confetti already in deps), level updates in UI",
+        "On fail: encouraging message showing what criteria were not met",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 29,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-030",
+      "title": "Update workout set logging UI for calisthenics",
+      "description": "As a user, I want the set logging UI to show calisthenics-appropriate inputs instead of weight inputs.",
+      "acceptanceCriteria": [
+        "Update workout session exercise card to remove weight/unit inputs",
+        "For rep-based exercises: show reps input field",
+        "For time-based exercises: show hold time (seconds) input field",
+        "Add optional form quality dropdown (poor/acceptable/good/excellent) per set",
+        "Add optional band level dropdown (none/light/medium/heavy/extra_heavy) per set",
+        "Add optional RPE selector (1-10) per set",
+        "Set data saves to modified WorkoutSet model via existing session actions",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 30,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-031",
+      "title": "Seed program templates",
+      "description": "As a developer, I need to seed 4-5 pre-built calisthenics program templates using the existing Program infrastructure.",
+      "acceptanceCriteria": [
+        "Seed 'Beginner Full Body' program: 3x/week, 4 weeks, uses basic progression exercises, requires floor + pull-up bar",
+        "Seed 'Muscle-Up Prep' program: 3x/week, 6 weeks, pull-up and dip focused, requires bar + parallels",
+        "Seed 'Front Lever Program' program: 3x/week, 6 weeks, pull-focused, requires bar",
+        "Seed 'Minimal Equipment' program: 3x/week, 4 weeks, floor + wall only",
+        "Seed 'Park Workout' program: 3x/week, 4 weeks, requires bar + parallels",
+        "Each program has: title (en/fr), description, level, equipment requirements, weeks with sessions, sessions with exercises and suggested sets",
+        "Seed is idempotent",
+        "Typecheck passes"
+      ],
+      "priority": 31,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-032",
+      "title": "Update program listing to filter by user equipment",
+      "description": "As a user, I want the program listing page to show only programs I can do with my equipment.",
+      "acceptanceCriteria": [
+        "Update existing programs listing page to check user's equipment against program requirements",
+        "Programs compatible with user's equipment shown prominently",
+        "Incompatible programs shown greyed or in a separate 'Requires additional equipment' section with missing equipment listed",
+        "If user has no equipment set, show all programs with a prompt to set up equipment",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 32,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-033",
+      "title": "Build home dashboard with stats and progression summary",
+      "description": "As a user, I want a home dashboard showing my recent activity and progression overview.",
+      "acceptanceCriteria": [
+        "Create or update authenticated home page at /[locale]/(app)/ or /dashboard",
+        "Stats section: workouts this week count, current streak (consecutive days/weeks with workouts), total workouts all time",
+        "Progression summary: compact list/grid showing each family name + current level (e.g., 'Push-Ups: Level 5')",
+        "Recent workouts: last 3-5 sessions with date, program name, duration",
+        "Links to progression page and exercise library",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 33,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-034",
+      "title": "Add navigation links for new pages",
+      "description": "As a user, I want navigation links to the new calisthenics-specific pages.",
+      "acceptanceCriteria": [
+        "Add 'Progression' link to main app navigation/sidebar pointing to /progression",
+        "Add 'Exercises' link to main app navigation/sidebar pointing to /exercises",
+        "Add 'Dashboard' link if not already the home page",
+        "Keep existing navigation items (Programs, Profile, Leaderboard, Statistics)",
+        "Remove links to any stripped pages (tools, etc.)",
+        "Navigation works on mobile (responsive sidebar/menu)",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 34,
+      "passes": false,
+      "notes": ""
+    }
+  ]
+}

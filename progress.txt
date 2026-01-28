@@ -78,3 +78,15 @@
   - Both models use onDelete: Cascade so deleting an exercise or equipment removes the join records
   - Table names are mapped to snake_case (equipment, exercise_equipment) for consistency
 ---
+
+## 2026-01-28 - US-007
+- What was implemented: Added ProgressionFamily and ProgressionLevel models to Prisma schema
+- Files changed:
+  - Modified: prisma/schema.prisma (added ProgressionFamily and ProgressionLevel models in a new "PROGRESSION SYSTEM MODELS" section)
+  - Added progressionLevels relation on Exercise model
+- **Learnings for future iterations:**
+  - ProgressionFamily represents progression chains like "Push-Up Family" with category mapping to ExerciseCategory
+  - ProgressionLevel links exercises to families with a level number and JSON unlockCriteria
+  - Unique constraints on (familyId, level) and (familyId, exerciseId) prevent duplicate levels and duplicate exercise assignments
+  - unlockCriteria is a JSON field with schema: { minReps, minSets, minHoldTime, minFormQuality, consistencyWeeks }
+---

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Play, Pause, RotateCcw } from "lucide-react";
 
 import { cn } from "@/shared/lib/utils";
-import { useWorkoutSession } from "@/features/workout-builder";
+import { useWorkoutSession } from "@/features/workout-session/model/use-workout-session";
 import { Timer } from "@/components/ui/timer";
 import { Button } from "@/components/ui/button";
 

@@ -12,8 +12,6 @@
     "old-vercel-build": "prisma generate && prisma migrate deploy && next build",
     "postinstall": "prisma generate",
     "lint": "next lint",
-    "import:exercises-full": "tsx scripts/import-exercises-with-attributes.ts",
-    "db:seed": "pnpm run import:exercises-full ./data/sample-exercises.csv",
     "db:seed-plans": "tsx scripts/seed-subscription-plans-simple.ts",
     "db:seed-workout-advanced": "tsx scripts/seed-workout-data-advanced.ts",
     "lint:fix": "next lint --fix",

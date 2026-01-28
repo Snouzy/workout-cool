@@ -136,7 +136,6 @@ model Exercise {
   updatedAt         DateTime @updatedAt
 
   // Relations
-  attributes             ExerciseAttribute[]
   WorkoutSessionExercise WorkoutSessionExercise[]
   ProgramSessionExercise ProgramSessionExercise[]
   favoritesByUsers       UserFavoriteExercise[]
@@ -144,149 +143,10 @@ model Exercise {
   @@map("exercises")
 }
 
-model ExerciseAttributeName {
-  id        String                    @id @default(cuid())
-  name      ExerciseAttributeNameEnum @unique
-  createdAt DateTime                  @default(now())
-  updatedAt DateTime                  @updatedAt
-
-  // Relations
-  values     ExerciseAttributeValue[]
-  attributes ExerciseAttribute[]
-
-  @@map("exercise_attribute_names")
-}
-
-model ExerciseAttributeValue {
-  id              String                     @id @default(cuid())
-  attributeNameId String
-  value           ExerciseAttributeValueEnum
-  createdAt       DateTime                   @default(now())
-  updatedAt       DateTime                   @updatedAt
-
-  // Relations
-  attributeName ExerciseAttributeName @relation(fields: [attributeNameId], references: [id])
-  attributes    ExerciseAttribute[]
-
-  @@unique([attributeNameId, value])
-  @@map("exercise_attribute_values")
-}
-
-model ExerciseAttribute {
-  id               String   @id @default(cuid())
-  exerciseId       String
-  attributeNameId  String
-  attributeValueId String
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
-
-  // Relations
-  exercise       Exercise               @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
-  attributeName  ExerciseAttributeName  @relation(fields: [attributeNameId], references: [id])
-  attributeValue ExerciseAttributeValue @relation(fields: [attributeValueId], references: [id])
-
-  @@unique([exerciseId, attributeNameId, attributeValueId])
-  @@map("exercise_attributes")
-}
-
 // Enums
 enum ExercisePrivacy {
   PUBLIC
   PRIVATE
-}
-
-// Noms d'attributs
-enum ExerciseAttributeNameEnum {
-  TYPE
-  PRIMARY_MUSCLE
-  SECONDARY_MUSCLE
-  EQUIPMENT
-  MECHANICS_TYPE
-}
-
-// Toutes les valeurs possibles
-enum ExerciseAttributeValueEnum {
-  // Types d'exercices
-  BODYWEIGHT
-  STRENGTH
-  POWERLIFTING
-  CALISTHENIC
-  PLYOMETRICS
-  STRETCHING
-  STRONGMAN
-  CARDIO
-  STABILIZATION
-  POWER
-  RESISTANCE
-  CROSSFIT
-  WEIGHTLIFTING
-
-  // Groupes musculaires
-  BICEPS
-  SHOULDERS
-  CHEST
-  BACK
-  GLUTES
-  TRICEPS
-  HAMSTRINGS
-  QUADRICEPS
-  FOREARMS
-  CALVES
-  TRAPS
-  ABDOMINALS
-  NECK
-  LATS
-  ADDUCTORS
-  ABDUCTORS
-  OBLIQUES
-  GROIN
-  FULL_BODY
-  ROTATOR_CUFF
-  HIP_FLEXOR
-  ACHILLES_TENDON
-  FINGERS
-
-  // Équipements
-  DUMBBELL
-  KETTLEBELLS
-  BARBELL
-  SMITH_MACHINE
-  BODY_ONLY
-  OTHER
-  BANDS
-  EZ_BAR
-  MACHINE
-  DESK
-  PULLUP_BAR
-  NONE
-  CABLE
-  MEDICINE_BALL
-  SWISS_BALL
-  FOAM_ROLL
-  WEIGHT_PLATE
-  TRX
-  BOX
-  ROPES
-  SPIN_BIKE
-  STEP
-  BOSU
-  TYRE
-  SANDBAG
-  POLE
-  BENCH
-  WALL
-  BAR
-  RACK
-  CAR
-  SLED
-  CHAIN
-  SKIERG
-  ROPE
-  NA
-
-  // Types de mécanique
-  ISOLATION
-  COMPOUND
 }
 
 model WorkoutSession {
@@ -297,7 +157,7 @@ model WorkoutSession {
   endedAt   DateTime?
   duration  Int? // en secondes
   exercises WorkoutSessionExercise[]
-  muscles   ExerciseAttributeValueEnum[] @default([])
+  muscles   String[] @default([])
 
   rating        Int? // 1-5 star rating
   ratingComment String? @db.Text // Optional comment for rating
@@ -549,11 +409,11 @@ model Program {
   category           String
   image              String
   level              ProgramLevel
-  type               ExerciseAttributeValueEnum
+  type               String
   durationWeeks      Int                          @default(4)
   sessionsPerWeek    Int                          @default(3)
   sessionDurationMin Int                          @default(30)
-  equipment          ExerciseAttributeValueEnum[] @default([])
+  equipment          String[] @default([])
   isPremium          Boolean                      @default(true)
   isActive           Boolean                      @default(true)
   visibility         ProgramVisibility            @default(DRAFT)
@@ -628,7 +488,7 @@ model ProgramSession {
   descriptionPt    String                       @db.Text
   descriptionRu    String                       @db.Text
   descriptionZhCn  String                       @db.Text
-  equipment        ExerciseAttributeValueEnum[] @default([])
+  equipment        String[] @default([])
   estimatedMinutes Int
   isPremium        Boolean                      @default(true)
 

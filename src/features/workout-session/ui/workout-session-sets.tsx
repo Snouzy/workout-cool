@@ -11,11 +11,11 @@ import TrophyImg from "@public/images/trophy.png";
 import { cn } from "@/shared/lib/utils";
 import { useWorkoutSession } from "@/features/workout-session/model/use-workout-session";
 import { useSyncWorkoutSessions } from "@/features/workout-session/model/use-sync-workout-sessions";
-import { ExerciseVideoModal } from "@/features/workout-builder/ui/exercise-video-modal";
-import { useSyncFavoriteExercises } from "@/features/workout-builder/hooks/use-sync-favorite-exercises";
+import { ExerciseVideoModal } from "@/features/workout-session/ui/exercise-video-modal";
+import { useSyncFavoriteExercises } from "@/features/workout-session/hooks/use-sync-favorite-exercises";
 import { Button } from "@/components/ui/button";
 
-import { FavoriteExerciseButton } from "../../workout-builder/ui/favorite-exercise-button";
+import { FavoriteExerciseButton } from "./favorite-exercise-button";
 import { WorkoutSessionSet } from "./workout-session-set";
 
 export function WorkoutSessionSets({

@@ -9,7 +9,7 @@ import { cn } from "@/shared/lib/utils";
 import { useWorkoutSession } from "@/features/workout-session/model/use-workout-session";
 import { Button } from "@/components/ui/button";
 
-import { QuitWorkoutDialog } from "../../workout-builder/ui/quit-workout-dialog";
+import { QuitWorkoutDialog } from "./quit-workout-dialog";
 
 interface WorkoutSessionHeaderProps {
   onQuitWorkout: VoidFunction;

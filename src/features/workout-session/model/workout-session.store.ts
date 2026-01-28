@@ -4,7 +4,6 @@ import { workoutSessionLocal } from "@/shared/lib/workout-session/workout-sessio
 import { WorkoutSession } from "@/shared/lib/workout-session/types/workout-session";
 import { convertWeight, type WeightUnit } from "@/shared/lib/weight-conversion";
 import { WorkoutSessionExercise, WorkoutSet, WorkoutSetType, WorkoutSetUnit } from "@/features/workout-session/types/workout-set";
-import { useWorkoutBuilderStore } from "@/features/workout-builder/model/workout-builder.store";
 import { ExerciseWithAttributes } from "@/entities/exercise/types/exercise.types";
 
 interface WorkoutSessionProgress {
@@ -152,7 +151,7 @@ export const useWorkoutSessionStore = create<WorkoutSessionState>((set, get) => 
       });
     }
 
-    useWorkoutBuilderStore.getState().setStep(1);
+    // Workout builder removed - no step reset needed
   },
 
   toggleTimer: () => {

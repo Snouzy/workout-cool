@@ -6,7 +6,7 @@ import { Search, BarChart3 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { ExerciseAttributeNameEnum } from "@prisma/client";
 
-import { ExerciseVideoModal } from "@/features/workout-builder/ui/exercise-video-modal";
+import { ExerciseVideoModal } from "@/features/workout-session/ui/exercise-video-modal";
 import { ExerciseWithAttributes } from "@/entities/exercise/types/exercise.types";
 import { getExerciseAttributesValueOf, getPrimaryMuscle } from "@/entities/exercise/shared/muscles";
 import { Skeleton } from "@/components/ui/skeleton";

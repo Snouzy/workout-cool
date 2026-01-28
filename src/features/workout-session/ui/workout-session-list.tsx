@@ -1,12 +1,8 @@
-import { useRouter } from "next/navigation";
-import { Play, Repeat2, Trash2 } from "lucide-react";
-import { ExerciseAttributeNameEnum } from "@prisma/client";
+import { Play, Trash2 } from "lucide-react";
 
 import { useCurrentLocale, useI18n } from "locales/client";
 import { useWorkoutSessionService } from "@/shared/lib/workout-session/use-workout-session.service";
 import { useWorkoutSessions } from "@/features/workout-session/model/use-workout-sessions";
-import { useWorkoutBuilderStore } from "@/features/workout-builder/model/workout-builder.store";
-import { getExerciseAttributesValueOf, getPrimaryMuscle, getAttributeValue } from "@/entities/exercise/shared/muscles";
 import { Link } from "@/components/ui/link";
 import { Button } from "@/components/ui/button";
 
@@ -22,12 +18,9 @@ const BADGE_COLORS = [
 export function WorkoutSessionList() {
   const locale = useCurrentLocale();
   const t = useI18n();
-  const router = useRouter();
-  const loadFromSession = useWorkoutBuilderStore((s) => s.loadFromSession);
   const { remove } = useWorkoutSessionService();
 
   const { data: sessions = [], refetch } = useWorkoutSessions();
-  const activeSession = sessions.find((s) => s.status === "active");
 
   const handleDelete = async (id: string) => {
     const confirmed = window.confirm(t("workout_builder.confirm_delete"));
@@ -41,56 +34,6 @@ export function WorkoutSessionList() {
       console.error("Error deleting session:", error);
       alert("Error deleting session");
     }
-  };
-
-  const handleRepeat = (id: string) => {
-    const sessionToCopy = sessions.find((s) => s.id === id);
-    if (!sessionToCopy) return;
-
-    const allEquipment = Array.from(
-      new Set(
-        sessionToCopy.exercises.flatMap((ex) => getExerciseAttributesValueOf(ex, ExerciseAttributeNameEnum.EQUIPMENT)).filter(Boolean),
-      ),
-    );
-
-    // Utilise les muscles stockés dans la session, sinon fallback sur les muscles primaires des exercices
-    const allMuscles =
-      sessionToCopy.muscles && sessionToCopy.muscles.length > 0
-        ? sessionToCopy.muscles
-        : Array.from(
-            new Set(
-              sessionToCopy.exercises
-                .flatMap((ex) => getExerciseAttributesValueOf(ex, ExerciseAttributeNameEnum.PRIMARY_MUSCLE))
-                .filter(Boolean),
-            ),
-          );
-
-    const exercisesByMuscle = allMuscles.map((muscle) => ({
-      muscle,
-      exercises: sessionToCopy.exercises
-        .filter((ex) => {
-          const primaryMuscle = getPrimaryMuscle(ex.attributes || []);
-          return primaryMuscle && getAttributeValue(primaryMuscle) === muscle;
-        })
-        .map((ex) => ({
-          ...ex,
-          id: ex.id,
-          workoutSessionId: sessionToCopy.id,
-          exerciseId: ex.id,
-          order: ex.order,
-        })),
-    }));
-
-    const exercisesOrder = sessionToCopy.exercises.map((ex) => ex.id);
-
-    // 5. inject in the builder and go step 3
-    loadFromSession({
-      equipment: allEquipment,
-      muscles: allMuscles,
-      exercisesByMuscle,
-      exercisesOrder,
-    });
-    router.push("/?fromSession=1");
   };
 
   return (
@@ -165,25 +108,6 @@ export function WorkoutSessionList() {
                     <span>{t("workout_builder.session.back_to_workout")}</span>
                   </Link>
                 )}
-                {!isActive && (
-                  <div
-                    className="tooltip tooltip-left"
-                    data-tip={
-                      activeSession ? t("workout_builder.session.already_have_a_active_session") : t("workout_builder.session.repeat")
-                    }
-                  >
-                    <Button
-                      aria-label={t("workout_builder.session.repeat")}
-                      className="w-12 h-12"
-                      disabled={!!activeSession}
-                      onClick={() => handleRepeat(session.id)}
-                      size="icon"
-                      variant="ghost"
-                    >
-                      <Repeat2 className="w-7 h-7 text-blue-500 dark:text-blue-400" />
-                    </Button>
-                  </div>
-                )}
 
                 {!isActive && (
                   <div className="tooltip" data-tip={t("workout_builder.session.delete")}>
@@ -202,7 +126,6 @@ export function WorkoutSessionList() {
           );
         })}
       </ul>
-      {/* TODO: create a new workout */}
     </div>
   );
 }

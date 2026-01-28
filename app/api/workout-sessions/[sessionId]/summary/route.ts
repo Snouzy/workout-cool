@@ -42,11 +42,10 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
       return NextResponse.json({ error: "Workout session not found or unauthorized" }, { status: 404 });
     }
 
-    // Calculate summary metrics
+    // Calculate summary metrics for calisthenics
     let totalSets = 0;
     let totalReps = 0;
-    let totalVolume = 0; // weight × reps
-    let totalWeightLifted = 0;
+    let totalHoldTime = 0; // in seconds
     const exerciseCount = workoutSession.exercises.length;
 
     workoutSession.exercises.forEach((sessionExercise) => {
@@ -55,16 +54,13 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
           totalSets++;
 
           // Calculate reps
-          if (set.types.includes("REPS") && set.valuesInt.length > 0) {
-            const reps = set.valuesInt[0];
-            totalReps += reps;
+          if (set.reps) {
+            totalReps += set.reps;
+          }
 
-            // Calculate volume if weight is present
-            if (set.types.includes("WEIGHT") && set.valuesInt.length > 1) {
-              const weight = set.valuesInt[1];
-              totalVolume += weight * reps;
-              totalWeightLifted += weight;
-            }
+          // Calculate total hold time
+          if (set.holdTimeSeconds) {
+            totalHoldTime += set.holdTimeSeconds;
           }
         }
       });
@@ -90,8 +86,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
         // Summary metrics
         totalSets,
         totalReps,
-        totalVolume,
-        totalWeightLifted,
+        totalHoldTime,
         exerciseCount,
         caloriesBurned,
 

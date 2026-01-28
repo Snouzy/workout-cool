@@ -1,15 +1,17 @@
 import { ExerciseWithAttributes } from "@/entities/exercise/types/exercise.types";
 
-export type WorkoutSetType = "TIME" | "WEIGHT" | "REPS" | "BODYWEIGHT" | "NA";
-export type WorkoutSetUnit = "kg" | "lbs";
+// Calisthenics-focused workout set types
+export type FormQuality = "poor" | "acceptable" | "good" | "excellent";
+export type BandLevel = "none" | "light" | "medium" | "heavy" | "extra_heavy";
 
 export interface WorkoutSet {
   id: string;
   setIndex: number;
-  types: WorkoutSetType[]; // To support multiple columns
-  valuesInt?: number[]; // To support multiple columns
-  valuesSec?: number[]; // To support multiple columns
-  units?: WorkoutSetUnit[]; // Pour supporter plusieurs colonnes
+  reps?: number;
+  holdTimeSeconds?: number;
+  formQuality?: FormQuality;
+  bandUsed?: BandLevel;
+  rpe?: number; // Rate of Perceived Exertion (1-10)
   completed: boolean;
 }
 

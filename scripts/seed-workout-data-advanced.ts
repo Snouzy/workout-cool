@@ -1,8 +1,9 @@
 import { prisma } from "../src/shared/lib/prisma";
+import { BandLevel, FormQuality } from "@prisma/client";
 
 // Configuration
 const USER_ID = "bwZuBQO4cJgBX6NiZaXgv81vKfgBQcFe";
-const BENCH_PRESS_ID = "cmbw9xso904p69kv1vwuadhx6"; // Développé couché à la barre prise large
+const PUSH_UP_ID = "cmbw9xso904p69kv1vwuadhx6"; // This will need to be updated to a real exercise ID after seeding
 
 interface WorkoutPattern {
   dayOfWeek: number; // 0 = Sunday, 1 = Monday, etc.
@@ -18,51 +19,65 @@ interface ExercisePattern {
 
 interface SetPattern {
   repsRange: [number, number];
-  weightPercentage: number; // Percentage of working weight
+  holdTimeRange?: [number, number]; // For isometric exercises
+  bandLevel: BandLevel;
 }
 
-// Realistic workout patterns
+// Realistic calisthenics workout patterns
 const workoutPatterns: WorkoutPattern[] = [
   {
-    dayOfWeek: 1, // Monday - Chest day
+    dayOfWeek: 1, // Monday - Push focused
     hour: 10,
     exercisePatterns: [
       {
-        exerciseId: BENCH_PRESS_ID,
+        exerciseId: PUSH_UP_ID,
         sets: [
-          { repsRange: [12, 15], weightPercentage: 60 }, // Warm-up
-          { repsRange: [10, 12], weightPercentage: 70 }, // Warm-up
-          { repsRange: [8, 10], weightPercentage: 85 }, // Working set
-          { repsRange: [6, 8], weightPercentage: 100 }, // Working set
-          { repsRange: [6, 8], weightPercentage: 100 }, // Working set
-          { repsRange: [8, 10], weightPercentage: 90 }, // Back-off set
+          { repsRange: [10, 12], bandLevel: "none" }, // Warm-up
+          { repsRange: [15, 20], bandLevel: "none" }, // Working set
+          { repsRange: [12, 15], bandLevel: "none" }, // Working set
+          { repsRange: [10, 12], bandLevel: "none" }, // Back-off set
         ],
-        progressionRate: 2.5, // 2.5% per week
+        progressionRate: 5, // 5% more reps per week
       },
     ],
   },
   {
-    dayOfWeek: 4, // Thursday - Upper body
+    dayOfWeek: 4, // Thursday - Full body
     hour: 16,
     exercisePatterns: [
       {
-        exerciseId: BENCH_PRESS_ID,
+        exerciseId: PUSH_UP_ID,
         sets: [
-          { repsRange: [12, 15], weightPercentage: 50 }, // Warm-up
-          { repsRange: [10, 12], weightPercentage: 65 }, // Warm-up
-          { repsRange: [8, 10], weightPercentage: 80 }, // Lighter day
-          { repsRange: [8, 10], weightPercentage: 80 },
-          { repsRange: [10, 12], weightPercentage: 75 },
+          { repsRange: [8, 10], bandLevel: "none" }, // Warm-up
+          { repsRange: [12, 15], bandLevel: "none" }, // Working set
+          { repsRange: [12, 15], bandLevel: "none" }, // Working set
+          { repsRange: [10, 12], bandLevel: "none" }, // Back-off set
         ],
-        progressionRate: 2.5,
+        progressionRate: 5,
       },
     ],
   },
 ];
 
-async function seedAdvancedWorkoutData(weeksToGenerate: number = 12, startingWeight: number = 60) {
-  console.log(`Starting to seed ${weeksToGenerate} weeks of workout data...`);
-  console.log(`Starting bench press weight: ${startingWeight}kg`);
+const formQualities: FormQuality[] = ["poor", "acceptable", "good", "excellent"];
+
+function getRandomFormQuality(): FormQuality {
+  // Weighted towards good form
+  const weights = [0.05, 0.15, 0.5, 0.3]; // poor, acceptable, good, excellent
+  const random = Math.random();
+  let cumulative = 0;
+  for (let i = 0; i < weights.length; i++) {
+    cumulative += weights[i];
+    if (random < cumulative) {
+      return formQualities[i];
+    }
+  }
+  return "good";
+}
+
+async function seedAdvancedWorkoutData(weeksToGenerate: number = 12, startingReps: number = 10) {
+  console.log(`Starting to seed ${weeksToGenerate} weeks of calisthenics workout data...`);
+  console.log(`Starting reps: ${startingReps}`);
 
   try {
     const today = new Date();
@@ -74,12 +89,12 @@ async function seedAdvancedWorkoutData(weeksToGenerate: number = 12, startingWei
       const weekStart = new Date(today);
       weekStart.setDate(today.getDate() - week * 7);
 
-      // Calculate current working weight with progression
+      // Calculate current working reps with progression
       const weeksCompleted = weeksToGenerate - 1 - week;
       const progressionMultiplier = Math.pow(1 + workoutPatterns[0].exercisePatterns[0].progressionRate / 100, weeksCompleted);
-      const currentWorkingWeight = startingWeight * progressionMultiplier;
+      const currentWorkingReps = Math.round(startingReps * progressionMultiplier);
 
-      console.log(`\nWeek ${weeksCompleted + 1}: Working weight = ${currentWorkingWeight.toFixed(1)}kg`);
+      console.log(`\nWeek ${weeksCompleted + 1}: Target reps = ${currentWorkingReps}`);
 
       // Generate sessions for each pattern in the week
       for (const pattern of workoutPatterns) {
@@ -99,7 +114,7 @@ async function seedAdvancedWorkoutData(weeksToGenerate: number = 12, startingWei
         }
 
         // Create workout session
-        const duration = 45 + Math.floor(Math.random() * 30); // 45-75 minutes
+        const duration = 30 + Math.floor(Math.random() * 30); // 30-60 minutes
         const workoutSession = await prisma.workoutSession.create({
           data: {
             userId: USER_ID,
@@ -110,7 +125,7 @@ async function seedAdvancedWorkoutData(weeksToGenerate: number = 12, startingWei
         });
 
         totalSessionsCreated++;
-        console.log(`  Created session on ${sessionDate.toLocaleDateString()} (${pattern.dayOfWeek === 1 ? "Heavy" : "Light"} day)`);
+        console.log(`  Created session on ${sessionDate.toLocaleDateString()}`);
 
         // Create exercises and sets for this session
         for (let exerciseIndex = 0; exerciseIndex < pattern.exercisePatterns.length; exerciseIndex++) {
@@ -128,33 +143,25 @@ async function seedAdvancedWorkoutData(weeksToGenerate: number = 12, startingWei
           for (let setIndex = 0; setIndex < exercisePattern.sets.length; setIndex++) {
             const setPattern = exercisePattern.sets[setIndex];
 
-            // Calculate actual weight for this set
-            let setWeight = (currentWorkingWeight * setPattern.weightPercentage) / 100;
-
-            // Add small random variation (±2.5%)
-            setWeight *= 0.975 + Math.random() * 0.05;
-
-            // Round to nearest 2.5kg
-            setWeight = Math.round(setWeight / 2.5) * 2.5;
-            setWeight = Math.max(20, setWeight); // Minimum 20kg (empty barbell)
-
             // Calculate reps with some variation
             const repsRange = setPattern.repsRange;
-            const reps = repsRange[0] + Math.floor(Math.random() * (repsRange[1] - repsRange[0] + 1));
+            const baseReps = Math.round((currentWorkingReps * (repsRange[0] + repsRange[1])) / 2 / startingReps);
+            const reps = baseReps + Math.floor(Math.random() * 3) - 1; // ±1 variation
 
-            // Occasionally fail a rep on heavy sets
-            const failedRep = setPattern.weightPercentage >= 95 && Math.random() < 0.15;
-            const actualReps = failedRep ? Math.max(1, reps - 1) : reps;
+            // Random RPE between 6-9
+            const rpe = 6 + Math.floor(Math.random() * 4);
 
             await prisma.workoutSet.create({
               data: {
                 workoutSessionExerciseId: workoutSessionExercise.id,
                 setIndex: setIndex,
-                types: ["REPS", "WEIGHT"],
-                type: "WEIGHT",
-                valuesInt: [actualReps, Math.round(setWeight)],
-                valuesSec: [],
-                units: ["kg"],
+                reps: Math.max(1, reps),
+                holdTimeSeconds: setPattern.holdTimeRange
+                  ? setPattern.holdTimeRange[0] + Math.floor(Math.random() * (setPattern.holdTimeRange[1] - setPattern.holdTimeRange[0]))
+                  : null,
+                formQuality: getRandomFormQuality(),
+                bandUsed: setPattern.bandLevel,
+                rpe: rpe,
                 completed: true,
               },
             });
@@ -187,7 +194,7 @@ async function seedAdvancedWorkoutData(weeksToGenerate: number = 12, startingWei
       await prisma.workoutSessionExercise.create({
         data: {
           workoutSessionId: workoutSession.id,
-          exerciseId: BENCH_PRESS_ID,
+          exerciseId: PUSH_UP_ID,
           order: 0,
         },
       });
@@ -195,12 +202,12 @@ async function seedAdvancedWorkoutData(weeksToGenerate: number = 12, startingWei
       console.log(`  Created planned session for ${futureDate.toLocaleDateString()}`);
     }
 
-    console.log("\n✅ Successfully seeded workout data!");
+    console.log("\n✅ Successfully seeded calisthenics workout data!");
     console.log("\nSummary:");
     console.log(`- Total sessions created: ${totalSessionsCreated}`);
     console.log(`- Total sets created: ${totalSetsCreated}`);
     console.log(`- Average sets per session: ${(totalSetsCreated / totalSessionsCreated).toFixed(1)}`);
-    console.log(`- Final working weight: ${(startingWeight * Math.pow(1.025, weeksToGenerate - 1)).toFixed(1)}kg`);
+    console.log(`- Final target reps: ${Math.round(startingReps * Math.pow(1.05, weeksToGenerate - 1))}`);
   } catch (error) {
     console.error("Error seeding data:", error);
     throw error;
@@ -212,16 +219,16 @@ async function seedAdvancedWorkoutData(weeksToGenerate: number = 12, startingWei
 // Parse command line arguments
 const args = process.argv.slice(2);
 const weeks = args[0] ? parseInt(args[0]) : 12;
-const startWeight = args[1] ? parseInt(args[1]) : 60;
+const startReps = args[1] ? parseInt(args[1]) : 10;
 
-if (isNaN(weeks) || isNaN(startWeight)) {
-  console.error("Usage: tsx seed-workout-data-advanced.ts [weeks] [startingWeight]");
-  console.error("Example: tsx seed-workout-data-advanced.ts 12 60");
+if (isNaN(weeks) || isNaN(startReps)) {
+  console.error("Usage: tsx seed-workout-data-advanced.ts [weeks] [startingReps]");
+  console.error("Example: tsx seed-workout-data-advanced.ts 12 10");
   process.exit(1);
 }
 
 // Run the seed script
-seedAdvancedWorkoutData(weeks, startWeight).catch((error) => {
+seedAdvancedWorkoutData(weeks, startReps).catch((error) => {
   console.error("Fatal error:", error);
   process.exit(1);
 });

@@ -24,7 +24,7 @@ export interface OneRepMaxPoint {
 export interface OneRepMaxResponse {
   exerciseId: string;
   timeframe: StatisticsTimeframe;
-  formula: "Lombardi";
+  formula: "Lombardi" | "N/A";
   formulaDescription: string;
   data: OneRepMaxPoint[];
   count: number;

@@ -1,11 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { X, Target, Weight } from "lucide-react";
+import { useState } from "react";
+import { X, Target, Activity } from "lucide-react";
 
 import { useCurrentLocale, useI18n } from "locales/client";
-import { type WeightUnit } from "@/shared/lib/weight-conversion";
-import { cn } from "@/shared/lib/utils";
 import { useWorkoutSession } from "@/features/workout-session/model/use-workout-session";
 import { Button } from "@/components/ui/button";
 
@@ -18,12 +16,12 @@ interface WorkoutSessionHeaderProps {
 export function WorkoutSessionHeader({ onQuitWorkout }: WorkoutSessionHeaderProps) {
   const t = useI18n();
   const [showQuitDialog, setShowQuitDialog] = useState(false);
-  const [volumeUnit, setVolumeUnit] = useState<WeightUnit>("kg");
   const locale = useCurrentLocale();
-  const { getExercisesCompleted, getTotalExercises, session, getTotalVolumeInUnit } = useWorkoutSession();
+  const { getExercisesCompleted, getTotalExercises, session, getTotalReps, getTotalHoldTime } = useWorkoutSession();
   const exercisesCompleted = getExercisesCompleted();
   const totalExercises = getTotalExercises();
-  const totalVolume = getTotalVolumeInUnit(volumeUnit);
+  const totalReps = getTotalReps();
+  const totalHoldTime = getTotalHoldTime();
 
   // Format time with animated colons
   const formatTimeWithAnimatedColons = (date: Date) => {
@@ -42,18 +40,14 @@ export function WorkoutSessionHeader({ onQuitWorkout }: WorkoutSessionHeaderProp
     return timeString;
   };
 
-  // Load volume unit preference from localStorage
-  useEffect(() => {
-    const savedUnit = localStorage.getItem("volumeUnit") as WeightUnit;
-    if (savedUnit === "kg" || savedUnit === "lbs") {
-      setVolumeUnit(savedUnit);
+  // Format hold time in minutes and seconds
+  const formatHoldTime = (seconds: number) => {
+    if (seconds < 60) {
+      return `${seconds}s`;
     }
-  }, []);
-
-  // Save volume unit preference to localStorage
-  const handleVolumeUnitChange = (unit: WeightUnit) => {
-    setVolumeUnit(unit);
-    localStorage.setItem("volumeUnit", unit);
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return secs > 0 ? `${mins}m ${secs}s` : `${mins}m`;
   };
 
   const handleQuitClick = () => {
@@ -117,44 +111,26 @@ export function WorkoutSessionHeader({ onQuitWorkout }: WorkoutSessionHeaderProp
               </div>
             </div>
 
-            {/* Card 2: Total Volume */}
+            {/* Card 2: Training Summary (Reps and Hold Time) */}
             <div className="bg-white dark:bg-slate-800 rounded-md p-2 border border-slate-200 dark:border-slate-700">
               <div className="flex items-center gap-2 mb-2">
                 <div className="w-5 h-5 rounded-full bg-orange-500/20 flex items-center justify-center shrink-0">
-                  <Weight className="h-3 w-3 text-orange-400" />
+                  <Activity className="h-3 w-3 text-orange-400" />
                 </div>
-                <h3 className="text-slate-700 dark:text-white font-medium text-xs truncate">{t("workout_builder.session.total_volume")}</h3>
+                <h3 className="text-slate-700 dark:text-white font-medium text-xs truncate">Training Summary</h3>
               </div>
 
-              <div className="text-center">
-                <div className="text-lg font-bold text-slate-900 dark:text-white mb-1">
-                  {totalVolume.toFixed(volumeUnit === "lbs" ? 1 : 0)}
+              <div className="flex items-center justify-around">
+                <div className="text-center">
+                  <div className="text-lg font-bold text-slate-900 dark:text-white">{totalReps}</div>
+                  <div className="text-xs text-slate-400">reps</div>
                 </div>
-                <div className="flex items-center justify-center gap-1">
-                  <button
-                    className={cn(
-                      "text-xs px-1.5 py-0.5 rounded transition-colors",
-                      volumeUnit === "kg"
-                        ? "bg-orange-100 text-orange-700 dark:bg-orange-900 dark:text-orange-100"
-                        : "text-slate-400 hover:text-slate-600 dark:hover:text-slate-300",
-                    )}
-                    onClick={() => handleVolumeUnitChange("kg")}
-                  >
-                    kg
-                  </button>
-                  <span className="text-slate-300 dark:text-slate-600">|</span>
-                  <button
-                    className={cn(
-                      "text-xs px-1.5 py-0.5 rounded transition-colors",
-                      volumeUnit === "lbs"
-                        ? "bg-orange-100 text-orange-700 dark:bg-orange-900 dark:text-orange-100"
-                        : "text-slate-400 hover:text-slate-600 dark:hover:text-slate-300",
-                    )}
-                    onClick={() => handleVolumeUnitChange("lbs")}
-                  >
-                    lbs
-                  </button>
-                </div>
+                {totalHoldTime > 0 && (
+                  <div className="text-center">
+                    <div className="text-lg font-bold text-slate-900 dark:text-white">{formatHoldTime(totalHoldTime)}</div>
+                    <div className="text-xs text-slate-400">hold</div>
+                  </div>
+                )}
               </div>
             </div>
           </div>

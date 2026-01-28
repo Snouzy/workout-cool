@@ -2,8 +2,7 @@ import { z } from "zod";
 import { NextRequest, NextResponse } from "next/server";
 
 import { OneRepMaxResponse, StatisticsErrorResponse } from "@/shared/types/statistics.types";
-import { prisma } from "@/shared/lib/prisma";
-import { STATISTICS_TIMEFRAMES, DEFAULT_TIMEFRAME, TIMEFRAME_DAYS, LOMBARDI_DIVISOR } from "@/shared/constants/statistics";
+import { STATISTICS_TIMEFRAMES, DEFAULT_TIMEFRAME } from "@/shared/constants/statistics";
 import { getMobileCompatibleSession } from "@/shared/api/mobile-auth";
 
 const timeframeSchema = z.enum([
@@ -13,11 +12,14 @@ const timeframeSchema = z.enum([
   STATISTICS_TIMEFRAMES.ONE_YEAR,
 ]);
 
-// Lombardi formula: 1RM = Weight × (1 + (Reps ÷ 30))
-function calculateOneRepMax(weight: number, reps: number): number {
-  return weight * (1 + reps / LOMBARDI_DIVISOR);
-}
-
+/**
+ * One-Rep Max endpoint - Not applicable for calisthenics exercises.
+ * This endpoint returns an empty dataset as calisthenics exercises are bodyweight-based
+ * and don't have a meaningful 1RM calculation.
+ *
+ * For calisthenics progression tracking, use the weight-progression endpoint
+ * which now tracks max reps/hold time instead.
+ */
 export async function GET(request: NextRequest, { params }: { params: Promise<{ exerciseId: string }> }) {
   try {
     // Get user session
@@ -46,119 +48,24 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     }
 
     const timeframe = timeframeParsed.data;
-
-    // Calculate date range (ensuring we're working with UTC dates to avoid timezone issues)
-    const endDate = new Date();
-    const startDate = new Date();
-
-    const daysToSubtract = TIMEFRAME_DAYS[timeframe];
-    if (timeframe === STATISTICS_TIMEFRAMES.ONE_YEAR) {
-      startDate.setFullYear(startDate.getFullYear() - 1);
-    } else {
-      startDate.setDate(startDate.getDate() - daysToSubtract);
-    }
-
-    // Set time to start and end of day in UTC
-    startDate.setUTCHours(0, 0, 0, 0);
-    endDate.setUTCHours(23, 59, 59, 999);
-
     const { exerciseId } = await params;
 
-    // Fetch sets with weight and reps
-    const workoutSessionExercises = await prisma.workoutSessionExercise.findMany({
-      where: {
-        exerciseId,
-        workoutSession: {
-          userId: user.id,
-          startedAt: {
-            gte: startDate,
-            lte: endDate,
-          },
-        },
-      },
-      include: {
-        workoutSession: {
-          select: {
-            startedAt: true,
-          },
-        },
-        sets: {
-          where: {
-            completed: true,
-            types: {
-              hasEvery: ["WEIGHT", "REPS"],
-            },
-          },
-          orderBy: {
-            setIndex: "asc",
-          },
-        },
-      },
-      orderBy: {
-        workoutSession: {
-          startedAt: "asc",
-        },
-      },
-    });
-
-    // Group by session and calculate best 1RM per session
-    const sessionBest1RM = new Map<string, { date: Date; oneRepMax: number }>();
-
-    workoutSessionExercises.forEach((sessionExercise) => {
-      const sessionDate = sessionExercise.workoutSession.startedAt.toISOString().split("T")[0];
-      let bestOneRepMax = 0;
-
-      sessionExercise.sets.forEach((set) => {
-        // Find weight and reps values from arrays
-        const weightIndex = set.types.indexOf("WEIGHT");
-        const repsIndex = set.types.indexOf("REPS");
-
-        if (weightIndex !== -1 && repsIndex !== -1 && set.valuesInt && set.valuesInt[weightIndex] && set.valuesInt[repsIndex]) {
-          const weight = set.valuesInt[weightIndex];
-          const reps = set.valuesInt[repsIndex];
-          const oneRepMax = calculateOneRepMax(weight, reps);
-
-          if (oneRepMax > bestOneRepMax) {
-            bestOneRepMax = oneRepMax;
-          }
-        }
-      });
-
-      if (bestOneRepMax > 0) {
-        const currentBest = sessionBest1RM.get(sessionDate);
-        if (!currentBest || bestOneRepMax > currentBest.oneRepMax) {
-          sessionBest1RM.set(sessionDate, {
-            date: sessionExercise.workoutSession.startedAt,
-            oneRepMax: Math.round(bestOneRepMax * 10) / 10, // Round to 1 decimal
-          });
-        }
-      }
-    });
-
-    // Convert to array format
-    const oneRepMaxProgression = Array.from(sessionBest1RM.values())
-      .sort((a, b) => a.date.getTime() - b.date.getTime())
-      .map(({ date, oneRepMax }) => ({
-        date: date.toISOString(),
-        estimatedOneRepMax: oneRepMax,
-      }));
-
+    // One-Rep Max is not applicable for calisthenics exercises
+    // Return empty dataset with explanation
     const response: OneRepMaxResponse = {
       exerciseId,
       timeframe,
-      formula: "Lombardi",
-      formulaDescription: "1RM = Weight × (1 + (Reps ÷ 30))",
-      data: oneRepMaxProgression,
-      count: oneRepMaxProgression.length,
+      formula: "N/A",
+      formulaDescription: "One-Rep Max is not applicable for calisthenics/bodyweight exercises",
+      data: [],
+      count: 0,
     };
 
-    // Add cache headers - 1 hour cache (disabled for debugging)
+    // Add cache headers
     const headers = new Headers();
-    // Temporarily disable cache for debugging
     headers.set("Cache-Control", "no-store, no-cache, must-revalidate");
     headers.set("Pragma", "no-cache");
     headers.set("Expires", "0");
-    // Original: headers.set("Cache-Control", "private, max-age=3600, stale-while-revalidate=86400");
 
     return NextResponse.json(response, { headers });
   } catch (error) {

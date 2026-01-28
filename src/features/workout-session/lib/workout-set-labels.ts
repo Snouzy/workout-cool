@@ -1,13 +1,18 @@
-import { TFunction } from "locales/client";
+import { FormQuality, BandLevel } from "../types/workout-set";
 
-import { WorkoutSetType } from "../types/workout-set";
+// Static labels for form quality and band level
+// These can be updated to use translations when the translation keys are added
+export const FORM_QUALITY_LABELS: Record<FormQuality, string> = {
+  poor: "Poor",
+  acceptable: "Acceptable",
+  good: "Good",
+  excellent: "Excellent",
+};
 
-export function getWorkoutSetTypeLabels(t: TFunction): Record<WorkoutSetType, string> {
-  return {
-    TIME: t("workout_builder.session.time"),
-    WEIGHT: t("workout_builder.session.weight"),
-    REPS: t("workout_builder.session.reps"),
-    BODYWEIGHT: t("workout_builder.session.bodyweight"),
-    NA: "N/A",
-  };
-}
+export const BAND_LEVEL_LABELS: Record<BandLevel, string> = {
+  none: "No band",
+  light: "Light",
+  medium: "Medium",
+  heavy: "Heavy",
+  extra_heavy: "Extra Heavy",
+};

@@ -36,7 +36,11 @@ export const useWorkoutSessionService = () => {
           sets: sets.map((set) => {
             return {
               ...set,
-              units: nullToUndefined(set.units),
+              reps: nullToUndefined(set.reps),
+              holdTimeSeconds: nullToUndefined(set.holdTimeSeconds),
+              formQuality: nullToUndefined(set.formQuality),
+              bandUsed: nullToUndefined(set.bandUsed),
+              rpe: nullToUndefined(set.rpe),
             };
           }),
         })),

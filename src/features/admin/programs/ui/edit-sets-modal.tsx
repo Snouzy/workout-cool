@@ -3,10 +3,9 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { X, Plus, Minus, Trash2 } from "lucide-react";
-import { ProgramSessionExercise, ProgramSuggestedSet } from "@prisma/client";
+import { ProgramSessionExercise, ProgramSuggestedSet, WorkoutSetType, WorkoutSetUnit } from "@prisma/client";
 
 import { AVAILABLE_WORKOUT_SET_TYPES, MAX_WORKOUT_SET_COLUMNS, WORKOUT_SET_UNITS_TUPLE } from "@/shared/constants/workout-set-types";
-import { WorkoutSetType, WorkoutSetUnit } from "@/features/workout-session/types/workout-set";
 
 import { updateExerciseSets } from "../actions/update-exercise-sets.action";
 

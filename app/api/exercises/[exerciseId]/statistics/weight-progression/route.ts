@@ -59,7 +59,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
 
     const { exerciseId } = await params;
 
-    // Fetch weight progression data
+    // Fetch progression data (calisthenics-focused: max reps or hold time)
     const workoutSessionExercises = await prisma.workoutSessionExercise.findMany({
       where: {
         exerciseId,
@@ -80,9 +80,6 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
         sets: {
           where: {
             completed: true,
-            types: {
-              has: "WEIGHT",
-            },
           },
           orderBy: {
             setIndex: "asc",
@@ -96,49 +93,45 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
       },
     });
 
-    // Group by session and find max weight per session
-    const sessionMaxWeights = new Map<string, { date: Date; maxWeight: number }>();
-    console.log("sessionMaxWeights:", sessionMaxWeights);
+    // Group by session and find max reps or hold time per session
+    const sessionMaxValues = new Map<string, { date: Date; maxValue: number }>();
 
     workoutSessionExercises.forEach((sessionExercise) => {
       const sessionDate = sessionExercise.workoutSession.startedAt.toISOString().split("T")[0];
-      let maxWeight = 0;
+      let maxValue = 0;
 
       sessionExercise.sets.forEach((set) => {
-        // Find weight value from arrays
-        const weightIndex = set.types.indexOf("WEIGHT");
-        if (weightIndex !== -1 && set.valuesInt && set.valuesInt[weightIndex]) {
-          const weight = set.valuesInt[weightIndex];
-          if (weight > maxWeight) {
-            maxWeight = weight;
-          }
+        // For calisthenics, track max reps or max hold time
+        const value = set.reps ?? set.holdTimeSeconds ?? 0;
+        if (value > maxValue) {
+          maxValue = value;
         }
       });
 
-      if (maxWeight > 0) {
-        const currentMax = sessionMaxWeights.get(sessionDate);
-        if (!currentMax || maxWeight > currentMax.maxWeight) {
-          sessionMaxWeights.set(sessionDate, {
+      if (maxValue > 0) {
+        const currentMax = sessionMaxValues.get(sessionDate);
+        if (!currentMax || maxValue > currentMax.maxValue) {
+          sessionMaxValues.set(sessionDate, {
             date: sessionExercise.workoutSession.startedAt,
-            maxWeight: maxWeight,
+            maxValue: maxValue,
           });
         }
       }
     });
 
-    // Convert to array format
-    const weightProgression = Array.from(sessionMaxWeights.values())
+    // Convert to array format (reusing WeightProgressionResponse structure for compatibility)
+    const progression = Array.from(sessionMaxValues.values())
       .sort((a, b) => a.date.getTime() - b.date.getTime())
-      .map(({ date, maxWeight }) => ({
+      .map(({ date, maxValue }) => ({
         date: date.toISOString(),
-        weight: maxWeight,
+        weight: maxValue, // Reusing 'weight' field to store max reps/hold time for API compatibility
       }));
 
     const response: WeightProgressionResponse = {
       exerciseId,
       timeframe,
-      data: weightProgression,
-      count: weightProgression.length,
+      data: progression,
+      count: progression.length,
     };
 
     // Add cache headers - 1 hour cache (disabled for debugging)
@@ -151,10 +144,10 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
 
     return NextResponse.json(response, { headers });
   } catch (error) {
-    console.error("Error fetching weight progression:", error);
+    console.error("Error fetching progression:", error);
     const errorResponse: StatisticsErrorResponse = {
       error: "INTERNAL_SERVER_ERROR",
-      message: "Failed to fetch weight progression",
+      message: "Failed to fetch progression data",
     };
     return NextResponse.json(errorResponse, { status: 500 });
   }

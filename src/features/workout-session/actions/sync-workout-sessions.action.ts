@@ -1,21 +1,24 @@
 "use server";
 
 import { z } from "zod";
-import { ExerciseAttributeValueEnum } from "@prisma/client";
 
 import { workoutSessionStatuses } from "@/shared/lib/workout-session/types/workout-session";
 import { prisma } from "@/shared/lib/prisma";
-import { ALL_WORKOUT_SET_TYPES, WORKOUT_SET_UNITS_TUPLE } from "@/shared/constants/workout-set-types";
 import { ERROR_MESSAGES } from "@/shared/constants/errors";
 import { actionClient } from "@/shared/api/safe-actions";
+
+// Calisthenics-focused workout set schema
+const formQualityValues = ["poor", "acceptable", "good", "excellent"] as const;
+const bandLevelValues = ["none", "light", "medium", "heavy", "extra_heavy"] as const;
 
 const workoutSetSchema = z.object({
   id: z.string(),
   setIndex: z.number(),
-  types: z.array(z.enum(ALL_WORKOUT_SET_TYPES)),
-  valuesInt: z.array(z.number()).optional(),
-  valuesSec: z.array(z.number()).optional(),
-  units: z.array(z.enum(WORKOUT_SET_UNITS_TUPLE)).optional(),
+  reps: z.number().optional(),
+  holdTimeSeconds: z.number().optional(),
+  formQuality: z.enum(formQualityValues).optional(),
+  bandUsed: z.enum(bandLevelValues).optional(),
+  rpe: z.number().min(1).max(10).optional(),
   completed: z.boolean(),
 });
 
@@ -33,7 +36,7 @@ const syncWorkoutSessionSchema = z.object({
     endedAt: z.string().optional(),
     exercises: z.array(workoutSessionExerciseSchema),
     status: z.enum(workoutSessionStatuses),
-    muscles: z.array(z.nativeEnum(ExerciseAttributeValueEnum)),
+    muscles: z.array(z.string()),
     rating: z.number().min(1).max(5).nullable().optional(),
     ratingComment: z.string().nullable().optional(),
   }),
@@ -84,12 +87,12 @@ export const syncWorkoutSessionAction = actionClient.schema(syncWorkoutSessionSc
             sets: {
               create: exercise.sets.map((set) => ({
                 setIndex: set.setIndex,
-                types: set.types,
-                valuesInt: set.valuesInt,
-                valuesSec: set.valuesSec,
-                units: set.units,
+                reps: set.reps,
+                holdTimeSeconds: set.holdTimeSeconds,
+                formQuality: set.formQuality,
+                bandUsed: set.bandUsed ?? "none",
+                rpe: set.rpe,
                 completed: set.completed,
-                type: set.types && set.types.length > 0 ? set.types[0] : "NA",
               })),
             },
           })),
@@ -106,8 +109,13 @@ export const syncWorkoutSessionAction = actionClient.schema(syncWorkoutSessionSc
             exercise: { connect: { id: exercise.id } },
             sets: {
               create: exercise.sets.map((set) => ({
-                ...set,
-                type: set.types && set.types.length > 0 ? set.types[0] : "NA",
+                setIndex: set.setIndex,
+                reps: set.reps,
+                holdTimeSeconds: set.holdTimeSeconds,
+                formQuality: set.formQuality,
+                bandUsed: set.bandUsed ?? "none",
+                rpe: set.rpe,
+                completed: set.completed,
               })),
             },
           })),

@@ -362,6 +362,14 @@ enum FormQuality {
   excellent
 }
 
+enum BandLevel {
+  none
+  light
+  medium
+  heavy
+  extra_heavy
+}
+
 model WorkoutSession {
   id        String                       @id @default(cuid())
   userId    String
@@ -397,11 +405,11 @@ model WorkoutSet {
   id                       String                 @id @default(cuid())
   workoutSessionExerciseId String
   setIndex                 Int
-  type                     WorkoutSetType
-  types                    WorkoutSetType[]       @default([])
-  valuesInt                Int[]                  @default([])
-  valuesSec                Int[]                  @default([])
-  units                    WorkoutSetUnit[]       @default([])
+  reps                     Int?
+  holdTimeSeconds          Int?
+  formQuality              FormQuality?
+  bandUsed                 BandLevel?             @default(none)
+  rpe                      Int?                   // Rate of Perceived Exertion (1-10)
   completed                Boolean                @default(false)
   workoutSessionExercise   WorkoutSessionExercise @relation(fields: [workoutSessionExerciseId], references: [id], onDelete: Cascade)
 

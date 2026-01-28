@@ -2,8 +2,7 @@ import { create } from "zustand";
 
 import { workoutSessionLocal } from "@/shared/lib/workout-session/workout-session.local";
 import { WorkoutSession } from "@/shared/lib/workout-session/types/workout-session";
-import { convertWeight, type WeightUnit } from "@/shared/lib/weight-conversion";
-import { WorkoutSessionExercise, WorkoutSet, WorkoutSetType, WorkoutSetUnit } from "@/features/workout-session/types/workout-set";
+import { WorkoutSessionExercise, WorkoutSet } from "@/features/workout-session/types/workout-set";
 import { ExerciseWithAttributes } from "@/entities/exercise/types/exercise.types";
 
 interface WorkoutSessionProgress {
@@ -47,8 +46,8 @@ interface WorkoutSessionState {
   formatElapsedTime: () => string;
   getExercisesCompleted: () => number;
   getTotalExercises: () => number;
-  getTotalVolume: () => number;
-  getTotalVolumeInUnit: (unit: WeightUnit) => number;
+  getTotalReps: () => number;
+  getTotalHoldTime: () => number;
   loadSessionFromLocal: () => void;
   addExerciseToSession: (exercise: ExerciseWithAttributes) => void;
 }
@@ -75,7 +74,7 @@ export const useWorkoutSessionStore = create<WorkoutSessionState>((set, get) => 
         } as WorkoutSessionExercise;
       }
 
-      // Default sets for custom workouts
+      // Default sets for custom workouts (calisthenics-focused)
       return {
         ...ex,
         order: idx,
@@ -83,10 +82,11 @@ export const useWorkoutSessionStore = create<WorkoutSessionState>((set, get) => 
           {
             id: `${ex.id}-set-1`,
             setIndex: 0,
-            types: ["REPS", "WEIGHT"],
-            valuesInt: [],
-            valuesSec: [],
-            units: [],
+            reps: undefined,
+            holdTimeSeconds: undefined,
+            formQuality: undefined,
+            bandUsed: "none",
+            rpe: undefined,
             completed: false,
           },
         ],
@@ -196,27 +196,23 @@ export const useWorkoutSessionStore = create<WorkoutSessionState>((set, get) => 
     const currentExercise = session.exercises[exIdx];
     const sets = currentExercise.sets;
 
-    let typesToCopy: WorkoutSetType[] = ["REPS"];
-    let unitsToCopy: WorkoutSetUnit[] = [];
-
+    // Copy band level from last set if exists
+    let bandToCopy: "none" | "light" | "medium" | "heavy" | "extra_heavy" = "none";
     if (sets.length > 0) {
       const lastSet = sets[sets.length - 1];
-
-      if (lastSet.types && lastSet.types.length > 0) {
-        typesToCopy = [...lastSet.types];
-        if (lastSet.units && lastSet.units.length > 0) {
-          unitsToCopy = [...lastSet.units];
-        }
+      if (lastSet.bandUsed) {
+        bandToCopy = lastSet.bandUsed;
       }
     }
 
     const newSet: WorkoutSet = {
       id: `${currentExercise.id}-set-${sets.length + 1}`,
       setIndex: sets.length,
-      types: typesToCopy,
-      valuesInt: [],
-      valuesSec: [],
-      units: unitsToCopy,
+      reps: undefined,
+      holdTimeSeconds: undefined,
+      formQuality: undefined,
+      bandUsed: bandToCopy,
+      rpe: undefined,
       completed: false,
     };
 
@@ -336,64 +332,38 @@ export const useWorkoutSessionStore = create<WorkoutSessionState>((set, get) => 
     return session.exercises.length;
   },
 
-  getTotalVolume: () => {
+  getTotalReps: () => {
     const { session } = get();
     if (!session) return 0;
 
-    let totalVolume = 0;
+    let totalReps = 0;
 
     session.exercises.forEach((exercise) => {
       exercise.sets.forEach((set) => {
-        // Vérifier si le set est complété et contient REPS et WEIGHT
-        if (set.completed && set.types.includes("REPS") && set.types.includes("WEIGHT") && set.valuesInt) {
-          const repsIndex = set.types.indexOf("REPS");
-          const weightIndex = set.types.indexOf("WEIGHT");
-
-          const reps = set.valuesInt[repsIndex] || 0;
-          const weight = set.valuesInt[weightIndex] || 0;
-
-          // Convertir les livres en kg si nécessaire
-          const weightInKg =
-            set.units && set.units[weightIndex] === "lbs"
-              ? weight * 0.453592 // 1 lb = 0.453592 kg
-              : weight;
-
-          totalVolume += reps * weightInKg;
+        if (set.completed && set.reps) {
+          totalReps += set.reps;
         }
       });
     });
 
-    return Math.round(totalVolume);
+    return totalReps;
   },
 
-  getTotalVolumeInUnit: (unit: WeightUnit) => {
+  getTotalHoldTime: () => {
     const { session } = get();
     if (!session) return 0;
 
-    let totalVolume = 0;
+    let totalHoldTime = 0;
 
     session.exercises.forEach((exercise) => {
       exercise.sets.forEach((set) => {
-        // Vérifier si le set est complété et contient REPS et WEIGHT
-        if (set.completed && set.types.includes("REPS") && set.types.includes("WEIGHT") && set.valuesInt) {
-          const repsIndex = set.types.indexOf("REPS");
-          const weightIndex = set.types.indexOf("WEIGHT");
-
-          const reps = set.valuesInt[repsIndex] || 0;
-          const weight = set.valuesInt[weightIndex] || 0;
-
-          // Déterminer l'unité de poids originale de la série
-          const originalUnit: WeightUnit = set.units && set.units[weightIndex] === "lbs" ? "lbs" : "kg";
-
-          // Convertir vers l'unité demandée
-          const convertedWeight = convertWeight(weight, originalUnit, unit);
-
-          totalVolume += reps * convertedWeight;
+        if (set.completed && set.holdTimeSeconds) {
+          totalHoldTime += set.holdTimeSeconds;
         }
       });
     });
 
-    return Math.round(totalVolume * 10) / 10; // Arrondir à 1 décimale
+    return totalHoldTime;
   },
 
   formatElapsedTime: () => {
@@ -431,7 +401,7 @@ export const useWorkoutSessionStore = create<WorkoutSessionState>((set, get) => 
       return;
     }
 
-    // Create new exercise with default sets
+    // Create new exercise with default sets (calisthenics-focused)
     const newExercise: WorkoutSessionExercise = {
       ...exercise,
       order: session.exercises.length,
@@ -439,10 +409,11 @@ export const useWorkoutSessionStore = create<WorkoutSessionState>((set, get) => 
         {
           id: `${exercise.id}-set-1`,
           setIndex: 0,
-          types: ["REPS", "WEIGHT"],
-          valuesInt: [],
-          valuesSec: [],
-          units: [],
+          reps: undefined,
+          holdTimeSeconds: undefined,
+          formQuality: undefined,
+          bandUsed: "none",
+          rpe: undefined,
           completed: false,
         },
       ],

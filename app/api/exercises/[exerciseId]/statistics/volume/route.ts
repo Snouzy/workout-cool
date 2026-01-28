@@ -111,7 +111,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
       },
     });
 
-    // Calculate weekly volume
+    // Calculate weekly volume for calisthenics
     const weeklyVolume = new Map<string, { weekStart: Date; totalVolume: number; setCount: number }>();
 
     workoutSessionExercises.forEach((sessionExercise) => {
@@ -121,20 +121,13 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
       sessionExercise.sets.forEach((set) => {
         let volume = 0;
 
-        // Calculate volume based on set type
-        const weightIndex = set.types.indexOf("WEIGHT");
-        const repsIndex = set.types.indexOf("REPS");
-        const timeIndex = set.types.indexOf("TIME");
-
-        if (weightIndex !== -1 && repsIndex !== -1 && set.valuesInt && set.valuesInt[weightIndex] && set.valuesInt[repsIndex]) {
-          // Weight-based exercise: reps × weight
-          volume = set.valuesInt[repsIndex] * set.valuesInt[weightIndex];
-        } else if (repsIndex !== -1 && set.valuesInt && set.valuesInt[repsIndex]) {
-          // Bodyweight exercise: count reps as volume
-          volume = set.valuesInt[repsIndex];
-        } else if (timeIndex !== -1 && set.valuesSec && set.valuesSec[0]) {
+        // Calculate volume based on set data (calisthenics-focused)
+        if (set.reps) {
+          // Rep-based exercise: count reps as volume
+          volume = set.reps;
+        } else if (set.holdTimeSeconds) {
           // Time-based exercise: use seconds as volume
-          volume = set.valuesSec[0];
+          volume = set.holdTimeSeconds;
         }
 
         if (volume > 0) {
@@ -163,7 +156,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
       timeframe,
       data: volumeProgression,
       count: volumeProgression.length,
-      calculationNote: "Volume = sets × reps × weight (or reps for bodyweight, or seconds for time-based)",
+      calculationNote: "Volume = total reps (for rep-based) or total seconds (for time-based exercises)",
     };
 
     // Add cache headers - 1 hour cache (disabled for debugging)

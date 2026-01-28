@@ -151,8 +151,43 @@ model Exercise {
   ProgramSessionExercise ProgramSessionExercise[]
   favoritesByUsers       UserFavoriteExercise[]
   equipmentRequired      ExerciseEquipment[]
+  progressionLevels      ProgressionLevel[]
 
   @@map("exercises")
+}
+
+// ========================================
+// PROGRESSION SYSTEM MODELS
+// ========================================
+
+model ProgressionFamily {
+  id          String           @id @default(cuid())
+  name        String
+  slug        String           @unique
+  description String           @db.Text
+  category    ExerciseCategory
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+
+  // Relations
+  levels ProgressionLevel[]
+
+  @@map("progression_families")
+}
+
+model ProgressionLevel {
+  id             String @id @default(cuid())
+  familyId       String
+  exerciseId     String
+  level          Int
+  unlockCriteria Json   // { minReps, minSets, minHoldTime, minFormQuality, consistencyWeeks }
+
+  family   ProgressionFamily @relation(fields: [familyId], references: [id], onDelete: Cascade)
+  exercise Exercise          @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
+
+  @@unique([familyId, level])
+  @@unique([familyId, exerciseId])
+  @@map("progression_levels")
 }
 
 // ========================================

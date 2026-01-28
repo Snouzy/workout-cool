@@ -38,3 +38,12 @@
   - WorkoutSession.muscles and ProgramSession.equipment also changed to String[]
   - Migration not generated (no DB available in this env) — will need to run prisma migrate when DB is set up
 ---
+
+## 2026-01-28 - US-004
+- What was implemented: Added 6 calisthenics enums to Prisma schema (ExerciseCategory, DifficultyLevel, MeasurementType, MuscleGroup, EquipmentType, EquipmentHeight)
+- Files changed:
+  - Modified: prisma/schema.prisma (added enums in a new "CALISTHENICS ENUMS" section)
+- **Learnings for future iterations:**
+  - Pre-existing typecheck errors from US-003 EAV removal still present — expected until new Exercise model is built
+  - Prisma generate works with new enums without running migration
+---

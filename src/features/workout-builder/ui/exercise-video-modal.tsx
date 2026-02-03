@@ -100,6 +100,7 @@ export function ExerciseVideoModal({ open, onOpenChange, exercise }: ExerciseVid
                     allow="autoplay; encrypted-media"
                     allowFullScreen
                     className="w-full h-full border-0"
+                    referrerPolicy="strict-origin-when-cross-origin"
                     src={youTubeEmbedUrl}
                     title={title ?? ""}
                   />

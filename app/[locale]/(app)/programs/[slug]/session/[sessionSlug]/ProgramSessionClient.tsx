@@ -154,8 +154,8 @@ export function ProgramSessionClient({ program, week, session, isAuthenticated, 
     if (!workoutSession || !sessionProgressId) return;
 
     try {
-      // Complete the workout
-      completeWorkout();
+      // Complete the workout (now async and will call our API)
+      await completeWorkout();
 
       // Save to database and mark session as complete
       const { isCompleted, nextWeek, nextSession } = await completeProgramSession(sessionProgressId, workoutSession.id);

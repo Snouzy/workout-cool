@@ -1716,6 +1716,7 @@ export default {
   },
 
   commons: {
+    upgrade_to_premium: "Torne-se Premium",
     last_activity: "Última atividade",
     registered_on: "Inscrito em",
     just_now: "agora mesmo",

@@ -843,6 +843,7 @@ export default {
     },
   },
   commons: {
+    upgrade_to_premium: "Torne-se Premium",
     last_activity: "Última actividad",
     registered_on: "Inscrito el",
     just_now: "ahora mismo",

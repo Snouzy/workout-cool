@@ -838,6 +838,7 @@ export default {
     },
   },
   commons: {
+    upgrade_to_premium: "成为高级",
     last_activity: "最近活动",
     registered_on: "注册于",
     just_now: "刚刚",

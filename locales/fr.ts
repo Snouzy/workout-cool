@@ -1738,6 +1738,7 @@ export default {
     },
   },
   commons: {
+    upgrade_to_premium: "Devenir Premium",
     last_activity: "Dernière activité",
     registered_on: "Inscrit le",
     refresh: "Actualiser",

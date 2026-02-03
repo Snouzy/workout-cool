@@ -1707,6 +1707,7 @@ export default {
     },
   },
   commons: {
+    upgrade_to_premium: "Стань Премиум",
     last_activity: "Последняя активность",
     registered_on: "Зарегистрирован",
     just_now: "только что",

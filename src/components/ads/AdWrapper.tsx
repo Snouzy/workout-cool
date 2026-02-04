@@ -2,6 +2,7 @@
 
 import { ReactNode } from "react";
 
+import { useBillingConfig } from "@/shared/hooks/use-billing-config";
 import { useUserSubscription } from "@/features/ads/hooks/useUserSubscription";
 import { env } from "@/env";
 
@@ -13,6 +14,7 @@ interface AdWrapperProps {
 
 export function AdWrapper({ children, fallback = null, forceShow = false }: AdWrapperProps) {
   const { isPremium, isPending } = useUserSubscription();
+  const { billingMode } = useBillingConfig();
 
   if (!env.NEXT_PUBLIC_SHOW_ADS) {
     return null;
@@ -33,7 +35,11 @@ export function AdWrapper({ children, fallback = null, forceShow = false }: AdWr
     return <>{fallback}</>;
   }
 
-  // TODO: don't show ads to self hosted users
+  // Don't show ads if billing is disabled (self-hosted instances with no billing)
+  if (billingMode === "DISABLED") {
+    return <>{fallback}</>;
+  }
+
   // Don't show ads to premium users
   if (isPremium) {
     return <>{fallback}</>;

@@ -7,6 +7,7 @@ import { useI18n } from "locales/client";
 import Logo from "@public/logo.png";
 import { LanguageSelector } from "@/widgets/language-selector/language-selector";
 import { usePremiumStatus } from "@/shared/lib/premium/use-premium";
+import { useBillingConfig } from "@/shared/hooks/use-billing-config";
 import { ThemeToggle } from "@/features/theme/ThemeToggle";
 import { ReleaseNotesDialog } from "@/features/release-notes";
 import WorkoutStreakHeader from "@/features/layout/workout-streak-header";
@@ -21,6 +22,7 @@ export const Header = () => {
   const logout = useLogout();
   const t = useI18n();
   const { data: premiumStatus } = usePremiumStatus();
+  const { shouldShowPremiumGates } = useBillingConfig();
 
   // Get user initials for avatar
   const userAvatar = session.data?.user?.email?.substring(0, 2).toUpperCase() || "";
@@ -67,7 +69,7 @@ export const Header = () => {
 
         {/* User Menu */}
         <div className="navbar-end">
-          {isPremium || !showAds || !hasAdProvider ? <WorkoutStreakHeader /> : <RemoveAdsText />}
+          {isPremium || !showAds || !hasAdProvider || !shouldShowPremiumGates ? <WorkoutStreakHeader /> : <RemoveAdsText />}
           <ReleaseNotesDialog />
           <ThemeToggle />
           <LanguageSelector />
@@ -78,7 +80,7 @@ export const Header = () => {
                 <div className="w-8 rounded-full bg-primary text-primary-content !flex items-center justify-center text-sm font-medium">
                   {userAvatar || <User className="w-4 h-4" />}
                 </div>
-                {isPremium && (
+                {isPremium && shouldShowPremiumGates && (
                   <div className="absolute -top-1 -right-1 w-4 h-4 bg-amber-400 rounded-full !flex items-center justify-center">
                     <Crown className="w-2.5 h-2.5 text-amber-900" />
                   </div>
@@ -98,45 +100,47 @@ export const Header = () => {
                 </Link>
               </li>
 
-              {/* Subscription Menu Item */}
-              <li>
-                <Link
-                  className="!no-underline"
-                  href={isPremium ? "/api/premium/billing-portal" : "/premium"}
-                  size="base"
-                  variant="nav"
-                  {...(isPremium && {
-                    onClick: async (e) => {
-                      e.preventDefault();
-                      try {
-                        const response = await fetch("/api/premium/billing-portal", {
-                          method: "POST",
-                          headers: { "Content-Type": "application/json" },
-                          body: JSON.stringify({ returnUrl: window.location.origin + "/profile" }),
-                        });
-                        const data = await response.json();
-                        if (data.success && data.url) {
-                          window.location.href = data.url;
+              {/* Subscription Menu Item - Only show if billing is enabled */}
+              {shouldShowPremiumGates && (
+                <li>
+                  <Link
+                    className="!no-underline"
+                    href={isPremium ? "/api/premium/billing-portal" : "/premium"}
+                    size="base"
+                    variant="nav"
+                    {...(isPremium && {
+                      onClick: async (e) => {
+                        e.preventDefault();
+                        try {
+                          const response = await fetch("/api/premium/billing-portal", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({ returnUrl: window.location.origin + "/profile" }),
+                          });
+                          const data = await response.json();
+                          if (data.success && data.url) {
+                            window.location.href = data.url;
+                          }
+                        } catch (error) {
+                          console.error("Error opening billing portal:", error);
                         }
-                      } catch (error) {
-                        console.error("Error opening billing portal:", error);
-                      }
-                    },
-                  })}
-                >
-                  {isPremium ? (
-                    <>
-                      <Crown className="w-4 h-4 text-amber-500" />
-                      {t("commons.manage_subscription")}
-                    </>
-                  ) : (
-                    <>
-                      <Sparkles className="w-4 h-4 text-purple-500" />
-                      {t("commons.remove_ads")}
-                    </>
-                  )}
-                </Link>
-              </li>
+                      },
+                    })}
+                  >
+                    {isPremium ? (
+                      <>
+                        <Crown className="w-4 h-4 text-amber-500" />
+                        {t("commons.manage_subscription")}
+                      </>
+                    ) : (
+                      <>
+                        <Sparkles className="w-4 h-4 text-purple-500" />
+                        {t("commons.remove_ads")}
+                      </>
+                    )}
+                  </Link>
+                </li>
+              )}
 
               <hr className="my-1 border-slate-200 dark:border-gray-800" />
 

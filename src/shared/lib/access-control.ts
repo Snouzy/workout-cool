@@ -1,6 +1,8 @@
+import { BillingConfig } from "./billing-config";
+
 /**
  * Access control utilities for program sessions
- * Determines user access based on authentication and premium status
+ * Determines user access based on authentication, premium status, and billing mode
  */
 
 export interface AccessControlContext {
@@ -9,16 +11,22 @@ export interface AccessControlContext {
   isSessionPremium: boolean;
 }
 
-export type AccessAction = 
-  | "allow" 
-  | "require_auth" 
+export type AccessAction =
+  | "allow"
+  | "require_auth"
   | "require_premium";
 
 /**
  * Determines what action should be taken based on user status and session requirements
+ * Respects billing mode for self-hosted instances
  */
 export function getSessionAccess(context: AccessControlContext): AccessAction {
   const { isAuthenticated, isPremium, isSessionPremium } = context;
+
+  // Rule 0: If billing is disabled or freemium, grant access to all authenticated users
+  if (isAuthenticated && BillingConfig.shouldGrantFreeAccess()) {
+    return "allow";
+  }
 
   // Rule 1: Not authenticated -> require auth
   if (!isAuthenticated) {

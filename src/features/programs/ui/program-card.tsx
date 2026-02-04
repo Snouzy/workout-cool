@@ -5,6 +5,7 @@ import { ExerciseAttributeValueEnum } from "@prisma/client";
 
 import { Locale } from "locales/types";
 import { getI18n } from "locales/server";
+import { BillingConfig } from "@/shared/lib/billing-config";
 import { getAttributeValueLabel } from "@/shared/lib/attribute-value-translation";
 import { getProgramDescription, getProgramSlug, getProgramTitle } from "@/features/programs/lib/translations-mapper";
 
@@ -17,7 +18,9 @@ interface ProgramCardProps {
 }
 
 export async function ProgramCard({ program, size = "medium", locale }: ProgramCardProps) {
-  const isLocked = program.isPremium;
+  // Respect billing mode - don't show lock/badge if billing is disabled/freemium
+  const shouldShowPremiumIndicators = BillingConfig.shouldShowPremiumGates();
+  const isLocked = program.isPremium && shouldShowPremiumIndicators;
   const t = await getI18n();
   const title = getProgramTitle(program, locale);
   const description = getProgramDescription(program, locale);

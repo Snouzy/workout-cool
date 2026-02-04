@@ -1,6 +1,7 @@
 import { PaymentProcessor, PlanProviderMapping } from "@prisma/client";
 
 import { prisma } from "@/shared/lib/prisma";
+import { BillingConfig } from "@/shared/lib/billing-config";
 
 import { StripeProvider } from "./providers/stripe-provider";
 import { PremiumService } from "./premium.service";
@@ -13,6 +14,7 @@ import type { PaymentProvider } from "./providers/base-provider";
  *
  * Simple manager that coordinates between providers and services
  * Easy to extend with new payment providers
+ * Respects billing mode for self-hosted instances
  */
 export class PremiumManager {
   private static providers: Record<string, PaymentProvider> = {
@@ -21,9 +23,13 @@ export class PremiumManager {
 
   /**
    * Get available premium plans with provider mappings
-   * Returns 3 plans: Free, Supporter, Premium - fitness focused
+   * Returns empty array if billing is disabled or freemium
    */
   static async getAvailablePlans(provider?: string, region?: string): Promise<PremiumPlan[]> {
+    // If billing is disabled or freemium, return no plans
+    if (!BillingConfig.isBillingEnabled()) {
+      return [];
+    }
     // Try to get plans from database first
     const dbPlans = await prisma.subscriptionPlan.findMany({
       where: {
@@ -79,8 +85,18 @@ export class PremiumManager {
 
   /**
    * Create checkout for a plan using provider mapping
+   * Disabled if billing is not enabled
    */
   static async createCheckout(userId: string, planId: string, provider: string = "stripe", region?: string): Promise<CheckoutResult> {
+    // If billing is disabled or freemium, prevent checkout
+    if (!BillingConfig.isBillingEnabled()) {
+      return {
+        success: false,
+        error: "Billing is disabled on this instance",
+        provider: provider as any,
+      };
+    }
+
     const paymentProvider = this.providers[provider];
     if (!paymentProvider) {
       return {

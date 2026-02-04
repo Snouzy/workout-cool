@@ -2,7 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { Users, LayoutDashboard, BarChart3, Settings } from "lucide-react";
+import { Users, LayoutDashboard, BarChart3, Settings, Dumbbell } from "lucide-react";
 
 import { cn } from "@/shared/lib/utils";
 
@@ -26,6 +26,12 @@ const navigation = [
     href: "/admin/programs",
     icon: BarChart3,
     description: "Manage programs.",
+  },
+  {
+    name: "Exercises",
+    href: "/admin/exercises",
+    icon: Dumbbell,
+    description: "Manage exercises.",
   },
   {
     name: "Settings",

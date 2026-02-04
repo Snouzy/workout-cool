@@ -38,6 +38,7 @@ export const signUpAction = actionClient.schema(signUpSchema).action(async ({ pa
       });
     }
 
+
     return user;
   } catch (error) {
     console.error(error);

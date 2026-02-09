@@ -123,20 +123,22 @@ export const auth = betterAuth({
     },
     enabled: true,
   },
-  socialProviders: {
-    google: {
-      enabled: true,
-      clientId: env.GOOGLE_CLIENT_ID,
-      clientSecret: env.GOOGLE_CLIENT_SECRET,
-      mapProfileToUser: async (profile) => {
-        return {
-          ...profile,
-          email: profile.email,
-          firstName: profile.given_name,
-          lastName: profile.family_name,
-          role: UserRole.user,
-        };
-      },
-    },
-  },
+  socialProviders: env.GOOGLE_CLIENT_ID && env.GOOGLE_CLIENT_SECRET
+    ? {
+        google: {
+          enabled: true,
+          clientId: env.GOOGLE_CLIENT_ID,
+          clientSecret: env.GOOGLE_CLIENT_SECRET,
+          mapProfileToUser: async (profile) => {
+            return {
+              ...profile,
+              email: profile.email,
+              firstName: profile.given_name,
+              lastName: profile.family_name,
+              role: UserRole.user,
+            };
+          },
+        },
+      }
+    : {},
 });

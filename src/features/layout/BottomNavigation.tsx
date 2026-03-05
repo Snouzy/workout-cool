@@ -3,7 +3,7 @@
 import React from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { Home, Grid, Activity, Trophy } from "lucide-react";
+import { Home, Grid, Dumbbell, TrendingUp, Trophy } from "lucide-react";
 
 import { useCurrentLocale, useI18n } from "locales/client";
 import { cn } from "@/shared/lib/utils";
@@ -22,9 +22,18 @@ export function BottomNavigation() {
       mobileLabel: t("bottom_navigation.workouts"),
       href: paths.root,
       icon: Home,
-      emoji: "WorkoutCoolHappy.png",
       description: t("bottom_navigation.workouts_tooltip"),
       isActive: pathname === paths.root || pathname === `/${locale}`,
+    },
+    {
+      id: "exercises",
+      label: t("bottom_navigation.exercises"),
+      shortLabel: t("bottom_navigation.exercises"),
+      mobileLabel: t("bottom_navigation.exercises"),
+      href: `/${locale}${paths.exercises}`,
+      icon: Dumbbell,
+      description: t("bottom_navigation.exercises_tooltip"),
+      isActive: pathname.includes(paths.exercises),
     },
     {
       id: "programs",
@@ -33,20 +42,18 @@ export function BottomNavigation() {
       mobileLabel: t("bottom_navigation.programs"),
       href: `${paths.programs}`,
       icon: Grid,
-      emoji: "WorkoutCoolSwag.png",
       description: t("bottom_navigation.programs_tooltip"),
       isActive: pathname.includes(paths.programs),
     },
     {
-      id: "statistics",
-      label: t("bottom_navigation.statistics"),
-      shortLabel: t("bottom_navigation.statistics"),
-      mobileLabel: t("bottom_navigation.statistics"),
-      href: `/${locale}/statistics`,
-      icon: Activity,
-      emoji: "WorkoutCoolBiceps.png",
-      description: t("bottom_navigation.statistics_tooltip"),
-      isActive: pathname.includes("/statistics"),
+      id: "progression",
+      label: t("bottom_navigation.progression"),
+      shortLabel: t("bottom_navigation.progression"),
+      mobileLabel: t("bottom_navigation.progression"),
+      href: `/${locale}${paths.progression}`,
+      icon: TrendingUp,
+      description: t("bottom_navigation.progression_tooltip"),
+      isActive: pathname.includes(paths.progression),
     },
     {
       id: "leaderboard",

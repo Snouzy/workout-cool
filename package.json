@@ -16,6 +16,10 @@
     "db:seed-workout-advanced": "tsx scripts/seed-workout-data-advanced.ts",
     "lint:fix": "next lint --fix",
     "db:seed-leaderboard": "tsx scripts/seed-leaderboard-data.ts",
+    "db:seed-equipment": "tsx scripts/seed-equipment.ts",
+    "db:seed-push-pull": "tsx scripts/seed-push-pull-families.ts",
+    "db:seed-lsit-frontlever": "tsx scripts/seed-lsit-frontlever-families.ts",
+    "db:seed-dip-squat": "tsx scripts/seed-dip-squat-families.ts",
     "migrate:prod": "env-cmd -f .env.production prisma migrate deploy"
   },
   "resolutions": {

@@ -1,5 +1,101 @@
 # PRD: CaliGym MVP — Calisthenics Progression Training App
 
+---
+
+## SHIP DAY PLAN — 2026-03-05
+
+> Audit performed by 4-agent team (tech-architect, product-analyst, ux-designer, test-strategist).
+> Goal: ship v0.1 by end of day.
+
+### Current State
+
+| Layer | Score | Summary |
+|---|---|---|
+| Schema | 9/10 | All calisthenics models done (US-001 to US-010) |
+| API / Server Actions | 8/10 | Programs, auth, workout sessions all working |
+| Application Layer | 4/10 | Programs + admin done; progression system missing entirely |
+| UI Pages | 2/10 | 15+ pages exist; all new calisthenics pages absent |
+| Seed Data | 1/10 | **Database is empty** — biggest blocker |
+
+### v0.1 Critical Path (~7–8 hours)
+
+Execute in this order. Seeds and server actions can be parallelized.
+
+**Phase 1 — Data (2–3h, start immediately)**
+
+| Story | Task | Est. |
+|---|---|---|
+| US-011 | Seed 8 equipment items | 30 min |
+| US-012 | Seed Push-Up + Pull-Up families (10 levels each + exercises) | 1.5h |
+| US-013 | Seed Dip + Squat families (8–10 levels each + exercises) | 1h |
+| US-014 | Seed L-Sit + Front Lever families (8–10 levels each + exercises) | 1h |
+
+Simplification: minimum viable exercise content for MVP (name en/fr, slug, description, instructions[], cues[], category, muscles, difficulty, measurementType, defaults). Enrich post-launch.
+
+**Phase 2 — Server Actions (1.5–2h, parallelize with Phase 1)**
+
+| Story | Task | Est. |
+|---|---|---|
+| US-017 | `getUserProgressions`, `getProgressionFamily` actions in `src/features/progression-system/` | 1h |
+| US-018 | `getAllEquipment`, `getUserEquipment` actions in `src/features/equipment-setup/` | 30 min |
+| US-019 | `getExercises(filters)`, `getExerciseBySlug(slug)` in `src/entities/exercise/` | 30 min |
+
+**Phase 3 — Pages (4–5h, after Phase 2)**
+
+| Story | Task | Est. |
+|---|---|---|
+| US-025 | Exercise browse page `/exercises` (category/muscle/difficulty filters, URL params via nuqs) | 1h |
+| US-026 | Exercise detail page `/exercises/[slug]` (video, instructions, progression context) | 45 min |
+| US-027 | Progression dashboard `/progression` (6 family cards, level progress bars) | 1h |
+| US-028 | Progression family detail `/progression/[familySlug]` (timeline, locked/unlocked states) | 1h |
+| US-033 | Home dashboard (workout stats, progression summary, last 5 sessions) | 1h |
+
+**Phase 4 — Polish (30–45 min)**
+
+| Story | Task | Est. |
+|---|---|---|
+| US-030 | Verify workout set logging UI shows calisthenics fields (reps/holdTime/formQuality/bandUsed/rpe), not weight | 30 min |
+| US-034 | Add Progression + Exercises links to nav (BottomNavigation.tsx + sidebar) | 15 min |
+
+### Decisions Resolved
+
+1. **Initial progression level**: Everyone starts at level 1. Assessment system unlocks higher levels (v0.2).
+2. **Seed data detail**: Minimum viable content first. commonMistakes, imageUrls, videoUrls enriched post-launch.
+3. **Unlock criteria**: Conservative — e.g. `{ minReps: 8, minSets: 3, minFormQuality: "good" }`.
+4. **Onboarding**: Leave current stub as-is for v0.1. Full onboarding (equipment selection, goals, experience level) ships in v0.2.
+5. **Assessment UI**: `Test My Level` button appears in v0.1 but is disabled/placeholder. Full flow ships in v0.2.
+6. **Program templates**: Defer to v0.2. Existing programs infrastructure is available; templates seeded separately.
+
+### Deferred to v0.2
+
+- US-015: Standalone exercises (core, mobility, supplementary)
+- US-016: User model extensions (experienceLevel, trainingGoals)
+- US-020: Assessment server actions
+- US-021: Equipment selector UI component
+- US-022: Equipment selection in onboarding
+- US-023: Experience level + goals in onboarding
+- US-024: Equipment in profile settings
+- US-029: Assessment/level-up UI
+- US-031: Program templates seed
+- US-032: Program equipment filtering
+
+### Test Strategy
+
+No test framework installed. Recommended: add **Vitest** (fast setup, no config).
+
+Two tier-1 tests to write before shipping (~45 min):
+1. `syncWorkoutSessionAction` — validates calisthenics fields saved correctly (formQuality, bandUsed, rpe)
+2. `startProgramSession` — validates session state idempotency (creates once, returns existing)
+
+### UX Watch Items for v0.1
+
+- **Onboarding stub**: Acceptable for v0.1. Add a simple "Get started → Programs" CTA instead of blank page.
+- **Session completion**: Shows summary + confetti — solid. Ensure "data saved" is clear.
+- **Empty states**: Programs page has good empty state. Exercise and progression pages need one too.
+- **i18n gaps**: `Training Summary`, `Band` labels are hardcoded English — note for post-launch i18n pass.
+
+---
+
 ## Introduction
 
 CaliGym is a calisthenics-specific training platform that guides users from complete beginner to advanced skills like muscle-ups, planches, and front levers. It is built by forking [workout-cool](https://github.com/Snouzy/workout-cool) (Next.js 15, Prisma + PostgreSQL, Feature-Sliced Design, shadcn/ui + DaisyUI, Better Auth, i18n) and transforming it from a general gym tracker into a progression-focused calisthenics app.

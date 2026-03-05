@@ -161,8 +161,8 @@
         "Typecheck passes"
       ],
       "priority": 10,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Schema complete per audit 2026-03-05. WorkoutSet now has holdTimeSeconds, formQuality (FormQuality enum), bandUsed (BandLevel enum), rpe fields. Weight fields removed. UI components in src/features/workout-session/ui/ still need verification — confirm weight inputs are removed and calisthenics inputs are shown."
     },
     {
       "id": "US-011",
@@ -177,7 +177,8 @@
       ],
       "priority": 11,
       "passes": false,
-      "notes": ""
+      "v0_1": true,
+      "notes": "v0.1 CRITICAL. First seed to run — unblocks all exercise and progression features. Use upsert for idempotency."
     },
     {
       "id": "US-012",
@@ -193,7 +194,8 @@
       ],
       "priority": 12,
       "passes": false,
-      "notes": "This is a large seed but it's data entry, not complex logic. Each exercise needs detailed content."
+      "v0_1": true,
+      "notes": "v0.1 CRITICAL. MVP simplification: minimum viable content per exercise (name en/fr, slug, description, instructions[], cues[], category, muscles, difficulty, measurementType, defaultSets, defaultReps/HoldTime). Full content (commonMistakes, videoUrl, imageUrls) can be enriched post-launch."
     },
     {
       "id": "US-013",
@@ -209,7 +211,8 @@
       ],
       "priority": 13,
       "passes": false,
-      "notes": ""
+      "v0_1": true,
+      "notes": "v0.1 CRITICAL. Same MVP simplification as US-012 — minimum viable content first, enrich post-launch."
     },
     {
       "id": "US-014",
@@ -225,7 +228,8 @@
       ],
       "priority": 14,
       "passes": false,
-      "notes": ""
+      "v0_1": true,
+      "notes": "v0.1 CRITICAL. Same MVP simplification as US-012 — minimum viable content first, enrich post-launch."
     },
     {
       "id": "US-015",
@@ -240,7 +244,9 @@
       ],
       "priority": 15,
       "passes": false,
-      "notes": ""
+      "v0_1": false,
+      "deferred": true,
+      "notes": "DEFERRED to v0.2. The 6 progression families (US-012 to US-014) cover all critical exercises for MVP. Standalone core/mobility/supplementary exercises can be added post-launch once the app is live and feedback is gathered."
     },
     {
       "id": "US-016",
@@ -255,7 +261,9 @@
       ],
       "priority": 16,
       "passes": false,
-      "notes": ""
+      "v0_1": false,
+      "deferred": true,
+      "notes": "DEFERRED to v0.2. Requires schema migration. Onboarding customization (US-022, US-023) deferred with it. For v0.1, all users start at progression level 1 and test up."
     },
     {
       "id": "US-017",
@@ -272,7 +280,8 @@
       ],
       "priority": 17,
       "passes": false,
-      "notes": ""
+      "v0_1": true,
+      "notes": "v0.1 CRITICAL. Create src/features/progression-system/actions/. For v0.1: getUserProgressions and getProgressionFamily are must-have. advanceUserLevel and initializeUserProgressions can be stubs that are filled in when assessment UI ships in v0.2."
     },
     {
       "id": "US-018",
@@ -288,7 +297,8 @@
       ],
       "priority": 18,
       "passes": false,
-      "notes": ""
+      "v0_1": true,
+      "notes": "v0.1 CRITICAL. getAllEquipment and getUserEquipment needed for v0.1 (exercise filtering). updateUserEquipment needed when equipment selection UI ships — can be a stub for now."
     },
     {
       "id": "US-019",
@@ -304,7 +314,8 @@
       ],
       "priority": 19,
       "passes": false,
-      "notes": ""
+      "v0_1": true,
+      "notes": "v0.1 CRITICAL. getExercises(filters) and getExerciseBySlug(slug) are must-have for browse and detail pages. getExercisesForUserEquipment can be a lightweight wrapper built on top of getExercises."
     },
     {
       "id": "US-020",
@@ -319,7 +330,9 @@
       ],
       "priority": 20,
       "passes": false,
-      "notes": ""
+      "v0_1": false,
+      "deferred": true,
+      "notes": "DEFERRED to v0.2. Assessment/level-up system requires both submitAssessment logic and UI (US-029). Progression dashboard (US-027/028) ships in v0.1 with read-only views and a placeholder 'Test My Level' button."
     },
     {
       "id": "US-021",
@@ -336,7 +349,9 @@
       ],
       "priority": 21,
       "passes": false,
-      "notes": ""
+      "v0_1": false,
+      "deferred": true,
+      "notes": "DEFERRED to v0.2. Equipment UI selector depends on US-018 (equipment actions). For v0.1 all exercises are shown; users can filter manually on the exercise browse page."
     },
     {
       "id": "US-022",
@@ -352,7 +367,9 @@
       ],
       "priority": 22,
       "passes": false,
-      "notes": ""
+      "v0_1": false,
+      "deferred": true,
+      "notes": "DEFERRED to v0.2. Current onboarding page is a stub — for v0.1 leave it as-is or add a minimal 'get started' CTA. Full onboarding with equipment selection comes in v0.2 with US-021."
     },
     {
       "id": "US-023",
@@ -368,7 +385,9 @@
       ],
       "priority": 23,
       "passes": false,
-      "notes": ""
+      "v0_1": false,
+      "deferred": true,
+      "notes": "DEFERRED to v0.2. Depends on US-016 (User model extension with experienceLevel/trainingGoals) which is also deferred."
     },
     {
       "id": "US-024",
@@ -384,7 +403,9 @@
       ],
       "priority": 24,
       "passes": false,
-      "notes": ""
+      "v0_1": false,
+      "deferred": true,
+      "notes": "DEFERRED to v0.2. Ships with US-021 equipment selector component."
     },
     {
       "id": "US-025",
@@ -403,7 +424,8 @@
       ],
       "priority": 25,
       "passes": false,
-      "notes": ""
+      "v0_1": true,
+      "notes": "v0.1 CRITICAL. Depends on US-019 (exercise server actions). Use nuqs for URL params. For v0.1, equipment toggle filter can be simplified to a category/muscle/difficulty filter only — equipment-based filtering can come with US-021 in v0.2."
     },
     {
       "id": "US-026",
@@ -418,7 +440,8 @@
       ],
       "priority": 26,
       "passes": false,
-      "notes": ""
+      "v0_1": true,
+      "notes": "v0.1 CRITICAL. Depends on US-019 (getExerciseBySlug). Progression context (previous/next exercise in family) requires join through ProgressionLevel table."
     },
     {
       "id": "US-027",
@@ -436,7 +459,8 @@
       ],
       "priority": 27,
       "passes": false,
-      "notes": ""
+      "v0_1": true,
+      "notes": "v0.1 CRITICAL. Depends on US-017 (getUserProgressions). For v0.1: show all 6 family cards with current level and next exercise. 'Test My Level' button can appear but link to a 'Coming soon' state since assessment UI (US-029) is deferred."
     },
     {
       "id": "US-028",
@@ -455,7 +479,8 @@
       ],
       "priority": 28,
       "passes": false,
-      "notes": ""
+      "v0_1": true,
+      "notes": "v0.1 CRITICAL. Depends on US-017 (getProgressionFamily). Shows all levels as vertical timeline with locked/unlocked states. 'Test My Level' button disabled/placeholder for v0.1 — full assessment flow is US-029 in v0.2."
     },
     {
       "id": "US-029",
@@ -473,7 +498,9 @@
       ],
       "priority": 29,
       "passes": false,
-      "notes": ""
+      "v0_1": false,
+      "deferred": true,
+      "notes": "DEFERRED to v0.2. Requires US-020 (assessment server actions). Progression detail page (US-028) ships with a placeholder 'Test My Level' button in v0.1."
     },
     {
       "id": "US-030",
@@ -492,7 +519,8 @@
       ],
       "priority": 30,
       "passes": false,
-      "notes": ""
+      "v0_1": true,
+      "notes": "v0.1 CRITICAL. The WorkoutSet schema is already correct (US-010). This story is about verifying and updating the UI components. Check src/features/workout-session/ui/ for weight-related inputs and replace with reps/holdTime/formQuality/bandUsed/rpe. UX audit confirmed the fields exist in the UI but need verification."
     },
     {
       "id": "US-031",
@@ -510,7 +538,9 @@
       ],
       "priority": 31,
       "passes": false,
-      "notes": ""
+      "v0_1": false,
+      "deferred": true,
+      "notes": "DEFERRED to v0.2. Program templates require significant seed data effort. For v0.1, users can still use any existing programs in the database. Program templates are the second thing to add after core progression features."
     },
     {
       "id": "US-032",
@@ -526,7 +556,9 @@
       ],
       "priority": 32,
       "passes": false,
-      "notes": ""
+      "v0_1": false,
+      "deferred": true,
+      "notes": "DEFERRED to v0.2. Depends on US-021 (equipment selector) and US-031 (program templates). For v0.1 all programs shown; users can manually pick what fits their equipment."
     },
     {
       "id": "US-033",
@@ -543,7 +575,8 @@
       ],
       "priority": 33,
       "passes": false,
-      "notes": ""
+      "v0_1": true,
+      "notes": "v0.1 CRITICAL. Home page is currently a stub ('Dashboard coming soon'). Replace with real dashboard: workout stats (this week, streak, total), progression summary grid (6 families × current level), last 3-5 sessions. Depends on US-017 (getUserProgressions) and existing workout session queries."
     },
     {
       "id": "US-034",
@@ -561,7 +594,8 @@
       ],
       "priority": 34,
       "passes": false,
-      "notes": ""
+      "v0_1": true,
+      "notes": "v0.1 CRITICAL. Fast win — 15-30 min task. Add 'Progression' and 'Exercises' to BottomNavigation.tsx and sidebar. Remove any dead links to stripped pages. Do this last, after pages exist to link to."
     }
   ]
 }

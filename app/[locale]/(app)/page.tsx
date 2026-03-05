@@ -2,6 +2,11 @@ import React from "react";
 
 import { getServerUrl } from "@/shared/lib/server-url";
 import { SiteConfig } from "@/shared/config/site-config";
+import { serverAuth } from "@/entities/user/model/get-server-session-user";
+import { getDashboardStats } from "@/features/dashboard/actions/get-dashboard-stats.action";
+import { getUserProgressions } from "@/features/progression-system/actions/get-user-progressions.action";
+import { DashboardPage } from "@/features/dashboard/ui/dashboard-page";
+import { WelcomePage } from "@/features/dashboard/ui/welcome-page";
 
 import type { Metadata } from "next";
 
@@ -47,13 +52,18 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   };
 }
 
-export default async function HomePage() {
-  return (
-    <div className="bg-background text-foreground relative flex flex-col h-full items-center justify-center p-8">
-      <h1 className="text-2xl font-bold mb-4">Welcome to CaliGym</h1>
-      <p className="text-muted-foreground text-center max-w-md">
-        Your calisthenics progression training platform. Dashboard coming soon.
-      </p>
-    </div>
-  );
+export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  const user = await serverAuth();
+
+  if (!user) {
+    return <WelcomePage locale={locale} />;
+  }
+
+  const [stats, progressions] = await Promise.all([
+    getDashboardStats(user.id),
+    getUserProgressions(user.id),
+  ]);
+
+  return <DashboardPage locale={locale} progressions={progressions} stats={stats} />;
 }

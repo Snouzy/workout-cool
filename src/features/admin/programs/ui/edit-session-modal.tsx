@@ -3,7 +3,6 @@
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { ExerciseAttributeValueEnum } from "@prisma/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { generateSlugsForAllLanguages } from "@/shared/lib/slug";
@@ -33,7 +32,7 @@ const sessionSchema = z.object({
   descriptionZhCn: z.string().min(1, "La description en chinois est requise"),
   estimatedMinutes: z.number().min(5, "Au moins 5 minutes"),
   isPremium: z.boolean(),
-  equipment: z.array(z.nativeEnum(ExerciseAttributeValueEnum)),
+  equipment: z.array(z.string()),
 });
 
 type SessionFormData = z.infer<typeof sessionSchema>;
@@ -45,19 +44,19 @@ interface EditSessionModalProps {
 }
 
 const EQUIPMENT_OPTIONS = [
-  { value: ExerciseAttributeValueEnum.BODY_ONLY, label: "Poids du corps" },
-  { value: ExerciseAttributeValueEnum.DUMBBELL, label: "Haltères" },
-  { value: ExerciseAttributeValueEnum.BARBELL, label: "Barre" },
-  { value: ExerciseAttributeValueEnum.KETTLEBELLS, label: "Kettlebells" },
-  { value: ExerciseAttributeValueEnum.BANDS, label: "Élastiques" },
-  { value: ExerciseAttributeValueEnum.MACHINE, label: "Machines" },
-  { value: ExerciseAttributeValueEnum.CABLE, label: "Câbles" },
+  { value: "BODY_ONLY", label: "Poids du corps" },
+  { value: "DUMBBELL", label: "Haltères" },
+  { value: "BARBELL", label: "Barre" },
+  { value: "KETTLEBELLS", label: "Kettlebells" },
+  { value: "BANDS", label: "Élastiques" },
+  { value: "MACHINE", label: "Machines" },
+  { value: "CABLE", label: "Câbles" },
 ];
 
 export function EditSessionModal({ open, onOpenChange, session }: EditSessionModalProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [activeTab, setActiveTab] = useState("fr");
-  const [selectedEquipment, setSelectedEquipment] = useState<ExerciseAttributeValueEnum[]>(session.equipment);
+  const [selectedEquipment, setSelectedEquipment] = useState<string[]>(session.equipment);
 
   const {
     register,
@@ -86,7 +85,7 @@ export function EditSessionModal({ open, onOpenChange, session }: EditSessionMod
     },
   });
 
-  const toggleEquipment = (equipment: ExerciseAttributeValueEnum) => {
+  const toggleEquipment = (equipment: string) => {
     const newEquipment = selectedEquipment.includes(equipment)
       ? selectedEquipment.filter((e) => e !== equipment)
       : [...selectedEquipment, equipment];

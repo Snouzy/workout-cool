@@ -2,7 +2,7 @@
 
 import { headers } from "next/headers";
 import { revalidatePath } from "next/cache";
-import { UserRole, ProgramLevel, ExerciseAttributeValueEnum } from "@prisma/client";
+import { UserRole, ProgramLevel } from "@prisma/client";
 
 import { generateSlug } from "@/shared/lib/slug";
 import { prisma } from "@/shared/lib/prisma";
@@ -24,11 +24,11 @@ interface UpdateProgramData {
   category: string;
   image: string;
   level: ProgramLevel;
-  type: ExerciseAttributeValueEnum;
+  type: string;
   durationWeeks: number;
   sessionsPerWeek: number;
   sessionDurationMin: number;
-  equipment: ExerciseAttributeValueEnum[];
+  equipment: string[];
   isPremium: boolean;
   emoji?: string;
   coaches: Array<{

@@ -2,7 +2,7 @@
 
 import { headers } from "next/headers";
 import { revalidatePath } from "next/cache";
-import { ProgramLevel, ExerciseAttributeValueEnum, UserRole, ProgramVisibility } from "@prisma/client";
+import { ProgramLevel, UserRole, ProgramVisibility } from "@prisma/client";
 
 import { generateSlug } from "@/shared/lib/slug";
 import { prisma } from "@/shared/lib/prisma";
@@ -25,13 +25,13 @@ interface CreateProgramData {
   category: string;
   image: string;
   level: ProgramLevel;
-  type: ExerciseAttributeValueEnum;
+  type: string;
 
   // Program details
   durationWeeks: number;
   sessionsPerWeek: number;
   sessionDurationMin: number;
-  equipment: ExerciseAttributeValueEnum[];
+  equipment: string[];
   isPremium: boolean;
   emoji?: string;
 

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { X, Plus, Trash2 } from "lucide-react";
-import { ProgramLevel, ExerciseAttributeValueEnum } from "@prisma/client";
+import { ProgramLevel } from "@prisma/client";
 
 import { useI18n } from "locales/client";
 import { allEquipmentValues, getEquipmentTranslation } from "@/shared/lib/workout-session/equipments";
@@ -28,11 +28,11 @@ interface EditProgramModalProps {
     category: string;
     image: string;
     level: ProgramLevel;
-    type: ExerciseAttributeValueEnum;
+    type: string;
     durationWeeks: number;
     sessionsPerWeek: number;
     sessionDurationMin: number;
-    equipment: ExerciseAttributeValueEnum[];
+    equipment: string[];
     isPremium: boolean;
     coaches: Array<{
       id: string;
@@ -95,7 +95,7 @@ export function EditProgramModal({ program, open, onOpenChange }: EditProgramMod
     onOpenChange(false);
   };
 
-  const handleEquipmentChange = (equipment: ExerciseAttributeValueEnum) => {
+  const handleEquipmentChange = (equipment: string) => {
     const newEquipment = formData.equipment.includes(equipment)
       ? formData.equipment.filter((e) => e !== equipment)
       : [...formData.equipment, equipment];
@@ -379,7 +379,7 @@ export function EditProgramModal({ program, open, onOpenChange }: EditProgramMod
               <select
                 className="select select-bordered w-full"
                 disabled={isSaving}
-                onChange={(e) => setFormData({ ...formData, type: e.target.value as ExerciseAttributeValueEnum })}
+                onChange={(e) => setFormData({ ...formData, type: e.target.value as string })}
                 value={formData.type}
               >
                 <option value="BODYWEIGHT">Poids du corps</option>

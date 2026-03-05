@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Lock, Star, Clock, Calendar, Dumbbell } from "lucide-react";
-import { ExerciseAttributeValueEnum } from "@prisma/client";
+
 
 import { Locale } from "locales/types";
 import { getI18n } from "locales/server";
@@ -196,7 +196,7 @@ export async function ProgramCard({ program, size = "medium", locale }: ProgramC
               <div className="flex flex-wrap gap-1 text-xs text-slate-500 dark:text-slate-400">
                 {program.equipment.slice(0, 3).map((equipment, index) => (
                   <span className="inline-flex items-center" key={equipment}>
-                    {getAttributeValueLabel(equipment as ExerciseAttributeValueEnum, t)}
+                    {getAttributeValueLabel(equipment, t)}
                     {index < Math.min(program.equipment.length, 3) - 1 && (
                       <span className="text-slate-300 dark:text-slate-600 ml-1">•</span>
                     )}

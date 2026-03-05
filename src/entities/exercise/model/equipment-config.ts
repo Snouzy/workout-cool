@@ -1,4 +1,3 @@
-import { ExerciseAttributeValueEnum } from "@prisma/client";
 import { StaticImageData } from "next/image";
 
 import PullupBar from "@public/images/equipment/pull-up-bar.png";
@@ -11,7 +10,7 @@ import Barbell from "@public/images/equipment/barbell.png";
 import Band from "@public/images/equipment/band.png";
 
 export interface EquipmentItem {
-  value: ExerciseAttributeValueEnum;
+  value: string;
   label: string;
   icon: StaticImageData;
   description?: string;
@@ -20,56 +19,56 @@ export interface EquipmentItem {
 
 export const EQUIPMENT_CONFIG: EquipmentItem[] = [
   {
-    value: ExerciseAttributeValueEnum.BODY_ONLY,
+    value: "BODY_ONLY",
     label: "Bodyweight",
     icon: Bodyweight,
     description: "Exercises using only your body weight",
     className: "h-12 w-12",
   },
   {
-    value: ExerciseAttributeValueEnum.DUMBBELL,
+    value: "DUMBBELL",
     label: "Dumbbell",
     icon: Dumbbell,
     description: "Free weight exercises with dumbbells",
     className: "h-12 w-12",
   },
   {
-    value: ExerciseAttributeValueEnum.BARBELL,
+    value: "BARBELL",
     label: "Barbell",
     icon: Barbell,
     description: "Compound movements with a barbell",
     className: "h-12 w-12",
   },
   {
-    value: ExerciseAttributeValueEnum.KETTLEBELLS,
+    value: "KETTLEBELLS",
     label: "Kettlebell",
     icon: Kettlebell,
     description: "Dynamic exercises with kettlebells",
     className: "h-12 w-12",
   },
   {
-    value: ExerciseAttributeValueEnum.BANDS,
+    value: "BANDS",
     label: "Band",
     icon: Band,
     description: "Resistance band exercises",
     className: "h-12 w-12",
   },
   {
-    value: ExerciseAttributeValueEnum.WEIGHT_PLATE,
+    value: "WEIGHT_PLATE",
     label: "Plate",
     icon: Plate,
     description: "Exercises using weight plates",
     className: "h-12 w-12",
   },
   {
-    value: ExerciseAttributeValueEnum.PULLUP_BAR,
+    value: "PULLUP_BAR",
     label: "Pull-up bar",
     icon: PullupBar,
     description: "Upper body exercises with a pull-up bar",
     className: "h-12 w-12",
   },
   {
-    value: ExerciseAttributeValueEnum.BENCH,
+    value: "BENCH",
     label: "Bench",
     icon: Bench,
     description: "Bench exercises and support",
@@ -77,10 +76,10 @@ export const EQUIPMENT_CONFIG: EquipmentItem[] = [
   },
 ];
 
-export function getEquipmentByValue(value: ExerciseAttributeValueEnum): EquipmentItem | undefined {
+export function getEquipmentByValue(value: string): EquipmentItem | undefined {
   return EQUIPMENT_CONFIG.find((equipment) => equipment.value === value);
 }
 
-export function getEquipmentLabel(value: ExerciseAttributeValueEnum): string {
+export function getEquipmentLabel(value: string): string {
   return getEquipmentByValue(value)?.label || value;
 }

@@ -2,7 +2,7 @@
 
 import { headers } from "next/headers";
 import { revalidatePath } from "next/cache";
-import { ExerciseAttributeValueEnum, UserRole } from "@prisma/client";
+import { UserRole } from "@prisma/client";
 
 import { prisma } from "@/shared/lib/prisma";
 import { auth } from "@/features/auth/lib/better-auth";
@@ -27,7 +27,7 @@ interface UpdateSessionData {
   descriptionPt: string;
   descriptionRu: string;
   descriptionZhCn: string;
-  equipment: ExerciseAttributeValueEnum[];
+  equipment: string[];
   estimatedMinutes: number;
   isPremium: boolean;
 }

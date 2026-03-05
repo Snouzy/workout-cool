@@ -1,25 +1,23 @@
-import { ExerciseAttributeValueEnum } from "@prisma/client";
-
 import { TFunction } from "locales/client";
 
 export const allEquipmentValues = [
-  ExerciseAttributeValueEnum.BODY_ONLY,
-  ExerciseAttributeValueEnum.DUMBBELL,
-  ExerciseAttributeValueEnum.BARBELL,
-  ExerciseAttributeValueEnum.KETTLEBELLS,
-  ExerciseAttributeValueEnum.BANDS,
+  "BODY_ONLY",
+  "DUMBBELL",
+  "BARBELL",
+  "KETTLEBELLS",
+  "BANDS",
 ];
 
-export const getEquipmentTranslation = (value: ExerciseAttributeValueEnum, t: TFunction) => {
-  const equipmentKeys: Partial<Record<ExerciseAttributeValueEnum, string>> = {
-    [ExerciseAttributeValueEnum.BODY_ONLY]: "bodyweight",
-    [ExerciseAttributeValueEnum.DUMBBELL]: "dumbbell",
-    [ExerciseAttributeValueEnum.BARBELL]: "barbell",
-    [ExerciseAttributeValueEnum.KETTLEBELLS]: "kettlebell",
-    [ExerciseAttributeValueEnum.BANDS]: "band",
-    [ExerciseAttributeValueEnum.WEIGHT_PLATE]: "plate",
-    [ExerciseAttributeValueEnum.PULLUP_BAR]: "pullup_bar",
-    [ExerciseAttributeValueEnum.BENCH]: "bench",
+export const getEquipmentTranslation = (value: string, t: TFunction) => {
+  const equipmentKeys: Record<string, string> = {
+    BODY_ONLY: "bodyweight",
+    DUMBBELL: "dumbbell",
+    BARBELL: "barbell",
+    KETTLEBELLS: "kettlebell",
+    BANDS: "band",
+    WEIGHT_PLATE: "plate",
+    PULLUP_BAR: "pullup_bar",
+    BENCH: "bench",
   };
 
   const key = equipmentKeys[value];

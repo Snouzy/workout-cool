@@ -22,16 +22,7 @@ export const getWorkoutSessionsAction = actionClient.schema(getWorkoutSessionsSc
       include: {
         exercises: {
           include: {
-            exercise: {
-              include: {
-                attributes: {
-                  include: {
-                    attributeName: true,
-                    attributeValue: true,
-                  },
-                },
-              },
-            },
+            exercise: true,
             sets: true,
           },
         },

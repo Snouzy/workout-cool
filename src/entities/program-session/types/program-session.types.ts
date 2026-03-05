@@ -1,14 +1,12 @@
-import { ExerciseAttributeValueEnum } from "@prisma/client";
-
 import { I18nText, I18nSlug, I18nField } from "@/shared/types/i18n.types";
-import { ExerciseWithAttributes, SuggestedSet } from "@/entities/exercise/types/exercise.types";
+import { BaseExercise, SuggestedSet } from "@/entities/exercise/types/exercise.types";
 
 // Base session type
 export interface BaseProgramSession extends I18nText, I18nSlug {
   id: string;
   weekId: string;
   sessionNumber: number;
-  equipment: ExerciseAttributeValueEnum[];
+  equipment: string[];
   estimatedMinutes: number;
   isPremium: boolean;
 }
@@ -28,7 +26,7 @@ export interface ProgramExercise extends I18nField<"instructions"> {
   sessionId: string;
   exerciseId: string;
   order: number;
-  exercise: ExerciseWithAttributes;
+  exercise: BaseExercise;
   suggestedSets: SuggestedSet[];
 }
 

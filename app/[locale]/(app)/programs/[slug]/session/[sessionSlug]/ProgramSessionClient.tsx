@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, Play } from "lucide-react";
-import { ExerciseAttributeNameEnum, ProgramWeek } from "@prisma/client";
+import { ProgramWeek } from "@prisma/client";
 
 import { useCurrentLocale, useI18n } from "locales/client";
 import { canStartSession } from "@/shared/lib/access-control";
@@ -67,43 +67,14 @@ export function ProgramSessionClient({ program, week, session, isAuthenticated, 
 
       // Convert program exercises to workout format
       const exercises = session.exercises.map((ex) => ({
-        id: ex.exercise.id,
-        name: ex.exercise.name,
-        nameEn: ex.exercise.nameEn || null,
-        description: ex.exercise.description || "",
-        descriptionEn: ex.exercise.descriptionEn || "",
-        fullVideoUrl: ex.exercise.fullVideoUrl || null,
-        fullVideoImageUrl: ex.exercise.fullVideoImageUrl || null,
-        introduction: null,
-        introductionEn: null,
-        slug: null,
-        slugEn: null,
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        ...ex.exercise,
         order: ex.order,
-        attributes: ex.exercise.attributes.map((attr) => ({
-          id: attr.id,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-          exerciseId: ex.exercise.id,
-          attributeNameId: attr.attributeNameId,
-          attributeValueId: attr.attributeValueId,
-          attributeName: attr.attributeName,
-          attributeValue: attr.attributeValue,
-        })),
       }));
 
-      // Extract equipment and muscles from session exercises
-      const equipment = session.exercises.flatMap((ex) =>
-        ex.exercise.attributes
-          .filter((attr) => attr.attributeName === ExerciseAttributeNameEnum.EQUIPMENT)
-          .map((attr) => attr.attributeValue),
-      );
-
+      // Extract muscles from exercises
+      const equipment: string[] = [];
       const muscles = session.exercises.flatMap((ex) =>
-        ex.exercise.attributes
-          .filter((attr) => attr.attributeName === ExerciseAttributeNameEnum.PRIMARY_MUSCLE)
-          .map((attr) => attr.attributeValue),
+        ex.exercise.primaryMuscles || [],
       );
 
       // Convert suggestedSets to workout format

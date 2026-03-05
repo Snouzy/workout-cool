@@ -4,7 +4,7 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { Plus, Trash2 } from "lucide-react";
-import { ProgramLevel, ExerciseAttributeValueEnum } from "@prisma/client";
+import { ProgramLevel } from "@prisma/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { createProgram } from "../actions/create-program.action";
@@ -26,13 +26,13 @@ const programSchema = z.object({
   category: z.string().min(1, "La catégorie est requise"),
   image: z.string().url("URL d'image invalide"),
   level: z.nativeEnum(ProgramLevel),
-  type: z.nativeEnum(ExerciseAttributeValueEnum),
+  type: z.string(),
 
   // Step 2: Configuration
   durationWeeks: z.number().min(1, "Au moins 1 semaine"),
   sessionsPerWeek: z.number().min(1, "Au moins 1 séance par semaine"),
   sessionDurationMin: z.number().min(5, "Au moins 5 minutes"),
-  equipment: z.array(z.nativeEnum(ExerciseAttributeValueEnum)),
+  equipment: z.array(z.string()),
   isPremium: z.boolean(),
 
   // Step 3: Coaches
@@ -55,26 +55,26 @@ interface CreateProgramFormProps {
 }
 
 const EQUIPMENT_OPTIONS = [
-  { value: ExerciseAttributeValueEnum.BODY_ONLY, label: "Poids du corps" },
-  { value: ExerciseAttributeValueEnum.DUMBBELL, label: "Haltères" },
-  { value: ExerciseAttributeValueEnum.BARBELL, label: "Barre" },
-  { value: ExerciseAttributeValueEnum.KETTLEBELLS, label: "Kettlebells" },
-  { value: ExerciseAttributeValueEnum.BANDS, label: "Élastiques" },
-  { value: ExerciseAttributeValueEnum.MACHINE, label: "Machines" },
-  { value: ExerciseAttributeValueEnum.CABLE, label: "Câbles" },
+  { value: "BODY_ONLY", label: "Poids du corps" },
+  { value: "DUMBBELL", label: "Haltères" },
+  { value: "BARBELL", label: "Barre" },
+  { value: "KETTLEBELLS", label: "Kettlebells" },
+  { value: "BANDS", label: "Élastiques" },
+  { value: "MACHINE", label: "Machines" },
+  { value: "CABLE", label: "Câbles" },
 ];
 
 const TYPE_OPTIONS = [
-  { value: ExerciseAttributeValueEnum.STRENGTH, label: "Musculation" },
-  { value: ExerciseAttributeValueEnum.CARDIO, label: "Cardio" },
-  { value: ExerciseAttributeValueEnum.BODYWEIGHT, label: "Poids du corps" },
-  { value: ExerciseAttributeValueEnum.STRETCHING, label: "Étirements" },
-  { value: ExerciseAttributeValueEnum.CALISTHENIC, label: "Callisthénie" },
+  { value: "STRENGTH", label: "Musculation" },
+  { value: "CARDIO", label: "Cardio" },
+  { value: "BODYWEIGHT", label: "Poids du corps" },
+  { value: "STRETCHING", label: "Étirements" },
+  { value: "CALISTHENIC", label: "Callisthénie" },
 ];
 
 export function CreateProgramForm({ currentStep, onStepComplete, onSuccess, onCancel }: CreateProgramFormProps) {
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedEquipment, setSelectedEquipment] = useState<ExerciseAttributeValueEnum[]>([]);
+  const [selectedEquipment, setSelectedEquipment] = useState<string[]>([]);
   const [activeTab, setActiveTab] = useState("fr");
 
   const {
@@ -87,7 +87,7 @@ export function CreateProgramForm({ currentStep, onStepComplete, onSuccess, onCa
     resolver: zodResolver(programSchema),
     defaultValues: {
       level: ProgramLevel.BEGINNER,
-      type: ExerciseAttributeValueEnum.STRENGTH,
+      type: "STRENGTH",
       durationWeeks: 4,
       sessionsPerWeek: 3,
       sessionDurationMin: 30,
@@ -121,7 +121,7 @@ export function CreateProgramForm({ currentStep, onStepComplete, onSuccess, onCa
     setValue("coaches", newCoaches);
   };
 
-  const toggleEquipment = (equipment: ExerciseAttributeValueEnum) => {
+  const toggleEquipment = (equipment: string) => {
     const newEquipment = selectedEquipment.includes(equipment)
       ? selectedEquipment.filter((e) => e !== equipment)
       : [...selectedEquipment, equipment];
@@ -335,8 +335,8 @@ export function CreateProgramForm({ currentStep, onStepComplete, onSuccess, onCa
               </label>
               <select
                 className="select select-bordered"
-                defaultValue={ExerciseAttributeValueEnum.STRENGTH}
-                onChange={(e) => setValue("type", e.target.value as ExerciseAttributeValueEnum)}
+                defaultValue={"STRENGTH"}
+                onChange={(e) => setValue("type", e.target.value as string)}
               >
                 {TYPE_OPTIONS.map((option) => (
                   <option key={option.value} value={option.value}>

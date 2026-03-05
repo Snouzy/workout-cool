@@ -1,6 +1,6 @@
 "use server";
 
-import { ExerciseAttributeValueEnum, ProgramLevel, ProgramVisibility } from "@prisma/client";
+import { ProgramLevel, ProgramVisibility } from "@prisma/client";
 
 import { prisma } from "@/shared/lib/prisma";
 
@@ -27,11 +27,11 @@ export interface ProgramDetail {
   category: string;
   image: string;
   level: ProgramLevel;
-  type: ExerciseAttributeValueEnum;
+  type: string;
   durationWeeks: number;
   sessionsPerWeek: number;
   sessionDurationMin: number;
-  equipment: ExerciseAttributeValueEnum[];
+  equipment: string[];
   isPremium: boolean;
   emoji?: string;
   participantCount: number;
@@ -68,7 +68,7 @@ export interface ProgramDetail {
       slugPt: string;
       slugRu: string;
       slugZhCn: string;
-      equipment: ExerciseAttributeValueEnum[];
+      equipment: string[];
       estimatedMinutes: number;
       isPremium: boolean;
       totalExercises: number;

@@ -1,5 +1,3 @@
-import { ExerciseAttributeValueEnum } from "@prisma/client";
-
 import { WorkoutSessionExercise } from "@/features/workout-session/types/workout-set";
 
 export const workoutSessionStatuses = ["active", "completed", "synced"] as const;
@@ -16,5 +14,5 @@ export interface WorkoutSession {
   currentExerciseIndex?: number;
   isActive?: boolean;
   serverId?: string; // If synced
-  muscles: ExerciseAttributeValueEnum[];
+  muscles: string[];
 }

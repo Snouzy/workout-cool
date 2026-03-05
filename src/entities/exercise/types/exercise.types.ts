@@ -1,34 +1,42 @@
-import { ExerciseAttributeNameEnum, ExerciseAttributeValueEnum } from "@prisma/client";
-
-// import { I18nName, I18nField } from "@/shared/types/i18n.types";
-
-// Base exercise type
+// Base exercise type — matches new calisthenics Prisma Exercise model
 export interface BaseExercise {
   id: string;
-  fullVideoUrl?: string | null;
-  fullVideoImageUrl?: string | null;
-  introduction: string | null;
-  introductionEn: string | null;
   name: string;
   nameEn: string | null;
+  slug: string;
   description: string;
-  descriptionEn: string | null;
+  instructions: string[];
+  cues: string[];
+  commonMistakes: string[];
+  videoUrl: string | null;
+  imageUrls: string[];
+  difficultyLevel: string;
+  measurementType: string;
+  defaultSets: number;
+  defaultReps: number | null;
+  defaultHoldTime: number | null;
+  restBetweenSets: number;
+  category: string;
+  subcategory: string;
+  primaryMuscles: string[];
+  secondaryMuscles: string[];
+  bandAssistance: boolean;
+  bandResistance: boolean;
   createdAt: Date;
   updatedAt: Date;
 }
 
+/** @deprecated Use BaseExercise instead */
+export type ExerciseWithAttributes = BaseExercise;
+
+/** @deprecated No longer used with new schema */
 export interface ExerciseAttribute {
   id: string;
   exerciseId: string;
   attributeNameId: string;
   attributeValueId: string;
-  attributeName: ExerciseAttributeNameEnum | { name: ExerciseAttributeNameEnum; id: string };
-  attributeValue: ExerciseAttributeValueEnum | { value: ExerciseAttributeValueEnum; id: string };
-}
-
-// Exercise with attributes
-export interface ExerciseWithAttributes extends BaseExercise {
-  attributes: ExerciseAttribute[];
+  attributeName: string | { name: string; id: string };
+  attributeValue: string | { value: string; id: string };
 }
 
 // Suggested set for program exercises

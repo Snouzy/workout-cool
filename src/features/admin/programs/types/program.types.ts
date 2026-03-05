@@ -1,14 +1,11 @@
-import { 
-  Program, 
-  ProgramWeek, 
-  ProgramSession, 
-  ProgramSessionExercise, 
+import {
+  Program,
+  ProgramWeek,
+  ProgramSession,
+  ProgramSessionExercise,
   ProgramSuggestedSet,
   ProgramCoach,
   Exercise,
-  ExerciseAttribute,
-  ExerciseAttributeName,
-  ExerciseAttributeValue,
   UserProgramEnrollment
 } from "@prisma/client";
 
@@ -18,12 +15,7 @@ export type ProgramWithFullDetails = Program & {
   weeks: (ProgramWeek & {
     sessions: (ProgramSession & {
       exercises: (ProgramSessionExercise & {
-        exercise: Exercise & {
-          attributes: (ExerciseAttribute & {
-            attributeName: ExerciseAttributeName;
-            attributeValue: ExerciseAttributeValue;
-          })[];
-        };
+        exercise: Exercise;
         suggestedSets: ProgramSuggestedSet[];
       })[];
     })[];
@@ -67,10 +59,5 @@ export type SessionWithExercises = ProgramSession & {
   })[];
 };
 
-// Type pour un exercice avec ses attributs complets (pour le modal)
-export type ExerciseWithAttributes = Exercise & {
-  attributes: (ExerciseAttribute & {
-    attributeName: ExerciseAttributeName;
-    attributeValue: ExerciseAttributeValue;
-  })[];
-};
+// Type pour un exercice (attributes removed — EAV system removed)
+export type ExerciseWithAttributes = Exercise;

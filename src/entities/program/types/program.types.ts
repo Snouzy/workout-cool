@@ -1,4 +1,4 @@
-import { ProgramLevel, ExerciseAttributeValueEnum, ProgramVisibility, ProgramWeek } from "@prisma/client";
+import { ProgramLevel, ProgramVisibility, ProgramWeek } from "@prisma/client";
 
 import { I18nText, I18nSlug } from "@/shared/types/i18n.types";
 import { ProgramSessionWithExercises } from "@/entities/program-session/types/program-session.types";
@@ -9,11 +9,11 @@ export interface BaseProgram extends I18nText, I18nSlug {
   category: string;
   image: string;
   level: ProgramLevel;
-  type: ExerciseAttributeValueEnum;
+  type: string;
   durationWeeks: number;
   sessionsPerWeek: number;
   sessionDurationMin: number;
-  equipment: ExerciseAttributeValueEnum[];
+  equipment: string[];
   isPremium: boolean;
   visibility: ProgramVisibility;
   isActive: boolean;

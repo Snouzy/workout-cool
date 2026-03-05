@@ -1,11 +1,9 @@
-import { ExerciseAttributeValueEnum } from "@prisma/client";
-
 import { TFunction } from "locales/client";
 
 /**
- * Map enum values to translation keys for i18n
+ * Map attribute value strings to translation keys for i18n
  */
-export const ATTRIBUTE_VALUE_TRANSLATION_KEYS: Record<ExerciseAttributeValueEnum, string> = {
+export const ATTRIBUTE_VALUE_TRANSLATION_KEYS: Record<string, string> = {
   // exercise types
   BODYWEIGHT: "workout_builder.attribute_value.bodyweight",
   STRENGTH: "workout_builder.attribute_value.strength",
@@ -89,9 +87,9 @@ export const ATTRIBUTE_VALUE_TRANSLATION_KEYS: Record<ExerciseAttributeValueEnum
 };
 
 /**
- * Get the localized label for an ExerciseAttributeValueEnum
+ * Get the localized label for an attribute value string
  */
-export function getAttributeValueLabel(value: ExerciseAttributeValueEnum, t: TFunction): string {
+export function getAttributeValueLabel(value: string, t: TFunction): string {
   const key = ATTRIBUTE_VALUE_TRANSLATION_KEYS[value];
   return key ? t(key as keyof typeof t) : value;
 }

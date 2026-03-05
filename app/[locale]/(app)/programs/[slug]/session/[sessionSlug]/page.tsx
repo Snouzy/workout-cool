@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: SessionDetailPageProps): Prom
   }
 
   const sessionMetadata = generateSessionMetadata(response.session, response.program, locale);
-  const imageUrl = response.session.exercises[0]?.exercise.fullVideoImageUrl || "/images/default-workout.jpg";
+  const imageUrl = response.session.exercises[0]?.exercise.imageUrls?.[0] || "/images/default-workout.jpg";
 
   return {
     title: sessionMetadata.title,
@@ -130,15 +130,15 @@ export default async function SessionDetailPage({ params }: SessionDetailPagePro
     title: `${sessionTitle} - ${programTitle}`,
     description: response.session.description || `${sessionTitle} workout session`,
     url: `https://www.workout.cool/${locale}/programs/${slug}/session/${sessionSlug}`,
-    image: response.session.exercises[0]?.exercise.fullVideoImageUrl || undefined,
+    image: response.session.exercises[0]?.exercise.imageUrls?.[0] || undefined,
     sessionData: {
       duration: Math.round(response.session.exercises.length * 3), // Estimate 3 min per exercise
       exercises: response.session.exercises.map((ex) => ({
         name: ex.exercise.name,
         sets: ex.suggestedSets.length,
       })),
-      thumbnailUrl: response.session.exercises[0]?.exercise.fullVideoImageUrl || undefined,
-      videoUrl: response.session.exercises[0]?.exercise.fullVideoUrl || undefined,
+      thumbnailUrl: response.session.exercises[0]?.exercise.imageUrls?.[0] || undefined,
+      videoUrl: response.session.exercises[0]?.exercise.videoUrl || undefined,
     },
   });
 

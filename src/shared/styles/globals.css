@@ -101,15 +101,17 @@
     margin: 0 !important;
   }
 }
-/* 
+
+/* Prevent ad scripts (AdSense/Ezoic) from blocking scroll in the main card */
 [data-ezoic-incontent-sticky] {
   overflow: auto !important;
   overflow-y: auto !important;
 }
 
-.card.max-h-\[90vh\] {
+/* Prevent ad scripts (AdSense/Ezoic) from blocking scroll in the main card */
+.card.max-h-\[90vh\] > .overflow-y-auto {
   overflow-y: auto !important;
-} */
+}
 
 .dark {
   --color-base-100: oklch(25.33% 0.016 252.42);

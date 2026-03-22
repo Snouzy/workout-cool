@@ -1,7 +1,6 @@
 "use client";
 
 import { Drawer } from "vaul";
-import { ReactNode } from "react";
 import { ExternalLink, Globe, MapPin, Monitor, PieChart, Smartphone, Sparkles, Target, TrendingUp, X } from "lucide-react";
 
 import { useI18n } from "locales/client";
@@ -12,18 +11,6 @@ import { audienceStats } from "./sponsor-config";
 interface SponsorDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-}
-
-function StatCard({ icon, label, value }: { icon: ReactNode; label: string; value: string }) {
-  return (
-    <div className="rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 p-3">
-      <div className="flex items-center gap-1.5 mb-1">
-        {icon}
-        <span className="text-[10px] uppercase tracking-wide text-slate-500 dark:text-slate-400">{label}</span>
-      </div>
-      <p className="font-semibold text-sm text-slate-800 dark:text-slate-200">{value}</p>
-    </div>
-  );
 }
 
 export function SponsorDialog({ open, onOpenChange }: SponsorDialogProps) {

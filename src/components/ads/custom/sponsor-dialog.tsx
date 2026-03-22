@@ -88,10 +88,6 @@ export function SponsorDialog({ open, onOpenChange }: SponsorDialogProps) {
                   </div>
                   <span className="text-xs text-emerald-500 font-medium">↑{audienceStats.mobilePageViewsGrowth}</span>
                 </div>
-                <div className="mt-2 pt-2 border-t border-slate-200 dark:border-slate-700 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
-                  <span>Desktop {audienceStats.deviceDesktop}</span>
-                  <span>Mobile {audienceStats.deviceMobile}</span>
-                </div>
               </div>
             </div>
 
@@ -105,11 +101,69 @@ export function SponsorDialog({ open, onOpenChange }: SponsorDialogProps) {
                 <p className="font-semibold text-lg text-slate-800 dark:text-slate-200">{audienceStats.uniqueVisitors}</p>
                 <p className="text-xs text-emerald-500 font-medium">↑{audienceStats.uniqueVisitorsGrowth} from last month</p>
               </div>
-              <StatCard
-                icon={<Target className="w-4 h-4 text-purple-500" />}
-                label={t("ads.demographics")}
-                value={audienceStats.demographics}
-              />
+              <div className="rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 p-3">
+                <div className="flex items-center gap-1.5 mb-2">
+                  <Smartphone className="w-4 h-4 text-[#4F8EF7]" />
+                  <span className="text-[10px] uppercase tracking-wide text-slate-500 dark:text-slate-400">Device split</span>
+                </div>
+                <div className="space-y-1.5">
+                  <div className="flex items-center gap-2">
+                    <Monitor className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
+                    <div className="flex-1 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700">
+                      <div className="h-2.5 rounded-full bg-[#4F8EF7]" style={{ width: `${audienceStats.deviceDesktop}` }} />
+                    </div>
+                    <span className="text-xs font-semibold text-slate-700 dark:text-slate-200">{audienceStats.deviceDesktop}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Smartphone className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
+                    <div className="flex-1 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700">
+                      <div className="h-2.5 rounded-full bg-[#A5C4F7]" style={{ width: `${audienceStats.deviceMobile}` }} />
+                    </div>
+                    <span className="text-xs font-semibold text-slate-700 dark:text-slate-200">{audienceStats.deviceMobile}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Demographics: Gender & Age */}
+            <div className="rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 p-3 space-y-3">
+              <div className="flex items-center gap-1.5">
+                <Target className="w-4 h-4 text-purple-500" />
+                <span className="text-[10px] uppercase tracking-wide text-slate-500 dark:text-slate-400">Demographics</span>
+              </div>
+
+              {/* Gender */}
+              <div className="space-y-1.5">
+                <div className="flex items-center gap-3">
+                  <span className="text-xs text-slate-600 dark:text-slate-300 w-14 shrink-0">Male</span>
+                  <div className="flex-1 h-3 rounded-full bg-slate-200 dark:bg-slate-700">
+                    <div className="h-3 rounded-full bg-[#4F8EF7]" style={{ width: `${audienceStats.genderMale}%` }} />
+                  </div>
+                  <span className="text-xs font-semibold text-slate-700 dark:text-slate-200 w-12 text-right">{audienceStats.genderMale}%</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <span className="text-xs text-slate-600 dark:text-slate-300 w-14 shrink-0">Female</span>
+                  <div className="flex-1 h-3 rounded-full bg-slate-200 dark:bg-slate-700">
+                    <div className="h-3 rounded-full bg-[#A5C4F7]" style={{ width: `${audienceStats.genderFemale}%` }} />
+                  </div>
+                  <span className="text-xs font-semibold text-slate-700 dark:text-slate-200 w-12 text-right">{audienceStats.genderFemale}%</span>
+                </div>
+              </div>
+
+              <div className="border-t border-slate-200 dark:border-slate-700" />
+
+              {/* Age */}
+              <div className="space-y-1">
+                {audienceStats.ageDistribution.map((age) => (
+                  <div className="flex items-center gap-3" key={age.range}>
+                    <span className="text-xs text-slate-600 dark:text-slate-300 w-14 shrink-0">{age.range}</span>
+                    <div className="flex-1 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700">
+                      <div className="h-2.5 rounded-full bg-[#4F8EF7]" style={{ width: `${(age.percent / 27) * 100}%` }} />
+                    </div>
+                    <span className="text-xs font-semibold text-slate-700 dark:text-slate-200 w-12 text-right">{age.percent}%</span>
+                  </div>
+                ))}
+              </div>
             </div>
 
             {/* Top Countries */}

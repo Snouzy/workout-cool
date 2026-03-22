@@ -59,6 +59,15 @@ export const audienceStats = {
     "Australia",
     "Italy",
   ],
-  demographics: "18-35 ans, passionnés de fitness",
+  genderMale: 69.73,
+  genderFemale: 30.27,
+  ageDistribution: [
+    { range: "18-24", percent: 22.05 },
+    { range: "25-34", percent: 26.93 },
+    { range: "35-44", percent: 20.84 },
+    { range: "45-54", percent: 15.12 },
+    { range: "55-64", percent: 9.62 },
+    { range: "65+", percent: 5.44 },
+  ],
   pricing: "700€",
 };

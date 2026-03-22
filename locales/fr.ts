@@ -1984,7 +1984,8 @@ export default {
   },
   ads: {
     advertise: "Publicité",
-    click_to_advertise: "Cliquer pour placer votre pub ici →",
+    click_to_advertise: "Votre marque ici →",
+    visit_sponsor: "Visiter",
     dialog_title: "Votre marque, vue par 657K+ sportifs",
     dialog_description:
       "Workout.cool est l'app où les passionnés de fitness construisent leurs séances chaque jour. Placez votre marque devant eux.",
@@ -2007,6 +2008,7 @@ export default {
     feature_visitors: "304 133 visiteurs uniques voient votre marque",
     feature_targeted: "70% hommes, 18-44 ans — acheteurs fitness à forte intention",
     feature_premium_placement: "Placement premium : sidebar + bannières in-content",
+    feature_dofollow: "Backlink dofollow depuis un domaine haute autorité — boostez votre SEO",
     cta_book: "Réserver mon emplacement",
     cta_subtext: "Annulable à tout moment. En ligne sous 24h après paiement.",
     onboarding_title: "Onboarding Sponsor",

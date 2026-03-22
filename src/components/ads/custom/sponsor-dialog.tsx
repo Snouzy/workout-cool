@@ -218,6 +218,7 @@ export function SponsorDialog({ open, onOpenChange }: SponsorDialogProps) {
                 <li>✓ {t("ads.feature_visitors")}</li>
                 <li>✓ {t("ads.feature_targeted")}</li>
                 <li>✓ {t("ads.feature_premium_placement")}</li>
+                <li>✓ {t("ads.feature_dofollow")}</li>
               </ul>
 
               <a

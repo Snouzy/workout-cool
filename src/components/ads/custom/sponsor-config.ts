@@ -14,14 +14,27 @@ const SIDEBAR_SLOT_COUNT = 6;
  * Key format: "{position}-{index}" (e.g., "left-0", "right-2")
  */
 const sponsors: Record<string, Sponsor> = {
-  // Example:
-  // "right-3": {
-  //   id: "superx",
-  //   name: "SuperX",
-  //   description: "Grow faster on X with hidden insights smart analytics",
-  //   logoUrl: "/images/sponsors/superx.png",
-  //   url: "https://superx.so",
-  // },
+  "left-0": {
+    id: "fitdistance",
+    name: "Fitdistance",
+    description: "Le logiciel pour les coachs sportifs",
+    logoUrl: "/images/sponsorship/fd-with-padding.png",
+    url: "https://fitdistance.io/en",
+  },
+  "right-0": {
+    id: "nutripure",
+    name: "Nutripure",
+    description: "Premium supplements — best ingredients, full transparency, fair prices",
+    logoUrl: "/images/sponsorship/nutripure.png",
+    url: "https://c3po.link/QVupuZ8DYw",
+  },
+  "left-1": {
+    id: "nutri-and-co",
+    name: "Nutri&Co",
+    description: "La Nutra comme réflexe du quotidien",
+    logoUrl: "/images/sponsorship/nutri-and-co.png",
+    url: "https://www.nutri-and-co.com",
+  },
 };
 
 export function getSidebarSlots(side: "left" | "right"): (Sponsor | null)[] {

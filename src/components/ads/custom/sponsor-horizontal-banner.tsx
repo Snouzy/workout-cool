@@ -1,50 +1,13 @@
 "use client";
 
-import { useCallback, useEffect, useRef } from "react";
-
 import { getAllSlots } from "./sponsor-config";
 import { SponsorCard } from "./sponsor-card";
 
-const AUTO_SCROLL_INTERVAL = 3000;
-
 export function SponsorHorizontalBanner() {
   const allSlots = getAllSlots();
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  const scrollNext = useCallback(() => {
-    const container = scrollRef.current;
-    if (!container) return;
-
-    const { scrollLeft, scrollWidth, clientWidth } = container;
-    const maxScroll = scrollWidth - clientWidth;
-
-    if (maxScroll <= 0) return;
-
-    // If at the end, loop back to start
-    if (scrollLeft >= maxScroll - 2) {
-      container.scrollTo({ left: 0, behavior: "smooth" });
-    } else {
-      container.scrollBy({ left: 148, behavior: "smooth" }); // card width (140) + gap (8)
-    }
-  }, []);
-
-  const startAutoScroll = useCallback(() => {
-    if (intervalRef.current) return;
-    intervalRef.current = setInterval(scrollNext, AUTO_SCROLL_INTERVAL);
-  }, [scrollNext]);
-
-  const stopAutoScroll = useCallback(() => {
-    if (intervalRef.current) {
-      clearInterval(intervalRef.current);
-      intervalRef.current = null;
-    }
-  }, []);
-
-  useEffect(() => {
-    startAutoScroll();
-    return stopAutoScroll;
-  }, [startAutoScroll, stopAutoScroll]);
+  // Duplicate slots for seamless infinite scroll
+  const duplicatedSlots = [...allSlots, ...allSlots];
 
   return (
     <div className="w-full py-1">
@@ -55,24 +18,11 @@ export function SponsorHorizontalBanner() {
         </div>
       </div>
 
-      {/* Mobile: auto-scrolling carousel */}
-      <div
-        className="sm:hidden overflow-x-auto snap-x snap-mandatory"
-        onMouseEnter={stopAutoScroll}
-        onMouseLeave={startAutoScroll}
-        onTouchEnd={startAutoScroll}
-        onTouchStart={stopAutoScroll}
-        ref={scrollRef}
-        style={{ scrollbarWidth: "none" }}
-      >
-        <style jsx>{`
-          div::-webkit-scrollbar {
-            display: none;
-          }
-        `}</style>
-        <div className="flex gap-2 w-max px-1">
-          {allSlots.map((sponsor, index) => (
-            <div className="snap-start shrink-0 w-[140px]" key={index}>
+      {/* Mobile: continuous marquee scroll */}
+      <div className="sm:hidden overflow-hidden">
+        <div className="mt-2 flex gap-3 animate-marquee w-max">
+          {duplicatedSlots.map((sponsor, index) => (
+            <div className="shrink-0 w-[160px]" key={index}>
               <SponsorCard sponsor={sponsor} />
             </div>
           ))}

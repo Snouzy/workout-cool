@@ -1896,7 +1896,8 @@ export default {
   },
   ads: {
     advertise: "广告",
-    click_to_advertise: "点击在此投放广告 →",
+    click_to_advertise: "您的品牌在这里 →",
+    visit_sponsor: "访问",
     dialog_title: "您的品牌，被657K+健身爱好者看到",
     dialog_description: "Workout.cool是健身爱好者每天来构建其训练课程的地方。让您的品牌展现在他们面前。",
     // eslint-disable-next-line quotes
@@ -1918,6 +1919,7 @@ export default {
     feature_visitors: "304,133名独立访客看到您的品牌",
     feature_targeted: "70%男性，18-44岁——高意向健身购买者",
     feature_premium_placement: "高级位置：侧边栏+文章内嵌横幅",
+    feature_dofollow: "来自高权重域名的Dofollow反向链接 — 提升您的SEO",
     cta_book: "立即预留名额",
     cta_subtext: "随时可取消。支付后24小时内上线。",
     onboarding_title: "赞助商注册",

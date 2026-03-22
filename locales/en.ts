@@ -1959,7 +1959,8 @@ export default {
   },
   ads: {
     advertise: "Advertise",
-    click_to_advertise: "Click to add your ad here →",
+    click_to_advertise: "Your brand here →",
+    visit_sponsor: "Visit",
     dialog_title: "Your brand, seen by 657K+ people who train",
     dialog_description:
       "Workout.cool is where fitness enthusiasts come every day to build their sessions. Put your brand in front of them.",
@@ -1982,6 +1983,7 @@ export default {
     feature_visitors: "304,133 unique visitors see your brand",
     feature_targeted: "70% male, 18-44 — high-intent fitness buyers",
     feature_premium_placement: "Premium placement: sidebar + in-content banners",
+    feature_dofollow: "Dofollow backlink from a high-authority domain — boost your SEO",
     cta_book: "Secure your spot now",
     cta_subtext: "Cancel anytime. Live within 24h of payment.",
     onboarding_title: "Sponsor Onboarding",

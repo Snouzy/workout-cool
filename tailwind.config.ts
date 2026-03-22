@@ -189,12 +189,21 @@ const config: Config = {
             opacity: "0",
           },
         },
+        marquee: {
+          "0%": {
+            transform: "translateX(0)",
+          },
+          "100%": {
+            transform: "translateX(-50%)",
+          },
+        },
       },
       animation: {
         shine: "shine var(--duration) infinite linear",
         "accordion-down": "accordion-down 0.3s ease-out",
         "accordion-up": "accordion-up 0.3s ease-out",
         "caret-blink": "caret-blink 1.25s ease-out infinite",
+        marquee: "marquee 100s linear infinite",
       },
     },
   },

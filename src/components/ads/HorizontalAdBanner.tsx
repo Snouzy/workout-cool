@@ -6,6 +6,7 @@ import { GoogleAdSense } from "./GoogleAdSense";
 import { EzoicAd } from "./EzoicAd";
 import { AdWrapper } from "./AdWrapper";
 import { AdPlaceholder } from "./AdPlaceholder";
+import { SponsorHorizontalBanner } from "./custom";
 
 interface HorizontalAdBannerProps {
   adSlot?: string;
@@ -13,6 +14,14 @@ interface HorizontalAdBannerProps {
 }
 
 export function HorizontalAdBanner({ adSlot, ezoicPlacementId }: HorizontalAdBannerProps) {
+  if (env.NEXT_PUBLIC_AD_PROVIDER === "custom") {
+    return (
+      <AdWrapper>
+        <SponsorHorizontalBanner />
+      </AdWrapper>
+    );
+  }
+
   const isDevelopment = process.env.NODE_ENV === "development";
   const useEzoic = env.NEXT_PUBLIC_AD_PROVIDER === "ezoic" && ezoicPlacementId;
 

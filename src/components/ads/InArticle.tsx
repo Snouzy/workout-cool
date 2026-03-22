@@ -3,8 +3,19 @@ import { AdPlaceholder } from "@/components/ads/AdPlaceholder";
 
 import { GoogleAdSense } from "./GoogleAdSense";
 import { AdWrapper } from "./AdWrapper";
+import { SponsorHorizontalBanner } from "./custom";
 
 export function InArticle({ adSlot }: { adSlot: string }) {
+  if (env.NEXT_PUBLIC_AD_PROVIDER === "custom") {
+    return (
+      <AdWrapper>
+        <div className="w-full max-w-full my-4">
+          <SponsorHorizontalBanner />
+        </div>
+      </AdWrapper>
+    );
+  }
+
   const isDevelopment = process.env.NODE_ENV === "development";
 
   if (!env.NEXT_PUBLIC_AD_CLIENT) {

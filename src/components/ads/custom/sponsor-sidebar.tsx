@@ -1,7 +1,7 @@
 "use client";
 
-import { SponsorCard } from "./sponsor-card";
 import { getSidebarSlots } from "./sponsor-config";
+import { SponsorCard } from "./sponsor-card";
 
 interface SponsorSidebarProps {
   position: "left" | "right";

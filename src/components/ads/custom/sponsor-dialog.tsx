@@ -1,7 +1,7 @@
 "use client";
 
 import { Drawer } from "vaul";
-import { ExternalLink, Globe, MapPin, Monitor, PieChart, Smartphone, Sparkles, Target, TrendingUp, X } from "lucide-react";
+import { ExternalLink, Globe, MapPin, Monitor, PieChart, Search, Smartphone, Sparkles, Target, TrendingUp, X } from "lucide-react";
 
 import { useI18n } from "locales/client";
 import { env } from "@/env";
@@ -38,28 +38,50 @@ export function SponsorDialog({ open, onOpenChange }: SponsorDialogProps) {
 
           {/* Scrollable content */}
           <div className="overflow-y-auto px-5 pb-5 pt-2 space-y-4">
-            <Drawer.Title className="flex items-center gap-2 text-lg font-semibold text-slate-900 dark:text-white">
-              <Sparkles className="w-5 h-5 text-[#4F8EF7]" />
-              {t("ads.dialog_title")}
-            </Drawer.Title>
-            <Drawer.Description className="text-sm text-slate-500 dark:text-slate-400 -mt-2">
-              {t("ads.dialog_description")}
-            </Drawer.Description>
+            {/* 1. HOOK — Pattern interrupt with authority proof */}
+            <div>
+              <Drawer.Title className="flex items-center gap-2 text-lg font-semibold text-slate-900 dark:text-white">
+                <Sparkles className="w-5 h-5 text-[#4F8EF7]" />
+                {t("ads.dialog_title")}
+              </Drawer.Title>
+              <Drawer.Description className="text-sm text-slate-500 dark:text-slate-400 mt-1">
+                {t("ads.dialog_description")}
+              </Drawer.Description>
+            </div>
 
-            {/* Total Visits & Device Distribution */}
+            {/* 2. AUTHORITY — #1 on search engines (pattern interrupt) */}
+            <div className="rounded-lg bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-950/30 dark:to-orange-950/30 border border-amber-200 dark:border-amber-800/50 p-3">
+              <div className="flex items-center gap-2">
+                <div className="flex items-center justify-center w-8 h-8 rounded-full bg-amber-100 dark:bg-amber-900/50">
+                  <Search className="w-4 h-4 text-amber-600 dark:text-amber-400" />
+                </div>
+                <div>
+                  <p className="text-sm font-semibold text-slate-800 dark:text-slate-200">{t("ads.authority_title")}</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400">{t("ads.authority_subtitle")}</p>
+                </div>
+              </div>
+            </div>
+
+            {/* 3. SOCIAL PROOF — Traffic stats reframed as reach */}
             <div className="grid grid-cols-2 gap-3">
               <div className="rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 p-3">
                 <div className="flex items-center gap-1.5 mb-1">
                   <TrendingUp className="w-4 h-4 text-[#4F8EF7]" />
-                  <span className="text-[10px] uppercase tracking-wide text-slate-500 dark:text-slate-400">Total visits (feb. 2026)</span>
+                  <span className="text-[10px] uppercase tracking-wide text-slate-500 dark:text-slate-400">
+                    {t("ads.total_visits_label")}
+                  </span>
                 </div>
                 <p className="font-semibold text-lg text-slate-800 dark:text-slate-200">{audienceStats.totalVisits}</p>
-                <p className="text-xs text-emerald-500 font-medium">↑{audienceStats.totalVisitsGrowth} from last month</p>
+                <p className="text-xs text-emerald-500 font-medium">
+                  ↑{audienceStats.totalVisitsGrowth} {t("ads.from_last_month")}
+                </p>
               </div>
               <div className="rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 p-3">
                 <div className="flex items-center gap-1.5 mb-2">
                   <PieChart className="w-4 h-4 text-[#25CB78]" />
-                  <span className="text-[10px] uppercase tracking-wide text-slate-500 dark:text-slate-400">Page views (feb. 2026)</span>
+                  <span className="text-[10px] uppercase tracking-wide text-slate-500 dark:text-slate-400">
+                    {t("ads.page_views_label")}
+                  </span>
                 </div>
                 <div className="flex items-center justify-between text-sm text-slate-700 dark:text-slate-300">
                   <div className="flex items-center gap-1.5">
@@ -78,20 +100,26 @@ export function SponsorDialog({ open, onOpenChange }: SponsorDialogProps) {
               </div>
             </div>
 
-            {/* Unique Visitors & Demographics */}
+            {/* 4. SPECIFICITY — Unique visitors + device split */}
             <div className="grid grid-cols-2 gap-3">
               <div className="rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 p-3">
                 <div className="flex items-center gap-1.5 mb-1">
                   <Globe className="w-4 h-4 text-[#25CB78]" />
-                  <span className="text-[10px] uppercase tracking-wide text-slate-500 dark:text-slate-400">Unique visitors (feb. 2026)</span>
+                  <span className="text-[10px] uppercase tracking-wide text-slate-500 dark:text-slate-400">
+                    {t("ads.unique_visitors_label")}
+                  </span>
                 </div>
                 <p className="font-semibold text-lg text-slate-800 dark:text-slate-200">{audienceStats.uniqueVisitors}</p>
-                <p className="text-xs text-emerald-500 font-medium">↑{audienceStats.uniqueVisitorsGrowth} from last month</p>
+                <p className="text-xs text-emerald-500 font-medium">
+                  ↑{audienceStats.uniqueVisitorsGrowth} {t("ads.from_last_month")}
+                </p>
               </div>
               <div className="rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 p-3">
                 <div className="flex items-center gap-1.5 mb-2">
                   <Smartphone className="w-4 h-4 text-[#4F8EF7]" />
-                  <span className="text-[10px] uppercase tracking-wide text-slate-500 dark:text-slate-400">Device split</span>
+                  <span className="text-[10px] uppercase tracking-wide text-slate-500 dark:text-slate-400">
+                    {t("ads.device_split_label")}
+                  </span>
                 </div>
                 <div className="space-y-1.5">
                   <div className="flex items-center gap-2">
@@ -112,11 +140,11 @@ export function SponsorDialog({ open, onOpenChange }: SponsorDialogProps) {
               </div>
             </div>
 
-            {/* Demographics: Gender & Age */}
+            {/* 5. AUDIENCE QUALITY — Demographics */}
             <div className="rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 p-3 space-y-3">
               <div className="flex items-center gap-1.5">
                 <Target className="w-4 h-4 text-purple-500" />
-                <span className="text-[10px] uppercase tracking-wide text-slate-500 dark:text-slate-400">Demographics</span>
+                <span className="text-[10px] uppercase tracking-wide text-slate-500 dark:text-slate-400">{t("ads.audience_quality")}</span>
               </div>
 
               {/* Gender */}
@@ -126,14 +154,18 @@ export function SponsorDialog({ open, onOpenChange }: SponsorDialogProps) {
                   <div className="flex-1 h-3 rounded-full bg-slate-200 dark:bg-slate-700">
                     <div className="h-3 rounded-full bg-[#4F8EF7]" style={{ width: `${audienceStats.genderMale}%` }} />
                   </div>
-                  <span className="text-xs font-semibold text-slate-700 dark:text-slate-200 w-12 text-right">{audienceStats.genderMale}%</span>
+                  <span className="text-xs font-semibold text-slate-700 dark:text-slate-200 w-12 text-right">
+                    {audienceStats.genderMale}%
+                  </span>
                 </div>
                 <div className="flex items-center gap-3">
                   <span className="text-xs text-slate-600 dark:text-slate-300 w-14 shrink-0">Female</span>
                   <div className="flex-1 h-3 rounded-full bg-slate-200 dark:bg-slate-700">
                     <div className="h-3 rounded-full bg-[#A5C4F7]" style={{ width: `${audienceStats.genderFemale}%` }} />
                   </div>
-                  <span className="text-xs font-semibold text-slate-700 dark:text-slate-200 w-12 text-right">{audienceStats.genderFemale}%</span>
+                  <span className="text-xs font-semibold text-slate-700 dark:text-slate-200 w-12 text-right">
+                    {audienceStats.genderFemale}%
+                  </span>
                 </div>
               </div>
 
@@ -151,22 +183,24 @@ export function SponsorDialog({ open, onOpenChange }: SponsorDialogProps) {
                   </div>
                 ))}
               </div>
+
+              {/* Audience insight */}
+              <p className="text-xs text-slate-500 dark:text-slate-400 italic">{t("ads.audience_insight")}</p>
             </div>
 
-            {/* Top Countries */}
+            {/* 6. GEOGRAPHIC REACH — Top Countries + Map */}
             <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
               <MapPin className="w-4 h-4 shrink-0" />
               <span>
                 {t("ads.top_countries")}: {audienceStats.topCountries.join(", ")}
               </span>
             </div>
-
-            {/* SimilarWeb Traffic Map */}
             <div className="rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img alt={t("ads.similarweb_placeholder")} className="w-full h-auto" src="/images/countries.png" />
             </div>
 
-            {/* Pricing CTA */}
+            {/* 8. VALUE PROP + CTA — Benefits reframed as outcomes */}
             <div className="rounded-xl bg-gradient-to-br from-[#4F8EF7] to-[#25CB78] p-5 text-white">
               <div className="flex items-center justify-between mb-4">
                 <div>
@@ -195,6 +229,8 @@ export function SponsorDialog({ open, onOpenChange }: SponsorDialogProps) {
                 {t("ads.cta_book")}
                 <ExternalLink className="w-4 h-4" />
               </a>
+
+              <p className="text-center text-xs opacity-60 mt-2">{t("ads.cta_subtext")}</p>
             </div>
           </div>
         </Drawer.Content>

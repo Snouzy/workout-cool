@@ -2,8 +2,8 @@
 
 import { useCallback, useEffect, useRef } from "react";
 
-import { SponsorCard } from "./sponsor-card";
 import { getAllSlots } from "./sponsor-config";
+import { SponsorCard } from "./sponsor-card";
 
 const AUTO_SCROLL_INTERVAL = 3000;
 

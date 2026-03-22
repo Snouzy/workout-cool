@@ -6,8 +6,9 @@ import { ArrowRight, Megaphone } from "lucide-react";
 import { useI18n } from "locales/client";
 import { cn } from "@/shared/lib/utils";
 
-import type { Sponsor } from "./sponsor-config";
 import { SponsorDialog } from "./sponsor-dialog";
+
+import type { Sponsor } from "./sponsor-config";
 
 interface SponsorCardProps {
   sponsor: Sponsor | null;

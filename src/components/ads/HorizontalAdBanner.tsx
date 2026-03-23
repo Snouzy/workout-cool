@@ -1,12 +1,12 @@
 "use client";
 
-import { env } from "@/env";
-
 import { GoogleAdSense } from "./GoogleAdSense";
 import { EzoicAd } from "./EzoicAd";
+import { SponsorHorizontalBanner } from "./custom";
 import { AdWrapper } from "./AdWrapper";
 import { AdPlaceholder } from "./AdPlaceholder";
-import { SponsorHorizontalBanner } from "./custom";
+
+import { env } from "@/env";
 
 interface HorizontalAdBannerProps {
   adSlot?: string;
@@ -65,7 +65,8 @@ export function HorizontalAdBanner({ adSlot, ezoicPlacementId }: HorizontalAdBan
         </div>
       </div>
 
-      <style jsx>{`
+      {/* // eslint-disable-next-line react/no-unknown-property */}
+      <style>{`
         .responsive-ad-container {
           width: 100%;
           max-width: 320px;

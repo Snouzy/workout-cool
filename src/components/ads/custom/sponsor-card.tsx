@@ -83,8 +83,8 @@ export function SponsorCard({ sponsor, variant = "sidebar" }: SponsorCardProps) 
             <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#4F8EF7]/10 to-[#25CB78]/10 dark:from-[#4F8EF7]/20 dark:to-[#25CB78]/20 flex items-center justify-center group-hover:scale-110 transition-transform">
               <Megaphone className="w-6 h-6 text-[#4F8EF7]" />
             </div>
-            <span className="font-bold text-xs text-slate-700 dark:text-slate-300">{t("ads.advertise")}</span>
-            <span className="text-[10px] text-slate-400 dark:text-slate-500 leading-snug">{t("ads.click_to_advertise")}</span>
+            <span className="font-bold text-md text-slate-700 dark:text-slate-300">{t("ads.advertise")}</span>
+            <span className="text-sm text-slate-400 dark:text-slate-500 leading-snug">{t("ads.click_to_advertise")}</span>
           </div>
         ) : (
           <>

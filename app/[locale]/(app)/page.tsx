@@ -1,10 +1,8 @@
-import React from "react";
+import type { Metadata } from "next";
 
 import { getServerUrl } from "@/shared/lib/server-url";
 import { SiteConfig } from "@/shared/config/site-config";
 import { WorkoutStepper } from "@/features/workout-builder";
-
-import type { Metadata } from "next";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;

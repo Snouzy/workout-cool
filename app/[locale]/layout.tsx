@@ -246,7 +246,7 @@ export default async function RootLayout({ params, children }: RootLayoutProps) 
         <head>
           <meta charSet="UTF-8" />
           <meta content="width=device-width, initial-scale=1, maximum-scale=1 viewport-fit=cover" name="viewport" />
-          {/* {env.NEXT_PUBLIC_AD_PROVIDER === "custom" && ( */}
+          {/* {env.NEXT_PUBLIC_AD_PROVIDER !== "custom" && ( */}
           <>
             <meta content={env.NEXT_PUBLIC_AD_CLIENT} name="google-adsense-account" />
 
@@ -356,10 +356,12 @@ export default async function RootLayout({ params, children }: RootLayoutProps) 
             <AdBlockerForPremium />
             <NextTopLoader color="#FF5722" delay={100} showSpinner={false} />
 
-            <div className="flex flex-col w-full">
-              <div className="flex justify-center items-start gap-4 w-full">
+            <div className="flex items-center justify-center min-h-screen w-full">
+              <div className="flex items-start gap-4">
                 <VerticalLeftBanner />
-                {children}
+                <div className="max-w-4xl max-sm:max-w-full">
+                  {children}
+                </div>
                 <VerticalRightBanner />
               </div>
             </div>

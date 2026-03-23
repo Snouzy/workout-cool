@@ -1,16 +1,16 @@
 import React, { useCallback } from "react";
 import Image from "next/image";
 import { Play, Shuffle, Trash2, GripVertical, Loader2, BarChart3 } from "lucide-react";
+import { useCurrentLocale, useI18n } from "locales/client";
 import { CSS } from "@dnd-kit/utilities";
 import { useSortable } from "@dnd-kit/sortable";
-
-import { useCurrentLocale, useI18n } from "locales/client";
-import useBoolean from "@/shared/hooks/useBoolean";
-import { Button } from "@/components/ui/button";
 
 import { ExerciseVideoModal } from "./exercise-video-modal";
 
 import type { ExerciseWithAttributes } from "../types";
+
+import useBoolean from "@/shared/hooks/useBoolean";
+import { Button } from "@/components/ui/button";
 
 const MUSCLE_CONFIGS: Record<string, string> = {
   ABDOMINALS: "bg-red-500",
@@ -28,6 +28,9 @@ interface ExerciseListItemProps {
   onPick: (exerciseId: string) => void;
   onDelete: (exerciseId: string, muscle: string) => void;
   isShuffling?: boolean;
+  isActive?: boolean;
+  onShuffleFeedback?: () => void;
+  onDeleteFeedback?: () => void;
 }
 
 export const ExerciseListItem = React.memo(function ExerciseListItem({
@@ -36,29 +39,52 @@ export const ExerciseListItem = React.memo(function ExerciseListItem({
   onShuffle,
   onDelete,
   isShuffling,
+  isActive,
+  onShuffleFeedback,
+  onDeleteFeedback,
 }: Omit<ExerciseListItemProps, "onPick">) {
   const t = useI18n();
   const locale = useCurrentLocale();
   const playVideo = useBoolean();
 
-  const { attributes, listeners, setNodeRef, transform, isDragging } = useSortable({ id: exercise.id });
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
+    id: exercise.id,
+    transition: {
+      duration: 250,
+      easing: "cubic-bezier(0.25, 1, 0.5, 1)",
+    },
+  });
 
   const exerciseName = locale === "fr" ? exercise.name : exercise.nameEn;
   const muscleColor = MUSCLE_CONFIGS[muscle] || "bg-gray-500";
   const muscleTitle = t(("workout_builder.muscles." + muscle.toLowerCase()) as keyof typeof t);
 
   const handleShuffle = useCallback(() => {
+    onShuffleFeedback?.();
     onShuffle(exercise.id, muscle);
-  }, [onShuffle, exercise.id, muscle]);
+  }, [onShuffle, exercise.id, muscle, onShuffleFeedback]);
+
+  const handleDelete = useCallback(() => {
+    onDeleteFeedback?.();
+    onDelete(exercise.id, muscle);
+  }, [onDelete, exercise.id, muscle, onDeleteFeedback]);
 
   return (
     <div
-      className={`flex items-center gap-2 sm:gap-3 p-2 sm:p-3 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700 select-none ${isDragging ? "shadow-lg" : ""}`}
+      className={`flex items-center gap-2 sm:gap-3 p-2 sm:p-3 border-b border-slate-200 dark:border-slate-700 select-none transition-[box-shadow,background-color] duration-200 ${
+        isDragging
+          ? "shadow-xl shadow-blue-500/15 bg-blue-50/60 dark:bg-blue-950/30 rounded-lg"
+          : isActive
+            ? ""
+            : "bg-white dark:bg-slate-900"
+      }`}
       ref={setNodeRef}
       style={{
         transform: CSS.Transform.toString(transform),
+        transition,
         zIndex: isDragging ? 1000 : 1,
         position: isDragging ? "relative" : "static",
+        scale: isDragging ? "1.02" : "1",
         userSelect: "none",
         WebkitUserSelect: "none",
         MozUserSelect: "none",
@@ -94,7 +120,6 @@ export const ExerciseListItem = React.memo(function ExerciseListItem({
       )}
 
       <div
-         
         className={`tooltip tooltip-bottom w-4 h-4 sm:w-5 sm:h-5 rounded text-white text-[10px] sm:text-xs font-bold flex items-center justify-center shrink-0 cursor-pointer ${muscleColor}`}
         data-tip={muscleTitle}
       >
@@ -123,10 +148,7 @@ export const ExerciseListItem = React.memo(function ExerciseListItem({
         <BarChart3 className="h-4 w-4" />
       </button>
 
-      <button
-        className="p-1 sm:p-2 text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300"
-        onClick={() => onDelete(exercise.id, muscle)}
-      >
+      <button className="p-1 sm:p-2 text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300" onClick={handleDelete}>
         <Trash2 className="h-4 w-4" />
       </button>
 

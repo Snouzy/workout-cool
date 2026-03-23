@@ -1,16 +1,27 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { Loader2, Plus } from "lucide-react";
-import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
-import { DndContext, closestCenter, PointerSensor, useSensor, useSensors, DragEndEvent, MouseSensor } from "@dnd-kit/core";
-
 import { useI18n } from "locales/client";
-import { env } from "@/env";
-import { HorizontalBottomBanner } from "@/components/ads";
+import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
+import {
+  DndContext,
+  closestCenter,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  DragEndEvent,
+  DragStartEvent,
+  DragOverEvent,
+  MouseSensor,
+} from "@dnd-kit/core";
 
 import { useWorkoutStepper } from "../hooks/use-workout-stepper";
 import { ExerciseListItem } from "./exercise-list-item";
 
 import type { ExerciseWithAttributes } from "../types";
+
+import { useDragFeedback } from "@/shared/hooks/use-drag-feedback";
+import { env } from "@/env";
+import { HorizontalBottomBanner } from "@/components/ads";
 
 interface ExercisesSelectionProps {
   isLoading: boolean;
@@ -36,6 +47,8 @@ export const ExercisesSelection = ({
   const t = useI18n();
   const [flatExercises, setFlatExercises] = useState<{ id: string; muscle: string; exercise: ExerciseWithAttributes }[]>([]);
   const { setExercisesOrder, exercisesOrder } = useWorkoutStepper();
+  const feedback = useDragFeedback();
+  const [activeId, setActiveId] = useState<string | null>(null);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -78,9 +91,26 @@ export const ExercisesSelection = ({
     setFlatExercises(flatExercisesComputed);
   }, [flatExercisesComputed]);
 
+  const handleDragStart = useCallback(
+    (_event: DragStartEvent) => {
+      setActiveId(_event.active.id as string);
+      feedback.onPickUp();
+    },
+    [feedback],
+  );
+
+  const handleDragOver = useCallback(
+    (event: DragOverEvent) => {
+      feedback.onCrossItem(event.over?.id as string | null);
+    },
+    [feedback],
+  );
+
   const handleDragEnd = useCallback(
     (event: DragEndEvent) => {
       const { active, over } = event;
+      setActiveId(null);
+      feedback.onPlace();
       if (active.id !== over?.id) {
         setFlatExercises((items) => {
           const oldIndex = items.findIndex((item) => item.id === active.id);
@@ -91,7 +121,7 @@ export const ExercisesSelection = ({
         });
       }
     },
-    [setExercisesOrder],
+    [setExercisesOrder, feedback],
   );
 
   if (isLoading) {
@@ -110,17 +140,26 @@ export const ExercisesSelection = ({
       {flatExercises.length > 0 ? (
         <div className="max-w-4xl mx-auto">
           {/* Liste des exercices drag and drop */}
-          <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd} sensors={sensors}>
+          <DndContext
+            collisionDetection={closestCenter}
+            onDragEnd={handleDragEnd}
+            onDragOver={handleDragOver}
+            onDragStart={handleDragStart}
+            sensors={sensors}
+          >
             <SortableContext items={sortableItems} strategy={verticalListSortingStrategy}>
               <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 overflow-hidden">
                 {flatExercises.map((item) => (
                   <ExerciseListItem
                     exercise={item.exercise}
+                    isActive={activeId === item.id}
                     isShuffling={shufflingExerciseId === item.exercise.id}
                     key={item.id}
                     muscle={item.muscle}
                     onDelete={onDelete}
+                    onDeleteFeedback={feedback.onDelete}
                     onShuffle={onShuffle}
+                    onShuffleFeedback={feedback.onShuffle}
                   />
                 ))}
                 <div className="border-t border-slate-200 dark:border-slate-800">

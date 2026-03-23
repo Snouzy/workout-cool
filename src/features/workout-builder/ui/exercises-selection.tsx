@@ -14,6 +14,7 @@ import {
   DragOverEvent,
   MouseSensor,
 } from "@dnd-kit/core";
+import { restrictToVerticalAxis, restrictToParentElement } from "@dnd-kit/modifiers";
 
 import { useWorkoutStepper } from "../hooks/use-workout-stepper";
 import { ExerciseListItem, ExerciseListItemOverlay } from "./exercise-list-item";
@@ -148,6 +149,7 @@ export const ExercisesSelection = ({
           {/* Liste des exercices drag and drop */}
           <DndContext
             collisionDetection={closestCenter}
+            modifiers={[restrictToVerticalAxis, restrictToParentElement]}
             onDragCancel={handleDragCancel}
             onDragEnd={handleDragEnd}
             onDragOver={handleDragOver}
@@ -155,7 +157,7 @@ export const ExercisesSelection = ({
             sensors={sensors}
           >
             <SortableContext items={sortableItems} strategy={verticalListSortingStrategy}>
-              <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 overflow-hidden">
+              <div className="bg-white dark:bg-slate-900 rounded-t-lg border border-b-0 border-slate-200 dark:border-slate-800 overflow-hidden">
                 {flatExercises.map((item) => (
                   <ExerciseListItem
                     exercise={item.exercise}
@@ -169,17 +171,6 @@ export const ExercisesSelection = ({
                     onShuffleFeedback={feedback.onShuffle}
                   />
                 ))}
-                <div className="border-t border-slate-200 dark:border-slate-800">
-                  <button
-                    className="w-full flex items-center gap-3 py-4 px-4 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950 transition-colors"
-                    onClick={onAdd}
-                  >
-                    <div className="h-8 w-8 rounded-full bg-blue-600 flex items-center justify-center">
-                      <Plus className="h-4 w-4 text-white" />
-                    </div>
-                    <span className="font-medium">{t("commons.add")}</span>
-                  </button>
-                </div>
               </div>
             </SortableContext>
 
@@ -187,6 +178,17 @@ export const ExercisesSelection = ({
               {activeItem ? <ExerciseListItemOverlay exercise={activeItem.exercise} muscle={activeItem.muscle} /> : null}
             </DragOverlay>
           </DndContext>
+          <div className="border border-t-0 border-slate-200 dark:border-slate-800 rounded-b-lg bg-white dark:bg-slate-900">
+            <button
+              className="w-full flex items-center gap-3 py-4 px-4 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950 transition-colors"
+              onClick={onAdd}
+            >
+              <div className="h-8 w-8 rounded-full bg-blue-600 flex items-center justify-center">
+                <Plus className="h-4 w-4 text-white" />
+              </div>
+              <span className="font-medium">{t("commons.add")}</span>
+            </button>
+          </div>
         </div>
       ) : error ? (
         <div className="text-center py-20">

@@ -54,8 +54,7 @@ export const ExercisesSelection = ({
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
-        delay: 100,
-        tolerance: 5,
+        distance: 0,
       },
     }),
     useSensor(MouseSensor, {

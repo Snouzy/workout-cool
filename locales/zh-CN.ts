@@ -1904,7 +1904,7 @@ export default {
     advertise: "广告",
     click_to_advertise: "您的品牌在这里 →",
     sponsor_fitdistance: "运动教练专用软件",
-    sponsor_nutripure: "优质补剂：最佳原料、完全透明、价格实惠",
+    sponsor_nutripure: "优质补剂，完全透明",
     sponsor_nutri_and_co: "让营养成为日常习惯",
     visit_sponsor: "访问",
     rewarded_dialog_title: "准备好训练了吗？",

@@ -1959,7 +1959,7 @@ export default {
     advertise: "Реклама",
     click_to_advertise: "Ваш бренд здесь →",
     sponsor_fitdistance: "Программа для спортивных тренеров",
-    sponsor_nutripure: "Премиум-добавки: лучшие ингредиенты, полная прозрачность, доступные цены",
+    sponsor_nutripure: "Премиум-добавки, полная прозрачность",
     sponsor_nutri_and_co: "Нутрицевтика как ежедневная привычка",
     visit_sponsor: "Перейти",
     rewarded_dialog_title: "Готовы к тренировке?",

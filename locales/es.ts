@@ -1968,7 +1968,7 @@ export default {
     advertise: "Publicidad",
     click_to_advertise: "Tu marca aquí →",
     sponsor_fitdistance: "El software para entrenadores deportivos",
-    sponsor_nutripure: "Suplementos premium: mejores ingredientes, transparencia total, precios accesibles",
+    sponsor_nutripure: "Suplementos premium, transparencia total",
     sponsor_nutri_and_co: "La Nutra como reflejo diario",
     visit_sponsor: "Visitar",
     rewarded_dialog_title: "¿Listo para entrenar?",

@@ -356,10 +356,10 @@ export default async function RootLayout({ params, children }: RootLayoutProps) 
             <AdBlockerForPremium />
             <NextTopLoader color="#FF5722" delay={100} showSpinner={false} />
 
-            <div className="flex items-center justify-center min-h-screen w-full">
-              <div className="flex items-start gap-4">
+            <div className="flex items-center justify-center min-h-screen w-full max-sm:min-h-full">
+              <div className="flex items-start gap-4 w-full max-sm:gap-0">
                 <VerticalLeftBanner />
-                <div className="max-w-4xl max-sm:max-w-full">
+                <div className="w-full lg:max-w-4xl">
                   {children}
                 </div>
                 <VerticalRightBanner />

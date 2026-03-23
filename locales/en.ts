@@ -1967,7 +1967,7 @@ export default {
     advertise: "Advertise",
     click_to_advertise: "Your brand here →",
     sponsor_fitdistance: "The software for sports coaches",
-    sponsor_nutripure: "Premium supplements: best ingredients, full transparency, fair prices",
+    sponsor_nutripure: "Premium supplements, full transparency",
     sponsor_nutri_and_co: "Nutra as a daily reflex",
     visit_sponsor: "Visit",
     rewarded_dialog_title: "Ready to train?",

@@ -357,11 +357,9 @@ export default async function RootLayout({ params, children }: RootLayoutProps) 
             <NextTopLoader color="#FF5722" delay={100} showSpinner={false} />
 
             <div className="flex items-center justify-center min-h-screen w-full max-sm:min-h-full">
-              <div className="flex items-start gap-4 w-full max-sm:gap-0">
+              <div className="flex items-start gap-2 w-full max-sm:gap-0 justify-center">
                 <VerticalLeftBanner />
-                <div className="w-full lg:max-w-4xl">
-                  {children}
-                </div>
+                <div className="">{children}</div>
                 <VerticalRightBanner />
               </div>
             </div>

@@ -4,6 +4,7 @@ export interface Sponsor {
   descriptionKey: string;
   logoUrl: string;
   url: string;
+  brandColor?: string;
 }
 
 const SIDEBAR_SLOT_COUNT = 6;
@@ -20,6 +21,7 @@ const sponsors: Record<string, Sponsor> = {
     descriptionKey: "ads.sponsor_fitdistance",
     logoUrl: "/images/sponsorship/fd-with-padding.png",
     url: "https://fitdistance.io/en",
+    brandColor: "#F97316",
   },
   "right-0": {
     id: "nutripure",
@@ -27,6 +29,7 @@ const sponsors: Record<string, Sponsor> = {
     descriptionKey: "ads.sponsor_nutripure",
     logoUrl: "/images/sponsorship/nutripure.png",
     url: "https://c3po.link/QVupuZ8DYw",
+    brandColor: "#6BA4A0",
   },
   "left-1": {
     id: "nutri-and-co",
@@ -34,6 +37,7 @@ const sponsors: Record<string, Sponsor> = {
     descriptionKey: "ads.sponsor_nutri_and_co",
     logoUrl: "/images/sponsorship/nutri-and-co.png",
     url: "https://www.nutri-and-co.com",
+    brandColor: "#1A2F3B",
   },
 };
 

@@ -29,7 +29,7 @@ export function SponsorSidebar({ position }: SponsorSidebarProps) {
   }, [checkScroll]);
 
   return (
-    <div className="hidden lg:flex flex-col w-[240px] sticky top-4 max-h-[calc(100vh-2rem)] relative">
+    <div className="hidden lg:flex flex-col w-[240px] sticky top-4 max-h-[calc(100vh-2rem)] relative mx-2">
       {/* Top fade */}
       <div
         className="absolute top-0 left-0 right-0 h-8 bg-gradient-to-b from-base-200 dark:from-[#18181b] to-transparent z-10 pointer-events-none transition-opacity duration-300"
@@ -37,12 +37,7 @@ export function SponsorSidebar({ position }: SponsorSidebarProps) {
       />
 
       {/* Scrollable content */}
-      <div
-        className="flex flex-col gap-3 overflow-y-auto"
-        onScroll={checkScroll}
-        ref={scrollRef}
-        style={{ scrollbarWidth: "none" }}
-      >
+      <div className="flex flex-col gap-3 overflow-y-auto" onScroll={checkScroll} ref={scrollRef} style={{ scrollbarWidth: "none" }}>
         {slots.map((sponsor, index) => (
           <SponsorCard key={`${position}-${index}`} sponsor={sponsor} />
         ))}

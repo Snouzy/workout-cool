@@ -23,12 +23,13 @@ export function SponsorCard({ sponsor, variant = "sidebar" }: SponsorCardProps) 
     return (
       <a
         className={cn(
-          "group relative block rounded-xl border transition-all hover:shadow-lg hover:-translate-y-0.5",
-          "border-[#4F8EF7]/20 dark:border-[#4F8EF7]/30 bg-gradient-to-b from-white to-blue-50/50 dark:from-slate-800 dark:to-slate-800/80 hover:border-[#4F8EF7]/40 shadow-sm",
+          "group relative h-full block rounded-xl transition-all hover:shadow-lg hover:-translate-y-0.5 shadow-sm bg-gradient-to-b from-white to-blue-50/40 dark:from-slate-800 dark:to-slate-800/80 lg:bg-none lg:bg-white lg:dark:bg-slate-800",
+          "border-2 lg:border lg:!border-slate-200 lg:dark:!border-slate-700",
           variant === "sidebar" ? "p-3 w-full" : "p-3 w-full flex items-center gap-3",
         )}
         href={sponsor.url}
         rel="noopener noreferrer sponsored"
+        style={sponsor.brandColor ? { borderColor: `${sponsor.brandColor}30` } : undefined}
         target="_blank"
       >
         {variant === "sidebar" ? (
@@ -76,16 +77,17 @@ export function SponsorCard({ sponsor, variant = "sidebar" }: SponsorCardProps) 
     <>
       <button
         className={cn(
-          "group h-full rounded-xl border border-dashed border-slate-200 dark:border-slate-700/50 bg-slate-50/50 dark:bg-slate-800/30 transition-all hover:border-slate-300 dark:hover:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer w-full opacity-60 hover:opacity-100",
+          "group h-full rounded-xl border border-dashed border-slate-200 dark:border-slate-700/50 bg-slate-50/50 dark:bg-slate-800/30 transition-all hover:border-slate-300 dark:hover:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer w-full opacity-75  hover:opacity-100",
           variant === "sidebar" ? "p-3.5" : "p-3 flex items-center gap-3",
         )}
         onClick={() => setDialogOpen(true)}
         type="button"
       >
         {variant === "sidebar" ? (
-          <div className="flex flex-col items-center text-center gap-2">
-            <Megaphone className="w-5 h-5 text-slate-300 dark:text-slate-600" />
-            <span className="font-medium text-xs text-slate-400 dark:text-slate-500">{t("ads.click_to_advertise")}</span>
+          <div className="flex flex-col items-center justify-center text-center gap-2 py-4">
+            <Megaphone className="w-7 h-7 text-slate-400 dark:text-slate-600" />
+            <span className="font-semibold text-xs text-slate-400 dark:text-slate-500">{t("ads.advertise")}</span>
+            <span className="text-[10px] text-slate-400 dark:text-slate-600 leading-snug">{t("ads.click_to_advertise")}</span>
           </div>
         ) : (
           <>

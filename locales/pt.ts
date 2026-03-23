@@ -1961,6 +1961,9 @@ export default {
   ads: {
     advertise: "Publicidade",
     click_to_advertise: "Sua marca aqui →",
+    sponsor_fitdistance: "O software para treinadores esportivos",
+    sponsor_nutripure: "Suplementos premium: melhores ingredientes, transparência total, preços acessíveis",
+    sponsor_nutri_and_co: "A Nutra como reflexo do dia a dia",
     visit_sponsor: "Visitar",
     dialog_title: "Sua marca, vista por 657K+ pessoas que se exercitam",
     dialog_description:

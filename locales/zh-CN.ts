@@ -1897,6 +1897,9 @@ export default {
   ads: {
     advertise: "广告",
     click_to_advertise: "您的品牌在这里 →",
+    sponsor_fitdistance: "运动教练专用软件",
+    sponsor_nutripure: "优质补剂：最佳原料、完全透明、价格实惠",
+    sponsor_nutri_and_co: "让营养成为日常习惯",
     visit_sponsor: "访问",
     dialog_title: "您的品牌，被657K+健身爱好者看到",
     dialog_description: "Workout.cool是健身爱好者每天来构建其训练课程的地方。让您的品牌展现在他们面前。",

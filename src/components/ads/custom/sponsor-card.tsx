@@ -6,12 +6,12 @@ import { useI18n } from "locales/client";
 
 import { SponsorDialog } from "./sponsor-dialog";
 
-import type { Sponsor } from "./sponsor-config";
+import type { TranslatedSponsor } from "./sponsor-config";
 
 import { cn } from "@/shared/lib/utils";
 
 interface SponsorCardProps {
-  sponsor: Sponsor | null;
+  sponsor: TranslatedSponsor | null;
   variant?: "sidebar" | "banner";
 }
 

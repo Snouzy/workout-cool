@@ -1,4 +1,14 @@
+import type { TFunction } from "locales/client";
+
 export interface Sponsor {
+  id: string;
+  name: string;
+  descriptionKey: string;
+  logoUrl: string;
+  url: string;
+}
+
+export interface TranslatedSponsor {
   id: string;
   name: string;
   description: string;
@@ -17,32 +27,42 @@ const sponsors: Record<string, Sponsor> = {
   "left-0": {
     id: "fitdistance",
     name: "Fitdistance",
-    description: "Le logiciel pour les coachs sportifs",
+    descriptionKey: "ads.sponsor_fitdistance",
     logoUrl: "/images/sponsorship/fd-with-padding.png",
     url: "https://fitdistance.io/en",
   },
   "right-0": {
     id: "nutripure",
     name: "Nutripure",
-    description: "Premium supplements : best ingredients, full transparency, fair prices",
+    descriptionKey: "ads.sponsor_nutripure",
     logoUrl: "/images/sponsorship/nutripure.png",
     url: "https://c3po.link/QVupuZ8DYw",
   },
   "left-1": {
     id: "nutri-and-co",
     name: "Nutri&Co",
-    description: "La Nutra comme réflexe du quotidien",
+    descriptionKey: "ads.sponsor_nutri_and_co",
     logoUrl: "/images/sponsorship/nutri-and-co.png",
     url: "https://www.nutri-and-co.com",
   },
 };
 
-export function getSidebarSlots(side: "left" | "right"): (Sponsor | null)[] {
-  return Array.from({ length: SIDEBAR_SLOT_COUNT }, (_, i) => sponsors[`${side}-${i}`] ?? null);
+function translateSponsor(sponsor: Sponsor, t: TFunction): TranslatedSponsor {
+  return {
+    ...sponsor,
+    description: t(sponsor.descriptionKey as Parameters<TFunction>[0]),
+  };
 }
 
-export function getAllSlots(): (Sponsor | null)[] {
-  return [...getSidebarSlots("left"), ...getSidebarSlots("right")];
+export function getSidebarSlots(side: "left" | "right", t: TFunction): (TranslatedSponsor | null)[] {
+  return Array.from({ length: SIDEBAR_SLOT_COUNT }, (_, i) => {
+    const sponsor = sponsors[`${side}-${i}`];
+    return sponsor ? translateSponsor(sponsor, t) : null;
+  });
+}
+
+export function getAllSlots(t: TFunction): (TranslatedSponsor | null)[] {
+  return [...getSidebarSlots("left", t), ...getSidebarSlots("right", t)];
 }
 
 export const audienceStats = {

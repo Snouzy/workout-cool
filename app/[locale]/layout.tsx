@@ -267,6 +267,11 @@ export default async function RootLayout({ params, children }: RootLayoutProps) 
                   __html: `
                     window.ezstandalone = window.ezstandalone || {};
                     ezstandalone.cmd = ezstandalone.cmd || [];
+                    ezstandalone.cmd.push(function() {
+                      ezstandalone.initRewardedAds();
+                    });
+                    window.ezRewardedAds = window.ezRewardedAds || {};
+                    window.ezRewardedAds.cmd = window.ezRewardedAds.cmd || [];
                   `,
                 }}
               />

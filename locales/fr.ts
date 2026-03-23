@@ -1997,7 +1997,7 @@ export default {
     visit_sponsor: "Visiter",
     rewarded_dialog_title: "Prêt à t'entraîner ?",
     rewarded_dialog_subtitle: "Regarde une courte pub pour débloquer ta séance : ça permet de garder Workout.cool gratuit.",
-    rewarded_watch_ad: "Regarder la pub & Commencer",
+    rewarded_watch_ad: "Regarder la pub & commencer",
     rewarded_or: "ou",
     rewarded_go_premium: "Plus jamais de pubs",
     rewarded_premium_hint: "Les membres Premium ne voient jamais de pubs et démarrent instantanément",

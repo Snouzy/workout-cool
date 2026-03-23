@@ -23,8 +23,8 @@ export function SponsorCard({ sponsor, variant = "sidebar" }: SponsorCardProps) 
     return (
       <a
         className={cn(
-          "group relative h-full block rounded-xl transition-all hover:shadow-lg hover:-translate-y-0.5 shadow-sm bg-white dark:from-slate-800 dark:to-slate-800/80 lg:bg-none lg:bg-white lg:dark:bg-slate-800",
-          "border-2 lg:border lg:!border-slate-200 lg:dark:!border-slate-700",
+          "group relative h-full block rounded-xl transition-all hover:shadow-lg hover:-translate-y-0.5 shadow-sm bg-white dark:bg-slate-800",
+          "border-2 border-slate-200 dark:border-slate-700",
           variant === "sidebar" ? "p-3 w-full" : "p-3 w-full flex items-center gap-3",
         )}
         href={sponsor.url}

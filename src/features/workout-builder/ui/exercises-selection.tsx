@@ -4,6 +4,7 @@ import { useI18n } from "locales/client";
 import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import {
   DndContext,
+  DragOverlay,
   closestCenter,
   PointerSensor,
   useSensor,
@@ -15,7 +16,7 @@ import {
 } from "@dnd-kit/core";
 
 import { useWorkoutStepper } from "../hooks/use-workout-stepper";
-import { ExerciseListItem } from "./exercise-list-item";
+import { ExerciseListItem, ExerciseListItemOverlay } from "./exercise-list-item";
 
 import type { ExerciseWithAttributes } from "../types";
 
@@ -124,6 +125,12 @@ export const ExercisesSelection = ({
     [setExercisesOrder, feedback],
   );
 
+  const handleDragCancel = useCallback(() => {
+    setActiveId(null);
+  }, []);
+
+  const activeItem = useMemo(() => flatExercises.find((item) => item.id === activeId), [flatExercises, activeId]);
+
   if (isLoading) {
     return (
       <div className="space-y-6">
@@ -142,6 +149,7 @@ export const ExercisesSelection = ({
           {/* Liste des exercices drag and drop */}
           <DndContext
             collisionDetection={closestCenter}
+            onDragCancel={handleDragCancel}
             onDragEnd={handleDragEnd}
             onDragOver={handleDragOver}
             onDragStart={handleDragStart}
@@ -175,6 +183,10 @@ export const ExercisesSelection = ({
                 </div>
               </div>
             </SortableContext>
+
+            <DragOverlay dropAnimation={{ duration: 200, easing: "cubic-bezier(0.18, 0.67, 0.6, 1.22)" }}>
+              {activeItem ? <ExerciseListItemOverlay exercise={activeItem.exercise} muscle={activeItem.muscle} /> : null}
+            </DragOverlay>
           </DndContext>
         </div>
       ) : error ? (

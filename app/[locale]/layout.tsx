@@ -1,8 +1,11 @@
 import { Inter, Permanent_Marker } from "next/font/google";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
-
 import { Providers } from "app/[locale]/providers";
+
+import type { ReactNode } from "react";
+import type { Metadata } from "next";
+
 import { cn } from "@/shared/lib/utils";
 import { generateStructuredData, StructuredDataScript } from "@/shared/lib/structured-data";
 import { getServerUrl } from "@/shared/lib/server-url";
@@ -17,9 +20,6 @@ import { TailwindIndicator } from "@/components/utils/TailwindIndicator";
 import { NextTopLoader } from "@/components/ui/next-top-loader";
 import { ServiceWorkerRegistration } from "@/components/pwa/ServiceWorkerRegistration";
 import { VerticalLeftBanner, VerticalRightBanner, AdBlockerForPremium } from "@/components/ads";
-
-import type { ReactElement } from "react";
-import type { Metadata } from "next";
 
 import "@/shared/styles/globals.css";
 
@@ -219,7 +219,7 @@ export const preferredRegion = ["fra1", "sfo1", "iad1"];
 
 interface RootLayoutProps {
   params: Promise<{ locale: string }>;
-  children: ReactElement;
+  children: ReactNode;
 }
 
 export default async function RootLayout({ params, children }: RootLayoutProps) {
@@ -246,30 +246,32 @@ export default async function RootLayout({ params, children }: RootLayoutProps) 
         <head>
           <meta charSet="UTF-8" />
           <meta content="width=device-width, initial-scale=1, maximum-scale=1 viewport-fit=cover" name="viewport" />
-          <meta content={env.NEXT_PUBLIC_AD_CLIENT} name="google-adsense-account" />
+          {env.NEXT_PUBLIC_AD_PROVIDER !== "custom" && (
+            <>
+              <meta content={env.NEXT_PUBLIC_AD_CLIENT} name="google-adsense-account" />
 
-          <script
-            async
-            crossOrigin="anonymous"
-            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${env.NEXT_PUBLIC_AD_CLIENT}`}
-          />
+              <script
+                async
+                crossOrigin="anonymous"
+                src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${env.NEXT_PUBLIC_AD_CLIENT}`}
+              />
 
-          {/* Ezoic Privacy Scripts */}
-          {/* eslint-disable-next-line @next/next/no-sync-scripts */}
-          <script data-cfasync="false" src="https://cmp.gatekeeperconsent.com/min.js" />
-          {/* eslint-disable-next-line @next/next/no-sync-scripts */}
-          <script data-cfasync="false" src="https://the.gatekeeperconsent.com/cmp.min.js" />
+              {/* Ezoic Privacy Scripts */}
+              <script data-cfasync="false" src="https://cmp.gatekeeperconsent.com/min.js" />
+              <script data-cfasync="false" src="https://the.gatekeeperconsent.com/cmp.min.js" />
 
-          {/* Ezoic Header Script */}
-          <script async src="//www.ezojs.com/ezoic/sa.min.js" />
-          <script
-            dangerouslySetInnerHTML={{
-              __html: `
-                window.ezstandalone = window.ezstandalone || {};
-                ezstandalone.cmd = ezstandalone.cmd || [];
-              `,
-            }}
-          />
+              {/* Ezoic Header Script */}
+              <script async src="//www.ezojs.com/ezoic/sa.min.js" />
+              <script
+                dangerouslySetInnerHTML={{
+                  __html: `
+                    window.ezstandalone = window.ezstandalone || {};
+                    ezstandalone.cmd = ezstandalone.cmd || [];
+                  `,
+                }}
+              />
+            </>
+          )}
 
           {/* PWA Meta Tags */}
           <meta content="yes" name="apple-mobile-web-app-capable" />
@@ -282,7 +284,6 @@ export default async function RootLayout({ params, children }: RootLayoutProps) 
           {/* PWA Manifest */}
           <link href={`/${locale}/manifest.json`} rel="manifest" />
 
-          {/* eslint-disable-next-line @next/next/no-page-custom-font */}
           <link as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="preload" />
 
           {/* Alternate hreflang for i18n */}

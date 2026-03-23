@@ -1388,6 +1388,11 @@ export default {
     title: "Что нового",
     release_notes: "Заметки о выпуске",
     notes: {
+      note_2026_03_23: {
+        title: "🚀 Спонсоры, Реклама и Next.js 16!",
+        content:
+          "<li>Новая <strong>система спонсоров</strong> : знакомьтесь с нашими партнёрами в боковой панели и мобильной карусели</li><li>Посмотрите короткую рекламу перед тренировкой, чтобы <strong>бесплатно поддержать проект</strong> : или оформите Premium, чтобы пропустить</li><li>Миграция на <strong>Next.js 16</strong> для более быстрой загрузки и лучшей производительности</li><li>Новая <strong>листаемая карусель</strong> на мобильных для просмотра спонсоров</li><li>Улучшена поддержка <strong>светлой темы</strong> в диалогах тренировки</li>",
+      },
       note_2025_10_29: {
         title: "🍑 Новая Программа Booty Выпущена!",
         content:
@@ -1582,6 +1587,7 @@ export default {
       previous: "Назад",
       continue: "Продолжить",
       complete: "Завершить",
+      start_workout: "Начать тренировку",
     },
     stats: {
       "muscle_selected#zero": "0 мышц выбрано",
@@ -1948,5 +1954,61 @@ export default {
     },
     "workout#one": "тренировка",
     "workout#other": "тренировок",
+  },
+  ads: {
+    advertise: "Реклама",
+    click_to_advertise: "Ваш бренд здесь →",
+    sponsor_fitdistance: "Программа для спортивных тренеров",
+    sponsor_nutripure: "Премиум-добавки: лучшие ингредиенты, полная прозрачность, доступные цены",
+    sponsor_nutri_and_co: "Нутрицевтика как ежедневная привычка",
+    visit_sponsor: "Перейти",
+    rewarded_dialog_title: "Готовы к тренировке?",
+    rewarded_dialog_subtitle:
+      "Посмотрите короткую рекламу, чтобы разблокировать тренировку : это помогает Workout.cool оставаться бесплатным.",
+    rewarded_watch_ad: "Смотреть рекламу и начать",
+    rewarded_or: "или",
+    rewarded_go_premium: "Без рекламы навсегда",
+    rewarded_premium_hint: "Участники Premium никогда не видят рекламу и начинают мгновенно",
+    dialog_title: "Ваш бренд, видимый для 657K+ людей, которые тренируются",
+    dialog_description:
+      "Workout.cool — это место, где фитнес-энтузиасты приходят каждый день, чтобы построить свои тренировки. Покажите вашу марку именно им.",
+    // eslint-disable-next-line quotes
+    authority_title: '#1 в Google по запросу "workout"',
+    authority_subtitle: "Также на 1-м месте в Bing, DuckDuckGo и Yandex",
+    total_visits_label: "Общий охват (февраль 2026)",
+    page_views_label: "Просмотры страниц (февраль 2026)",
+    unique_visitors_label: "Уникальные посетители (февраль 2026)",
+    device_split_label: "Распределение по устройствам",
+    from_last_month: "по сравнению с прошлым месяцем",
+    audience_quality: "Кто видит ваш бренд",
+    audience_insight:
+      "69.7% мужчин, доминирует возраст 18-44 — точная аудитория, которая покупает товары для фитнеса, питания и производительности.",
+    top_countries: "Топ стран",
+    more_countries: "еще",
+    similarweb_placeholder: "Доля трафика по странам — SimilarWeb",
+    pricing_starting_at: "От",
+    month: "мес",
+    feature_logo_link: "Ваш логотип и ссылка на каждой странице",
+    feature_visitors: "304 133 уникальных посетителя видят вашу марку",
+    feature_targeted: "70% мужчин, 18-44 — высокомотивированные покупатели фитнеса",
+    feature_premium_placement: "Премиум-размещение: сайдбар + баннеры в контенте",
+    feature_dofollow: "Dofollow-бэклинк с домена высокого авторитета — усильте ваш SEO",
+    cta_book: "Забронировать место сейчас",
+    cta_subtext: "Отмените в любой момент. Активируется в течение 24 часов после платежа.",
+    onboarding_title: "Регистрация спонсора",
+    onboarding_description: "Спасибо за оплату! Заполните данные вашего бренда ниже, и ваша реклама будет запущена в течение 24 часов.",
+    onboarding_brand_name: "Название бренда",
+    onboarding_email: "Контактный email",
+    onboarding_website: "URL сайта",
+    onboarding_logo: "URL логотипа",
+    onboarding_logo_hint: "Прямая ссылка на ваш логотип (PNG или SVG, мин 200x200px)",
+    onboarding_tagline: "Слоган",
+    onboarding_notes: "Дополнительные заметки",
+    onboarding_notes_placeholder: "Особые требования, предпочтительное размещение, цели кампании...",
+    onboarding_submit: "Отправить данные спонсора",
+    onboarding_success_title: "Всё готово!",
+    onboarding_success_description:
+      "Мы получили данные вашего бренда. Ваша реклама будет запущена в течение 24 часов. Мы отправим вам подтверждение по email.",
+    optional: "необязательно",
   },
 } as const;

@@ -1,3 +1,4 @@
+/* eslint-disable quotes */
 export default {
   leaderboard: {
     title: "Classificação",
@@ -1401,6 +1402,11 @@ export default {
     title: "Novidades",
     release_notes: "Notas de Lançamento",
     notes: {
+      note_2026_03_23: {
+        title: "🚀 Patrocinadores, Anúncios & Next.js 16!",
+        content:
+          "<li>Novo <strong>sistema de patrocinadores</strong> : descubra nossos parceiros na barra lateral e no carrossel mobile</li><li>Assista a um breve anúncio antes do treino para <strong>apoiar o projeto de graça</strong> : ou assine Premium para pular</li><li>Migração para <strong>Next.js 16</strong> para carregamento mais rápido e melhor desempenho</li><li>Novo <strong>carrossel deslizável</strong> no mobile para navegar os patrocinadores</li><li>Melhor suporte ao <strong>modo claro</strong> nos diálogos de treino</li>",
+      },
       note_2025_10_29: {
         title: "🍑 Novo Programa Booty Lançado!",
         content:
@@ -1590,6 +1596,7 @@ export default {
       previous: "Anterior",
       continue: "Continuar",
       complete: "Concluir",
+      start_workout: "Iniciar treino",
     },
     stats: {
       "muscle_selected#zero": "0 músculos selecionados",
@@ -1957,5 +1964,58 @@ export default {
     },
     "workout#one": "treino",
     "workout#other": "treinos",
+  },
+  ads: {
+    advertise: "Publicidade",
+    click_to_advertise: "Sua marca aqui →",
+    sponsor_fitdistance: "O software para treinadores esportivos",
+    sponsor_nutripure: "Suplementos premium: melhores ingredientes, transparência total, preços acessíveis",
+    sponsor_nutri_and_co: "A Nutra como reflexo do dia a dia",
+    visit_sponsor: "Visitar",
+    rewarded_dialog_title: "Pronto para treinar?",
+    rewarded_dialog_subtitle: "Assista a um breve anúncio para desbloquear seu treino : ajuda a manter o Workout.cool gratuito.",
+    rewarded_watch_ad: "Assistir anúncio e começar",
+    rewarded_or: "ou",
+    rewarded_go_premium: "Sem anúncios para sempre",
+    rewarded_premium_hint: "Membros Premium nunca veem anúncios e começam instantaneamente",
+    dialog_title: "Sua marca, vista por 657K+ pessoas que se exercitam",
+    dialog_description:
+      "Workout.cool é onde entusiastas de fitness vêm todos os dias para construir suas sessões. Coloque sua marca na frente deles.",
+    authority_title: '#1 no Google para "workout"',
+    authority_subtitle: "Também classificado #1 no Bing, DuckDuckGo e Yandex",
+    total_visits_label: "Alcance total (fev. 2026)",
+    page_views_label: "Visualizações de páginas (fev. 2026)",
+    unique_visitors_label: "Visitantes únicos (fev. 2026)",
+    device_split_label: "Divisão de dispositivos",
+    from_last_month: "do mês anterior",
+    audience_quality: "Quem vê sua marca",
+    audience_insight: "69.7% homens, dominante 18-44 — exatamente o público que compra produtos de fitness, nutrição e desempenho.",
+    top_countries: "Principais países",
+    more_countries: "mais",
+    similarweb_placeholder: "Compartilhamento de tráfego por país — SimilarWeb",
+    pricing_starting_at: "A partir de",
+    month: "mês",
+    feature_logo_link: "Seu logo e link exibidos em cada página",
+    feature_visitors: "304.133 visitantes únicos veem sua marca",
+    feature_targeted: "70% homens, 18-44 — compradores de fitness de alta intenção",
+    feature_premium_placement: "Posicionamento premium: sidebar + banners no conteúdo",
+    feature_dofollow: "Backlink dofollow de um domínio de alta autoridade — impulsione seu SEO",
+    cta_book: "Garanta seu lugar agora",
+    cta_subtext: "Cancele a qualquer momento. Ativo em até 24h após o pagamento.",
+    onboarding_title: "Onboarding de Patrocinador",
+    onboarding_description: "Obrigado pelo pagamento! Preencha os dados da sua marca abaixo e seu anúncio estará ativo em 24h.",
+    onboarding_brand_name: "Nome da marca",
+    onboarding_email: "Email de contato",
+    onboarding_website: "URL do site",
+    onboarding_logo: "URL do logo",
+    onboarding_logo_hint: "Link direto para o seu logo (PNG ou SVG, mín 200x200px)",
+    onboarding_tagline: "Slogan",
+    onboarding_notes: "Notas adicionais",
+    onboarding_notes_placeholder: "Requisitos específicos, posicionamento preferido, objetivos da campanha...",
+    onboarding_submit: "Enviar meu patrocínio",
+    onboarding_success_title: "Tudo pronto!",
+    onboarding_success_description:
+      "Recebemos os dados da sua marca. Seu anúncio estará ativo em 24 horas. Enviaremos um email de confirmação.",
+    optional: "opcional",
   },
 } as const;

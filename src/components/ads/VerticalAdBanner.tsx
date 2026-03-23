@@ -2,6 +2,7 @@ import { env } from "@/env";
 
 import { GoogleAdSense } from "./GoogleAdSense";
 import { EzoicAd } from "./EzoicAd";
+import { SponsorSidebar } from "./custom";
 import { AdWrapper } from "./AdWrapper";
 import { AdPlaceholder } from "./AdPlaceholder";
 
@@ -12,6 +13,14 @@ interface VerticalAdBannerProps {
 }
 
 export function VerticalAdBanner({ adSlot, ezoicPlacementId, position = "left" }: VerticalAdBannerProps) {
+  if (env.NEXT_PUBLIC_AD_PROVIDER === "custom") {
+    return (
+      <AdWrapper>
+        <SponsorSidebar position={position} />
+      </AdWrapper>
+    );
+  }
+
   const isDevelopment = process.env.NODE_ENV === "development";
   const useEzoic = env.NEXT_PUBLIC_AD_PROVIDER === "ezoic" && ezoicPlacementId;
 

@@ -1,14 +1,14 @@
 "use client";
 
 import { create } from "zustand";
-
 import { useI18n } from "locales/client";
-import { logger } from "@/shared/lib/logger";
-import { brandedToast } from "@/components/ui/toast";
 
 import { ProviderConfirmationDialog } from "./DialogProviderDialog";
 
 import type { ConfirmationDialogProps } from "./DialogProviderDialog";
+
+import { logger } from "@/shared/lib/logger";
+import { brandedToast } from "@/components/ui/toast";
 
 type DialogType = ConfirmationDialogProps & {
   id: string;

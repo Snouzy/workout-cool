@@ -1,15 +1,14 @@
-import React from "react";
 import Link from "next/link";
 import { Metadata } from "next";
 import { ChevronLeftIcon } from "lucide-react";
-
 import { getI18n } from "locales/server";
+
+import { CalorieCalculatorComparison } from "./CalorieCalculatorComparison";
+
 import { getServerUrl } from "@/shared/lib/server-url";
 import { env } from "@/env";
 import { generateSEOMetadata, SEOScripts } from "@/components/seo/SEOHead";
 import { HorizontalTopBanner } from "@/components/ads";
-
-import { CalorieCalculatorComparison } from "./CalorieCalculatorComparison";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;

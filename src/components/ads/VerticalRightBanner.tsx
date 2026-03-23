@@ -3,10 +3,11 @@ import { env } from "@/env";
 import { VerticalAdBanner } from "./VerticalAdBanner";
 
 export function VerticalRightBanner() {
+  const isCustom = env.NEXT_PUBLIC_AD_PROVIDER === "custom";
   const hasAdSlot = env.NEXT_PUBLIC_VERTICAL_RIGHT_BANNER_AD_SLOT;
   const hasEzoicPlacement = env.NEXT_PUBLIC_EZOIC_VERTICAL_RIGHT_PLACEMENT_ID;
-  
-  if (!hasAdSlot && !hasEzoicPlacement) {
+
+  if (!isCustom && !hasAdSlot && !hasEzoicPlacement) {
     return null;
   }
 

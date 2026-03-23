@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import { waitUntil } from "@vercel/functions";
-import { OpenPanel, type PostEventPayload } from "@openpanel/nextjs";
+import { OpenPanel, type TrackProperties } from "@openpanel/nextjs";
 
 import { env } from "@/env";
 
@@ -23,18 +23,20 @@ export const setupAnalytics = async (options?: Props) => {
   if (trackingConsent && userId && fullName) {
     const [firstName, lastName] = fullName.split(" ");
 
-    waitUntil(
-      client.identify({
-        profileId: userId,
-        firstName,
-        lastName,
-        email: email ?? undefined,
-      }),
-    );
+    const identifyPromise = client.identify({
+      profileId: userId,
+      firstName,
+      lastName,
+      email: email ?? undefined,
+    });
+
+    if (identifyPromise) {
+      waitUntil(identifyPromise);
+    }
   }
 
   return {
-    track: (options: { event: string } & PostEventPayload["properties"]) => {
+    track: (options: { event: string } & TrackProperties) => {
       if (env.NODE_ENV !== "production") {
         console.log("Track", options);
         return;

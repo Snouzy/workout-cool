@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import type { ReactNode } from "react";
 import { redirect } from "next/navigation";
 import { UserRole } from "@prisma/client";
 
@@ -8,7 +8,7 @@ import { serverRequiredUser } from "@/entities/user/model/get-server-session-use
 
 interface AdminLayoutProps {
   params: Promise<{ locale: string }>;
-  children: ReactElement;
+  children: ReactNode;
 }
 
 export default async function AdminLayout({ children }: AdminLayoutProps) {

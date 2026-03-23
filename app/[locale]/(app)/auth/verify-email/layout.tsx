@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import type { ReactNode } from "react";
 import { redirect } from "next/navigation";
 
 import { getServerUrl } from "@/shared/lib/server-url";
@@ -7,7 +7,7 @@ import { serverRequiredUser } from "@/entities/user/model/get-server-session-use
 
 interface RootLayoutProps {
   params: Promise<{ locale: string }>;
-  children: ReactElement;
+  children: ReactNode;
 }
 
 export default async function RootLayout({ children }: RootLayoutProps) {

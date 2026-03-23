@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 /* eslint-disable max-len */
 import type { Config } from "tailwindcss";
 

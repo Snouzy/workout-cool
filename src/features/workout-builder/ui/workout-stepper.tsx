@@ -4,20 +4,9 @@ import { useState, useEffect, useMemo } from "react";
 import { useQueryState } from "nuqs";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { ExerciseAttributeValueEnum } from "@prisma/client";
-
 import { useCurrentLocale, useI18n } from "locales/client";
 import Trophy from "@public/images/trophy.png";
-import useBoolean from "@/shared/hooks/useBoolean";
-import { WorkoutSessionSets } from "@/features/workout-session/ui/workout-session-sets";
-import { WorkoutSessionHeader } from "@/features/workout-session/ui/workout-session-header";
-import { DonationModal } from "@/features/workout-session/ui/donation-modal";
-import { useDonationModal } from "@/features/workout-session/hooks/use-donation-modal";
-import { WorkoutBuilderFooter } from "@/features/workout-builder/ui/workout-stepper-footer";
-import { env } from "@/env";
-import { Button } from "@/components/ui/button";
-import { NutripureAffiliateBanner } from "@/components/ads/nutripure-affiliate-banner";
-import { HorizontalTopBanner } from "@/components/ads";
+import { ExerciseAttributeValueEnum } from "@prisma/client";
 
 import { StepperStepProps } from "../types";
 import { useWorkoutStepper } from "../hooks/use-workout-stepper";
@@ -29,6 +18,17 @@ import { EquipmentSelection } from "./equipment-selection";
 import { AddExerciseModal } from "./add-exercise-modal";
 
 import type { ExerciseWithAttributes, WorkoutBuilderStep } from "../types";
+
+import useBoolean from "@/shared/hooks/useBoolean";
+import { WorkoutSessionSets } from "@/features/workout-session/ui/workout-session-sets";
+import { WorkoutSessionHeader } from "@/features/workout-session/ui/workout-session-header";
+import { DonationModal } from "@/features/workout-session/ui/donation-modal";
+import { useDonationModal } from "@/features/workout-session/hooks/use-donation-modal";
+import { WorkoutBuilderFooter } from "@/features/workout-builder/ui/workout-stepper-footer";
+import { env } from "@/env";
+import { Button } from "@/components/ui/button";
+import { NutripureAffiliateBanner } from "@/components/ads/nutripure-affiliate-banner";
+import { HorizontalTopBanner } from "@/components/ads";
 
 export function WorkoutStepper() {
   const { loadSessionFromLocal } = useWorkoutSession();

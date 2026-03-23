@@ -1,4 +1,4 @@
-import { OpenPanelComponent, type PostEventPayload, useOpenPanel } from "@openpanel/nextjs";
+import { OpenPanelComponent, type TrackProperties, useOpenPanel } from "@openpanel/nextjs";
 
 import { env } from "@/env";
 
@@ -19,7 +19,7 @@ const AnalyticsProvider = function () {
   );
 };
 
-const track = (options: { event: string } & PostEventPayload["properties"]) => {
+const track = (options: { event: string } & TrackProperties) => {
   if (!env.NEXT_PUBLIC_OPENPANEL_CLIENT_ID) {
     return;
   }

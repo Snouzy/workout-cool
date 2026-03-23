@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "target": "ES2017",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -11,14 +15,22 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "incremental": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"],
-      "@/workoutcool/*": ["./src/*"],
-      "@emails/*": ["emails/*"],
-      "@public/*": ["public/*"]
+      "@/*": [
+        "./src/*"
+      ],
+      "@/workoutcool/*": [
+        "./src/*"
+      ],
+      "@emails/*": [
+        "emails/*"
+      ],
+      "@public/*": [
+        "public/*"
+      ]
     },
     "plugins": [
       {
@@ -26,6 +38,18 @@
       }
     ]
   },
-  "exclude": ["node_modules", "src/utils/inapp.js", "src/utils/externalLinkOpener.js", "src/utils/browserEscape.js"],
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "tailwind.config.ts"]
+  "exclude": [
+    "node_modules",
+    "src/utils/inapp.js",
+    "src/utils/externalLinkOpener.js",
+    "src/utils/browserEscape.js"
+  ],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "tailwind.config.ts",
+    ".next/dev/types/**/*.ts"
+  ]
 }

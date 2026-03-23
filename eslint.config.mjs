@@ -31,7 +31,6 @@ const config = [
       "plugin:prettier/recommended",
       "plugin:import/recommended",
       "plugin:import/typescript",
-      "next/core-web-vitals",
     ),
   ),
   {

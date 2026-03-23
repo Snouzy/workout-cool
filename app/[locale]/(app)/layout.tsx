@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import type { ReactNode } from "react";
 
 import { Header } from "@/features/layout/Header";
 import { Footer } from "@/features/layout/Footer";
@@ -6,7 +6,7 @@ import { BottomNavigation } from "@/features/layout/BottomNavigation";
 
 interface RootLayoutProps {
   params: Promise<{ locale: string }>;
-  children: ReactElement;
+  children: ReactNode;
 }
 
 export default async function RootLayout({ children }: RootLayoutProps) {

@@ -2,13 +2,13 @@
 
 import { useState } from "react";
 import { ArrowRight, ExternalLink, Megaphone } from "lucide-react";
-
 import { useI18n } from "locales/client";
-import { cn } from "@/shared/lib/utils";
 
 import { SponsorDialog } from "./sponsor-dialog";
 
 import type { Sponsor } from "./sponsor-config";
+
+import { cn } from "@/shared/lib/utils";
 
 interface SponsorCardProps {
   sponsor: Sponsor | null;
@@ -33,7 +33,6 @@ export function SponsorCard({ sponsor, variant = "sidebar" }: SponsorCardProps) 
         {variant === "sidebar" ? (
           <div className="flex flex-col items-center text-center gap-2.5">
             <div className="relative">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 alt={sponsor.name}
                 className="w-14 h-14 rounded-xl object-contain ring-2 ring-slate-100 dark:ring-slate-700 group-hover:ring-[#4F8EF7]/20 transition-all"
@@ -41,8 +40,10 @@ export function SponsorCard({ sponsor, variant = "sidebar" }: SponsorCardProps) 
               />
             </div>
             <div className="space-y-1">
-              <span className="font-bold text-xs text-slate-800 dark:text-slate-200 leading-tight block">{sponsor.name}</span>
-              <span className="text-[10px] text-slate-500 dark:text-slate-400 leading-snug line-clamp-2 block">{sponsor.description}</span>
+              <span className="font-bold text-sm md:text-md text-slate-800 dark:text-slate-200 leading-tight block">{sponsor.name}</span>
+              <span className="text-[10px] md:text-sm text-slate-500 dark:text-slate-400 leading-snug line-clamp-2 block">
+                {sponsor.description}
+              </span>
             </div>
             <span className="flex items-center gap-1 text-[10px] font-medium text-[#4F8EF7]">
               {t("ads.visit_sponsor")}
@@ -51,8 +52,11 @@ export function SponsorCard({ sponsor, variant = "sidebar" }: SponsorCardProps) 
           </div>
         ) : (
           <>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img alt={sponsor.name} className="w-10 h-10 rounded-xl object-contain ring-2 ring-slate-100 dark:ring-slate-700 shrink-0" src={sponsor.logoUrl} />
+            <img
+              alt={sponsor.name}
+              className="w-10 h-10 rounded-xl object-contain ring-2 ring-slate-100 dark:ring-slate-700 shrink-0"
+              src={sponsor.logoUrl}
+            />
             <div className="flex-1 min-w-0">
               <span className="font-bold text-sm text-slate-800 dark:text-slate-200 block truncate">{sponsor.name}</span>
               <span className="text-xs text-slate-500 dark:text-slate-400 block truncate">{sponsor.description}</span>

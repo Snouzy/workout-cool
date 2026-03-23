@@ -1,6 +1,6 @@
-import { env } from "@/env";
-
 import { VerticalAdBanner } from "./VerticalAdBanner";
+
+import { env } from "@/env";
 
 export function VerticalLeftBanner() {
   const isCustom = env.NEXT_PUBLIC_AD_PROVIDER === "custom";

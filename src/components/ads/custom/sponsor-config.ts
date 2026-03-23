@@ -24,7 +24,7 @@ const sponsors: Record<string, Sponsor> = {
   "right-0": {
     id: "nutripure",
     name: "Nutripure",
-    description: "Premium supplements — best ingredients, full transparency, fair prices",
+    description: "Premium supplements : best ingredients, full transparency, fair prices",
     logoUrl: "/images/sponsorship/nutripure.png",
     url: "https://c3po.link/QVupuZ8DYw",
   },

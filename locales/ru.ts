@@ -1471,6 +1471,8 @@ export default {
     impact_footer: "Каждое пожертвование, даже маленькое, имеет реальное значение! 🙏",
     later_button: "Позже",
     support_button: "Поддержать проект",
+    watch_ad: "Посмотреть рекламу для поддержки",
+    or: "или",
   },
 
   // Contact Support

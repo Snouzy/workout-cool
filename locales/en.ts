@@ -1479,6 +1479,8 @@ export default {
     impact_footer: "Every donation, even small, makes a real difference! 🙏",
     later_button: "Later",
     support_button: "Support the project",
+    watch_ad: "Watch an ad to support us",
+    or: "or",
   },
 
   // Contact Support

@@ -607,6 +607,8 @@ export default {
     impact_footer: "每一笔捐赠，即使很小，都会产生真正的影响！🙏",
     later_button: "稍后",
     support_button: "支持项目",
+    watch_ad: "观看广告来支持我们",
+    or: "或",
   },
 
   // Contact Support

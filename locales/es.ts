@@ -611,6 +611,8 @@ export default {
     impact_footer: "¡Cada donación, incluso pequeña, hace una diferencia real! 🙏",
     later_button: "Más tarde",
     support_button: "Apoyar el proyecto",
+    watch_ad: "Ver un anuncio para apoyarnos",
+    or: "o",
   },
 
   // Contact Support

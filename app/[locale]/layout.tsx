@@ -359,7 +359,7 @@ export default async function RootLayout({ params, children }: RootLayoutProps) 
             <div className="flex items-center justify-center min-h-screen w-full max-sm:min-h-full">
               <div className="flex items-start gap-2 w-full max-sm:gap-0 justify-center">
                 <VerticalLeftBanner />
-                <div className="">{children}</div>
+                <div className="min-w-0 sm:min-w-auto w-full sm:w-auto">{children}</div>
                 <VerticalRightBanner />
               </div>
             </div>

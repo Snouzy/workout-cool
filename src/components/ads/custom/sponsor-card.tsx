@@ -42,7 +42,7 @@ export function SponsorCard({ sponsor, variant = "sidebar" }: SponsorCardProps) 
             <div className="space-y-1">
               <span className="font-bold text-sm md:text-md text-slate-800 dark:text-slate-200 leading-tight block">{sponsor.name}</span>
               <span className="text-[10px] md:text-sm text-slate-500 dark:text-slate-400 leading-snug line-clamp-2 block">
-                {t(sponsor.descriptionKey as Parameters<typeof t>[0], {})}
+                {t(sponsor.descriptionKey as keyof typeof t)}
               </span>
             </div>
             <ExternalLink className="absolute top-2 right-2 w-3.5 h-3.5 text-[#4F8EF7] lg:hidden" />
@@ -60,7 +60,7 @@ export function SponsorCard({ sponsor, variant = "sidebar" }: SponsorCardProps) 
             />
             <div className="flex-1 min-w-0">
               <span className="font-bold text-sm text-slate-800 dark:text-slate-200 block truncate">{sponsor.name}</span>
-              <span className="text-xs text-slate-500 dark:text-slate-400 block truncate">{t(sponsor.descriptionKey as Parameters<typeof t>[0], {})}</span>
+              <span className="text-xs text-slate-500 dark:text-slate-400 block truncate">{t(sponsor.descriptionKey as keyof typeof t)}</span>
             </div>
             <ArrowRight className="w-4 h-4 text-[#4F8EF7] shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" />
           </>

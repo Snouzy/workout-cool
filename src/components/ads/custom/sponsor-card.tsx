@@ -23,7 +23,7 @@ export function SponsorCard({ sponsor, variant = "sidebar" }: SponsorCardProps) 
     return (
       <a
         className={cn(
-          "group block rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 transition-all hover:shadow-lg hover:border-[#4F8EF7]/40 dark:hover:border-[#4F8EF7]/40 hover:-translate-y-0.5",
+          "group relative block rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 transition-all hover:shadow-lg hover:border-[#4F8EF7]/40 dark:hover:border-[#4F8EF7]/40 hover:-translate-y-0.5",
           variant === "sidebar" ? "p-3 w-full" : "p-3 w-full flex items-center gap-3",
         )}
         href={sponsor.url}
@@ -45,7 +45,8 @@ export function SponsorCard({ sponsor, variant = "sidebar" }: SponsorCardProps) 
                 {sponsor.description}
               </span>
             </div>
-            <span className="flex items-center gap-1 text-[10px] font-medium text-[#4F8EF7]">
+            <ExternalLink className="absolute top-2 right-2 w-3.5 h-3.5 text-[#4F8EF7] lg:hidden" />
+            <span className="hidden lg:flex items-center gap-1 text-[10px] font-medium text-[#4F8EF7]">
               {t("ads.visit_sponsor")}
               <ExternalLink className="w-3 h-3" />
             </span>

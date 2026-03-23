@@ -1405,7 +1405,7 @@ export default {
       note_2026_03_23: {
         title: "🚀 Patrocinadores, Anúncios & Next.js 16!",
         content:
-          "<li>Novo <strong>sistema de patrocinadores</strong> : descubra nossos parceiros na barra lateral e no carrossel mobile</li><li>Assista a um breve anúncio antes do treino para <strong>apoiar o projeto de graça</strong> : ou assine Premium para pular</li><li>Migração para <strong>Next.js 16</strong> para carregamento mais rápido e melhor desempenho</li><li>Novo <strong>carrossel deslizável</strong> no mobile para navegar os patrocinadores</li>",
+          "<li>Novo <strong>sistema de patrocinadores</strong> : descubra nossos parceiros na barra lateral e no carrossel mobile</li><li>Assista a um breve anúncio antes do treino para <strong>apoiar o projeto de graça</strong> : ou assine Premium para pular</li><li>Migração para <strong>Next.js 16</strong> para carregamento mais rápido e melhor desempenho</li><li>Novo <strong>carrossel deslizável</strong> no mobile para navegar os patrocinadores</li><li>Melhor suporte ao <strong>modo claro</strong> nos diálogos de treino</li>",
       },
       note_2025_10_29: {
         title: "🍑 Novo Programa Booty Lançado!",

@@ -533,7 +533,7 @@ export default {
       note_2026_03_23: {
         title: "🚀 赞助商、广告和Next.js 16！",
         content:
-          "<li>全新<strong>赞助商系统</strong>：在侧边栏和移动端轮播中发现我们的合作伙伴</li><li>训练前观看短视频广告<strong>免费支持项目</strong>：或升级Premium跳过广告</li><li>迁移到<strong>Next.js 16</strong>，加载更快，性能更强</li><li>移动端新增<strong>可滑动轮播</strong>浏览赞助商</li>",
+          "<li>全新<strong>赞助商系统</strong>：在侧边栏和移动端轮播中发现我们的合作伙伴</li><li>训练前观看短视频广告<strong>免费支持项目</strong>：或升级Premium跳过广告</li><li>迁移到<strong>Next.js 16</strong>，加载更快，性能更强</li><li>移动端新增<strong>可滑动轮播</strong>浏览赞助商</li><li>改进训练对话框的<strong>浅色模式</strong>支持</li>",
       },
       note_2025_10_29: {
         title: "🍑 新的臀部训练计划发布！",

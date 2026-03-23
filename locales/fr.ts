@@ -1425,7 +1425,7 @@ export default {
       note_2026_03_23: {
         title: "🚀 Sponsors, Pubs & Next.js 16 !",
         content:
-          "<li>Nouveau <strong>système de sponsors</strong> : découvre nos partenaires dans la sidebar et le carousel mobile</li><li>Regarde une courte pub avant ta séance pour <strong>soutenir le projet gratuitement</strong> : ou passe Premium pour sauter</li><li>Migration vers <strong>Next.js 16</strong> pour un chargement plus rapide et de meilleures performances</li><li>Nouveau <strong>carousel swipeable</strong> sur mobile pour parcourir les sponsors</li>",
+          "<li>Nouveau <strong>système de sponsors</strong> : découvre nos partenaires dans la sidebar et le carousel mobile</li><li>Regarde une courte pub avant ta séance pour <strong>soutenir le projet gratuitement</strong> : ou passe Premium pour sauter</li><li>Migration vers <strong>Next.js 16</strong> pour un chargement plus rapide et de meilleures performances</li><li>Nouveau <strong>carousel swipeable</strong> sur mobile pour parcourir les sponsors</li><li>Meilleur support du <strong>mode clair</strong> sur les dialogues de workout</li>",
       },
       note_2025_10_29: {
         title: "🍑 Nouveau Programme Booty Disponible !",

@@ -1400,7 +1400,7 @@ export default {
       note_2026_03_23: {
         title: "🚀 Sponsors, Ads & Next.js 16!",
         content:
-          "<li>Brand new <strong>sponsor system</strong>: discover our partners in the sidebar and mobile carousel</li><li>Watch a short ad before your workout to <strong>support the project for free</strong>: or go Premium to skip</li><li>Migrated to <strong>Next.js 16</strong> for faster loading and better performance</li><li>New <strong>swipeable carousel</strong> on mobile to browse sponsors</li>",
+          "<li>Brand new <strong>sponsor system</strong>: discover our partners in the sidebar and mobile carousel</li><li>Watch a short ad before your workout to <strong>support the project for free</strong>: or go Premium to skip</li><li>Migrated to <strong>Next.js 16</strong> for faster loading and better performance</li><li>New <strong>swipeable carousel</strong> on mobile to browse sponsors</li><li>Improved <strong>light mode</strong> support across workout dialogs</li>",
       },
       note_2025_10_29: {
         title: "🍑 New Booty Program Released!",

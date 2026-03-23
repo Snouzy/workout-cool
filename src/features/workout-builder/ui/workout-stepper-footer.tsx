@@ -1,8 +1,9 @@
 "use client";
-import { ArrowLeft, ArrowRight } from "lucide-react";
-
+import { ArrowLeft, ArrowRight, Play } from "lucide-react";
 import { useI18n } from "locales/client";
+
 import { Button } from "@/components/ui/button";
+import { RewardedAdGate } from "@/components/ads/custom/RewardedAdGate";
 
 export function WorkoutBuilderFooter({
   currentStep,
@@ -40,18 +41,35 @@ export function WorkoutBuilderFooter({
           </Button>
 
           {/* Next/Start Workout button */}
-          <Button
-            className="flex-1 rounded-full bg-blue-600 hover:bg-blue-700 min-h-12 dark:bg-blue-500 dark:hover:bg-blue-600"
-            disabled={!canContinue}
-            onClick={isFinalStep ? () => onStartWorkout?.() : onNext}
-            size="default"
-            variant="default"
-          >
-            <div className="flex items-center justify-center gap-2">
-              <span className="font-semibold">{t("workout_builder.navigation.continue")}</span>
-              <ArrowRight className="h-4 w-4" />
-            </div>
-          </Button>
+          {isFinalStep && onStartWorkout ? (
+            <RewardedAdGate onRewardGranted={onStartWorkout}>
+              <Button
+                asChild
+                className="flex-1 rounded-full bg-green-600 hover:bg-green-700 min-h-12 dark:bg-green-500 dark:hover:bg-green-600 w-full"
+                disabled={!canContinue}
+                size="default"
+                variant="default"
+              >
+                <div className="flex items-center justify-center gap-2">
+                  <Play className="h-4 w-4" />
+                  <span className="font-semibold">{t("workout_builder.navigation.start_workout")}</span>
+                </div>
+              </Button>
+            </RewardedAdGate>
+          ) : (
+            <Button
+              className="flex-1 rounded-full bg-blue-600 hover:bg-blue-700 min-h-12 dark:bg-blue-500 dark:hover:bg-blue-600"
+              disabled={!canContinue}
+              onClick={onNext}
+              size="default"
+              variant="default"
+            >
+              <div className="flex items-center justify-center gap-2">
+                <span className="font-semibold">{t("workout_builder.navigation.continue")}</span>
+                <ArrowRight className="h-4 w-4" />
+              </div>
+            </Button>
+          )}
         </div>
       </div>
     </div>

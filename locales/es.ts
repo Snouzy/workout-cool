@@ -717,6 +717,7 @@ export default {
       previous: "Anterior",
       continue: "Continuar",
       complete: "Completar",
+      start_workout: "Empezar entrenamiento",
     },
     stats: {
       "muscle_selected#zero": "0 músculos seleccionados",
@@ -1965,6 +1966,12 @@ export default {
     sponsor_nutripure: "Suplementos premium: mejores ingredientes, transparencia total, precios accesibles",
     sponsor_nutri_and_co: "La Nutra como reflejo diario",
     visit_sponsor: "Visitar",
+    rewarded_dialog_title: "¿Listo para entrenar?",
+    rewarded_dialog_subtitle: "Mira un breve anuncio para desbloquear tu entrenamiento : ayuda a mantener Workout.cool gratis.",
+    rewarded_watch_ad: "Ver anuncio y empezar",
+    rewarded_or: "o",
+    rewarded_go_premium: "Sin anuncios nunca más",
+    rewarded_premium_hint: "Los miembros Premium nunca ven anuncios y empiezan al instante",
     dialog_title: "Tu marca, vista por 657K+ personas que entrenan",
     dialog_description:
       "Workout.cool es donde los entusiastas del fitness vienen cada día para construir sus sesiones. Pon tu marca frente a ellos.",

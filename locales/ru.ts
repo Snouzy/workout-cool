@@ -1582,6 +1582,7 @@ export default {
       previous: "Назад",
       continue: "Продолжить",
       complete: "Завершить",
+      start_workout: "Начать тренировку",
     },
     stats: {
       "muscle_selected#zero": "0 мышц выбрано",
@@ -1956,6 +1957,13 @@ export default {
     sponsor_nutripure: "Премиум-добавки: лучшие ингредиенты, полная прозрачность, доступные цены",
     sponsor_nutri_and_co: "Нутрицевтика как ежедневная привычка",
     visit_sponsor: "Перейти",
+    rewarded_dialog_title: "Готовы к тренировке?",
+    rewarded_dialog_subtitle:
+      "Посмотрите короткую рекламу, чтобы разблокировать тренировку : это помогает Workout.cool оставаться бесплатным.",
+    rewarded_watch_ad: "Смотреть рекламу и начать",
+    rewarded_or: "или",
+    rewarded_go_premium: "Без рекламы навсегда",
+    rewarded_premium_hint: "Участники Premium никогда не видят рекламу и начинают мгновенно",
     dialog_title: "Ваш бренд, видимый для 657K+ людей, которые тренируются",
     dialog_description:
       "Workout.cool — это место, где фитнес-энтузиасты приходят каждый день, чтобы построить свои тренировки. Покажите вашу марку именно им.",

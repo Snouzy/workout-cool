@@ -27,7 +27,6 @@ import { useDonationModal } from "@/features/workout-session/hooks/use-donation-
 import { WorkoutBuilderFooter } from "@/features/workout-builder/ui/workout-stepper-footer";
 import { env } from "@/env";
 import { Button } from "@/components/ui/button";
-import { NutripureAffiliateBanner } from "@/components/ads/nutripure-affiliate-banner";
 import { HorizontalTopBanner } from "@/components/ads";
 
 export function WorkoutStepper() {
@@ -289,9 +288,9 @@ export function WorkoutStepper() {
     }
 
     if (currentStep === 2) {
-      if (locale === "fr") {
-        return <NutripureAffiliateBanner />;
-      }
+      // if (locale === "fr") {
+      //   return <NutripureAffiliateBanner />;
+      // }
 
       if (env.NEXT_PUBLIC_TOP_STEPPER_STEP_2_BANNER_AD_SLOT || env.NEXT_PUBLIC_EZOIC_TOP_STEPPER_STEP_2_PLACEMENT_ID) {
         return (
@@ -304,9 +303,9 @@ export function WorkoutStepper() {
     }
 
     if (currentStep === 3) {
-      if (locale === "fr") {
-        return <NutripureAffiliateBanner />;
-      }
+      // if (locale === "fr") {
+      //   return <NutripureAffiliateBanner />;
+      // }
 
       if (env.NEXT_PUBLIC_TOP_STEPPER_STEP_3_BANNER_AD_SLOT || env.NEXT_PUBLIC_EZOIC_TOP_STEPPER_STEP_3_PLACEMENT_ID) {
         return (

@@ -713,6 +713,7 @@ export default {
       previous: "上一步",
       continue: "继续",
       complete: "完成",
+      start_workout: "开始训练",
     },
     stats: {
       "muscle_selected#zero": "已选择 0 块肌肉",
@@ -1901,6 +1902,12 @@ export default {
     sponsor_nutripure: "优质补剂：最佳原料、完全透明、价格实惠",
     sponsor_nutri_and_co: "让营养成为日常习惯",
     visit_sponsor: "访问",
+    rewarded_dialog_title: "准备好训练了吗？",
+    rewarded_dialog_subtitle: "观看短视频广告解锁训练 : 帮助Workout.cool保持免费。",
+    rewarded_watch_ad: "观看广告并开始",
+    rewarded_or: "或",
+    rewarded_go_premium: "永远告别广告",
+    rewarded_premium_hint: "Premium会员永远不看广告，立即开始训练",
     dialog_title: "您的品牌，被657K+健身爱好者看到",
     dialog_description: "Workout.cool是健身爱好者每天来构建其训练课程的地方。让您的品牌展现在他们面前。",
     // eslint-disable-next-line quotes

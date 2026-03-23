@@ -1,17 +1,17 @@
 "use client";
 import Image from "next/image";
 import { Check } from "lucide-react";
+import { useI18n, useCurrentLocale } from "locales/client";
 import { ExerciseAttributeValueEnum } from "@prisma/client";
 
-import { useI18n, useCurrentLocale } from "locales/client";
+import { EQUIPMENT_CONFIG } from "../model/equipment-config";
+
 import { getEquipmentTranslation } from "@/shared/lib/workout-session/equipments";
 import { cn } from "@/shared/lib/utils";
 import { env } from "@/env";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { HorizontalBottomBanner } from "@/components/ads";
-
-import { EQUIPMENT_CONFIG } from "../model/equipment-config";
 
 interface EquipmentSelectionProps {
   onClearEquipment: VoidFunction;

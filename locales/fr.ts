@@ -1612,6 +1612,7 @@ export default {
       previous: "Précédent",
       continue: "Continuer",
       complete: "Terminer",
+      start_workout: "Commencer la séance",
     },
     stats: {
       "muscle_selected#zero": "0 muscle sélectionné",
@@ -1989,6 +1990,12 @@ export default {
     sponsor_nutripure: "Compléments premium : meilleurs ingrédients, transparence totale, prix accessibles",
     sponsor_nutri_and_co: "La Nutra comme réflexe du quotidien",
     visit_sponsor: "Visiter",
+    rewarded_dialog_title: "Prêt à t'entraîner ?",
+    rewarded_dialog_subtitle: "Regarde une courte pub pour débloquer ta séance : ça permet de garder Workout.cool gratuit.",
+    rewarded_watch_ad: "Regarder la pub & Commencer",
+    rewarded_or: "ou",
+    rewarded_go_premium: "Plus jamais de pubs",
+    rewarded_premium_hint: "Les membres Premium ne voient jamais de pubs et démarrent instantanément",
     dialog_title: "Votre marque, vue par 657K+ sportifs",
     dialog_description:
       "Workout.cool est l'app où les passionnés de fitness construisent leurs séances chaque jour. Placez votre marque devant eux.",

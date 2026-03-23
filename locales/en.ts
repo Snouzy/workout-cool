@@ -1586,6 +1586,7 @@ export default {
       previous: "Previous",
       continue: "Continue",
       complete: "Complete",
+      start_workout: "Start Workout",
     },
     stats: {
       "muscle_selected#zero": "0 muscle selected",
@@ -1964,6 +1965,12 @@ export default {
     sponsor_nutripure: "Premium supplements: best ingredients, full transparency, fair prices",
     sponsor_nutri_and_co: "Nutra as a daily reflex",
     visit_sponsor: "Visit",
+    rewarded_dialog_title: "Ready to train?",
+    rewarded_dialog_subtitle: "Watch a quick ad to unlock your workout : it keeps Workout.cool free for everyone.",
+    rewarded_watch_ad: "Watch Ad & Start",
+    rewarded_or: "or",
+    rewarded_go_premium: "Skip Ads Forever",
+    rewarded_premium_hint: "Premium members never see ads and start instantly",
     dialog_title: "Your brand, seen by 657K+ people who train",
     dialog_description:
       "Workout.cool is where fitness enthusiasts come every day to build their sessions. Put your brand in front of them.",

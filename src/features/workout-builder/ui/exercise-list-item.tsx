@@ -53,7 +53,7 @@ export const ExerciseListItem = React.memo(function ExerciseListItem({
 
   return (
     <div
-      className={`flex items-center gap-3 p-3 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700 select-none ${isDragging ? "shadow-lg" : ""}`}
+      className={`flex items-center gap-2 sm:gap-3 p-2 sm:p-3 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700 select-none ${isDragging ? "shadow-lg" : ""}`}
       ref={setNodeRef}
       style={{
         transform: CSS.Transform.toString(transform),
@@ -71,12 +71,12 @@ export const ExerciseListItem = React.memo(function ExerciseListItem({
         {...attributes}
         {...listeners}
       >
-        <GripVertical className="h-5 w-5 text-slate-400" />
+        <GripVertical className="h-4 w-4 sm:h-5 sm:w-5 text-slate-400" />
       </div>
 
       {exercise.fullVideoImageUrl && (
         <div
-          className="relative h-10 w-10 rounded overflow-hidden shrink-0 bg-slate-200 dark:bg-slate-800 cursor-pointer border border-slate-200 dark:border-slate-700/50"
+          className="relative h-8 w-8 sm:h-10 sm:w-10 rounded overflow-hidden shrink-0 bg-slate-200 dark:bg-slate-800 cursor-pointer border border-slate-200 dark:border-slate-700/50"
           onClick={playVideo.setTrue}
         >
           <Image
@@ -95,14 +95,14 @@ export const ExerciseListItem = React.memo(function ExerciseListItem({
 
       <div
          
-        className={`tooltip tooltip-bottom w-5 h-5 rounded text-white text-xs font-bold flex items-center justify-center shrink-0 cursor-pointer ${muscleColor}`}
+        className={`tooltip tooltip-bottom w-4 h-4 sm:w-5 sm:h-5 rounded text-white text-[10px] sm:text-xs font-bold flex items-center justify-center shrink-0 cursor-pointer ${muscleColor}`}
         data-tip={muscleTitle}
       >
         {muscle.charAt(0)}
       </div>
 
       <div className="flex-1 min-w-0">
-        <span className="text-sm font-medium text-slate-900 dark:text-slate-100 md:truncate">{exerciseName}</span>
+        <span className="text-xs sm:text-sm font-medium text-slate-900 dark:text-slate-100 block truncate">{exerciseName}</span>
       </div>
 
       <Button
@@ -117,14 +117,14 @@ export const ExerciseListItem = React.memo(function ExerciseListItem({
       </Button>
 
       <button
-        className="p-2 text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
+        className="p-1 sm:p-2 text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
         onClick={playVideo.setTrue}
       >
         <BarChart3 className="h-4 w-4" />
       </button>
 
       <button
-        className="p-2 text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300"
+        className="p-1 sm:p-2 text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300"
         onClick={() => onDelete(exercise.id, muscle)}
       >
         <Trash2 className="h-4 w-4" />

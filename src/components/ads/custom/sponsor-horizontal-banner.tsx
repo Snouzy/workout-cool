@@ -23,7 +23,7 @@ export function SponsorHorizontalBanner() {
     <div className="w-full py-1 overflow-hidden" ref={emblaRef}>
       <div className="flex gap-3">
         {allSlots.map((sponsor, index) => (
-          <div className="shrink-0 w-[160px]" key={index}>
+          <div className={`shrink-0 ${sponsor ? "w-[200px]" : "w-[140px]"}`} key={index}>
             <SponsorCard sponsor={sponsor} />
           </div>
         ))}

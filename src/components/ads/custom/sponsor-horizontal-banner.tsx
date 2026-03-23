@@ -1,6 +1,5 @@
 "use client";
 
-import { useI18n } from "locales/client";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 
@@ -8,8 +7,7 @@ import { getAllSlots } from "./sponsor-config";
 import { SponsorCard } from "./sponsor-card";
 
 export function SponsorHorizontalBanner() {
-  const t = useI18n();
-  const allSlots = getAllSlots(t);
+  const allSlots = getAllSlots();
 
   const [emblaRef] = useEmblaCarousel(
     {

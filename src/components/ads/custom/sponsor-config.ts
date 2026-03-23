@@ -1,17 +1,7 @@
-import type { TFunction } from "locales/client";
-
 export interface Sponsor {
   id: string;
   name: string;
   descriptionKey: string;
-  logoUrl: string;
-  url: string;
-}
-
-export interface TranslatedSponsor {
-  id: string;
-  name: string;
-  description: string;
   logoUrl: string;
   url: string;
 }
@@ -47,22 +37,12 @@ const sponsors: Record<string, Sponsor> = {
   },
 };
 
-function translateSponsor(sponsor: Sponsor, t: TFunction): TranslatedSponsor {
-  return {
-    ...sponsor,
-    description: t(sponsor.descriptionKey as Parameters<TFunction>[0]),
-  };
+export function getSidebarSlots(side: "left" | "right"): (Sponsor | null)[] {
+  return Array.from({ length: SIDEBAR_SLOT_COUNT }, (_, i) => sponsors[`${side}-${i}`] ?? null);
 }
 
-export function getSidebarSlots(side: "left" | "right", t: TFunction): (TranslatedSponsor | null)[] {
-  return Array.from({ length: SIDEBAR_SLOT_COUNT }, (_, i) => {
-    const sponsor = sponsors[`${side}-${i}`];
-    return sponsor ? translateSponsor(sponsor, t) : null;
-  });
-}
-
-export function getAllSlots(t: TFunction): (TranslatedSponsor | null)[] {
-  return [...getSidebarSlots("left", t), ...getSidebarSlots("right", t)];
+export function getAllSlots(): (Sponsor | null)[] {
+  return [...getSidebarSlots("left"), ...getSidebarSlots("right")];
 }
 
 export const audienceStats = {

@@ -2,11 +2,12 @@
 
 import { Drawer } from "vaul";
 import { ExternalLink, Globe, MapPin, Monitor, PieChart, Search, Smartphone, Sparkles, Target, TrendingUp, X } from "lucide-react";
-
 import { useI18n } from "locales/client";
-import { env } from "@/env";
 
 import { audienceStats } from "./sponsor-config";
+
+import { env } from "@/env";
+
 
 interface SponsorDialogProps {
   open: boolean;
@@ -196,7 +197,6 @@ export function SponsorDialog({ open, onOpenChange }: SponsorDialogProps) {
               </span>
             </div>
             <div className="rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img alt={t("ads.similarweb_placeholder")} className="w-full h-auto" src="/images/countries.png" />
             </div>
 

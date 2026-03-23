@@ -31,9 +31,9 @@ export function WorkoutBuilderFooter({
         {/* Center stats on top for mobile */}
 
         {/* Navigation buttons */}
-        <div className="mt-4 min-h-12 flex items-center justify-between gap-3 bg-white dark:bg-slate-900 w-full p-0.5 border border-slate-400 dark:border-slate-700 rounded-full">
+        <div className={`mt-4 min-h-12 flex items-center justify-between bg-white dark:bg-slate-900 w-full p-0.5 border border-slate-400 dark:border-slate-700 ${isFinalStep ? "flex-col sm:flex-row gap-2 sm:gap-3 rounded-2xl sm:rounded-full" : "flex-row gap-3 rounded-full"}`}>
           {/* Previous button */}
-          <Button className="flex-1 rounded-full min-h-12" disabled={isFirstStep} onClick={onPrevious} size="default" variant="ghost">
+          <Button className={`flex-1 rounded-full min-h-12 ${isFinalStep ? "w-full" : ""}`} disabled={isFirstStep} onClick={onPrevious} size="default" variant="ghost">
             <div className="flex items-center gap-2">
               <ArrowLeft className="h-4 w-4" />
               <span className="font-medium">{t("workout_builder.navigation.previous")}</span>
@@ -45,7 +45,7 @@ export function WorkoutBuilderFooter({
             <RewardedAdGate onRewardGranted={onStartWorkout}>
               <Button
                 asChild
-                className="flex-1 rounded-full bg-green-600 hover:bg-green-700 min-h-12 dark:bg-green-500 dark:hover:bg-green-600 w-full"
+                className="flex-1 w-full rounded-full bg-green-600 hover:bg-green-700 min-h-12 dark:bg-green-500 dark:hover:bg-green-600"
                 disabled={!canContinue}
                 size="default"
                 variant="default"
@@ -58,7 +58,7 @@ export function WorkoutBuilderFooter({
             </RewardedAdGate>
           ) : (
             <Button
-              className="flex-1 rounded-full bg-blue-600 hover:bg-blue-700 min-h-12 dark:bg-blue-500 dark:hover:bg-blue-600"
+              className="flex-1 w-full rounded-full bg-blue-600 hover:bg-blue-700 min-h-12 dark:bg-blue-500 dark:hover:bg-blue-600"
               disabled={!canContinue}
               onClick={onNext}
               size="default"

@@ -4,15 +4,15 @@ import { useBoolean } from "usehooks-ts";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { Plus, Loader2, X, ChevronDown, ChevronUp } from "lucide-react";
+import { useCurrentLocale, useI18n } from "locales/client";
 import { useQuery } from "@tanstack/react-query";
 import { ExerciseAttributeValueEnum } from "@prisma/client";
 
-import { useCurrentLocale, useI18n } from "locales/client";
-import { FavoriteButton } from "@/features/workout-builder/ui/favorite-button";
-import { useFavoritesModal } from "@/features/workout-builder/hooks/use-favorites-modal";
-
 import { useWorkoutBuilderStore } from "../model/workout-builder.store";
 import { getExercisesByMuscleAction } from "../actions/get-exercises-by-muscle.action";
+
+import { FavoriteButton } from "@/features/workout-builder/ui/favorite-button";
+import { useFavoritesModal } from "@/features/workout-builder/hooks/use-favorites-modal";
 
 interface AddExerciseModalProps {
   isOpen: boolean;

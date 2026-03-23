@@ -3,8 +3,8 @@
 import React from "react";
 import Image from "next/image";
 import { ClockIcon } from "lucide-react";
-
 import { useI18n, useCurrentLocale } from "locales/client";
+
 import { formatDateShort, formatRelativeTime } from "@/shared/lib/date";
 import { TopWorkoutUser } from "@/features/leaderboard/models/types";
 

@@ -1,9 +1,10 @@
 import { useRouter } from "next/navigation";
 import { Play, Repeat2, Trash2 } from "lucide-react";
+import { useCurrentLocale, useI18n } from "locales/client";
 import { ExerciseAttributeNameEnum } from "@prisma/client";
 
-import { useCurrentLocale, useI18n } from "locales/client";
 import { useWorkoutSessionService } from "@/shared/lib/workout-session/use-workout-session.service";
+import { useWorkoutFeedback } from "@/shared/hooks/use-workout-feedback";
 import { useWorkoutSessions } from "@/features/workout-session/model/use-workout-sessions";
 import { useWorkoutBuilderStore } from "@/features/workout-builder/model/workout-builder.store";
 import { getExerciseAttributesValueOf, getPrimaryMuscle, getAttributeValue } from "@/entities/exercise/shared/muscles";
@@ -25,6 +26,7 @@ export function WorkoutSessionList() {
   const router = useRouter();
   const loadFromSession = useWorkoutBuilderStore((s) => s.loadFromSession);
   const { remove } = useWorkoutSessionService();
+  const feedback = useWorkoutFeedback();
 
   const { data: sessions = [], refetch } = useWorkoutSessions();
   const activeSession = sessions.find((s) => s.status === "active");
@@ -35,6 +37,7 @@ export function WorkoutSessionList() {
     if (!confirmed) return;
 
     try {
+      feedback.onDelete();
       await remove(id);
       refetch();
     } catch (error) {
@@ -44,6 +47,7 @@ export function WorkoutSessionList() {
   };
 
   const handleRepeat = (id: string) => {
+    feedback.onNextExercise();
     const sessionToCopy = sessions.find((s) => s.id === id);
     if (!sessionToCopy) return;
 

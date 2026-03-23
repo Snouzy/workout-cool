@@ -1,40 +1,7 @@
 "use client";
 
 import { useCallback, useRef } from "react";
-
-/**
- * Synthesized micro-sounds using Web Audio API.
- * No assets needed — pure generated tones tuned for dopamine response.
- *
- * Inspired by Duolingo's "pop/snap" and Things' tactile audio cues.
- */
-function getAudioContext(): AudioContext | null {
-  if (typeof window === "undefined") return null;
-  const AC = window.AudioContext || (window as any).webkitAudioContext;
-  if (!AC) return null;
-  return new AC();
-}
-
-function playTone(ctx: AudioContext, freq: number, duration: number, type: OscillatorType = "sine", volume = 0.12) {
-  const osc = ctx.createOscillator();
-  const gain = ctx.createGain();
-
-  osc.type = type;
-  osc.frequency.setValueAtTime(freq, ctx.currentTime);
-  gain.gain.setValueAtTime(volume, ctx.currentTime);
-  gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
-
-  osc.connect(gain);
-  gain.connect(ctx.destination);
-  osc.start(ctx.currentTime);
-  osc.stop(ctx.currentTime + duration);
-}
-
-function vibrate(pattern: number | number[]) {
-  if (typeof navigator !== "undefined" && navigator.vibrate) {
-    navigator.vibrate(pattern);
-  }
-}
+import { playTone, vibrate, ensureAudioContext } from "@/shared/lib/audio-feedback";
 
 /** Satisfying "pick up" — high-pitched pop */
 function playPickUp(ctx: AudioContext) {
@@ -79,15 +46,7 @@ export function useDragFeedback() {
   const ctxRef = useRef<AudioContext | null>(null);
   const lastOverIdRef = useRef<string | null>(null);
 
-  const ensureCtx = useCallback(() => {
-    if (!ctxRef.current || ctxRef.current.state === "closed") {
-      ctxRef.current = getAudioContext();
-    }
-    if (ctxRef.current?.state === "suspended") {
-      ctxRef.current.resume();
-    }
-    return ctxRef.current;
-  }, []);
+  const ensureCtx = useCallback(() => ensureAudioContext(ctxRef), []);
 
   const onPickUp = useCallback(() => {
     const ctx = ensureCtx();

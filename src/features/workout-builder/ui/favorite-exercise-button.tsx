@@ -1,8 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
-
 import { useI18n } from "locales/client";
+
+import { useSyncFavoriteExercises } from "../hooks/use-sync-favorite-exercises";
+
 import { cn } from "@/shared/lib/utils";
 import {
   FAVORITE_EXERICSES_STORAGE_KEY,
@@ -11,8 +13,6 @@ import {
 } from "@/features/workout-builder/model/favorite-exercises.local";
 import { brandedToast } from "@/components/ui/toast";
 import { StarButton } from "@/components/ui/star-button";
-
-import { useSyncFavoriteExercises } from "../hooks/use-sync-favorite-exercises";
 
 interface FavoriteExerciseButtonProps {
   exerciseId: string;

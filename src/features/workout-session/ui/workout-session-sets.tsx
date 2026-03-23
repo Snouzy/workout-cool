@@ -4,11 +4,15 @@ import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Check, Play, ArrowRight, Trophy as TrophyIcon, Plus, Hourglass } from "lucide-react";
-import confetti from "canvas-confetti";
-
 import { useCurrentLocale, useI18n } from "locales/client";
+import confetti from "canvas-confetti";
 import TrophyImg from "@public/images/trophy.png";
+
+import { FavoriteExerciseButton } from "../../workout-builder/ui/favorite-exercise-button";
+import { WorkoutSessionSet } from "./workout-session-set";
+
 import { cn } from "@/shared/lib/utils";
+import { useWorkoutFeedback } from "@/shared/hooks/use-workout-feedback";
 import { useWorkoutSession } from "@/features/workout-session/model/use-workout-session";
 import { useSyncWorkoutSessions } from "@/features/workout-session/model/use-sync-workout-sessions";
 import { ExerciseVideoModal } from "@/features/workout-builder/ui/exercise-video-modal";
@@ -17,9 +21,6 @@ import { env } from "@/env";
 import { PremiumUpsellAlert } from "@/components/ui/premium-upsell-alert";
 import { Button } from "@/components/ui/button";
 import { HorizontalBottomBanner } from "@/components/ads";
-
-import { FavoriteExerciseButton } from "../../workout-builder/ui/favorite-exercise-button";
-import { WorkoutSessionSet } from "./workout-session-set";
 
 export function WorkoutSessionSets({
   showCongrats,
@@ -40,6 +41,7 @@ export function WorkoutSessionSets({
   const { syncSessions } = useSyncWorkoutSessions();
   const prevExerciseIndexRef = useRef<number>(currentExerciseIndex);
   const { syncFavoriteExercises } = useSyncFavoriteExercises();
+  const feedback = useWorkoutFeedback();
 
   // auto-scroll to current exercise when index changes (but not when adding sets)
   useEffect(() => {
@@ -108,15 +110,31 @@ export function WorkoutSessionSets({
 
   const renderStepBackground = (idx: number, allSetsCompleted: boolean) => {
     if (allSetsCompleted) {
-      return "bg-green-500 border-green-500";
+      return "bg-green-500 border-green-500 shadow-lg shadow-green-500/30 transition-all duration-500";
     }
     if (idx === currentExerciseIndex) {
-      return "bg-gray-300 border-gray-400 dark:bg-slate-500 dark:border-slate-500";
+      return "bg-gray-300 border-gray-400 dark:bg-slate-500 dark:border-slate-500 transition-all duration-300";
     }
-    return "bg-slate-200 border-slate-200";
+    return "bg-slate-200 border-slate-200 transition-all duration-300";
+  };
+
+  const handleAddSet = () => {
+    feedback.onAddSet();
+    addSet();
+  };
+
+  const handleNextExercise = () => {
+    feedback.onNextExercise();
+    goToNextExercise();
+  };
+
+  const handleFinishSet = (exerciseIdx: number, setIdx: number) => {
+    feedback.onFinishSet();
+    finishSet(exerciseIdx, setIdx);
   };
 
   const handleFinishSession = () => {
+    feedback.onFinishWorkout();
     completeWorkout();
     syncFavoriteExercises();
     syncSessions();
@@ -217,8 +235,8 @@ export function WorkoutSessionSets({
                       <WorkoutSessionSet
                         key={set.id}
                         onChange={(sIdx: number, data: Partial<typeof set>) => updateSet(idx, sIdx, data)}
-                        onFinish={() => finishSet(idx, setIdx)}
-                        onRemove={() => removeSet(idx, setIdx)}
+                        onFinish={() => handleFinishSet(idx, setIdx)}
+                        onRemove={() => { feedback.onDelete(); removeSet(idx, setIdx); }}
                         set={set}
                         setIndex={setIdx}
                       />
@@ -229,7 +247,7 @@ export function WorkoutSessionSets({
                     <Button
                       aria-label="Ajouter une série"
                       className="flex-1 flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white font-bold py-3 rounded-xl border border-green-600 transition-all duration-200 active:scale-95 focus:ring-2 focus:ring-green-400"
-                      onClick={addSet}
+                      onClick={handleAddSet}
                     >
                       <Plus className="h-5 w-5" />
                       {t("workout_builder.session.add_set")}
@@ -237,7 +255,7 @@ export function WorkoutSessionSets({
                     <Button
                       aria-label="Exercice suivant"
                       className="flex-1 flex items-center justify-center gap-2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 rounded-xl border border-blue-600 transition-all duration-200 active:scale-95 focus:ring-2 focus:ring-blue-400"
-                      onClick={goToNextExercise}
+                      onClick={handleNextExercise}
                     >
                       <ArrowRight className="h-5 w-5" />
                       {t("workout_builder.session.next_exercise")}

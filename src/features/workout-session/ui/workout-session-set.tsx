@@ -1,6 +1,6 @@
 import { Plus, Minus, Trash2 } from "lucide-react";
-
 import { useI18n } from "locales/client";
+
 import { AVAILABLE_WORKOUT_SET_TYPES, MAX_WORKOUT_SET_COLUMNS } from "@/shared/constants/workout-set-types";
 import { WorkoutSet, WorkoutSetType, WorkoutSetUnit } from "@/features/workout-session/types/workout-set";
 import { getWorkoutSetTypeLabels } from "@/features/workout-session/lib/workout-set-labels";
@@ -156,10 +156,22 @@ export function WorkoutSessionSet({ set, setIndex, onChange, onFinish, onRemove 
   };
 
   return (
-    <div className="w-full py-4 flex flex-col gap-2 bg-slate-50 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm mb-3 relative px-2 sm:px-4">
+    <div
+      className={`w-full py-4 flex flex-col gap-2 rounded-xl shadow-sm mb-3 relative px-2 sm:px-4 transition-all duration-500 ${
+        set.completed
+          ? "bg-green-50/50 dark:bg-green-950/20 border-2 border-green-300 dark:border-green-800"
+          : "bg-slate-50 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-700/50"
+      }`}
+    >
       <div className="flex items-center justify-between mb-2">
-        <div className="bg-blue-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow dark:bg-blue-900 dark:text-blue-300">
-          SET {setIndex + 1}
+        <div
+          className={`text-white text-xs font-bold px-3 py-1 rounded-full shadow transition-all duration-500 ${
+            set.completed
+              ? "bg-green-500 dark:bg-green-700 dark:text-green-100"
+              : "bg-blue-500 dark:bg-blue-900 dark:text-blue-300"
+          }`}
+        >
+          {set.completed ? "✓" : ""} SET {setIndex + 1}
         </div>
         <Button
           aria-label="Supprimer la série"

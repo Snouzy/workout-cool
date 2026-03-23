@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Heart, X, Code, Server, Coffee, Github, Tv, Loader2 } from "lucide-react";
+import { Heart, X, Code, Server, Coffee, Github, Tv } from "lucide-react";
 import { useI18n } from "locales/client";
 
 import { Button } from "@/components/ui/button";
@@ -14,7 +14,6 @@ interface DonationModalProps {
 export function DonationModal({ isOpen, onClose }: DonationModalProps) {
   const t = useI18n();
   const modalRef = useRef<HTMLDialogElement>(null);
-  const [adLoading, setAdLoading] = useState(false);
   const [adReady, setAdReady] = useState(false);
 
   useEffect(() => {
@@ -61,11 +60,9 @@ export function DonationModal({ isOpen, onClose }: DonationModalProps) {
       return;
     }
 
-    setAdLoading(true);
-    window.ezRewardedAds.requestAndShow(() => {
-      setAdLoading(false);
-    });
-  }, []);
+    onClose();
+    window.ezRewardedAds.requestAndShow(() => {});
+  }, [onClose]);
 
   return (
     <dialog className="modal modal-bottom sm:modal-middle" ref={modalRef} style={{ padding: 0 }}>
@@ -149,12 +146,11 @@ export function DonationModal({ isOpen, onClose }: DonationModalProps) {
               <>
                 <Button
                   className="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white border-0"
-                  disabled={adLoading}
                   onClick={handleWatchAd}
                   size="large"
                   type="button"
                 >
-                  {adLoading ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Tv className="h-4 w-4 mr-2" />}
+                  <Tv className="h-4 w-4 mr-2" />
                   {t("donation_modal.watch_ad")}
                 </Button>
                 <div className="flex items-center gap-3">

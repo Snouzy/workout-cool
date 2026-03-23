@@ -102,6 +102,11 @@
   }
 }
 
+/* Hide Ezoic privacy center gear icon */
+#ezPrivacyCenter {
+  display: none !important;
+}
+
 /* Prevent ad scripts (AdSense/Ezoic) from blocking scroll in the main card */
 [data-ezoic-incontent-sticky] {
   overflow: auto !important;

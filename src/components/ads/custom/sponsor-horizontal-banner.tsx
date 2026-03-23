@@ -20,23 +20,13 @@ export function SponsorHorizontalBanner() {
   );
 
   return (
-    <div className="w-full py-1">
-      {/* Desktop: single banner-style card */}
-      <div className="hidden sm:flex justify-center">
-        <div className="w-full max-w-md">
-          <SponsorCard sponsor={allSlots[0] ?? null} variant="banner" />
-        </div>
-      </div>
-
-      {/* Mobile: embla carousel */}
-      <div className="sm:hidden overflow-hidden mt-2" ref={emblaRef}>
-        <div className="flex gap-3">
-          {allSlots.map((sponsor, index) => (
-            <div className="shrink-0 w-[160px]" key={index}>
-              <SponsorCard sponsor={sponsor} />
-            </div>
-          ))}
-        </div>
+    <div className="w-full py-1 overflow-hidden" ref={emblaRef}>
+      <div className="flex gap-3">
+        {allSlots.map((sponsor, index) => (
+          <div className="shrink-0 w-[160px]" key={index}>
+            <SponsorCard sponsor={sponsor} />
+          </div>
+        ))}
       </div>
     </div>
   );

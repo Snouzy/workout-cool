@@ -616,6 +616,13 @@ export default {
   },
 
   // Contact Support
+  exercise_modal: {
+    pr_title: "Tendencia de récords personales",
+    unlock_insights: "Desbloquear análisis avanzados",
+    feature_pr: "Récords personales",
+    feature_volume: "Seguimiento de volumen",
+  },
+
   contact_support: "Contactar soporte",
   contact_support_subtitle: "Describe tu problema y te ayudaremos lo antes posible. También puedes escribirnos directamente a",
 

@@ -1,7 +1,6 @@
 "use client";
 
 import { Check, X, Star, Target } from "lucide-react";
-
 import { useI18n } from "locales/client";
 
 interface Feature {
@@ -172,7 +171,7 @@ export function FeatureComparisonTable() {
                   <div className="font-bold text-gray-900 dark:text-white">{t("premium.plans.free.name")}</div>
                   <div className="text-sm text-gray-500">{t("premium.plans.free.price_label")}</div>
                 </div>
-                <div className="text-center">
+                <div className="text-center bg-[#00D4AA]/5 dark:bg-[#00D4AA]/10 rounded-lg p-2 -m-2">
                   <div className="font-bold text-[#00D4AA]">{t("premium.plans.premium.name")}</div>
                   <div className="text-sm text-gray-500">{t("premium.plans.premium.price_label")}</div>
                 </div>
@@ -190,7 +189,9 @@ export function FeatureComparisonTable() {
                       <div className="grid grid-cols-3 gap-4 items-center py-2" key={featureIndex}>
                         <div className="text-xs sm:text-sm text-gray-700 dark:text-gray-300">{feature.name}</div>
                         <div className="text-center">{renderFeatureValue(feature.free)}</div>
-                        <div className="text-center">{renderFeatureValue(feature.premium)}</div>
+                        <div className="text-center bg-[#00D4AA]/5 dark:bg-[#00D4AA]/10 rounded-lg py-1">
+                          {renderFeatureValue(feature.premium)}
+                        </div>
                       </div>
                     ))}
                   </div>

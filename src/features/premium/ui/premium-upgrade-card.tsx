@@ -4,15 +4,8 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Crown, Zap, Heart, Check, ArrowRight, LogIn, Github, Users, RefreshCw, Lock, ShieldCheck, GiftIcon } from "lucide-react";
-import { useMutation } from "@tanstack/react-query";
-
 import { useI18n, useCurrentLocale } from "locales/client";
-import { usePremiumRedirect } from "@/shared/lib/premium/use-premium-redirect";
-import { useIsPremium } from "@/shared/lib/premium/use-premium";
-import { usePendingCheckout } from "@/shared/lib/premium/use-pending-checkout";
-import { usePremiumPlans } from "@/shared/hooks/use-premium-plans";
-import { useSession } from "@/features/auth/lib/auth-client";
-import { Button } from "@/components/ui/button";
+import { useMutation } from "@tanstack/react-query";
 
 import { PricingHeroSection } from "./pricing-hero-section";
 import { PricingFAQ } from "./pricing-faq";
@@ -20,6 +13,13 @@ import { FeatureComparisonTable } from "./feature-comparison-table";
 import { ConversionFlowNotification } from "./conversion-flow-notification";
 
 import type { CheckoutResult } from "@/shared/types/premium.types";
+
+import { usePremiumRedirect } from "@/shared/lib/premium/use-premium-redirect";
+import { useIsPremium } from "@/shared/lib/premium/use-premium";
+import { usePendingCheckout } from "@/shared/lib/premium/use-pending-checkout";
+import { usePremiumPlans } from "@/shared/hooks/use-premium-plans";
+import { useSession } from "@/features/auth/lib/auth-client";
+import { Button } from "@/components/ui/button";
 
 export function PremiumUpgradeCard() {
   const t = useI18n();
@@ -35,7 +35,6 @@ export function PremiumUpgradeCard() {
 
   // Fetch dynamic pricing
   const { data: plansData, isLoading: plansLoading } = usePremiumPlans();
-  console.log("plansData:", plansData);
 
   // Handle premium redirects after successful upgrade
   usePremiumRedirect();
@@ -80,8 +79,6 @@ export function PremiumUpgradeCard() {
   };
 
   const handleUpgrade = (planId: string) => {
-    console.log("planId:", planId);
-
     // Check if user is authenticated
     if (!isAuthenticated) {
       // Store the selected plan for after authentication
@@ -102,11 +99,8 @@ export function PremiumUpgradeCard() {
   const yearlyPlan = plansData?.plans.find((p) => p.internalId.startsWith("premium-yearly"));
 
   const monthlyPrice = monthlyPlan?.priceMonthly || 7.9;
-  console.log("monthlyPrice:", monthlyPrice);
   const yearlyPrice = yearlyPlan?.priceYearly || 49.0;
-  console.log("yearlyPrice:", yearlyPrice);
   const currency = monthlyPlan?.currency || "EUR";
-  console.log("currency:", currency);
 
   const currentPrice = isYearly ? yearlyPrice : monthlyPrice;
   const currentPeriod = isYearly ? t("premium.pricing.year") : t("premium.pricing.month");
@@ -121,17 +115,6 @@ export function PremiumUpgradeCard() {
       maximumFractionDigits: 2,
     }).format(price);
   };
-
-  // Log debug info in development
-  useEffect(() => {
-    if (plansData && process.env.NODE_ENV === "development") {
-      console.log("📊 Plans data:", plansData);
-      console.log("🌍 Detected region:", plansData.detectedRegion);
-      if (plansData.debug) {
-        console.log("🔍 Debug headers:", plansData.debug.headers);
-      }
-    }
-  }, [plansData]);
 
   if (isPremium) {
     return (

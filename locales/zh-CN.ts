@@ -612,6 +612,13 @@ export default {
   },
 
   // Contact Support
+  exercise_modal: {
+    pr_title: "个人记录趋势",
+    unlock_insights: "解锁高级分析",
+    feature_pr: "个人记录",
+    feature_volume: "训练量追踪",
+  },
+
   contact_support: "联系支持",
   contact_support_subtitle: "描述您的问题，我们将尽快帮助您。您也可以直接写信给我们：",
 

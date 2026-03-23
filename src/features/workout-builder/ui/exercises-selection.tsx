@@ -1,7 +1,8 @@
-import { useState, useEffect, useCallback, useMemo } from "react";
+import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import { Loader2, Plus } from "lucide-react";
 import { useI18n } from "locales/client";
-import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
+import { arrayMove, SortableContext } from "@dnd-kit/sortable";
+import { restrictToVerticalAxis, restrictToParentElement } from "@dnd-kit/modifiers";
 import {
   DndContext,
   DragOverlay,
@@ -14,7 +15,6 @@ import {
   DragOverEvent,
   MouseSensor,
 } from "@dnd-kit/core";
-import { restrictToVerticalAxis, restrictToParentElement } from "@dnd-kit/modifiers";
 
 import { useWorkoutStepper } from "../hooks/use-workout-stepper";
 import { ExerciseListItem, ExerciseListItemOverlay } from "./exercise-list-item";
@@ -51,6 +51,8 @@ export const ExercisesSelection = ({
   const { setExercisesOrder, exercisesOrder } = useWorkoutStepper();
   const feedback = useDragFeedback();
   const [activeId, setActiveId] = useState<string | null>(null);
+  const isMobile = useRef(typeof window !== "undefined" && window.innerWidth < 640);
+  const modifiers = isMobile.current ? [restrictToVerticalAxis] : [restrictToVerticalAxis, restrictToParentElement];
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -149,14 +151,14 @@ export const ExercisesSelection = ({
           {/* Liste des exercices drag and drop */}
           <DndContext
             collisionDetection={closestCenter}
-            modifiers={[restrictToVerticalAxis, restrictToParentElement]}
+            modifiers={modifiers}
             onDragCancel={handleDragCancel}
             onDragEnd={handleDragEnd}
             onDragOver={handleDragOver}
             onDragStart={handleDragStart}
             sensors={sensors}
           >
-            <SortableContext items={sortableItems} strategy={verticalListSortingStrategy}>
+            <SortableContext items={sortableItems}>
               <div className="bg-white dark:bg-slate-900 rounded-t-lg border border-b-0 border-slate-200 dark:border-slate-800 overflow-hidden">
                 {flatExercises.map((item) => (
                   <ExerciseListItem

@@ -1476,6 +1476,13 @@ export default {
   },
 
   // Contact Support
+  exercise_modal: {
+    pr_title: "Тренд личных рекордов",
+    unlock_insights: "Разблокировать продвинутую аналитику",
+    feature_pr: "Личные рекорды",
+    feature_volume: "Отслеживание объёма",
+  },
+
   contact_support: "Связаться с поддержкой",
   contact_support_subtitle: "Опишите вашу проблему, и мы поможем вам как можно скорее. Вы также можете написать нам напрямую на",
 

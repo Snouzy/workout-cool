@@ -36,7 +36,7 @@ const sponsors: Record<string, Sponsor> = {
     name: "Nutri&Co",
     descriptionKey: "ads.sponsor_nutri_and_co",
     logoUrl: "/images/sponsorship/nutri-and-co.png",
-    url: "https://www.nutri-and-co.com",
+    url: "https://nutriandco.com/",
     brandColor: "#1A2F3B",
   },
 };

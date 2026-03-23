@@ -72,7 +72,7 @@ export function PricingFAQ() {
                 key={index}
               >
                 <button
-                  className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-400 dark:hover:bg-gray-800 transition-colors duration-200"
+                  className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-slate-200 dark:hover:bg-gray-800 transition-colors duration-200"
                   onClick={() => toggleFAQ(index)}
                 >
                   <span className="text-lg sm:text-xl leading-tight font-semibold text-gray-900 dark:text-white pr-4">{item.question}</span>

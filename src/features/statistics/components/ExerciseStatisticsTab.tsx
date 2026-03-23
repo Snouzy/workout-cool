@@ -1,20 +1,19 @@
 "use client";
 
-import React from "react";
 import { AlertCircle } from "lucide-react";
-
 import { useI18n, useCurrentLocale } from "locales/client";
+
+import { useWeightProgression, useOneRepMax, useVolumeData } from "../hooks/use-exercise-statistics";
+import { WeightProgressionChart } from "./WeightProgressionChart";
+import { VolumeChart } from "./VolumeChart";
+import { OneRepMaxChart } from "./OneRepMaxChart";
+
 import { cn } from "@/shared/lib/utils";
 import { formatDate } from "@/shared/lib/date";
 import { StatisticsTimeframe } from "@/shared/constants/statistics";
 import { PremiumGate } from "@/components/ui/premium-gate";
 import { Loader } from "@/components/ui/loader";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-
-import { useWeightProgression, useOneRepMax, useVolumeData } from "../hooks/use-exercise-statistics";
-import { WeightProgressionChart } from "./WeightProgressionChart";
-import { VolumeChart } from "./VolumeChart";
-import { OneRepMaxChart } from "./OneRepMaxChart";
 
 interface ExerciseStatisticsTabProps {
   exerciseId: string;

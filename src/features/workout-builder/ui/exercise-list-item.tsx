@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import Image from "next/image";
 import { Play, Shuffle, Trash2, GripVertical, Loader2, BarChart3 } from "lucide-react";
 import { useCurrentLocale, useI18n } from "locales/client";
@@ -83,6 +83,7 @@ export const ExerciseListItem = React.memo(function ExerciseListItem({
   const t = useI18n();
   const locale = useCurrentLocale();
   const playVideo = useBoolean();
+  const [modalTab, setModalTab] = useState<"video" | "statistics">("video");
 
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: exercise.id,
@@ -143,7 +144,7 @@ export const ExerciseListItem = React.memo(function ExerciseListItem({
           {exercise.fullVideoImageUrl && (
             <div
               className="relative h-8 w-8 sm:h-10 sm:w-10 rounded overflow-hidden shrink-0 bg-slate-200 dark:bg-slate-800 cursor-pointer border border-slate-200 dark:border-slate-700/50"
-              onClick={playVideo.setTrue}
+              onClick={() => { setModalTab("video"); playVideo.setTrue(); }}
             >
               <Image
                 alt={exerciseName ?? ""}
@@ -183,7 +184,7 @@ export const ExerciseListItem = React.memo(function ExerciseListItem({
 
           <button
             className="p-1 sm:p-2 text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
-            onClick={playVideo.setTrue}
+            onClick={() => { setModalTab("statistics"); playVideo.setTrue(); }}
           >
             <BarChart3 className="h-4 w-4" />
           </button>
@@ -192,7 +193,7 @@ export const ExerciseListItem = React.memo(function ExerciseListItem({
             <Trash2 className="h-4 w-4" />
           </button>
 
-          {exercise.fullVideoUrl && <ExerciseVideoModal exercise={exercise} onOpenChange={playVideo.toggle} open={playVideo.value} />}
+          {exercise.fullVideoUrl && <ExerciseVideoModal defaultTab={modalTab} exercise={exercise} onOpenChange={playVideo.toggle} open={playVideo.value} />}
         </>
       )}
     </div>

@@ -1509,6 +1509,13 @@ export default {
     or: "ou",
   },
 
+  exercise_modal: {
+    pr_title: "Tendance des records personnels",
+    unlock_insights: "Débloquer les analyses avancées",
+    feature_pr: "Records personnels",
+    feature_volume: "Suivi du volume",
+  },
+
   // Contact Support
   contact_support: "Contacter le support",
   contact_support_subtitle: "Décrivez votre problème et nous vous aiderons dès que possible. Vous pouvez aussi nous écrire directement à",

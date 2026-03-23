@@ -3,8 +3,8 @@
 import React from "react";
 import Link from "next/link";
 import { Crown, Sparkles } from "lucide-react";
-
 import { useI18n } from "locales/client";
+
 import { cn } from "@/shared/lib/utils";
 import { useUserSubscription } from "@/features/ads/hooks/useUserSubscription";
 import { Skeleton } from "@/components/ui/skeleton";

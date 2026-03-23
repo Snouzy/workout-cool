@@ -1483,6 +1483,14 @@ export default {
     or: "or",
   },
 
+  // Exercise modal premium teaser
+  exercise_modal: {
+    pr_title: "Personal Record Trend",
+    unlock_insights: "Unlock Advanced Insights",
+    feature_pr: "Personal records",
+    feature_volume: "Volume tracking",
+  },
+
   // Contact Support
   contact_support: "Contact Support",
   contact_support_subtitle: "Describe your issue and we'll help you as soon as possible. You can also write to us directly at",

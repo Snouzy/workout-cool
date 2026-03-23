@@ -50,7 +50,7 @@ const sponsors: Record<string, Sponsor> = {
 function translateSponsor(sponsor: Sponsor, t: TFunction): TranslatedSponsor {
   return {
     ...sponsor,
-    description: t(sponsor.descriptionKey as Parameters<TFunction>[0]),
+    description: (t as (key: string) => string)(sponsor.descriptionKey),
   };
 }
 

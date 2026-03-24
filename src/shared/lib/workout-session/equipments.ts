@@ -1,6 +1,5 @@
-import { ExerciseAttributeValueEnum } from "@prisma/client";
-
 import { TFunction } from "locales/client";
+import { ExerciseAttributeValueEnum } from "@prisma/client";
 
 export const allEquipmentValues = [
   ExerciseAttributeValueEnum.BODY_ONLY,

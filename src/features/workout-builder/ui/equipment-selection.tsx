@@ -8,6 +8,7 @@ import { EQUIPMENT_CONFIG } from "../model/equipment-config";
 
 import { getEquipmentTranslation } from "@/shared/lib/workout-session/equipments";
 import { cn } from "@/shared/lib/utils";
+import { useWorkoutFeedback } from "@/shared/hooks/use-workout-feedback";
 import { env } from "@/env";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -27,6 +28,7 @@ interface EquipmentCardProps {
 
 function EquipmentCard({ equipment, isSelected, onToggle }: EquipmentCardProps) {
   const t = useI18n();
+  const { onTap } = useWorkoutFeedback();
 
   const translation = getEquipmentTranslation(equipment.value, t);
 
@@ -39,8 +41,9 @@ function EquipmentCard({ equipment, isSelected, onToggle }: EquipmentCardProps) 
         "border-2 border-slate-200 dark:border-slate-700",
         "rounded-xl shadow-sm hover:shadow-xl",
         // Transitions smooth
-        "transition-all duration-300 ease-out",
+        "transition-all duration-200 ease-out",
         "hover:scale-[1.02] hover:-translate-y-1",
+        "active:scale-[0.97] active:translate-y-0 active:duration-75",
         // Selected state
         isSelected && [
           "border-emerald-400 dark:border-emerald-500",
@@ -50,7 +53,10 @@ function EquipmentCard({ equipment, isSelected, onToggle }: EquipmentCardProps) 
         // Hover effects
         !isSelected && "hover:border-slate-300 dark:hover:border-slate-600",
       )}
-      onClick={onToggle}
+      onClick={() => {
+        onTap();
+        onToggle();
+      }}
     >
       <CardContent className="p-2 sm:p-4 h-auto flex flex-col justify-center items-center relative">
         <div

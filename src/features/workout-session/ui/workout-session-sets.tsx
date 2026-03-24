@@ -155,7 +155,7 @@ export function WorkoutSessionSets({
           const details = exerciseDetailsMap[ex.id];
           return (
             <li
-              className={`mb-8 ml-4 ${idx !== currentExerciseIndex ? "cursor-pointer hover:opacity-80" : ""}`}
+              className={`mb-8 ml-2 md:ml-4 ${idx !== currentExerciseIndex ? "cursor-pointer hover:opacity-80" : ""}`}
               id={`exercise-${idx}`}
               key={ex.id}
               onClick={() => handleExerciseClick(idx)}
@@ -236,7 +236,10 @@ export function WorkoutSessionSets({
                         key={set.id}
                         onChange={(sIdx: number, data: Partial<typeof set>) => updateSet(idx, sIdx, data)}
                         onFinish={() => handleFinishSet(idx, setIdx)}
-                        onRemove={() => { feedback.onDelete(); removeSet(idx, setIdx); }}
+                        onRemove={() => {
+                          feedback.onDelete();
+                          removeSet(idx, setIdx);
+                        }}
                         set={set}
                         setIndex={setIdx}
                       />

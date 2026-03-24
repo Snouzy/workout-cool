@@ -28,7 +28,7 @@ const sponsors: Record<string, Sponsor> = {
     name: "Nutripure",
     descriptionKey: "ads.sponsor_nutripure",
     logoUrl: "/images/sponsorship/nutripure.png",
-    url: "https://c3po.link/QVupuZ8DYw",
+    url: "https://www.nutripure.fr/fr/?utm_source=affilae&utm_medium=affiliation&utm_campaign=Fit'Distance&ae=1038",
     brandColor: "#6BA4A0",
   },
   "left-1": {
@@ -36,7 +36,7 @@ const sponsors: Record<string, Sponsor> = {
     name: "Nutri&Co",
     descriptionKey: "ads.sponsor_nutri_and_co",
     logoUrl: "/images/sponsorship/nutri-and-co.png",
-    url: "https://nutriandco.com/",
+    url: "https://nutriandco.com/fr/?utm_source=affilae&utm_medium=par&utm_campaign=fit-distance&ae=1253",
     brandColor: "#1A2F3B",
   },
 };

@@ -16,7 +16,7 @@ interface HorizontalAdBannerProps {
 export function HorizontalAdBanner({ adSlot, ezoicPlacementId }: HorizontalAdBannerProps) {
   if (env.NEXT_PUBLIC_AD_PROVIDER === "custom") {
     return (
-      <div className="lg:hidden">
+      <div className="lg:hidden min-h-[90px]">
         <AdWrapper>
           <SponsorHorizontalBanner />
         </AdWrapper>
@@ -30,7 +30,7 @@ export function HorizontalAdBanner({ adSlot, ezoicPlacementId }: HorizontalAdBan
   return (
     <>
       {/* Below lg: show ezoic if configured, sponsor carousel only if not in ezoic mode */}
-      <div className="lg:hidden">
+      <div className="lg:hidden min-h-[90px]">
         <AdWrapper>
           {isDevelopment ? (
             <AdPlaceholder height="50px" type="Mobile Ad Banner" width="100%" />

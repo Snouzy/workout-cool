@@ -4,7 +4,7 @@ import { useState, useEffect, useMemo } from "react";
 import { useQueryState } from "nuqs";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { useCurrentLocale, useI18n } from "locales/client";
+import { useI18n } from "locales/client";
 import Trophy from "@public/images/trophy.png";
 import { ExerciseAttributeValueEnum } from "@prisma/client";
 
@@ -57,7 +57,6 @@ export function WorkoutStepper() {
     goToStep,
     deleteExercise,
   } = useWorkoutStepper();
-  const locale = useCurrentLocale();
   useEffect(() => {
     loadSessionFromLocal();
   }, []);
@@ -82,14 +81,6 @@ export function WorkoutStepper() {
       fetchExercises();
     }
   }, [currentStep, selectedEquipment, selectedMuscles, fromSession]);
-
-  useEffect(() => {
-    if (typeof window !== "undefined" && window.ezstandalone) {
-      window.ezstandalone.cmd.push(function () {
-        window.ezstandalone.refresh();
-      });
-    }
-  }, [currentStep]);
 
   const { isWorkoutActive, session, startWorkout, quitWorkout } = useWorkoutSession();
 

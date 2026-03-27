@@ -14,6 +14,20 @@ interface HorizontalAdBannerProps {
 }
 
 export function HorizontalAdBanner({ adSlot, ezoicPlacementId }: HorizontalAdBannerProps) {
+  const isDevelopment = process.env.NODE_ENV === "development";
+
+  if (isDevelopment) {
+    return (
+      <>
+        <div className="">
+          <AdWrapper>
+            <AdPlaceholder height="90px" type="Horizontal Ad Banner" width="100%" />
+          </AdWrapper>
+        </div>
+      </>
+    );
+  }
+
   if (env.NEXT_PUBLIC_AD_PROVIDER === "custom") {
     return (
       <div className="lg:hidden min-h-[90px]">
@@ -24,7 +38,6 @@ export function HorizontalAdBanner({ adSlot, ezoicPlacementId }: HorizontalAdBan
     );
   }
 
-  const isDevelopment = process.env.NODE_ENV === "development";
   const useEzoic = env.NEXT_PUBLIC_AD_PROVIDER === "ezoic" && ezoicPlacementId;
 
   return (

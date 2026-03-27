@@ -271,8 +271,8 @@ export default async function RootLayout({ params, children }: RootLayoutProps) 
                       ezstandalone.enable();
                       ezstandalone.initRewardedAds({
                         anchor: false,
-                        interstitial: false,
-                        video: false,
+                        interstitial: true,
+                        video: true,
                         sideRails: false
                       });
                     });

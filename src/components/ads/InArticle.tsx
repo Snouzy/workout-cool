@@ -1,11 +1,17 @@
+import { GoogleAdSense } from "./GoogleAdSense";
+import { EzoicAd } from "./EzoicAd";
+import { SponsorHorizontalBanner } from "./custom";
+import { AdWrapper } from "./AdWrapper";
+
 import { env } from "@/env";
 import { AdPlaceholder } from "@/components/ads/AdPlaceholder";
 
-import { GoogleAdSense } from "./GoogleAdSense";
-import { AdWrapper } from "./AdWrapper";
-import { SponsorHorizontalBanner } from "./custom";
+interface InArticleProps {
+  adSlot?: string;
+  ezoicPlacementId?: string;
+}
 
-export function InArticle({ adSlot }: { adSlot: string }) {
+export function InArticle({ adSlot, ezoicPlacementId }: InArticleProps) {
   if (env.NEXT_PUBLIC_AD_PROVIDER === "custom") {
     return (
       <AdWrapper>
@@ -17,8 +23,9 @@ export function InArticle({ adSlot }: { adSlot: string }) {
   }
 
   const isDevelopment = process.env.NODE_ENV === "development";
+  const useEzoic = env.NEXT_PUBLIC_AD_PROVIDER === "ezoic" && ezoicPlacementId;
 
-  if (!env.NEXT_PUBLIC_AD_CLIENT) {
+  if (!env.NEXT_PUBLIC_AD_CLIENT && !useEzoic) {
     return null;
   }
 
@@ -28,9 +35,11 @@ export function InArticle({ adSlot }: { adSlot: string }) {
         <div className="flex justify-center">
           {isDevelopment ? (
             <AdPlaceholder height="200px" type="In-Article Ad" width="300px" />
-          ) : (
+          ) : useEzoic ? (
+            <EzoicAd className="w-full" placementId={ezoicPlacementId} />
+          ) : adSlot ? (
             <GoogleAdSense
-              adClient={env.NEXT_PUBLIC_AD_CLIENT}
+              adClient={env.NEXT_PUBLIC_AD_CLIENT as string}
               adFormat="fluid"
               adSlot={adSlot}
               className="adsbygoogle"
@@ -41,7 +50,7 @@ export function InArticle({ adSlot }: { adSlot: string }) {
                 height: "200px",
               }}
             />
-          )}
+          ) : null}
         </div>
       </div>
     </AdWrapper>

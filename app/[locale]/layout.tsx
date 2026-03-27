@@ -268,6 +268,8 @@ export default async function RootLayout({ params, children }: RootLayoutProps) 
                     window.ezstandalone = window.ezstandalone || {};
                     ezstandalone.cmd = ezstandalone.cmd || [];
                     ezstandalone.cmd.push(function() {
+                      ezstandalone.enable();
+                      ezstandalone.display();
                       ezstandalone.initRewardedAds({
                         anchor: false,
                         interstitial: false,

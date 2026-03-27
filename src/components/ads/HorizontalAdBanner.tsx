@@ -29,10 +29,14 @@ export function HorizontalAdBanner({ adSlot, ezoicPlacementId }: HorizontalAdBan
 
   return (
     <>
-      {/* Below lg: always show sponsor carousel */}
+      {/* Below lg: show ezoic if configured, otherwise sponsor carousel */}
       <div className="lg:hidden">
         <AdWrapper>
-          <SponsorHorizontalBanner />
+          {useEzoic ? (
+            <EzoicAd className="w-full" placementId={ezoicPlacementId} />
+          ) : (
+            <SponsorHorizontalBanner />
+          )}
         </AdWrapper>
       </div>
 

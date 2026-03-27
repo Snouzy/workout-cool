@@ -11,7 +11,11 @@ declare global {
   interface Window {
     ezstandalone: {
       cmd: Array<() => void>;
-      showAds: (placementId?: string | string[]) => void;
+      define: (...placementIds: (string | number)[]) => void;
+      enable: () => void;
+      display: () => void;
+      refresh: () => void;
+      showAds: (...placementIds: (string | number)[]) => void;
     };
   }
 }

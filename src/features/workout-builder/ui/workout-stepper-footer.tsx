@@ -25,7 +25,7 @@ export function WorkoutBuilderFooter({
   const isFinalStep = currentStep === totalSteps;
 
   return (
-    <div className="w-full sticky bottom-0 ">
+    <div className="w-full sticky bottom-0 max-sm:bottom-14 z-30">
       {/* Mobile layout - vertical stack */}
       <div className="flex flex-col gap-4 px-2 sm:px-6 pb-2">
         {/* Center stats on top for mobile */}

@@ -202,8 +202,11 @@ export const ExercisesSelection = ({
         </div>
       )}
 
-      {env.NEXT_PUBLIC_EXERCISE_SELECTION_BANNER_AD_SLOT && (
-        <HorizontalBottomBanner adSlot={env.NEXT_PUBLIC_EXERCISE_SELECTION_BANNER_AD_SLOT} />
+      {(env.NEXT_PUBLIC_EXERCISE_SELECTION_BANNER_AD_SLOT || env.NEXT_PUBLIC_EZOIC_EXERCISES_SELECTION_PLACEMENT_ID) && (
+        <HorizontalBottomBanner
+          adSlot={env.NEXT_PUBLIC_EXERCISE_SELECTION_BANNER_AD_SLOT}
+          ezoicPlacementId={env.NEXT_PUBLIC_EZOIC_EXERCISES_SELECTION_PLACEMENT_ID}
+        />
       )}
     </div>
   );

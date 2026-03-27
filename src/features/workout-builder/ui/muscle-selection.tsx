@@ -1,7 +1,6 @@
-import React from "react";
+import { useI18n } from "locales/client";
 import { ExerciseAttributeValueEnum } from "@prisma/client";
 
-import { useI18n } from "locales/client";
 import { cn } from "@/shared/lib/utils";
 import { TricepsGroup } from "@/features/workout-builder/ui/muscles/triceps-group";
 import { TrapsGroup } from "@/features/workout-builder/ui/muscles/traps-group";
@@ -1217,8 +1216,11 @@ export function MuscleSelection({ onToggleMuscle, selectedMuscles }: MuscleSelec
         <MuscleIllustration onToggleMuscle={onToggleMuscle} selectedMuscles={selectedMuscles} />
       </div>
 
-      {env.NEXT_PUBLIC_MUSCLE_SELECTION_BANNER_AD_SLOT && (
-        <HorizontalBottomBanner adSlot={env.NEXT_PUBLIC_MUSCLE_SELECTION_BANNER_AD_SLOT} />
+      {(env.NEXT_PUBLIC_MUSCLE_SELECTION_BANNER_AD_SLOT || env.NEXT_PUBLIC_EZOIC_MUSCLE_SELECTION_PLACEMENT_ID) && (
+        <HorizontalBottomBanner
+          adSlot={env.NEXT_PUBLIC_MUSCLE_SELECTION_BANNER_AD_SLOT}
+          ezoicPlacementId={env.NEXT_PUBLIC_EZOIC_MUSCLE_SELECTION_PLACEMENT_ID}
+        />
       )}
     </div>
   );

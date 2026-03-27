@@ -128,8 +128,11 @@ export function CalorieCalculatorHub() {
   return (
     <div className="space-y-8">
       {/* Introduction */}
-      {env.NEXT_PUBLIC_TOP_CALCULATOR_HUB_BANNER_AD_SLOT && (
-        <HorizontalTopBanner adSlot={env.NEXT_PUBLIC_TOP_CALCULATOR_HUB_BANNER_AD_SLOT} />
+      {(env.NEXT_PUBLIC_TOP_CALCULATOR_HUB_BANNER_AD_SLOT || env.NEXT_PUBLIC_EZOIC_TOP_CALCULATOR_HUB_PLACEMENT_ID) && (
+        <HorizontalTopBanner
+          adSlot={env.NEXT_PUBLIC_TOP_CALCULATOR_HUB_BANNER_AD_SLOT}
+          ezoicPlacementId={env.NEXT_PUBLIC_EZOIC_TOP_CALCULATOR_HUB_PLACEMENT_ID}
+        />
       )}
       <div className="text-center max-w-3xl mx-auto">
         <h1 className="text-3xl sm:text-4xl font-bold mb-4 text-base-content dark:text-base-content/90">
@@ -203,8 +206,11 @@ export function CalorieCalculatorHub() {
         ))}
       </div>
 
-      {env.NEXT_PUBLIC_BOTTOM_CALCULATOR_HUB_BANNER_AD_SLOT && (
-        <HorizontalBottomBanner adSlot={env.NEXT_PUBLIC_BOTTOM_CALCULATOR_HUB_BANNER_AD_SLOT} />
+      {(env.NEXT_PUBLIC_BOTTOM_CALCULATOR_HUB_BANNER_AD_SLOT || env.NEXT_PUBLIC_EZOIC_BOTTOM_CALCULATOR_HUB_PLACEMENT_ID) && (
+        <HorizontalBottomBanner
+          adSlot={env.NEXT_PUBLIC_BOTTOM_CALCULATOR_HUB_BANNER_AD_SLOT}
+          ezoicPlacementId={env.NEXT_PUBLIC_EZOIC_BOTTOM_CALCULATOR_HUB_PLACEMENT_ID}
+        />
       )}
 
       {/* Info Section */}

@@ -178,8 +178,11 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
     <div className="flex-1 flex flex-col overflow-hidden relative">
       <div className="flex-1 overflow-y-auto overflow-x-hidden pb-20">
         <Breadcrumbs items={breadcrumbItems} />
-        {env.NEXT_PUBLIC_TOP_PROGRAM_DETAILS_BANNER_AD_SLOT && (
-          <HorizontalTopBanner adSlot={env.NEXT_PUBLIC_TOP_PROGRAM_DETAILS_BANNER_AD_SLOT} />
+        {(env.NEXT_PUBLIC_TOP_PROGRAM_DETAILS_BANNER_AD_SLOT || env.NEXT_PUBLIC_EZOIC_TOP_PROGRAM_DETAILS_PLACEMENT_ID) && (
+          <HorizontalTopBanner
+            adSlot={env.NEXT_PUBLIC_TOP_PROGRAM_DETAILS_BANNER_AD_SLOT}
+            ezoicPlacementId={env.NEXT_PUBLIC_EZOIC_TOP_PROGRAM_DETAILS_PLACEMENT_ID}
+          />
         )}
         {/* Hero Image Section with Gamification */}
         <div className="relative h-40 sm:h-64 bg-gradient-to-br from-[#4F8EF7] to-[#25CB78]">
@@ -531,8 +534,11 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
                     });
                   })()}
                 </div>
-                {env.NEXT_PUBLIC_BOTTOM_PROGRAM_DETAILS_BANNER_AD_SLOT && (
-                  <HorizontalBottomBanner adSlot={env.NEXT_PUBLIC_BOTTOM_PROGRAM_DETAILS_BANNER_AD_SLOT} />
+                {(env.NEXT_PUBLIC_BOTTOM_PROGRAM_DETAILS_BANNER_AD_SLOT || env.NEXT_PUBLIC_EZOIC_BOTTOM_PROGRAM_DETAILS_PLACEMENT_ID) && (
+                  <HorizontalBottomBanner
+                    adSlot={env.NEXT_PUBLIC_BOTTOM_PROGRAM_DETAILS_BANNER_AD_SLOT}
+                    ezoicPlacementId={env.NEXT_PUBLIC_EZOIC_BOTTOM_PROGRAM_DETAILS_PLACEMENT_ID}
+                  />
                 )}
               </div>
             </div>

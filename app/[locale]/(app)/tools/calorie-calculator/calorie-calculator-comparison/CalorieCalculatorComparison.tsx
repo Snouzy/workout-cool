@@ -147,8 +147,11 @@ export function CalorieCalculatorComparison() {
 
           <GoalSelector onChange={(goal) => updateInput("goal", goal)} value={inputs.goal} />
 
-          {env.NEXT_PUBLIC_BOTTOM_CALORIE_CALCULATOR_COMPARISON_AD_SLOT && (
-            <HorizontalBottomBanner adSlot={env.NEXT_PUBLIC_BOTTOM_CALORIE_CALCULATOR_COMPARISON_AD_SLOT} />
+          {(env.NEXT_PUBLIC_BOTTOM_CALORIE_CALCULATOR_COMPARISON_AD_SLOT || env.NEXT_PUBLIC_EZOIC_BOTTOM_CALORIE_COMPARISON_PLACEMENT_ID) && (
+            <HorizontalBottomBanner
+              adSlot={env.NEXT_PUBLIC_BOTTOM_CALORIE_CALCULATOR_COMPARISON_AD_SLOT}
+              ezoicPlacementId={env.NEXT_PUBLIC_EZOIC_BOTTOM_CALORIE_COMPARISON_PLACEMENT_ID}
+            />
           )}
           {/* Calculate Button */}
           <button

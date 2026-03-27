@@ -83,6 +83,14 @@ export function WorkoutStepper() {
     }
   }, [currentStep, selectedEquipment, selectedMuscles, fromSession]);
 
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.ezstandalone) {
+      window.ezstandalone.cmd.push(function () {
+        window.ezstandalone.refresh();
+      });
+    }
+  }, [currentStep]);
+
   const { isWorkoutActive, session, startWorkout, quitWorkout } = useWorkoutSession();
 
   const canContinue = currentStep === 1 ? canProceedToStep2 : currentStep === 2 ? canProceedToStep3 : exercisesByMuscle.length > 0;

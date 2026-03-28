@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { Platform } from "@prisma/client";
 
 import { prisma } from "@/shared/lib/prisma";
-import { serverRequiredUser } from "@/entities/user/model/get-server-session-user";
+import { getMobileCompatibleSession } from "@/shared/api/mobile-auth";
 
 /**
  * Sync RevenueCat Status with Backend (Simplified)
@@ -25,8 +25,13 @@ const syncStatusSchema = z.object({
 
 export async function POST(request: NextRequest) {
   try {
-    // Get authenticated user
-    const user = await serverRequiredUser();
+    // Get authenticated user (supports mobile cookie format)
+    const session = await getMobileCompatibleSession(request);
+    const user = session?.user;
+
+    if (!user) {
+      return NextResponse.json({ error: "Authentication required" }, { status: 401 });
+    }
 
     // Parse and validate request body
     const body = await request.json();

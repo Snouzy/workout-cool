@@ -1,21 +1,19 @@
 import { NextRequest, NextResponse } from "next/server";
-import { headers } from "next/headers";
 
 import { prisma } from "@/shared/lib/prisma";
-import { enrollInProgram } from "@/features/programs/actions/enroll-program.action";
-import { auth } from "@/features/auth/lib/better-auth";
+import { getMobileCompatibleSession } from "@/shared/api/mobile-auth";
 
 export async function POST(req: NextRequest, { params }: { params: Promise<{ slug: string }> }) {
   try {
     const { slug } = await params;
 
-    const session = await auth.api.getSession({
-      headers: await headers(),
-    });
+    const session = await getMobileCompatibleSession(req);
 
-    if (!session) {
+    if (!session?.user) {
       return NextResponse.json({ error: "Unauthorized", code: "UNAUTHORIZED" }, { status: 401 });
     }
+
+    const userId = session.user.id;
 
     const program = await prisma.program.findUnique({
       where: { slug },
@@ -26,17 +24,34 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ slu
       return NextResponse.json({ error: "Program not found", code: "NOT_FOUND" }, { status: 404 });
     }
 
-    const result = await enrollInProgram(program.id);
+    // Check if already enrolled
+    const existingEnrollment = await prisma.userProgramEnrollment.findUnique({
+      where: { userId_programId: { userId, programId: program.id } },
+    });
 
-    const updatedProgram = await prisma.program.findUnique({
+    if (existingEnrollment) {
+      return NextResponse.json({
+        enrollment: existingEnrollment,
+        isNew: false,
+        totalEnrollments: program.participantCount,
+      });
+    }
+
+    // Create enrollment + increment participant count
+    const enrollment = await prisma.userProgramEnrollment.create({
+      data: { userId, programId: program.id },
+    });
+
+    const updatedProgram = await prisma.program.update({
       where: { id: program.id },
+      data: { participantCount: { increment: 1 } },
       select: { participantCount: true },
     });
 
     return NextResponse.json({
-      enrollment: result.enrollment,
-      isNew: result.isNew,
-      totalEnrollments: updatedProgram?.participantCount || program.participantCount,
+      enrollment,
+      isNew: true,
+      totalEnrollments: updatedProgram.participantCount,
     });
   } catch (error) {
     console.error("Error enrolling in program:", error);
@@ -51,20 +66,15 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ slu
 
 export async function GET(req: NextRequest, { params }: { params: Promise<{ slug: string }> }) {
   try {
-    const session = await auth.api.getSession({
-      headers: await headers(),
-    });
+    const session = await getMobileCompatibleSession(req);
 
     const { slug } = await params;
 
-    if (!session) {
+    if (!session?.user) {
       return NextResponse.json({ error: "Unauthorized", code: "UNAUTHORIZED" }, { status: 401 });
     }
 
-    const userId = session.user?.id;
-    if (!userId) {
-      return NextResponse.json({ error: "User not found", code: "USER_NOT_FOUND" }, { status: 404 });
-    }
+    const userId = session.user.id;
 
     const program = await prisma.program.findUnique({
       where: { slug },

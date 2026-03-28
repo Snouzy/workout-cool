@@ -42,6 +42,9 @@ model User {
   licenses      License[]
   isPremium     Boolean?       @default(false)
 
+  // Onboarding preferences
+  onboardingPreferences Json?
+
   // Training programs
   programEnrollments UserProgramEnrollment[]
 

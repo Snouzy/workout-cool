@@ -64,7 +64,7 @@ export function WorkoutSessionSets({
         } else {
           exerciseElement.scrollIntoView({
             behavior: "smooth",
-            block: "center",
+            block: "start",
           });
         }
       }

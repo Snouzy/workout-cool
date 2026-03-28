@@ -1,6 +1,7 @@
-import type { ReactNode } from "react";
 import { redirect } from "next/navigation";
 import { UserRole } from "@prisma/client";
+
+import type { ReactNode } from "react";
 
 import { AdminSidebar } from "@/features/admin/layout/admin-sidebar/ui/admin-sidebar";
 import { AdminHeader } from "@/features/admin/layout/admin-sidebar/ui/admin-header";

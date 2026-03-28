@@ -4,16 +4,16 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { LogOut, Menu, X, UserCog } from "lucide-react";
-
 import Logo from "@public/logo.png";
+
+import type { SessionUser } from "@/entities/user/types/session-user";
+
 import { PLACEHOLDERS } from "@/shared/constants/placeholders";
 import { paths } from "@/shared/constants/paths";
 import { useLogout } from "@/features/auth/model/useLogout";
 import { displayFirstNameAndFirstLetterLastName } from "@/entities/user/lib/display-name";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-
-import type { SessionUser } from "@/entities/user/types/session-user";
 
 interface AdminHeaderProps {
   user: SessionUser;

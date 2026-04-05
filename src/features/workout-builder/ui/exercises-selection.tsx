@@ -23,7 +23,6 @@ import type { ExerciseWithAttributes } from "../types";
 
 import { useDragFeedback } from "@/shared/hooks/use-drag-feedback";
 import { env } from "@/env";
-import { HorizontalBottomBanner } from "@/components/ads";
 
 interface ExercisesSelectionProps {
   isLoading: boolean;
@@ -202,12 +201,6 @@ export const ExercisesSelection = ({
         </div>
       )}
 
-      {(env.NEXT_PUBLIC_EXERCISE_SELECTION_BANNER_AD_SLOT || env.NEXT_PUBLIC_EZOIC_EXERCISES_SELECTION_PLACEMENT_ID) && (
-        <HorizontalBottomBanner
-          adSlot={env.NEXT_PUBLIC_EXERCISE_SELECTION_BANNER_AD_SLOT}
-          ezoicPlacementId={env.NEXT_PUBLIC_EZOIC_EXERCISES_SELECTION_PLACEMENT_ID}
-        />
-      )}
     </div>
   );
 };

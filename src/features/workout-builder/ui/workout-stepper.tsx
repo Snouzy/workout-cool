@@ -27,7 +27,7 @@ import { useDonationModal } from "@/features/workout-session/hooks/use-donation-
 import { WorkoutBuilderFooter } from "@/features/workout-builder/ui/workout-stepper-footer";
 import { env } from "@/env";
 import { Button } from "@/components/ui/button";
-import { HorizontalTopBanner } from "@/components/ads";
+import { HorizontalTopBanner, HorizontalBottomBanner } from "@/components/ads";
 
 export function WorkoutStepper() {
   const { loadSessionFromLocal } = useWorkoutSession();
@@ -273,6 +273,33 @@ export function WorkoutStepper() {
     }
   };
 
+  const renderBottomBanner = () => {
+    if (currentStep === 1 && (env.NEXT_PUBLIC_EQUIPMENT_SELECTION_BANNER_AD_SLOT || env.NEXT_PUBLIC_EZOIC_EQUIPMENT_SELECTION_PLACEMENT_ID)) {
+      return (
+        <HorizontalBottomBanner
+          adSlot={env.NEXT_PUBLIC_EQUIPMENT_SELECTION_BANNER_AD_SLOT}
+          ezoicPlacementId={env.NEXT_PUBLIC_EZOIC_EQUIPMENT_SELECTION_PLACEMENT_ID}
+        />
+      );
+    }
+    if (currentStep === 2 && (env.NEXT_PUBLIC_MUSCLE_SELECTION_BANNER_AD_SLOT || env.NEXT_PUBLIC_EZOIC_MUSCLE_SELECTION_PLACEMENT_ID)) {
+      return (
+        <HorizontalBottomBanner
+          adSlot={env.NEXT_PUBLIC_MUSCLE_SELECTION_BANNER_AD_SLOT}
+          ezoicPlacementId={env.NEXT_PUBLIC_EZOIC_MUSCLE_SELECTION_PLACEMENT_ID}
+        />
+      );
+    }
+    if (currentStep === 3 && (env.NEXT_PUBLIC_EXERCISE_SELECTION_BANNER_AD_SLOT || env.NEXT_PUBLIC_EZOIC_EXERCISES_SELECTION_PLACEMENT_ID)) {
+      return (
+        <HorizontalBottomBanner
+          adSlot={env.NEXT_PUBLIC_EXERCISE_SELECTION_BANNER_AD_SLOT}
+          ezoicPlacementId={env.NEXT_PUBLIC_EZOIC_EXERCISES_SELECTION_PLACEMENT_ID}
+        />
+      );
+    }
+  };
+
   const renderTopBanner = () => {
     if (currentStep === 1) {
       // if (locale === "fr") {
@@ -329,6 +356,7 @@ export function WorkoutStepper() {
       <div className="px-2 sm:px-6">{renderStepContent()}</div>
 
       <WorkoutBuilderFooter
+        bottomBanner={renderBottomBanner()}
         canContinue={canContinue}
         currentStep={currentStep}
         onNext={nextStep}

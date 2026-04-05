@@ -1,6 +1,7 @@
 "use client";
 import { ArrowLeft, ArrowRight, Play } from "lucide-react";
 import { useI18n } from "locales/client";
+import type { ReactNode } from "react";
 
 import { Button } from "@/components/ui/button";
 import { RewardedAdGate } from "@/components/ads/custom/RewardedAdGate";
@@ -12,6 +13,7 @@ export function WorkoutBuilderFooter({
   onPrevious,
   onNext,
   onStartWorkout,
+  bottomBanner,
 }: {
   currentStep: number;
   totalSteps: number;
@@ -19,6 +21,7 @@ export function WorkoutBuilderFooter({
   onPrevious: VoidFunction;
   onNext: VoidFunction;
   onStartWorkout?: VoidFunction;
+  bottomBanner?: ReactNode;
 }) {
   const t = useI18n();
   const isFirstStep = currentStep === 1;
@@ -28,6 +31,7 @@ export function WorkoutBuilderFooter({
     <div className="w-full sticky bottom-0 max-sm:bottom-14 z-30">
       {/* Mobile layout - vertical stack */}
       <div className="flex flex-col gap-4 px-2 sm:px-6 pb-2">
+        {bottomBanner}
         {/* Center stats on top for mobile */}
 
         {/* Navigation buttons */}

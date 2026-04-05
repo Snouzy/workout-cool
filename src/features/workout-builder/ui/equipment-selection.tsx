@@ -12,7 +12,6 @@ import { useWorkoutFeedback } from "@/shared/hooks/use-workout-feedback";
 import { env } from "@/env";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { HorizontalBottomBanner } from "@/components/ads";
 
 interface EquipmentSelectionProps {
   onClearEquipment: VoidFunction;
@@ -146,12 +145,6 @@ export function EquipmentSelection({ onToggleEquipment, selectedEquipment }: Equ
           </div>
         ))}
       </div>
-      {(env.NEXT_PUBLIC_EQUIPMENT_SELECTION_BANNER_AD_SLOT || env.NEXT_PUBLIC_EZOIC_EQUIPMENT_SELECTION_PLACEMENT_ID) && (
-        <HorizontalBottomBanner
-          adSlot={env.NEXT_PUBLIC_EQUIPMENT_SELECTION_BANNER_AD_SLOT}
-          ezoicPlacementId={env.NEXT_PUBLIC_EZOIC_EQUIPMENT_SELECTION_PLACEMENT_ID}
-        />
-      )}
 
       {/* {locale === "fr" ? (
         <NutripureAffiliateBanner />

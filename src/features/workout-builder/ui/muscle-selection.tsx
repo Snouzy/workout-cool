@@ -16,7 +16,6 @@ import { BicepsGroup } from "@/features/workout-builder/ui/muscles/biceps-group"
 import { BackGroup } from "@/features/workout-builder/ui/muscles/back-group";
 import { AbdominalsGroup } from "@/features/workout-builder/ui/muscles/abdominals-group";
 import { env } from "@/env";
-import { HorizontalBottomBanner } from "@/components/ads";
 
 interface MuscleSelectionProps {
   onToggleMuscle: (muscle: ExerciseAttributeValueEnum) => void;
@@ -1216,12 +1215,6 @@ export function MuscleSelection({ onToggleMuscle, selectedMuscles }: MuscleSelec
         <MuscleIllustration onToggleMuscle={onToggleMuscle} selectedMuscles={selectedMuscles} />
       </div>
 
-      {(env.NEXT_PUBLIC_MUSCLE_SELECTION_BANNER_AD_SLOT || env.NEXT_PUBLIC_EZOIC_MUSCLE_SELECTION_PLACEMENT_ID) && (
-        <HorizontalBottomBanner
-          adSlot={env.NEXT_PUBLIC_MUSCLE_SELECTION_BANNER_AD_SLOT}
-          ezoicPlacementId={env.NEXT_PUBLIC_EZOIC_MUSCLE_SELECTION_PLACEMENT_ID}
-        />
-      )}
     </div>
   );
 }

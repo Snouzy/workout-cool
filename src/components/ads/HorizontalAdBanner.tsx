@@ -44,7 +44,9 @@ export function HorizontalAdBanner({ adSlot, ezoicPlacementId }: HorizontalAdBan
   if (useEzoic) {
     return (
       <AdWrapper>
-        <EzoicAd className="w-full" placementId={ezoicPlacementId} />
+        <div className="w-full min-h-[90px]">
+          <EzoicAd className="w-full" placementId={ezoicPlacementId} />
+        </div>
       </AdWrapper>
     );
   }

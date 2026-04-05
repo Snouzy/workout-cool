@@ -40,23 +40,26 @@ export function HorizontalAdBanner({ adSlot, ezoicPlacementId }: HorizontalAdBan
 
   const useEzoic = env.NEXT_PUBLIC_AD_PROVIDER === "ezoic" && ezoicPlacementId;
 
+  // Ezoic: render a single placement — never two with the same ID (duplicate IDs → 400 bad response)
+  if (useEzoic) {
+    return (
+      <AdWrapper>
+        <EzoicAd className="w-full" placementId={ezoicPlacementId} />
+      </AdWrapper>
+    );
+  }
+
   return (
     <>
-      {/* Below lg: show ezoic if configured, sponsor carousel only if not in ezoic mode */}
+      {/* Below lg: sponsor carousel */}
       <div className="lg:hidden min-h-[90px]">
         <AdWrapper>
-          {isDevelopment ? (
-            <AdPlaceholder height="50px" type="Mobile Ad Banner" width="100%" />
-          ) : useEzoic ? (
-            <EzoicAd className="w-full" placementId={ezoicPlacementId} />
-          ) : env.NEXT_PUBLIC_AD_PROVIDER !== "ezoic" ? (
-            <SponsorHorizontalBanner />
-          ) : null}
+          <SponsorHorizontalBanner />
         </AdWrapper>
       </div>
 
-      {/* lg+: show regular ad (ezoic/adsense) */}
-      {(env.NEXT_PUBLIC_AD_CLIENT || useEzoic) && (
+      {/* lg+: show adsense */}
+      {env.NEXT_PUBLIC_AD_CLIENT && adSlot && (
         <div className="hidden lg:block">
           <AdWrapper>
             <div
@@ -69,27 +72,19 @@ export function HorizontalAdBanner({ adSlot, ezoicPlacementId }: HorizontalAdBan
               }}
             >
               <div className="py-1 flex justify-center w-full">
-                {isDevelopment ? (
-                  <AdPlaceholder height="90px" type="Horizontal Ad Banner" width="100%" />
-                ) : useEzoic ? (
-                  <div className="responsive-ad-container">
-                    <EzoicAd className="w-full h-full" placementId={ezoicPlacementId} />
-                  </div>
-                ) : adSlot ? (
-                  <div className="responsive-ad-container">
-                    <GoogleAdSense
-                      adClient={env.NEXT_PUBLIC_AD_CLIENT as string}
-                      adFormat="fluid"
-                      adSlot={adSlot}
-                      fullWidthResponsive={true}
-                      style={{
-                        display: "block",
-                        width: "100%",
-                        height: "90px",
-                      }}
-                    />
-                  </div>
-                ) : null}
+                <div className="responsive-ad-container">
+                  <GoogleAdSense
+                    adClient={env.NEXT_PUBLIC_AD_CLIENT as string}
+                    adFormat="fluid"
+                    adSlot={adSlot}
+                    fullWidthResponsive={true}
+                    style={{
+                      display: "block",
+                      width: "100%",
+                      height: "90px",
+                    }}
+                  />
+                </div>
               </div>
             </div>
 

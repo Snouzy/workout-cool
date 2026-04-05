@@ -30,7 +30,7 @@ export function VerticalAdBanner({ adSlot, ezoicPlacementId, position = "left" }
 
   return (
     <AdWrapper>
-      <div className="hidden lg:block w-[160px] h-[600px] sticky top-4">
+      <div className="w-[160px] h-[600px] sticky top-4">
         {isDevelopment ? (
           <AdPlaceholder height="600px" type={`Vertical Ad (${position})`} width="160px" />
         ) : useEzoic ? (

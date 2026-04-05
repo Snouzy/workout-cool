@@ -41,13 +41,14 @@ export function HorizontalAdBanner({ adSlot, ezoicPlacementId }: HorizontalAdBan
   const useEzoic = env.NEXT_PUBLIC_AD_PROVIDER === "ezoic" && ezoicPlacementId;
 
   // Ezoic: render a single placement — never two with the same ID (duplicate IDs → 400 bad response)
+  // min-h is outside AdWrapper so space is always reserved, even during isPending or when Ezoic is slow to fill
   if (useEzoic) {
     return (
-      <AdWrapper>
-        <div className="w-full min-h-[90px]">
+      <div className="w-full min-h-[50px]">
+        <AdWrapper>
           <EzoicAd className="w-full" placementId={ezoicPlacementId} />
-        </div>
-      </AdWrapper>
+        </AdWrapper>
+      </div>
     );
   }
 

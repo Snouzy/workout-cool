@@ -270,10 +270,10 @@ export default async function RootLayout({ params, children }: RootLayoutProps) 
                     ezstandalone.cmd.push(function() {
                       ezstandalone.enable();
                       ezstandalone.initRewardedAds({
-                        anchor: false,
+                        anchor: true,
                         interstitial: true,
                         video: true,
-                        sideRails: false
+                        sideRails: true
                       });
                     });
                     window.ezRewardedAds = window.ezRewardedAds || {};

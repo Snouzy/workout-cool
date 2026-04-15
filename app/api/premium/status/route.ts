@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import { prisma } from "@/shared/lib/prisma";
+import { BillingConfig } from "@/shared/lib/billing-config";
 import { getMobileCompatibleSession } from "@/shared/api/mobile-auth";
 
 /**
@@ -9,6 +10,7 @@ import { getMobileCompatibleSession } from "@/shared/api/mobile-auth";
  * GET /api/premium/status
  *
  * Returns the premium status for the current user, checking both:
+ * - Billing mode configuration (for self-hosted instances)
  * - RevenueCat subscriptions (mobile)
  * - Stripe subscriptions (legacy web)
  */
@@ -23,6 +25,22 @@ export async function GET(request: NextRequest) {
         isPremium: false,
         source: null,
         message: "User not authenticated",
+      });
+    }
+
+    // Check billing mode - if billing is disabled or freemium, grant free premium access
+    if (BillingConfig.shouldGrantFreeAccess()) {
+      return NextResponse.json({
+        isPremium: true,
+        source: "self-hosted",
+        billingMode: BillingConfig.getBillingMode(),
+        message: "Premium features enabled for self-hosted instance",
+        subscriptions: {
+          hasRevenueCat: false,
+          hasStripe: false,
+          count: 0,
+        },
+        currentSubscription: null,
       });
     }
 

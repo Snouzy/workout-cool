@@ -156,39 +156,6 @@ export default {
           label: "平均进展",
         },
       },
-
-      // Health Risks
-      health_risks: {
-        overweight: {
-          high_blood_pressure: "高血压",
-          ldl_cholesterol: "低密度脂蛋白胆固醇（坏胆固醇）水平升高",
-          hdl_cholesterol: "高密度脂蛋白胆固醇（好胆固醇）水平降低",
-          triglycerides: "甘油三酯水平升高",
-          type_2_diabetes: "2型糖尿病",
-          coronary_heart_disease: "冠心病",
-          stroke: "中风",
-          gallbladder_disease: "胆囊疾病",
-          osteoarthritis: "骨关节炎",
-          sleep_apnea: "睡眠呼吸暂停和呼吸问题",
-          certain_cancers: "某些癌症（子宫内膜癌、乳腺癌、结肠癌、肾癌、胆囊癌、肝癌）",
-          low_quality_life: "生活质量低下",
-          mental_illnesses: "精神疾病，如临床抑郁症和焦虑症",
-          body_pains: "身体疼痛和身体功能困难",
-          increased_mortality: "总体死亡风险增加",
-        },
-        underweight: {
-          malnutrition: "营养不良和维生素缺乏",
-          anemia: "贫血（血液携氧能力降低）",
-          osteoporosis: "骨质疏松症（骨折风险增加）",
-          immune_function: "免疫功能下降",
-          growth_development: "生长发育问题（特别是儿童）",
-          reproductive_issues: "女性因荷尔蒙失衡导致的生殖问题",
-          miscarriage_risk: "妊娠早期流产风险较高",
-          surgery_complications: "手术期间潜在并发症",
-          increased_mortality: "总体死亡风险增加",
-          underlying_conditions: "可能表明潜在的医疗状况",
-        },
-      },
     },
 
     // Educational Content
@@ -444,6 +411,11 @@ export default {
     conversion_flow_title: "重定向...",
     conversion_flow_message: "成功登录！重定向到结账...",
     redirecting_to_checkout: "重定向到结账",
+
+    // Premium Gate
+    premium_feature: "高级功能",
+    upgrade_to_access_feature: "升级到高级会员以使用此功能",
+    unlock_all_features: "解锁全部功能并支持开发",
   },
   breadcrumbs: {
     home: "首页",
@@ -671,6 +643,7 @@ export default {
       forearms: "前臂",
       traps: "斜方肌",
       obliques: "腹斜肌",
+      lats: "背阔肌",
     },
     exercise: {
       watch_video: "观看视频",
@@ -856,6 +829,7 @@ export default {
     upgrade_to_premium: "成为高级",
     last_activity: "最近活动",
     registered_on: "注册于",
+    refresh: "刷新",
     just_now: "刚刚",
     signup_with: "使用 {provider} 注册",
     signin_with: "使用 {provider} 登录",
@@ -995,6 +969,9 @@ export default {
       keywords: "健身计算器, 卡路里计算器, 宏量营养素计算器, BMI计算器, TDEE计算器, 心率区间, 单次最大重量, 健身工具",
     },
     "calorie-calculator": {
+      body_fat_percentage: "体脂百分比",
+      body_fat_info_title:
+        "体脂百分比对Katch-McArdle和Cunningham公式至关重要，因为它们基于瘦体重进行计算。如果您不清楚自己的确切体脂率，可使用在线对照图或DEXA扫描以获得准确数据。",
       title: "卡路里计算器",
       description: "根据您的活动水平和目标计算每日卡路里需求 (TDEE)",
       meta: {
@@ -1129,6 +1106,7 @@ export default {
       max_heart_rate_info: "通过负荷测试或最大努力训练测得的真实最大心率，比基于年龄的估算更精确。",
 
       results: {
+        overview: "您的心率区间概览",
         title: "您的心率区间",
         max_heart_rate: "最大心率",
         heart_rate_reserve: "心率储备",
@@ -1797,6 +1775,39 @@ export default {
         multidisciplinary: "与医疗团队采用多学科方法",
       },
     },
+
+    // Health Risks
+    health_risks: {
+      overweight: {
+        high_blood_pressure: "高血压",
+        ldl_cholesterol: "低密度脂蛋白胆固醇（坏胆固醇）水平升高",
+        hdl_cholesterol: "高密度脂蛋白胆固醇（好胆固醇）水平降低",
+        triglycerides: "甘油三酯水平升高",
+        type_2_diabetes: "2型糖尿病",
+        coronary_heart_disease: "冠心病",
+        stroke: "中风",
+        gallbladder_disease: "胆囊疾病",
+        osteoarthritis: "骨关节炎",
+        sleep_apnea: "睡眠呼吸暂停和呼吸问题",
+        certain_cancers: "某些癌症（子宫内膜癌、乳腺癌、结肠癌、肾癌、胆囊癌、肝癌）",
+        low_quality_life: "生活质量下降",
+        mental_illnesses: "精神疾病，如临床抑郁症和焦虑症",
+        body_pains: "身体疼痛及活动功能受限",
+        increased_mortality: "总体死亡风险升高",
+      },
+      underweight: {
+        malnutrition: "营养不良和维生素缺乏",
+        anemia: "贫血（血液携氧能力下降）",
+        osteoporosis: "骨质疏松（骨折风险增加）",
+        immune_function: "免疫功能下降",
+        growth_development: "生长发育问题（尤其在儿童中）",
+        reproductive_issues: "女性因激素失衡可能出现的生殖问题",
+        miscarriage_risk: "妊娠早期流产风险升高",
+        surgery_complications: "手术中可能出现的并发症",
+        increased_mortality: "总体死亡风险升高",
+        underlying_conditions: "可能提示潜在疾病",
+      },
+    },
   },
   statistics: {
     title: "统计数据",
@@ -1906,6 +1917,9 @@ export default {
       november: "十一月",
       december: "十二月",
     },
+    no_workout: "无训练",
+    one_workout_unit: "次训练",
+    multiple_workouts_unit: "次训练",
     "workout#one": "次训练",
     "workout#other": "次训练",
   },

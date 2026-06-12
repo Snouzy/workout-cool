@@ -1,29 +1,39 @@
 <div align="center">
-<img src="public/logo.png" alt="Workout.cool Logo" width="120" height="120">
-<h1>Workout.cool</h1>
-<h3><em>Modern fitness coaching platform with comprehensive exercise database</em></h3>
-<p>
-<a href="https://github.com/Snouzy/workout-cool/graphs/contributors"><img src="https://img.shields.io/github/contributors/Snouzy/workout-cool?style=plastic" alt="Contributors">
-<a href="https://github.com/Snouzy/workout-cool/network/members">  
-<img src="https://img.shields.io/github/forks/Snouzy/workout-cool" alt="Forks">
-<a href="https://github.com/Snouzy/workout-cool/stargazers">
-<img src="https://img.shields.io/github/stars/Snouzy/workout-cool" alt="Stars">
-<a href="https://github.com/Snouzy/workout-cool/issues">  
-<img src="https://img.shields.io/github/issues/Snouzy/workout-cool" alt="Issues">
-<img src="https://img.shields.io/github/repo-size/Snouzy/workout-cool" alt="Repository Size">
-<a href="LICENSE">
-  <img src="https://img.shields.io/badge/License-MIT-green.svg" alt="MIT License">
-</a>
+  <h1>Workout.cool / Tester for Tabanos Team</h1>
+<p align="center">
+  <img src="public/logo.png" alt="Tester Logo" width="100" height="100" /><br>
 
-<p>
-    <a href="https://discord.gg/NtrsUBuHUB">
-      <img src="https://img.shields.io/badge/Discord-Join%20Community-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="Discord">
-    </a>
-    <a href="https://ko-fi.com/workoutcool">
-      <img src="https://img.shields.io/badge/Ko--fi-Support%20Project-FF5E5B?style=for-the-badge&logo=ko-fi&logoColor=white" alt="Ko-fi">
-    </a>
-  </p>
-  <!-- Keep these links. Translations will automatically update with the README. -->
+  <span style="font-size:28px; margin:0 15px;">
+    for
+  </span>
+
+  <img src="https://github.com/user-attachments/assets/5e1a7603-a014-496d-b343-a3ea6acd5617"
+       alt="Tabanos Logo"
+       width="100"
+       height="100" />
+</p>
+
+</div>
+<h3><em>Modern fitness coaching platform with comprehensive exercise database</em></h3>
+<div>
+  <a href="https://github.com/Snouzy/workout-cool/graphs/contributors"><img src="https://img.shields.io/github/contributors/Snouzy/workout-cool?style=plastic" alt="Contributors"></a>
+  <a href="https://github.com/Snouzy/workout-cool/network/members"><img src="https://img.shields.io/github/forks/Snouzy/workout-cool" alt="Forks"></a>
+  <a href="https://github.com/Snouzy/workout-cool/stargazers"><img src="https://img.shields.io/github/stars/Snouzy/workout-cool" alt="Stars"></a>
+  <a href="https://github.com/Snouzy/workout-cool/issues"><img src="https://img.shields.io/github/issues/Snouzy/workout-cool" alt="Issues"></a>
+  <img src="https://img.shields.io/github/repo-size/Snouzy/workout-cool" alt="Repository Size">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-green.svg" alt="MIT License"></a>
+</div>
+
+<div>
+  <a href="https://discord.gg/NtrsUBuHUB">
+    <img src="https://img.shields.io/badge/Discord-Join%20Community-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="Discord">
+  </a>
+  <a href="https://ko-fi.com/workoutcool">
+    <img src="https://img.shields.io/badge/Ko--fi-Support%20Project-FF5E5B?style=for-the-badge&logo=ko-fi&logoColor=white" alt="Ko-fi">
+  </a>
+</div>
+<!-- Keep these links. Translations will automatically update with the README. -->
+<div>
   <a href="https://readme-i18n.com/Snouzy/workout-cool?lang=de">Deutsch</a> |
   <a href="https://readme-i18n.com/Snouzy/workout-cool?lang=es">Español</a> |
   <a href="https://readme-i18n.com/Snouzy/workout-cool?lang=fr">français</a> |
@@ -32,9 +42,13 @@
   <a href="https://readme-i18n.com/Snouzy/workout-cool?lang=pt">Português</a> |
   <a href="https://readme-i18n.com/Snouzy/workout-cool?lang=ru">Русский</a> |
   <a href="https://readme-i18n.com/Snouzy/workout-cool?lang=zh">中文</a>
-</p>
+</div>
 </div>
 
+> **Fork academico** -- Curso de Pruebas de Software, Sprint 1.
+> Repositorio original: [Snouzy/workout-cool](https://github.com/Snouzy/workout-cool)
+> 
+> Documentacion del proyecto: [GitHub Pages](https://czrich.github.io/workout-cool/) | Plan de pruebas: [Wiki](https://github.com/CZrich/workout-cool/wiki) | Tablero Kanban: [Projects](https://github.com/users/CZrich/projects/3)
 ## Table of Contents
 
 - [About](#about)

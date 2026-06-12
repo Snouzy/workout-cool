@@ -1,62 +1,56 @@
-"use client";
+import { describe, it, expect } from "vitest";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import React from "react";
+// Importamos únicamente el componente que está expuesto en tu archivo real
+import { InlineTooltip } from "./tooltip"; 
 
-import * as React from "react";
-import * as TooltipPrimitive from "@radix-ui/react-tooltip";
+describe("Suite Avanzada: InlineTooltip", () => {
+  it("debería renderizar el disparador y ser accesible en el DOM", () => {
+    render(
+      <InlineTooltip title="Información importante" delayDuration={0}>
+        <span>Texto del Trigger</span>
+      </InlineTooltip>
+    );
+    
+    const trigger = screen.getByText("Texto del Trigger");
+    expect(trigger).toBeInTheDocument();
+  });
 
-import { cn } from "@/shared/lib/utils";
+  it("debería admitir la propiedad asChild y renderizar el componente hijo directamente", () => {
+    render(
+      <InlineTooltip title="Información de botón" delayDuration={0}>
+        <button data-testid="custom-button">Mi Botón Personalizado</button>
+      </InlineTooltip>
+    );
 
-const TooltipProvider = TooltipPrimitive.Provider;
+    const button = screen.getByTestId("custom-button");
+    expect(button).toBeInTheDocument();
+    expect(button.tagName.toLowerCase()).toBe("button");
+  });
 
-const TooltipRoot = TooltipPrimitive.Root;
+  it("debería abrir el contenido del tooltip interactivo tras los eventos de puntero y enfoque", async () => {
+    render(
+      <InlineTooltip title="Este es el secreto del tooltip" delayDuration={0}>
+        <span data-testid="tooltip-trigger">Pasa el cursor aquí</span>
+      </InlineTooltip>
+    );
 
-const TooltipTrigger = TooltipPrimitive.Trigger;
+    // 1. Al principio el contenido flotante no debe existir en el documento
+    expect(screen.queryByText("Este es el secreto del tooltip")).not.toBeInTheDocument();
 
-const TooltipContent = React.forwardRef<
-  React.ElementRef<typeof TooltipPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Content>
->(({ className, sideOffset = 4, ...props }, ref) => (
-  <TooltipPrimitive.Content
-    className={cn(
-      "z-50 overflow-hidden rounded-md border bg-popover px-3 py-1.5 text-sm text-popover-foreground shadow-md animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
-      className,
-    )}
-    ref={ref}
-    sideOffset={sideOffset}
-    {...props}
-  />
-));
-TooltipContent.displayName = TooltipPrimitive.Content.displayName;
+    const trigger = screen.getByTestId("tooltip-trigger");
 
-const InlineTooltip = ({
-  children,
-  title,
-  delayDuration = 200,
-  className,
-  side,
-}: React.PropsWithChildren<{
-  title: string;
-  delayDuration?: number;
-  className?: string;
-  side?: "top" | "bottom" | "left" | "right";
-}>) => {
-  return (
-    <TooltipProvider>
-      <TooltipRoot delayDuration={delayDuration}>
-        <TooltipTrigger asChild={typeof children !== "string"}>{children}</TooltipTrigger>
-        <TooltipContent className={cn("max-w-md", className)} side={side}>
-          <p className="text-center">{title}</p>
-        </TooltipContent>
-      </TooltipRoot>
-    </TooltipProvider>
-  );
-};
+    // 2. Simulamos la secuencia exacta de eventos de interacción que espera Radix
+    fireEvent.pointerEnter(trigger);
+    fireEvent.focus(trigger);
 
-const Tooltip = (props: React.ComponentPropsWithoutRef<typeof TooltipRoot>) => {
-  return (
-    <TooltipProvider>
-      <TooltipRoot {...props} />
-    </TooltipProvider>
-  );
-};
-
-export { InlineTooltip, Tooltip, TooltipContent, TooltipProvider, TooltipRoot, TooltipTrigger };
+    // 3. Esperamos a que el Portal de Radix inyecte el contenido de forma asíncrona
+    await waitFor(async () => {
+      // Usamos findAllByText en caso de que Radix clone el nodo en el árbol virtual
+      const elements = await screen.findAllByText("Este es el secreto del tooltip");
+      expect(elements[0]).toBeInTheDocument();
+      // Validamos que tenga estilos funcionales del diseño (centrado)
+      expect(elements[0].className).toContain("text-center");
+    });
+  });
+});

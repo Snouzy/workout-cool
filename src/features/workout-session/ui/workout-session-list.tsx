@@ -47,6 +47,7 @@ export function WorkoutSessionList() {
   };
 
   const handleRepeat = (id: string) => {
+    if (activeSession) return;
     feedback.onNextExercise();
     const sessionToCopy = sessions.find((s) => s.id === id);
     if (!sessionToCopy) return;

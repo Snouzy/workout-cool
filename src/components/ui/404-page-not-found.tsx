@@ -2,7 +2,7 @@
 
 import router from "next/router";
 
-import { useI18n } from "locales/client";
+import { useI18n } from "@/locales/client";
 import { Button } from "@/components/ui/button";
 
 export function NotFoundPage() {

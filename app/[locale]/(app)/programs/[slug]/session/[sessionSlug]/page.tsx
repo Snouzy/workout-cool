@@ -2,13 +2,20 @@ import { notFound } from "next/navigation";
 import { headers } from "next/headers";
 import { Metadata } from "next";
 
-import { Locale } from "locales/types";
+import { Locale, locales } from "locales/types";
 import { getI18n } from "locales/server";
 import { generateStructuredData, StructuredDataScript } from "@/shared/lib/structured-data";
-import { getSessionTitle, getProgramTitle } from "@/features/programs/lib/translations-mapper";
+import {
+  getProgramSlug,
+  getProgramTitle,
+  getSessionSlug,
+  getSessionTitle,
+} from "@/features/programs/lib/translations-mapper";
 import { generateSessionMetadata } from "@/features/programs/lib/session-metadata";
 import { getSessionBySlug } from "@/features/programs/actions/get-session-by-slug.action";
 import { auth } from "@/features/auth/lib/better-auth";
+import type { ProgramI18nReference } from "@/entities/program/types/program.types";
+import type { ProgramSessionWithExercises } from "@/entities/program-session/types/program-session.types";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 
 // Import the existing session client component
@@ -17,6 +24,53 @@ import { ProgramSessionClient } from "./ProgramSessionClient";
 interface SessionDetailPageProps {
   params: Promise<{ slug: string; sessionSlug: string; locale: Locale }>;
 }
+
+const getHrefLang = (locale: Locale): string => {
+  switch (locale) {
+    case "en":
+      return "en-US";
+    case "fr":
+      return "fr-FR";
+    case "es":
+      return "es-ES";
+    case "pt":
+      return "pt-PT";
+    case "ru":
+      return "ru-RU";
+    default:
+      return locale;
+  }
+};
+
+const buildSessionUrl = (locale: Locale, programSlug: string, sessionSlug: string, includeLocalePrefix = true): string => {
+  const localePrefix = includeLocalePrefix ? `/${locale}` : "";
+
+  return `https://www.workout.cool${localePrefix}/programs/${programSlug}/session/${sessionSlug}`;
+};
+
+const getAlternateSessionUrl = (
+  locale: Locale,
+  program: ProgramI18nReference,
+  session: ProgramSessionWithExercises,
+  includeLocalePrefix = true,
+): string | null => {
+  const programSlug = getProgramSlug(program, locale) || program.slug;
+  const sessionSlug = getSessionSlug(session, locale);
+
+  return sessionSlug ? buildSessionUrl(locale, programSlug, sessionSlug, includeLocalePrefix) : null;
+};
+
+const getCanonicalSessionUrl = (
+  locale: Locale,
+  program: ProgramI18nReference,
+  session: ProgramSessionWithExercises,
+  includeLocalePrefix = true,
+): string => {
+  const programSlug = getProgramSlug(program, locale) || program.slug;
+  const sessionSlug = getSessionSlug(session, locale) || session.slug;
+
+  return buildSessionUrl(locale, programSlug, sessionSlug, includeLocalePrefix);
+};
 
 export async function generateMetadata({ params }: SessionDetailPageProps): Promise<Metadata> {
   const { slug, sessionSlug, locale } = await params;
@@ -29,6 +83,8 @@ export async function generateMetadata({ params }: SessionDetailPageProps): Prom
 
   const sessionMetadata = generateSessionMetadata(response.session, response.program, locale);
   const imageUrl = response.session.exercises[0]?.exercise.fullVideoImageUrl || "/images/default-workout.jpg";
+  const canonicalUrl = getCanonicalSessionUrl(locale, response.program, response.session);
+  const xDefaultUrl = getAlternateSessionUrl("en", response.program, response.session, false);
 
   return {
     title: sessionMetadata.title,
@@ -37,7 +93,7 @@ export async function generateMetadata({ params }: SessionDetailPageProps): Prom
     openGraph: {
       title: sessionMetadata.title,
       description: sessionMetadata.description,
-      url: `https://www.workout.cool/${locale}/programs/${slug}/session/${sessionSlug}`,
+      url: canonicalUrl,
       siteName: "Workout Cool",
       images: [
         {
@@ -58,15 +114,16 @@ export async function generateMetadata({ params }: SessionDetailPageProps): Prom
       creator: "@WorkoutCool",
     },
     alternates: {
-      canonical: `https://www.workout.cool/${locale}/programs/${slug}/session/${sessionSlug}`,
+      canonical: canonicalUrl,
       languages: {
-        "fr-FR": `https://www.workout.cool/fr/programs/${slug}/session/${sessionSlug}`,
-        "en-US": `https://www.workout.cool/en/programs/${slug}/session/${sessionSlug}`,
-        "es-ES": `https://www.workout.cool/es/programs/${slug}/session/${sessionSlug}`,
-        "pt-PT": `https://www.workout.cool/pt/programs/${slug}/session/${sessionSlug}`,
-        "ru-RU": `https://www.workout.cool/ru/programs/${slug}/session/${sessionSlug}`,
-        "zh-CN": `https://www.workout.cool/zh-CN/programs/${slug}/session/${sessionSlug}`,
-        "x-default": `https://www.workout.cool/programs/${slug}/session/${sessionSlug}`,
+        ...Object.fromEntries(
+          locales.flatMap((targetLocale) => {
+            const sessionUrl = getAlternateSessionUrl(targetLocale, response.program, response.session);
+
+            return sessionUrl ? [[getHrefLang(targetLocale), sessionUrl]] : [];
+          }),
+        ),
+        ...(xDefaultUrl ? { "x-default": xDefaultUrl } : {}),
       },
     },
     robots: {
@@ -102,6 +159,8 @@ export default async function SessionDetailPage({ params }: SessionDetailPagePro
   const t = await getI18n();
   const sessionTitle = getSessionTitle(response.session, locale);
   const programTitle = getProgramTitle(response.program, locale);
+  const programSlug = getProgramSlug(response.program, locale) || response.program.slug;
+  const canonicalUrl = getCanonicalSessionUrl(locale, response.program, response.session);
 
   // Generate breadcrumb items
   const breadcrumbItems = [
@@ -115,7 +174,7 @@ export default async function SessionDetailPage({ params }: SessionDetailPagePro
     },
     {
       label: programTitle,
-      href: `/${locale}/programs/${slug}`,
+      href: `/${locale}/programs/${programSlug}`,
     },
     {
       label: sessionTitle,
@@ -129,7 +188,7 @@ export default async function SessionDetailPage({ params }: SessionDetailPagePro
     locale,
     title: `${sessionTitle} - ${programTitle}`,
     description: response.session.description || `${sessionTitle} workout session`,
-    url: `https://www.workout.cool/${locale}/programs/${slug}/session/${sessionSlug}`,
+    url: canonicalUrl,
     image: response.session.exercises[0]?.exercise.fullVideoImageUrl || undefined,
     sessionData: {
       duration: Math.round(response.session.exercises.length * 3), // Estimate 3 min per exercise

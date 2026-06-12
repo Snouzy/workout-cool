@@ -25,7 +25,7 @@ export function getProgramDescription(program: ProgramDetail | PublicProgram, lo
   return getI18nField(program, "description", locale);
 }
 
-export function getProgramSlug(program: ProgramDetail | PublicProgram, locale: Locale): string {
+export function getProgramSlug(program: ProgramDetail | PublicProgram | ProgramI18nReference, locale: Locale): string {
   return getI18nField(program, "slug", locale);
 }
 

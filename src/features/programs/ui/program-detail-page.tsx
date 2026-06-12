@@ -59,6 +59,7 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
   const searchParams = useSearchParams();
   const router = useRouter();
   const currentLocale = useCurrentLocale();
+  const programSlug = getSlugForLocale(program, currentLocale) || program.slug;
   const isPremium = useIsPremium();
   const programTitle = getProgramTitle(program, currentLocale);
   const programDescription = getProgramDescription(program, currentLocale);
@@ -136,7 +137,7 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
 
   const handleCTAClick = () => {
     if (isAuthenticated && hasJoinedProgram) {
-      router.push(`/programs/${program.slug}/?tab=sessions`);
+      router.push(`/${currentLocale}/programs/${programSlug}/?tab=sessions`);
     } else {
       setShowWelcomeModal(true);
     }
@@ -145,7 +146,7 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
   const handleJoinProgram = async () => {
     setShowWelcomeModal(false);
 
-    router.push(`/programs/${program.slug}/?tab=sessions`);
+    router.push(`/${currentLocale}/programs/${programSlug}/?tab=sessions`);
 
     // if (isAuthenticated && hasJoinedProgram) {
     //   // Navigate to current session if user has already joined
@@ -447,7 +448,7 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
                     }
 
                     return currentWeekSessions.map((session) => {
-                      const sessionSlug = getSlugForLocale(session, currentLocale);
+                      const sessionSlug = getSlugForLocale(session, currentLocale) || session.slug;
                       const sessionName = getSessionTitle(session, currentLocale);
                       const sessionDescription = getSessionDescription(session, currentLocale);
 
@@ -463,7 +464,7 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
                           }`}
                           key={session.id}
                           onClick={() => {
-                            window.location.href = `/${currentLocale}/programs/${program.slug}/session/${sessionSlug}`;
+                            window.location.href = `/${currentLocale}/programs/${programSlug}/session/${sessionSlug}`;
                           }}
                         >
                           {/* Session Number Badge */}

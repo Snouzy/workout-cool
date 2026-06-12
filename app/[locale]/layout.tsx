@@ -69,7 +69,9 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
                 ? "ru_RU"
                 : locale === "zh-CN"
                   ? "zh_CN"
-                  : "fr_FR",
+                  : locale === "zh-TW"
+                    ? "zh_TW"
+                    : "fr_FR",
       alternateLocale: [
         "fr_FR",
         "fr_CA",
@@ -104,7 +106,9 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
                   ? "ru_RU"
                   : locale === "zh-CN"
                     ? "zh_CN"
-                    : "fr_FR"),
+                    : locale === "zh-TW"
+                      ? "zh_TW"
+                      : "fr_FR"),
       ),
       images: [
         {
@@ -143,6 +147,12 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
           height: SiteConfig.seo.ogImage.height,
           alt: `${SiteConfig.title} - 现代健身平台`,
         },
+        {
+          url: `${getServerUrl()}/images/default-og-image_zh-TW.jpg`,
+          width: SiteConfig.seo.ogImage.width,
+          height: SiteConfig.seo.ogImage.height,
+          alt: `${SiteConfig.title} - 現代化健身平台`,
+        },
       ],
       type: "website",
     },
@@ -170,6 +180,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
         "pt-PT": "https://www.workout.cool/pt",
         "ru-RU": "https://www.workout.cool/ru",
         "zh-CN": "https://www.workout.cool/zh-CN",
+        "zh-TW": "https://www.workout.cool/zh-TW",
         "x-default": "https://www.workout.cool",
       },
     },
@@ -304,6 +315,7 @@ export default async function RootLayout({ params, children }: RootLayoutProps) 
           <link href="https://www.workout.cool/pt" hrefLang="pt" rel="alternate" />
           <link href="https://www.workout.cool/ru" hrefLang="ru" rel="alternate" />
           <link href="https://www.workout.cool/zh-CN" hrefLang="zh-CN" rel="alternate" />
+          <link href="https://www.workout.cool/zh-TW" hrefLang="zh-TW" rel="alternate" />
           <link href="https://www.workout.cool" hrefLang="x-default" rel="alternate" />
 
           {/* Theme color for PWA */}

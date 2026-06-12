@@ -24,7 +24,7 @@ export async function getProgramProgressBySlug(slug: string) {
   // First, find the program by slug
   const program = await prisma.program.findFirst({
     where: {
-      OR: [{ slug }, { slugEn: slug }, { slugEs: slug }, { slugPt: slug }, { slugRu: slug }, { slugZhCn: slug }],
+      OR: [{ slug }, { slugEn: slug }, { slugEs: slug }, { slugPt: slug }, { slugRu: slug }, { slugZhCn: slug }, { slugZhTw: slug }],
       visibility: ProgramVisibility.PUBLISHED,
       isActive: true,
     },

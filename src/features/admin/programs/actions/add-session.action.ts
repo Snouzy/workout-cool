@@ -16,18 +16,21 @@ interface AddSessionData {
   titlePt: string;
   titleRu: string;
   titleZhCn: string;
+  titleZhTw: string;
   slug: string;
   slugEn: string;
   slugEs: string;
   slugPt: string;
   slugRu: string;
   slugZhCn: string;
+  slugZhTw: string;
   description: string;
   descriptionEn: string;
   descriptionEs: string;
   descriptionPt: string;
   descriptionRu: string;
   descriptionZhCn: string;
+  descriptionZhTw: string;
   equipment: ExerciseAttributeValueEnum[];
   estimatedMinutes: number;
   isPremium: boolean;
@@ -67,18 +70,21 @@ export async function addSessionToWeek(data: AddSessionData) {
       titlePt: data.titlePt,
       titleRu: data.titleRu,
       titleZhCn: data.titleZhCn,
+      titleZhTw: data.titleZhTw,
       slug: data.slug,
       slugEn: data.slugEn,
       slugEs: data.slugEs,
       slugPt: data.slugPt,
       slugRu: data.slugRu,
       slugZhCn: data.slugZhCn,
+      slugZhTw: data.slugZhTw,
       description: data.description,
       descriptionEn: data.descriptionEn,
       descriptionEs: data.descriptionEs,
       descriptionPt: data.descriptionPt,
       descriptionRu: data.descriptionRu,
       descriptionZhCn: data.descriptionZhCn,
+      descriptionZhTw: data.descriptionZhTw,
       equipment: data.equipment,
       estimatedMinutes: data.estimatedMinutes,
       isPremium: data.isPremium,

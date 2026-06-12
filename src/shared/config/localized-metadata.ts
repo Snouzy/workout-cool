@@ -108,12 +108,21 @@ export const LocalizedMetadata = {
     category: "健身",
     classification: "健身与健康",
   },
+  "zh-TW": {
+    title: "Workout Cool",
+    description: "現代化健身教練平台，提供完整的動作資料庫",
+    keywords: ["健身", "訓練", "動作", "肌肉訓練", "力量訓練", "健美", "健身 App", "訓練計畫", "動作資料庫"],
+    ogAlt: "Workout Cool - 現代化健身平台",
+    applicationName: "Workout Cool",
+    category: "健身",
+    classification: "健身與健康",
+  },
 } as const;
 
 export type SupportedLocale = keyof typeof LocalizedMetadata;
 
 export function getLocalizedMetadata(locale: string) {
-  const supportedLocales: SupportedLocale[] = ["en", "fr", "es", "pt", "ru", "zh-CN"];
+  const supportedLocales: SupportedLocale[] = ["en", "fr", "es", "pt", "ru", "zh-CN", "zh-TW"];
 
   if (supportedLocales.includes(locale as SupportedLocale)) {
     return LocalizedMetadata[locale as SupportedLocale];

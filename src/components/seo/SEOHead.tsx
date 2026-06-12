@@ -78,6 +78,7 @@ export function generateSEOMetadata({
         "pt-PT": `${baseUrl}/pt`,
         "ru-RU": `${baseUrl}/ru`,
         "zh-CN": `${baseUrl}/zh-CN`,
+        "zh-TW": `${baseUrl}/zh-TW`,
         "x-default": baseUrl,
       },
     },
@@ -97,7 +98,9 @@ export function generateSEOMetadata({
                 ? "ru_RU"
                 : locale === "zh-CN"
                   ? "zh_CN"
-                  : "fr_FR",
+                  : locale === "zh-TW"
+                    ? "zh_TW"
+                    : "fr_FR",
       alternateLocale: [
         "fr_FR",
         "fr_CA",
@@ -132,7 +135,9 @@ export function generateSEOMetadata({
                   ? "ru_RU"
                   : locale === "zh-CN"
                     ? "zh_CN"
-                    : "fr_FR"),
+                    : locale === "zh-TW"
+                      ? "zh_TW"
+                      : "fr_FR"),
       ),
       images: [
         {
@@ -207,6 +212,7 @@ export function SEOScripts({
       <link href={`${baseUrl}/pt${hreflangPath}`} hrefLang="pt" rel="alternate" />
       <link href={`${baseUrl}/ru${hreflangPath}`} hrefLang="ru" rel="alternate" />
       <link href={`${baseUrl}/zh-CN${hreflangPath}`} hrefLang="zh-CN" rel="alternate" />
+      <link href={`${baseUrl}/zh-TW${hreflangPath}`} hrefLang="zh-TW" rel="alternate" />
       <link href={`${baseUrl}/en${hreflangPath}`} hrefLang="x-default" rel="alternate" />
     </>
   ) : null;

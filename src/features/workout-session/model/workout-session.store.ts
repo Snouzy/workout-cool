@@ -135,7 +135,18 @@ export const useWorkoutSessionStore = create<WorkoutSessionState>((set, get) => 
     const { session } = get();
 
     if (session) {
-      workoutSessionLocal.update(session.id, { status: "completed", endedAt: new Date().toISOString() });
+      // Mark all remaining sets as completed so analytics (volume, ACWR,
+      // exercise completion stats) reflects the work that was actually done.
+      const completedExercises = session.exercises.map((ex) => ({
+        ...ex,
+        sets: ex.sets.map((set) => ({ ...set, completed: true })),
+      }));
+
+      workoutSessionLocal.update(session.id, {
+        status: "completed",
+        endedAt: new Date().toISOString(),
+        exercises: completedExercises,
+      });
       console.log({
         session: { ...session, status: "completed", endedAt: new Date().toISOString() },
         progress: {},
@@ -144,7 +155,12 @@ export const useWorkoutSessionStore = create<WorkoutSessionState>((set, get) => 
         isWorkoutActive: false,
       });
       set({
-        session: { ...session, status: "completed", endedAt: new Date().toISOString() },
+        session: {
+          ...session,
+          exercises: completedExercises,
+          status: "completed",
+          endedAt: new Date().toISOString(),
+        },
         progress: {},
         elapsedTime: 0,
         isTimerRunning: false,

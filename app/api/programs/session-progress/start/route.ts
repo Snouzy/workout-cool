@@ -59,7 +59,11 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    if (!programSession) {
+    if (!programSession || programSession.week.programId !== enrollment.program.id) {
+      // Reject a sessionId that doesn't belong to the program the enrollment is
+      // for; otherwise we'd create a UserSessionProgress pointing at a session
+      // from another program and overwrite the user's currentWeek/currentSession
+      // with that program's values.
       return NextResponse.json({ error: "Session not found" }, { status: 404 });
     }
 

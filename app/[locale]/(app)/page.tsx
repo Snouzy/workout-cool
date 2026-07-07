@@ -8,6 +8,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const { locale } = await params;
 
   const isEnglish = locale === "en";
+  // OG images use "zh" for zh-CN (the file is default-og-image_zh.jpg)
+  const ogImageLocale = locale === "zh-CN" ? "zh" : locale;
   const title = isEnglish ? "Build Your Perfect Workout" : "Créez Votre Entraînement Parfait";
   const description = isEnglish
     ? "Create free workout routines with our comprehensive exercise database. Track your progress and achieve your fitness goals. 🏋️"
@@ -31,7 +33,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       description,
       images: [
         {
-          url: `${getServerUrl()}/images/default-og-image_${locale}.jpg`,
+          url: `${getServerUrl()}/images/default-og-image_${ogImageLocale}.jpg`,
           width: SiteConfig.seo.ogImage.width,
           height: SiteConfig.seo.ogImage.height,
           alt: title,
@@ -41,7 +43,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     twitter: {
       title: `${title} | ${SiteConfig.title}`,
       description,
-      images: [`${getServerUrl()}/images/default-og-image_${locale}.jpg`],
+      images: [`${getServerUrl()}/images/default-og-image_${ogImageLocale}.jpg`],
     },
   };
 }

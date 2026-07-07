@@ -22,16 +22,14 @@ export const getTopWorkoutUsersAction = actionClient.schema(inputSchema).action(
   try {
     const { startDate, endDate } = getDateRangeForPeriod(period);
 
+    // Only count sessions that were actually finished (endedAt is set).
+    const sessionWhere = startDate
+      ? { startedAt: { gte: startDate, lte: endDate }, endedAt: { not: null } }
+      : { endedAt: { not: null } };
+
     const whereClause = {
       WorkoutSession: {
-        some: startDate
-          ? {
-              startedAt: {
-                gte: startDate,
-                lte: endDate,
-              },
-            }
-          : {},
+        some: sessionWhere,
       },
     };
 
@@ -45,27 +43,13 @@ export const getTopWorkoutUsersAction = actionClient.schema(inputSchema).action(
         createdAt: true,
         _count: {
           select: {
-            WorkoutSession: startDate
-              ? {
-                  where: {
-                    startedAt: {
-                      gte: startDate,
-                      lte: endDate,
-                    },
-                  },
-                }
-              : true,
+            WorkoutSession: {
+              where: sessionWhere,
+            },
           },
         },
         WorkoutSession: {
-          where: startDate
-            ? {
-                startedAt: {
-                  gte: startDate,
-                  lte: endDate,
-                },
-              }
-            : undefined,
+          where: sessionWhere,
           select: {
             endedAt: true,
             startedAt: true,

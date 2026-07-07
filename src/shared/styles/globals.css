@@ -1,12 +1,119 @@
 @import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap");
+
+@import "tailwindcss";
+@import "tw-animate-css";
 @import "./additional-styles/utility-patterns.css";
 @import "./additional-styles/highlights.css";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
+@plugin "@tailwindcss/typography";
 @plugin "daisyui";
+
+/* Enable class-based dark mode (was darkMode: "class" in tailwind.config.ts) */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Theme migrated from tailwind.config.ts → Tailwind v4 CSS-first config */
+@theme {
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1472px;
+
+  --font-sans: "Plus Jakarta Sans", sans-serif;
+  --font-permanent-marker: var(--font-permanent-marker);
+
+  --text-1sm: 0.8rem;
+
+  --color-popover: #fff;
+  --color-popover-foreground: #000;
+  --color-primary: #238be6;
+  --color-transparent: transparent;
+  --color-current: currentColor;
+  --color-white: #ffffff;
+  --color-black: #171718;
+
+  --color-green-100: #dcfce7;
+  --color-green-200: #d9f9eb;
+  --color-green-300: #bdf4e0;
+  --color-green-400: #93e6c2;
+  --color-green-500: #50c890;
+  --color-green-600: #339e6e;
+  --color-green-700: #227c54;
+  --color-green-800: #1c6444;
+  --color-green: #22c55e;
+
+  --color-gray-100: #fafbfc;
+  --color-gray-200: #f9fafb;
+  --color-gray-300: #f1f3f5;
+  --color-gray-400: #e5e8eb;
+  --color-gray-500: #b9bec6;
+  --color-gray-600: #9ca3af;
+  --color-gray-700: #6b7280;
+  --color-gray: #525866;
+
+  --color-orange-100: #fef3c7;
+  --color-orange-200: #fdc88a;
+  --color-orange-300: #ffa270;
+  --color-orange-400: #ff6f37;
+  --color-orange-500: #ff5722;
+  --color-orange-600: #e64a19;
+  --color-orange-700: #d84315;
+  --color-orange-800: #9e1a0e;
+  --color-orange-900: #450805;
+  --color-orange: #ff5722;
+
+  --color-amber-100: #fef3c7;
+  --color-amber-200: #fde68a;
+  --color-amber-300: #fcd34d;
+  --color-amber-400: #fbbf24;
+  --color-amber-500: #f59e0b;
+  --color-amber-600: #d97706;
+  --color-amber-700: #b45309;
+  --color-amber-800: #92400e;
+  --color-amber-900: #7a3207;
+  --color-amber: #f59e0b;
+
+  --color-danger: #ef4444;
+  --color-danger-light: #fee2e2;
+  --color-success: #22c55e;
+  --color-success-light: #dcfce7;
+  --color-warning: #eab308;
+  --color-light-theme: #f4f7ff;
+  --color-light-orange: #ffedd5;
+  --color-light-blue: #e0f2fe;
+  --color-light-purple: #f3e8ff;
+
+  --shadow-3xl: 0 1px 2px 0 rgba(95, 74, 46, 0.08), 0 0 0 1px rgba(227, 225, 222, 0.4);
+  --shadow-sm: 0 1px 2px 0 rgba(113, 116, 152, 0.1);
+
+  --animate-shine: shine var(--duration) infinite linear;
+  --animate-accordion-down: accordion-down 0.3s ease-out;
+  --animate-accordion-up: accordion-up 0.3s ease-out;
+  --animate-caret-blink: caret-blink 1.25s ease-out infinite;
+  --animate-marquee: marquee 100s linear infinite;
+
+  @keyframes shine {
+    0% { background-position: 0% 0%; }
+    50% { background-position: 100% 100%; }
+    100% { background-position: 0% 0%; }
+  }
+  @keyframes accordion-down {
+    from { height: 0; }
+    to { height: var(--radix-accordion-content-height); }
+  }
+  @keyframes accordion-up {
+    from { height: var(--radix-accordion-content-height); }
+    to { height: 0; }
+  }
+  @keyframes caret-blink {
+    0%, 70%, 100% { opacity: 1; }
+    20%, 50% { opacity: 0; }
+  }
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+}
 
 /* Google AdSense Styles - Prevent "No slot size for availableWidth=0" error */
 

@@ -1,4 +1,6 @@
 /* Typography */
+@reference "tailwindcss";
+
 * {
 }
 .h1 {

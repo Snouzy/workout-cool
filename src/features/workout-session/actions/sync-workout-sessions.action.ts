@@ -7,7 +7,7 @@ import { workoutSessionStatuses } from "@/shared/lib/workout-session/types/worko
 import { prisma } from "@/shared/lib/prisma";
 import { ALL_WORKOUT_SET_TYPES, WORKOUT_SET_UNITS_TUPLE } from "@/shared/constants/workout-set-types";
 import { ERROR_MESSAGES } from "@/shared/constants/errors";
-import { actionClient } from "@/shared/api/safe-actions";
+import { authenticatedActionClient } from "@/shared/api/safe-actions";
 
 const workoutSetSchema = z.object({
   id: z.string(),
@@ -39,87 +39,90 @@ const syncWorkoutSessionSchema = z.object({
   }),
 });
 
-export const syncWorkoutSessionAction = actionClient.schema(syncWorkoutSessionSchema).action(async ({ parsedInput }) => {
-  try {
-    const { session } = parsedInput;
+export const syncWorkoutSessionAction = authenticatedActionClient
+  .schema(syncWorkoutSessionSchema)
+  .action(async ({ parsedInput, ctx }) => {
+    try {
+      const { session } = parsedInput;
 
-    // Check if user exists
-    const userExists = await prisma.user.findUnique({
-      where: { id: session.userId },
-    });
+      // Enforce that the authenticated user can only sync their own workout
+      // sessions. Without this check, any authenticated user could create or
+      // overwrite workout sessions for an arbitrary user ID supplied in the
+      // request body (IDOR / CWE-862 Missing Authorization).
+      if (session.userId !== ctx.user.id) {
+        console.error(
+          `User ${ctx.user.id} attempted to sync a session for user ${session.userId}`,
+        );
+        return { serverError: ERROR_MESSAGES.USER_NOT_FOUND };
+      }
 
-    if (!userExists) {
-      console.error(`User with ID ${session.userId} does not exist`);
-      return { serverError: ERROR_MESSAGES.USER_NOT_FOUND };
-    }
+      // Check if all exercises exist
+      const exerciseIds = session.exercises.map((e) => e.id);
+      const existingExercises = await prisma.exercise.findMany({
+        where: { id: { in: exerciseIds } },
+        select: { id: true },
+      });
 
-    // Check if all exercises exist
-    const exerciseIds = session.exercises.map((e) => e.id);
-    const existingExercises = await prisma.exercise.findMany({
-      where: { id: { in: exerciseIds } },
-      select: { id: true },
-    });
+      const existingExerciseIds = new Set(existingExercises.map((e) => e.id));
+      const missingExercises = exerciseIds.filter((id) => !existingExerciseIds.has(id));
 
-    const existingExerciseIds = new Set(existingExercises.map((e) => e.id));
-    const missingExercises = exerciseIds.filter((id) => !existingExerciseIds.has(id));
+      if (missingExercises.length > 0) {
+        console.error("Missing exercises:", missingExercises);
+        return { serverError: `Exercises not found: ${missingExercises.join(", ")}` };
+      }
 
-    if (missingExercises.length > 0) {
-      console.error("Missing exercises:", missingExercises);
-      return { serverError: `Exercises not found: ${missingExercises.join(", ")}` };
-    }
+      const { status: _s, ...sessionData } = session;
 
-    const { status: _s, ...sessionData } = session;
-
-    const result = await prisma.workoutSession.upsert({
-      where: { id: session.id },
-      create: {
-        ...sessionData,
-        muscles: session.muscles,
-        rating: session.rating,
-        ratingComment: session.ratingComment,
-        exercises: {
-          create: session.exercises.map((exercise) => ({
-            order: exercise.order,
-            exercise: { connect: { id: exercise.id } },
-            sets: {
-              create: exercise.sets.map((set) => ({
-                setIndex: set.setIndex,
-                types: set.types,
-                valuesInt: set.valuesInt,
-                valuesSec: set.valuesSec,
-                units: set.units,
-                completed: set.completed,
-                type: set.types && set.types.length > 0 ? set.types[0] : "NA",
-              })),
-            },
-          })),
+      const result = await prisma.workoutSession.upsert({
+        where: { id: session.id },
+        create: {
+          ...sessionData,
+          muscles: session.muscles,
+          rating: session.rating,
+          ratingComment: session.ratingComment,
+          exercises: {
+            create: session.exercises.map((exercise) => ({
+              order: exercise.order,
+              exercise: { connect: { id: exercise.id } },
+              sets: {
+                create: exercise.sets.map((set) => ({
+                  setIndex: set.setIndex,
+                  types: set.types,
+                  valuesInt: set.valuesInt,
+                  valuesSec: set.valuesSec,
+                  units: set.units,
+                  completed: set.completed,
+                  type: set.types && set.types.length > 0 ? set.types[0] : "NA",
+                })),
+              },
+            })),
+          },
         },
-      },
-      update: {
-        muscles: session.muscles,
-        rating: session.rating,
-        ratingComment: session.ratingComment,
-        exercises: {
-          deleteMany: {},
-          create: session.exercises.map((exercise) => ({
-            order: exercise.order,
-            exercise: { connect: { id: exercise.id } },
-            sets: {
-              create: exercise.sets.map((set) => ({
-                ...set,
-                type: set.types && set.types.length > 0 ? set.types[0] : "NA",
-              })),
-            },
-          })),
+        update: {
+          muscles: session.muscles,
+          rating: session.rating,
+          ratingComment: session.ratingComment,
+          exercises: {
+            deleteMany: {},
+            create: session.exercises.map((exercise) => ({
+              order: exercise.order,
+              exercise: { connect: { id: exercise.id } },
+              sets: {
+                create: exercise.sets.map((set) => ({
+                  ...set,
+                  type: set.types && set.types.length > 0 ? set.types[0] : "NA",
+                })),
+              },
+            })),
+          },
         },
-      },
-    });
+      });
 
-    console.log("✅ Workout session synced successfully:", result.id);
+      console.log("✅ Workout session synced successfully:", result.id);
 
-    return { data: result };
-  } catch (error) {
-    console.error("❌ Error syncing workout session:", error);
-    return { serverError: "Failed to sync workout session" };
-  }
-});
+      return { data: result };
+    } catch (error) {
+      console.error("❌ Error syncing workout session:", error);
+      return { serverError: "Failed to sync workout session" };
+    }
+  });

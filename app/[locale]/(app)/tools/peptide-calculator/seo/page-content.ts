@@ -49,7 +49,7 @@ const en: PeptidePageContent = {
       heading: "The reconstitution formula, explained",
       lead: "Peptide reconstitution runs on two divisions: concentration equals peptide mass divided by water volume, and dose volume equals dose divided by concentration. A 10 mg vial reconstituted with 5 mL of bacteriostatic water yields 2 mg per mL, so a 250 mcg dose occupies 0.125 mL.",
       body: [
-        "Convert to one mass unit before dividing, or the arithmetic falls apart. Micrograms and milligrams differ by a factor of 1,000: 250 mcg is 0.25 mg, and 1,000 mcg is 1 mg. Every mismatch between the two is a tenfold or hundredfold error in the volume you draw.",
+        "Convert to one mass unit before dividing, or the arithmetic falls apart. Micrograms and milligrams differ by a factor of 1,000: 250 mcg is 0.25 mg, and 1,000 mcg is 1 mg. Every mismatch between the two is a thousandfold error in the volume you draw.",
         "Work the running example step by step. 10 mg of peptide divided by 5 mL of water is 2 mg/mL. A 250 mcg dose is 0.25 mg. 0.25 mg divided by 2 mg/mL is 0.125 mL. That volume is the answer in millilitres, and everything after it is a change of scale, not a change of quantity.",
         "Doses per vial comes from the same two numbers: total peptide divided by dose. 10 mg is 10,000 mcg, and 10,000 divided by 250 is 40 doses. That figure is a quick sanity check — if the calculator says a 10 mg vial holds three doses of 250 mcg, something in your inputs is wrong.",
       ],
@@ -181,7 +181,7 @@ const en: PeptidePageContent = {
 
 const pt: PeptidePageContent = {
   heroSubtitle:
-    "Informe a quantidade no frasco, a água bacteriostática que você adicionou e a sua dose. Receba o volume exato em mililitros e a marca até onde puxar em uma seringa de insulina U-100.",
+    "Informe a quantidade no frasco, a água bacteriostática que você adicionou e a sua dose. Veja o volume exato em mililitros e a marca até onde puxar em uma seringa de insulina U-100.",
   sections: [
     {
       id: "how-to",
@@ -199,7 +199,7 @@ const pt: PeptidePageContent = {
       heading: "A fórmula da reconstituição de peptídeos, explicada",
       lead: "A reconstituição de peptídeos se resolve com duas divisões: a concentração é a massa de peptídeo dividida pelo volume de água, e o volume da dose é a dose dividida pela concentração. Um frasco de 10 mg reconstituído com 5 mL de água bacteriostática dá 2 mg/mL, então uma dose de 250 mcg ocupa 0,125 mL.",
       body: [
-        "Converta tudo para uma única unidade de massa antes de dividir, ou a conta desanda. Microgramas e miligramas diferem por um fator de 1.000: 250 mcg são 0,25 mg, e 1.000 mcg são 1 mg. Cada troca entre as duas unidades vira um erro de dez ou de cem vezes no volume que você puxa.",
+        "Converta tudo para uma única unidade de massa antes de dividir, ou a conta desanda. Microgramas e miligramas diferem por um fator de 1.000: 250 mcg são 0,25 mg, e 1.000 mcg são 1 mg. Cada troca entre as duas unidades vira um erro de mil vezes no volume que você puxa.",
         "No exemplo, 10 mg de peptídeo divididos por 5 mL de água dão 2 mg/mL. A dose de 250 mcg equivale a 0,25 mg, e 0,25 mg divididos por 2 mg/mL dão 0,125 mL. Esse volume é a resposta em mililitros; tudo o que vem depois dele é mudança de escala, não de quantidade.",
         "As doses por frasco saem dos mesmos dois números: peptídeo total dividido pela dose. 10 mg são 10.000 mcg, e 10.000 divididos por 250 dão 40 doses. Esse número serve de conferência rápida — se a calculadora disser que um frasco de 10 mg rende três doses de 250 mcg, alguma entrada está errada.",
       ],
@@ -209,7 +209,7 @@ const pt: PeptidePageContent = {
       heading: "Tabela de reconstituição de peptídeos",
       lead: "Cada linha de uma tabela de reconstituição de peptídeos é aritmética, não sugestão: ela cruza uma massa de peptídeo com um volume de água bacteriostática e mostra a concentração resultante. 10 mg com 2 mL dão 5 mg/mL; os mesmos 10 mg com 5 mL dão 2 mg/mL. Adicionar água nunca altera a massa de peptídeo.",
       body: [
-        "Escolha a linha pelo volume que você quer estar medindo, não pelo número que parece mais redondo. Concentrações mais altas significam menos líquido por injeção e menos água parada no frasco; concentrações mais baixas espalham a mesma dose por mais unidades da seringa, o que torna doses pequenas mais fáceis de ler com precisão.",
+        "Escolha a linha pelo volume que você quer medir, não pelo número que parece mais redondo. Concentrações mais altas significam menos líquido por injeção e menos água parada no frasco; concentrações mais baixas espalham a mesma dose por mais unidades da seringa, o que torna doses pequenas mais fáceis de ler com precisão.",
         "Nenhuma linha desta tabela diz quanto peptídeo usar. Toda linha guarda a mesma massa total antes e depois da mistura — adicionar água muda a concentração e o volume que você puxa, nunca a quantidade de peptídeo dentro do frasco. Sua dose vem de quem a prescreveu ou do rótulo do produto; a tabela só mostra em que resulta uma determinada mistura.",
       ],
     },
@@ -218,25 +218,25 @@ const pt: PeptidePageContent = {
       heading: "Conversão de mcg para unidades na seringa de insulina",
       lead: "As unidades da seringa de insulina saem dos microgramas com uma fórmula só: unidades são a dose em microgramas dividida por dez vezes a concentração em mg/mL. A 2 mg/mL, uma dose de 250 mcg é 250 dividido por 20, ou seja, 12,5 unidades. A mesma dose a 10 mg/mL são 2,5 unidades.",
       body: [
-        "O fator dez vem da seringa, não do peptídeo. Uma unidade em uma seringa U-100 é 0,01 mL, então 0,125 mL são 12,5 unidades. Multiplicar o valor em mililitros por 100 chega ao mesmo lugar, com a mesma confiabilidade da fórmula.",
-        "Concentração e unidades andam em direções opostas. Dobre a concentração e as unidades caem à metade, porque a mesma massa de peptídeo fica comprimida em metade do líquido. É por isso que uma única linha da tabela de conversão traz 12,5 unidades, 5 unidades e 2,5 unidades: uma dose, três misturas, três marcas diferentes no corpo da seringa.",
+        "O fator dez vem da seringa, não do peptídeo. Uma unidade em uma seringa U-100 é 0,01 mL, então 0,125 mL são 12,5 unidades. Multiplicar o valor em mililitros por 100 dá no mesmo, com a mesma confiabilidade da fórmula.",
+        "Concentração e unidades andam em direções opostas. Dobre a concentração e as unidades caem à metade, porque a mesma massa de peptídeo fica comprimida em metade do líquido. É por isso que uma única linha da tabela de conversão traz 12,5; 5 e 2,5 unidades: uma dose, três misturas, três marcas diferentes no corpo da seringa.",
         "Confira qual seringa você tem na mão antes de confiar em qualquer número de unidades. Uma seringa U-100 marca 100 unidades por mililitro; uma U-40 marca 40 unidades por mililitro, e os mesmos 0,125 mL seriam 5 unidades nela. Unidade é uma escala impressa no corpo da seringa, não uma quantidade fixa.",
       ],
     },
     {
       id: "u100",
       heading: "Por que a seringa U-100 marca 100 unidades por mililitro",
-      lead: "U-100 é um padrão de concentração de insulina: 100 unidades internacionais por mililitro. O corpo da seringa é graduado para que 100 unidades preencham exatamente 1 mL, o que faz de uma unidade 0,01 mL. Em um peptídeo reconstituído, essa escala não carrega sentido de insulina — é só uma régua fina de centésimos de mililitro.",
+      lead: "U-100 é um padrão de concentração de insulina: 100 unidades internacionais por mililitro. O corpo da seringa é graduado para que 100 unidades preencham exatamente 1 mL, de modo que uma unidade equivale a 0,01 mL. Em um peptídeo reconstituído, essa escala não tem nada a ver com insulina — é só uma régua fina de centésimos de mililitro.",
       body: [
         "Capacidade da seringa e escala de unidades são coisas distintas. Uma seringa U-100 de 0,3 mL vai até 30 unidades, uma de 0,5 mL até 50, uma de 1 mL até 100 — mas em todas as três uma unidade vale 0,01 mL. Dá para aspirar 12,5 unidades em qualquer uma das três; 60 unidades não cabem nas duas primeiras.",
-        "Corpos menores são mais fáceis de ler. Em uma seringa de 0,3 mL as graduações ficam mais afastadas, então 12,5 unidades caem claramente entre duas marcas, em vez de espremidas contra elas. Quando o volume calculado cabe, a seringa menor costuma dar a leitura mais precisa.",
-        "As marcas de meia unidade não estão em toda seringa. Alguns corpos são impressos só de unidade em unidade, e nesse caso 12,5 unidades têm de ser estimadas entre duas marcas, ou a mistura ajustada para que o número caia sobre uma linha impressa. Olhe a sua própria seringa antes de supor a precisão que a calculadora sugere.",
+        "Corpos menores são mais fáceis de ler. Em uma seringa de 0,3 mL as graduações ficam mais afastadas, então 12,5 unidades caem claramente entre duas marcas, em vez de ficarem espremidas contra elas. Quando o volume calculado cabe, a seringa menor costuma dar a leitura mais precisa.",
+        "As marcas de meia unidade não estão em toda seringa. Alguns corpos de seringa são impressos só de unidade em unidade, e nesse caso 12,5 unidades têm de ser estimadas entre duas marcas, ou a mistura ajustada para que o número caia sobre uma linha impressa. Olhe a sua própria seringa antes de supor a precisão que a calculadora sugere.",
       ],
     },
     {
       id: "water",
       heading: "Água bacteriostática ou água estéril?",
-      lead: "Água bacteriostática é água estéril com 0,9% de álcool benzílico, um conservante que inibe o crescimento bacteriano e permite entrar no frasco mais de uma vez. Água estéril não tem conservante, então, depois que o lacre é perfurado, ela não oferece proteção contra contaminação entre uma retirada e outra.",
+      lead: "Água bacteriostática é água estéril com 0,9% de álcool benzílico, um conservante que inibe o crescimento bacteriano e permite puncionar o frasco mais de uma vez. Água estéril não tem conservante, então, depois que o lacre é perfurado, ela não oferece proteção contra contaminação entre uma retirada e outra.",
       body: [
         "Nenhum dos dois líquidos muda a aritmética. 5 mL são 5 mL, e um frasco de 10 mg reconstituído com qualquer um dos dois dá 2 mg/mL. A escolha afeta por quanto tempo o frasco reconstituído continua utilizável e como ele deve ser guardado, não o volume que você puxa.",
         "Use o diluente indicado no rótulo do seu produto. Alguns peptídeos são especificados com água bacteriostática, outros com água estéril, outros com um diluente completamente diferente; o próprio álcool benzílico é a razão pela qual certos produtos nunca são reconstituídos com ela. Quando o rótulo e um post de fórum divergem, o rótulo vence.",
@@ -248,7 +248,7 @@ const pt: PeptidePageContent = {
       heading: "Erros comuns no cálculo da dose de peptídeo",
       lead: "A maioria dos erros de cálculo com peptídeos é erro de unidade, e são erros grandes: confundir microgramas com miligramas desloca a vírgula por um fator de 1.000, e ler uma seringa U-40 como se fosse U-100 erra o volume por um fator de 2,5. Os dois produzem um número que parece plausível na seringa.",
       body: [
-        "Supor que o volume de água é fixo vem em seguida. Não existe quantidade padrão de água bacteriostática para um frasco de 10 mg — 2 mL dão 5 mg/mL e 5 mL dão 2 mg/mL —, então um número de unidades copiado do frasco de outra pessoa está errado no seu. Recalcule para o volume que você realmente adicionou.",
+        "O erro seguinte é supor que o volume de água é fixo. Não existe quantidade padrão de água bacteriostática para um frasco de 10 mg — 2 mL dão 5 mg/mL e 5 mL dão 2 mg/mL —, então um número de unidades copiado do frasco de outra pessoa está errado no seu. Recalcule para o volume que você realmente adicionou.",
         "Reaproveitar um número depois de mudar a mistura é o mesmo erro em câmera lenta. Se 250 mcg eram 12,5 unidades no frasco anterior, continuam sendo 12,5 unidades neste só se a concentração for idêntica. Refaça a conta a cada reconstituição.",
         "O pó liofilizado ocupa um pouco de volume, então o líquido final pode ficar ligeiramente acima da água que você adicionou; a calculadora assume que isso não acontece. E um peptídeo rotulado em unidades internacionais, e não em miligramas, não entra em um cálculo baseado em mg sem o fator de conversão daquele produto específico.",
       ],
@@ -297,12 +297,12 @@ const pt: PeptidePageContent = {
     {
       question: "Quantos mL para reconstituir 10 mg?",
       answer:
-        "Qualquer volume entre cerca de 1 mL e a capacidade do frasco funciona, e cada um dá uma concentração diferente: 1 mL dá 10 mg/mL, 2 mL dão 5 mg/mL e 5 mL dão 2 mg/mL. Escolha o volume indicado no rótulo do produto e calcule a sua dose contra a concentração resultante.",
+        "Qualquer volume entre cerca de 1 mL e a capacidade do frasco funciona, e cada um dá uma concentração diferente: 1 mL dá 10 mg/mL, 2 mL dão 5 mg/mL e 5 mL dão 2 mg/mL. Escolha o volume indicado no rótulo do produto e calcule a sua dose com base na concentração resultante.",
     },
     {
       question: "Como reconstituir 30 mg de peptídeo?",
       answer:
-        "Adicione o volume escolhido de água bacteriostática devagar, pela parede do frasco, e deixe dissolver sem agitar. 3 mL em um frasco de 30 mg dão 10 mg/mL, e 6 mL dão 5 mg/mL. Divida 30 mg pelos mililitros que você adicionou para achar a concentração, depois converta a sua dose contra ela.",
+        "Adicione o volume escolhido de água bacteriostática devagar, pela parede do frasco, e deixe dissolver sem agitar. 3 mL em um frasco de 30 mg dão 10 mg/mL, e 6 mL dão 5 mg/mL. Divida 30 mg pelos mililitros que você adicionou para achar a concentração, depois converta a sua dose usando essa concentração.",
     },
     {
       question: "Quanta água usar para reconstituir 10 mg de peptídeo?",

@@ -1,5 +1,3 @@
-"use client";
-
 export type CalculatorMode = "forward" | "reverse";
 
 interface ModeSelectorProps {

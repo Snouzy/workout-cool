@@ -66,6 +66,11 @@ export function PeptideCalculatorClient({ defaultInput = DEFAULT_INPUT }: Peptid
   );
   const patch = (partial: Partial<PeptideInput>) => setInput((current) => ({ ...current, ...partial }));
 
+  const optionSteps = [
+    { number: "02", eyebrow: t("tools.peptide-calculator.step_2_eyebrow"), title: t("tools.peptide-calculator.step_2_title"), name: "vial", options: VIAL_MG_OPTIONS, suffix: "mg", value: input.vialMg, onChange: (vialMg: number) => patch({ vialMg }) },
+    { number: "03", eyebrow: t("tools.peptide-calculator.step_3_eyebrow"), title: t("tools.peptide-calculator.step_3_title"), name: "water", options: WATER_ML_OPTIONS, suffix: "ml", value: input.waterMl, onChange: (waterMl: number) => patch({ waterMl }) },
+  ];
+
   return (
     <div>
       <ModeSelector
@@ -93,29 +98,11 @@ export function PeptideCalculatorClient({ defaultInput = DEFAULT_INPUT }: Peptid
         </Step>
 
         <div className="flex flex-col gap-8">
-          <Step eyebrow={t("tools.peptide-calculator.step_2_eyebrow")} number="02" title={t("tools.peptide-calculator.step_2_title")}>
-            <OptionChips
-              legend={t("tools.peptide-calculator.step_2_title")}
-              name="vial"
-              onChange={(vialMg) => patch({ vialMg })}
-              options={VIAL_MG_OPTIONS}
-              otherLabel={t("tools.peptide-calculator.other")}
-              suffix="mg"
-              value={input.vialMg}
-            />
-          </Step>
-
-          <Step eyebrow={t("tools.peptide-calculator.step_3_eyebrow")} number="03" title={t("tools.peptide-calculator.step_3_title")}>
-            <OptionChips
-              legend={t("tools.peptide-calculator.step_3_title")}
-              name="water"
-              onChange={(waterMl) => patch({ waterMl })}
-              options={WATER_ML_OPTIONS}
-              otherLabel={t("tools.peptide-calculator.other")}
-              suffix="ml"
-              value={input.waterMl}
-            />
-          </Step>
+          {optionSteps.map((step) => (
+            <Step eyebrow={step.eyebrow} key={step.number} number={step.number} title={step.title}>
+              <OptionChips legend={step.title} name={step.name} onChange={step.onChange} options={step.options} otherLabel={t("tools.peptide-calculator.other")} suffix={step.suffix} value={step.value} />
+            </Step>
+          ))}
 
           <DoseInputStep
             doseMcg={input.doseMcg}

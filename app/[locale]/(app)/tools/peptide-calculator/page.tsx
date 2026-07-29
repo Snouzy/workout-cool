@@ -10,6 +10,7 @@ import { DEFAULT_INPUT } from "./lib/presets";
 
 import { getServerUrl } from "@/shared/lib/server-url";
 import { env } from "@/env";
+import { RelatedTools } from "@/components/tools/RelatedTools";
 import { generateSEOMetadata, SEOScripts } from "@/components/seo/SEOHead";
 import { HorizontalBottomBanner, HorizontalTopBanner } from "@/components/ads";
 
@@ -107,15 +108,22 @@ export default async function PeptideCalculatorPage({ params }: { params: Promis
         <div className="container relative z-10 mx-auto max-w-5xl px-2 py-6 sm:px-4">
           <div className="mb-8 text-center">
             <div className="mb-4 text-6xl">💉</div>
-            <h1 className="mb-4 text-3xl font-bold text-gray-900 dark:text-white sm:text-5xl">
-              {t("tools.peptide-calculator.title")}
-            </h1>
+            <h1 className="mb-4 text-3xl font-bold text-gray-900 dark:text-white sm:text-5xl">{t("tools.peptide-calculator.title")}</h1>
             <p className="mx-auto max-w-3xl text-xl text-gray-600 dark:text-gray-300">{content.heroSubtitle}</p>
           </div>
 
           <PeptideCalculatorClient defaultInput={DEFAULT_INPUT} />
 
           <SEOContentServer content={content} />
+
+          <RelatedTools
+            heading={t("tools.related_title")}
+            tools={[
+              { href: `/${locale}/tools/bmi-calculator`, label: t("tools.bmi-calculator.title") },
+              { href: `/${locale}/tools/calorie-calculator`, label: t("tools.calorie-calculator.title") },
+              { href: `/${locale}/tools/heart-rate-zones`, label: t("tools.heart-rate-calculator.title") },
+            ]}
+          />
         </div>
 
         {(env.NEXT_PUBLIC_BOTTOM_PEPTIDE_BANNER_AD_SLOT || env.NEXT_PUBLIC_EZOIC_BOTTOM_PEPTIDE_PLACEMENT_ID) && (

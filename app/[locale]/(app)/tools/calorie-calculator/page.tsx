@@ -1,11 +1,11 @@
-import React from "react";
 import { Metadata } from "next";
-
 import { getI18n } from "locales/server";
-import { getServerUrl } from "@/shared/lib/server-url";
-import { generateSEOMetadata, SEOScripts } from "@/components/seo/SEOHead";
 
 import { CalorieCalculatorHub } from "./CalorieCalculatorHub";
+
+import { getServerUrl } from "@/shared/lib/server-url";
+import { RelatedTools } from "@/components/tools/RelatedTools";
+import { generateSEOMetadata, SEOScripts } from "@/components/seo/SEOHead";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
@@ -71,6 +71,11 @@ export default async function CalorieCalculatorPage({ params }: { params: Promis
       <div className="light:bg-white dark:bg-base-200/20">
         <div className="container mx-auto px-2 sm:px-4 py-4 sm:py-8 max-w-4xl">
           <CalorieCalculatorHub />
+
+          <RelatedTools
+            heading={t("tools.related_title")}
+            tools={[{ href: `/${locale}/tools/peptide-calculator`, label: t("tools.peptide-calculator.title") }]}
+          />
         </div>
       </div>
     </>

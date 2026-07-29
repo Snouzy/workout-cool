@@ -38,7 +38,7 @@ export function SyringeSelector({ legend, value, onChange, unitsLabel }: Syringe
           />
 
           <div className="min-w-[4.5rem]">
-            <div className="text-lg font-bold text-base-content">{option.volumeMl} ml</div>
+            <div className="text-lg font-bold text-base-content">{option.volumeMl} mL</div>
             <div className="text-sm text-base-content/60">
               {option.capacity} {unitsLabel}
             </div>

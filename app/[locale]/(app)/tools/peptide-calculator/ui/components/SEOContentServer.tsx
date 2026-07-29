@@ -44,7 +44,7 @@ export function SEOContentServer({ content }: { content: PeptidePageContent }) {
     <article className="prose prose-lg mt-16 max-w-none dark:prose-invert">
       {content.sections.map((section) => {
         if (section.id === "faq") {
-          return <FAQAccordion items={content.faq} key={section.id} title={section.heading} />;
+          return <FAQAccordion items={content.faq} key={section.id} lead={section.lead} title={section.heading} />;
         }
 
         return (

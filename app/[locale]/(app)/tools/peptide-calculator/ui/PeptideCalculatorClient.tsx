@@ -68,7 +68,7 @@ export function PeptideCalculatorClient({ defaultInput = DEFAULT_INPUT }: Peptid
 
   const optionSteps = [
     { number: "02", eyebrow: t("tools.peptide-calculator.step_2_eyebrow"), title: t("tools.peptide-calculator.step_2_title"), name: "vial", options: VIAL_MG_OPTIONS, suffix: "mg", value: input.vialMg, onChange: (vialMg: number) => patch({ vialMg }) },
-    { number: "03", eyebrow: t("tools.peptide-calculator.step_3_eyebrow"), title: t("tools.peptide-calculator.step_3_title"), name: "water", options: WATER_ML_OPTIONS, suffix: "ml", value: input.waterMl, onChange: (waterMl: number) => patch({ waterMl }) },
+    { number: "03", eyebrow: t("tools.peptide-calculator.step_3_eyebrow"), title: t("tools.peptide-calculator.step_3_title"), name: "water", options: WATER_ML_OPTIONS, suffix: "mL", value: input.waterMl, onChange: (waterMl: number) => patch({ waterMl }) },
   ];
 
   return (

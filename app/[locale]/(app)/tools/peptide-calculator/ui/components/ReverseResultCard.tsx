@@ -38,7 +38,7 @@ export function ReverseResultCard({ doseMcg, concentrationMgPerMl, units, labels
 
           <div className="mt-6 rounded-xl bg-base-200 px-4 py-3">
             <div className="text-xs uppercase tracking-wide text-base-content/50">{labels.concentration}</div>
-            <div className="text-lg font-bold text-base-content">{round(concentrationMgPerMl, 3)} mg/ml</div>
+            <div className="text-lg font-bold text-base-content">{round(concentrationMgPerMl, 3)} mg/mL</div>
           </div>
         </>
       )}

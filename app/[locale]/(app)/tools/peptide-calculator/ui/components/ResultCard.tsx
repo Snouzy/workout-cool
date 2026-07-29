@@ -40,14 +40,14 @@ export function ResultCard({ result, capacity, doseMcg, labels }: ResultCardProp
               {round(result.units, 2)} {labels.units}
             </span>
             <span className="ml-3 block text-base font-normal text-base-content/60 sm:inline">
-              {doseMcg} mcg = {round(result.volumeMl, 4)} ml
+              {doseMcg} mcg = {round(result.volumeMl, 4)} mL
             </span>
           </h2>
 
           <div className="mt-6 flex flex-wrap gap-3">
             <div className="rounded-xl bg-base-200 px-4 py-3">
               <div className="text-xs uppercase tracking-wide text-base-content/50">{labels.concentration}</div>
-              <div className="text-lg font-bold text-base-content">{round(result.concentrationMgPerMl, 3)} mg/ml</div>
+              <div className="text-lg font-bold text-base-content">{round(result.concentrationMgPerMl, 3)} mg/mL</div>
             </div>
             <div className="rounded-xl bg-base-200 px-4 py-3">
               <div className="text-xs uppercase tracking-wide text-base-content/50">{labels.dosesPerVial}</div>

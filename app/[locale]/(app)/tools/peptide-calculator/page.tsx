@@ -1,0 +1,142 @@
+import { Metadata } from "next";
+import { Locale } from "locales/types";
+import { getI18n } from "locales/server";
+
+import { PeptideCalculatorClient } from "./ui/PeptideCalculatorClient";
+import { SEOContentServer } from "./ui/components/SEOContentServer";
+import { PEPTIDE_CALCULATOR_CONTENT, PEPTIDE_CALCULATOR_CONTENT_FALLBACK } from "./seo/page-content";
+import { PEPTIDE_CALCULATOR_SEO } from "./seo/config";
+import { DEFAULT_INPUT } from "./lib/presets";
+
+import { getServerUrl } from "@/shared/lib/server-url";
+import { env } from "@/env";
+import { generateSEOMetadata, SEOScripts } from "@/components/seo/SEOHead";
+import { HorizontalBottomBanner, HorizontalTopBanner } from "@/components/ads";
+
+const PATH = "/tools/peptide-calculator";
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: Locale }> }): Promise<Metadata> {
+  const { locale } = await params;
+  const seo = PEPTIDE_CALCULATOR_SEO[locale] || PEPTIDE_CALCULATOR_SEO.en;
+
+  return generateSEOMetadata({
+    title: seo.title,
+    description: seo.description,
+    keywords: seo.keywords,
+    locale,
+    canonical: `${getServerUrl()}/${locale}${PATH}`,
+    structuredData: {
+      type: "Calculator",
+      calculatorData: {
+        calculatorType: "peptide-calculator",
+        inputFields: ["syringe size", "vial amount in mg", "bacteriostatic water in ml", "dose in mcg"],
+        outputFields: ["units to draw on a U-100 syringe", "volume in ml", "concentration in mg/ml", "doses per vial"],
+        formula: "units = (doseMcg / 1000) / (vialMg / waterMl) x 100",
+        accuracy: "Exact unit conversion for U-100 insulin syringes",
+        targetAudience: ["fitness enthusiasts", "athletes"],
+        relatedCalculators: ["bmi-calculator", "calorie-calculator", "heart-rate-zones"],
+      },
+    },
+  });
+}
+
+export default async function PeptideCalculatorPage({ params }: { params: Promise<{ locale: Locale }> }) {
+  const { locale } = await params;
+  const t = await getI18n();
+  const seo = PEPTIDE_CALCULATOR_SEO[locale] || PEPTIDE_CALCULATOR_SEO.en;
+  const content = PEPTIDE_CALCULATOR_CONTENT[locale] ?? PEPTIDE_CALCULATOR_CONTENT_FALLBACK;
+  const url = `${getServerUrl()}/${locale}${PATH}`;
+
+  return (
+    <>
+      <SEOScripts
+        canonical={url}
+        description={seo.description}
+        hreflangPath={PATH}
+        locale={locale}
+        ogImage={`${getServerUrl()}/images/screenshots/peptide-calculator/og.jpg`}
+        title={seo.title}
+      />
+
+      <script
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify([
+            {
+              "@context": "https://schema.org",
+              "@type": "WebApplication",
+              name: seo.title,
+              applicationCategory: "HealthApplication",
+              operatingSystem: "Any",
+              isAccessibleForFree: true,
+              offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+              author: { "@type": "Organization", name: "WorkoutCool", url: getServerUrl() },
+              description: seo.description,
+              inLanguage: locale,
+              dateModified: new Date().toISOString().split("T")[0],
+            },
+            {
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              mainEntity: content.faq.map((item) => ({
+                "@type": "Question",
+                name: item.question,
+                acceptedAnswer: { "@type": "Answer", text: item.answer },
+              })),
+            },
+            {
+              "@context": "https://schema.org",
+              "@type": "HowTo",
+              name: seo.title,
+              description: content.heroSubtitle,
+              step: content.sections.slice(0, 4).map((section, index) => ({
+                "@type": "HowToStep",
+                position: index + 1,
+                name: section.heading,
+                text: section.lead,
+              })),
+            },
+            {
+              "@context": "https://schema.org",
+              "@type": "BreadcrumbList",
+              itemListElement: [
+                { "@type": "ListItem", position: 1, name: "Tools", item: `${getServerUrl()}/${locale}/tools` },
+                { "@type": "ListItem", position: 2, name: seo.title, item: url },
+              ],
+            },
+          ]),
+        }}
+        type="application/ld+json"
+      />
+
+      <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white dark:from-gray-900 dark:to-gray-800">
+        {(env.NEXT_PUBLIC_TOP_PEPTIDE_BANNER_AD_SLOT || env.NEXT_PUBLIC_EZOIC_TOP_PEPTIDE_PLACEMENT_ID) && (
+          <HorizontalTopBanner
+            adSlot={env.NEXT_PUBLIC_TOP_PEPTIDE_BANNER_AD_SLOT}
+            ezoicPlacementId={env.NEXT_PUBLIC_EZOIC_TOP_PEPTIDE_PLACEMENT_ID}
+          />
+        )}
+
+        <div className="container relative z-10 mx-auto max-w-5xl px-2 py-6 sm:px-4">
+          <div className="mb-8 text-center">
+            <div className="mb-4 text-6xl">💉</div>
+            <h1 className="mb-4 text-3xl font-bold text-gray-900 dark:text-white sm:text-5xl">
+              {t("tools.peptide-calculator.title")}
+            </h1>
+            <p className="mx-auto max-w-3xl text-xl text-gray-600 dark:text-gray-300">{content.heroSubtitle}</p>
+          </div>
+
+          <PeptideCalculatorClient defaultInput={DEFAULT_INPUT} />
+
+          <SEOContentServer content={content} />
+        </div>
+
+        {(env.NEXT_PUBLIC_BOTTOM_PEPTIDE_BANNER_AD_SLOT || env.NEXT_PUBLIC_EZOIC_BOTTOM_PEPTIDE_PLACEMENT_ID) && (
+          <HorizontalBottomBanner
+            adSlot={env.NEXT_PUBLIC_BOTTOM_PEPTIDE_BANNER_AD_SLOT}
+            ezoicPlacementId={env.NEXT_PUBLIC_EZOIC_BOTTOM_PEPTIDE_PLACEMENT_ID}
+          />
+        )}
+      </div>
+    </>
+  );
+}

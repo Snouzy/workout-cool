@@ -6,6 +6,12 @@ interface SyringeRulerProps {
 
 const LABEL_EVERY = 5;
 
+function getLabelTransformClass(fillPercent: number): string {
+  if (fillPercent < 10) return "translate-x-0";
+  if (fillPercent > 90) return "-translate-x-full";
+  return "-translate-x-1/2";
+}
+
 export function SyringeRuler({ units, capacity, unitsLabel }: SyringeRulerProps) {
   const ticks = Array.from({ length: capacity + 1 }, (_, index) => index);
   const clamped = Math.min(Math.max(units, 0), capacity);
@@ -48,7 +54,7 @@ export function SyringeRuler({ units, capacity, unitsLabel }: SyringeRulerProps)
 
       <div className="relative h-6">
         <span
-          className="absolute -translate-x-1/2 rounded-md bg-primary px-2 py-0.5 text-xs font-bold text-primary-content"
+          className={`absolute rounded-md bg-primary px-2 py-0.5 text-xs font-bold text-primary-content ${getLabelTransformClass(fillPercent)}`}
           style={{ left: `${fillPercent}%` }}
         >
           {units} {unitsLabel}

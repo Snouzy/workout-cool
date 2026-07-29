@@ -21,15 +21,7 @@ interface SEOHeadProps {
     datePublished?: string;
     dateModified?: string;
     calculatorData?: {
-      calculatorType:
-        | "calorie"
-        | "macro"
-        | "bmi"
-        | "heart-rate"
-        | "heart-rate-zones"
-        | "one-rep-max"
-        | "rest-timer"
-        | "peptide-calculator";
+      calculatorType: "calorie" | "macro" | "bmi" | "heart-rate" | "heart-rate-zones" | "one-rep-max" | "rest-timer";
       inputFields: string[];
       outputFields: string[];
       formula?: string;

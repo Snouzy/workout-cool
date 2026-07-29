@@ -25,18 +25,6 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: L
     keywords: seo.keywords,
     locale,
     canonical: `${getServerUrl()}/${locale}${PATH}`,
-    structuredData: {
-      type: "Calculator",
-      calculatorData: {
-        calculatorType: "peptide-calculator",
-        inputFields: ["syringe size", "vial amount in mg", "bacteriostatic water in ml", "dose in mcg"],
-        outputFields: ["units to draw on a U-100 syringe", "volume in ml", "concentration in mg/ml", "doses per vial"],
-        formula: "units = (doseMcg / 1000) / (vialMg / waterMl) x 100",
-        accuracy: "Exact unit conversion for U-100 insulin syringes",
-        targetAudience: ["fitness enthusiasts", "athletes"],
-        relatedCalculators: ["bmi-calculator", "calorie-calculator", "heart-rate-zones"],
-      },
-    },
   });
 }
 

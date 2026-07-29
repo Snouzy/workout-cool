@@ -43,15 +43,7 @@ export interface StructuredDataProps {
   };
   // Calculator-specific fields
   calculatorData?: {
-    calculatorType:
-      | "calorie"
-      | "macro"
-      | "bmi"
-      | "heart-rate"
-      | "heart-rate-zones"
-      | "one-rep-max"
-      | "rest-timer"
-      | "peptide-calculator";
+    calculatorType: "calorie" | "macro" | "bmi" | "heart-rate" | "heart-rate-zones" | "one-rep-max" | "rest-timer";
     inputFields: string[];
     outputFields: string[];
     formula?: string;
@@ -549,7 +541,7 @@ export function generateStructuredData({
         },
       };
 
-      const keywordsForType = calculatorKeywords[calculatorData.calculatorType as keyof typeof calculatorKeywords];
+      const keywordsForType = calculatorKeywords[calculatorData.calculatorType];
       const currentKeywords = keywordsForType?.[locale as keyof typeof keywordsForType] || keywordsForType?.en || [];
 
       return {

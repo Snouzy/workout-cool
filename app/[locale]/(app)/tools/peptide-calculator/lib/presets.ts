@@ -36,6 +36,7 @@ export const SYRINGE_OPTIONS: SyringeOption[] = [
 export const VIAL_MG_OPTIONS = [5, 10, 20, 50, 100];
 export const WATER_ML_OPTIONS = [1, 2, 3, 5];
 export const DOSE_MCG_OPTIONS = [50, 100, 250, 500];
+export const UNITS_OPTIONS = [5, 10, 25, 50];
 
 export const DEFAULT_INPUT = {
   vialMg: 10,

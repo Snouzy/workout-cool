@@ -331,16 +331,16 @@ const pt: PeptidePageContent = {
 
 const fr: PeptidePageContent = {
   heroSubtitle:
-    "Indiquez la quantité de votre flacon, l'eau bactériostatique que vous avez ajoutée et votre dose. Obtenez le volume exact en millilitres et la graduation à atteindre sur une seringue à insuline U-100.",
+    "Indiquez la quantité inscrite sur votre flacon, l'eau bactériostatique que vous avez ajoutée et votre dose. Vous obtenez le volume exact en millilitres et la graduation à atteindre sur une seringue à insuline U-100.",
   sections: [
     {
       id: "how-to",
       heading: "Comment utiliser ce calculateur de peptides",
-      lead: "Trois nombres suffisent à ce calculateur de peptides : les milligrammes de peptide inscrits sur le flacon, les millilitres d'eau bactériostatique que vous ajoutez, et la dose en mcg que vous voulez prélever. Entrez-les et vous obtenez le volume en millilitres et la graduation correspondante sur votre seringue à insuline.",
+      lead: "Trois nombres suffisent à ce calculateur de peptides : les milligrammes de peptide inscrits sur le flacon, les millilitres d'eau bactériostatique que vous ajoutez et la dose en mcg que vous voulez prélever. Entrez-les et vous obtenez le volume en millilitres et la graduation correspondante sur votre seringue à insuline.",
       body: [
-        "Commencez par le flacon. L'étiquette qui indique 10 mg donne la masse de peptide sec, pas un volume : il n'y a rien à mesurer avant d'avoir ajouté du liquide. Entrez 10 mg comme quantité de flacon.",
-        "Entrez ensuite l'eau bactériostatique. C'est le volume que vous poussez dans le flacon, et il vous appartient dans la limite de sa contenance : 5 mL d'eau dans un flacon de 10 mg donnent une concentration de 2 mg/mL. Moins d'eau, solution plus concentrée et volume plus petit par dose ; plus d'eau, solution plus diluée et volume plus grand, donc plus facile à mesurer.",
-        "Entrez la dose en dernier, en mcg, telle qu'elle figure sur votre ordonnance ou sur l'étiquette du produit. Le calculateur ne juge pas ce nombre, il le convertit. Une dose de 250 mcg à 2 mg/mL occupe 0,125 mL, soit 12,5 unités sur une seringue U-100, et le flacon de 10 mg contient 40 doses de cette taille.",
+        "Commencez par le flacon. L'étiquette qui indique 10 mg donne la masse de peptide sec, pas un volume : il n'y a rien à mesurer avant d'avoir ajouté du liquide. Entrez 10 mg comme quantité dans le flacon.",
+        "Entrez ensuite l'eau bactériostatique. C'est le volume que vous poussez dans le flacon, et c'est vous qui le choisissez, dans la limite de la contenance du flacon : 5 mL d'eau dans un flacon de 10 mg donnent une concentration de 2 mg/mL. Moins d'eau, solution plus concentrée et volume plus petit par dose ; plus d'eau, solution plus diluée et volume plus grand, donc plus facile à mesurer.",
+        "Entrez la dose en dernier, en mcg, telle qu'elle figure sur votre ordonnance ou sur l'étiquette du produit. Le calculateur ne juge pas ce nombre, il le convertit. Une dose de 250 mcg à 2 mg/mL occupe 0,125 mL, soit 12,5 unités sur une seringue U-100, et le flacon de 10 mg en contient 40.",
         "Lisez le résultat sur le schéma de la seringue avant de prélever. Le nombre d'unités est la graduation où vous alignez le piston ; le volume en millilitres est cette même quantité dans l'unité imprimée sur le corps d'une seringue à tuberculine. Les deux décrivent un seul et même volume.",
       ],
     },
@@ -349,8 +349,8 @@ const fr: PeptidePageContent = {
       heading: "La formule de reconstitution des peptides",
       lead: "La reconstitution d'un peptide tient en deux divisions : la concentration est la masse de peptide divisée par le volume d'eau, et le volume de la dose est la dose divisée par la concentration. Un flacon de 10 mg reconstitué avec 5 mL d'eau bactériostatique donne 2 mg/mL, donc 250 mcg occupent 0,125 mL.",
       body: [
-        "Ramenez tout à une seule unité de masse avant de diviser, sinon le calcul s'effondre. Un microgramme et un milligramme sont séparés par un facteur 1 000 : 250 mcg valent 0,25 mg, et 1 000 mcg valent 1 mg. Chaque confusion entre les deux devient une erreur de mille fois sur le volume prélevé.",
-        "Suivez l'exemple pas à pas. 10 mg de peptide divisés par 5 mL d'eau font 2 mg/mL. La dose de 250 mcg vaut 0,25 mg. 0,25 mg divisés par 2 mg/mL font 0,125 mL. Ce volume est la réponse en millilitres ; tout ce qui vient après n'est qu'un changement d'échelle, pas de quantité.",
+        "Ramenez tout à une seule unité de masse avant de diviser, sinon le calcul s'effondre. Un facteur 1 000 sépare le microgramme du milligramme : 250 mcg valent 0,25 mg, et 1 000 mcg valent 1 mg. Chaque confusion entre les deux fausse le volume prélevé d'un facteur 1 000.",
+        "10 mg de peptide divisés par 5 mL d'eau font 2 mg/mL. La dose de 250 mcg vaut 0,25 mg. 0,25 mg divisé par 2 mg/mL fait 0,125 mL. Ce volume est la réponse en millilitres ; tout ce qui vient après n'est qu'un changement d'échelle, pas de quantité.",
         "Le nombre de doses par flacon sort des deux mêmes nombres : peptide total divisé par la dose. 10 mg valent 10 000 mcg, et 10 000 divisés par 250 donnent 40 doses. Ce chiffre sert de contrôle rapide : si le calculateur annonce trois doses de 250 mcg dans un flacon de 10 mg, une de vos entrées est fausse.",
       ],
     },
@@ -360,7 +360,7 @@ const fr: PeptidePageContent = {
       lead: "Les lignes d'un tableau de reconstitution sont de l'arithmétique, pas des suggestions : chacune associe une masse de peptide à un volume d'eau bactériostatique et donne la concentration obtenue. 10 mg avec 2 mL donnent 5 mg/mL ; les mêmes 10 mg avec 5 mL donnent 2 mg/mL. Ajouter de l'eau ne change jamais la masse de peptide.",
       body: [
         "Choisissez une ligne selon le volume que vous voulez mesurer, pas selon le chiffre le plus rond. Une concentration élevée signifie moins de liquide par injection et moins d'eau qui dort dans le flacon ; une concentration faible étale la même dose sur plus de graduations, ce qui rend les petites doses plus lisibles.",
-        "Aucune ligne de ce tableau ne dit quelle quantité de peptide utiliser. Chaque ligne contient la même masse totale avant et après le mélange : ajouter de l'eau change la concentration et le volume prélevé, jamais la quantité de peptide dans le flacon. Votre dose vient de votre prescripteur ou de l'étiquette du produit ; le tableau dit seulement ce que donne un mélange donné.",
+        "Aucune ligne de ce tableau ne dit quelle quantité de peptide utiliser. Chaque ligne contient la même masse totale avant et après le mélange : ajouter de l'eau change la concentration et le volume prélevé, jamais la quantité de peptide dans le flacon. Votre dose vient de votre prescripteur ou de l'étiquette du produit ; le tableau indique seulement le résultat d'un mélange donné.",
       ],
     },
     {
@@ -368,19 +368,19 @@ const fr: PeptidePageContent = {
       heading: "Convertir des mcg en unités de seringue à insuline",
       lead: "Les unités de seringue à insuline se déduisent des mcg par une seule formule : les unités valent la dose en mcg divisée par dix fois la concentration en mg/mL. À 2 mg/mL, une dose de 250 mcg fait 250 divisé par 20, soit 12,5 unités. La même dose à 10 mg/mL fait 2,5 unités.",
       body: [
-        "Le facteur dix vient de la seringue, pas du peptide. Une unité sur une seringue U-100 vaut 0,01 mL, donc 0,125 mL font 12,5 unités. Multiplier le volume en millilitres par 100 donne le même résultat, aussi sûrement que la formule.",
-        "Concentration et unités varient en sens inverse. Doublez la concentration et les unités sont divisées par deux, puisque la même masse de peptide tient dans deux fois moins de liquide. C'est pourquoi une même ligne du tableau de conversion donne 12,5 unités, puis 5, puis 2,5 : une dose, trois mélanges, trois graduations différentes.",
+        "Le facteur dix vient de la seringue, pas du peptide. Une unité sur une seringue U-100 vaut 0,01 mL, donc 0,125 mL fait 12,5 unités. Multiplier le volume en millilitres par 100 donne le même résultat, aussi sûrement que la formule.",
+        "Concentration et unités varient en sens inverse. Doublez la concentration et les unités diminuent de moitié, puisque la même masse de peptide tient dans deux fois moins de liquide. C'est pourquoi une même ligne du tableau de conversion donne 12,5 unités, puis 5, puis 2,5 : une dose, trois mélanges, trois graduations différentes.",
         "Vérifiez quelle seringue vous avez en main avant de vous fier à un nombre d'unités. Une seringue U-100 compte 100 unités par millilitre, une U-40 n'en compte que 40, et les mêmes 0,125 mL y feraient 5 unités. Une unité est une graduation imprimée sur un corps de seringue, pas une quantité fixe.",
       ],
     },
     {
       id: "u100",
       heading: "Pourquoi une seringue U-100 est graduée à 100 unités par millilitre",
-      lead: "U-100 est une norme de concentration de l'insuline : 100 unités internationales par millilitre. Le corps de la seringue est gradué pour que 100 unités remplissent exactement 1 mL, ce qui fait une unité à 0,01 mL. Sur un peptide reconstitué, cette échelle ne dit rien de l'insuline : c'est une règle graduée en centièmes de millilitre.",
+      lead: "U-100 est une norme de concentration de l'insuline : 100 unités internationales par millilitre. Le corps de la seringue est gradué pour que 100 unités remplissent exactement 1 mL, ce qui fait une unité de 0,01 mL. Pour un peptide reconstitué, cette échelle ne dit rien de l'insuline : c'est une règle graduée en centièmes de millilitre.",
       body: [
         "La contenance de la seringue et l'échelle des unités sont deux choses distinctes. Une seringue U-100 de 0,3 mL est graduée jusqu'à 30 unités, une de 0,5 mL jusqu'à 50, une de 1 mL jusqu'à 100 ; dans les trois cas, une unité vaut 0,01 mL. Un prélèvement de 12,5 unités passe dans les trois ; 60 unités ne passent pas dans les deux premières.",
         "Les petits corps de seringue se lisent mieux. Sur une seringue de 0,3 mL, les graduations sont plus espacées : 12,5 unités tombent nettement entre deux traits au lieu d'être écrasées contre eux. Quand le volume calculé y tient, la plus petite seringue donne le prélèvement le plus précis.",
-        "Les demi-graduations ne sont pas imprimées sur toutes les seringues. Certains corps ne portent que des traits d'une unité : vous devez alors estimer 12,5 unités entre deux traits, ou ajuster le mélange pour que le nombre tombe sur un trait imprimé. Regardez votre propre seringue avant de croire à la précision que le calculateur suggère.",
+        "Les demi-graduations ne sont pas imprimées sur toutes les seringues. Certains corps sont gradués à l'unité seulement : vous devez alors estimer 12,5 unités entre deux traits, ou ajuster le mélange pour que le nombre tombe sur un trait imprimé. Regardez votre propre seringue avant de croire à la précision que le calculateur suggère.",
       ],
     },
     {
@@ -398,9 +398,9 @@ const fr: PeptidePageContent = {
       heading: "Erreurs fréquentes dans le calcul d'une dose de peptide",
       lead: "La plupart des erreurs de calcul d'une dose de peptide sont des erreurs d'unité, et elles sont énormes : confondre les mcg et les mg fausse le volume d'un facteur 1 000, et lire une seringue U-40 comme une U-100 le fausse d'un facteur 2,5. Les deux donnent un nombre crédible sur la seringue.",
       body: [
-        "Croire que le volume d'eau est imposé vient juste après. Il n'existe pas de quantité standard d'eau bactériostatique pour un flacon de 10 mg — 2 mL donnent 5 mg/mL, 5 mL donnent 2 mg/mL — donc un nombre d'unités recopié du flacon de quelqu'un d'autre est faux sur le vôtre. Recalculez avec le volume que vous avez réellement ajouté.",
+        "L'erreur suivante consiste à croire que le volume d'eau est imposé. Il n'existe pas de quantité standard d'eau bactériostatique pour un flacon de 10 mg — 2 mL donnent 5 mg/mL, 5 mL donnent 2 mg/mL — donc un nombre d'unités recopié du flacon de quelqu'un d'autre est faux sur le vôtre. Recalculez avec le volume que vous avez réellement ajouté.",
         "Réutiliser un chiffre après avoir changé le mélange est la même erreur au ralenti. Si 250 mcg faisaient 12,5 unités sur votre flacon précédent, ils font 12,5 unités sur celui-ci uniquement à concentration identique. Refaites le calcul à chaque reconstitution.",
-        "La poudre lyophilisée occupe elle-même un peu de volume : le liquide final peut donc monter légèrement au-dessus de l'eau que vous avez ajoutée, et le calculateur suppose que non. Et un peptide étiqueté en unités internationales plutôt qu'en milligrammes n'entre pas dans un calcul en mg sans le facteur de conversion propre à ce produit.",
+        "La poudre lyophilisée occupe elle-même un peu de volume : le volume final peut donc dépasser légèrement le volume d'eau que vous avez ajouté, et le calculateur n'en tient pas compte. Autre limite : un peptide étiqueté en unités internationales plutôt qu'en milligrammes n'entre pas dans un calcul en mg sans le facteur de conversion propre à ce produit.",
       ],
     },
     {
@@ -447,12 +447,12 @@ const fr: PeptidePageContent = {
     {
       question: "Combien de mL pour reconstituer 10 mg ?",
       answer:
-        "Tout volume entre environ 1 mL et la contenance du flacon fonctionne, et chacun donne une concentration différente : 1 mL donne 10 mg/mL, 2 mL donnent 5 mg/mL, 5 mL donnent 2 mg/mL. Prenez le volume indiqué sur l'étiquette de votre produit, puis calculez votre dose sur la concentration obtenue.",
+        "Tout volume entre environ 1 mL et la contenance du flacon fonctionne, et chacun donne une concentration différente : 1 mL donne 10 mg/mL, 2 mL donnent 5 mg/mL, 5 mL donnent 2 mg/mL. Prenez le volume indiqué sur l'étiquette de votre produit, puis calculez votre dose d'après la concentration obtenue.",
     },
     {
       question: "Comment reconstituer 30 mg de peptide ?",
       answer:
-        "Versez le volume d'eau bactériostatique choisi lentement le long de la paroi du flacon et laissez dissoudre sans secouer. 3 mL dans un flacon de 30 mg donnent 10 mg/mL, 6 mL donnent 5 mg/mL. Divisez 30 mg par les millilitres ajoutés pour la concentration, puis convertissez votre dose.",
+        "Versez lentement, le long de la paroi du flacon, le volume d'eau bactériostatique choisi, et laissez la poudre se dissoudre sans secouer. 3 mL dans un flacon de 30 mg donnent 10 mg/mL, 6 mL donnent 5 mg/mL. Divisez 30 mg par les millilitres ajoutés pour la concentration, puis convertissez votre dose.",
     },
     {
       question: "Quelle quantité d'eau pour reconstituer 10 mg de peptide ?",
@@ -462,7 +462,7 @@ const fr: PeptidePageContent = {
     {
       question: "Comment faire le calcul de la reconstitution ?",
       answer:
-        "Deux divisions suffisent. D'abord, la masse de peptide divisée par le volume d'eau donne la concentration en mg/mL. Ensuite, votre dose divisée par cette concentration donne le volume en mL. Multipliez ce volume par 100 pour les unités sur une seringue U-100. Convertissez d'abord les mcg en mg : 250 mcg valent 0,25 mg.",
+        "Deux divisions suffisent. D'abord, la masse de peptide divisée par le volume d'eau donne la concentration en mg/mL. Ensuite, votre dose divisée par cette concentration donne le volume en mL. Multipliez ce volume par 100 pour les unités sur une seringue U-100. Convertissez les mcg en mg au préalable : 250 mcg valent 0,25 mg.",
     },
     {
       question: "Combien d'unités font 250 mcg sur une seringue à insuline ?",

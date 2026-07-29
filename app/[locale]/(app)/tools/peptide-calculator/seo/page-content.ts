@@ -479,7 +479,157 @@ const fr: PeptidePageContent = {
     "Outil de conversion uniquement. Vérifiez toujours la concentration, l'échelle d'unités de votre seringue et toute ordonnance auprès d'un professionnel de santé qualifié. Ce calculateur ne donne pas d'avis médical.",
 };
 
-export const PEPTIDE_CALCULATOR_CONTENT: Partial<Record<Locale, PeptidePageContent>> = { en, fr, pt };
+const es: PeptidePageContent = {
+  heroSubtitle:
+    "Introduce la cantidad que indica tu vial, el agua bacteriostática que añadiste y tu dosis. Obtienes el volumen exacto en mililitros y hasta qué graduación cargar en una jeringa de insulina U-100.",
+  sections: [
+    {
+      id: "how-to",
+      heading: "Cómo usar esta calculadora de péptidos",
+      lead: "Esta calculadora de péptidos trabaja con tres números: los miligramos de péptido impresos en el vial, los mililitros de agua bacteriostática que añades y la dosis en mcg que quieres cargar. Introdúcelos y obtienes el volumen en mililitros y la graduación correspondiente en tu jeringa de insulina.",
+      body: [
+        "Empieza por el vial. Una etiqueta que dice 10 mg indica la masa de péptido seco, no un volumen: no hay nada que medir hasta que añades líquido. Introduce 10 mg como cantidad en el vial.",
+        "Introduce después el agua bacteriostática. Es el volumen que empujas en el vial, y lo eliges tú dentro de su capacidad: 5 mL de agua en un vial de 10 mg dan una concentración de 2 mg/mL. Con menos agua la solución queda más concentrada y el volumen por dosis es menor; con más agua queda más diluida y el volumen es mayor, más fácil de medir.",
+        "Introduce la dosis al final, en mcg, tal como aparece en tu receta o en la etiqueta del producto. La calculadora no juzga ese número: lo convierte. Una dosis de 250 mcg a 2 mg/mL ocupa 0,125 mL, es decir 12,5 unidades en una jeringa U-100, y el vial de 10 mg contiene 40 dosis así.",
+        "Lee el resultado en el diagrama de la jeringa antes de cargar. La cifra en unidades es la graduación donde alineas el émbolo; la cifra en mililitros es esa misma cantidad en la unidad impresa en el cuerpo de una jeringa de tuberculina. Las dos describen el mismo volumen.",
+      ],
+    },
+    {
+      id: "formula",
+      heading: "La fórmula de la reconstitución de péptidos",
+      lead: "Reconstituir un péptido son dos divisiones: la concentración es la masa de péptido dividida entre el volumen de agua, y el volumen de la dosis es la dosis dividida entre la concentración. Un vial de 10 mg con 5 mL de agua bacteriostática da 2 mg/mL, así que 250 mcg ocupan 0,125 mL.",
+      body: [
+        "Pasa todo a una sola unidad de masa antes de dividir, o la cuenta no cuadra. Entre el microgramo y el miligramo hay un factor de 1000: 250 mcg son 0,25 mg, y 1000 mcg son 1 mg. Cada confusión entre los dos falsea el volumen que cargas por un factor de 1000.",
+        "10 mg de péptido divididos entre 5 mL de agua dan 2 mg/mL. La dosis de 250 mcg equivale a 0,25 mg, y 0,25 mg entre 2 mg/mL da 0,125 mL. Ese volumen es la respuesta en mililitros; todo lo que viene después es un cambio de escala, no de cantidad.",
+        "Las dosis por vial salen de los mismos dos números: péptido total dividido entre la dosis. 10 mg son 10 000 mcg, y 10 000 entre 250 dan 40 dosis. Esa cifra sirve de comprobación rápida: si la calculadora dice que un vial de 10 mg rinde tres dosis de 250 mcg, algún dato que introdujiste está mal.",
+      ],
+    },
+    {
+      id: "chart",
+      heading: "Tabla de reconstitución de péptidos",
+      lead: "Las filas de una tabla de reconstitución de péptidos son aritmética, no sugerencias: cada una cruza una masa de péptido con un volumen de agua bacteriostática y da la concentración resultante. 10 mg con 2 mL dan 5 mg/mL; los mismos 10 mg con 5 mL dan 2 mg/mL. Añadir agua nunca cambia la masa de péptido.",
+      body: [
+        "Elige una fila por el volumen que quieres medir, no por la cifra que parece más redonda. Una concentración alta significa menos líquido por inyección y menos agua parada en el vial; una concentración baja reparte la misma dosis entre más unidades de la jeringa, y las dosis pequeñas resultan más fáciles de leer con precisión.",
+        "Ninguna fila de esta tabla dice cuánto péptido usar. Todas guardan la misma masa total antes y después de la mezcla: añadir agua cambia la concentración y el volumen que cargas, nunca la cantidad de péptido que hay dentro del vial. Tu dosis viene de quien te la prescribe o de la etiqueta del producto; la tabla solo dice qué concentración da una mezcla determinada.",
+      ],
+    },
+    {
+      id: "conversion",
+      heading: "Convertir mcg a unidades de jeringa de insulina",
+      lead: "Las unidades de una jeringa de insulina salen de los mcg con una sola fórmula: las unidades son la dosis en mcg dividida entre diez veces la concentración en mg/mL. A 2 mg/mL, una dosis de 250 mcg es 250 entre 20, o sea 12,5 unidades. La misma dosis a 10 mg/mL son 2,5 unidades.",
+      body: [
+        "El factor diez viene de la jeringa, no del péptido. Una unidad en una jeringa U-100 es 0,01 mL, así que 0,125 mL equivale a 12,5 unidades. Multiplicar la cifra en mililitros por 100 da el mismo resultado, con la misma fiabilidad que la fórmula.",
+        "Concentración y unidades van en sentidos opuestos. Duplica la concentración y las unidades caen a la mitad, porque la misma masa de péptido queda comprimida en la mitad de líquido. Por eso una sola fila de la tabla de conversión da 12,5 unidades, luego 5 y luego 2,5: una dosis, tres mezclas, tres graduaciones distintas.",
+        "Comprueba qué jeringa tienes en la mano antes de fiarte de una cifra de unidades. Una jeringa U-100 marca 100 unidades por mililitro; una U-40 marca 40 unidades por mililitro, y esos mismos 0,125 mL serían 5 unidades en ella. Una unidad es una escala impresa en un cuerpo de jeringa, no una cantidad fija.",
+      ],
+    },
+    {
+      id: "u100",
+      heading: "Por qué una jeringa U-100 marca 100 unidades por mililitro",
+      lead: "U-100 es un estándar de concentración de insulina: 100 unidades internacionales por mililitro. El cuerpo de la jeringa está graduado para que 100 unidades llenen exactamente 1 mL, así que una unidad equivale a 0,01 mL. En un péptido reconstituido esa escala no dice nada de insulina: es una regla graduada en centésimas de mililitro.",
+      body: [
+        "La capacidad de la jeringa y la escala de unidades son dos cosas distintas. Una jeringa U-100 de 0,3 mL está graduada hasta 30 unidades, una de 0,5 mL hasta 50 y una de 1 mL hasta 100; en las tres, una unidad vale 0,01 mL. Una carga de 12,5 unidades entra en las tres; una de 60 unidades no entra en las dos primeras.",
+        "Una jeringa pequeña te da una lectura más clara. En una de 0,3 mL las graduaciones quedan más separadas, así que 12,5 unidades caen claramente entre dos marcas en lugar de apretadas contra ellas. Cuando el volumen calculado cabe, la jeringa más pequeña te da la carga más precisa.",
+        "Las marcas de media unidad no están impresas en todas las jeringas. Algunos cuerpos vienen graduados solo de unidad en unidad, y entonces tienes que estimar 12,5 unidades entre dos marcas, o ajustar la mezcla para que la cifra caiga sobre una línea impresa. Mira tu propia jeringa antes de dar por buena la precisión que sugiere la calculadora.",
+      ],
+    },
+    {
+      id: "water",
+      heading: "¿Agua bacteriostática o agua estéril?",
+      lead: "El agua bacteriostática es agua estéril con un 0,9 % de alcohol bencílico, un conservante que frena el crecimiento bacteriano y permite pinchar el vial más de una vez. El agua estéril no lleva conservante, así que una vez perforado su sello no protege de la contaminación entre una carga y otra.",
+      body: [
+        "Ninguno de los dos líquidos cambia la aritmética. 5 mL son 5 mL, y un vial de 10 mg reconstituido con uno o con otro da 2 mg/mL. La elección cambia cuánto tiempo dura el vial reconstituido y cómo guardarlo, no el volumen que cargas.",
+        "Usa el diluyente que indica la etiqueta de tu producto. Algunos péptidos piden agua bacteriostática, otros agua estéril y otros un diluyente distinto; el propio alcohol bencílico es la razón por la que ciertos productos nunca llevan agua bacteriostática. Cuando la etiqueta y un mensaje de foro se contradicen, manda la etiqueta.",
+        "Echa el agua despacio, por la pared interior del vial en lugar de lanzarla sobre el polvo, y deja el vial quieto hasta que la solución quede transparente. No lo agites. Los péptidos son moléculas frágiles, y la agitación las degrada sin cambiar nada de lo que mide la calculadora.",
+      ],
+    },
+    {
+      id: "mistakes",
+      heading: "Errores frecuentes al calcular una dosis de péptido",
+      lead: "La mayoría de los errores al calcular una dosis de péptido son errores de unidad, y son enormes: confundir mcg con mg falsea el volumen por un factor de 1000, y leer una jeringa U-40 como si fuera U-100 lo falsea por un factor de 2,5. Los dos dan una cifra creíble en la jeringa.",
+      body: [
+        "El error siguiente consiste en creer que el volumen de agua es fijo. No existe una cantidad estándar de agua bacteriostática para un vial de 10 mg —2 mL dan 5 mg/mL y 5 mL dan 2 mg/mL—, así que una cifra de unidades copiada del vial de otra persona está mal en el tuyo. Vuelve a calcular con el volumen que añadiste realmente.",
+        "Reutilizar una cifra después de cambiar la mezcla es el mismo error a cámara lenta. Si 250 mcg eran 12,5 unidades en tu vial anterior, siguen siendo 12,5 unidades en este solo si la concentración es idéntica. Repite la cuenta cada vez que reconstituyes.",
+        "El polvo liofilizado ocupa algo de volumen, así que el volumen final puede superar ligeramente el volumen de agua que añadiste, y la calculadora no lo tiene en cuenta. Otro límite: un péptido etiquetado en unidades internacionales y no en miligramos no entra en un cálculo en mg sin el factor de conversión propio de ese producto.",
+      ],
+    },
+    {
+      id: "faq",
+      heading: "Preguntas frecuentes",
+      lead: "Las preguntas más frecuentes sobre reconstitución de péptidos, volumen de agua bacteriostática y unidades de jeringa de insulina tienen respuesta más abajo. Cada respuesta aplica los dos mismos pasos de la calculadora: divide la masa de péptido entre el volumen de agua para la concentración, y luego la dosis entre esa concentración para el volumen.",
+      body: [],
+    },
+  ],
+  reconstitutionTable: {
+    caption: "Tabla de reconstitución de péptidos",
+    headers: ["Cantidad de péptido", "Agua bacteriostática añadida", "Concentración final"],
+    rows: [
+      ["5 mg", "1 mL", "5 mg/mL"],
+      ["5 mg", "2 mL", "2.5 mg/mL"],
+      ["10 mg", "2 mL", "5 mg/mL"],
+      ["10 mg", "5 mL", "2 mg/mL"],
+      ["15 mg", "3 mL", "5 mg/mL"],
+      ["20 mg", "4 mL", "5 mg/mL"],
+      ["30 mg", "3 mL", "10 mg/mL"],
+    ],
+  },
+  conversionTable: {
+    caption: "Dosis convertida en unidades de jeringa de insulina",
+    headers: ["Dosis", "a 2 mg/mL", "a 5 mg/mL", "a 10 mg/mL"],
+    rows: [
+      ["250 mcg", "12.5 U", "5 U", "2.5 U"],
+      ["500 mcg", "25 U", "10 U", "5 U"],
+      ["1000 mcg", "50 U", "20 U", "10 U"],
+      ["2000 mcg", "100 U", "40 U", "20 U"],
+    ],
+  },
+  faq: [
+    {
+      question: "¿Cómo calcular la reconstitución de péptidos?",
+      answer:
+        "Divide la masa de péptido entre el volumen de agua bacteriostática para obtener la concentración, y luego tu dosis entre esa concentración para obtener el volumen que tienes que cargar. Un vial de 10 mg con 5 mL de agua da 2 mg/mL, así que una dosis de 250 mcg es 0,125 mL, o 12,5 unidades.",
+    },
+    {
+      question: "¿Cuántos mL de agua bacteriostática mezclar con un péptido?",
+      answer:
+        "Cualquier volumen que quepa en el vial: la cantidad que añades fija la concentración, no la potencia del producto. 2 mL en un vial de 10 mg dan 5 mg/mL; 5 mL dan 2 mg/mL. Los volúmenes grandes hacen que las dosis pequeñas sean más fáciles de leer. Sigue el volumen de diluyente que indica la etiqueta.",
+    },
+    {
+      question: "¿Cuántos mL para reconstituir 10 mg?",
+      answer:
+        "Funciona cualquier volumen entre 1 mL y la capacidad del vial, y cada uno da una concentración distinta: 1 mL da 10 mg/mL, 2 mL dan 5 mg/mL y 5 mL dan 2 mg/mL. Elige el volumen que indica la etiqueta de tu producto y calcula tu dosis a partir de la concentración resultante.",
+    },
+    {
+      question: "¿Cómo reconstituir 30 mg de péptido?",
+      answer:
+        "Echa despacio el agua bacteriostática que hayas elegido, por la pared del vial, y deja que el polvo se disuelva sin agitar el vial. 3 mL en un vial de 30 mg dan 10 mg/mL, y 6 mL dan 5 mg/mL. Divide 30 mg entre los mililitros que añadiste y convierte tu dosis a partir de esa concentración.",
+    },
+    {
+      question: "¿Cuánta agua para reconstituir 10 mg de péptido?",
+      answer:
+        "El volumen de agua lo eliges tú, y es lo que determina la concentración: 1 mL de agua bacteriostática da 10 mg/mL, 2 mL dan 5 mg/mL, 4 mL dan 2,5 mg/mL y 5 mL dan 2 mg/mL. Los cuatro contienen los mismos 10 mg de péptido; solo cambia el volumen que cargas por dosis.",
+    },
+    {
+      question: "¿Cómo hacer el cálculo de la reconstitución?",
+      answer:
+        "Con dos divisiones. Primero, la masa de péptido entre el volumen de agua da la concentración en mg/mL. Segundo, tu dosis entre esa concentración da el volumen en mL. Multiplica ese volumen por 100 para las unidades en una jeringa U-100. Pasa antes los mcg a mg: 250 mcg son 0,25 mg.",
+    },
+    {
+      question: "¿Cuántas unidades son 250 mcg en una jeringa de insulina?",
+      answer:
+        "El número de unidades depende de la concentración de tu vial. En una jeringa U-100, 250 mcg son 12,5 unidades a 2 mg/mL, 5 unidades a 5 mg/mL y 2,5 unidades a 10 mg/mL. Divide la dosis en mcg entre diez veces la concentración en mg/mL para cualquier otra mezcla.",
+    },
+    {
+      question: "¿Qué significa U-100 en una jeringa de insulina?",
+      answer:
+        "U-100 significa que el cuerpo de la jeringa está graduado para una concentración de 100 unidades por mililitro: una unidad vale 0,01 mL y 100 unidades llenan 1 mL. Las jeringas U-40 están graduadas a 40 unidades por mililitro. Leer un volumen en la escala equivocada falsea el resultado por un factor de 2,5.",
+    },
+  ],
+  disclaimer:
+    "Solo herramienta de conversión. Verifica siempre la concentración, la escala de unidades de tu jeringa y cualquier receta con un profesional de la salud cualificado. Esta calculadora no da consejo médico.",
+};
+
+export const PEPTIDE_CALCULATOR_CONTENT: Partial<Record<Locale, PeptidePageContent>> = { en, es, fr, pt };
 
 /** Repli utilisé tant qu'une locale n'a pas son contenu rédigé. */
 export const PEPTIDE_CALCULATOR_CONTENT_FALLBACK = en;

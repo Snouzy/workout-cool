@@ -1,4 +1,3 @@
-import { ExerciseAttributeValueEnum } from "@prisma/client";
 
 import PullupBar from "@public/images/equipment/pull-up-bar.png";
 import Plate from "@public/images/equipment/plate.png";
@@ -8,6 +7,7 @@ import Bodyweight from "@public/images/equipment/bodyweight.png";
 import Bench from "@public/images/equipment/bench.png";
 import Barbell from "@public/images/equipment/barbell.png";
 import Band from "@public/images/equipment/band.png";
+import { ExerciseAttributeValueEnum } from "@prisma/client";
 
 import { EquipmentItem } from "../types";
 

@@ -1,5 +1,4 @@
 import { Clock, Dumbbell, Timer } from "lucide-react";
-
 import { useI18n } from "locales/client";
 
 interface SessionRichSnippetsProps {

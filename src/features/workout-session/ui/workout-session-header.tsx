@@ -2,14 +2,15 @@
 
 import { useState, useEffect } from "react";
 import { X, Target, Weight } from "lucide-react";
-
 import { useCurrentLocale, useI18n } from "locales/client";
+
+import { QuitWorkoutDialog } from "../../workout-builder/ui/quit-workout-dialog";
+
 import { type WeightUnit } from "@/shared/lib/weight-conversion";
 import { cn } from "@/shared/lib/utils";
 import { useWorkoutSession } from "@/features/workout-session/model/use-workout-session";
 import { Button } from "@/components/ui/button";
 
-import { QuitWorkoutDialog } from "../../workout-builder/ui/quit-workout-dialog";
 
 interface WorkoutSessionHeaderProps {
   onQuitWorkout: VoidFunction;

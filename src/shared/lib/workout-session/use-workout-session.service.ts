@@ -1,12 +1,14 @@
+import { workoutSessionLocal } from "./workout-session.local";
+
+import type { WorkoutSession } from "./types/workout-session";
+
 import { nullToUndefined } from "@/shared/lib/format";
 import { syncWorkoutSessionAction } from "@/features/workout-session/actions/sync-workout-sessions.action";
 import { getWorkoutSessionsAction } from "@/features/workout-session/actions/get-workout-sessions.action";
 import { deleteWorkoutSessionAction } from "@/features/workout-session/actions/delete-workout-session.action";
 import { useSession } from "@/features/auth/lib/auth-client";
 
-import { workoutSessionLocal } from "./workout-session.local";
 
-import type { WorkoutSession } from "./types/workout-session";
 
 // This is an abstraction layer to handle the local storage and/or the API calls.
 // He's the orchestrator.

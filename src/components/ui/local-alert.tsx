@@ -1,7 +1,6 @@
-import React from "react";
 import Link from "next/link";
-
 import { useI18n } from "locales/client";
+
 import { cn } from "@/shared/lib/utils";
 import { paths } from "@/shared/constants/paths";
 import { Alert, AlertDescription } from "@/components/ui/alert";

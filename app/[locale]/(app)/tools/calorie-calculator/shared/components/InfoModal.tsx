@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { XIcon } from "lucide-react";
 
 interface InfoModalProps {

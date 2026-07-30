@@ -6,6 +6,8 @@ import { useState } from "react";
 import { ExerciseAttributeValueEnum } from "@prisma/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 
+import { addSessionToWeek } from "../actions/add-session.action";
+
 import { generateSlugsForAllLanguages } from "@/shared/lib/slug";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
@@ -15,7 +17,6 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
-import { addSessionToWeek } from "../actions/add-session.action";
 
 const sessionSchema = z.object({
   title: z.string().min(1, "Le titre est requis"),

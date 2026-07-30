@@ -1,9 +1,8 @@
-import React from "react";
 import Link from "next/link";
-
 import { getI18n } from "locales/server";
 import { ScrollToTopButton } from "app/[locale]/(app)/tools/heart-rate-zones/ui/components/ScrollToTopButton";
 import { FAQAccordion } from "app/[locale]/(app)/tools/heart-rate-zones/ui/components/FAQAccordion";
+
 import { env } from "@/env";
 import { InArticle } from "@/components/ads";
 

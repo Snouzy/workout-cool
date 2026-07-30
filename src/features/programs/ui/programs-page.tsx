@@ -1,13 +1,14 @@
 import Image from "next/image";
 import { Crown, TrendingUp } from "lucide-react";
-
 import { Locale } from "locales/types";
 import { getI18n } from "locales/server";
-import { env } from "@/env";
-import { HorizontalBottomBanner, HorizontalTopBanner } from "@/components/ads";
 
 import { getPublicPrograms } from "../actions/get-public-programs.action";
 import { ProgramCard } from "./program-card";
+
+import { env } from "@/env";
+import { HorizontalBottomBanner, HorizontalTopBanner } from "@/components/ads";
+
 
 interface ProgramsPageProps {
   locale: Locale;

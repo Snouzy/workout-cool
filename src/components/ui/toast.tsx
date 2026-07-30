@@ -6,8 +6,8 @@ import Image from "next/image";
 import { X, CheckCircle2, AlertTriangle, Info, XCircle } from "lucide-react";
 import { cva, type VariantProps } from "class-variance-authority";
 import * as ToastPrimitives from "@radix-ui/react-toast";
-
 import Logo from "@public/logo.png";
+
 import { cn } from "@/shared/lib/utils";
 
 const ToastProvider = ToastPrimitives.Provider;

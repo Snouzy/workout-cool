@@ -9,7 +9,6 @@ import { EQUIPMENT_CONFIG } from "../model/equipment-config";
 import { getEquipmentTranslation } from "@/shared/lib/workout-session/equipments";
 import { cn } from "@/shared/lib/utils";
 import { useWorkoutFeedback } from "@/shared/hooks/use-workout-feedback";
-import { env } from "@/env";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 

@@ -75,6 +75,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         priority: 0.85,
       })),
     ),
+
+    // Peptide calculator
+    ...locales.flatMap((locale) =>
+      [`${baseUrl}/${locale}/tools/peptide-calculator`].map((url) => ({
+        url,
+        lastModified: currentDate,
+        changeFrequency: "monthly" as const,
+        priority: 0.85,
+      })),
+    ),
     // Auth pages (lower priority as they're functional pages)
     {
       url: `${baseUrl}/auth/signin`,

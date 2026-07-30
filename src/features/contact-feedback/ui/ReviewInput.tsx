@@ -1,6 +1,6 @@
 import { Angry, Frown, Meh, SmilePlus } from "lucide-react";
-
 import { useI18n } from "locales/client";
+
 import { cn } from "@/shared/lib/utils";
 import { InlineTooltip } from "@/components/ui/tooltip";
 

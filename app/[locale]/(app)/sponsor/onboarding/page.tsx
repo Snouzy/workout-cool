@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { Sparkles } from "lucide-react";
-
 import { getI18n } from "locales/server";
+
 import { SponsorOnboardingForm } from "@/features/sponsor/onboarding/SponsorOnboardingForm";
 
 export const metadata: Metadata = {

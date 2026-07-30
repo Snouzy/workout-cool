@@ -1,6 +1,6 @@
-import React from "react";
 
 import { getI18n } from "locales/server";
+
 import { ExercisesBrowser } from "@/features/statistics/components/ExercisesBrowser";
 import { PremiumGate } from "@/components/ui/premium-gate";
 

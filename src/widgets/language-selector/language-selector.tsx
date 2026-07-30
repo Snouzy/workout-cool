@@ -2,8 +2,8 @@
 
 import { useAction } from "next-safe-action/hooks";
 import { Languages } from "lucide-react";
-
 import { useChangeLocale, languages, useI18n } from "locales/client";
+
 import { updateUserAction } from "@/entities/user/model/update-user.action";
 
 const languageFlags: Record<string, string> = {

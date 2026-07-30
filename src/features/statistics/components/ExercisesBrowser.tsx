@@ -5,10 +5,10 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Search, X } from "lucide-react";
 import debounce from "lodash.debounce";
+import { useI18n } from "locales/client";
 import { useQuery } from "@tanstack/react-query";
 import { ExerciseAttributeNameEnum, ExerciseAttributeValueEnum } from "@prisma/client";
 
-import { useI18n } from "locales/client";
 import { getAttributeValueLabel } from "@/shared/lib/attribute-value-translation";
 import { StatisticsTimeframe } from "@/shared/constants/statistics";
 import { ExerciseVideoModal } from "@/features/workout-builder/ui/exercise-video-modal";

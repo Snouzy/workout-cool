@@ -2,9 +2,10 @@
 
 import { useQuery } from "@tanstack/react-query";
 
+import type { PremiumStatus, UserSubscription } from "@/shared/types/premium.types";
+
 import { useSession } from "@/features/auth/lib/auth-client";
 
-import type { PremiumStatus, UserSubscription } from "@/shared/types/premium.types";
 
 export function usePremiumStatus() {
   const { data: session } = useSession();

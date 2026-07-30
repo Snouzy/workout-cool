@@ -1,8 +1,8 @@
 "use server";
 
+import { Locale } from "locales/types";
 import { ProgramVisibility } from "@prisma/client";
 
-import { Locale } from "locales/types";
 import { getLocaleSuffix } from "@/shared/types/i18n.types";
 import { prisma } from "@/shared/lib/prisma";
 import { SessionDetailResponse } from "@/entities/program/types/program.types";

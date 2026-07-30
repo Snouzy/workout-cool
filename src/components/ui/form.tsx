@@ -1,17 +1,18 @@
 import { Controller, FormProvider, useForm, useFormContext } from "react-hook-form";
 import * as React from "react";
 import { TriangleAlert } from "lucide-react";
+import { useI18n } from "locales/client";
 import { Slot } from "@radix-ui/react-slot";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { useI18n } from "locales/client";
-import { cn } from "@/shared/lib/utils";
 
 import { Label } from "./label";
 
 import type { z, ZodSchema } from "zod";
 import type { ControllerProps, FieldPath, FieldValues, SubmitHandler, UseFormProps, UseFormReturn } from "react-hook-form";
 import type * as LabelPrimitive from "@radix-ui/react-label";
+
+import { cn } from "@/shared/lib/utils";
 
 type FormProps<T extends FieldValues> = Omit<React.ComponentProps<"form">, "onSubmit"> & {
   form: UseFormReturn<T>;

@@ -1,9 +1,13 @@
 import { useState } from "react";
 import Image from "next/image";
 import { Play, Shuffle, MoreVertical, Trash2, Info, Target } from "lucide-react";
+import { useI18n } from "locales/client";
 import { ExerciseAttributeNameEnum } from "@prisma/client";
 
-import { useI18n } from "locales/client";
+import { ExerciseVideoModal } from "./exercise-video-modal";
+
+import type { ExerciseWithAttributes } from "../types";
+
 import { getExerciseAttributesValueOf } from "@/entities/exercise/shared/muscles";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
@@ -11,9 +15,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
-import { ExerciseVideoModal } from "./exercise-video-modal";
 
-import type { ExerciseWithAttributes } from "../types";
 
 interface ExerciseCardProps {
   exercise: ExerciseWithAttributes;

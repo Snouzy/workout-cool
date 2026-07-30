@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { Sparkles, Heart, Github, Users, TrendingUp, Zap } from "lucide-react";
-
 import { useI18n } from "locales/client";
 
 export function PricingHeroSection() {

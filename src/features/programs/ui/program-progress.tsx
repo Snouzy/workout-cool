@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { CheckCircle, PlayCircle } from "lucide-react";
-
 import { useI18n } from "locales/client";
+
 import { getProgramProgress } from "@/features/programs/actions/get-program-progress.action";
 
 interface ProgramProgressProps {

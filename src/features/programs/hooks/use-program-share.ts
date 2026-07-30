@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-
 import { useI18n } from "locales/client";
+
 import { shareContent, getCurrentPageUrl, type ShareData, type ShareResult } from "@/shared/lib/web-share";
 
 interface UseProgramShareProps {

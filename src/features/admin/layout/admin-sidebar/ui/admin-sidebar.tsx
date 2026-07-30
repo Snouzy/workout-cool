@@ -4,9 +4,10 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { Users, LayoutDashboard, BarChart3, Settings } from "lucide-react";
 
+import version from "../../../../../../package.json";
+
 import { cn } from "@/shared/lib/utils";
 
-import version from "../../../../../../package.json";
 
 const navigation = [
   {

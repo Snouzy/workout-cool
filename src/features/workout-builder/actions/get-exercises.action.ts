@@ -2,10 +2,11 @@
 
 import { ExerciseAttributeNameEnum } from "@prisma/client";
 
+import { getExercisesSchema } from "../schema/get-exercises.schema";
+
 import { prisma } from "@/shared/lib/prisma";
 import { actionClient } from "@/shared/api/safe-actions";
 
-import { getExercisesSchema } from "../schema/get-exercises.schema";
 
 // Utility function to shuffle an array (Fisher-Yates shuffle)
 function shuffleArray<T>(array: T[]): T[] {

@@ -3,9 +3,9 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { Trophy, Target, Calendar, Zap, X } from "lucide-react";
+import { useI18n } from "locales/client";
 import confetti from "canvas-confetti";
 
-import { useI18n } from "locales/client";
 import { Button } from "@/components/ui/button";
 
 interface WelcomeModalProps {

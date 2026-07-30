@@ -1,4 +1,3 @@
-import React from "react";
 
 import { getI18n } from "locales/server";
 import { ScrollToTopButton } from "app/[locale]/(app)/tools/heart-rate-zones/ui/components/ScrollToTopButton";

@@ -15,7 +15,6 @@ import { CalvesGroup } from "@/features/workout-builder/ui/muscles/calves-group"
 import { BicepsGroup } from "@/features/workout-builder/ui/muscles/biceps-group";
 import { BackGroup } from "@/features/workout-builder/ui/muscles/back-group";
 import { AbdominalsGroup } from "@/features/workout-builder/ui/muscles/abdominals-group";
-import { env } from "@/env";
 
 interface MuscleSelectionProps {
   onToggleMuscle: (muscle: ExerciseAttributeValueEnum) => void;

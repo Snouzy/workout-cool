@@ -19,8 +19,11 @@ import {
   Unlock,
   ArrowRight,
 } from "lucide-react";
-
 import { useCurrentLocale, useI18n } from "locales/client";
+
+import { getProgramProgress } from "../actions/get-program-progress.action";
+import { ProgramDetail } from "../actions/get-program-by-slug.action";
+
 import { useIsPremium } from "@/shared/lib/premium/use-premium";
 import { getSlugForLocale } from "@/shared/lib/locale-slug";
 import { ATTRIBUTE_VALUE_TRANSLATION_KEYS, getAttributeValueLabel } from "@/shared/lib/attribute-value-translation";
@@ -39,8 +42,6 @@ import { env } from "@/env";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { HorizontalBottomBanner, HorizontalTopBanner } from "@/components/ads";
 
-import { getProgramProgress } from "../actions/get-program-progress.action";
-import { ProgramDetail } from "../actions/get-program-by-slug.action";
 
 interface ProgramDetailPageProps {
   program: ProgramDetail;

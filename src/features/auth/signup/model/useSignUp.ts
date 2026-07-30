@@ -1,9 +1,9 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
+import { useI18n } from "locales/client";
 import { useMutation } from "@tanstack/react-query";
 
-import { useI18n } from "locales/client";
 import { SignUpSchema } from "@/features/auth/signup/schema/signup.schema";
 import { signUpAction } from "@/features/auth/signup/model/signup.action";
 import { brandedToast } from "@/components/ui/toast";

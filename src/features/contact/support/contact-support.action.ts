@@ -1,11 +1,13 @@
 "use server";
 
 import ContactSupportEmail from "@emails/ContactSupportEmail";
+
+import { ContactSupportSchema } from "./contact-support.schema";
+
 import { sendEmail } from "@/shared/lib/mail/sendEmail";
 import { SiteConfig } from "@/shared/config/site-config";
 import { actionClient } from "@/shared/api/safe-actions";
 
-import { ContactSupportSchema } from "./contact-support.schema";
 
 export const contactSupportAction = actionClient.schema(ContactSupportSchema).action(async ({ parsedInput }) => {
   await sendEmail({

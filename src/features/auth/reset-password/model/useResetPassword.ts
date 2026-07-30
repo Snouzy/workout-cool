@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-
 import { useI18n } from "locales/client";
+
 import { paths } from "@/shared/constants/paths";
 import { authClient } from "@/features/auth/lib/auth-client";
 import { brandedToast } from "@/components/ui/toast";

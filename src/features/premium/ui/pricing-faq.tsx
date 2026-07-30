@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
-
 import { useI18n } from "locales/client";
 
 export function PricingFAQ() {

@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 
 import { useScrollToTop } from "@/shared/hooks/useScrollToTop";
 

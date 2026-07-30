@@ -2,7 +2,6 @@
 
 import React from "react";
 import { TrendingDownIcon, TrendingUpIcon, ScaleIcon, RocketIcon, ZapOffIcon } from "lucide-react";
-
 import { useI18n } from "locales/client";
 import { Goal } from "app/[locale]/(app)/tools/calorie-calculator/calorie-calculator.utils";
 

@@ -1,9 +1,11 @@
 import { notFound } from "next/navigation";
 import { headers } from "next/headers";
 import { Metadata } from "next";
-
 import { Locale } from "locales/types";
 import { getI18n } from "locales/server";
+
+import { ProgramSessionClient } from "./ProgramSessionClient";
+
 import { generateStructuredData, StructuredDataScript } from "@/shared/lib/structured-data";
 import { getSessionTitle, getProgramTitle } from "@/features/programs/lib/translations-mapper";
 import { generateSessionMetadata } from "@/features/programs/lib/session-metadata";
@@ -12,7 +14,6 @@ import { auth } from "@/features/auth/lib/better-auth";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 
 // Import the existing session client component
-import { ProgramSessionClient } from "./ProgramSessionClient";
 
 interface SessionDetailPageProps {
   params: Promise<{ slug: string; sessionSlug: string; locale: Locale }>;

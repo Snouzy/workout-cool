@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import * as React from "react";
 
 export const YoutubeIcon: React.FC<React.ImgHTMLAttributes<HTMLImageElement>> = (props) => (

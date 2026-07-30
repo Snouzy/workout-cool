@@ -3,9 +3,10 @@
 import React from "react";
 import { Check } from "lucide-react";
 
+import { StepperStepProps } from "../types";
+
 import { cn } from "@/shared/lib/utils";
 
-import { StepperStepProps } from "../types";
 
 interface StepperHeaderProps {
   steps: StepperStepProps[];

@@ -1,14 +1,16 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Lock, Star, Clock, Calendar, Dumbbell } from "lucide-react";
-import { ExerciseAttributeValueEnum } from "@prisma/client";
-
 import { Locale } from "locales/types";
 import { getI18n } from "locales/server";
+import { ExerciseAttributeValueEnum } from "@prisma/client";
+
+
+import { PublicProgram } from "../actions/get-public-programs.action";
+
 import { getAttributeValueLabel } from "@/shared/lib/attribute-value-translation";
 import { getProgramDescription, getProgramSlug, getProgramTitle } from "@/features/programs/lib/translations-mapper";
 
-import { PublicProgram } from "../actions/get-public-programs.action";
 
 interface ProgramCardProps {
   program: PublicProgram;

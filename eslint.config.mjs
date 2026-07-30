@@ -21,6 +21,27 @@ const compat = new FlatCompat({
 });
 
 const config = [
+  // Global ignores. In flat config a config object that carries `files` alongside `ignores`
+  // only excludes paths from *that* object — it is not a project-wide ignore. These have to
+  // live in an object with `ignores` and nothing else, or ESLint walks build output and lints
+  // its own config file.
+  {
+    ignores: [
+      "**/node_modules/**",
+      "**/.next/**",
+      "**/out/**",
+      "**/coverage/**",
+      "**/build/**",
+      "**/dist/**",
+      "public/**",
+      "eslint.config.mjs",
+      "next.config.js",
+      "src/utils/attempt2.js",
+      "src/utils/inapp.js",
+      "src/utils/externalLinkOpener.js",
+      "src/utils/browserEscape.js",
+    ],
+  },
   js.configs.recommended,
   ...tsConfigs.recommended,
   ...fixupConfigRules(
@@ -138,6 +159,9 @@ const config = [
       "@typescript-eslint/no-explicit-any": "off",
       "react/prop-types": "off",
       "react/require-default-props": "off",
+      // styled-jsx marks its <style> tags with `jsx` and `global`, which are real props here
+      // rather than typos for DOM attributes.
+      "react/no-unknown-property": ["error", { ignore: ["jsx", "global"] }],
       "import/no-unresolved": "off",
       "import/no-cycle": ["off", { maxDepth: "∞" }],
       "@typescript-eslint/no-shadow": "off",

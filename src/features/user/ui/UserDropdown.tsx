@@ -2,8 +2,10 @@
 
 import Link from "next/link";
 import { LayoutDashboard, LogOut, User2 } from "lucide-react";
-
 import { useI18n } from "locales/client";
+
+import type { PropsWithChildren } from "react";
+
 import { useLogout } from "@/features/auth/model/useLogout";
 import { Loader } from "@/components/ui/loader";
 import {
@@ -16,7 +18,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import type { PropsWithChildren } from "react";
 
 export const UserDropdown = ({ children }: PropsWithChildren) => {
   const logout = useLogout();

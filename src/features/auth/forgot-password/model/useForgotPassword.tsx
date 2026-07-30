@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-
 import { useI18n } from "locales/client";
+
 import { getServerUrl } from "@/shared/lib/server-url";
 import { paths } from "@/shared/constants/paths";
 import { authClient } from "@/features/auth/lib/auth-client";

@@ -1,4 +1,5 @@
 import { Locale } from "locales/types";
+
 import { getLocaleSuffix } from "@/shared/types/i18n.types";
 
 /**

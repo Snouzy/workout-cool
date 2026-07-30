@@ -4,10 +4,11 @@ import { headers } from "next/headers";
 import { revalidatePath } from "next/cache";
 import { UserRole, WorkoutSetType, WorkoutSetUnit } from "@prisma/client";
 
+import { ExerciseWithAttributes } from "../types/program.types";
+
 import { prisma } from "@/shared/lib/prisma";
 import { auth } from "@/features/auth/lib/better-auth";
 
-import { ExerciseWithAttributes } from "../types/program.types";
 
 interface SuggestedSetData {
   setIndex: number;

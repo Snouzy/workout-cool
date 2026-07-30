@@ -1,4 +1,5 @@
 import { Locale } from "locales/types";
+
 import { getI18nField } from "@/shared/lib/i18n-mapper";
 import { PublicProgram } from "@/features/programs/actions/get-public-programs.action";
 import { ProgramDetail } from "@/features/programs/actions/get-program-by-slug.action";

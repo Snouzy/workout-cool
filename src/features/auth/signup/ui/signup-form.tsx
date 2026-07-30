@@ -2,8 +2,12 @@
 
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-
 import { useI18n } from "locales/client";
+
+import { signUpSchema } from "../schema/signup.schema";
+
+import type { SignUpSchema } from "../schema/signup.schema";
+
 import { paths } from "@/shared/constants/paths";
 import { ProviderButton } from "@/features/auth/ui/ProviderButton";
 import { useSignUp } from "@/features/auth/signup/model/useSignUp";
@@ -11,9 +15,7 @@ import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, useZodForm } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 
-import { signUpSchema } from "../schema/signup.schema";
 
-import type { SignUpSchema } from "../schema/signup.schema";
 
 export const SignUpForm = () => {
   const t = useI18n();

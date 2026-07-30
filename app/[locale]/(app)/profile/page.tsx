@@ -1,7 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
-
 import { useI18n } from "locales/client";
+
 import { WorkoutSessionList } from "@/features/workout-session/ui/workout-session-list";
 import { WorkoutSessionHeatmap } from "@/features/workout-session/ui/workout-session-heatmap";
 import { useWorkoutSessions } from "@/features/workout-session/model/use-workout-sessions";

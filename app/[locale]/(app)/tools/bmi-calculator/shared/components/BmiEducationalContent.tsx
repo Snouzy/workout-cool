@@ -1,10 +1,12 @@
 "use client";
 
 import { useI18n } from "locales/client";
+
+import { FormulaCard, createFraction, createSuperscript } from "./MathEquation";
+
 import { env } from "@/env";
 import { InArticle } from "@/components/ads";
 
-import { FormulaCard, createFraction, createSuperscript } from "./MathEquation";
 
 export function BmiEducationalContent() {
   const t = useI18n();

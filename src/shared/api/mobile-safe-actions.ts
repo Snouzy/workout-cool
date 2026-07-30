@@ -1,10 +1,11 @@
 import { createSafeActionClient } from "next-safe-action";
 import { headers } from "next/headers";
 
-import { auth } from "@/features/auth/lib/better-auth";
 
 import { ActionError } from "./safe-actions";
 import { cleanMobileCookies } from "./mobile-cookie-utils";
+
+import { auth } from "@/features/auth/lib/better-auth";
 
 /**
  * Gets the authenticated user from headers, handling mobile app cookie issues

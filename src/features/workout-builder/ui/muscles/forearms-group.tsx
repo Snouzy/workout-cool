@@ -1,4 +1,3 @@
-import React from "react";
 import { ExerciseAttributeValueEnum } from "@prisma/client";
 
 export const ForearmsGroup = ({

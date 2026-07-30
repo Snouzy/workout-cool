@@ -2,9 +2,9 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Metadata } from "next";
-import { CalculatorIcon, ScaleIcon, HeartIcon, DumbbellIcon, RepeatIcon } from "lucide-react";
-
+import { CalculatorIcon, ScaleIcon, HeartIcon, DumbbellIcon, RepeatIcon, SyringeIcon } from "lucide-react";
 import { getI18n } from "locales/server";
+
 import { env } from "@/env";
 import { HorizontalBottomBanner, HorizontalTopBanner } from "@/components/ads";
 
@@ -51,6 +51,14 @@ const fitnessTools: FitnessTool[] = [
     gradientFrom: "from-[#8B5CF6]",
     gradientTo: "to-[#7C3AED]",
     href: "/tools/heart-rate-zones",
+  },
+  {
+    id: "peptide-calculator",
+    icon: <SyringeIcon className="w-8 h-8" />,
+    emoji: "WorkoutCoolMedical.png",
+    gradientFrom: "from-[#06B6D4]",
+    gradientTo: "to-[#0891B2]",
+    href: "/tools/peptide-calculator",
   },
   {
     id: "one-rep-max",

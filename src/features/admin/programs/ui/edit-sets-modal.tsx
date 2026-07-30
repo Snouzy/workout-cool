@@ -5,10 +5,11 @@ import { useRouter } from "next/navigation";
 import { X, Plus, Minus, Trash2 } from "lucide-react";
 import { ProgramSessionExercise, ProgramSuggestedSet } from "@prisma/client";
 
+import { updateExerciseSets } from "../actions/update-exercise-sets.action";
+
 import { AVAILABLE_WORKOUT_SET_TYPES, MAX_WORKOUT_SET_COLUMNS, WORKOUT_SET_UNITS_TUPLE } from "@/shared/constants/workout-set-types";
 import { WorkoutSetType, WorkoutSetUnit } from "@/features/workout-session/types/workout-set";
 
-import { updateExerciseSets } from "../actions/update-exercise-sets.action";
 
 interface EditSetsModalProps {
   exercise: ProgramSessionExercise & {

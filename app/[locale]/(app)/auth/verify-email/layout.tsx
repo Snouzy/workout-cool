@@ -1,5 +1,6 @@
-import type { ReactNode } from "react";
 import { redirect } from "next/navigation";
+
+import type { ReactNode } from "react";
 
 import { getServerUrl } from "@/shared/lib/server-url";
 import { paths } from "@/shared/constants/paths";

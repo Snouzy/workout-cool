@@ -1,6 +1,6 @@
 import Link from "next/link";
-
 import { getI18n } from "locales/server";
+
 import { paths } from "@/shared/constants/paths";
 import { SignUpForm } from "@/features/auth/signup/ui/signup-form";
 

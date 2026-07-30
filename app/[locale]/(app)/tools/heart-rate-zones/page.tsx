@@ -1,6 +1,4 @@
-import React from "react";
 import { Metadata } from "next";
-
 import { Locale } from "locales/types";
 import { getI18n } from "locales/server";
 import { HeartRateZonesCalculatorClient } from "app/[locale]/(app)/tools/heart-rate-zones/ui/HeartRateZonesCalculatorClient";
@@ -9,6 +7,7 @@ import { EducationalContentServer } from "app/[locale]/(app)/tools/heart-rate-zo
 import { HEART_RATE_ZONES_CONTENT } from "app/[locale]/(app)/tools/heart-rate-zones/seo/page-content";
 import { HEART_RATE_ZONES_SEO } from "app/[locale]/(app)/tools/heart-rate-zones/seo/config";
 import { calculateHeartRateZones } from "app/[locale]/(app)/tools/heart-rate-zones/lib/utils";
+
 import { getServerUrl } from "@/shared/lib/server-url";
 import { env } from "@/env";
 import { generateSEOMetadata, SEOScripts } from "@/components/seo/SEOHead";

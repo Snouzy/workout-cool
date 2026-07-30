@@ -1,14 +1,14 @@
 "use client";
 
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
-import React from "react";
-
 import { useI18n, useCurrentLocale } from "locales/client";
+
+import { useChartTheme } from "../hooks/use-chart-theme";
+
 import { WeightProgressionPoint } from "@/shared/types/statistics.types";
 import { cn } from "@/shared/lib/utils";
 import { formatDate } from "@/shared/lib/date";
 
-import { useChartTheme } from "../hooks/use-chart-theme";
 
 interface WeightProgressionChartProps {
   data: WeightProgressionPoint[];

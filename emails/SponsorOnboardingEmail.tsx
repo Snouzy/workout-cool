@@ -1,4 +1,3 @@
-import * as React from "react";
 import { Body, Container, Head, Heading, Hr, Html, Link, Preview, Section, Text, Tailwind } from "@react-email/components";
 
 interface SponsorOnboardingEmailProps {

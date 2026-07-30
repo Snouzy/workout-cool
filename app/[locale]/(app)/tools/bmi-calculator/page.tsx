@@ -1,11 +1,11 @@
-import React from "react";
 import { Metadata } from "next";
-
 import { getI18n } from "locales/server";
 import { BmiEducationalContent } from "app/[locale]/(app)/tools/bmi-calculator/shared/components/BmiEducationalContent";
 import { BmiCalculatorClient } from "app/[locale]/(app)/tools/bmi-calculator/shared/BmiCalculatorClient";
+
 import { getServerUrl } from "@/shared/lib/server-url";
 import { env } from "@/env";
+import { RelatedTools } from "@/components/tools/RelatedTools";
 import { generateSEOMetadata, SEOScripts } from "@/components/seo/SEOHead";
 import { HorizontalBottomBanner, HorizontalTopBanner } from "@/components/ads";
 
@@ -115,6 +115,11 @@ export default async function BmiCalculatorPage({ params }: { params: Promise<{ 
           <div className="mt-16">
             <BmiEducationalContent />
           </div>
+
+          <RelatedTools
+            heading={t("tools.related_title")}
+            tools={[{ href: `/${locale}/tools/peptide-calculator`, label: t("tools.peptide-calculator.title") }]}
+          />
         </div>
         {(env.NEXT_PUBLIC_BOTTOM_BMI_BANNER_AD_SLOT || env.NEXT_PUBLIC_EZOIC_BOTTOM_BMI_PLACEMENT_ID) && (
           <HorizontalBottomBanner

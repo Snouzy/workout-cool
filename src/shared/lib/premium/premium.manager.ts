@@ -1,12 +1,13 @@
 import { PaymentProcessor, PlanProviderMapping } from "@prisma/client";
 
-import { prisma } from "@/shared/lib/prisma";
 
 import { StripeProvider } from "./providers/stripe-provider";
 import { PremiumService } from "./premium.service";
 
 import type { PremiumPlan, CheckoutResult } from "@/shared/types/premium.types";
 import type { PaymentProvider } from "./providers/base-provider";
+
+import { prisma } from "@/shared/lib/prisma";
 
 /**
  * Premium Manager - KISS orchestrator

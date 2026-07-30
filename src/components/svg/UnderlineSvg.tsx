@@ -6,8 +6,8 @@ export const UnderlineSvg = (props: ComponentPropsWithoutRef<"svg">) => {
       <path
         d="M2.99975 17.6351C116.771 12.3405 178.178 12.7036 252 18.0966"
         stroke="currentColor"
-        stroke-linecap="round"
-        stroke-width="5.75696"
+        strokeLinecap="round"
+        strokeWidth="5.75696"
       />
     </svg>
   );

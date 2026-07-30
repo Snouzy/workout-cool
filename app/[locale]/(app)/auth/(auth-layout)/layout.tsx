@@ -1,12 +1,13 @@
 import { redirect } from "next/navigation";
 import { headers } from "next/headers";
-
 import { getI18n } from "locales/server";
+
+import type { LayoutParams } from "@/shared/types/next";
+
 import { paths } from "@/shared/constants/paths";
 import { auth } from "@/features/auth/lib/better-auth";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
-import type { LayoutParams } from "@/shared/types/next";
 
 export default async function AuthLayout(props: LayoutParams<{}>) {
   const t = await getI18n();

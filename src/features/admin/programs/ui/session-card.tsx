@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { Plus, Clock, Dumbbell, Settings, ChevronDown, ChevronRight, Edit } from "lucide-react";
-
 import { useI18n } from "locales/client";
 
 import { SessionWithExercises } from "../types/program.types";

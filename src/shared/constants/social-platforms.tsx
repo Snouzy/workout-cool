@@ -12,7 +12,6 @@ import {
   FaTiktok,
   FaThreads,
 } from "react-icons/fa6";
-
 import { TFunction } from "locales/client";
 
 export const SOCIAL_FIELD_PLACEHOLDERS: Record<string, string> = {

@@ -2,9 +2,9 @@
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { LockKeyhole, LockKeyholeOpen } from "lucide-react";
+import { useI18n } from "locales/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { useI18n } from "locales/client";
 import { Input } from "@/workoutcool/components/ui/input";
 import { Button } from "@/workoutcool/components/ui/button";
 import { updatePasswordAction } from "@/features/update-password/model/update-password.action";

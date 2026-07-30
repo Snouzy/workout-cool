@@ -1,10 +1,12 @@
 import { Locale } from "locales/types";
 import { TFunction } from "locales/client";
-import { ATTRIBUTE_VALUE_TRANSLATION_KEYS } from "@/shared/lib/attribute-value-translation";
-import { getLocalizedMetadata } from "@/shared/config/localized-metadata";
 
 import { ProgramDetail } from "../actions/get-program-by-slug.action";
 import { getProgramTitle } from "./translations-mapper";
+
+import { ATTRIBUTE_VALUE_TRANSLATION_KEYS } from "@/shared/lib/attribute-value-translation";
+import { getLocalizedMetadata } from "@/shared/config/localized-metadata";
+
 
 export function generateProgramSEOKeywords(program: ProgramDetail, locale: Locale, t: TFunction): string[] {
   const baseData = getLocalizedMetadata(locale);

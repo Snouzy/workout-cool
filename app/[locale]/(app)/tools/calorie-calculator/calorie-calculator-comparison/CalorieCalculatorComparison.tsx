@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
-
+import { useState } from "react";
 import { useI18n } from "locales/client";
 import { BodyFatInput } from "app/[locale]/(app)/tools/calorie-calculator/shared/components/BodyFatInput";
 import {
@@ -18,6 +17,7 @@ import {
   CalorieCalculatorInputs,
   CalorieResults,
 } from "app/[locale]/(app)/tools/calorie-calculator/shared/calorie-formulas.utils";
+
 import { env } from "@/env";
 import { HorizontalBottomBanner } from "@/components/ads";
 

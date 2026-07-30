@@ -1,13 +1,13 @@
 "use client";
 
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
-import React from "react";
-
 import { useI18n } from "locales/client";
+
+import { useChartTheme } from "../hooks/use-chart-theme";
+
 import { VolumePoint } from "@/shared/types/statistics.types";
 import { cn } from "@/shared/lib/utils";
 
-import { useChartTheme } from "../hooks/use-chart-theme";
 
 interface VolumeChartProps {
   data: VolumePoint[];

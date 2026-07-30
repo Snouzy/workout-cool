@@ -2,14 +2,15 @@
 
 import { useAction } from "next-safe-action/hooks";
 import { CheckCircle, ExternalLink, Loader2 } from "lucide-react";
-
 import { useI18n } from "locales/client";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, useZodForm } from "@/components/ui/form";
 
 import { SponsorOnboardingSchema, type SponsorOnboardingSchemaType } from "./sponsor-onboarding.schema";
 import { sponsorOnboardingAction } from "./sponsor-onboarding.action";
+
+import { Textarea } from "@/components/ui/textarea";
+import { Input } from "@/components/ui/input";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, useZodForm } from "@/components/ui/form";
+
 
 export function SponsorOnboardingForm() {
   const t = useI18n();

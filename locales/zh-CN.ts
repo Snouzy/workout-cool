@@ -1416,7 +1416,6 @@ export default {
     "peptide-calculator": {
       title: "多肽计算器",
       description: "将多肽剂量换算为毫升和U-100胰岛素注射器单位",
-      presets_legend: "常用西林瓶规格",
       step_1_eyebrow: "器材",
       step_1_title: "您使用的是哪种注射器？",
       step_2_eyebrow: "复溶",

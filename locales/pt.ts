@@ -925,7 +925,6 @@ export default {
     "peptide-calculator": {
       title: "Calculadora de Peptídeos",
       description: "Converta uma dose de peptídeo em mililitros e unidades de seringa de insulina U-100",
-      presets_legend: "Tamanhos rápidos de frasco",
       step_1_eyebrow: "Equipamento",
       step_1_title: "Qual seringa você está usando?",
       step_2_eyebrow: "Reconstituição",

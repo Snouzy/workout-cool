@@ -4,12 +4,11 @@ import { useMemo, useState } from "react";
 import { useCurrentLocale, useI18n } from "locales/client";
 
 import { PeptideInput } from "../lib/types";
-import { DEFAULT_INPUT, DOSE_MCG_OPTIONS, PEPTIDE_PRESETS, UNITS_OPTIONS, VIAL_MG_OPTIONS, WATER_ML_OPTIONS } from "../lib/presets";
+import { DEFAULT_INPUT, DOSE_MCG_OPTIONS, UNITS_OPTIONS, VIAL_MG_OPTIONS, WATER_ML_OPTIONS } from "../lib/presets";
 import { calculateDoseFromUnits, calculatePeptideDose } from "../lib/calculate";
 import { usePeptideUrlState } from "./usePeptideUrlState";
 import { SyringeSelector } from "./components/SyringeSelector";
 import { Step } from "./components/Step";
-import { PresetPicker } from "./components/PresetPicker";
 import { PeptideVial } from "./components/PeptideVial";
 import { OptionChips } from "./components/OptionChips";
 import { ModeSelector, CalculatorMode } from "./components/ModeSelector";
@@ -49,13 +48,7 @@ export function PeptideCalculatorClient({ defaultInput = DEFAULT_INPUT, disclaim
         value={mode}
       />
 
-      <PresetPicker
-        legend={t("tools.peptide-calculator.presets_legend")}
-        onSelect={(vialMg) => patch({ vialMg })}
-        presets={PEPTIDE_PRESETS}
-      />
-
-      <div className="grid gap-8 lg:grid-cols-2">
+      <div className="mt-6 grid gap-8 lg:grid-cols-2">
         <Step eyebrow={t("tools.peptide-calculator.step_1_eyebrow")} number="01" title={t("tools.peptide-calculator.step_1_title")}>
           <SyringeSelector
             legend={t("tools.peptide-calculator.step_1_title")}
@@ -73,10 +66,10 @@ export function PeptideCalculatorClient({ defaultInput = DEFAULT_INPUT, disclaim
             </Step>
           ))}
 
-          {/* Driven by steps 02 and 03 together, so it sits with the pair — after
-              the inputs on mobile, never pushing them below the fold. */}
+          {/* Driven by step 03's water volume, and placed after both input steps so it never
+              pushes them below the fold on mobile. */}
           <div className="rounded-2xl border border-base-300 bg-base-100 p-4">
-            <PeptideVial locale={locale} vialMg={input.vialMg} waterMl={input.waterMl} />
+            <PeptideVial waterMl={input.waterMl} />
           </div>
 
           <DoseInputStep

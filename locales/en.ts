@@ -893,7 +893,6 @@ export default {
     "peptide-calculator": {
       title: "Peptide Calculator",
       description: "Convert a peptide dose into millilitres and U-100 insulin syringe units",
-      presets_legend: "Quick vial sizes",
       step_1_eyebrow: "Equipment",
       step_1_title: "Which syringe are you using?",
       step_2_eyebrow: "Reconstitution",

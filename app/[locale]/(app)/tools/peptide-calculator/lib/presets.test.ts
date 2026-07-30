@@ -1,26 +1,26 @@
 import { describe, expect, it } from "vitest";
 
-import { PEPTIDE_PRESETS, SYRINGE_OPTIONS } from "./presets";
+import { SYRINGE_OPTIONS } from "./presets";
 
-describe("PEPTIDE_PRESETS", () => {
-  it("expose des identifiants uniques", () => {
-    const ids = PEPTIDE_PRESETS.map((preset) => preset.id);
-
-    expect(new Set(ids).size).toBe(ids.length);
+describe("SYRINGE_OPTIONS", () => {
+  it("expose trois seringues U-100 standard", () => {
+    expect(SYRINGE_OPTIONS.map((option) => option.capacity)).toEqual([30, 50, 100]);
   });
 
-  it("n'expose que des tailles de flacon positives et finies", () => {
-    for (const preset of PEPTIDE_PRESETS) {
-      expect(preset.vialSizesMg.length).toBeGreaterThan(0);
-
-      for (const size of preset.vialSizesMg) {
-        expect(Number.isFinite(size)).toBe(true);
-        expect(size).toBeGreaterThan(0);
-      }
+  it("associe chaque capacité au volume qu'elle représente sur une échelle U-100", () => {
+    // 1 mL = 100 unités, donc la capacité en unités vaut cent fois le volume en mL.
+    for (const option of SYRINGE_OPTIONS) {
+      expect(option.volumeMl * 100).toBeCloseTo(option.capacity, 10);
     }
   });
 
-  it("expose trois seringues U-100 standard", () => {
-    expect(SYRINGE_OPTIONS.map((option) => option.capacity)).toEqual([30, 50, 100]);
+  it("pointe chaque seringue vers son propre visuel", () => {
+    const images = SYRINGE_OPTIONS.map((option) => option.image);
+
+    expect(new Set(images).size).toBe(images.length);
+
+    for (const option of SYRINGE_OPTIONS) {
+      expect(option.image).toBe(`/images/syringes/syringe-${option.capacity}-units.png`);
+    }
   });
 });

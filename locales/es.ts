@@ -1450,7 +1450,6 @@ export default {
     "peptide-calculator": {
       title: "Calculadora de Péptidos",
       description: "Convierte una dosis de péptido en mililitros y unidades de jeringa de insulina U-100",
-      presets_legend: "Tamaños de vial rápidos",
       step_1_eyebrow: "Equipo",
       step_1_title: "¿Qué jeringa estás usando?",
       step_2_eyebrow: "Reconstitución",

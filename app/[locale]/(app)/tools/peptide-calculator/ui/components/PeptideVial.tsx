@@ -18,9 +18,9 @@ interface PeptideVialProps {
 const FULL_ML = 5;
 
 /**
- * The vial as an illustration: the liquid rises with the water the user added and the
- * lyophilised cake dissolves into it. The label carries a static caption and the vial
- * quantity — facts the user entered, never a dose.
+ * The vial as an illustration: the liquid rises with the water the user added. The cake at
+ * the base and the label's caption both stay put — only the liquid moves. The label carries
+ * the vial quantity, a fact the user entered, never a dose.
  *
  * Decorative throughout. The article's own prose names these parts for readers and for
  * search engines, so the drawing stays out of the accessibility tree entirely.
@@ -28,7 +28,6 @@ const FULL_ML = 5;
 export function PeptideVial({ vialMg, waterMl, locale }: PeptideVialProps) {
   const reduced = useReducedMotion();
   const level = Math.min(Math.max(waterMl / FULL_ML, 0.06), 1);
-  const cakePresence = Math.min(1, (1 - level) * 2);
   const transition = reduced ? INSTANT : SPRING_SLOW;
 
   return (
@@ -45,11 +44,10 @@ export function PeptideVial({ vialMg, waterMl, locale }: PeptideVialProps) {
             initial={false}
             transition={transition}
           />
-          <motion.div
-            animate={{ opacity: Math.max(0.18, cakePresence), scaleY: Math.max(0.6, 1 - level * 0.5) }}
-            className="absolute bottom-0 left-[8%] right-[8%] h-[17%] origin-bottom rounded-[45%_55%_35%_40%/65%_55%_45%_40%] bg-[#f0e7d3]"
-            initial={false}
-            transition={transition}
+          {/* The cake sits still: a faint constant base, independent of the water volume.
+              Only the liquid above it moves. */}
+          <div
+            className="absolute bottom-0 left-[8%] right-[8%] h-[17%] origin-bottom scale-y-[0.6] rounded-[45%_55%_35%_40%/65%_55%_45%_40%] bg-[#f0e7d3] opacity-[0.18]"
           />
         </div>
 

@@ -129,8 +129,8 @@ const en: PeptidePageContent = {
     rows: [
       ["250 mcg", "12.5 U", "5 U", "2.5 U"],
       ["500 mcg", "25 U", "10 U", "5 U"],
-      ["1000 mcg", "50 U", "20 U", "10 U"],
-      ["2000 mcg", "100 U", "40 U", "20 U"],
+      ["1,000 mcg", "50 U", "20 U", "10 U"],
+      ["2,000 mcg", "100 U", "40 U", "20 U"],
     ],
   },
   faq: [
@@ -265,7 +265,7 @@ const pt: PeptidePageContent = {
     headers: ["Quantidade de peptídeo", "Água bacteriostática adicionada", "Concentração final"],
     rows: [
       ["5 mg", "1 mL", "5 mg/mL"],
-      ["5 mg", "2 mL", "2.5 mg/mL"],
+      ["5 mg", "2 mL", "2,5 mg/mL"],
       ["10 mg", "2 mL", "5 mg/mL"],
       ["10 mg", "5 mL", "2 mg/mL"],
       ["15 mg", "3 mL", "5 mg/mL"],
@@ -277,10 +277,10 @@ const pt: PeptidePageContent = {
     caption: "Dose convertida em unidades da seringa de insulina",
     headers: ["Dose", "a 2 mg/mL", "a 5 mg/mL", "a 10 mg/mL"],
     rows: [
-      ["250 mcg", "12.5 U", "5 U", "2.5 U"],
+      ["250 mcg", "12,5 U", "5 U", "2,5 U"],
       ["500 mcg", "25 U", "10 U", "5 U"],
-      ["1000 mcg", "50 U", "20 U", "10 U"],
-      ["2000 mcg", "100 U", "40 U", "20 U"],
+      ["1.000 mcg", "50 U", "20 U", "10 U"],
+      ["2.000 mcg", "100 U", "40 U", "20 U"],
     ],
   },
   faq: [
@@ -415,7 +415,7 @@ const fr: PeptidePageContent = {
     headers: ["Quantité de peptide", "Eau bactériostatique ajoutée", "Concentration finale"],
     rows: [
       ["5 mg", "1 mL", "5 mg/mL"],
-      ["5 mg", "2 mL", "2.5 mg/mL"],
+      ["5 mg", "2 mL", "2,5 mg/mL"],
       ["10 mg", "2 mL", "5 mg/mL"],
       ["10 mg", "5 mL", "2 mg/mL"],
       ["15 mg", "3 mL", "5 mg/mL"],
@@ -427,10 +427,10 @@ const fr: PeptidePageContent = {
     caption: "Dose convertie en unités de seringue à insuline",
     headers: ["Dose", "à 2 mg/mL", "à 5 mg/mL", "à 10 mg/mL"],
     rows: [
-      ["250 mcg", "12.5 U", "5 U", "2.5 U"],
+      ["250 mcg", "12,5 U", "5 U", "2,5 U"],
       ["500 mcg", "25 U", "10 U", "5 U"],
-      ["1000 mcg", "50 U", "20 U", "10 U"],
-      ["2000 mcg", "100 U", "40 U", "20 U"],
+      ["1 000 mcg", "50 U", "20 U", "10 U"],
+      ["2 000 mcg", "100 U", "40 U", "20 U"],
     ],
   },
   faq: [
@@ -565,7 +565,7 @@ const es: PeptidePageContent = {
     headers: ["Cantidad de péptido", "Agua bacteriostática añadida", "Concentración final"],
     rows: [
       ["5 mg", "1 mL", "5 mg/mL"],
-      ["5 mg", "2 mL", "2.5 mg/mL"],
+      ["5 mg", "2 mL", "2,5 mg/mL"],
       ["10 mg", "2 mL", "5 mg/mL"],
       ["10 mg", "5 mL", "2 mg/mL"],
       ["15 mg", "3 mL", "5 mg/mL"],
@@ -577,7 +577,7 @@ const es: PeptidePageContent = {
     caption: "Dosis convertida en unidades de jeringa de insulina",
     headers: ["Dosis", "a 2 mg/mL", "a 5 mg/mL", "a 10 mg/mL"],
     rows: [
-      ["250 mcg", "12.5 U", "5 U", "2.5 U"],
+      ["250 mcg", "12,5 U", "5 U", "2,5 U"],
       ["500 mcg", "25 U", "10 U", "5 U"],
       ["1000 mcg", "50 U", "20 U", "10 U"],
       ["2000 mcg", "100 U", "40 U", "20 U"],
@@ -715,7 +715,7 @@ const ru: PeptidePageContent = {
     headers: ["Количество пептида", "Добавлено бактериостатической воды", "Итоговая концентрация"],
     rows: [
       ["5 mg", "1 mL", "5 mg/mL"],
-      ["5 mg", "2 mL", "2.5 mg/mL"],
+      ["5 mg", "2 mL", "2,5 mg/mL"],
       ["10 mg", "2 mL", "5 mg/mL"],
       ["10 mg", "5 mL", "2 mg/mL"],
       ["15 mg", "3 mL", "5 mg/mL"],
@@ -727,10 +727,10 @@ const ru: PeptidePageContent = {
     caption: "Доза в единицах инсулинового шприца",
     headers: ["Доза", "при 2 мг/мл", "при 5 мг/мл", "при 10 мг/мл"],
     rows: [
-      ["250 mcg", "12.5 U", "5 U", "2.5 U"],
+      ["250 mcg", "12,5 U", "5 U", "2,5 U"],
       ["500 mcg", "25 U", "10 U", "5 U"],
-      ["1000 mcg", "50 U", "20 U", "10 U"],
-      ["2000 mcg", "100 U", "40 U", "20 U"],
+      ["1 000 mcg", "50 U", "20 U", "10 U"],
+      ["2 000 mcg", "100 U", "40 U", "20 U"],
     ],
   },
   faq: [

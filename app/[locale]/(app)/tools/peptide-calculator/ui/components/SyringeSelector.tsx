@@ -4,15 +4,19 @@ import Image from "next/image";
 
 import { SyringeCapacity } from "../../lib/types";
 import { SYRINGE_OPTIONS } from "../../lib/presets";
+import { formatLocaleNumber } from "../../lib/formatNumber";
+
+import type { Locale } from "locales/types";
 
 interface SyringeSelectorProps {
   legend: string;
   value: SyringeCapacity;
   onChange: (value: SyringeCapacity) => void;
   unitsLabel: string;
+  locale: Locale;
 }
 
-export function SyringeSelector({ legend, value, onChange, unitsLabel }: SyringeSelectorProps) {
+export function SyringeSelector({ legend, value, onChange, unitsLabel, locale }: SyringeSelectorProps) {
   return (
     <fieldset className="flex flex-col gap-3">
       <legend className="sr-only">{legend}</legend>
@@ -38,7 +42,7 @@ export function SyringeSelector({ legend, value, onChange, unitsLabel }: Syringe
           />
 
           <div className="min-w-[4.5rem]">
-            <div className="text-lg font-bold text-base-content">{option.volumeMl} mL</div>
+            <div className="text-lg font-bold text-base-content">{formatLocaleNumber(option.volumeMl, 1, locale)} mL</div>
             <div className="text-sm text-base-content/60">
               {option.capacity} {unitsLabel}
             </div>

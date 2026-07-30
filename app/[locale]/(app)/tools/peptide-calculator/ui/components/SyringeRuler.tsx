@@ -1,7 +1,12 @@
+import { formatLocaleNumber } from "../../lib/formatNumber";
+
+import type { Locale } from "locales/types";
+
 interface SyringeRulerProps {
   units: number;
   capacity: number;
   unitsLabel: string;
+  locale: Locale;
 }
 
 const LABEL_EVERY = 5;
@@ -12,7 +17,7 @@ function getLabelTransformClass(fillPercent: number): string {
   return "-translate-x-1/2";
 }
 
-export function SyringeRuler({ units, capacity, unitsLabel }: SyringeRulerProps) {
+export function SyringeRuler({ units, capacity, unitsLabel, locale }: SyringeRulerProps) {
   const ticks = Array.from({ length: capacity + 1 }, (_, index) => index);
   const clamped = Math.min(Math.max(units, 0), capacity);
   const fillPercent = (clamped / capacity) * 100;
@@ -57,7 +62,7 @@ export function SyringeRuler({ units, capacity, unitsLabel }: SyringeRulerProps)
           className={`absolute rounded-md bg-primary px-2 py-0.5 text-xs font-bold text-primary-content ${getLabelTransformClass(fillPercent)}`}
           style={{ left: `${fillPercent}%` }}
         >
-          {units} {unitsLabel}
+          {formatLocaleNumber(units, 2, locale)} {unitsLabel}
         </span>
       </div>
     </div>

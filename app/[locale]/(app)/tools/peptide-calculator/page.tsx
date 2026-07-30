@@ -38,14 +38,7 @@ export default async function PeptideCalculatorPage({ params }: { params: Promis
 
   return (
     <>
-      <SEOScripts
-        canonical={url}
-        description={seo.description}
-        hreflangPath={PATH}
-        locale={locale}
-        ogImage={`${getServerUrl()}/images/screenshots/peptide-calculator/og.jpg`}
-        title={seo.title}
-      />
+      <SEOScripts canonical={url} description={seo.description} hreflangPath={PATH} locale={locale} title={seo.title} />
 
       <script
         dangerouslySetInnerHTML={{
@@ -112,7 +105,7 @@ export default async function PeptideCalculatorPage({ params }: { params: Promis
             <p className="mx-auto max-w-3xl text-xl text-gray-600 dark:text-gray-300">{content.heroSubtitle}</p>
           </div>
 
-          <PeptideCalculatorClient defaultInput={DEFAULT_INPUT} />
+          <PeptideCalculatorClient defaultInput={DEFAULT_INPUT} disclaimer={content.disclaimer} />
 
           <SEOContentServer content={content} />
 

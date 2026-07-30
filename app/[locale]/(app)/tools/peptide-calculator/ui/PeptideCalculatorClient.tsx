@@ -36,9 +36,10 @@ function readFromUrl(fallback: PeptideInput): PeptideInput {
 
 interface PeptideCalculatorClientProps {
   defaultInput?: PeptideInput;
+  disclaimer: string;
 }
 
-export function PeptideCalculatorClient({ defaultInput = DEFAULT_INPUT }: PeptideCalculatorClientProps) {
+export function PeptideCalculatorClient({ defaultInput = DEFAULT_INPUT, disclaimer }: PeptideCalculatorClientProps) {
   const t = useI18n();
   const locale = useCurrentLocale();
   const [input, setInput] = useState<PeptideInput>(defaultInput);
@@ -50,12 +51,11 @@ export function PeptideCalculatorClient({ defaultInput = DEFAULT_INPUT }: Peptid
   }, []);
 
   useEffect(() => {
-    const params = new URLSearchParams({
-      vial: String(input.vialMg),
-      water: String(input.waterMl),
-      dose: String(input.doseMcg),
-      syringe: String(input.syringeCapacity),
-    });
+    const params = new URLSearchParams(window.location.search);
+    params.set("vial", String(input.vialMg));
+    params.set("water", String(input.waterMl));
+    params.set("dose", String(input.doseMcg));
+    params.set("syringe", String(input.syringeCapacity));
 
     window.history.replaceState(null, "", `${window.location.pathname}?${params}`);
   }, [input]);
@@ -92,6 +92,7 @@ export function PeptideCalculatorClient({ defaultInput = DEFAULT_INPUT }: Peptid
         <Step eyebrow={t("tools.peptide-calculator.step_1_eyebrow")} number="01" title={t("tools.peptide-calculator.step_1_title")}>
           <SyringeSelector
             legend={t("tools.peptide-calculator.step_1_title")}
+            locale={locale}
             onChange={(syringeCapacity) => patch({ syringeCapacity })}
             unitsLabel={t("tools.peptide-calculator.units")}
             value={input.syringeCapacity}
@@ -156,6 +157,8 @@ export function PeptideCalculatorClient({ defaultInput = DEFAULT_INPUT }: Peptid
         }}
         units={units}
       />
+
+      <p className="mt-6 rounded-2xl bg-base-200 p-5 text-sm text-base-content/70">{disclaimer}</p>
     </div>
   );
 }

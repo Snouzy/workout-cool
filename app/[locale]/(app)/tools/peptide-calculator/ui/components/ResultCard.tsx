@@ -40,7 +40,7 @@ export function ResultCard({ result, capacity, doseMcg, labels, locale }: Result
               {formatLocaleNumber(result.units, 2, locale)} {labels.units}
             </span>
             <span className="ml-3 block text-base font-normal text-base-content/60 sm:inline">
-              {doseMcg} mcg = {formatLocaleNumber(result.volumeMl, 4, locale)} mL
+              {formatLocaleNumber(doseMcg, 2, locale)} mcg = {formatLocaleNumber(result.volumeMl, 4, locale)} mL
             </span>
           </h2>
 
@@ -57,7 +57,7 @@ export function ResultCard({ result, capacity, doseMcg, labels, locale }: Result
             </div>
           </div>
 
-          <SyringeRuler capacity={capacity} units={roundToPrecision(result.units, 2)} unitsLabel={labels.units} />
+          <SyringeRuler capacity={capacity} locale={locale} units={roundToPrecision(result.units, 2)} unitsLabel={labels.units} />
 
           {result.warnings.length > 0 && (
             <ul className="mt-6 space-y-2">

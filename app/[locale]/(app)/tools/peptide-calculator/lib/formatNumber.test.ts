@@ -50,6 +50,14 @@ describe("formatLocaleNumber", () => {
     expect(formatLocaleNumber(1, 2, "fr")).toBe("1");
   });
 
+  it("arrondit une valeur non exacte au lieu de la tronquer (vial 7 mg + eau 3 mL + dose 250 mcg -> 10.714285... unités)", () => {
+    // concentration = 7 / 3 mg/mL ; volume = 0.25 / (7/3) mL ; units = volume * 100 = 10.714285714...
+    const units = (250 / 1000 / (7 / 3)) * 100;
+
+    expect(formatLocaleNumber(units, 2, "en")).toBe("10.71");
+    expect(formatLocaleNumber(units, 2, "fr")).toBe("10,71");
+  });
+
   it("ne produit jamais de séparateur de milliers pour une valeur au-dessus de 999", () => {
     const en = formatLocaleNumber(2000, 2, "en");
     const fr = formatLocaleNumber(2000, 2, "fr");
@@ -75,5 +83,11 @@ describe("roundToPrecision", () => {
   it("reste indépendant de la locale, puisqu'il n'y a pas de mise en forme", () => {
     expect(Number.isFinite(roundToPrecision(2000, 2))).toBe(true);
     expect(roundToPrecision(2000, 2)).toBe(2000);
+  });
+
+  it("arrondit une valeur non exacte plutôt que de la tronquer (vial 7 mg + eau 3 mL + dose 250 mcg -> 10.714285... unités)", () => {
+    const units = (250 / 1000 / (7 / 3)) * 100;
+
+    expect(roundToPrecision(units, 2)).toBe(10.71);
   });
 });

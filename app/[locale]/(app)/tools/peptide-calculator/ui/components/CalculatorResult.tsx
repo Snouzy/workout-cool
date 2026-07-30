@@ -1,7 +1,10 @@
+
 import { PeptideResult } from "../../lib/types";
 import { ReverseResultCard, ReverseResultLabels } from "./ReverseResultCard";
 import { ResultCard, ResultLabels } from "./ResultCard";
 import { CalculatorMode } from "./ModeSelector";
+
+import type { Locale } from "locales/types";
 
 interface CalculatorResultProps {
   mode: CalculatorMode;
@@ -13,6 +16,7 @@ interface CalculatorResultProps {
   concentrationMgPerMl: number;
   units: number;
   reverseLabels: ReverseResultLabels;
+  locale: Locale;
 }
 
 export function CalculatorResult({
@@ -25,9 +29,10 @@ export function CalculatorResult({
   concentrationMgPerMl,
   units,
   reverseLabels,
+  locale,
 }: CalculatorResultProps) {
   if (mode === "forward") {
-    return <ResultCard capacity={capacity} doseMcg={doseMcg} labels={forwardLabels} result={result} />;
+    return <ResultCard capacity={capacity} doseMcg={doseMcg} labels={forwardLabels} locale={locale} result={result} />;
   }
 
   return (
@@ -35,6 +40,7 @@ export function CalculatorResult({
       concentrationMgPerMl={concentrationMgPerMl}
       doseMcg={reverseDoseMcg}
       labels={reverseLabels}
+      locale={locale}
       units={units}
     />
   );

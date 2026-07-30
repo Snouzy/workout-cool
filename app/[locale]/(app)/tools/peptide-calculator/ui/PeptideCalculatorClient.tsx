@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { useI18n } from "locales/client";
+import { useCurrentLocale, useI18n } from "locales/client";
 
 import { PeptideInput, SyringeCapacity } from "../lib/types";
 import { DEFAULT_INPUT, DOSE_MCG_OPTIONS, PEPTIDE_PRESETS, UNITS_OPTIONS, VIAL_MG_OPTIONS, WATER_ML_OPTIONS } from "../lib/presets";
@@ -40,6 +40,7 @@ interface PeptideCalculatorClientProps {
 
 export function PeptideCalculatorClient({ defaultInput = DEFAULT_INPUT }: PeptideCalculatorClientProps) {
   const t = useI18n();
+  const locale = useCurrentLocale();
   const [input, setInput] = useState<PeptideInput>(defaultInput);
   const [mode, setMode] = useState<CalculatorMode>("forward");
   const [units, setUnits] = useState(10);
@@ -142,6 +143,7 @@ export function PeptideCalculatorClient({ defaultInput = DEFAULT_INPUT }: Peptid
             NOT_A_WHOLE_GRADUATION: t("tools.peptide-calculator.warnings.not_whole_graduation"),
           },
         }}
+        locale={locale}
         mode={mode}
         result={result}
         reverseDoseMcg={reverseDose}

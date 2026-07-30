@@ -1,5 +1,8 @@
 import { PeptideResult, WarningCode } from "../../lib/types";
+import { formatLocaleNumber, roundToPrecision } from "../../lib/formatNumber";
 import { SyringeRuler } from "./SyringeRuler";
+
+import type { Locale } from "locales/types";
 
 export interface ResultLabels {
   eyebrow: string;
@@ -16,13 +19,10 @@ interface ResultCardProps {
   capacity: number;
   doseMcg: number;
   labels: ResultLabels;
+  locale: Locale;
 }
 
-function round(value: number, decimals: number): string {
-  return Number(value.toFixed(decimals)).toString();
-}
-
-export function ResultCard({ result, capacity, doseMcg, labels }: ResultCardProps) {
+export function ResultCard({ result, capacity, doseMcg, labels, locale }: ResultCardProps) {
   return (
     <section
       aria-live="polite"
@@ -37,17 +37,19 @@ export function ResultCard({ result, capacity, doseMcg, labels }: ResultCardProp
           <h2 className="text-2xl font-bold text-base-content sm:text-4xl">
             {labels.drawTo}{" "}
             <span className="text-primary">
-              {round(result.units, 2)} {labels.units}
+              {formatLocaleNumber(result.units, 2, locale)} {labels.units}
             </span>
             <span className="ml-3 block text-base font-normal text-base-content/60 sm:inline">
-              {doseMcg} mcg = {round(result.volumeMl, 4)} mL
+              {doseMcg} mcg = {formatLocaleNumber(result.volumeMl, 4, locale)} mL
             </span>
           </h2>
 
           <div className="mt-6 flex flex-wrap gap-3">
             <div className="rounded-xl bg-base-200 px-4 py-3">
               <div className="text-xs uppercase tracking-wide text-base-content/50">{labels.concentration}</div>
-              <div className="text-lg font-bold text-base-content">{round(result.concentrationMgPerMl, 3)} mg/mL</div>
+              <div className="text-lg font-bold text-base-content">
+                {formatLocaleNumber(result.concentrationMgPerMl, 3, locale)} mg/mL
+              </div>
             </div>
             <div className="rounded-xl bg-base-200 px-4 py-3">
               <div className="text-xs uppercase tracking-wide text-base-content/50">{labels.dosesPerVial}</div>
@@ -55,7 +57,7 @@ export function ResultCard({ result, capacity, doseMcg, labels }: ResultCardProp
             </div>
           </div>
 
-          <SyringeRuler capacity={capacity} units={Number(round(result.units, 2))} unitsLabel={labels.units} />
+          <SyringeRuler capacity={capacity} units={roundToPrecision(result.units, 2)} unitsLabel={labels.units} />
 
           {result.warnings.length > 0 && (
             <ul className="mt-6 space-y-2">

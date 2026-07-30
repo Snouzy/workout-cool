@@ -1,3 +1,7 @@
+import { formatLocaleNumber } from "../../lib/formatNumber";
+
+import type { Locale } from "locales/types";
+
 export interface ReverseResultLabels {
   eyebrow: string;
   doseIs: string;
@@ -11,13 +15,10 @@ interface ReverseResultCardProps {
   concentrationMgPerMl: number;
   units: number;
   labels: ReverseResultLabels;
+  locale: Locale;
 }
 
-function round(value: number, decimals: number): string {
-  return Number(value.toFixed(decimals)).toString();
-}
-
-export function ReverseResultCard({ doseMcg, concentrationMgPerMl, units, labels }: ReverseResultCardProps) {
+export function ReverseResultCard({ doseMcg, concentrationMgPerMl, units, labels, locale }: ReverseResultCardProps) {
   return (
     <section
       aria-live="polite"
@@ -30,15 +31,17 @@ export function ReverseResultCard({ doseMcg, concentrationMgPerMl, units, labels
       ) : (
         <>
           <h2 className="text-2xl font-bold text-base-content sm:text-4xl">
-            {labels.doseIs} <span className="text-primary">{round(doseMcg, 2)} mcg</span>
+            {labels.doseIs} <span className="text-primary">{formatLocaleNumber(doseMcg, 2, locale)} mcg</span>
             <span className="ml-3 block text-base font-normal text-base-content/60 sm:inline">
-              {units} {labels.units} = {round(doseMcg / 1000, 4)} mg
+              {units} {labels.units} = {formatLocaleNumber(doseMcg / 1000, 4, locale)} mg
             </span>
           </h2>
 
           <div className="mt-6 rounded-xl bg-base-200 px-4 py-3">
             <div className="text-xs uppercase tracking-wide text-base-content/50">{labels.concentration}</div>
-            <div className="text-lg font-bold text-base-content">{round(concentrationMgPerMl, 3)} mg/mL</div>
+            <div className="text-lg font-bold text-base-content">
+              {formatLocaleNumber(concentrationMgPerMl, 3, locale)} mg/mL
+            </div>
           </div>
         </>
       )}

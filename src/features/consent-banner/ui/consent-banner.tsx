@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { useAction } from "next-safe-action/hooks";
-
 import { useI18n } from "locales/client";
+
 import { cn } from "@/shared/lib/utils";
 import { trackingConsentAction } from "@/features/consent-banner/model/tracking-consent.action";
 import { Button } from "@/components/ui/button";

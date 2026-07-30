@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-
 import { useChangeLocale, useCurrentLocale } from "locales/client";
+
 import { useUpdateUserLocale } from "@/entities/user/model/update-user-locale";
 
 export function useAutoLocale() {

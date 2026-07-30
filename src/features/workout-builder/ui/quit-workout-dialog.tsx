@@ -1,8 +1,8 @@
 "use client";
 
 import { AlertTriangle, Trash2 } from "lucide-react";
-
 import { useI18n } from "locales/client";
+
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 

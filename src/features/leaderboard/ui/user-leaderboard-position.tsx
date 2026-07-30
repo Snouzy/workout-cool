@@ -1,13 +1,13 @@
 "use client";
 
-import React from "react";
 import { useQueryState } from "nuqs";
 import { usePathname } from "next/navigation";
 
-import { useSession } from "@/features/auth/lib/auth-client";
 
 import { useUserPosition } from "../hooks/use-user-position";
 import { LeaderboardPeriod } from "../actions/get-top-workout-users.action";
+
+import { useSession } from "@/features/auth/lib/auth-client";
 
 export default function UserLeaderboardPosition() {
   const { data: session } = useSession();

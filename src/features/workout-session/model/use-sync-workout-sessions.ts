@@ -2,10 +2,11 @@
 
 import { useEffect, useState } from "react";
 
+import { syncWorkoutSessionAction } from "../actions/sync-workout-sessions.action";
+
 import { workoutSessionLocal } from "@/shared/lib/workout-session/workout-session.local";
 import { useSession } from "@/features/auth/lib/auth-client";
 
-import { syncWorkoutSessionAction } from "../actions/sync-workout-sessions.action";
 
 interface SyncState {
   isSyncing: boolean;

@@ -3,9 +3,9 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, Play } from "lucide-react";
+import { useCurrentLocale, useI18n } from "locales/client";
 import { ExerciseAttributeNameEnum, ProgramWeek } from "@prisma/client";
 
-import { useCurrentLocale, useI18n } from "locales/client";
 import { canStartSession } from "@/shared/lib/access-control";
 import { WorkoutSessionSets } from "@/features/workout-session/ui/workout-session-sets";
 import { WorkoutSessionHeader } from "@/features/workout-session/ui/workout-session-header";

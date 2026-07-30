@@ -2,15 +2,16 @@
 
 import * as React from "react";
 import { Bell } from "lucide-react";
-
 import { useCurrentLocale, useI18n } from "locales/client";
-import { formatDate } from "@/shared/lib/date";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
 
 import { releaseNotes } from "../model/notes";
 import { useChangelogNotification } from "../hooks/use-changelog-notification";
 import { ChangelogNotificationBadge } from "./changelog-notification-badge";
+
+import { formatDate } from "@/shared/lib/date";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+
 
 export interface ReleaseNotesDialogProps {
   /** Function called when dialog is opened */

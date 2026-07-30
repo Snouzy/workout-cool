@@ -1,9 +1,11 @@
 import { useMemo } from "react";
+import { useCurrentLocale } from "locales/client";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
 import dayjs from "dayjs";
 
-import { useCurrentLocale } from "locales/client";
+import type { WorkoutSession } from "@/shared/lib/workout-session/types/workout-session";
+
 import { cn } from "@/shared/lib/utils";
 import { formatDate } from "@/shared/lib/date";
 import { useWorkoutSessions } from "@/features/workout-session/model/use-workout-sessions";
@@ -12,7 +14,6 @@ import { useWorkoutSessions } from "@/features/workout-session/model/use-workout
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
-import type { WorkoutSession } from "@/shared/lib/workout-session/types/workout-session";
 
 const DEFAULT_STREAK_COUNT = 5;
 

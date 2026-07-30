@@ -1,7 +1,7 @@
 import { Metadata } from "next";
-
 import { Locale } from "locales/types";
 import { getI18n } from "locales/server";
+
 import LeaderboardPage from "@/features/leaderboard/ui/leaderboard-page";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 

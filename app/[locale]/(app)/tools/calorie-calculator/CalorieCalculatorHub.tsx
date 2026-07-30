@@ -3,8 +3,8 @@
 import React from "react";
 import Link from "next/link";
 import { TrendingUpIcon, AwardIcon, TargetIcon, BrainIcon, GlobeIcon, ChartBarIcon } from "lucide-react";
-
 import { useI18n } from "locales/client";
+
 import { env } from "@/env";
 import { HorizontalBottomBanner, HorizontalTopBanner } from "@/components/ads";
 

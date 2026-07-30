@@ -1,9 +1,9 @@
 import { notFound } from "next/navigation";
 import { headers } from "next/headers";
 import { Metadata } from "next";
-
 import { Locale } from "locales/types";
 import { getI18n } from "locales/server";
+
 import { generateStructuredData, StructuredDataScript } from "@/shared/lib/structured-data";
 import { getLocalizedMetadata } from "@/shared/config/localized-metadata";
 import { ProgramDetailPage } from "@/features/programs/ui/program-detail-page";

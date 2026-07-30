@@ -2,11 +2,12 @@
 
 import { useFormStatus } from "react-dom";
 
+import type { ComponentPropsWithoutRef } from "react";
+import type { ButtonProps } from "@/components/ui/button";
+
 import { Loader } from "@/components/ui/loader";
 import { Button } from "@/components/ui/button";
 
-import type { ComponentPropsWithoutRef } from "react";
-import type { ButtonProps } from "@/components/ui/button";
 
 export const SubmitButton = (props: ButtonProps) => {
   const { pending } = useFormStatus();

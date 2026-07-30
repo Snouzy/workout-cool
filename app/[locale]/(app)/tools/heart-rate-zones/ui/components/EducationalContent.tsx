@@ -1,8 +1,8 @@
 "use client";
 
-import React from "react";
 
 import { TFunction, useI18n } from "locales/client";
+
 import { useScrollToTop } from "@/shared/hooks/useScrollToTop";
 
 export function EducationalContent() {

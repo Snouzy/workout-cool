@@ -22,7 +22,6 @@ import { ExerciseListItem, ExerciseListItemOverlay } from "./exercise-list-item"
 import type { ExerciseWithAttributes } from "../types";
 
 import { useDragFeedback } from "@/shared/hooks/use-drag-feedback";
-import { env } from "@/env";
 
 interface ExercisesSelectionProps {
   isLoading: boolean;

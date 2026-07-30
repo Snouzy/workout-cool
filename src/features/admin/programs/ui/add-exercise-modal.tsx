@@ -7,10 +7,11 @@ import { Plus, Trash2, Search } from "lucide-react";
 import { WorkoutSetType, WorkoutSetUnit } from "@prisma/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { CreateSuggestedSetData, SUGGESTED_SET_TEMPLATES } from "@/features/programs/lib/suggested-sets-helpers";
 
 import { ExerciseWithAttributes } from "../types/program.types";
 import { addExerciseToSession, getExercises } from "../actions/add-exercise.action";
+
+import { CreateSuggestedSetData, SUGGESTED_SET_TEMPLATES } from "@/features/programs/lib/suggested-sets-helpers";
 
 const exerciseSchema = z.object({
   exerciseId: z.string().min(1, "Veuillez sélectionner un exercice"),

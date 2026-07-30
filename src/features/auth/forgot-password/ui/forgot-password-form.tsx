@@ -2,9 +2,11 @@
 
 import { useForm } from "react-hook-form";
 import Link from "next/link";
+import { useI18n } from "locales/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { useI18n } from "locales/client";
+import { useForgotPassword } from "../model/useForgotPassword";
+
 import { paths } from "@/shared/constants/paths";
 import { forgotPasswordSchema, ForgotPasswordSchema } from "@/features/auth/forgot-password/forgot-password.schema";
 import { Input } from "@/components/ui/input";
@@ -12,7 +14,6 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
-import { useForgotPassword } from "../model/useForgotPassword";
 
 export const ForgotPasswordForm = () => {
   const t = useI18n();

@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { Loader2 } from "lucide-react";
-
 import { useI18n } from "locales/client";
+
 import { usePendingCheckout } from "@/shared/lib/premium/use-pending-checkout";
 
 export function ConversionFlowNotification() {

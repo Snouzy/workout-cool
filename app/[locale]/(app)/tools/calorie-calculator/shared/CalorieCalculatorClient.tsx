@@ -1,11 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { Calculator } from "lucide-react";
-
 import { useI18n } from "locales/client";
-import { env } from "@/env";
-import { HorizontalBottomBanner } from "@/components/ads";
+
 
 import { BodyFatInput } from "./components/BodyFatInput";
 import {
@@ -21,6 +19,9 @@ import {
 import { calculateCalories, type CalorieCalculatorInputs, type CalorieResults } from "./calorie-formulas.utils";
 
 import type { CalculatorConfig } from "./types";
+
+import { env } from "@/env";
+import { HorizontalBottomBanner } from "@/components/ads";
 
 interface CalorieCalculatorClientProps {
   config: CalculatorConfig;

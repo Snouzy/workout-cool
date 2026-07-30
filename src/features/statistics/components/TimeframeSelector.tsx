@@ -1,8 +1,8 @@
 "use client";
 
-import React from "react";
 
 import { useI18n } from "locales/client";
+
 import { cn } from "@/shared/lib/utils";
 import { StatisticsTimeframe } from "@/shared/constants/statistics";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";

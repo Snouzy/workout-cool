@@ -2,9 +2,9 @@
 
 import React, { useState, useEffect } from "react";
 import { Lock, Eye, TrendingUp, Zap, Star, Crown, ArrowRight, RotateCcw } from "lucide-react";
+import { useI18n, useCurrentLocale } from "locales/client";
 import { motion, AnimatePresence } from "framer-motion";
 
-import { useI18n, useCurrentLocale } from "locales/client";
 import { cn } from "@/shared/lib/utils";
 
 interface StatisticsPreviewOverlayProps {

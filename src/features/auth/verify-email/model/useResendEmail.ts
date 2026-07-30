@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-
 import { useI18n } from "locales/client";
+
 import { getServerUrl } from "@/shared/lib/server-url";
 import { paths } from "@/shared/constants/paths";
 import { COUNTDOWN_TIME } from "@/features/auth/verify-email/constants";

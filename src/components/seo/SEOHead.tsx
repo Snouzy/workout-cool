@@ -1,10 +1,11 @@
 import React from "react";
 
+import type { Metadata } from "next";
+
 import { generateStructuredData, StructuredDataScript } from "@/shared/lib/structured-data";
 import { getServerUrl } from "@/shared/lib/server-url";
 import { SiteConfig } from "@/shared/config/site-config";
 
-import type { Metadata } from "next";
 
 interface SEOHeadProps {
   title?: string;

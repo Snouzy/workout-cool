@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
-
 import { useI18n } from "locales/client";
+
 import { Button } from "@/components/ui/button";
 
 export const SignInButton = () => {

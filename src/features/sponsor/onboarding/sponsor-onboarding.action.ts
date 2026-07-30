@@ -1,11 +1,13 @@
 "use server";
 
 import SponsorOnboardingEmail from "@emails/SponsorOnboardingEmail";
+
+import { SponsorOnboardingSchema } from "./sponsor-onboarding.schema";
+
 import { sendEmail } from "@/shared/lib/mail/sendEmail";
 import { SiteConfig } from "@/shared/config/site-config";
 import { actionClient } from "@/shared/api/safe-actions";
 
-import { SponsorOnboardingSchema } from "./sponsor-onboarding.schema";
 
 export const sponsorOnboardingAction = actionClient.schema(SponsorOnboardingSchema).action(async ({ parsedInput }) => {
   await sendEmail({

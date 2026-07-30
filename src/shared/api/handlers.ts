@@ -1,10 +1,11 @@
 import { NextResponse } from "next/server";
 
-import { serverAuth } from "@/entities/user/model/get-server-session-user";
 
 import { createSafeHandler } from "./createHandler";
 
 import type { HandleReturnedServerErrorFn } from "./createHandler";
+
+import { serverAuth } from "@/entities/user/model/get-server-session-user";
 
 export class HandlerError extends Error {
   status = 400;

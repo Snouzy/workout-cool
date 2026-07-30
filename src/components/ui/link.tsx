@@ -1,9 +1,10 @@
 import { forwardRef } from "react";
 import NextLink from "next/link";
 
+import type { ComponentProps } from "react";
+
 import { cn } from "@/shared/lib/utils";
 
-import type { ComponentProps } from "react";
 
 interface LinkProps extends ComponentProps<typeof NextLink> {
   variant?: "default" | "nav" | "footer" | "button";

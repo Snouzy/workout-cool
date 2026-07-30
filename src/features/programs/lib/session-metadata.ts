@@ -1,10 +1,12 @@
 /* eslint-disable max-len */
 import { Locale } from "locales/types";
+
+import { getSessionTitle, getSessionDescription, getProgramTitle } from "./translations-mapper";
+
 import { getLocalizedMetadata } from "@/shared/config/localized-metadata";
 import { ProgramSessionWithExercises } from "@/entities/program-session/types/program-session.types";
 import { ProgramI18nReference } from "@/entities/program/types/program.types";
 
-import { getSessionTitle, getSessionDescription, getProgramTitle } from "./translations-mapper";
 
 export function generateSessionSEOKeywords(session: ProgramSessionWithExercises, program: ProgramI18nReference, locale: Locale): string[] {
   const baseData = getLocalizedMetadata(locale);

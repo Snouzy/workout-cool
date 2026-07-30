@@ -1,11 +1,10 @@
-import React from "react";
 import Link from "next/link";
 import { Metadata } from "next";
 import { ChevronLeftIcon } from "lucide-react";
-
 import { getI18n } from "locales/server";
 import { CalorieCalculatorClient } from "app/[locale]/(app)/tools/calorie-calculator/shared/CalorieCalculatorClient";
 import { calculatorConfigs } from "app/[locale]/(app)/tools/calorie-calculator/shared/calculator-configs";
+
 import { getServerUrl } from "@/shared/lib/server-url";
 import { env } from "@/env";
 import { generateSEOMetadata, SEOScripts } from "@/components/seo/SEOHead";

@@ -1,4 +1,3 @@
-import * as React from "react";
 import { ComponentPropsWithoutRef } from "react";
 
 export type BrokenLinkIconProps = ComponentPropsWithoutRef<"svg"> & { size?: number };

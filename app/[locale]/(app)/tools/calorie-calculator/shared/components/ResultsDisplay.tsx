@@ -1,9 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import { BeefIcon, WheatIcon, DropletIcon, FlameIcon, ActivityIcon } from "lucide-react";
-
 import { useI18n } from "locales/client";
 import { CalorieResults } from "app/[locale]/(app)/tools/calorie-calculator/calorie-calculator.utils";
 

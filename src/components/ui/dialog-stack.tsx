@@ -3,9 +3,10 @@
 import { Children, cloneElement, createContext, useContext, useEffect, useState } from "react";
 import * as Portal from "@radix-ui/react-portal";
 
+import type { ButtonHTMLAttributes, Dispatch, HTMLAttributes, MouseEventHandler, ReactElement, ReactNode, SetStateAction } from "react";
+
 import { cn } from "@/shared/lib/utils";
 
-import type { ButtonHTMLAttributes, Dispatch, HTMLAttributes, MouseEventHandler, ReactElement, ReactNode, SetStateAction } from "react";
 
 type DialogStackContextType = {
   activeIndex: number;

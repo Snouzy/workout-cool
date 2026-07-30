@@ -3,10 +3,10 @@ import { useForm } from "react-hook-form";
 import * as React from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import { useI18n } from "locales/client";
 import { Label } from "@radix-ui/react-label";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { useI18n } from "locales/client";
 import { cn } from "@/shared/lib/utils";
 import { paths } from "@/shared/constants/paths";
 import { ProviderButton } from "@/features/auth/ui/ProviderButton";

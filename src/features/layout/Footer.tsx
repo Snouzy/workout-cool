@@ -1,7 +1,7 @@
 import { Github, Mail, Twitter } from "lucide-react";
-
 import { getI18n } from "locales/server";
 import { TFunction } from "locales/client";
+
 import { cn } from "@/shared/lib/utils";
 import { paths } from "@/shared/constants/paths";
 import { WorkoutSessionTimer } from "@/features/workout-session/ui/workout-session-timer";

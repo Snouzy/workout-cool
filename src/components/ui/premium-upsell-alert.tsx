@@ -1,8 +1,7 @@
-import React from "react";
 import Link from "next/link";
 import { Sparkles, Zap, Ban } from "lucide-react";
-
 import { useI18n } from "locales/client";
+
 import { cn } from "@/shared/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";

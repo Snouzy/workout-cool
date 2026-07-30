@@ -1,6 +1,6 @@
 import { useSearchParams } from "next/navigation";
-
 import { useI18n } from "locales/client";
+
 import { paths } from "@/shared/constants/paths";
 import { LoginSchema } from "@/features/auth/signin/schema/signin.schema";
 import { authClient } from "@/features/auth/lib/auth-client";

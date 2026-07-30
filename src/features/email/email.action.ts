@@ -1,8 +1,9 @@
 "use server";
 
+import { EmailActionSchema } from "./email.schema";
+
 import { actionClient } from "@/shared/api/safe-actions";
 
-import { EmailActionSchema } from "./email.schema";
 
 // export const addEmailAction = action(EmailActionSchema, async ({ email }) => {
 //   try {

@@ -2,7 +2,6 @@
 
 import React from "react";
 import { ActivityIcon, BedIcon, BedDoubleIcon, BikeIcon, ZapIcon } from "lucide-react";
-
 import { useI18n } from "locales/client";
 import { ActivityLevel } from "app/[locale]/(app)/tools/calorie-calculator/calorie-calculator.utils";
 

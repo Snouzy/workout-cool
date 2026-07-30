@@ -1,8 +1,8 @@
 "use client";
 
 import { Mail } from "lucide-react";
-
 import { useI18n } from "locales/client";
+
 import { cn } from "@/shared/lib/utils";
 import { paths } from "@/shared/constants/paths";
 import { useResendEmail } from "@/features/auth/verify-email/model/useResendEmail";

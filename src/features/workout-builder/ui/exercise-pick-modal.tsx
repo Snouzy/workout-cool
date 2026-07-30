@@ -1,14 +1,15 @@
 import { useEffect, useRef } from "react";
 import Image from "next/image";
 import { X, Play } from "lucide-react";
+import { useCurrentLocale, useI18n } from "locales/client";
 import { ExerciseAttributeNameEnum } from "@prisma/client";
 
-import { useCurrentLocale, useI18n } from "locales/client";
+import type { ExerciseWithAttributes } from "../types";
+
 import { getExerciseAttributesValueOf } from "@/entities/exercise/shared/muscles";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
-import type { ExerciseWithAttributes } from "../types";
 
 interface ExercisePickModalProps {
   exercise: ExerciseWithAttributes | null;

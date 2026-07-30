@@ -1,8 +1,10 @@
 "use client";
 
 import { useBoolean } from "usehooks-ts";
-
 import { useI18n } from "locales/client";
+
+import type { PropsWithChildren } from "react";
+
 import { ReviewInput } from "@/features/contact-feedback/ui/ReviewInput";
 import { ContactFeedbackSchema, ContactFeedbackSchemaType } from "@/features/contact-feedback/model/contact-feedback.schema";
 import { contactFeedbackAction } from "@/features/contact-feedback/model/contact-feedback.action";
@@ -14,7 +16,6 @@ import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, useZodForm } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 
-import type { PropsWithChildren } from "react";
 
 export type ContactFeedbackPopoverProps = PropsWithChildren<{}>;
 

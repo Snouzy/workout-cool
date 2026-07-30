@@ -2,7 +2,6 @@
 
 import { useRouter } from "next/navigation";
 import { Ban } from "lucide-react";
-
 import { useI18n } from "locales/client";
 
 export function RemoveAdsText() {

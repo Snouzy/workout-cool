@@ -1,8 +1,8 @@
 "use server";
 
+import { getI18n } from "locales/server";
 import { UserRole } from "@prisma/client";
 
-import { getI18n } from "locales/server";
 import { setupAnalytics } from "@/shared/lib/analytics/server";
 import { LogEvents } from "@/shared/lib/analytics/events";
 import { ActionError, actionClient } from "@/shared/api/safe-actions";

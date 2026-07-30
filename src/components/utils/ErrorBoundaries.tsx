@@ -2,11 +2,12 @@
 
 import { Component } from "react";
 
+import type { ErrorInfo, ReactNode } from "react";
+
 import { logger } from "@/shared/lib/logger";
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
-import type { ErrorInfo, ReactNode } from "react";
 
 type Props = {
   children?: ReactNode;

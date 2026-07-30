@@ -2,10 +2,10 @@
 
 import { z } from "zod";
 import { useForm } from "react-hook-form";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+import { useI18n } from "locales/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { useI18n } from "locales/client";
 import "./styles.css";
 import { env } from "@/env";
 import { InArticle } from "@/components/ads";

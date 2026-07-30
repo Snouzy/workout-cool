@@ -1,11 +1,12 @@
 /* eslint-disable no-fallthrough */
 import Stripe from "stripe";
 
+import type { CheckoutResult, PremiumPlan } from "@/shared/types/premium.types";
+import type { CheckoutOptions, PaymentProvider, WebhookResult } from "./base-provider";
+
 import { prisma } from "@/shared/lib/prisma";
 import { env } from "@/env";
 
-import type { CheckoutResult, PremiumPlan } from "@/shared/types/premium.types";
-import type { CheckoutOptions, PaymentProvider, WebhookResult } from "./base-provider";
 
 /**
  * Stripe Payment Provider

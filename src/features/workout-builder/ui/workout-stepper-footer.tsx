@@ -1,6 +1,7 @@
 "use client";
 import { ArrowLeft, ArrowRight, Play } from "lucide-react";
 import { useI18n } from "locales/client";
+
 import type { ReactNode } from "react";
 
 import { Button } from "@/components/ui/button";

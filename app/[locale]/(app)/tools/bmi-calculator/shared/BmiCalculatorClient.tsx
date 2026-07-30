@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-
+import { useState, useEffect } from "react";
 import { useI18n } from "locales/client";
 import {
   BmiData,

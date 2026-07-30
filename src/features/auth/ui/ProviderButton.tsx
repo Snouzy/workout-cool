@@ -1,16 +1,17 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
+import { useI18n } from "locales/client";
 import { useMutation } from "@tanstack/react-query";
 
-import { useI18n } from "locales/client";
+import type { ReactNode } from "react";
+
 import { getServerUrl } from "@/shared/lib/server-url";
 import { authClient } from "@/features/auth/lib/auth-client";
 import { Loader } from "@/components/ui/loader";
 import { Button, ButtonProps } from "@/components/ui/button";
 import { GoogleSvg } from "@/components/svg/GoogleSvg";
 
-import type { ReactNode } from "react";
 
 const ProviderData: Record<string, { icon: ReactNode; name: string }> = {
   google: {

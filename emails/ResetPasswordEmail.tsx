@@ -1,9 +1,9 @@
-import * as React from "react";
 import { Button, Heading, Hr, Link, Section, Text } from "@react-email/components";
+
+import { BaseEmailLayout } from "./utils/BaseEmailLayout"; // Import the layout
 
 import { SiteConfig } from "@/shared/config/site-config";
 
-import { BaseEmailLayout } from "./utils/BaseEmailLayout"; // Import the layout
 
 interface ResetPasswordEmailProps {
   url: string;

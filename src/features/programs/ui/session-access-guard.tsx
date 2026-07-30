@@ -2,8 +2,8 @@
 
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-
 import { useCurrentLocale, useI18n } from "locales/client";
+
 import { getSessionAccess, type AccessControlContext } from "@/shared/lib/access-control";
 import { Button } from "@/components/ui/button";
 

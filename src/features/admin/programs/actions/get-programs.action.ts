@@ -3,10 +3,11 @@
 import { headers } from "next/headers";
 import { UserRole, ProgramVisibility } from "@prisma/client";
 
+import { ProgramWithStats, ProgramWithFullDetails } from "../types/program.types";
+
 import { prisma } from "@/shared/lib/prisma";
 import { auth } from "@/features/auth/lib/better-auth";
 
-import { ProgramWithStats, ProgramWithFullDetails } from "../types/program.types";
 
 export async function getPrograms(visibility?: ProgramVisibility): Promise<ProgramWithStats[]> {
   const session = await auth.api.getSession({

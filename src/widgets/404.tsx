@@ -1,6 +1,6 @@
 import Link from "next/link";
-
 import { getI18n } from "locales/server";
+
 import { buttonVariants } from "@/components/ui/button";
 
 export async function Page404() {

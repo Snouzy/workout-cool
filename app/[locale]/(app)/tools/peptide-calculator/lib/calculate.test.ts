@@ -63,6 +63,11 @@ describe("calculateDoseFromUnits", () => {
     expect(back).toBeCloseTo(BASE.doseMcg, 10);
   });
 
+  it("répond encore au-delà de la plus grande seringue", () => {
+    // Un prélèvement qui déborde est un avertissement affiché en rouge, pas une entrée refusée.
+    expect(calculateDoseFromUnits({ vialMg: 5, waterMl: 10, units: 150 })).toBeCloseTo(750, 10);
+  });
+
   it("rend null sur entrée invalide", () => {
     expect(calculateDoseFromUnits({ vialMg: 10, waterMl: 5, units: 0 })).toBeNull();
     expect(calculateDoseFromUnits({ vialMg: 0, waterMl: 5, units: 10 })).toBeNull();

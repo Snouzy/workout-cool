@@ -13,9 +13,18 @@ export const SYRINGE_OPTIONS: SyringeOption[] = [
 ];
 
 export const VIAL_MG_OPTIONS = [5, 10, 20, 50, 100];
-export const WATER_ML_OPTIONS = [1, 2, 3, 5];
-export const DOSE_MCG_OPTIONS = [50, 100, 250, 500];
-export const UNITS_OPTIONS = [5, 10, 25, 50];
+export const WATER_ML_OPTIONS = [1, 2, 3, 5, 10];
+
+/** Dose presets, one list per display unit. The stored dose stays in micrograms either way. */
+export const DOSE_MCG_OPTIONS = [50, 100, 250, 500, 750];
+export const DOSE_MG_OPTIONS = [1, 2, 2.5, 5, 8];
+
+/** Step of the free-entry field, per quantity: small enough to be useful, coarse enough to be quick. */
+export const STEP_VIAL_MG = 1;
+export const STEP_WATER_ML = 0.5;
+export const STEP_DOSE_MCG = 10;
+export const STEP_DOSE_MG = 0.1;
+export const STEP_UNITS = 0.5;
 
 export const DEFAULT_INPUT = {
   vialMg: 10,

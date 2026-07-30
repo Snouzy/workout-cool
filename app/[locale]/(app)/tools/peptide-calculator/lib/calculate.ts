@@ -5,7 +5,12 @@ export const UNITS_PER_ML = 100;
 const MAX_VIAL_MG = 1000;
 const MAX_WATER_ML = 100;
 const MAX_DOSE_MCG = 100_000;
-const MAX_UNITS = 100;
+/**
+ * Deliberately well above the 100-unit barrel: a draw that overflows the selected syringe is
+ * a warning the result block renders in red, never a reason to stop answering. This ceiling
+ * only rejects nonsense.
+ */
+const MAX_UNITS = 1000;
 const MIN_MEASURABLE_UNITS = 2;
 const TYPICAL_MAX_WATER_ML = 10;
 const EPSILON = 1e-9;

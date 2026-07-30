@@ -48,7 +48,9 @@ export function SEOContentServer({ content }: { content: PeptidePageContent }) {
         }
 
         return (
-          <div key={section.id}>
+          // `id` is what the widget's "how it works" link scrolls to; `scroll-mt` keeps the
+          // heading clear of the sticky header once it lands.
+          <div className="scroll-mt-20" id={section.id} key={section.id}>
             <Section section={section} />
             {section.id === "chart" && <ContentTable table={content.reconstitutionTable} />}
             {section.id === "conversion" && <ContentTable table={content.conversionTable} />}

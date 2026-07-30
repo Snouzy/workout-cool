@@ -99,13 +99,12 @@ export default async function PeptideCalculatorPage({ params }: { params: Promis
         )}
 
         <div className="container relative z-10 mx-auto max-w-5xl px-2 py-6 sm:px-4">
-          <div className="mb-8 text-center">
-            <div className="mb-4 text-6xl">💉</div>
-            <h1 className="mb-4 text-3xl font-bold text-gray-900 dark:text-white sm:text-5xl">{t("tools.peptide-calculator.title")}</h1>
-            <p className="mx-auto max-w-3xl text-xl text-gray-600 dark:text-gray-300">{content.heroSubtitle}</p>
-          </div>
-
-          <PeptideCalculatorClient defaultInput={DEFAULT_INPUT} disclaimer={content.disclaimer} />
+          <PeptideCalculatorClient
+            defaultInput={DEFAULT_INPUT}
+            disclaimer={content.disclaimer}
+            subtitle={content.heroSubtitle}
+            title={t("tools.peptide-calculator.title")}
+          />
 
           <SEOContentServer content={content} />
 

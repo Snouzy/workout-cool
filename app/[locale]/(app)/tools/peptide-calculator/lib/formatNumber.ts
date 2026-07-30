@@ -32,3 +32,24 @@ export function formatLocaleNumber(value: number, decimals: number, locale: Loca
 export function roundToPrecision(value: number, decimals: number): number {
   return Number(value.toFixed(decimals));
 }
+
+/** Micrograms below the thousand read as `mcg`; past it, `8 mg` beats `8000 mcg`. */
+export const DOSE_UNIT_SWITCH_MCG = 1000;
+
+export interface FormattedDose {
+  value: string;
+  unit: "mcg" | "mg";
+}
+
+/**
+ * Renders a dose in whichever unit keeps it readable, as `{value, unit}` so the
+ * caller can style the two parts separately (the result headline colours the unit).
+ */
+export function formatDose(doseMcg: number, locale: Locale): FormattedDose {
+  const asMg = doseMcg >= DOSE_UNIT_SWITCH_MCG;
+
+  return {
+    value: formatLocaleNumber(asMg ? doseMcg / 1000 : doseMcg, asMg ? 3 : 0, locale),
+    unit: asMg ? "mg" : "mcg",
+  };
+}

@@ -935,12 +935,6 @@ export default {
         water_excess: "C'est une quantité d'eau inhabituellement élevée pour un seul flacon. Vérifiez ce chiffre.",
         not_whole_graduation: "Cela tombe entre deux graduations. Lisez le repère le plus proche sur votre seringue.",
       },
-      vial: {
-        cap: "Capsule aluminium sertie",
-        stopper: "Bouchon en caoutchouc butyle",
-        glass: "Flacon en verre borosilicaté",
-        cake: "Culot de peptide lyophilisé",
-      },
     },
     related_title: "Autres calculateurs gratuits",
     "one-rep-max": {

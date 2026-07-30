@@ -955,12 +955,6 @@ export default {
         water_excess: "Essa é uma quantidade de água incomumente grande para um único frasco. Confira o valor novamente.",
         not_whole_graduation: "Isso cai entre graduações. Leia a marca mais próxima na sua seringa.",
       },
-      vial: {
-        cap: "Cápsula de alumínio lacrada",
-        stopper: "Tampa de borracha butílica",
-        glass: "Frasco de vidro borossilicato",
-        cake: "Bolo de peptídeo liofilizado",
-      },
     },
     related_title: "Outras calculadoras gratuitas",
     "one-rep-max": {

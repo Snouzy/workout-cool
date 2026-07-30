@@ -7,36 +7,22 @@
  * light and dark. The only literal colours are the ones that are physically
  * literal: the aluminium crimp and the butyl stopper.
  */
-// Shoulder shortened (was a 32-unit drop from the neck, y54→y86 — a soda-bottle silhouette) to a
-// 16-unit drop, y54→y70, so the straight body reads as most of the vessel and the neck reads as
-// short, like a real reagent vial rather than a bottle. Only the shoulder curves moved; the neck
-// (cap/stopper, y4–40) and the bottom rounding are untouched.
-const BODY_PATH =
-  "M46 40 L46 54 C46 61 18 60 18 70 L18 184 C18 191 23 195 30 195 L90 195 C97 195 102 191 102 184 L102 70 C102 60 74 61 74 54 L74 40 Z";
-
-const SVG_CLASS = "absolute inset-0 h-full w-full";
 
 /**
- * Where each named part actually sits, in this file's own 120×200 viewBox units — the single
- * source of truth PeptideVial's leader lines anchor to (see LEADER_PATHS there), so a callout can
- * be checked against real geometry instead of eyeballed against a screenshot.
+ * Proportions are what make this read as a reagent vial rather than a soda bottle.
+ * A real crimped 10 mL vial is roughly 22 mm across the body, a 20 mm cap and a
+ * 13 mm neck — so the cap is nearly as wide as the body and the shoulder is a
+ * short, tight step, not a long taper.
  *
- * - cap:     rect x=38 y=4  w=44 h=28 → right edge x=82, vertical centre y=18
- * - stopper: rect x=45 y=26 w=30 h=20, drawn *under* the cap → right edge x=75; the visible band
- *            is the strip below the cap (y 32–46, since the cap covers y 4–32), centre y=39
- * - glass:   BODY_PATH's straight run is x=18/102, y=70–184 → right edge x=102; y=95 sits in the
- *            plain glass between the shoulder and the label band (which starts at y=112), clearly
- *            "glass" rather than "label" or "cake"
- * - cake:    sits at the bottom of the liquid clip box (x 18–102, y 70–195 after the shoulder
- *            shortened); PeptideVial insets it a further 8% each side and gives it height 17% of
- *            that 125-unit-tall box → right edge ≈ x=95.3, band y≈173.8–195, centre y≈184.4
+ * Here, in this file's 120×200 viewBox: body x26→94 (68 wide), neck x42→78
+ * (36 wide, 53% of the body), cap x38→82 (44 wide, 65% of the body and
+ * overhanging the neck by 4 each side, the way a crimp does). The shoulder drops
+ * only y52→y66, so the straight body is most of the vessel.
  */
-export const VIAL_PART_ANCHORS: Record<"cap" | "stopper" | "glass" | "cake", { x: number; y: number }> = {
-  cap: { x: 82, y: 18 },
-  stopper: { x: 75, y: 39 },
-  glass: { x: 102, y: 95 },
-  cake: { x: 95.3, y: 184.4 },
-};
+const BODY_PATH =
+  "M42 38 L42 52 C42 59 30 60 26 66 L26 186 C26 192 31 196 37 196 L83 196 C89 196 94 192 94 186 L94 66 C90 60 78 59 78 52 L78 38 Z";
+
+const SVG_CLASS = "absolute inset-0 h-full w-full";
 
 export function VialGlassBack() {
   return (
@@ -80,11 +66,11 @@ export function VialGlassFront() {
       <rect fill="#000000" fillOpacity="0.16" height="3" width="44" x="38" y="29" />
 
       {/* glass edges: a highlight down one side, a soft shadow down the other */}
-      <path d="M26 94 C23 104 23 168 26 180 L32 180 C29 168 29 104 32 94 Z" fill="#ffffff" fillOpacity="0.55" />
+      <path d="M32 90 C29 100 29 170 32 182 L38 182 C35 170 35 100 38 90 Z" fill="#ffffff" fillOpacity="0.55" />
       <g className="text-base-content">
-        <path d="M94 96 C97 106 97 166 94 178 L89 178 C92 166 92 106 89 96 Z" fill="currentColor" fillOpacity="0.08" />
+        <path d="M88 92 C91 102 91 168 88 180 L83 180 C86 168 86 102 83 92 Z" fill="currentColor" fillOpacity="0.08" />
         <path d={BODY_PATH} stroke="currentColor" strokeOpacity="0.22" strokeWidth="2" />
-        <path d="M46 41 L74 41" stroke="currentColor" strokeOpacity="0.18" strokeWidth="2" />
+        <path d="M42 41 L78 41" stroke="currentColor" strokeOpacity="0.18" strokeWidth="2" />
       </g>
     </svg>
   );

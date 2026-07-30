@@ -76,17 +76,7 @@ export function PeptideCalculatorClient({ defaultInput = DEFAULT_INPUT, disclaim
           {/* Driven by steps 02 and 03 together, so it sits with the pair — after
               the inputs on mobile, never pushing them below the fold. */}
           <div className="rounded-2xl border border-base-300 bg-base-100 p-4">
-            <PeptideVial
-              labels={{
-                cake: t("tools.peptide-calculator.vial.cake"),
-                cap: t("tools.peptide-calculator.vial.cap"),
-                glass: t("tools.peptide-calculator.vial.glass"),
-                stopper: t("tools.peptide-calculator.vial.stopper"),
-              }}
-              locale={locale}
-              vialMg={input.vialMg}
-              waterMl={input.waterMl}
-            />
+            <PeptideVial locale={locale} vialMg={input.vialMg} waterMl={input.waterMl} />
           </div>
 
           <DoseInputStep

@@ -7,10 +7,36 @@
  * light and dark. The only literal colours are the ones that are physically
  * literal: the aluminium crimp and the butyl stopper.
  */
+// Shoulder shortened (was a 32-unit drop from the neck, y54→y86 — a soda-bottle silhouette) to a
+// 16-unit drop, y54→y70, so the straight body reads as most of the vessel and the neck reads as
+// short, like a real reagent vial rather than a bottle. Only the shoulder curves moved; the neck
+// (cap/stopper, y4–40) and the bottom rounding are untouched.
 const BODY_PATH =
-  "M46 40 L46 54 C46 68 18 66 18 86 L18 184 C18 191 23 195 30 195 L90 195 C97 195 102 191 102 184 L102 86 C102 66 74 68 74 54 L74 40 Z";
+  "M46 40 L46 54 C46 61 18 60 18 70 L18 184 C18 191 23 195 30 195 L90 195 C97 195 102 191 102 184 L102 70 C102 60 74 61 74 54 L74 40 Z";
 
 const SVG_CLASS = "absolute inset-0 h-full w-full";
+
+/**
+ * Where each named part actually sits, in this file's own 120×200 viewBox units — the single
+ * source of truth PeptideVial's leader lines anchor to (see LEADER_PATHS there), so a callout can
+ * be checked against real geometry instead of eyeballed against a screenshot.
+ *
+ * - cap:     rect x=38 y=4  w=44 h=28 → right edge x=82, vertical centre y=18
+ * - stopper: rect x=45 y=26 w=30 h=20, drawn *under* the cap → right edge x=75; the visible band
+ *            is the strip below the cap (y 32–46, since the cap covers y 4–32), centre y=39
+ * - glass:   BODY_PATH's straight run is x=18/102, y=70–184 → right edge x=102; y=95 sits in the
+ *            plain glass between the shoulder and the label band (which starts at y=112), clearly
+ *            "glass" rather than "label" or "cake"
+ * - cake:    sits at the bottom of the liquid clip box (x 18–102, y 70–195 after the shoulder
+ *            shortened); PeptideVial insets it a further 8% each side and gives it height 17% of
+ *            that 125-unit-tall box → right edge ≈ x=95.3, band y≈173.8–195, centre y≈184.4
+ */
+export const VIAL_PART_ANCHORS: Record<"cap" | "stopper" | "glass" | "cake", { x: number; y: number }> = {
+  cap: { x: 82, y: 18 },
+  stopper: { x: 75, y: 39 },
+  glass: { x: 102, y: 95 },
+  cake: { x: 95.3, y: 184.4 },
+};
 
 export function VialGlassBack() {
   return (

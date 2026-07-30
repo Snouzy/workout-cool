@@ -1,4 +1,5 @@
 import { formatLocaleNumber } from "../../lib/formatNumber";
+import { AnimatedNumber } from "./AnimatedNumber";
 
 import type { Locale } from "locales/types";
 
@@ -31,7 +32,10 @@ export function ReverseResultCard({ doseMcg, concentrationMgPerMl, units, labels
       ) : (
         <>
           <h2 className="text-2xl font-bold text-base-content sm:text-4xl">
-            {labels.doseIs} <span className="text-primary">{formatLocaleNumber(doseMcg, 2, locale)} mcg</span>
+            {labels.doseIs}{" "}
+            <span className="text-primary">
+              <AnimatedNumber value={formatLocaleNumber(doseMcg, 2, locale)} /> mcg
+            </span>
             <span className="ml-3 block text-base font-normal text-base-content/60 sm:inline">
               {formatLocaleNumber(units, 2, locale)} {labels.units} = {formatLocaleNumber(doseMcg / 1000, 4, locale)} mg
             </span>

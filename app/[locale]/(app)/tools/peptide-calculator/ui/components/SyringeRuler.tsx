@@ -1,4 +1,11 @@
+"use client";
+
+import { useEffect } from "react";
+import { motion, useMotionValue, useReducedMotion, useSpring, useTransform } from "framer-motion";
+
+import { SPRING } from "../../lib/motion";
 import { formatLocaleNumber } from "../../lib/formatNumber";
+import { RulerTicks } from "./RulerTicks";
 
 import type { Locale } from "locales/types";
 
@@ -9,61 +16,52 @@ interface SyringeRulerProps {
   locale: Locale;
 }
 
-const LABEL_EVERY = 5;
-
-function getLabelTransformClass(fillPercent: number): string {
-  if (fillPercent < 10) return "translate-x-0";
-  if (fillPercent > 90) return "-translate-x-full";
-  return "-translate-x-1/2";
-}
-
 export function SyringeRuler({ units, capacity, unitsLabel, locale }: SyringeRulerProps) {
-  const ticks = Array.from({ length: capacity + 1 }, (_, index) => index);
+  const reduced = useReducedMotion();
+
+  // The bar saturates, the badge below tells the truth. This clamp must not change.
   const clamped = Math.min(Math.max(units, 0), capacity);
-  const fillPercent = (clamped / capacity) * 100;
+  const fraction = clamped / capacity;
+
+  const target = useMotionValue(fraction);
+  const spring = useSpring(target, SPRING);
+  // Reduced motion reads the target directly: correctly positioned, never animated.
+  const fill = reduced ? target : spring;
+
+  useEffect(() => {
+    target.set(fraction);
+  }, [fraction, target]);
+
+  // Percentages of each element's own width, so every position stays a transform.
+  const edgeX = useTransform(fill, (value) => `${(value - 1) * 100}%`);
+  const badgeX = useTransform(fill, (value) => `${(1 - value) * 100}%`);
 
   return (
     <div className="mt-6">
       <div className="mb-1 flex justify-between text-xs text-base-content/50">
-        <span>0</span>
+        <span>{formatLocaleNumber(0, 0, locale)}</span>
         <span>
-          {capacity} {unitsLabel}
+          {formatLocaleNumber(capacity, 0, locale)} {unitsLabel}
         </span>
       </div>
 
-      <div className="relative h-16 rounded-lg border border-base-content/15 bg-base-100">
-        <div
-          className="absolute inset-y-0 left-0 rounded-l-lg bg-gradient-to-r from-primary/70 to-primary"
-          style={{ width: `${fillPercent}%` }}
-        />
+      <div className="relative h-16 overflow-hidden rounded-lg border border-base-300 bg-base-100">
+        <motion.div className="absolute inset-y-0 left-0 w-full origin-left bg-gradient-to-r from-primary/70 to-primary" style={{ scaleX: fill }} />
 
-        {ticks.map((tick) => {
-          const isLabelled = tick % LABEL_EVERY === 0;
+        <RulerTicks capacity={capacity} fill={fill} locale={locale} />
 
-          return (
-            <div
-              className={`absolute top-0 ${isLabelled ? "" : "hidden sm:block"}`}
-              key={tick}
-              style={{ left: `${(tick / capacity) * 100}%` }}
-            >
-              <div className={`w-px bg-base-content/40 ${isLabelled ? "h-5" : "h-2.5"}`} />
-              {isLabelled && tick > 0 && tick < capacity && (
-                <span className="absolute left-1/2 top-5 -translate-x-1/2 text-[10px] text-base-content/60">{tick}</span>
-              )}
-            </div>
-          );
-        })}
-
-        <div className="absolute inset-y-0 w-0.5 bg-base-content" style={{ left: `${fillPercent}%` }} />
+        <motion.div className="absolute inset-y-0 left-0 w-full border-r-2 border-base-content" style={{ x: edgeX }} />
       </div>
 
       <div className="relative h-6">
-        <span
-          className={`absolute rounded-md bg-primary px-2 py-0.5 text-xs font-bold text-primary-content ${getLabelTransformClass(fillPercent)}`}
-          style={{ left: `${fillPercent}%` }}
-        >
-          {formatLocaleNumber(units, 2, locale)} {unitsLabel}
-        </span>
+        <motion.div className="absolute inset-x-0 top-0" style={{ x: edgeX }}>
+          <motion.span
+            className="absolute right-0 top-0 whitespace-nowrap rounded-md bg-primary px-2 py-0.5 text-xs font-bold text-primary-content"
+            style={{ x: badgeX }}
+          >
+            {formatLocaleNumber(units, 2, locale)} {unitsLabel}
+          </motion.span>
+        </motion.div>
       </div>
     </div>
   );

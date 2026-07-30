@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 
+import { ChipLabel } from "./Chip";
+
 interface OptionChipsProps {
   name: string;
   legend: string;
@@ -10,16 +12,6 @@ interface OptionChipsProps {
   onChange: (value: number) => void;
   suffix: string;
   otherLabel: string;
-}
-
-function chipClassName(selected: boolean): string {
-  return [
-    "cursor-pointer rounded-xl border-2 px-4 py-2 text-sm font-semibold transition-colors",
-    "has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2",
-    selected
-      ? "border-primary bg-primary/10 text-primary"
-      : "border-base-content/15 bg-base-100 text-base-content/70 hover:border-primary/40",
-  ].join(" ");
 }
 
 export function OptionChips({ name, legend, options, value, onChange, suffix, otherLabel }: OptionChipsProps) {
@@ -31,7 +23,7 @@ export function OptionChips({ name, legend, options, value, onChange, suffix, ot
       <legend className="sr-only">{legend}</legend>
 
       {options.map((option) => (
-        <label className={chipClassName(!isCustom && option === value)} key={option}>
+        <ChipLabel key={option} selected={!isCustom && option === value}>
           <input
             checked={!isCustom && option === value}
             className="sr-only"
@@ -44,7 +36,7 @@ export function OptionChips({ name, legend, options, value, onChange, suffix, ot
             value={option}
           />
           {option} {suffix}
-        </label>
+        </ChipLabel>
       ))}
 
       {isCustom ? (
@@ -58,10 +50,10 @@ export function OptionChips({ name, legend, options, value, onChange, suffix, ot
           value={value}
         />
       ) : (
-        <label className={chipClassName(false)}>
+        <ChipLabel selected={false}>
           <input className="sr-only" name={name} onChange={() => setCustomMode(true)} type="radio" />
           {otherLabel}
-        </label>
+        </ChipLabel>
       )}
     </fieldset>
   );

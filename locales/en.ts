@@ -923,6 +923,12 @@ export default {
         water_excess: "That is an unusually large amount of water for a single vial. Double-check the figure.",
         not_whole_graduation: "This lands between graduations. Read the nearest mark on your syringe.",
       },
+      vial: {
+        cap: "Aluminium crimp cap",
+        stopper: "Butyl rubber stopper",
+        glass: "Borosilicate glass vial",
+        cake: "Lyophilised peptide cake",
+      },
     },
     related_title: "Other free calculators",
     "one-rep-max": {

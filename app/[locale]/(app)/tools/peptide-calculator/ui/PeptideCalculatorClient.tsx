@@ -1,38 +1,20 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useCurrentLocale, useI18n } from "locales/client";
 
-import { PeptideInput, SyringeCapacity } from "../lib/types";
+import { PeptideInput } from "../lib/types";
 import { DEFAULT_INPUT, DOSE_MCG_OPTIONS, PEPTIDE_PRESETS, UNITS_OPTIONS, VIAL_MG_OPTIONS, WATER_ML_OPTIONS } from "../lib/presets";
 import { calculateDoseFromUnits, calculatePeptideDose } from "../lib/calculate";
+import { usePeptideUrlState } from "./usePeptideUrlState";
 import { SyringeSelector } from "./components/SyringeSelector";
 import { Step } from "./components/Step";
 import { PresetPicker } from "./components/PresetPicker";
+import { PeptideVial } from "./components/PeptideVial";
 import { OptionChips } from "./components/OptionChips";
 import { ModeSelector, CalculatorMode } from "./components/ModeSelector";
 import { DoseInputStep } from "./components/DoseInputStep";
 import { CalculatorResult } from "./components/CalculatorResult";
-
-function readFromUrl(fallback: PeptideInput): PeptideInput {
-  if (typeof window === "undefined") return fallback;
-
-  const params = new URLSearchParams(window.location.search);
-  const read = (key: string, value: number) => {
-    const parsed = Number(params.get(key));
-    return Number.isFinite(parsed) && parsed > 0 ? parsed : value;
-  };
-  const syringe = read("syringe", fallback.syringeCapacity);
-
-  return {
-    vialMg: read("vial", fallback.vialMg),
-    waterMl: read("water", fallback.waterMl),
-    doseMcg: read("dose", fallback.doseMcg),
-    syringeCapacity: ([30, 50, 100] as const).includes(syringe as SyringeCapacity)
-      ? (syringe as SyringeCapacity)
-      : fallback.syringeCapacity,
-  };
-}
 
 interface PeptideCalculatorClientProps {
   defaultInput?: PeptideInput;
@@ -42,30 +24,15 @@ interface PeptideCalculatorClientProps {
 export function PeptideCalculatorClient({ defaultInput = DEFAULT_INPUT, disclaimer }: PeptideCalculatorClientProps) {
   const t = useI18n();
   const locale = useCurrentLocale();
-  const [input, setInput] = useState<PeptideInput>(defaultInput);
+  const { input, patch } = usePeptideUrlState(defaultInput);
   const [mode, setMode] = useState<CalculatorMode>("forward");
   const [units, setUnits] = useState(10);
-
-  useEffect(() => {
-    setInput(readFromUrl(defaultInput));
-  }, []);
-
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    params.set("vial", String(input.vialMg));
-    params.set("water", String(input.waterMl));
-    params.set("dose", String(input.doseMcg));
-    params.set("syringe", String(input.syringeCapacity));
-
-    window.history.replaceState(null, "", `${window.location.pathname}?${params}`);
-  }, [input]);
 
   const result = useMemo(() => calculatePeptideDose(input), [input]);
   const reverseDose = useMemo(
     () => calculateDoseFromUnits({ vialMg: input.vialMg, waterMl: input.waterMl, units }),
     [input.vialMg, input.waterMl, units],
   );
-  const patch = (partial: Partial<PeptideInput>) => setInput((current) => ({ ...current, ...partial }));
 
   const optionSteps = [
     { number: "02", eyebrow: t("tools.peptide-calculator.step_2_eyebrow"), title: t("tools.peptide-calculator.step_2_title"), name: "vial", options: VIAL_MG_OPTIONS, suffix: "mg", value: input.vialMg, onChange: (vialMg: number) => patch({ vialMg }) },
@@ -105,6 +72,22 @@ export function PeptideCalculatorClient({ defaultInput = DEFAULT_INPUT, disclaim
               <OptionChips legend={step.title} name={step.name} onChange={step.onChange} options={step.options} otherLabel={t("tools.peptide-calculator.other")} suffix={step.suffix} value={step.value} />
             </Step>
           ))}
+
+          {/* Driven by steps 02 and 03 together, so it sits with the pair — after
+              the inputs on mobile, never pushing them below the fold. */}
+          <div className="rounded-2xl border border-base-300 bg-base-100 p-4">
+            <PeptideVial
+              labels={{
+                cake: t("tools.peptide-calculator.vial.cake"),
+                cap: t("tools.peptide-calculator.vial.cap"),
+                glass: t("tools.peptide-calculator.vial.glass"),
+                stopper: t("tools.peptide-calculator.vial.stopper"),
+              }}
+              locale={locale}
+              vialMg={input.vialMg}
+              waterMl={input.waterMl}
+            />
+          </div>
 
           <DoseInputStep
             doseMcg={input.doseMcg}

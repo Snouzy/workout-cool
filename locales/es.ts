@@ -1480,6 +1480,12 @@ export default {
         water_excess: "Esa es una cantidad de agua inusualmente grande para un solo vial. Verifica la cifra.",
         not_whole_graduation: "Esto cae entre graduaciones. Lee la marca más cercana en tu jeringa.",
       },
+      vial: {
+        cap: "Cápsula de aluminio engastada",
+        stopper: "Tapón de caucho butilo",
+        glass: "Vial de vidrio borosilicato",
+        cake: "Torta de péptido liofilizado",
+      },
     },
     related_title: "Otras calculadoras gratuitas",
     "one-rep-max": {

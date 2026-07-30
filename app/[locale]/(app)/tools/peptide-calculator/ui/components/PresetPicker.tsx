@@ -1,4 +1,9 @@
+"use client";
+
+import { useId } from "react";
+
 import { PeptidePreset } from "../../lib/presets";
+import { ChipButton } from "./Chip";
 
 interface PresetPickerProps {
   legend: string;
@@ -7,21 +12,21 @@ interface PresetPickerProps {
 }
 
 export function PresetPicker({ legend, presets, onSelect }: PresetPickerProps) {
+  const legendId = useId();
+
   return (
-    <div className="mb-8">
-      <p className="mb-2 text-xs font-bold uppercase tracking-widest text-base-content/50">{legend}</p>
-      <div className="flex flex-wrap gap-2">
-        {presets.map((preset) => (
-          <button
-            className="rounded-full border border-base-content/15 bg-base-100 px-3 py-1.5 text-sm font-medium text-base-content/80 transition-colors hover:border-primary/50 hover:text-primary"
-            key={preset.id}
-            onClick={() => onSelect(preset.vialSizesMg[0])}
-            type="button"
-          >
-            {preset.label}
-          </button>
-        ))}
-      </div>
+    // The heading is no longer shown, but a row of bare buttons still needs a
+    // name: the legend stays in the DOM as the group's accessible name.
+    <div aria-labelledby={legendId} className="mb-8 flex flex-wrap gap-2" role="group">
+      <p className="sr-only" id={legendId}>
+        {legend}
+      </p>
+
+      {presets.map((preset) => (
+        <ChipButton key={preset.id} onClick={() => onSelect(preset.vialSizesMg[0])}>
+          {preset.label}
+        </ChipButton>
+      ))}
     </div>
   );
 }

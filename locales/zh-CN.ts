@@ -1446,6 +1446,12 @@ export default {
         water_excess: "单瓶加水量异常偏大，请核实数值。",
         not_whole_graduation: "该数值落在两格刻度之间，请读取最接近的刻度。",
       },
+      vial: {
+        cap: "铝制密封盖",
+        stopper: "丁基橡胶塞",
+        glass: "硼硅玻璃西林瓶",
+        cake: "冻干多肽粉饼",
+      },
     },
     related_title: "其他免费计算器",
     "one-rep-max": {

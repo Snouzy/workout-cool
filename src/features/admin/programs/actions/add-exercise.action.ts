@@ -24,6 +24,7 @@ interface AddExerciseData {
   order: number;
   instructions: string;
   instructionsEn: string;
+  instructionsZhTw: string;
   suggestedSets: SuggestedSetData[];
 }
 
@@ -62,6 +63,7 @@ export async function addExerciseToSession(data: AddExerciseData) {
       instructionsPt: data.instructionsEn,
       instructionsRu: data.instructionsEn,
       instructionsZhCn: data.instructionsEn,
+      instructionsZhTw: data.instructionsZhTw || data.instructionsEn,
       suggestedSets: {
         create: data.suggestedSets.map((set) => ({
           setIndex: set.setIndex,

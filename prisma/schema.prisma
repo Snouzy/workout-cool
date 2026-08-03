@@ -537,18 +537,21 @@ model Program {
   slugPt             String                       @unique
   slugRu             String                       @unique
   slugZhCn           String                       @unique
+  slugZhTw           String                       @unique
   title              String
   titleEn            String
   titleEs            String
   titlePt            String
   titleRu            String
   titleZhCn          String
+  titleZhTw          String
   description        String                       @db.Text
   descriptionEn      String                       @db.Text
   descriptionEs      String                       @db.Text
   descriptionPt      String                       @db.Text
   descriptionRu      String                       @db.Text
   descriptionZhCn    String                       @db.Text
+  descriptionZhTw    String                       @db.Text
   category           String
   image              String
   level              ProgramLevel
@@ -595,12 +598,14 @@ model ProgramWeek {
   titlePt         String
   titleRu         String
   titleZhCn       String
+  titleZhTw       String
   description     String @db.Text
   descriptionEn   String @db.Text
   descriptionEs   String @db.Text
   descriptionPt   String @db.Text
   descriptionRu   String @db.Text
   descriptionZhCn String @db.Text
+  descriptionZhTw String @db.Text
 
   program  Program          @relation(fields: [programId], references: [id], onDelete: Cascade)
   sessions ProgramSession[]
@@ -619,18 +624,21 @@ model ProgramSession {
   titlePt          String
   titleRu          String
   titleZhCn        String
+  titleZhTw        String
   slug             String
   slugEn           String
   slugEs           String
   slugPt           String
   slugRu           String
   slugZhCn         String
+  slugZhTw         String
   description      String                       @db.Text
   descriptionEn    String                       @db.Text
   descriptionEs    String                       @db.Text
   descriptionPt    String                       @db.Text
   descriptionRu    String                       @db.Text
   descriptionZhCn  String                       @db.Text
+  descriptionZhTw  String                       @db.Text
   equipment        ExerciseAttributeValueEnum[] @default([])
   estimatedMinutes Int
   isPremium        Boolean                      @default(true)
@@ -646,6 +654,7 @@ model ProgramSession {
   @@unique([weekId, slugPt])
   @@unique([weekId, slugRu])
   @@unique([weekId, slugZhCn])
+  @@unique([weekId, slugZhTw])
   @@map("program_sessions")
 }
 
@@ -660,6 +669,7 @@ model ProgramSessionExercise {
   instructionsPt   String @db.Text
   instructionsRu   String @db.Text
   instructionsZhCn String @db.Text
+  instructionsZhTw String @db.Text
 
   session       ProgramSession        @relation(fields: [sessionId], references: [id], onDelete: Cascade)
   exercise      Exercise              @relation(fields: [exerciseId], references: [id])

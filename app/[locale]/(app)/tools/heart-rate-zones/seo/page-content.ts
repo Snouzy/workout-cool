@@ -28,4 +28,7 @@ export const HEART_RATE_ZONES_CONTENT: Record<Locale, PageContent> = {
   "zh-CN": {
     heroSubtitle: "发现您的个性化训练区间，优化运动表现，燃烧更多脂肪，改善心血管健康",
   },
+  "zh-TW": {
+    heroSubtitle: "探索個人化訓練區間，最佳化運動表現、燃燒更多脂肪，並提升心血管健康",
+  },
 };

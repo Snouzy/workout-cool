@@ -25,6 +25,8 @@ export function generateSessionSEOKeywords(session: ProgramSessionWithExercises,
         return ex.exercise.nameEn || ex.exercise.name; // Using nameEn as fallback since nameRu doesn't exist
       case "zh-CN":
         return ex.exercise.nameEn || ex.exercise.name; // Using nameEn as fallback since nameZhCn doesn't exist
+      case "zh-TW":
+        return ex.exercise.nameEn || ex.exercise.name; // Using nameEn as fallback since nameZhTw doesn't exist
       default:
         return ex.exercise.name;
     }
@@ -41,7 +43,9 @@ export function generateSessionSEOKeywords(session: ProgramSessionWithExercises,
             ? "тренировочная сессия"
             : locale === "zh-CN"
               ? "训练课程"
-              : "séance d'entraînement";
+              : locale === "zh-TW"
+                ? "訓練課程"
+                : "séance d'entraînement";
 
   return [
     ...baseData.keywords,
@@ -75,7 +79,9 @@ export function generateSessionMetadata(session: ProgramSessionWithExercises, pr
             ? `Тренировочная сессия ${sessionTitle} из программы ${programTitle}. ${session.exercises.length} упражнений, ~${Math.round(session.exercises.length * 3)} минут.`
             : locale === "zh-CN"
               ? `${programTitle}计划中的${sessionTitle}训练课程。${session.exercises.length}个练习，约${Math.round(session.exercises.length * 3)}分钟。`
-              : `Séance d'entraînement ${sessionTitle} du programme ${programTitle}. ${session.exercises.length} exercices, ~${Math.round(session.exercises.length * 3)} minutes.`);
+              : locale === "zh-TW"
+                ? `${programTitle} 課程的 ${sessionTitle} 訓練。${session.exercises.length} 個動作，約 ${Math.round(session.exercises.length * 3)} 分鐘。`
+                : `Séance d'entraînement ${sessionTitle} du programme ${programTitle}. ${session.exercises.length} exercices, ~${Math.round(session.exercises.length * 3)} minutes.`);
 
   return {
     title,

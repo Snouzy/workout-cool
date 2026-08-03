@@ -18,12 +18,14 @@ function detectUserLocale(request: NextRequest): string {
     .sort((a, b) => b.quality - a.quality);
 
   // Map browser locales to supported locales
-  const supportedLocales = ["en", "fr", "es", "zh-cn", "ru", "pt"];
+  const supportedLocales = ["en", "fr", "es", "zh-cn", "zh-tw", "ru", "pt"];
 
   for (const { locale } of languages) {
     // Exact match
     if (supportedLocales.includes(locale)) {
-      return locale === "zh-cn" ? "zh-CN" : locale;
+      if (locale === "zh-cn") return "zh-CN";
+      if (locale === "zh-tw") return "zh-TW";
+      return locale;
     }
 
     // Language match (fr-FR -> fr)
@@ -34,6 +36,10 @@ function detectUserLocale(request: NextRequest): string {
 
     // Chinese variants
     if (locale.startsWith("zh")) {
+      if (locale.startsWith("zh-hant") || locale === "zh-hk" || locale === "zh-mo") {
+        return "zh-TW";
+      }
+
       return "zh-CN";
     }
   }
@@ -42,7 +48,7 @@ function detectUserLocale(request: NextRequest): string {
 }
 
 const I18nMiddleware = createI18nMiddleware({
-  locales: ["en", "fr", "es", "zh-CN", "ru", "pt"],
+  locales: ["en", "fr", "es", "zh-CN", "zh-TW", "ru", "pt"],
   defaultLocale: "en",
   urlMappingStrategy: "rewrite",
 });

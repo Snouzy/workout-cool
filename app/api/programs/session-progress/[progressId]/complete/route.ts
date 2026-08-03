@@ -63,9 +63,12 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
 
     const currentWeekSessions =
       sessionProgress.enrollment.program.weeks.find((w) => w.weekNumber === currentWeek)?.sessions.length || 0;
+    const maxWeek = Math.max(...sessionProgress.enrollment.program.weeks.map((w) => w.weekNumber));
 
     if (nextSession > currentWeekSessions) {
-      nextWeek = currentWeek + 1;
+      // Clamp to the program's last week so out-of-order completion can't strand
+      // the user on a "ghost week" that has no sessions.
+      nextWeek = Math.min(currentWeek + 1, maxWeek);
       nextSession = 1;
     }
 

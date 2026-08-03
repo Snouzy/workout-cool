@@ -157,20 +157,50 @@ management._
 
 ### Docker Installation
 
-1. **Copy environment variables**
+1. **Run with published image:**
+
+   ```bash
+   docker run -p 3000:3000 \
+     -e DATABASE_URL="postgresql://username:password@host:5432/workout_cool" \
+     -e NEXTAUTH_SECRET="your-secret" \
+     -e NEXTAUTH_URL="http://localhost:3000" \
+     ghcr.io/snouzy/workout-cool:latest
+   ```
+
+2. **Or use Docker Compose:**
 
    ```bash
    cp .env.example .env
+   # Edit .env with your configuration
    ```
 
-2. **Start everything for development:**
+   Create `docker-compose.yml`:
+   ```yaml
+   services:
+     postgres:
+       image: postgres:15
+       ports:
+         - "${DB_PORT:-5432}:5432"
+       volumes:
+         - pgdata:/var/lib/postgresql/data
+       env_file: .env
 
-   ```sh
-   make dev
+     workout_cool:
+       image: ghcr.io/snouzy/workout-cool:latest
+       ports:
+         - "${APP_PORT:-3000}:3000"
+       depends_on:
+         - postgres
+       env_file: .env
+
+   volumes:
+     pgdata:
    ```
 
-   - This will start the database in Docker, run migrations, seed the DB, and start the Next.js dev server.
-   - To stop services run `make down`
+   Then run:
+   ```bash
+   docker compose up -d
+   ```
 
 3. **Open your browser** Navigate to [http://localhost:3000](http://localhost:3000)
 

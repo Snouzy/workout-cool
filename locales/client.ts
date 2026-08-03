@@ -37,8 +37,9 @@ export const { useI18n, useScopedI18n, I18nProviderClient, useChangeLocale, defi
     // basePath: '/base',
     // Uncomment to use custom segment name
     // segmentName: 'locale',
-    // Uncomment to set fallback locale
-    // fallbackLocale: en,
+    // Fall back to English for any key missing from a locale, so untranslated
+    // keys show English text instead of the raw "section.key" path.
+    fallbackLocale: en,
   },
 );
 

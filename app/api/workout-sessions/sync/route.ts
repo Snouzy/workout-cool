@@ -19,7 +19,12 @@ export async function POST(request: NextRequest) {
     }
 
     // Use the existing server action
-    const result = await syncWorkoutSessionAction({ session: body.session });
+    // Override the client-supplied userId with the authenticated user so a
+    // logged-in caller cannot sync (create/overwrite) a session under another
+    // user's account.
+    const result = await syncWorkoutSessionAction({
+      session: { ...body.session, userId: session.user.id },
+    });
 
     if (result?.serverError) {
       return NextResponse.json({ error: result.serverError }, { status: 500 });

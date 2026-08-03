@@ -6,8 +6,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@plugin "daisyui";
-
 /* Google AdSense Styles - Prevent "No slot size for availableWidth=0" error */
 
 :root {

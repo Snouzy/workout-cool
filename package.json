@@ -73,7 +73,7 @@
     "clsx": "^2.1.1",
     "crypto-js": "^4.2.0",
     "csv-parser": "^3.2.0",
-    "daisyui": "^5.0.43",
+    "daisyui": "^4.12.10",
     "dayjs": "^1.11.13",
     "embla-carousel-autoplay": "^8.6.0",
     "embla-carousel-react": "^8.6.0",

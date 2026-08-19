@@ -2034,6 +2034,8 @@ export default {
     rewarded_dialog_title: "Ready to train?",
     rewarded_dialog_subtitle: "Watch a quick ad to unlock your workout : it keeps Workout.cool free for everyone.",
     rewarded_watch_ad: "Watch Ad & Start",
+    rewarded_ad_error: "The ad could not be shown. Your reward was not unlocked.",
+    rewarded_ad_retry: "Retry",
     rewarded_or: "or",
     rewarded_go_premium: "Skip Ads Forever",
     rewarded_premium_hint: "Premium members never see ads and start instantly",

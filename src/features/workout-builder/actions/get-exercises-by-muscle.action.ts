@@ -4,6 +4,7 @@ import { z } from "zod";
 import { ExerciseAttributeNameEnum, ExerciseAttributeValueEnum } from "@prisma/client";
 
 import { prisma } from "@/shared/lib/prisma";
+import { buildEquipmentRequirementsFilter } from "@/shared/lib/exercise-equipment";
 import { actionClient } from "@/shared/api/safe-actions";
 
 
@@ -62,16 +63,7 @@ export const getExercisesByMuscleAction = actionClient
                   },
                 },
                 {
-                  attributes: {
-                    some: {
-                      attributeNameId: equipmentAttributeName.id,
-                      attributeValue: {
-                        value: {
-                          in: equipment,
-                        },
-                      },
-                    },
-                  },
+                  AND: buildEquipmentRequirementsFilter(equipment, equipmentAttributeName.id),
                 },
                 // Exclude stretching exercises
                 {

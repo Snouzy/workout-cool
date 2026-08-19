@@ -4,6 +4,7 @@ import { z } from "zod";
 import { ExerciseAttributeNameEnum, ExerciseAttributeValueEnum } from "@prisma/client";
 
 import { prisma } from "@/shared/lib/prisma";
+import { buildEquipmentRequirementsFilter } from "@/shared/lib/exercise-equipment";
 import { actionClient } from "@/shared/api/safe-actions";
 
 const shuffleExerciseSchema = z.object({
@@ -51,16 +52,7 @@ export const shuffleExerciseAction = actionClient.schema(shuffleExerciseSchema).
             },
           },
           {
-            attributes: {
-              some: {
-                attributeNameId: equipmentAttributeName.id,
-                attributeValue: {
-                  value: {
-                    in: equipment,
-                  },
-                },
-              },
-            },
+            AND: buildEquipmentRequirementsFilter(equipment, equipmentAttributeName.id),
           },
           {
             NOT: {
@@ -108,16 +100,7 @@ export const shuffleExerciseAction = actionClient.schema(shuffleExerciseSchema).
               },
             },
             {
-              attributes: {
-                some: {
-                  attributeNameId: equipmentAttributeName.id,
-                  attributeValue: {
-                    value: {
-                      in: equipment,
-                    },
-                  },
-                },
-              },
+              AND: buildEquipmentRequirementsFilter(equipment, equipmentAttributeName.id),
             },
             {
               NOT: {

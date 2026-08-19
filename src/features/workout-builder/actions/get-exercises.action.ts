@@ -5,8 +5,8 @@ import { ExerciseAttributeNameEnum } from "@prisma/client";
 import { getExercisesSchema } from "../schema/get-exercises.schema";
 
 import { prisma } from "@/shared/lib/prisma";
+import { buildEquipmentRequirementsFilter } from "@/shared/lib/exercise-equipment";
 import { actionClient } from "@/shared/api/safe-actions";
-
 
 // Utility function to shuffle an array (Fisher-Yates shuffle)
 function shuffleArray<T>(array: T[]): T[] {
@@ -60,16 +60,7 @@ export const getExercisesAction = actionClient.schema(getExercisesSchema).action
                 },
               },
               {
-                attributes: {
-                  some: {
-                    attributeNameId: equipmentAttributeName.id,
-                    attributeValue: {
-                      value: {
-                        in: equipment,
-                      },
-                    },
-                  },
-                },
+                AND: buildEquipmentRequirementsFilter(equipment, equipmentAttributeName.id),
               },
               // Exclude stretching exercises
               {
@@ -114,16 +105,7 @@ export const getExercisesAction = actionClient.schema(getExercisesSchema).action
                   },
                 },
                 {
-                  attributes: {
-                    some: {
-                      attributeNameId: equipmentAttributeName.id,
-                      attributeValue: {
-                        value: {
-                          in: equipment,
-                        },
-                      },
-                    },
-                  },
+                AND: buildEquipmentRequirementsFilter(equipment, equipmentAttributeName.id),
                 },
                 // Exclude exercises already found as primary
                 {

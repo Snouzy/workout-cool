@@ -4,6 +4,8 @@ import fs from "fs";
 import csv from "csv-parser";
 import { ExerciseAttributeNameEnum, ExerciseAttributeValueEnum, PrismaClient } from "@prisma/client";
 
+import { inferAdditionalEquipmentRequirements } from "../src/shared/lib/exercise-equipment";
+
 const prisma = new PrismaClient();
 
 interface ExerciseAttributeCSVRow {
@@ -20,6 +22,29 @@ interface ExerciseAttributeCSVRow {
   slug_en: string;
   attribute_name: string;
   attribute_value: string;
+}
+
+interface GroupedExercise {
+  originalId: string;
+  name: string;
+  nameEn: string | null;
+  description: string | null;
+  descriptionEn: string | null;
+  fullVideoUrl: string | null;
+  fullVideoImageUrl: string | null;
+  introduction: string | null;
+  introductionEn: string | null;
+  slug: string;
+  slugEn: string;
+  attributes: Array<{
+    attributeName: string;
+    attributeValue: string;
+  }>;
+}
+
+interface ResolvedExerciseAttribute {
+  attributeName: ExerciseAttributeNameEnum;
+  attributeValue: ExerciseAttributeValueEnum;
 }
 
 function cleanValue(value: string): string | null {
@@ -60,6 +85,32 @@ function groupExercisesByOriginalId(rows: ExerciseAttributeCSVRow[]) {
   }
 
   return Array.from(exercisesMap.values());
+}
+
+function resolveExerciseAttributes(exercise: GroupedExercise): ResolvedExerciseAttribute[] {
+  const equipmentValues = exercise.attributes
+    .filter((attribute) => attribute.attributeName === ExerciseAttributeNameEnum.EQUIPMENT)
+    .map((attribute) => normalizeAttributeValue(attribute.attributeValue));
+  const inferredEquipment = inferAdditionalEquipmentRequirements(exercise);
+  const allEquipment = [...equipmentValues, ...inferredEquipment].filter(
+    (value, index, values) => values.indexOf(value) === index,
+  );
+  const equipmentToAdd = inferredEquipment.length > 0
+    ? allEquipment.filter((value) => value !== ExerciseAttributeValueEnum.BODY_ONLY)
+    : allEquipment;
+
+  return [
+    ...exercise.attributes
+      .filter((attribute) => attribute.attributeName !== ExerciseAttributeNameEnum.EQUIPMENT)
+      .map((attribute) => ({
+        attributeName: attribute.attributeName as ExerciseAttributeNameEnum,
+        attributeValue: normalizeAttributeValue(attribute.attributeValue),
+      })),
+    ...equipmentToAdd.map((value) => ({
+      attributeName: ExerciseAttributeNameEnum.EQUIPMENT,
+      attributeValue: value,
+    })),
+  ];
 }
 
 async function ensureAttributeNameExists(name: ExerciseAttributeNameEnum) {
@@ -162,7 +213,7 @@ async function importExercisesFromCSV(filePath: string) {
               });
 
               // Create new attributes
-              for (const attr of exercise.attributes) {
+              for (const attr of resolveExerciseAttributes(exercise)) {
                 try {
                   const attributeName = await ensureAttributeNameExists(attr.attributeName);
                   const attributeValue = await ensureAttributeValueExists(attributeName.id, normalizeAttributeValue(attr.attributeValue));

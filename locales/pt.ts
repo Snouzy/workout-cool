@@ -2036,6 +2036,8 @@ export default {
     rewarded_dialog_title: "Pronto para treinar?",
     rewarded_dialog_subtitle: "Assista a um breve anúncio para desbloquear seu treino : ajuda a manter o Workout.cool gratuito.",
     rewarded_watch_ad: "Assistir anúncio e começar",
+    rewarded_ad_error: "Não foi possível exibir o anúncio. Sua recompensa não foi desbloqueada.",
+    rewarded_ad_retry: "Tentar novamente",
     rewarded_or: "ou",
     rewarded_go_premium: "Sem anúncios para sempre",
     rewarded_premium_hint: "Membros Premium nunca veem anúncios e começam instantaneamente",

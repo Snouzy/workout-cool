@@ -10,6 +10,7 @@ import TrophyImg from "@public/images/trophy.png";
 
 import { FavoriteExerciseButton } from "../../workout-builder/ui/favorite-exercise-button";
 import { WorkoutSessionSet } from "./workout-session-set";
+import { ShareWorkoutButton } from "./share-workout-button";
 
 import { cn } from "@/shared/lib/utils";
 import { useWorkoutFeedback } from "@/shared/hooks/use-workout-feedback";
@@ -78,7 +79,12 @@ export function WorkoutSessionSets({
         <Image alt={t("workout_builder.session.complete") + " trophy"} className="w-56 h-56" src={TrophyImg} />
         <h2 className="text-2xl font-bold mb-2">{t("workout_builder.session.complete") + " ! 🎉"}</h2>
         <p className="text-lg text-slate-600 mb-6">{t("workout_builder.session.workout_in_progress")}</p>
-        <Button onClick={() => router.push("/profile")}>{t("commons.go_to_profile")}</Button>
+        <div className="flex flex-col sm:flex-row gap-3">
+          <Button onClick={() => router.push("/profile")}>{t("commons.go_to_profile")}</Button>
+          {session && (
+            <ShareWorkoutButton exercisesCount={session.exercises.length} muscles={session.muscles} startedAt={session.startedAt} />
+          )}
+        </div>
       </div>
     );
   }

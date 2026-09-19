@@ -323,12 +323,17 @@ export function AddExerciseModal({ open, onOpenChange, sessionId, nextOrder }: A
                                   </label>
                                   <input
                                     className="input input-bordered input-sm"
+                                    inputMode="decimal"
+                                    min={0}
                                     onChange={(e) => {
-                                      const weightValue = parseInt(e.target.value) || 0;
+                                      const raw = e.target.value;
+                                      const parsed = raw === "" ? 0 : Number.parseFloat(raw);
+                                      const weightValue = Number.isFinite(parsed) && parsed >= 0 ? parsed : 0;
                                       const repsValue = set.valuesInt?.[1] || 10;
                                       updateSet(index, "valuesInt", [weightValue, repsValue]);
                                     }}
                                     placeholder="kg"
+                                    step="0.1"
                                     type="number"
                                     value={set.valuesInt?.[0] || ""}
                                   />

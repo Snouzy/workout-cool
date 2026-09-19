@@ -1725,6 +1725,12 @@ export default {
       end: "конец",
       exercise: "УПРАЖНЕНИЕ",
       repeat: "Повторить",
+      share_my_success: "Поделиться успехом",
+      share_card_title: "Тренировка завершена!",
+      share_card_subtitle: "Поздравляем с тренировкой {date}!",
+      share_card_exercises_label: "упражнений выполнено",
+      share_card_motivation: "Продолжай в том же духе! 💪",
+      share_card_footer: "workout.cool — Бесплатно и Open Source",
       delete: "Удалить",
     },
     attribute_value: {

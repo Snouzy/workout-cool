@@ -794,6 +794,12 @@ export default {
       end: "结束",
       exercise: "练习",
       repeat: "重复",
+      share_my_success: "分享我的成就",
+      share_card_title: "训练完成！",
+      share_card_subtitle: "恭喜你完成 {date} 的训练！",
+      share_card_exercises_label: "个已完成动作",
+      share_card_motivation: "继续加油！💪",
+      share_card_footer: "workout.cool — 免费开源",
       delete: "删除",
     },
     attribute_value: {

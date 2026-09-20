@@ -19,6 +19,7 @@ import { Version } from "@/components/version";
 import { TailwindIndicator } from "@/components/utils/TailwindIndicator";
 import { NextTopLoader } from "@/components/ui/next-top-loader";
 import { ServiceWorkerRegistration } from "@/components/pwa/ServiceWorkerRegistration";
+import { AdScripts } from "@/components/ads/AdScripts";
 import { VerticalLeftBanner, VerticalRightBanner, AdBlockerForPremium } from "@/components/ads";
 
 import "@/shared/styles/globals.css";
@@ -246,43 +247,7 @@ export default async function RootLayout({ params, children }: RootLayoutProps) 
         <head>
           <meta charSet="UTF-8" />
           <meta content="width=device-width, initial-scale=1, maximum-scale=1 viewport-fit=cover" name="viewport" />
-          {/* {env.NEXT_PUBLIC_AD_PROVIDER !== "custom" && ( */}
-          <>
-            <meta content={env.NEXT_PUBLIC_AD_CLIENT} name="google-adsense-account" />
-
-            <script
-              async
-              crossOrigin="anonymous"
-              src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${env.NEXT_PUBLIC_AD_CLIENT}`}
-            />
-
-            {/* Ezoic Privacy Scripts */}
-            <script data-cfasync="false" src="https://cmp.gatekeeperconsent.com/min.js" />
-            <script data-cfasync="false" src="https://the.gatekeeperconsent.com/cmp.min.js" />
-
-            {/* Ezoic Header Script */}
-            <script async src="//www.ezojs.com/ezoic/sa.min.js" />
-            <script
-              dangerouslySetInnerHTML={{
-                __html: `
-                    window.ezstandalone = window.ezstandalone || {};
-                    ezstandalone.cmd = ezstandalone.cmd || [];
-                    ezstandalone.cmd.push(function() {
-                      ezstandalone.enable();
-                      ezstandalone.initRewardedAds({
-                        anchor: true,
-                        interstitial: true,
-                        video: true,
-                        sideRails: true
-                      });
-                    });
-                    window.ezRewardedAds = window.ezRewardedAds || {};
-                    window.ezRewardedAds.cmd = window.ezRewardedAds.cmd || [];
-                  `,
-              }}
-            />
-          </>
-          {/* )} */}
+          <AdScripts />
 
           {/* PWA Meta Tags */}
           <meta content="yes" name="apple-mobile-web-app-capable" />

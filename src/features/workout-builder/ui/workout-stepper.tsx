@@ -22,6 +22,7 @@ import type { ExerciseWithAttributes, WorkoutBuilderStep } from "../types";
 import useBoolean from "@/shared/hooks/useBoolean";
 import { WorkoutSessionSets } from "@/features/workout-session/ui/workout-session-sets";
 import { WorkoutSessionHeader } from "@/features/workout-session/ui/workout-session-header";
+import { ShareWorkoutButton } from "@/features/workout-session/ui/share-workout-button";
 import { DonationModal } from "@/features/workout-session/ui/donation-modal";
 import { useDonationModal } from "@/features/workout-session/hooks/use-donation-modal";
 import { WorkoutBuilderFooter } from "@/features/workout-builder/ui/workout-stepper-footer";
@@ -184,11 +185,20 @@ export function WorkoutStepper() {
   if (showCongrats && !isWorkoutActive) {
     return (
       <>
-        <div className="flex flex-col items-center justify-center py-16 h-full">
+        <div className="flex flex-col items-center justify-center py-16 h-full px-4">
           <Image alt="Trophée" className="w-56 h-56" src={Trophy} />
           <h2 className="text-2xl font-bold mb-2 text-center">{t("workout_builder.session.congrats")}</h2>
-          <p className="text-lg text-slate-600 mb-6">{t("workout_builder.session.congrats_subtitle")}</p>
-          <Button onClick={goToProfile}>{t("commons.go_to_profile")}</Button>
+          <p className="text-lg text-slate-600 mb-6 text-center">{t("workout_builder.session.congrats_subtitle")}</p>
+          <div className="flex flex-col sm:flex-row gap-3 items-center">
+            {session && (
+              <ShareWorkoutButton
+                exercisesCount={session.exercises.length}
+                muscles={session.muscles}
+                startedAt={session.startedAt}
+              />
+            )}
+            <Button onClick={goToProfile}>{t("commons.go_to_profile")}</Button>
+          </div>
         </div>
         {/* Donation Modal */}
         <DonationModal isOpen={showModal} onClose={closeModal} />

@@ -156,8 +156,14 @@ export function EditSetsModal({ exercise, open, onOpenChange }: EditSetsModalPro
           <div className="flex gap-1 w-full items-center">
             <input
               className="input input-bordered input-sm w-1/2 text-center font-semibold"
+              inputMode="decimal"
               min={0}
-              onChange={(e) => handleValueIntChange(setIndex, columnIndex, parseInt(e.target.value) || 0)}
+              onChange={(e) => {
+                const raw = e.target.value;
+                const parsed = raw === "" ? 0 : Number.parseFloat(raw);
+                handleValueIntChange(setIndex, columnIndex, Number.isFinite(parsed) && parsed >= 0 ? parsed : 0);
+              }}
+              step="0.1"
               type="number"
               value={set.valuesInt[columnIndex] ?? ""}
             />

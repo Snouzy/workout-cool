@@ -1720,6 +1720,10 @@ export default {
       exercise: "EXERCISE",
       repeat: "Repeat",
       delete: "Delete",
+      share_success: "Share your success",
+      share_card_title: "Workout Complete!",
+      share_card_exercises_label: "exercises completed",
+      share_card_footer: "workout.cool — Free & Open Source",
     },
     attribute_value: {
       bodyweight: "Bodyweight",

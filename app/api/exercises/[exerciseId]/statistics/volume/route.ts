@@ -145,9 +145,14 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
         } else if (repsIndex !== -1 && set.valuesInt && set.valuesInt[repsIndex]) {
           // Bodyweight exercise: count reps as volume
           volume = set.valuesInt[repsIndex];
-        } else if (timeIndex !== -1 && set.valuesSec && set.valuesSec[0]) {
-          // Time-based exercise: use seconds as volume
-          volume = set.valuesSec[0];
+        } else if (timeIndex !== -1 && (set.valuesInt || set.valuesSec)) {
+          // Time-based exercise: total duration in seconds. TIME stores minutes
+          // in valuesInt[timeIndex] and seconds in valuesSec[timeIndex]; the old
+          // valuesSec[0] guard both dropped the minutes and misread the index
+          // (and a 0-seconds value like a 3:00 plank was falsy and skipped).
+          const minutes = set.valuesInt?.[timeIndex] ?? 0;
+          const seconds = set.valuesSec?.[timeIndex] ?? 0;
+          volume = minutes * 60 + seconds;
         }
 
         if (volume > 0) {

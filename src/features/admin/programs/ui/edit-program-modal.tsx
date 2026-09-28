@@ -20,12 +20,14 @@ interface EditProgramModalProps {
     titlePt: string;
     titleRu: string;
     titleZhCn: string;
+    titleZhTw: string;
     description: string;
     descriptionEn: string;
     descriptionEs: string;
     descriptionPt: string;
     descriptionRu: string;
     descriptionZhCn: string;
+    descriptionZhTw: string;
     category: string;
     image: string;
     level: ProgramLevel;
@@ -57,12 +59,14 @@ export function EditProgramModal({ program, open, onOpenChange }: EditProgramMod
     titlePt: program.titlePt,
     titleRu: program.titleRu,
     titleZhCn: program.titleZhCn,
+    titleZhTw: program.titleZhTw,
     description: program.description,
     descriptionEn: program.descriptionEn,
     descriptionEs: program.descriptionEs,
     descriptionPt: program.descriptionPt,
     descriptionRu: program.descriptionRu,
     descriptionZhCn: program.descriptionZhCn,
+    descriptionZhTw: program.descriptionZhTw,
     category: program.category,
     image: program.image,
     level: program.level,
@@ -151,6 +155,9 @@ export function EditProgramModal({ program, open, onOpenChange }: EditProgramMod
             </button>
             <button className={`tab ${activeTab === "zh" ? "tab-active" : ""}`} onClick={() => setActiveTab("zh")} type="button">
               🇨🇳 ZH
+            </button>
+            <button className={`tab ${activeTab === "zh-TW" ? "tab-active" : ""}`} onClick={() => setActiveTab("zh-TW")} type="button">
+              🇹🇼 zh-TW
             </button>
           </div>
 
@@ -323,6 +330,35 @@ export function EditProgramModal({ program, open, onOpenChange }: EditProgramMod
                   disabled={isSaving}
                   onChange={(e) => setFormData({ ...formData, descriptionZhCn: e.target.value })}
                   value={formData.descriptionZhCn}
+                />
+              </div>
+            </div>
+          )}
+
+          {/* Traditional Chinese Fields */}
+          {activeTab === "zh-TW" && (
+            <div className="space-y-4">
+              <div>
+                <label className="label">
+                  <span className="label-text">標題（繁體中文）</span>
+                </label>
+                <input
+                  className="input input-bordered w-full"
+                  disabled={isSaving}
+                  onChange={(e) => setFormData({ ...formData, titleZhTw: e.target.value })}
+                  type="text"
+                  value={formData.titleZhTw}
+                />
+              </div>
+              <div>
+                <label className="label">
+                  <span className="label-text">說明（繁體中文）</span>
+                </label>
+                <textarea
+                  className="textarea textarea-bordered w-full h-24"
+                  disabled={isSaving}
+                  onChange={(e) => setFormData({ ...formData, descriptionZhTw: e.target.value })}
+                  value={formData.descriptionZhTw}
                 />
               </div>
             </div>

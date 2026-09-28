@@ -12,18 +12,21 @@ export interface ProgramDetail {
   slugPt: string;
   slugRu: string;
   slugZhCn: string;
+  slugZhTw: string;
   title: string;
   titleEn: string;
   titleEs: string;
   titlePt: string;
   titleRu: string;
   titleZhCn: string;
+  titleZhTw: string;
   description: string;
   descriptionEn: string;
   descriptionEs: string;
   descriptionPt: string;
   descriptionRu: string;
   descriptionZhCn: string;
+  descriptionZhTw: string;
   category: string;
   image: string;
   level: ProgramLevel;
@@ -46,7 +49,19 @@ export interface ProgramDetail {
     id: string;
     weekNumber: number;
     title: string;
+    titleEn: string;
+    titleEs: string;
+    titlePt: string;
+    titleRu: string;
+    titleZhCn: string;
+    titleZhTw: string;
     description: string;
+    descriptionEn: string;
+    descriptionEs: string;
+    descriptionPt: string;
+    descriptionRu: string;
+    descriptionZhCn: string;
+    descriptionZhTw: string;
     sessions: Array<{
       id: string;
       sessionNumber: number;
@@ -56,18 +71,21 @@ export interface ProgramDetail {
       titlePt: string;
       titleRu: string;
       titleZhCn: string;
+      titleZhTw: string;
       description: string;
       descriptionEn: string;
       descriptionEs: string;
       descriptionPt: string;
       descriptionRu: string;
       descriptionZhCn: string;
+      descriptionZhTw: string;
       slug: string;
       slugEn: string;
       slugEs: string;
       slugPt: string;
       slugRu: string;
       slugZhCn: string;
+      slugZhTw: string;
       equipment: ExerciseAttributeValueEnum[];
       estimatedMinutes: number;
       isPremium: boolean;
@@ -80,7 +98,7 @@ export async function getProgramBySlug(slug: string): Promise<ProgramDetail | nu
   try {
     const program = await prisma.program.findFirst({
       where: {
-        OR: [{ slug }, { slugEn: slug }, { slugEs: slug }, { slugPt: slug }, { slugRu: slug }, { slugZhCn: slug }],
+        OR: [{ slug }, { slugEn: slug }, { slugEs: slug }, { slugPt: slug }, { slugRu: slug }, { slugZhCn: slug }, { slugZhTw: slug }],
         visibility: ProgramVisibility.PUBLISHED,
         isActive: true,
       },
@@ -123,18 +141,21 @@ export async function getProgramBySlug(slug: string): Promise<ProgramDetail | nu
       slugPt: program.slugPt,
       slugRu: program.slugRu,
       slugZhCn: program.slugZhCn,
+      slugZhTw: program.slugZhTw,
       title: program.title,
       titleEn: program.titleEn,
       titleEs: program.titleEs,
       titlePt: program.titlePt,
       titleRu: program.titleRu,
       titleZhCn: program.titleZhCn,
+      titleZhTw: program.titleZhTw,
       description: program.description,
       descriptionEn: program.descriptionEn,
       descriptionEs: program.descriptionEs,
       descriptionPt: program.descriptionPt,
       descriptionRu: program.descriptionRu,
       descriptionZhCn: program.descriptionZhCn,
+      descriptionZhTw: program.descriptionZhTw,
       category: program.category,
       image: program.image,
       level: program.level,
@@ -161,12 +182,14 @@ export async function getProgramBySlug(slug: string): Promise<ProgramDetail | nu
         titlePt: week.titlePt,
         titleRu: week.titleRu,
         titleZhCn: week.titleZhCn,
+        titleZhTw: week.titleZhTw,
         description: week.description,
         descriptionEn: week.descriptionEn,
         descriptionEs: week.descriptionEs,
         descriptionPt: week.descriptionPt,
         descriptionRu: week.descriptionRu,
         descriptionZhCn: week.descriptionZhCn,
+        descriptionZhTw: week.descriptionZhTw,
         sessions: week.sessions.map((session) => ({
           id: session.id,
           sessionNumber: session.sessionNumber,
@@ -176,18 +199,21 @@ export async function getProgramBySlug(slug: string): Promise<ProgramDetail | nu
           titlePt: session.titlePt,
           titleRu: session.titleRu,
           titleZhCn: session.titleZhCn,
+          titleZhTw: session.titleZhTw,
           description: session.description,
           descriptionEn: session.descriptionEn,
           descriptionEs: session.descriptionEs,
           descriptionPt: session.descriptionPt,
           descriptionRu: session.descriptionRu,
           descriptionZhCn: session.descriptionZhCn,
+          descriptionZhTw: session.descriptionZhTw,
           slug: session.slug,
           slugEn: session.slugEn,
           slugEs: session.slugEs,
           slugPt: session.slugPt,
           slugRu: session.slugRu,
           slugZhCn: session.slugZhCn,
+          slugZhTw: session.slugZhTw,
           equipment: session.equipment,
           estimatedMinutes: session.estimatedMinutes,
           isPremium: session.isPremium,

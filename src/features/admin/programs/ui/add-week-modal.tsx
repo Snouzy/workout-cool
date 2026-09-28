@@ -14,12 +14,14 @@ const weekSchema = z.object({
   titlePt: z.string().min(1, "Le titre en portugais est requis"),
   titleRu: z.string().min(1, "Le titre en russe est requis"),
   titleZhCn: z.string().min(1, "Le titre en chinois est requis"),
+  titleZhTw: z.string().min(1, "Le titre en chinois traditionnel est requis"),
   description: z.string().optional(),
   descriptionEn: z.string().optional(),
   descriptionEs: z.string().optional(),
   descriptionPt: z.string().optional(),
   descriptionRu: z.string().optional(),
   descriptionZhCn: z.string().optional(),
+  descriptionZhTw: z.string().optional(),
 });
 
 type WeekFormData = z.infer<typeof weekSchema>;
@@ -41,12 +43,14 @@ export function AddWeekModal({ open, onOpenChange, programId, nextWeekNumber }: 
     titlePt: `Semana ${nextWeekNumber}`,
     titleRu: `Неделя ${nextWeekNumber}`,
     titleZhCn: `第${nextWeekNumber}周`,
+    titleZhTw: `第 ${nextWeekNumber} 週`,
     description: "",
     descriptionEn: "",
     descriptionEs: "",
     descriptionPt: "",
     descriptionRu: "",
     descriptionZhCn: "",
+    descriptionZhTw: "",
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -107,6 +111,9 @@ export function AddWeekModal({ open, onOpenChange, programId, nextWeekNumber }: 
               </button>
               <button className={`tab ${activeTab === "zh" ? "tab-active" : ""}`} onClick={() => setActiveTab("zh")} type="button">
                 🇨🇳 ZH
+              </button>
+              <button className={`tab ${activeTab === "zh-TW" ? "tab-active" : ""}`} onClick={() => setActiveTab("zh-TW")} type="button">
+                🇹🇼 zh-TW
               </button>
             </div>
 
@@ -297,6 +304,38 @@ export function AddWeekModal({ open, onOpenChange, programId, nextWeekNumber }: 
                     onChange={(e) => setFormData({ ...formData, descriptionZhCn: e.target.value })}
                     placeholder="本周描述..."
                     value={formData.descriptionZhCn}
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* Traditional Chinese Fields */}
+            {activeTab === "zh-TW" && (
+              <div className="space-y-4">
+                <div>
+                  <label className="label">
+                    <span className="label-text">標題（繁體中文）</span>
+                  </label>
+                  <input
+                    className="input input-bordered w-full"
+                    disabled={isLoading}
+                    onChange={(e) => setFormData({ ...formData, titleZhTw: e.target.value })}
+                    placeholder={`第 ${nextWeekNumber} 週`}
+                    required
+                    type="text"
+                    value={formData.titleZhTw}
+                  />
+                </div>
+                <div>
+                  <label className="label">
+                    <span className="label-text">說明（繁體中文）</span>
+                  </label>
+                  <textarea
+                    className="textarea textarea-bordered w-full h-24"
+                    disabled={isLoading}
+                    onChange={(e) => setFormData({ ...formData, descriptionZhTw: e.target.value })}
+                    placeholder="本週說明..."
+                    value={formData.descriptionZhTw}
                   />
                 </div>
               </div>

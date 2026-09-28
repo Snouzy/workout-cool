@@ -27,6 +27,8 @@ export function DurationBadge({
       return `${durationWeeks} semanas • ${totalHours}h total`;
     } else if (locale === "ru") {
       return `${durationWeeks} недель • ${totalHours}ч всего`;
+    } else if (locale === "zh-TW") {
+      return `${durationWeeks} 週 • 共 ${totalHours} 小時`;
     } else if (locale === "zh-CN") {
       return `${durationWeeks} 周 • 总共${totalHours}小时`;
     } else {

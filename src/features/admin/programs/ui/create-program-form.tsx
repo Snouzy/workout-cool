@@ -17,12 +17,14 @@ const programSchema = z.object({
   titlePt: z.string().min(1, "Le titre en portugais est requis"),
   titleRu: z.string().min(1, "Le titre en russe est requis"),
   titleZhCn: z.string().min(1, "Le titre en chinois est requis"),
+  titleZhTw: z.string().min(1, "Le titre en chinois traditionnel est requis"),
   description: z.string().min(1, "La description est requise"),
   descriptionEn: z.string().min(1, "La description en anglais est requise"),
   descriptionEs: z.string().min(1, "La description en espagnol est requise"),
   descriptionPt: z.string().min(1, "La description en portugais est requise"),
   descriptionRu: z.string().min(1, "La description en russe est requise"),
   descriptionZhCn: z.string().min(1, "La description en chinois est requise"),
+  descriptionZhTw: z.string().min(1, "La description en chinois traditionnel est requise"),
   category: z.string().min(1, "La catégorie est requise"),
   image: z.string().url("URL d'image invalide"),
   level: z.nativeEnum(ProgramLevel),
@@ -100,12 +102,14 @@ export function CreateProgramForm({ currentStep, onStepComplete, onSuccess, onCa
       titlePt: "",
       titleRu: "",
       titleZhCn: "",
+      titleZhTw: "",
       description: "",
       descriptionEn: "",
       descriptionEs: "",
       descriptionPt: "",
       descriptionRu: "",
       descriptionZhCn: "",
+      descriptionZhTw: "",
     },
   });
 
@@ -172,6 +176,9 @@ export function CreateProgramForm({ currentStep, onStepComplete, onSuccess, onCa
           </button>
           <button className={`tab ${activeTab === "zh" ? "tab-active" : ""}`} onClick={() => setActiveTab("zh")} type="button">
             🇨🇳 ZH
+          </button>
+          <button className={`tab ${activeTab === "zh-TW" ? "tab-active" : ""}`} onClick={() => setActiveTab("zh-TW")} type="button">
+            🇹🇼 zh-TW
           </button>
         </div>
 
@@ -292,6 +299,26 @@ export function CreateProgramForm({ currentStep, onStepComplete, onSuccess, onCa
                 </label>
                 <textarea className="textarea textarea-bordered h-24" id="descriptionZhCn" {...register("descriptionZhCn")} />
                 {errors.descriptionZhCn && <div className="text-sm text-error mt-1">{errors.descriptionZhCn.message}</div>}
+              </div>
+            </div>
+          )}
+
+          {/* Traditional Chinese Fields */}
+          {activeTab === "zh-TW" && (
+            <div className="space-y-4">
+              <div className="form-control">
+                <label className="label" htmlFor="titleZhTw">
+                  <span className="label-text">標題（繁體中文）</span>
+                </label>
+                <input className="input input-bordered" id="titleZhTw" {...register("titleZhTw")} />
+                {errors.titleZhTw && <div className="text-sm text-error mt-1">{errors.titleZhTw.message}</div>}
+              </div>
+              <div className="form-control">
+                <label className="label" htmlFor="descriptionZhTw">
+                  <span className="label-text">說明（繁體中文）</span>
+                </label>
+                <textarea className="textarea textarea-bordered h-24" id="descriptionZhTw" {...register("descriptionZhTw")} />
+                {errors.descriptionZhTw && <div className="text-sm text-error mt-1">{errors.descriptionZhTw.message}</div>}
               </div>
             </div>
           )}

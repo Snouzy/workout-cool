@@ -101,7 +101,7 @@ export default async function HeartRateZonesPage({ params }: { params: Promise<{
             offers: {
               "@type": "Offer",
               price: "0",
-              priceCurrency: locale === "ru" ? "RUB" : locale === "zh-CN" ? "CNY" : locale === "en" ? "USD" : "EUR",
+              priceCurrency: locale === "ru" ? "RUB" : locale === "zh-TW" ? "TWD" : locale === "zh-CN" ? "CNY" : locale === "en" ? "USD" : "EUR",
             },
             aggregateRating: {
               "@type": "AggregateRating",

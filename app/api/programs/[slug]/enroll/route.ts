@@ -3,6 +3,18 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/shared/lib/prisma";
 import { getMobileCompatibleSession } from "@/shared/api/mobile-auth";
 
+const getProgramSlugWhere = (slug: string) => ({
+  OR: [
+    { slug },
+    { slugEn: slug },
+    { slugEs: slug },
+    { slugPt: slug },
+    { slugRu: slug },
+    { slugZhCn: slug },
+    { slugZhTw: slug },
+  ],
+});
+
 export async function POST(req: NextRequest, { params }: { params: Promise<{ slug: string }> }) {
   try {
     const { slug } = await params;
@@ -15,8 +27,8 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ slu
 
     const userId = session.user.id;
 
-    const program = await prisma.program.findUnique({
-      where: { slug },
+    const program = await prisma.program.findFirst({
+      where: getProgramSlugWhere(slug),
       select: { id: true, participantCount: true },
     });
 
@@ -76,8 +88,8 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ slug
 
     const userId = session.user.id;
 
-    const program = await prisma.program.findUnique({
-      where: { slug },
+    const program = await prisma.program.findFirst({
+      where: getProgramSlugWhere(slug),
       select: { id: true },
     });
 

@@ -17,6 +17,7 @@ const exerciseSchema = z.object({
   exerciseId: z.string().min(1, "Veuillez sélectionner un exercice"),
   instructions: z.string().min(1, "Les instructions sont requises"),
   instructionsEn: z.string().min(1, "Les instructions en anglais sont requises"),
+  instructionsZhTw: z.string().optional(),
   suggestedSets: z.array(
     z.object({
       setIndex: z.number(),
@@ -136,6 +137,7 @@ export function AddExerciseModal({ open, onOpenChange, sessionId, nextOrder }: A
         order: nextOrder,
         instructions: data.instructions,
         instructionsEn: data.instructionsEn,
+        instructionsZhTw: data.instructionsZhTw || data.instructionsEn,
         suggestedSets: data.suggestedSets,
       });
 
@@ -258,6 +260,19 @@ export function AddExerciseModal({ open, onOpenChange, sessionId, nextOrder }: A
                             rows={3}
                           />
                           {errors.instructionsEn && <div className="text-sm text-error mt-1">{errors.instructionsEn.message}</div>}
+                        </div>
+                        <div className="form-control">
+                          <label className="label" htmlFor="instructionsZhTw">
+                            <span className="label-text">指示（繁體中文）</span>
+                          </label>
+                          <textarea
+                            className="textarea textarea-bordered"
+                            id="instructionsZhTw"
+                            {...register("instructionsZhTw")}
+                            placeholder="此課程中這個動作的特定指示..."
+                            rows={3}
+                          />
+                          {errors.instructionsZhTw && <div className="text-sm text-error mt-1">{errors.instructionsZhTw.message}</div>}
                         </div>
                       </div>
                     </div>

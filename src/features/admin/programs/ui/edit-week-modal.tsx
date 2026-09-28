@@ -16,12 +16,14 @@ interface EditWeekModalProps {
     titlePt: string;
     titleRu: string;
     titleZhCn: string;
+    titleZhTw: string;
     description: string;
     descriptionEn: string;
     descriptionEs: string;
     descriptionPt: string;
     descriptionRu: string;
     descriptionZhCn: string;
+    descriptionZhTw: string;
   };
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -37,12 +39,14 @@ export function EditWeekModal({ week, open, onOpenChange }: EditWeekModalProps) 
     titlePt: week.titlePt,
     titleRu: week.titleRu,
     titleZhCn: week.titleZhCn,
+    titleZhTw: week.titleZhTw,
     description: week.description,
     descriptionEn: week.descriptionEn,
     descriptionEs: week.descriptionEs,
     descriptionPt: week.descriptionPt,
     descriptionRu: week.descriptionRu,
     descriptionZhCn: week.descriptionZhCn,
+    descriptionZhTw: week.descriptionZhTw,
   });
   const [isSaving, setIsSaving] = useState(false);
 
@@ -100,6 +104,9 @@ export function EditWeekModal({ week, open, onOpenChange }: EditWeekModalProps) 
               </button>
               <button className={`tab ${activeTab === "zh" ? "tab-active" : ""}`} onClick={() => setActiveTab("zh")} type="button">
                 🇨🇳 ZH
+              </button>
+              <button className={`tab ${activeTab === "zh-TW" ? "tab-active" : ""}`} onClick={() => setActiveTab("zh-TW")} type="button">
+                🇹🇼 zh-TW
               </button>
             </div>
 
@@ -290,6 +297,38 @@ export function EditWeekModal({ week, open, onOpenChange }: EditWeekModalProps) 
                     onChange={(e) => setFormData({ ...formData, descriptionZhCn: e.target.value })}
                     placeholder="本周描述..."
                     value={formData.descriptionZhCn}
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* Traditional Chinese Fields */}
+            {activeTab === "zh-TW" && (
+              <div className="space-y-4">
+                <div>
+                  <label className="label">
+                    <span className="label-text">標題（繁體中文）</span>
+                  </label>
+                  <input
+                    className="input input-bordered w-full"
+                    disabled={isSaving}
+                    onChange={(e) => setFormData({ ...formData, titleZhTw: e.target.value })}
+                    placeholder="週標題"
+                    required
+                    type="text"
+                    value={formData.titleZhTw}
+                  />
+                </div>
+                <div>
+                  <label className="label">
+                    <span className="label-text">說明（繁體中文）</span>
+                  </label>
+                  <textarea
+                    className="textarea textarea-bordered w-full h-24"
+                    disabled={isSaving}
+                    onChange={(e) => setFormData({ ...formData, descriptionZhTw: e.target.value })}
+                    placeholder="本週說明..."
+                    value={formData.descriptionZhTw}
                   />
                 </div>
               </div>

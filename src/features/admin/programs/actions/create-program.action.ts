@@ -16,12 +16,14 @@ interface CreateProgramData {
   titlePt: string;
   titleRu: string;
   titleZhCn: string;
+  titleZhTw: string;
   description: string;
   descriptionEn: string;
   descriptionEs: string;
   descriptionPt: string;
   descriptionRu: string;
   descriptionZhCn: string;
+  descriptionZhTw: string;
   category: string;
   image: string;
   level: ProgramLevel;
@@ -60,11 +62,12 @@ export async function createProgram(data: CreateProgramData) {
   const slugPt = generateSlug(data.titlePt);
   const slugRu = generateSlug(data.titleRu);
   const slugZhCn = generateSlug(data.titleZhCn);
+  const slugZhTw = generateSlug(data.titleZhTw);
 
   // Check if any slug already exists
   const existingProgram = await prisma.program.findFirst({
     where: {
-      OR: [{ slug }, { slugEn }, { slugEs }, { slugPt }, { slugRu }, { slugZhCn }],
+      OR: [{ slug }, { slugEn }, { slugEs }, { slugPt }, { slugRu }, { slugZhCn }, { slugZhTw }],
     },
   });
 
@@ -80,18 +83,21 @@ export async function createProgram(data: CreateProgramData) {
       slugPt,
       slugRu,
       slugZhCn,
+      slugZhTw,
       title: data.title,
       titleEn: data.titleEn,
       titleEs: data.titleEs,
       titlePt: data.titlePt,
       titleRu: data.titleRu,
       titleZhCn: data.titleZhCn,
+      titleZhTw: data.titleZhTw,
       description: data.description,
       descriptionEn: data.descriptionEn,
       descriptionEs: data.descriptionEs,
       descriptionPt: data.descriptionPt,
       descriptionRu: data.descriptionRu,
       descriptionZhCn: data.descriptionZhCn,
+      descriptionZhTw: data.descriptionZhTw,
       category: data.category,
       image: data.image,
       level: data.level,

@@ -135,16 +135,30 @@ export const useWorkoutSessionStore = create<WorkoutSessionState>((set, get) => 
     const { session } = get();
 
     if (session) {
-      workoutSessionLocal.update(session.id, { status: "completed", endedAt: new Date().toISOString() });
-      console.log({
-        session: { ...session, status: "completed", endedAt: new Date().toISOString() },
-        progress: {},
-        elapsedTime: 0,
-        isTimerRunning: false,
-        isWorkoutActive: false,
+      const endedAt = new Date().toISOString();
+
+      // Mark every set as completed so analytics (volume, ACWR, completion
+      // stats) account for the work done. Without this, sessions wrapped up via
+      // "Finish Session" instead of finishing each set keep sets at
+      // completed: false and become invisible to those calculations.
+      const completedExercises = session.exercises.map((exercise) => ({
+        ...exercise,
+        sets: exercise.sets.map((set) => ({ ...set, completed: true })),
+      }));
+
+      workoutSessionLocal.update(session.id, {
+        exercises: completedExercises,
+        status: "completed",
+        endedAt,
       });
+
       set({
-        session: { ...session, status: "completed", endedAt: new Date().toISOString() },
+        session: {
+          ...session,
+          exercises: completedExercises,
+          status: "completed",
+          endedAt,
+        },
         progress: {},
         elapsedTime: 0,
         isTimerRunning: false,

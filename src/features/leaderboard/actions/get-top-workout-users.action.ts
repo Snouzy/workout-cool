@@ -22,16 +22,16 @@ export const getTopWorkoutUsersAction = actionClient.schema(inputSchema).action(
   try {
     const { startDate, endDate } = getDateRangeForPeriod(period);
 
+    // Only count sessions the user actually finished. Abandoned sessions keep
+    // status "active" with endedAt null and would otherwise inflate counts.
+    const completedSessionFilter = {
+      endedAt: { not: null },
+      ...(startDate && { startedAt: { gte: startDate, lte: endDate } }),
+    };
+
     const whereClause = {
       WorkoutSession: {
-        some: startDate
-          ? {
-              startedAt: {
-                gte: startDate,
-                lte: endDate,
-              },
-            }
-          : {},
+        some: completedSessionFilter,
       },
     };
 
@@ -45,27 +45,13 @@ export const getTopWorkoutUsersAction = actionClient.schema(inputSchema).action(
         createdAt: true,
         _count: {
           select: {
-            WorkoutSession: startDate
-              ? {
-                  where: {
-                    startedAt: {
-                      gte: startDate,
-                      lte: endDate,
-                    },
-                  },
-                }
-              : true,
+            WorkoutSession: {
+              where: completedSessionFilter,
+            },
           },
         },
         WorkoutSession: {
-          where: startDate
-            ? {
-                startedAt: {
-                  gte: startDate,
-                  lte: endDate,
-                },
-              }
-            : undefined,
+          where: completedSessionFilter,
           select: {
             endedAt: true,
             startedAt: true,

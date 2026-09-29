@@ -6,6 +6,7 @@ import { prisma } from "@/shared/lib/prisma";
 import { PremiumService } from "@/shared/lib/premium/premium.service";
 import { STATISTICS_TIMEFRAMES, DEFAULT_TIMEFRAME, TIMEFRAME_DAYS } from "@/shared/constants/statistics";
 import { getMobileCompatibleSession } from "@/shared/api/mobile-auth";
+import { convertWeight } from "@/shared/lib/weight-conversion";
 
 const timeframeSchema = z.enum([
   STATISTICS_TIMEFRAMES.FOUR_WEEKS,
@@ -141,7 +142,12 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
 
         if (weightIndex !== -1 && repsIndex !== -1 && set.valuesInt && set.valuesInt[weightIndex] && set.valuesInt[repsIndex]) {
           // Weight-based exercise: reps × weight
-          volume = set.valuesInt[repsIndex] * set.valuesInt[weightIndex];
+          // Normalize weight to kg so mixed kg/lbs sessions aggregate
+          // on a single unit (users can switch units per set).
+          const rawWeightVol = set.valuesInt[weightIndex];
+          const unitVol = set.units?.[weightIndex] === "lbs" ? "lbs" : "kg";
+          const weightKg = convertWeight(rawWeightVol, unitVol, "kg");
+          volume = set.valuesInt[repsIndex] * weightKg;
         } else if (repsIndex !== -1 && set.valuesInt && set.valuesInt[repsIndex]) {
           // Bodyweight exercise: count reps as volume
           volume = set.valuesInt[repsIndex];

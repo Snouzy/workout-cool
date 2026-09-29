@@ -6,6 +6,7 @@ import { prisma } from "@/shared/lib/prisma";
 import { PremiumService } from "@/shared/lib/premium/premium.service";
 import { STATISTICS_TIMEFRAMES, DEFAULT_TIMEFRAME, TIMEFRAME_DAYS, LOMBARDI_DIVISOR } from "@/shared/constants/statistics";
 import { getMobileCompatibleSession } from "@/shared/api/mobile-auth";
+import { convertWeight } from "@/shared/lib/weight-conversion";
 
 const timeframeSchema = z.enum([
   STATISTICS_TIMEFRAMES.FOUR_WEEKS,
@@ -127,7 +128,11 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
         const repsIndex = set.types.indexOf("REPS");
 
         if (weightIndex !== -1 && repsIndex !== -1 && set.valuesInt && set.valuesInt[weightIndex] && set.valuesInt[repsIndex]) {
-          const weight = set.valuesInt[weightIndex];
+          const rawWeightOrm = set.valuesInt[weightIndex];
+          // Normalize lbs -> kg so 1RM is unit-consistent regardless of
+          // which unit the set was logged in.
+          const unitOrm = set.units?.[weightIndex] === "lbs" ? "lbs" : "kg";
+          const weight = convertWeight(rawWeightOrm, unitOrm, "kg");
           const reps = set.valuesInt[repsIndex];
           const oneRepMax = calculateOneRepMax(weight, reps);
 

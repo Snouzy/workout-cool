@@ -6,6 +6,7 @@ import { prisma } from "@/shared/lib/prisma";
 import { PremiumService } from "@/shared/lib/premium/premium.service";
 import { STATISTICS_TIMEFRAMES, DEFAULT_TIMEFRAME, TIMEFRAME_DAYS } from "@/shared/constants/statistics";
 import { getMobileCompatibleSession } from "@/shared/api/mobile-auth";
+import { convertWeight } from "@/shared/lib/weight-conversion";
 
 const timeframeSchema = z.enum([
   STATISTICS_TIMEFRAMES.FOUR_WEEKS,
@@ -121,7 +122,11 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
         // Find weight value from arrays
         const weightIndex = set.types.indexOf("WEIGHT");
         if (weightIndex !== -1 && set.valuesInt && set.valuesInt[weightIndex]) {
-          const weight = set.valuesInt[weightIndex];
+          const rawWeight = set.valuesInt[weightIndex];
+          // Normalize lbs -> kg so the trend line is unit-consistent
+          // (users can switch units or mix them across sessions).
+          const unit = set.units?.[weightIndex] === "lbs" ? "lbs" : "kg";
+          const weight = convertWeight(rawWeight, unit, "kg");
           if (weight > maxWeight) {
             maxWeight = weight;
           }

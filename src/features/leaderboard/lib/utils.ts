@@ -15,8 +15,13 @@ export function getDateRangeForPeriod(period: LeaderboardPeriod): { startDate: D
 
   switch (period) {
     case "weekly": {
-      // Start of current week (Monday) in Paris timezone
-      const startOfWeek = now.startOf("week").add(1, "day"); // dayjs week starts on Sunday, add 1 for Monday
+      // Start of current week (Monday) in Paris timezone.
+      // dayjs' default week starts on Sunday, so deriving Monday via
+      // startOf("week").add(1, "day") inverts on a Sunday (start lands on the
+      // following Monday, which is *after* `now`) and yields an empty range.
+      // Compute Monday directly from the day-of-week instead.
+      const daysSinceMonday = (now.day() + 6) % 7; // Sun→6, Mon→0, …, Sat→5
+      const startOfWeek = now.subtract(daysSinceMonday, "day").startOf("day");
       return {
         startDate: startOfWeek.toDate(),
         endDate: now.toDate(),

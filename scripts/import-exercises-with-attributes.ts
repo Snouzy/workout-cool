@@ -4,6 +4,8 @@ import fs from "fs";
 import csv from "csv-parser";
 import { ExerciseAttributeNameEnum, ExerciseAttributeValueEnum, PrismaClient } from "@prisma/client";
 
+import { normalizeExerciseAttributeValue } from "./import-exercise-attribute-values";
+
 const prisma = new PrismaClient();
 
 interface ExerciseAttributeCSVRow {
@@ -76,14 +78,8 @@ async function ensureAttributeNameExists(name: ExerciseAttributeNameEnum) {
   return attributeName;
 }
 
-function normalizeAttributeValue(value: string): ExerciseAttributeValueEnum {
-  const cleaned = value.trim().toUpperCase();
-  if (["N/A", "NA", "NONE", "NULL", ""].includes(cleaned)) return "NA";
-  if ((Object.values(ExerciseAttributeValueEnum) as string[]).includes(cleaned)) {
-    return cleaned as ExerciseAttributeValueEnum;
-  }
-  throw new Error(`Unknown attribute value: ${value}`);
-}
+// Value normalisation is handled by the shared helper module.
+// See ./import-exercise-attribute-values.ts for alias definitions and error details.
 
 async function ensureAttributeValueExists(attributeNameId: string, value: ExerciseAttributeValueEnum) {
   let attributeValue = await prisma.exerciseAttributeValue.findFirst({
@@ -164,8 +160,17 @@ async function importExercisesFromCSV(filePath: string) {
               // Create new attributes
               for (const attr of exercise.attributes) {
                 try {
-                  const attributeName = await ensureAttributeNameExists(attr.attributeName);
-                  const attributeValue = await ensureAttributeValueExists(attributeName.id, normalizeAttributeValue(attr.attributeValue));
+                  const normalised = normalizeExerciseAttributeValue(
+                    attr.attributeName,
+                    attr.attributeValue,
+                  );
+                  const attributeName = await ensureAttributeNameExists(
+                    attr.attributeName as ExerciseAttributeNameEnum,
+                  );
+                  const attributeValue = await ensureAttributeValueExists(
+                    attributeName.id,
+                    normalised as ExerciseAttributeValueEnum,
+                  );
 
                   await prisma.exerciseAttribute.create({
                     data: {
@@ -175,9 +180,17 @@ async function importExercisesFromCSV(filePath: string) {
                     },
                   });
 
-                  console.log(`   ✅ Attribute: ${attr.attributeName} = ${attr.attributeValue}`);
+                  console.log(
+                    `   [OK] Attribute: ${attr.attributeName} = ${attr.attributeValue}` +
+                      (normalised !== attr.attributeValue.trim().toUpperCase()
+                        ? ` (normalised to ${normalised})`
+                        : ""),
+                  );
                 } catch (attrError) {
-                  console.error("   ❌ Attribute error:", attrError);
+                  console.error(
+                    `   [ERROR] Attribute ${attr.attributeName}=${attr.attributeValue}:`,
+                    attrError instanceof Error ? attrError.message : attrError,
+                  );
                 }
               }
 

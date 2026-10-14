@@ -1,0 +1,25 @@
+{
+  "test_id": "fa67f6cc-f91d-4171-b98e-522b55a6c79b",
+  "project_id": "01KM2CDFXKKHWDD2TSG94JGVGJ",
+  "folder_id": "01KM2CDFYCGAVS50DA3YHM6GMA",
+  "org_id": "3063150",
+  "session_name": "bmi_calculator",
+  "commit_id": "138c7cf2-272a-4880-a06b-cadf4392d6b1",
+  "testcase_id": "01M4WTJJN4VCZA9FHK7RNYFQV8",
+  "executions": [
+    {
+      "execution_id": "df401db7-c60a-440d-b074-e70f239c0b88",
+      "run_kind": "author",
+      "status": "passed",
+      "valid": true,
+      "at": "2026-10-14T09:07:29.622Z"
+    },
+    {
+      "execution_id": "7f29f68f-a248-4acd-9eeb-b41edd27c097",
+      "run_kind": "replay",
+      "status": "passed",
+      "valid": true,
+      "at": "2026-10-14T09:41:58.519Z"
+    }
+  ]
+}

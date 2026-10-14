@@ -34,6 +34,7 @@ const config = [
       "**/build/**",
       "**/dist/**",
       "public/**",
+      "e2e/**",
       "eslint.config.mjs",
       "next.config.js",
       "src/utils/attempt2.js",

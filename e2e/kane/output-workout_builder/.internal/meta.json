@@ -1,0 +1,25 @@
+{
+  "test_id": "09df34c3-906f-4d2f-b33f-17460a54afe0",
+  "project_id": "01KM2CDFXKKHWDD2TSG94JGVGJ",
+  "folder_id": "01KM2CDFYCGAVS50DA3YHM6GMA",
+  "org_id": "3063150",
+  "session_name": "workout_builder",
+  "commit_id": "79725b60-c8fc-4041-a6fe-c880c6ea952a",
+  "testcase_id": "01M4WW0YES4NTBRN0XZZRNMN93",
+  "executions": [
+    {
+      "execution_id": "bc89dbf6-33b9-4f8f-bdff-cd3b6e0f5895",
+      "run_kind": "author",
+      "status": "passed",
+      "valid": true,
+      "at": "2026-10-14T09:34:39.666Z"
+    },
+    {
+      "execution_id": "4bbc3516-6f16-4864-94ae-52591b13743e",
+      "run_kind": "replay",
+      "status": "passed",
+      "valid": true,
+      "at": "2026-10-14T09:43:23.284Z"
+    }
+  ]
+}

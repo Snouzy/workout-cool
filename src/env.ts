@@ -31,6 +31,9 @@ export const env = createEnv({
     // RevenueCat configuration
     REVENUECAT_SECRET_KEY: z.string().optional(),
     REVENUECAT_WEBHOOK_SECRET: z.string().optional(),
+
+    // App Store Connect campaign provider token (App Analytics → Campaigns), used by /download
+    APP_STORE_PROVIDER_TOKEN: z.string().optional(),
   },
   /**
    * If you add `client` environment variables, you need to add them to

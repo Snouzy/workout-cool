@@ -24,6 +24,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "daily" as const,
       priority: 1.0,
     })),
+    // Download page (smart link to the stores); the locale comes from the cookie, so one URL
+    {
+      url: `${baseUrl}/download`,
+      lastModified: currentDate,
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    },
     // Tools pages for all locales
     ...locales.map((locale) => ({
       url: `${baseUrl}/${locale}/tools`,

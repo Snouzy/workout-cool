@@ -2,11 +2,12 @@
 
 import { createI18nClient } from "next-international/client";
 
+import type { TypedLocales } from "./types";
+
 // NOTE: Also update middleware.ts to support locale
 export const languages = ["en", "fr", "es", "zh-CN", "ru", "pt"];
 
-export const { useI18n, useScopedI18n, I18nProviderClient, useChangeLocale, defineLocale, useCurrentLocale } = createI18nClient(
-  {
+const clientLocales = {
     en: async () => {
       await new Promise((resolve) => setTimeout(resolve, 100));
       return import("./en");
@@ -31,15 +32,19 @@ export const { useI18n, useScopedI18n, I18nProviderClient, useChangeLocale, defi
       await new Promise((resolve) => setTimeout(resolve, 100));
       return import("./pt");
     },
-  },
-  {
+};
+
+// TypedLocales hands next-international a pre-flattened locale type: see locales/types.ts.
+export const { useI18n, useScopedI18n, I18nProviderClient, useChangeLocale, defineLocale, useCurrentLocale } = createI18nClient<
+  typeof clientLocales,
+  TypedLocales
+>(clientLocales, {
     // Uncomment to set base path
     // basePath: '/base',
     // Uncomment to use custom segment name
     // segmentName: 'locale',
     // Uncomment to set fallback locale
     // fallbackLocale: en,
-  },
-);
+});
 
 export type TFunction = Awaited<ReturnType<typeof useI18n>>;

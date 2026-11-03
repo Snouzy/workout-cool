@@ -3,13 +3,13 @@
 import { z } from "zod";
 
 import { prisma } from "@/shared/lib/prisma";
-import { actionClient } from "@/shared/api/safe-actions";
+import { authenticatedActionClient } from "@/shared/api/safe-actions";
 
 const deleteWorkoutSessionSchema = z.object({
   id: z.string(),
 });
 
-export const deleteWorkoutSessionAction = actionClient.schema(deleteWorkoutSessionSchema).action(async ({ parsedInput }) => {
+export const deleteWorkoutSessionAction = authenticatedActionClient.schema(deleteWorkoutSessionSchema).action(async ({ parsedInput, ctx }) => {
   try {
     const { id } = parsedInput;
 
@@ -18,7 +18,9 @@ export const deleteWorkoutSessionAction = actionClient.schema(deleteWorkoutSessi
       select: { userId: true },
     });
 
-    if (!session) {
+    // Return the same error for missing and non-owned sessions so the endpoint
+    // cannot be used to disclose which session ids exist.
+    if (!session || session.userId !== ctx.user.id) {
       console.error("❌ Session not found:", id);
       return { serverError: "Session not found" };
     }

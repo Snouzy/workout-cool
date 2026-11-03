@@ -216,7 +216,7 @@ export function generateStructuredData({
                   : locale === "zh-CN"
                     ? "最新更新包括改进的运动数据库和更好的用户体验"
                     : "La dernière mise à jour inclut une base de données d'exercices améliorée et une meilleure expérience utilisateur",
-        screenshot: image || `${baseUrl}/images/default-og-image_${locale}.jpg`,
+        screenshot: image || `${baseUrl}/images/default-og-image_${locale === "zh-CN" ? "zh" : locale}.jpg`,
         aggregateRating: {
           "@type": "AggregateRating",
           ratingValue: "4.8",
@@ -247,7 +247,7 @@ export function generateStructuredData({
         },
         datePublished: datePublished || new Date().toISOString(),
         dateModified: dateModified || new Date().toISOString(),
-        image: image || `${baseUrl}/images/default-og-image_${locale}.jpg`,
+        image: image || `${baseUrl}/images/default-og-image_${locale === "zh-CN" ? "zh" : locale}.jpg`,
         mainEntityOfPage: {
           "@type": "WebPage",
           "@id": url,

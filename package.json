@@ -16,6 +16,7 @@
     "db:seed": "pnpm run import:exercises-full ./data/sample-exercises.csv",
     "db:seed-plans": "tsx scripts/seed-subscription-plans-simple.ts",
     "db:seed-workout-advanced": "tsx scripts/seed-workout-data-advanced.ts",
+    "backfill:equipment": "tsx scripts/backfill-equipment-tags.ts",
     "lint:fix": "next lint --fix",
     "db:seed-leaderboard": "tsx scripts/seed-leaderboard-data.ts",
     "migrate:prod": "env-cmd -f .env.production prisma migrate deploy",

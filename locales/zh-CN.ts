@@ -1969,6 +1969,8 @@ export default {
     rewarded_dialog_title: "准备好训练了吗？",
     rewarded_dialog_subtitle: "观看短视频广告解锁训练 : 帮助Workout.cool保持免费。",
     rewarded_watch_ad: "观看广告并开始",
+    rewarded_ad_error: "广告未能展示，奖励尚未解锁。",
+    rewarded_ad_retry: "重试",
     rewarded_or: "或",
     rewarded_go_premium: "永远告别广告",
     rewarded_premium_hint: "Premium会员永远不看广告，立即开始训练",

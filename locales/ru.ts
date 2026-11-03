@@ -2037,6 +2037,8 @@ export default {
     rewarded_dialog_subtitle:
       "Посмотрите короткую рекламу, чтобы разблокировать тренировку : это помогает Workout.cool оставаться бесплатным.",
     rewarded_watch_ad: "Смотреть рекламу и начать",
+    rewarded_ad_error: "Не удалось показать рекламу. Награда не была разблокирована.",
+    rewarded_ad_retry: "Повторить",
     rewarded_or: "или",
     rewarded_go_premium: "Без рекламы навсегда",
     rewarded_premium_hint: "Участники Premium никогда не видят рекламу и начинают мгновенно",

@@ -1724,6 +1724,12 @@ export default {
       end: "terminar",
       exercise: "EXERCÍCIO",
       repeat: "Repetir",
+      share_my_success: "Partilhar o meu sucesso",
+      share_card_title: "Treino concluído!",
+      share_card_subtitle: "Parabéns pelo teu treino de {date}!",
+      share_card_exercises_label: "exercícios concluídos",
+      share_card_motivation: "Continua! 💪",
+      share_card_footer: "workout.cool — Grátis e Open Source",
       delete: "Eliminar",
     },
     attribute_value: {

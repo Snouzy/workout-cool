@@ -31,6 +31,19 @@ export function WorkoutSessionSet({ set, setIndex, onChange, onFinish, onRemove 
     onChange(setIndex, { valuesInt: newValuesInt });
   };
 
+  // Weights accept decimals (2.5 / 7.5); reps/time stay integers via handleValueIntChange.
+  const handleValueWeightChange = (columnIndex: number) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValuesInt = Array.isArray(set.valuesInt) ? [...set.valuesInt] : [];
+    const raw = e.target.value;
+    if (raw === "") {
+      newValuesInt[columnIndex] = 0;
+    } else {
+      const parsed = Number.parseFloat(raw);
+      newValuesInt[columnIndex] = Number.isFinite(parsed) && parsed >= 0 ? parsed : 0;
+    }
+    onChange(setIndex, { valuesInt: newValuesInt });
+  };
+
   const handleValueSecChange = (columnIndex: number) => (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValuesSec = Array.isArray(set.valuesSec) ? [...set.valuesSec] : [];
     newValuesSec[columnIndex] = e.target.value ? parseInt(e.target.value, 10) : 0;
@@ -109,10 +122,11 @@ export function WorkoutSessionSet({ set, setIndex, onChange, onFinish, onRemove 
             <input
               className="border border-black rounded px-1 py-2 w-1/2 text-base text-center font-bold dark:bg-slate-800"
               disabled={set.completed}
+              inputMode="decimal"
               min={0}
-              onChange={handleValueIntChange(columnIndex)}
-              pattern="[0-9]*"
+              onChange={handleValueWeightChange(columnIndex)}
               placeholder=""
+              step="0.1"
               type="number"
               value={valuesInt[columnIndex] ?? ""}
             />

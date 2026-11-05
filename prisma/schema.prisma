@@ -329,7 +329,7 @@ model WorkoutSet {
   setIndex                 Int
   type                     WorkoutSetType
   types                    WorkoutSetType[]       @default([])
-  valuesInt                Int[]                  @default([])
+  valuesInt                Float[]                @default([])
   valuesSec                Int[]                  @default([])
   units                    WorkoutSetUnit[]       @default([])
   completed                Boolean                @default(false)
@@ -674,7 +674,7 @@ model ProgramSuggestedSet {
   programSessionExerciseId String
   setIndex                 Int
   types                    WorkoutSetType[] @default([])
-  valuesInt                Int[]            @default([])
+  valuesInt                Float[]          @default([])
   valuesSec                Int[]            @default([])
   units                    WorkoutSetUnit[] @default([])
 

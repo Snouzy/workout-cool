@@ -7,6 +7,8 @@ import { useI18n } from "locales/client";
 import { ProgramLevel, ExerciseAttributeValueEnum } from "@prisma/client";
 
 import { updateProgram } from "../actions/update-program.action";
+import { SwedishTranslationFields } from "./swedish-translation-fields";
+
 
 import { allEquipmentValues, getEquipmentTranslation } from "@/shared/lib/workout-session/equipments";
 
@@ -20,12 +22,14 @@ interface EditProgramModalProps {
     titlePt: string;
     titleRu: string;
     titleZhCn: string;
+    titleSv: string | null;
     description: string;
     descriptionEn: string;
     descriptionEs: string;
     descriptionPt: string;
     descriptionRu: string;
     descriptionZhCn: string;
+    descriptionSv: string | null;
     category: string;
     image: string;
     level: ProgramLevel;
@@ -57,12 +61,14 @@ export function EditProgramModal({ program, open, onOpenChange }: EditProgramMod
     titlePt: program.titlePt,
     titleRu: program.titleRu,
     titleZhCn: program.titleZhCn,
+    titleSv: program.titleSv ?? "",
     description: program.description,
     descriptionEn: program.descriptionEn,
     descriptionEs: program.descriptionEs,
     descriptionPt: program.descriptionPt,
     descriptionRu: program.descriptionRu,
     descriptionZhCn: program.descriptionZhCn,
+    descriptionSv: program.descriptionSv ?? "",
     category: program.category,
     image: program.image,
     level: program.level,
@@ -151,6 +157,9 @@ export function EditProgramModal({ program, open, onOpenChange }: EditProgramMod
             </button>
             <button className={`tab ${activeTab === "zh" ? "tab-active" : ""}`} onClick={() => setActiveTab("zh")} type="button">
               🇨🇳 ZH
+            </button>
+            <button className={`tab ${activeTab === "sv" ? "tab-active" : ""}`} onClick={() => setActiveTab("sv")} type="button">
+              🇸🇪 SV
             </button>
           </div>
 
@@ -297,6 +306,21 @@ export function EditProgramModal({ program, open, onOpenChange }: EditProgramMod
                 />
               </div>
             </div>
+          )}
+
+          {activeTab === "sv" && (
+            <SwedishTranslationFields
+              descriptionInput={{
+                disabled: isSaving,
+                value: formData.descriptionSv,
+                onChange: (e) => setFormData({ ...formData, descriptionSv: e.target.value }),
+              }}
+              titleInput={{
+                disabled: isSaving,
+                value: formData.titleSv,
+                onChange: (e) => setFormData({ ...formData, titleSv: e.target.value }),
+              }}
+            />
           )}
 
           {/* Chinese Fields */}

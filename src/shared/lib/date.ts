@@ -2,6 +2,7 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import dayjs from "dayjs";
 import "dayjs/locale/fr";
 import "dayjs/locale/en";
+import "dayjs/locale/sv";
 
 
 dayjs.extend(relativeTime);
@@ -15,6 +16,7 @@ const DEFAULT_FORMATS = {
   es: "D MMMM YYYY", // 15 de enero de 2024,
   "zh-CN": "YYYY年M月D日", // 2024年1月15日,
   ru: "D MMMM YYYY", // 15 января 2024,
+  sv: "D MMMM YYYY", // 15 januari 2024
   pt: "D MMMM YYYY", // 15 de janeiro de 2024,
 } as const;
 
@@ -28,6 +30,7 @@ const SHORT_FORMATS = {
   es: "MMM YYYY", // ene 2024
   "zh-CN": "YYYY年M月", // 2024年1月
   ru: "MMM YYYY", // янв 2024
+  sv: "MMM YYYY", // jan 2024
   pt: "MMM YYYY", // jan 2024
 } as const;
 

@@ -3,10 +3,16 @@ import { createI18nMiddleware } from "next-international/middleware";
 import { NextRequest, NextResponse } from "next/server";
 import { getSessionCookie } from "better-auth/cookies";
 
+import { locales, type Locale } from "./locales/types";
+
 import { resolveDownloadRedirect } from "@/shared/lib/stores/download-redirect";
 import { trackFromProxy } from "@/shared/lib/analytics/proxy";
 
-function detectUserLocale(request: NextRequest): string {
+function detectUserLocale(request: NextRequest): Locale {
+  const preference = request.cookies.get("detected-locale")?.value;
+  const savedLocale = locales.find((locale) => locale === preference);
+  if (savedLocale) return savedLocale;
+
   const acceptLanguage = request.headers.get("accept-language");
 
   if (!acceptLanguage) return "en";
@@ -20,20 +26,10 @@ function detectUserLocale(request: NextRequest): string {
     })
     .sort((a, b) => b.quality - a.quality);
 
-  // Map browser locales to supported locales
-  const supportedLocales = ["en", "fr", "es", "zh-cn", "ru", "pt"];
-
   for (const { locale } of languages) {
-    // Exact match
-    if (supportedLocales.includes(locale)) {
-      return locale === "zh-cn" ? "zh-CN" : locale;
-    }
-
-    // Language match (fr-FR -> fr)
-    const lang = locale.split("-")[0];
-    if (supportedLocales.includes(lang)) {
-      return lang;
-    }
+    const language = locale.split("-")[0];
+    const supportedLocale = locales.find((supported) => supported.toLowerCase() === locale || supported === language);
+    if (supportedLocale) return supportedLocale;
 
     // Chinese variants
     if (locale.startsWith("zh")) {
@@ -45,9 +41,10 @@ function detectUserLocale(request: NextRequest): string {
 }
 
 const I18nMiddleware = createI18nMiddleware({
-  locales: ["en", "fr", "es", "zh-CN", "ru", "pt"],
+  locales,
   defaultLocale: "en",
   urlMappingStrategy: "rewrite",
+  resolveLocaleFromRequest: detectUserLocale,
 });
 
 export async function proxy(request: NextRequest) {
@@ -86,16 +83,12 @@ export async function proxy(request: NextRequest) {
   // Normal i18n middleware processing
   const response = I18nMiddleware(request);
 
-  // Extract current locale from pathname
-  const localeMatch = pathname.match(/^\/([a-z]{2}(?:-[A-Z]{2})?)/);
-  const currentLocale = localeMatch ? localeMatch[1] : detectedLocale;
-
-  // Set Content-Language header for SEO
+  const currentLocale = response.headers.get("X-Next-Locale") || detectedLocale;
   response.headers.set("Content-Language", currentLocale);
 
-  // Store detected locale in cookie for future visits
-  if (!request.cookies.get("detected-locale")) {
-    response.cookies.set("detected-locale", detectedLocale, {
+  // Keep the client preference in sync when a visitor follows a localized link.
+  if (request.cookies.get("detected-locale")?.value !== currentLocale) {
+    response.cookies.set("detected-locale", currentLocale, {
       maxAge: 60 * 60 * 24 * 365, // 1 year
       httpOnly: false,
       secure: process.env.NODE_ENV === "production",

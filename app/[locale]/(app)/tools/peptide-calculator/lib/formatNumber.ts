@@ -1,7 +1,7 @@
 import type { Locale } from "locales/types";
 
 /** Locales that write the decimal separator as a comma rather than a point. */
-const COMMA_DECIMAL_LOCALES: ReadonlySet<Locale> = new Set(["fr", "es", "pt", "ru"]);
+const COMMA_DECIMAL_LOCALES: ReadonlySet<Locale> = new Set(["fr", "es", "pt", "ru", "sv"]);
 
 /**
  * Rounds `value` to at most `decimals` fraction digits, strips trailing zeros

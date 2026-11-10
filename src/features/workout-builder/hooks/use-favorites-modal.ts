@@ -9,7 +9,8 @@ import { useSession } from "@/features/auth/lib/auth-client";
 interface ExerciseWithAttributes {
   id: string;
   name: string;
-  nameEn: string;
+  nameEn: string | null;
+  nameSv?: string | null;
   fullVideoImageUrl: string | null;
   attributes: Array<{
     attributeName: { name: string };

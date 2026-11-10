@@ -30,6 +30,8 @@ export function generateProgramSEOKeywords(program: ProgramDetail, locale: Local
             ? "программа тренировок"
             : locale === "zh-CN"
               ? "训练计划"
-              : "programme d'entraînement",
+              : locale === "sv"
+                ? "träningsprogram"
+                : "programme d'entraînement",
   ];
 }

@@ -12,6 +12,7 @@ interface AddSessionData {
   sessionNumber: number;
   title: string;
   titleEn: string;
+  titleSv?: string;
   titleEs: string;
   titlePt: string;
   titleRu: string;
@@ -24,6 +25,7 @@ interface AddSessionData {
   slugZhCn: string;
   description: string;
   descriptionEn: string;
+  descriptionSv?: string;
   descriptionEs: string;
   descriptionPt: string;
   descriptionRu: string;
@@ -63,6 +65,7 @@ export async function addSessionToWeek(data: AddSessionData) {
       sessionNumber: data.sessionNumber,
       title: data.title,
       titleEn: data.titleEn,
+      titleSv: data.titleSv?.trim() || null,
       titleEs: data.titleEs,
       titlePt: data.titlePt,
       titleRu: data.titleRu,
@@ -75,6 +78,7 @@ export async function addSessionToWeek(data: AddSessionData) {
       slugZhCn: data.slugZhCn,
       description: data.description,
       descriptionEn: data.descriptionEn,
+      descriptionSv: data.descriptionSv?.trim() || null,
       descriptionEs: data.descriptionEs,
       descriptionPt: data.descriptionPt,
       descriptionRu: data.descriptionRu,

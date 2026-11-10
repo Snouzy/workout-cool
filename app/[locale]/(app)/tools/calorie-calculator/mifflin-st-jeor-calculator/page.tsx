@@ -45,6 +45,11 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 export default async function MifflinStJeorCalculatorPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   const t = await getI18n();
+  const bmr = t("tools.calorie-calculator.results.bmr");
+  const weight = t("tools.calorie-calculator.weight");
+  const height = t("tools.calorie-calculator.height");
+  const age = t("tools.calorie-calculator.age");
+  const { format } = new Intl.NumberFormat(locale);
 
   return (
     <>
@@ -109,8 +114,11 @@ export default async function MifflinStJeorCalculatorPage({ params }: { params: 
               <p className="text-sm leading-relaxed">{t("tools.mifflin-st-jeor.how_it_works_description")}</p>
               <div className="mt-4 p-3 bg-base-100/50 dark:bg-base-100/20 rounded-lg">
                 <p className="text-xs font-mono text-base-content/70">
-                  <strong>Men:</strong> BMR = 10 × weight(kg) + 6.25 × height(cm) - 5 × age + 5<br />
-                  <strong>Women:</strong> BMR = 10 × weight(kg) + 6.25 × height(cm) - 5 × age - 161
+                  <strong>{t("tools.calorie-calculator.male")}:</strong> {bmr} = 10 × {weight} (kg) + {format(6.25)} × {height} (cm) − 5 ×{" "}
+                  {age} + 5
+                  <br />
+                  <strong>{t("tools.calorie-calculator.female")}:</strong> {bmr} = 10 × {weight} (kg) + {format(6.25)} × {height} (cm) − 5 ×{" "}
+                  {age} − 161
                 </p>
               </div>
             </div>

@@ -4,6 +4,8 @@ import { useAction } from "next-safe-action/hooks";
 import { Languages } from "lucide-react";
 import { useChangeLocale, languages, useI18n } from "locales/client";
 
+import type { Locale } from "locales/types";
+
 import { updateUserAction } from "@/entities/user/model/update-user.action";
 
 const languageFlags: Record<string, string> = {
@@ -13,6 +15,7 @@ const languageFlags: Record<string, string> = {
   "zh-CN": "🇨🇳",
   ru: "🇷🇺",
   pt: "🇵🇹",
+  sv: "🇸🇪",
 };
 
 export function LanguageSelector() {
@@ -21,12 +24,12 @@ export function LanguageSelector() {
 
   const t = useI18n();
 
-  const handleLanguageChange = async (newLocale: string) => {
+  const handleLanguageChange = async (newLocale: Locale) => {
     // update cookie to prevent auto-detection conflicts
     document.cookie = `detected-locale=${newLocale}; max-age=${60 * 60 * 24 * 365}; path=/; samesite=lax`;
 
     // change locale immediately for better UX
-    changeLocale(newLocale as "en" | "fr" | "es" | "zh-CN" | "ru" | "pt");
+    changeLocale(newLocale);
 
     // save to database (fire and forget)
     action.execute({ locale: newLocale });
@@ -46,6 +49,8 @@ export function LanguageSelector() {
         return "Русский";
       case "pt":
         return "Português";
+      case "sv":
+        return "Svenska";
       default:
         return language;
     }

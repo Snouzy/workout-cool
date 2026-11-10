@@ -45,6 +45,9 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 export default async function CunninghamCalculatorPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   const t = await getI18n();
+  const bmr = t("tools.calorie-calculator.results.bmr");
+  const weight = t("tools.calorie-calculator.weight");
+  const bodyFat = t("tools.body_fat_percentage");
 
   return (
     <>
@@ -108,9 +111,7 @@ export default async function CunninghamCalculatorPage({ params }: { params: Pro
               <p className="text-sm leading-relaxed">{t("tools.cunningham.how_it_works_description")}</p>
               <div className="mt-4 p-3 bg-base-100/50 dark:bg-base-100/20 rounded-lg">
                 <p className="text-xs font-mono text-base-content/70">
-                  <strong>Cunningham:</strong> BMR = 500 + (22 × lean body mass)
-                  <br />
-                  <strong>Lean Body Mass:</strong> Weight(kg) × (1 - body fat %/100)
+                  <strong>Cunningham:</strong> {bmr} = 500 + 22 × [{weight} (kg) × (1 − {bodyFat} / 100)]
                 </p>
               </div>
             </div>

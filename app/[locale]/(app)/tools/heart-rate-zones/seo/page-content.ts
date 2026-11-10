@@ -9,6 +9,9 @@ export const HEART_RATE_ZONES_CONTENT: Record<Locale, PageContent> = {
   en: {
     heroSubtitle: "Discover your personalized training zones to optimize performance, burn more fat, and improve cardiovascular fitness",
   },
+  sv: {
+    heroSubtitle: "Lär känna dina pulszoner och anpassa träningen för att förbättra prestationen, öka fettförbränningen och få bättre kondition.",
+  },
   es: {
     heroSubtitle:
       "Descubre tus zonas de entrenamiento personalizadas para optimizar el rendimiento, quemar más grasa y mejorar tu condición cardiovascular",

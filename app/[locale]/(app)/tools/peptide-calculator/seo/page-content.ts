@@ -927,7 +927,148 @@ const zhCN: PeptidePageContent = {
   disclaimer: "仅为换算工具。浓度、注射器的单位刻度以及任何处方，都请向有资质的医疗专业人员核实。本计算器不提供医疗意见。",
 };
 
-export const PEPTIDE_CALCULATOR_CONTENT: Record<Locale, PeptidePageContent> = { en, es, fr, pt, ru, "zh-CN": zhCN };
+const sv: PeptidePageContent = {
+  heroSubtitle:
+    "Ange mängden peptid i flaskan, hur mycket bakteriostatiskt vatten som har tillsatts och dosen. Du får volymen i milliliter och motsvarande gradering på en U-100-insulinspruta.",
+  sections: [
+    {
+      id: "how-to",
+      heading: "Så använder du peptidkalkylatorn",
+      lead: "Beräkningen bygger på tre uppgifter: mängden peptid i milligram enligt flaskans märkning, volymen tillsatt bakteriostatiskt vatten i milliliter och den avsedda dosen i mikrogram. Resultatet visar volymen i milliliter och motsvarande gradering på insulinsprutan.",
+      body: [
+        "Börja med mängden i flaskan. Om etiketten anger 10 mg är det den torra peptidens massa. Volymen kan mätas först när vätskan har tillsatts. Ange 10 mg som mängd i flaskan.",
+        "Ange sedan volymen bakteriostatiskt vatten som har tillsatts. Med 5 ml vatten och 10 mg peptid blir koncentrationen 2 mg/ml. Med mindre vatten blir lösningen mer koncentrerad och volymen per dos mindre. Med mer vatten blir volymen per dos större och lättare att läsa av.",
+        "Ange sist dosen i mikrogram enligt ordinationen eller produktmärkningen. Kalkylatorn räknar om dosen utan att bedöma dess lämplighet. Vid 2 mg/ml motsvarar en dos på 250 mikrogram 0,125 ml eller 12,5 enheter på en U-100-spruta. Flaskan på 10 mg räcker då till 40 sådana doser.",
+        "Läs av resultatet i sprutdiagrammet. Antalet enheter anger vilket skalstreck kolven ska stå vid. Värdet i milliliter anger samma volym på skalan på en tuberkulinspruta.",
+      ],
+    },
+    {
+      id: "formula",
+      heading: "Så beräknas koncentration och dosvolym",
+      lead: "Beräkningen görs i två steg. Dela peptidens massa med vattenvolymen för att få koncentrationen. Dela sedan dosen med koncentrationen för att få dosvolymen. Med 10 mg peptid och 5 ml bakteriostatiskt vatten blir koncentrationen 2 mg/ml och en dos på 250 mikrogram motsvarar 0,125 ml.",
+      body: [
+        "Använd samma massenhet före divisionen. Ett milligram är 1 000 mikrogram, så 250 mikrogram är 0,25 mg. En förväxling mellan milligram och mikrogram ger en tusen gånger för stor eller för liten volym.",
+        "I exemplet ger 10 mg delat med 5 ml koncentrationen 2 mg/ml. Dosen 250 mikrogram är 0,25 mg. Delar du 0,25 mg med 2 mg/ml får du 0,125 ml. Omräkningen till sprutans skala beskriver sedan samma volym.",
+        "För att få antalet doser per flaska delar du den totala mängden peptid med dosen. 10 mg är 10 000 mikrogram och 10 000 delat med 250 ger 40 doser. Om resultatet exempelvis skulle visa tre doser på 250 mikrogram från en flaska på 10 mg behöver du kontrollera de angivna värdena.",
+      ],
+    },
+    {
+      id: "chart",
+      heading: "Tabell för beredning av peptider",
+      lead: "Tabellen innehåller räkneexempel. För varje mängd peptid och volym bakteriostatiskt vatten visas den beräknade koncentrationen. Med 10 mg och 2 ml blir den 5 mg/ml. Samma mängd peptid och 5 ml ger 2 mg/ml. Mängden peptid är densamma oavsett vattenvolym.",
+      body: [
+        "På varje rad kan du se hur stor volym som motsvarar en viss dos. En högre koncentration ger mindre vätska per dos. Vid lägre koncentration upptar samma dos fler skalstreck på sprutan, vilket kan göra små doser lättare att läsa av.",
+        "Tabellen anger koncentrationen för varje blandning. Dosen ska framgå av ordinationen eller produktmärkningen. Den totala massan i varje exempel är densamma före och efter beredningen. Vattenvolymen påverkar koncentrationen och volymen för en viss dos.",
+      ],
+    },
+    {
+      id: "conversion",
+      heading: "Räkna om mikrogram till enheter på en insulinspruta",
+      lead: "För en U-100-spruta får du antalet enheter genom att dela dosen i mikrogram med koncentrationen i mg/ml gånger tio. Vid 2 mg/ml blir en dos på 250 mikrogram alltså 250 delat med 20, det vill säga 12,5 enheter. Vid 10 mg/ml är samma dos 2,5 enheter.",
+      body: [
+        "Faktorn tio följer av sprutans skala och omräkningen av massenheten. En enhet på en U-100-spruta är 0,01 ml. Om du redan känner till volymen i milliliter kan du multiplicera den med 100. Volymen 0,125 ml motsvarar alltså 12,5 enheter.",
+        "När koncentrationen fördubblas halveras antalet enheter för samma dos. Därför står det 12,5, 5 och 2,5 enheter på samma rad i tabellen. De tre värdena motsvarar samma dos vid tre olika koncentrationer.",
+        "Kontrollera sprutans gradering innan du använder ett värde i enheter. På en U-100-spruta motsvarar 1 ml 100 enheter. På en U-40-spruta motsvarar 1 ml i stället 40 enheter, så 0,125 ml motsvarar 5 enheter på den skalan.",
+      ],
+    },
+    {
+      id: "u100",
+      heading: "Varför motsvarar 100 enheter en milliliter på en U-100-spruta?",
+      lead: "U-100 anger en insulinkoncentration på 100 internationella enheter per milliliter. Sprutan är graderad så att 100 enheter motsvarar 1 ml och ett steg på en enhet motsvarar 0,01 ml. För en beredd peptid anger skalan bara volymen i hundradels milliliter.",
+      body: [
+        "Samma skala används på U-100-sprutor av olika storlek. En spruta på 0,3 ml rymmer 30 enheter, en på 0,5 ml rymmer 50 och en på 1 ml rymmer 100. En enhet motsvarar alltid 0,01 ml på dessa sprutor. Alla tre rymmer 12,5 enheter, men bara den största rymmer 60.",
+        "På en mindre spruta kan avståndet mellan skalstrecken vara större. Det kan göra till exempel 12,5 enheter lättare att läsa av om volymen ryms i sprutan.",
+        "Alla sprutor har inte halvenhetsgradering. På en skala graderad i hela enheter ligger 12,5 mellan två streck. Kontrollera vilka markeringar som finns på sprutan när du bedömer med vilken noggrannhet resultatet kan mätas upp.",
+      ],
+    },
+    {
+      id: "water",
+      heading: "Bakteriostatiskt vatten och sterilt vatten",
+      lead: "Bakteriostatiskt vatten är sterilt vatten med 0,9 procent bensylalkohol. Konserveringsmedlet hämmar bakterietillväxt och möjliggör upprepade uttag ur flaskan. Sterilt vatten utan konserveringsmedel ger inget motsvarande skydd mot förorening mellan uttagen.",
+      body: [
+        "Beräkningen blir densamma för båda vätskorna. Med 10 mg peptid och 5 ml vätska blir koncentrationen 2 mg/ml. Valet av vätska påverkar hur den beredda produkten ska förvaras och hur länge den kan användas.",
+        "Följ produktens anvisningar om spädningsvätska. Vissa produkter kräver bakteriostatiskt vatten, andra sterilt vatten eller en annan vätska. För vissa produkter gör bensylalkoholen bakteriostatiskt vatten olämpligt. Följ produktmärkningen om uppgifter i exempelvis ett forum skiljer sig från den.",
+        "Följ produktens anvisningar vid beredningen. Om vattnet ska tillsättas längs flaskväggen ska det rinna sakta och inte sprutas direkt på pulvret. Låt pulvret lösas upp. Skakning kan skada känsliga peptider utan att det avspeglas i kalkylatorns resultat.",
+      ],
+    },
+    {
+      id: "mistakes",
+      heading: "Vanliga fel vid beräkningen",
+      lead: "Enhetsförväxlingar kan ge stora fel som är svåra att upptäcka på sprutans skala. Skillnaden mellan milligram och mikrogram är en faktor 1 000. Om du läser en U-40-spruta som en U-100-spruta blir volymen fel med en faktor 2,5.",
+      body: [
+        "Utgå från den vattenvolym som faktiskt har tillsatts. För en flaska på 10 mg ger 2 ml vatten koncentrationen 5 mg/ml, medan 5 ml vatten ger 2 mg/ml. Ett värde i enheter från en annan beredning kan därför bli fel.",
+        "Gör en ny beräkning när koncentrationen ändras. Om 250 mikrogram motsvarade 12,5 enheter i en tidigare beredning gäller värdet för den nya beredningen bara om koncentrationen och sprutans skala är desamma.",
+        "Tänk också på att pulvret tar upp en liten volym. Den slutliga volymen kan därför bli något större än den tillsatta vattenvolymen, vilket kalkylatorn inte tar hänsyn till. För en peptid märkt i internationella enheter krävs dessutom en produktspecifik omräkningsfaktor för att räkna i milligram.",
+      ],
+    },
+    {
+      id: "faq",
+      heading: "Vanliga frågor",
+      lead: "Här besvaras frågor om beredning, mängden bakteriostatiskt vatten och insulinsprutors skalor. Beräkningen bygger på två steg: dela mängden peptid med vattenvolymen för att få koncentrationen och dela sedan dosen med koncentrationen för att få volymen.",
+      body: [],
+    },
+  ],
+  reconstitutionTable: {
+    caption: "Tabell för beredning av peptider",
+    headers: ["Mängd peptid", "Tillsatt bakteriostatiskt vatten", "Slutlig koncentration"],
+    rows: [
+      ["5 mg", "1 ml", "5 mg/ml"],
+      ["5 mg", "2 ml", "2,5 mg/ml"],
+      ["10 mg", "2 ml", "5 mg/ml"],
+      ["10 mg", "5 ml", "2 mg/ml"],
+      ["15 mg", "3 ml", "5 mg/ml"],
+      ["20 mg", "4 ml", "5 mg/ml"],
+      ["30 mg", "3 ml", "10 mg/ml"],
+    ],
+  },
+  conversionTable: {
+    caption: "Från dos till enheter på en U-100-insulinspruta",
+    headers: ["Dos", "Vid 2 mg/ml", "Vid 5 mg/ml", "Vid 10 mg/ml"],
+    rows: [
+      ["250 mikrogram", "12,5 enheter", "5 enheter", "2,5 enheter"],
+      ["500 mikrogram", "25 enheter", "10 enheter", "5 enheter"],
+      ["1 000 mikrogram", "50 enheter", "20 enheter", "10 enheter"],
+      ["2 000 mikrogram", "100 enheter", "40 enheter", "20 enheter"],
+    ],
+  },
+  faq: [
+    {
+      question: "Hur beräknar jag koncentration och dosvolym?",
+      answer: "Dela mängden peptid med volymen bakteriostatiskt vatten för att få koncentrationen. Dela sedan dosen med koncentrationen för att få volymen. Med 10 mg och 5 ml blir koncentrationen 2 mg/ml, så 250 mikrogram motsvarar 0,125 ml eller 12,5 enheter på en U-100-spruta.",
+    },
+    {
+      question: "Hur mycket bakteriostatiskt vatten behövs för beredningen?",
+      answer: "Följ produktens anvisningar för spädningsvätska och volym. Mängden tillsatt vatten avgör koncentrationen. För 10 mg ger 2 ml vatten koncentrationen 5 mg/ml, medan 5 ml ger 2 mg/ml. Med större vattenvolym blir små doser lättare att läsa av på sprutan.",
+    },
+    {
+      question: "Vilken volym motsvarar 10 mg efter beredning?",
+      answer: "Det beror på mängden spädningsvätska. För 10 mg ger exempelvis 1 ml koncentrationen 10 mg/ml, 2 ml ger 5 mg/ml och 5 ml ger 2 mg/ml. Följ volymangivelsen i produktens anvisningar och räkna sedan med den koncentrationen.",
+    },
+    {
+      question: "Hur beräknas koncentrationen för 30 mg peptid?",
+      answer: "Dela 30 mg med antalet milliliter spädningsvätska som har tillsatts enligt produktens anvisningar. Med 3 ml blir koncentrationen 10 mg/ml och med 6 ml blir den 5 mg/ml. Använd sedan koncentrationen för att räkna om dosen till en volym.",
+    },
+    {
+      question: "Hur påverkar vattenvolymen en beredning med 10 mg peptid?",
+      answer: "Med 1 ml bakteriostatiskt vatten blir koncentrationen 10 mg/ml, med 2 ml blir den 5 mg/ml, med 4 ml blir den 2,5 mg/ml och med 5 ml blir den 2 mg/ml. Den totala mängden peptid är 10 mg i samtliga exempel. Det är volymen för en given dos som förändras.",
+    },
+    {
+      question: "Hur räknar jag själv på en beredning?",
+      answer: "Dela peptidmassan i milligram med vattenvolymen i milliliter för att få koncentrationen i mg/ml. Dela dosen i milligram med koncentrationen för att få volymen i milliliter. Multiplicera volymen med 100 för att få antalet enheter på en U-100-spruta. Räkna först om eventuella mikrogram till milligram: 250 mikrogram är 0,25 mg.",
+    },
+    {
+      question: "Hur många enheter på en insulinspruta motsvarar 250 mikrogram?",
+      answer: "Det beror på koncentrationen och sprutans gradering. På en U-100-spruta motsvarar 250 mikrogram 12,5 enheter vid 2 mg/ml, 5 enheter vid 5 mg/ml och 2,5 enheter vid 10 mg/ml. För andra koncentrationer delar du dosen i mikrogram med koncentrationen i mg/ml gånger tio.",
+    },
+    {
+      question: "Vad betyder U-100 på en insulinspruta?",
+      answer: "U-100 innebär att sprutan är graderad för 100 enheter per milliliter. En enhet motsvarar då 0,01 ml och 100 enheter motsvarar 1 ml. En U-40-spruta är däremot graderad för 40 enheter per milliliter. Att läsa av fel skala ger ett fel med en faktor 2,5.",
+    },
+  ],
+  disclaimer: "Verktyget räknar endast om enheter. Kontrollera alltid koncentrationen, sprutans gradering och eventuell ordination med behörig hälso- och sjukvårdspersonal. Kalkylatorn ger inga medicinska råd.",
+};
+
+export const PEPTIDE_CALCULATOR_CONTENT: Record<Locale, PeptidePageContent> = { en, es, fr, pt, ru, sv, "zh-CN": zhCN };
 
 /** Repli utilisé tant qu'une locale n'a pas son contenu rédigé. */
 export const PEPTIDE_CALCULATOR_CONTENT_FALLBACK = en;

@@ -9,10 +9,13 @@ export interface BaseExercise {
   fullVideoImageUrl?: string | null;
   introduction: string | null;
   introductionEn: string | null;
+  introductionSv?: string | null;
   name: string;
   nameEn: string | null;
+  nameSv?: string | null;
   description: string;
   descriptionEn: string | null;
+  descriptionSv?: string | null;
   createdAt: Date;
   updatedAt: Date;
 }

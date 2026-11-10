@@ -31,6 +31,24 @@ export const HEART_RATE_ZONES_SEO: Record<
       "heart rate by age",
     ],
   },
+  sv: {
+    title: "Beräkna dina pulszoner för träning",
+    description:
+      "Räkna ut dina pulszoner med en enkel formel eller Karvonens formel. Se pulstabellen för olika åldrar och lär dig använda zonerna i din konditionsträning.",
+    keywords: [
+      "beräkna pulszoner",
+      "målpuls",
+      "maxpuls",
+      "pulszoner",
+      "VO2-max",
+      "anaerob zon",
+      "aerob zon",
+      "fettförbränningszon",
+      "Karvonens formel",
+      "pulsbaserad träning",
+      "puls efter ålder",
+    ],
+  },
   es: {
     title: "Descubre tus zonas de frecuencia cardíaca ideales para un entrenamiento óptimo",
     description:

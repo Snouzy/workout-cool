@@ -14,10 +14,14 @@ export function getI18nField<T extends Record<string, any>>(
 ): string {
   if (!obj) return defaultValue;
   
-  const suffix = getLocaleSuffix(locale);
+  const suffix = getLocaleSuffix(locale, fieldName);
   const fieldKey = suffix ? `${fieldName}${suffix}` : fieldName;
   
-  return (obj[fieldKey] as string) || defaultValue;
+  const value = obj[fieldKey];
+  if (locale === "sv") {
+    return value || obj[`${fieldName}En`] || obj[fieldName] || defaultValue;
+  }
+  return value || defaultValue;
 }
 
 /**

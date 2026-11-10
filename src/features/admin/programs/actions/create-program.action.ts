@@ -12,12 +12,14 @@ interface CreateProgramData {
   // Basic info
   title: string;
   titleEn: string;
+  titleSv?: string;
   titleEs: string;
   titlePt: string;
   titleRu: string;
   titleZhCn: string;
   description: string;
   descriptionEn: string;
+  descriptionSv?: string;
   descriptionEs: string;
   descriptionPt: string;
   descriptionRu: string;
@@ -82,12 +84,14 @@ export async function createProgram(data: CreateProgramData) {
       slugZhCn,
       title: data.title,
       titleEn: data.titleEn,
+      titleSv: data.titleSv?.trim() || null,
       titleEs: data.titleEs,
       titlePt: data.titlePt,
       titleRu: data.titleRu,
       titleZhCn: data.titleZhCn,
       description: data.description,
       descriptionEn: data.descriptionEn,
+      descriptionSv: data.descriptionSv?.trim() || null,
       descriptionEs: data.descriptionEs,
       descriptionPt: data.descriptionPt,
       descriptionRu: data.descriptionRu,

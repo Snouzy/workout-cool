@@ -19,6 +19,24 @@ export const heartRateZonesTranslations = {
       medical_warning_title: "Important Medical Warning"
     }
   },
+  sv: {
+    meta: {
+      title: "Beräkna dina pulszoner och din målpuls",
+      description: "Räkna ut dina pulszoner med en enkel formel eller Karvonens formel. Se pulstabellen för olika åldrar och lär dig använda zonerna i din konditionsträning.",
+      keywords: "pulszoner, målpuls, maxpuls, träningszoner, VO2-max, anaerob zon, aerob zon, fettförbränningszon, Karvonens formel, pulsträning, puls efter ålder"
+    },
+    page_title: "Beräkna dina pulszoner",
+    page_subtitle: "Lär känna dina pulszoner och anpassa träningen för att förbättra prestationen, öka fettförbränningen och få bättre kondition.",
+    seo_content: {
+      intro_title: "Guide till pulsbaserad träning",
+      intro_text: "Pulszonerna hjälper dig att välja träningsintensitet utifrån ditt mål. Du kan använda dem för att planera pass för exempelvis viktnedgång, bättre uthållighet eller ökad prestationsförmåga.",
+      age_chart_title: "Pulstabell efter ålder",
+      zones_detail_title: "Så fungerar de fem pulszonerna",
+      expert_tips_title: "Experttips för din träning",
+      faq_title: "Vanliga frågor om pulszoner",
+      medical_warning_title: "Viktig medicinsk information"
+    }
+  },
   es: {
     meta: {
       title: "Calculadora de Zonas de Frecuencia Cardíaca - FC Máxima y Zonas de Entrenamiento",

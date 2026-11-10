@@ -4,7 +4,7 @@ import React from "react";
 
 import { getServerUrl } from "@/shared/lib/server-url";
 import { SiteConfig } from "@/shared/config/site-config";
-import { getLocalizedMetadata } from "@/shared/config/localized-metadata";
+import { getDefaultOgImagePath, getLocalizedMetadata } from "@/shared/config/localized-metadata";
 
 export interface StructuredDataProps {
   type: "WebSite" | "WebApplication" | "Organization" | "SoftwareApplication" | "Article" | "Course" | "VideoObject" | "Calculator";
@@ -76,18 +76,7 @@ export function generateStructuredData({
     url: url || baseUrl,
     name: title || localizedData.title,
     description: description || localizedData.description,
-    inLanguage:
-      locale === "en"
-        ? "en-US"
-        : locale === "es"
-          ? "es-ES"
-          : locale === "pt"
-            ? "pt-PT"
-            : locale === "ru"
-              ? "ru-RU"
-              : locale === "zh-CN"
-                ? "zh-CN"
-                : "fr-FR",
+    inLanguage: localizedData.languageTag,
     publisher: {
       "@type": "Organization",
       name: SiteConfig.company.name,
@@ -158,13 +147,15 @@ export function generateStructuredData({
                     ]
                   : locale === "zh-CN"
                     ? ["个性化锻炼计划构建器", "全面的运动数据库", "进度跟踪", "肌肉群目标定位", "基于设备的筛选"]
-                    : [
-                        "Créateur d'entraînement personnalisé",
-                        "Base de données d'exercices complète",
-                        "Suivi des progrès",
-                        "Ciblage des groupes musculaires",
-                        "Filtrage par équipement",
-                      ],
+                    : locale === "sv"
+                      ? ["Skapa egna träningspass", "Övningsbank", "Uppföljning av framsteg", "Val av muskelgrupper", "Filtrering efter utrustning"]
+                      : [
+                          "Créateur d'entraînement personnalisé",
+                          "Base de données d'exercices complète",
+                          "Suivi des progrès",
+                          "Ciblage des groupes musculaires",
+                          "Filtrage par équipement",
+                        ],
       };
 
     case "Organization":
@@ -215,8 +206,10 @@ export function generateStructuredData({
                   ? "Последнее обновление включает улучшенную базу данных упражнений и лучший пользовательский опыт"
                   : locale === "zh-CN"
                     ? "最新更新包括改进的运动数据库和更好的用户体验"
-                    : "La dernière mise à jour inclut une base de données d'exercices améliorée et une meilleure expérience utilisateur",
-        screenshot: image || `${baseUrl}/images/default-og-image_${locale}.jpg`,
+                    : locale === "sv"
+                      ? "Den senaste uppdateringen förbättrar övningsbanken och gör appen enklare att använda."
+                      : "La dernière mise à jour inclut une base de données d'exercices améliorée et une meilleure expérience utilisateur",
+        screenshot: image || `${baseUrl}${getDefaultOgImagePath(locale)}`,
         aggregateRating: {
           "@type": "AggregateRating",
           ratingValue: "4.8",
@@ -247,7 +240,7 @@ export function generateStructuredData({
         },
         datePublished: datePublished || new Date().toISOString(),
         dateModified: dateModified || new Date().toISOString(),
-        image: image || `${baseUrl}/images/default-og-image_${locale}.jpg`,
+        image: image || `${baseUrl}${getDefaultOgImagePath(locale)}`,
         mainEntityOfPage: {
           "@type": "WebPage",
           "@id": url,
@@ -266,7 +259,7 @@ export function generateStructuredData({
         name: title || baseStructuredData.name,
         description: description || baseStructuredData.description,
         url: url || baseUrl,
-        image: image || `${baseUrl}/images/default-og-image_${locale === "zh-CN" ? "zh" : locale}.jpg`,
+        image: image || `${baseUrl}${getDefaultOgImagePath(locale)}`,
         provider: {
           "@type": "Organization",
           name: SiteConfig.company.name,
@@ -284,7 +277,9 @@ export function generateStructuredData({
                   ? "Фитнес и техники тренировок"
                   : locale === "zh-CN"
                     ? "健身和锻炼技巧"
-                    : "Techniques de fitness et d'entraînement",
+                    : locale === "sv"
+                      ? "Träning och träningsteknik"
+                      : "Techniques de fitness et d'entraînement",
         courseCode: courseData.id,
         hasCourseInstance: {
           "@type": "CourseInstance",
@@ -318,18 +313,7 @@ export function generateStructuredData({
           category: courseData.isPremium ? "Premium" : "Free",
         },
         keywords: [courseData.category, difficultyLevel, "fitness", "workout", "training", ...courseData.equipment].join(", "),
-        inLanguage:
-          locale === "en"
-            ? "en-US"
-            : locale === "es"
-              ? "es-ES"
-              : locale === "pt"
-                ? "pt-PT"
-                : locale === "ru"
-                  ? "ru-RU"
-                  : locale === "zh-CN"
-                    ? "zh-CN"
-                    : "fr-FR",
+        inLanguage: localizedData.languageTag,
         isAccessibleForFree: !courseData.isPremium,
         syllabusSections: [
           {
@@ -345,7 +329,9 @@ export function generateStructuredData({
                       ? `${courseData.totalSessions} тренировочных сессий`
                       : locale === "zh-CN"
                         ? `${courseData.totalSessions} 训练课程`
-                        : `${courseData.totalSessions} séances d'entraînement`,
+                        : locale === "sv"
+                          ? `${courseData.totalSessions} träningspass`
+                          : `${courseData.totalSessions} séances d'entraînement`,
             description:
               locale === "en"
                 ? `Complete ${courseData.durationWeeks}-week program with ${courseData.sessionsPerWeek} sessions per week`
@@ -357,7 +343,9 @@ export function generateStructuredData({
                       ? `Полная программа на ${courseData.durationWeeks} недель с ${courseData.sessionsPerWeek} сессиями в неделю`
                       : locale === "zh-CN"
                         ? `${courseData.durationWeeks}周完整计划，每周${courseData.sessionsPerWeek}次训练`
-                        : `Programme complet de ${courseData.durationWeeks} semaines avec ${courseData.sessionsPerWeek} séances par semaine`,
+                        : locale === "sv"
+                          ? `Program på ${courseData.durationWeeks} veckor med ${courseData.sessionsPerWeek} pass i veckan`
+                          : `Programme complet de ${courseData.durationWeeks} semaines avec ${courseData.sessionsPerWeek} séances par semaine`,
           },
         ],
       };
@@ -403,23 +391,14 @@ export function generateStructuredData({
                   ? "тренировочная сессия"
                   : locale === "zh-CN"
                     ? "训练课程"
-                    : "séance d'entraînement",
+                    : locale === "sv"
+                      ? "träningspass"
+                      : "séance d'entraînement",
           "fitness",
           "exercise",
           "training",
         ].join(", "),
-        inLanguage:
-          locale === "en"
-            ? "en-US"
-            : locale === "es"
-              ? "es-ES"
-              : locale === "pt"
-                ? "pt-PT"
-                : locale === "ru"
-                  ? "ru-RU"
-                  : locale === "zh-CN"
-                    ? "zh-CN"
-                    : "fr-FR",
+        inLanguage: localizedData.languageTag,
         embedUrl: url,
         interactionStatistic: {
           "@type": "InteractionCounter",
@@ -433,6 +412,7 @@ export function generateStructuredData({
 
       const calculatorKeywords = {
         calorie: {
+          sv: ["kalorikalkylator", "energibehov", "basalomsättning"],
           en: ["calorie calculator", "TDEE calculator", "BMR calculator", "daily calorie needs", "weight loss calculator", "Cal mascot"],
           fr: ["calculateur calories", "calculateur TDEE", "calculateur BMR", "besoins caloriques", "perte de poids", "Cal mascotte"],
           es: ["calculadora calorías", "calculadora TDEE", "calculadora BMR", "necesidades calóricas", "pérdida peso", "Cal mascota"],
@@ -441,6 +421,7 @@ export function generateStructuredData({
           "zh-CN": ["卡路里计算器", "TDEE计算器", "BMR计算器", "每日卡路里需求", "减重计算器", "Cal吉祥物"],
         },
         "one-rep-max": {
+          sv: ["beräkna 1RM", "enrepetitionsmaximum"],
           en: ["one rep max", "one rep max calculator", "one rep max formula", "one rep max calculation", "one rep max calculator"],
           fr: ["one rep max", "calculateur one rep max", "formule one rep max", "calcul one rep max", "calculateur one rep max"],
           es: ["one rep max", "calculadora one rep max", "fórmula one rep max", "calculo one rep max", "calculadora one rep max"],
@@ -449,6 +430,7 @@ export function generateStructuredData({
           "zh-CN": ["一次最大重复次数", "一次最大重复次数计算器", "一次最大重复次数公式", "一次最大重复次数计算", "一次最大重复次数计算器"],
         },
         "rest-timer": {
+          sv: ["vilotimer", "vila mellan set"],
           en: ["rest timer", "rest timer calculator", "rest timer formula", "rest timer calculation", "rest timer calculator"],
           fr: [
             "timer de repos",
@@ -481,6 +463,7 @@ export function generateStructuredData({
           "zh-CN": ["休息计时器", "休息计时器计算器", "休息计时器公式", "休息计时器计算", "休息计时器计算器"],
         },
         macro: {
+          sv: ["makrokalkylator", "makronäringsämnen"],
           en: ["macro calculator", "macros calculator", "macros formula", "macros calculation", "macros calculator"],
           fr: ["calculateur macros", "calculateur macros", "formule macros", "calcul macros", "calculateur macros"],
           es: ["calculadora macros", "calculadora macros", "fórmula macros", "calculo macros", "calculadora macros"],
@@ -489,6 +472,7 @@ export function generateStructuredData({
           "zh-CN": ["宏计算器", "宏计算器", "宏公式", "宏计算", "宏计算器"],
         },
         bmi: {
+          sv: ["BMI-kalkylator", "beräkna BMI"],
           en: ["bmi calculator", "bmi formula", "bmi calculation", "bmi calculator"],
           fr: ["calculateur bmi", "formule bmi", "calcul bmi", "calculateur bmi"],
           es: ["calculadora bmi", "fórmula bmi", "calculo bmi", "calculadora bmi"],
@@ -497,6 +481,7 @@ export function generateStructuredData({
           "zh-CN": ["BMI计算器", "BMI公式", "BMI计算", "BMI计算器"],
         },
         "heart-rate": {
+          sv: ["pulskalkylator", "beräkna maxpuls"],
           en: ["heart rate calculator", "heart rate formula", "heart rate calculation", "heart rate calculator"],
           fr: [
             "calculateur fréquence cardiaque",
@@ -520,6 +505,7 @@ export function generateStructuredData({
           "zh-CN": ["心率计算器", "心率公式", "心率计算", "心率计算器"],
         },
         "heart-rate-zones": {
+          sv: ["beräkna pulszoner", "målpuls", "Karvonens formel"],
           en: ["heart rate zones calculator", "target heart rate", "training zones", "Karvonen formula", "VO2 max zone"],
           fr: [
             "calculateur zones fréquence cardiaque",
@@ -589,18 +575,7 @@ export function generateStructuredData({
         isAccessibleForFree: true,
         featureList: calculatorData.inputFields.concat(calculatorData.outputFields),
         keywords: currentKeywords.join(", "),
-        inLanguage:
-          locale === "en"
-            ? "en-US"
-            : locale === "es"
-              ? "es-ES"
-              : locale === "pt"
-                ? "pt-PT"
-                : locale === "ru"
-                  ? "ru-RU"
-                  : locale === "zh-CN"
-                    ? "zh-CN"
-                    : "fr-FR",
+        inLanguage: localizedData.languageTag,
         image: image || `${baseUrl}/images/calculator-og.jpg`,
         aggregateRating: {
           "@type": "AggregateRating",
@@ -682,7 +657,9 @@ export function generateStructuredData({
                     ? "Calcular Calorias"
                     : locale === "ru"
                       ? "Рассчитать Калории"
-                      : "计算卡路里",
+                      : locale === "sv"
+                        ? "Beräkna"
+                        : "计算卡路里",
           target: url || baseUrl,
         },
         sameAs: calculatorData.relatedCalculators?.map((calc) => `${baseUrl}/tools/${calc}`) || [],

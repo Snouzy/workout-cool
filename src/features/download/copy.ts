@@ -36,6 +36,19 @@ export const downloadCopy: Record<Locale, DownloadCopy> = {
     webHint: "Or train right here, in your browser:",
     webLink: "open the web version",
   },
+  sv: {
+    metaTitle: "Ladda ner Workout.cool för iPhone och Android",
+    metaDescription:
+      "Hämta den kostnadsfria träningsappen med öppen källkod från App Store eller Google Play. Välj utrustning och muskelgrupper, få ett träningspass och logga varje set.",
+    title: "Träna med Workout.cool på mobilen",
+    subtitle: "Välj utrustning och muskelgrupper och börja träna. Appen är gratis att ladda ner och har öppen källkod.",
+    appStore: "Hämta i App Store",
+    googlePlay: "Ladda ned på Google Play",
+    qrTitle: "Sitter du vid datorn?",
+    qrHint: "Skanna QR-koden med mobilkameran för att öppna rätt appbutik.",
+    webHint: "Du kan också träna direkt i webbläsaren.",
+    webLink: "Öppna webbversionen",
+  },
   fr: {
     metaTitle: "Télécharger Workout.cool sur iPhone et Android",
     metaDescription:

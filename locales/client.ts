@@ -4,8 +4,7 @@ import { createI18nClient } from "next-international/client";
 
 import type { TypedLocales } from "./types";
 
-// NOTE: Also update middleware.ts to support locale
-export const languages = ["en", "fr", "es", "zh-CN", "ru", "pt"];
+export { locales as languages } from "./types";
 
 const clientLocales = {
     en: async () => {
@@ -27,6 +26,10 @@ const clientLocales = {
     ru: async () => {
       await new Promise((resolve) => setTimeout(resolve, 100));
       return import("./ru");
+    },
+    sv: async () => {
+      await new Promise((resolve) => setTimeout(resolve, 100));
+      return import("./sv");
     },
     pt: async () => {
       await new Promise((resolve) => setTimeout(resolve, 100));

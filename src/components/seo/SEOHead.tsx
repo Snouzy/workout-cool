@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 import { generateStructuredData, StructuredDataScript } from "@/shared/lib/structured-data";
 import { getServerUrl } from "@/shared/lib/server-url";
 import { SiteConfig } from "@/shared/config/site-config";
+import { getDefaultOgImagePath, getLocalizedMetadata } from "@/shared/config/localized-metadata";
 
 
 interface SEOHeadProps {
@@ -44,10 +45,11 @@ export function generateSEOMetadata({
   noIndex = false,
 }: SEOHeadProps): Metadata {
   const baseUrl = getServerUrl();
+  const ogLocale = getLocalizedMetadata(locale).languageTag.replace("-", "_");
   const fullTitle = title ? `${title}` : SiteConfig.title;
   const finalDescription = description || SiteConfig.description;
   const finalCanonical = canonical || baseUrl;
-  const finalOgImage = ogImage || `${baseUrl}/images/default-og-image_${locale === "zh-CN" ? "zh" : locale}.jpg`;
+  const finalOgImage = ogImage || `${baseUrl}${getDefaultOgImagePath(locale)}`;
   const allKeywords = [...SiteConfig.keywords, ...keywords];
 
   return {
@@ -78,6 +80,7 @@ export function generateSEOMetadata({
         "es-ES": `${baseUrl}/es`,
         "pt-PT": `${baseUrl}/pt`,
         "ru-RU": `${baseUrl}/ru`,
+        "sv": `${baseUrl}/sv`,
         "zh-CN": `${baseUrl}/zh-CN`,
         "x-default": baseUrl,
       },
@@ -87,18 +90,7 @@ export function generateSEOMetadata({
       description: finalDescription,
       url: finalCanonical,
       siteName: SiteConfig.title,
-      locale:
-        locale === "en"
-          ? "en_US"
-          : locale === "es"
-            ? "es_ES"
-            : locale === "pt"
-              ? "pt_PT"
-              : locale === "ru"
-                ? "ru_RU"
-                : locale === "zh-CN"
-                  ? "zh_CN"
-                  : "fr_FR",
+      locale: ogLocale,
       alternateLocale: [
         "fr_FR",
         "fr_CA",
@@ -120,21 +112,8 @@ export function generateSEOMetadata({
         "zh_CN",
         "zh_TW",
         "zh_HK",
-      ].filter(
-        (alt) =>
-          alt !==
-          (locale === "en"
-            ? "en_US"
-            : locale === "es"
-              ? "es_ES"
-              : locale === "pt"
-                ? "pt_PT"
-                : locale === "ru"
-                  ? "ru_RU"
-                  : locale === "zh-CN"
-                    ? "zh_CN"
-                    : "fr_FR"),
-      ),
+        "sv_SE",
+      ].filter((alt) => alt !== ogLocale),
       images: [
         {
           url: finalOgImage,
@@ -181,7 +160,7 @@ export function SEOScripts({
 }: SEOScriptsProps) {
   const baseUrl = getServerUrl();
   const finalCanonical = canonical || baseUrl;
-  const finalOgImage = ogImage || `${baseUrl}/images/default-og-image_${locale === "zh-CN" ? "zh" : locale}.jpg`;
+  const finalOgImage = ogImage || `${baseUrl}${getDefaultOgImagePath(locale)}`;
 
   let structuredDataObj;
   if (structuredData) {
@@ -207,6 +186,7 @@ export function SEOScripts({
       <link href={`${baseUrl}/fr${hreflangPath}`} hrefLang="fr" rel="alternate" />
       <link href={`${baseUrl}/pt${hreflangPath}`} hrefLang="pt" rel="alternate" />
       <link href={`${baseUrl}/ru${hreflangPath}`} hrefLang="ru" rel="alternate" />
+      <link href={`${baseUrl}/sv${hreflangPath}`} hrefLang="sv" rel="alternate" />
       <link href={`${baseUrl}/zh-CN${hreflangPath}`} hrefLang="zh-CN" rel="alternate" />
       <link href={`${baseUrl}/en${hreflangPath}`} hrefLang="x-default" rel="alternate" />
     </>

@@ -10,7 +10,7 @@ import { cn } from "@/shared/lib/utils";
 import { generateStructuredData, StructuredDataScript } from "@/shared/lib/structured-data";
 import { getServerUrl } from "@/shared/lib/server-url";
 import { SiteConfig } from "@/shared/config/site-config";
-import { getLocalizedMetadata } from "@/shared/config/localized-metadata";
+import { getDefaultOgImagePath, getLocalizedMetadata } from "@/shared/config/localized-metadata";
 import { WorkoutSessionsSynchronizer } from "@/features/workout-session/ui/workout-sessions-synchronizer";
 import { FavoriteExercisesSynchronizer } from "@/features/workout-builder/model/favorite-exercises-synchronizer";
 import { ThemeSynchronizer } from "@/features/theme/ui/ThemeSynchronizer";
@@ -27,6 +27,7 @@ import "@/shared/styles/globals.css";
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
   const localizedData = getLocalizedMetadata(locale);
+  const ogLocale = localizedData.languageTag.replace("-", "_");
 
   return {
     title: {
@@ -59,18 +60,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       description: localizedData.description,
       url: getServerUrl(),
       siteName: SiteConfig.title,
-      locale:
-        locale === "en"
-          ? "en_US"
-          : locale === "es"
-            ? "es_ES"
-            : locale === "pt"
-              ? "pt_PT"
-              : locale === "ru"
-                ? "ru_RU"
-                : locale === "zh-CN"
-                  ? "zh_CN"
-                  : "fr_FR",
+      locale: ogLocale,
       alternateLocale: [
         "fr_FR",
         "fr_CA",
@@ -92,21 +82,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
         "zh_CN",
         "zh_TW",
         "zh_HK",
-      ].filter(
-        (alt) =>
-          alt !==
-          (locale === "en"
-            ? "en_US"
-            : locale === "es"
-              ? "es_ES"
-              : locale === "pt"
-                ? "pt_PT"
-                : locale === "ru"
-                  ? "ru_RU"
-                  : locale === "zh-CN"
-                    ? "zh_CN"
-                    : "fr_FR"),
-      ),
+        "sv_SE",
+      ].filter((alt) => alt !== ogLocale),
       images: [
         {
           url: `${getServerUrl()}/images/default-og-image_fr.jpg`,
@@ -155,7 +132,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       description: localizedData.description,
       images: [
         {
-          url: `${getServerUrl()}/images/default-og-image_${locale === "zh-CN" ? "zh" : locale}.jpg`,
+          url: `${getServerUrl()}${getDefaultOgImagePath(locale)}`,
           width: SiteConfig.seo.ogImage.width,
           height: SiteConfig.seo.ogImage.height,
           alt: localizedData.ogAlt,
@@ -170,6 +147,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
         "es-ES": "https://www.workout.cool/es",
         "pt-PT": "https://www.workout.cool/pt",
         "ru-RU": "https://www.workout.cool/ru",
+        "sv": "https://www.workout.cool/sv",
         "zh-CN": "https://www.workout.cool/zh-CN",
         "x-default": "https://www.workout.cool",
       },
@@ -268,6 +246,7 @@ export default async function RootLayout({ params, children }: RootLayoutProps) 
           <link href="https://www.workout.cool/es" hrefLang="es" rel="alternate" />
           <link href="https://www.workout.cool/pt" hrefLang="pt" rel="alternate" />
           <link href="https://www.workout.cool/ru" hrefLang="ru" rel="alternate" />
+          <link href="https://www.workout.cool/sv" hrefLang="sv" rel="alternate" />
           <link href="https://www.workout.cool/zh-CN" hrefLang="zh-CN" rel="alternate" />
           <link href="https://www.workout.cool" hrefLang="x-default" rel="alternate" />
 

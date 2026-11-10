@@ -10,6 +10,7 @@ import { ExerciseVideoModal } from "./exercise-video-modal";
 import type { ExerciseWithAttributes } from "../types";
 
 import useBoolean from "@/shared/hooks/useBoolean";
+import { getExerciseText } from "@/entities/exercise/shared/localized-text";
 import { Button } from "@/components/ui/button";
 
 const MUSCLE_CONFIGS: Record<string, string> = {
@@ -27,7 +28,7 @@ const MUSCLE_CONFIGS: Record<string, string> = {
  */
 export function ExerciseListItemOverlay({ exercise, muscle }: { exercise: ExerciseWithAttributes; muscle: string }) {
   const locale = useCurrentLocale();
-  const exerciseName = locale === "fr" ? exercise.name : exercise.nameEn;
+  const exerciseName = getExerciseText(exercise, "name", locale);
   const muscleColor = MUSCLE_CONFIGS[muscle] || "bg-gray-500";
 
   return (
@@ -96,7 +97,7 @@ export const ExerciseListItem = React.memo(function ExerciseListItem({
   // When this item is being dragged, it becomes a ghost placeholder
   const isGhost = isDragging;
 
-  const exerciseName = locale === "fr" ? exercise.name : exercise.nameEn;
+  const exerciseName = getExerciseText(exercise, "name", locale);
   const muscleColor = MUSCLE_CONFIGS[muscle] || "bg-gray-500";
   const muscleTitle = t(("workout_builder.muscles." + muscle.toLowerCase()) as keyof typeof t);
 

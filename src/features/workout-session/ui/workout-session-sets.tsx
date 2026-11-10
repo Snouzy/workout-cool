@@ -18,6 +18,7 @@ import { useSyncWorkoutSessions } from "@/features/workout-session/model/use-syn
 import { ExerciseVideoModal } from "@/features/workout-builder/ui/exercise-video-modal";
 import { useSyncFavoriteExercises } from "@/features/workout-builder/hooks/use-sync-favorite-exercises";
 import { env } from "@/env";
+import { getExerciseText } from "@/entities/exercise/shared/localized-text";
 import { PremiumUpsellAlert } from "@/components/ui/premium-upsell-alert";
 import { Button } from "@/components/ui/button";
 import { HorizontalBottomBanner } from "@/components/ads";
@@ -150,7 +151,7 @@ export function WorkoutSessionSets({
       <ol className="relative border-l-2 ml-2 border-slate-200 dark:border-slate-700">
         {session.exercises.map((ex, idx) => {
           const allSetsCompleted = ex.sets.length > 0 && ex.sets.every((set) => set.completed);
-          const exerciseName = locale === "fr" ? ex.name : ex.nameEn;
+          const exerciseName = getExerciseText(ex, "name", locale);
 
           const details = exerciseDetailsMap[ex.id];
           return (

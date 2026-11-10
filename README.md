@@ -232,7 +232,7 @@ Your CSV should have these columns:
 id,name,name_en,description,description_en,full_video_url,full_video_image_url,introduction,introduction_en,slug,slug_en,attribute_name,attribute_value
 ```
 
-You can use the provided example.
+You can also provide `name_sv`, `description_sv`, and `introduction_sv` for Swedish. Leaving a Swedish field empty or omitting its column keeps any existing Swedish text when reimporting. See `data/sample-exercises.csv` for a complete example.
 
 ### Import Commands
 
@@ -255,6 +255,17 @@ id,name,name_en,description,description_en,full_video_url,full_video_image_url,i
 Want unlimited exercise for local development ?
 
 Just ask chatGPT with the prompt from `./scripts/import-exercises-with-attributes.prompt.md`
+
+### Swedish program and exercise text
+
+The migrations add Swedish titles and summaries to matching rows for the five publicly listed programs, their weeks and their sessions. They also fill in the three bundled sample exercises and two additional exercise names. The program editor accepts Swedish text for your own content. A missing Swedish field falls back to English, then French.
+
+If you import the original content **after** running the migrations, you can apply the backfills again. They only fill missing Swedish fields on matching records and preserve existing translations.
+
+```bash
+pnpm exec prisma db execute --schema prisma/schema.prisma --file prisma/migrations/20261110000000_swedish_program_content/migration.sql
+pnpm exec prisma db execute --schema prisma/schema.prisma --file prisma/migrations/20261110000100_swedish_exercises/migration.sql
+```
 
 ## Project Architecture
 

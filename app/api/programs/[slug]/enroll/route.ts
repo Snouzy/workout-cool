@@ -2,6 +2,18 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { prisma } from "@/shared/lib/prisma";
 import { getMobileCompatibleSession } from "@/shared/api/mobile-auth";
+import { getProgramSlugFilter } from "@/features/programs/lib/program-slug-filter";
+
+async function findEnrollmentProgram(slug: string) {
+  const select = { id: true, participantCount: true };
+  const program = await prisma.program.findUnique({ where: { slug }, select });
+  if (program) return program;
+
+  return prisma.program.findFirst({
+    where: { ...getProgramSlugFilter(slug), isActive: true, visibility: "PUBLISHED" },
+    select,
+  });
+}
 
 export async function POST(req: NextRequest, { params }: { params: Promise<{ slug: string }> }) {
   try {
@@ -15,10 +27,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ slu
 
     const userId = session.user.id;
 
-    const program = await prisma.program.findUnique({
-      where: { slug },
-      select: { id: true, participantCount: true },
-    });
+    const program = await findEnrollmentProgram(slug);
 
     if (!program) {
       return NextResponse.json({ error: "Program not found", code: "NOT_FOUND" }, { status: 404 });
@@ -76,10 +85,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ slug
 
     const userId = session.user.id;
 
-    const program = await prisma.program.findUnique({
-      where: { slug },
-      select: { id: true },
-    });
+    const program = await findEnrollmentProgram(slug);
 
     if (!program) {
       return NextResponse.json({ error: "Program not found", code: "NOT_FOUND" }, { status: 404 });

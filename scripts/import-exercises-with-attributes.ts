@@ -10,19 +10,22 @@ interface ExerciseAttributeCSVRow {
   id: string;
   name: string;
   name_en: string;
+  name_sv?: string;
   description: string;
   description_en: string;
+  description_sv?: string;
   full_video_url: string;
   full_video_image_url: string;
   introduction: string;
   introduction_en: string;
+  introduction_sv?: string;
   slug: string;
   slug_en: string;
   attribute_name: string;
   attribute_value: string;
 }
 
-function cleanValue(value: string): string | null {
+function cleanValue(value?: string): string | null {
   if (!value || value === "NULL" || value.trim() === "") return null;
   return value.trim();
 }
@@ -38,12 +41,15 @@ function groupExercisesByOriginalId(rows: ExerciseAttributeCSVRow[]) {
         originalId: exerciseId,
         name: row.name,
         nameEn: cleanValue(row.name_en),
+        nameSv: cleanValue(row.name_sv) ?? undefined,
         description: cleanValue(row.description),
         descriptionEn: cleanValue(row.description_en),
+        descriptionSv: cleanValue(row.description_sv) ?? undefined,
         fullVideoUrl: cleanValue(row.full_video_url),
         fullVideoImageUrl: cleanValue(row.full_video_image_url),
         introduction: cleanValue(row.introduction),
         introductionEn: cleanValue(row.introduction_en),
+        introductionSv: cleanValue(row.introduction_sv) ?? undefined,
         slug: cleanValue(row.slug),
         slugEn: cleanValue(row.slug_en),
         attributes: [],
@@ -134,23 +140,29 @@ async function importExercisesFromCSV(filePath: string) {
                 update: {
                   name: exercise.name,
                   nameEn: exercise.nameEn,
+                  nameSv: exercise.nameSv,
                   description: exercise.description,
                   descriptionEn: exercise.descriptionEn,
+                  descriptionSv: exercise.descriptionSv,
                   fullVideoUrl: exercise.fullVideoUrl,
                   fullVideoImageUrl: exercise.fullVideoImageUrl,
                   introduction: exercise.introduction,
                   introductionEn: exercise.introductionEn,
+                  introductionSv: exercise.introductionSv,
                   slugEn: exercise.slugEn,
                 },
                 create: {
                   name: exercise.name,
                   nameEn: exercise.nameEn,
+                  nameSv: exercise.nameSv,
                   description: exercise.description,
                   descriptionEn: exercise.descriptionEn,
+                  descriptionSv: exercise.descriptionSv,
                   fullVideoUrl: exercise.fullVideoUrl,
                   fullVideoImageUrl: exercise.fullVideoImageUrl,
                   introduction: exercise.introduction,
                   introductionEn: exercise.introductionEn,
+                  introductionSv: exercise.introductionSv,
                   slug: exercise.slug || `exercise-${exercise.originalId}`,
                   slugEn: exercise.slugEn,
                 },

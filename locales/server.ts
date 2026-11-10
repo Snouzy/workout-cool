@@ -9,6 +9,7 @@ const serverLocales = {
   "zh-CN": () => import("./zh-CN"),
   ru: () => import("./ru"),
   pt: () => import("./pt"),
+  sv: () => import("./sv"),
 };
 
 // TypedLocales hands next-international a pre-flattened locale type: see locales/types.ts.

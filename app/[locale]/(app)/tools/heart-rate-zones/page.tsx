@@ -117,7 +117,7 @@ export default async function HeartRateZonesPage({ params }: { params: Promise<{
             datePublished: "2024-01-01",
             dateModified: new Date().toISOString().split("T")[0],
             description: seoContent.description,
-            screenshot: `${getServerUrl()}/images/screenshots/heart-rate-zones/${locale}.jpg`,
+            screenshot: `${getServerUrl()}/images/screenshots/heart-rate-zones/${locale === "sv" ? "en" : locale}.jpg`,
             featureList: [
               "Heart rate zones calculation",
               "5 personalized training zones",

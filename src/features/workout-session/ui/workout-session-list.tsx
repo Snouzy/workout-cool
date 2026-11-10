@@ -8,6 +8,7 @@ import { useWorkoutFeedback } from "@/shared/hooks/use-workout-feedback";
 import { useWorkoutSessions } from "@/features/workout-session/model/use-workout-sessions";
 import { useWorkoutBuilderStore } from "@/features/workout-builder/model/workout-builder.store";
 import { getExerciseAttributesValueOf, getPrimaryMuscle, getAttributeValue } from "@/entities/exercise/shared/muscles";
+import { getExerciseText } from "@/entities/exercise/shared/localized-text";
 import { Link } from "@/components/ui/link";
 import { Button } from "@/components/ui/button";
 
@@ -150,7 +151,7 @@ export function WorkoutSessionList() {
               </div>
               <div className="flex flex-wrap gap-2 flex-1">
                 {session.exercises?.map((ex, idx) => {
-                  const exerciseName = locale === "fr" ? ex.name : ex.nameEn;
+                  const exerciseName = getExerciseText(ex, "name", locale);
                   return (
                     <span
                       className={`inline-block border rounded-full px-1 text-xs font-semibold ${BADGE_COLORS[idx % BADGE_COLORS.length]}`}

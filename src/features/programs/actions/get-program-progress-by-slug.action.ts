@@ -4,6 +4,7 @@ import { headers } from "next/headers";
 import { ProgramVisibility } from "@prisma/client";
 
 import { prisma } from "@/shared/lib/prisma";
+import { getProgramSlugFilter } from "@/features/programs/lib/program-slug-filter";
 import { auth } from "@/features/auth/lib/better-auth";
 
 export async function getProgramProgressBySlug(slug: string) {
@@ -24,7 +25,7 @@ export async function getProgramProgressBySlug(slug: string) {
   // First, find the program by slug
   const program = await prisma.program.findFirst({
     where: {
-      OR: [{ slug }, { slugEn: slug }, { slugEs: slug }, { slugPt: slug }, { slugRu: slug }, { slugZhCn: slug }],
+      ...getProgramSlugFilter(slug),
       visibility: ProgramVisibility.PUBLISHED,
       isActive: true,
     },

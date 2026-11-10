@@ -62,6 +62,7 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
   const currentLocale = useCurrentLocale();
   const isPremium = useIsPremium();
   const programTitle = getProgramTitle(program, currentLocale);
+  const programSlug = getSlugForLocale(program, currentLocale);
   const programDescription = getProgramDescription(program, currentLocale);
   const currentWeekFull = program.weeks.find((w) => w.weekNumber === selectedWeek);
   const currentWeekTitle = currentWeekFull ? getWeekTitle(currentWeekFull, currentLocale) : "";
@@ -137,7 +138,7 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
 
   const handleCTAClick = () => {
     if (isAuthenticated && hasJoinedProgram) {
-      router.push(`/programs/${program.slug}/?tab=sessions`);
+      router.push(`/programs/${programSlug}/?tab=sessions`);
     } else {
       setShowWelcomeModal(true);
     }
@@ -146,7 +147,7 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
   const handleJoinProgram = async () => {
     setShowWelcomeModal(false);
 
-    router.push(`/programs/${program.slug}/?tab=sessions`);
+    router.push(`/programs/${programSlug}/?tab=sessions`);
 
     // if (isAuthenticated && hasJoinedProgram) {
     //   // Navigate to current session if user has already joined
@@ -464,7 +465,7 @@ export function ProgramDetailPage({ program, isAuthenticated }: ProgramDetailPag
                           }`}
                           key={session.id}
                           onClick={() => {
-                            window.location.href = `/${currentLocale}/programs/${program.slug}/session/${sessionSlug}`;
+                            window.location.href = `/${currentLocale}/programs/${programSlug}/session/${sessionSlug}`;
                           }}
                         >
                           {/* Session Number Badge */}

@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import { X } from "lucide-react";
 
 import { updateWeek } from "../actions/update-week.action";
+import { SwedishTranslationFields } from "./swedish-translation-fields";
+
 
 interface EditWeekModalProps {
   week: {
@@ -16,12 +18,14 @@ interface EditWeekModalProps {
     titlePt: string;
     titleRu: string;
     titleZhCn: string;
+    titleSv: string | null;
     description: string;
     descriptionEn: string;
     descriptionEs: string;
     descriptionPt: string;
     descriptionRu: string;
     descriptionZhCn: string;
+    descriptionSv: string | null;
   };
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -37,12 +41,14 @@ export function EditWeekModal({ week, open, onOpenChange }: EditWeekModalProps) 
     titlePt: week.titlePt,
     titleRu: week.titleRu,
     titleZhCn: week.titleZhCn,
+    titleSv: week.titleSv ?? "",
     description: week.description,
     descriptionEn: week.descriptionEn,
     descriptionEs: week.descriptionEs,
     descriptionPt: week.descriptionPt,
     descriptionRu: week.descriptionRu,
     descriptionZhCn: week.descriptionZhCn,
+    descriptionSv: week.descriptionSv ?? "",
   });
   const [isSaving, setIsSaving] = useState(false);
 
@@ -100,6 +106,9 @@ export function EditWeekModal({ week, open, onOpenChange }: EditWeekModalProps) 
               </button>
               <button className={`tab ${activeTab === "zh" ? "tab-active" : ""}`} onClick={() => setActiveTab("zh")} type="button">
                 🇨🇳 ZH
+              </button>
+              <button className={`tab ${activeTab === "sv" ? "tab-active" : ""}`} onClick={() => setActiveTab("sv")} type="button">
+                🇸🇪 SV
               </button>
             </div>
 
@@ -261,6 +270,21 @@ export function EditWeekModal({ week, open, onOpenChange }: EditWeekModalProps) 
                   />
                 </div>
               </div>
+            )}
+
+            {activeTab === "sv" && (
+              <SwedishTranslationFields
+                descriptionInput={{
+                  disabled: isSaving,
+                  value: formData.descriptionSv,
+                  onChange: (e) => setFormData({ ...formData, descriptionSv: e.target.value }),
+                }}
+                titleInput={{
+                  disabled: isSaving,
+                  value: formData.titleSv,
+                  onChange: (e) => setFormData({ ...formData, titleSv: e.target.value }),
+                }}
+              />
             )}
 
             {/* Chinese Fields */}

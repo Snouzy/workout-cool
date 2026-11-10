@@ -28,6 +28,20 @@ export const PEPTIDE_CALCULATOR_SEO: Record<
       "bacteriostatic water calculator",
     ],
   },
+  sv: {
+    title: "Peptidkalkylator för beredning, dos och sprutgradering",
+    description:
+      "Räkna om en dos till milliliter och skalstreck på en U-100-insulinspruta utifrån mängden peptid och mängden bakteriostatiskt vatten.",
+    keywords: [
+      "peptidkalkylator",
+      "dosberäkning",
+      "beredning av peptider",
+      "bakteriostatiskt vatten",
+      "enheter på insulinspruta",
+      "U-100-spruta",
+      "omvandling från mikrogram",
+    ],
+  },
   es: {
     title: "Calculadora de Péptidos — Reconstitución, Dosis y Unidades",
     description:

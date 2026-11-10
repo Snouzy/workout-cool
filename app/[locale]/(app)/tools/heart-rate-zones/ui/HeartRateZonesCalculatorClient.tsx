@@ -3,7 +3,7 @@
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
-import { useI18n } from "locales/client";
+import { useCurrentLocale, useI18n } from "locales/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import "./styles.css";
@@ -38,6 +38,7 @@ interface SEOFriendlyHeartRateCalculatorProps {
 
 export function HeartRateZonesCalculatorClient({ defaultAge = 30, defaultResults }: SEOFriendlyHeartRateCalculatorProps) {
   const t = useI18n();
+  const percent = new Intl.NumberFormat(useCurrentLocale(), { style: "percent" });
   const [results, setResults] = useState<HeartRateResults | null>(defaultResults || null);
 
   const { watch, setValue } = useForm<SimpleHeartRateFormData>({
@@ -224,7 +225,7 @@ export function HeartRateZonesCalculatorClient({ defaultAge = 30, defaultResults
                       />
                     </div>
                     <div className="text-xs text-gray-500 mt-1 text-right">
-                      {Math.round((zone.maxHR / results.maxHeartRate) * 100)}% de FCM
+                      {t("tools.heart-rate-zones.results.max_heart_rate")} × {percent.format(zone.maxHR / results.maxHeartRate)}
                     </div>
                   </div>
                 </div>

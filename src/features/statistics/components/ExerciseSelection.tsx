@@ -3,12 +3,14 @@
 import React, { useState, useCallback } from "react";
 import Image from "next/image";
 import { Search, BarChart3 } from "lucide-react";
+import { useCurrentLocale } from "locales/client";
 import { useQuery } from "@tanstack/react-query";
 import { ExerciseAttributeNameEnum } from "@prisma/client";
 
 import { ExerciseVideoModal } from "@/features/workout-builder/ui/exercise-video-modal";
 import { ExerciseWithAttributes } from "@/entities/exercise/types/exercise.types";
 import { getExerciseAttributesValueOf, getPrimaryMuscle } from "@/entities/exercise/shared/muscles";
+import { getExerciseText } from "@/entities/exercise/shared/localized-text";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Input } from "@/components/ui/input";
@@ -33,6 +35,7 @@ interface ExerciseSelectionProps {
 const MUSCLES = ["CHEST", "BACK", "SHOULDERS", "BICEPS", "TRICEPS", "LEGS", "ABDOMINALS"];
 
 export const ExerciseSelection: React.FC<ExerciseSelectionProps> = ({ open, onOpenChange, onSelectExercise }) => {
+  const locale = useCurrentLocale();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedMuscle, setSelectedMuscle] = useState<string | undefined>();
   const [selectedExercise, setSelectedExercise] = useState<ExerciseWithAttributes | null>(null);
@@ -85,11 +88,11 @@ export const ExerciseSelection: React.FC<ExerciseSelectionProps> = ({ open, onOp
           <div className="flex-1 flex items-center gap-4 cursor-pointer" onClick={() => handleExercisePress(exercise)}>
             {exercise.fullVideoImageUrl && (
               <div className="relative w-16 h-16 rounded-lg overflow-hidden bg-slate-100 dark:bg-slate-700">
-                <Image alt={exercise.name} className="object-cover" fill src={exercise.fullVideoImageUrl} />
+                <Image alt={getExerciseText(exercise, "name", locale)} className="object-cover" fill src={exercise.fullVideoImageUrl} />
               </div>
             )}
             <div className="flex-1">
-              <h3 className="font-medium text-slate-900 dark:text-slate-100 mb-1">{exercise.name}</h3>
+              <h3 className="font-medium text-slate-900 dark:text-slate-100 mb-1">{getExerciseText(exercise, "name", locale)}</h3>
               {primaryMuscle && (
                 <Badge className="text-xs" variant="success">
                   {getExerciseAttributesValueOf(exercise, ExerciseAttributeNameEnum.PRIMARY_MUSCLE)}
@@ -105,7 +108,7 @@ export const ExerciseSelection: React.FC<ExerciseSelectionProps> = ({ open, onOp
         </div>
       );
     },
-    [handleExercisePress, handleSelectForStats],
+    [handleExercisePress, handleSelectForStats, locale],
   );
 
   const renderMuscleFilters = useCallback(

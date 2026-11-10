@@ -53,7 +53,11 @@ export async function GET(request: NextRequest) {
     // Search by exercise name
     if (search) {
       conditions.push({
-        OR: [{ name: { contains: search, mode: "insensitive" } }, { nameEn: { contains: search, mode: "insensitive" } }],
+        OR: [
+          { name: { contains: search, mode: "insensitive" } },
+          { nameEn: { contains: search, mode: "insensitive" } },
+          { nameSv: { contains: search, mode: "insensitive" } },
+        ],
       });
     }
 
@@ -102,6 +106,7 @@ export async function GET(request: NextRequest) {
         id: true,
         name: true,
         nameEn: true,
+        nameSv: true,
         fullVideoUrl: true,
         fullVideoImageUrl: true,
         attributes: {

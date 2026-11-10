@@ -11,12 +11,13 @@ import { WorkoutSessionSets } from "@/features/workout-session/ui/workout-sessio
 import { WorkoutSessionHeader } from "@/features/workout-session/ui/workout-session-header";
 import { useWorkoutSession } from "@/features/workout-session/model/use-workout-session";
 import { SessionAccessGuard } from "@/features/programs/ui/session-access-guard";
-import { getSessionDescription, getSessionTitle, getSessionSlug, getProgramTitle } from "@/features/programs/lib/translations-mapper";
+import { getSessionDescription, getSessionTitle, getSessionSlug, getProgramTitle, getExerciseInstructions } from "@/features/programs/lib/translations-mapper";
 import { startProgramSession } from "@/features/programs/actions/start-program-session.action";
 import { enrollInProgram } from "@/features/programs/actions/enroll-program.action";
 import { completeProgramSession } from "@/features/programs/actions/complete-program-session.action";
 import { ProgramSessionWithExercises } from "@/entities/program-session/types/program-session.types";
 import { ProgramI18nReference } from "@/entities/program/types/program.types";
+import { getExerciseText } from "@/entities/exercise/shared/localized-text";
 import { Button } from "@/components/ui/button";
 import { SessionRichSnippets } from "@/components/seo/session-rich-snippets";
 
@@ -70,8 +71,10 @@ export function ProgramSessionClient({ program, week, session, isAuthenticated, 
         id: ex.exercise.id,
         name: ex.exercise.name,
         nameEn: ex.exercise.nameEn || null,
+        nameSv: ex.exercise.nameSv,
         description: ex.exercise.description || "",
         descriptionEn: ex.exercise.descriptionEn || "",
+        descriptionSv: ex.exercise.descriptionSv,
         fullVideoUrl: ex.exercise.fullVideoUrl || null,
         fullVideoImageUrl: ex.exercise.fullVideoImageUrl || null,
         introduction: null,
@@ -241,7 +244,8 @@ export function ProgramSessionClient({ program, week, session, isAuthenticated, 
                 <h2 className="text-lg font-semibold text-gray-900 dark:text-white">{t("programs.exercises_in_session")}</h2>
                 <div className="grid gap-3">
                   {session.exercises.map((exercise, index) => {
-                    const exerciseName = locale === "fr" ? exercise.exercise.name : exercise.exercise.nameEn;
+                    const exerciseName = getExerciseText(exercise.exercise, "name", locale);
+                    const instructions = getExerciseInstructions(exercise, locale);
                     return (
                       <div className="flex items-center p-4 bg-gray-50 dark:bg-gray-700 rounded-lg" key={exercise.id}>
                         <div className="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-bold mr-4">
@@ -249,6 +253,7 @@ export function ProgramSessionClient({ program, week, session, isAuthenticated, 
                         </div>
                         <div className="flex-1">
                           <h3 className="font-medium text-gray-900 dark:text-white">{exerciseName}</h3>
+                          {instructions && <p className="whitespace-pre-line text-sm text-gray-600 dark:text-gray-400">{instructions}</p>}
                         </div>
                         <div className="text-right">
                           <span className="text-sm text-gray-500 dark:text-gray-400">

@@ -8,6 +8,8 @@ import { ProgramLevel, ExerciseAttributeValueEnum } from "@prisma/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { createProgram } from "../actions/create-program.action";
+import { SwedishTranslationFields } from "./swedish-translation-fields";
+
 
 const programSchema = z.object({
   // Step 1: Basic info
@@ -17,12 +19,14 @@ const programSchema = z.object({
   titlePt: z.string().min(1, "Le titre en portugais est requis"),
   titleRu: z.string().min(1, "Le titre en russe est requis"),
   titleZhCn: z.string().min(1, "Le titre en chinois est requis"),
+  titleSv: z.string().optional(),
   description: z.string().min(1, "La description est requise"),
   descriptionEn: z.string().min(1, "La description en anglais est requise"),
   descriptionEs: z.string().min(1, "La description en espagnol est requise"),
   descriptionPt: z.string().min(1, "La description en portugais est requise"),
   descriptionRu: z.string().min(1, "La description en russe est requise"),
   descriptionZhCn: z.string().min(1, "La description en chinois est requise"),
+  descriptionSv: z.string().optional(),
   category: z.string().min(1, "La catégorie est requise"),
   image: z.string().url("URL d'image invalide"),
   level: z.nativeEnum(ProgramLevel),
@@ -100,12 +104,14 @@ export function CreateProgramForm({ currentStep, onStepComplete, onSuccess, onCa
       titlePt: "",
       titleRu: "",
       titleZhCn: "",
+      titleSv: "",
       description: "",
       descriptionEn: "",
       descriptionEs: "",
       descriptionPt: "",
       descriptionRu: "",
       descriptionZhCn: "",
+      descriptionSv: "",
     },
   });
 
@@ -172,6 +178,9 @@ export function CreateProgramForm({ currentStep, onStepComplete, onSuccess, onCa
           </button>
           <button className={`tab ${activeTab === "zh" ? "tab-active" : ""}`} onClick={() => setActiveTab("zh")} type="button">
             🇨🇳 ZH
+          </button>
+          <button className={`tab ${activeTab === "sv" ? "tab-active" : ""}`} onClick={() => setActiveTab("sv")} type="button">
+            🇸🇪 SV
           </button>
         </div>
 
@@ -274,6 +283,13 @@ export function CreateProgramForm({ currentStep, onStepComplete, onSuccess, onCa
                 {errors.descriptionRu && <div className="text-sm text-error mt-1">{errors.descriptionRu.message}</div>}
               </div>
             </div>
+          )}
+
+          {activeTab === "sv" && (
+            <SwedishTranslationFields
+              descriptionInput={register("descriptionSv")}
+              titleInput={register("titleSv")}
+            />
           )}
 
           {/* Chinese Fields */}

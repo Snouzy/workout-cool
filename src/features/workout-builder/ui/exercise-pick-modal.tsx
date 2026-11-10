@@ -7,6 +7,7 @@ import { ExerciseAttributeNameEnum } from "@prisma/client";
 import type { ExerciseWithAttributes } from "../types";
 
 import { getExerciseAttributesValueOf } from "@/entities/exercise/shared/muscles";
+import { getExerciseText } from "@/entities/exercise/shared/localized-text";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
@@ -49,8 +50,8 @@ export function ExercisePickModal({ exercise, muscle, isOpen, onClose, onConfirm
 
   if (!exercise) return null;
 
-  const exerciseName = locale === "fr" ? exercise.name : exercise.nameEn;
-  const exerciseDescription = locale === "fr" ? exercise.description : exercise.descriptionEn;
+  const exerciseName = getExerciseText(exercise, "name", locale);
+  const exerciseDescription = getExerciseText(exercise, "description", locale);
 
   // Extraire les attributs utiles
   const equipmentAttributes = getExerciseAttributesValueOf(exercise, ExerciseAttributeNameEnum.EQUIPMENT);

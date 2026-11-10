@@ -27,6 +27,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
               select: {
                 name: true,
                 nameEn: true,
+                nameSv: true,
                 attributes: {
                   include: {
                     attributeName: true,
@@ -111,6 +112,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
         exercises: workoutSession.exercises.map((sessionExercise) => ({
           name: sessionExercise.exercise.name,
           nameEn: sessionExercise.exercise.nameEn,
+          nameSv: sessionExercise.exercise.nameSv,
           completedSets: sessionExercise.sets.filter((s) => s.completed).length,
           totalSets: sessionExercise.sets.length,
         })),

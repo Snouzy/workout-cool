@@ -6,6 +6,8 @@ export type I18nField<T extends string> = {
 } & {
   [K in T as `${K}En`]: string;
 } & {
+  [K in Exclude<T, "slug"> as `${K}Sv`]: string | null;
+} & {
   [K in T as `${K}Es`]: string;
 } & {
   [K in T as `${K}Pt`]: string;
@@ -23,21 +25,27 @@ export type I18nName = I18nField<"name">;
 // Utility type to extract a specific locale field
 export type ExtractLocaleField<T extends Record<string, any>, Field extends keyof T, L extends Locale> = L extends "fr"
   ? T[Field]
-  : L extends "en"
-    ? T[`${string & Field}En`]
-    : L extends "es"
-      ? T[`${string & Field}Es`]
-      : L extends "pt"
-        ? T[`${string & Field}Pt`]
-        : L extends "ru"
-          ? T[`${string & Field}Ru`]
-          : L extends "zh-CN"
-            ? T[`${string & Field}ZhCn`]
-            : never;
+  : L extends "sv"
+    ? Field extends "slug"
+      ? T["slugEn"]
+      : T[`${string & Field}Sv`]
+    : L extends "en"
+      ? T[`${string & Field}En`]
+      : L extends "es"
+        ? T[`${string & Field}Es`]
+        : L extends "pt"
+          ? T[`${string & Field}Pt`]
+          : L extends "ru"
+            ? T[`${string & Field}Ru`]
+            : L extends "zh-CN"
+              ? T[`${string & Field}ZhCn`]
+              : never;
 
 // Helper to get field suffix for a locale
-export function getLocaleSuffix(locale: Locale): "En" | "Es" | "Pt" | "Ru" | "ZhCn" | "" {
+export function getLocaleSuffix(locale: Locale, field?: string): "Sv" | "En" | "Es" | "Pt" | "Ru" | "ZhCn" | "" {
   switch (locale) {
+    case "sv":
+      return field === "slug" ? "En" : "Sv";
     case "en":
       return "En";
     case "es":

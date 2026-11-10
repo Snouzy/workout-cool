@@ -11,6 +11,7 @@ interface UpdateSessionData {
   sessionId: string;
   title: string;
   titleEn: string;
+  titleSv?: string;
   titleEs: string;
   titlePt: string;
   titleRu: string;
@@ -23,6 +24,7 @@ interface UpdateSessionData {
   slugZhCn: string;
   description: string;
   descriptionEn: string;
+  descriptionSv?: string;
   descriptionEs: string;
   descriptionPt: string;
   descriptionRu: string;
@@ -90,6 +92,7 @@ export async function updateSession(data: UpdateSessionData) {
     data: {
       title: data.title,
       titleEn: data.titleEn,
+      titleSv: data.titleSv === undefined ? undefined : data.titleSv?.trim() || null,
       titleEs: data.titleEs,
       titlePt: data.titlePt,
       titleRu: data.titleRu,
@@ -102,6 +105,7 @@ export async function updateSession(data: UpdateSessionData) {
       slugZhCn: uniqueSlugs.slugZhCn,
       description: data.description,
       descriptionEn: data.descriptionEn,
+      descriptionSv: data.descriptionSv === undefined ? undefined : data.descriptionSv?.trim() || null,
       descriptionEs: data.descriptionEs,
       descriptionPt: data.descriptionPt,
       descriptionRu: data.descriptionRu,

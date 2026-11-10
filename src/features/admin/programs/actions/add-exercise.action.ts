@@ -24,6 +24,7 @@ interface AddExerciseData {
   order: number;
   instructions: string;
   instructionsEn: string;
+  instructionsSv?: string;
   suggestedSets: SuggestedSetData[];
 }
 
@@ -58,6 +59,7 @@ export async function addExerciseToSession(data: AddExerciseData) {
       order: data.order,
       instructions: data.instructions,
       instructionsEn: data.instructionsEn,
+      instructionsSv: data.instructionsSv?.trim() || null,
       instructionsEs: data.instructionsEn, // Default fallback
       instructionsPt: data.instructionsEn,
       instructionsRu: data.instructionsEn,

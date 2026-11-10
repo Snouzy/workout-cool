@@ -6,8 +6,10 @@ import { useState } from "react";
 import { ExerciseAttributeValueEnum } from "@prisma/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 
+
 import { SessionWithExercises } from "../types/program.types";
 import { updateSession } from "../actions/update-session.action";
+import { SwedishTranslationFields } from "./swedish-translation-fields";
 
 import { generateSlugsForAllLanguages } from "@/shared/lib/slug";
 import { Textarea } from "@/components/ui/textarea";
@@ -26,12 +28,14 @@ const sessionSchema = z.object({
   titlePt: z.string().min(1, "Le titre en portugais est requis"),
   titleRu: z.string().min(1, "Le titre en russe est requis"),
   titleZhCn: z.string().min(1, "Le titre en chinois est requis"),
+  titleSv: z.string().optional(),
   description: z.string().min(1, "La description est requise"),
   descriptionEn: z.string().min(1, "La description en anglais est requise"),
   descriptionEs: z.string().min(1, "La description en espagnol est requise"),
   descriptionPt: z.string().min(1, "La description en portugais est requise"),
   descriptionRu: z.string().min(1, "La description en russe est requise"),
   descriptionZhCn: z.string().min(1, "La description en chinois est requise"),
+  descriptionSv: z.string().optional(),
   estimatedMinutes: z.number().min(5, "Au moins 5 minutes"),
   isPremium: z.boolean(),
   equipment: z.array(z.nativeEnum(ExerciseAttributeValueEnum)),
@@ -75,12 +79,14 @@ export function EditSessionModal({ open, onOpenChange, session }: EditSessionMod
       titlePt: session.titlePt,
       titleRu: session.titleRu,
       titleZhCn: session.titleZhCn,
+      titleSv: session.titleSv ?? "",
       description: session.description,
       descriptionEn: session.descriptionEn,
       descriptionEs: session.descriptionEs,
       descriptionPt: session.descriptionPt,
       descriptionRu: session.descriptionRu,
       descriptionZhCn: session.descriptionZhCn,
+      descriptionSv: session.descriptionSv ?? "",
       estimatedMinutes: session.estimatedMinutes,
       isPremium: session.isPremium,
       equipment: session.equipment,
@@ -159,6 +165,9 @@ export function EditSessionModal({ open, onOpenChange, session }: EditSessionMod
             </button>
             <button className={`tab ${activeTab === "zh" ? "tab-active" : ""}`} onClick={() => setActiveTab("zh")} type="button">
               🇨🇳 ZH
+            </button>
+            <button className={`tab ${activeTab === "sv" ? "tab-active" : ""}`} onClick={() => setActiveTab("sv")} type="button">
+              🇸🇪 SV
             </button>
           </div>
 
@@ -240,6 +249,13 @@ export function EditSessionModal({ open, onOpenChange, session }: EditSessionMod
                 {errors.descriptionRu && <p className="text-sm text-red-500 mt-1">{errors.descriptionRu.message}</p>}
               </div>
             </div>
+          )}
+
+          {activeTab === "sv" && (
+            <SwedishTranslationFields
+              descriptionInput={register("descriptionSv")}
+              titleInput={register("titleSv")}
+            />
           )}
 
           {/* Chinese Fields */}

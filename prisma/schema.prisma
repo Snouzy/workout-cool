@@ -127,12 +127,15 @@ model Exercise {
   id                String   @id @default(cuid())
   name              String
   nameEn            String?
+  nameSv            String?
   description       String?  @db.Text
   descriptionEn     String?  @db.Text
+  descriptionSv     String?  @db.Text
   fullVideoUrl      String?  @db.Text
   fullVideoImageUrl String?  @db.Text
   introduction      String?  @db.Text
   introductionEn    String?  @db.Text
+  introductionSv    String?  @db.Text
   slug              String?  @unique
   slugEn            String?  @unique
   createdAt         DateTime @default(now())
@@ -543,12 +546,14 @@ model Program {
   titlePt            String
   titleRu            String
   titleZhCn          String
+  titleSv            String?
   description        String                       @db.Text
   descriptionEn      String                       @db.Text
   descriptionEs      String                       @db.Text
   descriptionPt      String                       @db.Text
   descriptionRu      String                       @db.Text
   descriptionZhCn    String                       @db.Text
+  descriptionSv      String?                      @db.Text
   category           String
   image              String
   level              ProgramLevel
@@ -595,12 +600,14 @@ model ProgramWeek {
   titlePt         String
   titleRu         String
   titleZhCn       String
+  titleSv         String?
   description     String @db.Text
   descriptionEn   String @db.Text
   descriptionEs   String @db.Text
   descriptionPt   String @db.Text
   descriptionRu   String @db.Text
   descriptionZhCn String @db.Text
+  descriptionSv   String? @db.Text
 
   program  Program          @relation(fields: [programId], references: [id], onDelete: Cascade)
   sessions ProgramSession[]
@@ -619,6 +626,7 @@ model ProgramSession {
   titlePt          String
   titleRu          String
   titleZhCn        String
+  titleSv          String?
   slug             String
   slugEn           String
   slugEs           String
@@ -631,6 +639,7 @@ model ProgramSession {
   descriptionPt    String                       @db.Text
   descriptionRu    String                       @db.Text
   descriptionZhCn  String                       @db.Text
+  descriptionSv    String?                      @db.Text
   equipment        ExerciseAttributeValueEnum[] @default([])
   estimatedMinutes Int
   isPremium        Boolean                      @default(true)
@@ -660,6 +669,7 @@ model ProgramSessionExercise {
   instructionsPt   String @db.Text
   instructionsRu   String @db.Text
   instructionsZhCn String @db.Text
+  instructionsSv   String? @db.Text
 
   session       ProgramSession        @relation(fields: [sessionId], references: [id], onDelete: Cascade)
   exercise      Exercise              @relation(fields: [exerciseId], references: [id])

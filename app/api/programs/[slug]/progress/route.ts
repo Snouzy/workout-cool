@@ -3,6 +3,7 @@ import { ProgramVisibility } from "@prisma/client";
 
 import { prisma } from "@/shared/lib/prisma";
 import { getMobileCompatibleSession } from "@/shared/api/mobile-auth";
+import { getProgramSlugFilter } from "@/features/programs/lib/program-slug-filter";
 
 export async function GET(request: NextRequest, { params }: { params: Promise<{ slug: string }> }) {
   try {
@@ -17,7 +18,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
 
     const program = await prisma.program.findFirst({
       where: {
-        OR: [{ slug }, { slugEn: slug }, { slugEs: slug }, { slugPt: slug }, { slugRu: slug }, { slugZhCn: slug }],
+        ...getProgramSlugFilter(slug),
         visibility: ProgramVisibility.PUBLISHED,
         isActive: true,
       },

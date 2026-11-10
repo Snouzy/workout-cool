@@ -44,6 +44,11 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 export default async function HarrisBenedictCalculatorPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   const t = await getI18n();
+  const bmr = t("tools.calorie-calculator.results.bmr");
+  const weight = t("tools.calorie-calculator.weight");
+  const height = t("tools.calorie-calculator.height");
+  const age = t("tools.calorie-calculator.age");
+  const { format } = new Intl.NumberFormat(locale);
 
   return (
     <>
@@ -108,9 +113,11 @@ export default async function HarrisBenedictCalculatorPage({ params }: { params:
               <p className="text-sm leading-relaxed">{t("tools.harris-benedict.how_it_works_description")}</p>
               <div className="mt-4 p-3 bg-base-100/50 dark:bg-base-100/20 rounded-lg">
                 <p className="text-xs font-mono text-base-content/70">
-                  <strong>Men:</strong> BMR = 88.362 + (13.397 × weight) + (4.799 × height) - (5.677 × age)
+                  <strong>{t("tools.calorie-calculator.male")}:</strong> {bmr} = {format(88.362)} + ({format(13.397)} × {weight}) + (
+                  {format(4.799)} × {height}) − ({format(5.677)} × {age})
                   <br />
-                  <strong>Women:</strong> BMR = 447.593 + (9.247 × weight) + (3.098 × height) - (4.330 × age)
+                  <strong>{t("tools.calorie-calculator.female")}:</strong> {bmr} = {format(447.593)} + ({format(9.247)} × {weight}) + (
+                  {format(3.098)} × {height}) − ({format(4.33)} × {age})
                 </p>
               </div>
             </div>

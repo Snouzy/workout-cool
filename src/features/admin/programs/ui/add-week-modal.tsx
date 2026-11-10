@@ -5,6 +5,8 @@ import { useState } from "react";
 import { X } from "lucide-react";
 
 import { addWeekToProgram } from "../actions/add-week.action";
+import { SwedishTranslationFields } from "./swedish-translation-fields";
+
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const weekSchema = z.object({
@@ -14,12 +16,14 @@ const weekSchema = z.object({
   titlePt: z.string().min(1, "Le titre en portugais est requis"),
   titleRu: z.string().min(1, "Le titre en russe est requis"),
   titleZhCn: z.string().min(1, "Le titre en chinois est requis"),
+  titleSv: z.string().optional(),
   description: z.string().optional(),
   descriptionEn: z.string().optional(),
   descriptionEs: z.string().optional(),
   descriptionPt: z.string().optional(),
   descriptionRu: z.string().optional(),
   descriptionZhCn: z.string().optional(),
+  descriptionSv: z.string().optional(),
 });
 
 type WeekFormData = z.infer<typeof weekSchema>;
@@ -41,12 +45,14 @@ export function AddWeekModal({ open, onOpenChange, programId, nextWeekNumber }: 
     titlePt: `Semana ${nextWeekNumber}`,
     titleRu: `Неделя ${nextWeekNumber}`,
     titleZhCn: `第${nextWeekNumber}周`,
+    titleSv: "",
     description: "",
     descriptionEn: "",
     descriptionEs: "",
     descriptionPt: "",
     descriptionRu: "",
     descriptionZhCn: "",
+    descriptionSv: "",
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -107,6 +113,9 @@ export function AddWeekModal({ open, onOpenChange, programId, nextWeekNumber }: 
               </button>
               <button className={`tab ${activeTab === "zh" ? "tab-active" : ""}`} onClick={() => setActiveTab("zh")} type="button">
                 🇨🇳 ZH
+              </button>
+              <button className={`tab ${activeTab === "sv" ? "tab-active" : ""}`} onClick={() => setActiveTab("sv")} type="button">
+                🇸🇪 SV
               </button>
             </div>
 
@@ -268,6 +277,21 @@ export function AddWeekModal({ open, onOpenChange, programId, nextWeekNumber }: 
                   />
                 </div>
               </div>
+            )}
+
+            {activeTab === "sv" && (
+              <SwedishTranslationFields
+                descriptionInput={{
+                  disabled: isLoading,
+                  value: formData.descriptionSv,
+                  onChange: (e) => setFormData({ ...formData, descriptionSv: e.target.value }),
+                }}
+                titleInput={{
+                  disabled: isLoading,
+                  value: formData.titleSv,
+                  onChange: (e) => setFormData({ ...formData, titleSv: e.target.value }),
+                }}
+              />
             )}
 
             {/* Chinese Fields */}

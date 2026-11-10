@@ -16,6 +16,7 @@ interface SlugData {
  */
 export function getSlugForLocale(slugData: SlugData, locale: string): string {
   switch (locale) {
+    case "sv":
     case "en":
       return slugData.slugEn;
     case "es":
@@ -37,6 +38,7 @@ export function getSlugForLocale(slugData: SlugData, locale: string): string {
 interface TitleData {
   title: string;
   titleEn: string;
+  titleSv?: string | null;
   titleEs: string;
   titlePt: string;
   titleRu: string;
@@ -45,6 +47,8 @@ interface TitleData {
 
 export function getTitleForLocale(titleData: TitleData, locale: string): string {
   switch (locale) {
+    case "sv":
+      return titleData.titleSv || titleData.titleEn || titleData.title;
     case "en":
       return titleData.titleEn;
     case "es":

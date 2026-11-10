@@ -7,10 +7,12 @@ import { getI18n } from "locales/server";
 import { ProgramSessionClient } from "./ProgramSessionClient";
 
 import { generateStructuredData, StructuredDataScript } from "@/shared/lib/structured-data";
-import { getSessionTitle, getProgramTitle } from "@/features/programs/lib/translations-mapper";
+import { getLocalizedMetadata } from "@/shared/config/localized-metadata";
+import { getSessionTitle, getSessionDescription, getProgramTitle } from "@/features/programs/lib/translations-mapper";
 import { generateSessionMetadata } from "@/features/programs/lib/session-metadata";
 import { getSessionBySlug } from "@/features/programs/actions/get-session-by-slug.action";
 import { auth } from "@/features/auth/lib/better-auth";
+import { getExerciseText } from "@/entities/exercise/shared/localized-text";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 
 // Import the existing session client component
@@ -48,7 +50,7 @@ export async function generateMetadata({ params }: SessionDetailPageProps): Prom
           alt: sessionMetadata.title,
         },
       ],
-      locale: locale === "zh-CN" ? "zh_CN" : locale.replace("-", "_"),
+      locale: getLocalizedMetadata(locale).languageTag.replace("-", "_"),
       type: "website",
     },
     twitter: {
@@ -67,6 +69,7 @@ export async function generateMetadata({ params }: SessionDetailPageProps): Prom
         "pt-PT": `https://www.workout.cool/pt/programs/${slug}/session/${sessionSlug}`,
         "ru-RU": `https://www.workout.cool/ru/programs/${slug}/session/${sessionSlug}`,
         "zh-CN": `https://www.workout.cool/zh-CN/programs/${slug}/session/${sessionSlug}`,
+        sv: `https://www.workout.cool/sv/programs/${response.program.slugEn}/session/${response.session.slugEn}`,
         "x-default": `https://www.workout.cool/programs/${slug}/session/${sessionSlug}`,
       },
     },
@@ -129,13 +132,13 @@ export default async function SessionDetailPage({ params }: SessionDetailPagePro
     type: "VideoObject",
     locale,
     title: `${sessionTitle} - ${programTitle}`,
-    description: response.session.description || `${sessionTitle} workout session`,
+    description: getSessionDescription(response.session, locale) || `${sessionTitle} workout session`,
     url: `https://www.workout.cool/${locale}/programs/${slug}/session/${sessionSlug}`,
     image: response.session.exercises[0]?.exercise.fullVideoImageUrl || undefined,
     sessionData: {
       duration: Math.round(response.session.exercises.length * 3), // Estimate 3 min per exercise
       exercises: response.session.exercises.map((ex) => ({
-        name: ex.exercise.name,
+        name: getExerciseText(ex.exercise, "name", locale),
         sets: ex.suggestedSets.length,
       })),
       thumbnailUrl: response.session.exercises[0]?.exercise.fullVideoImageUrl || undefined,

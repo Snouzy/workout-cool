@@ -13,6 +13,7 @@ import { StatisticsTimeframe } from "@/shared/constants/statistics";
 import { ExerciseCharts } from "@/features/statistics/components/ExerciseStatisticsTab";
 import { TimeframeSelector } from "@/features/statistics/components";
 import { getExerciseAttributesValueOf } from "@/entities/exercise/shared/muscles";
+import { getExerciseText } from "@/entities/exercise/shared/localized-text";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
@@ -34,9 +35,9 @@ export function ExerciseVideoModal({ open, onOpenChange, exercise, defaultTab = 
     if (open) setActiveTab(defaultTab);
   }, [open, defaultTab]);
 
-  const title = locale === "fr" ? exercise.name : exercise.nameEn || exercise.name;
-  const introduction = locale === "fr" ? exercise.introduction : exercise.introductionEn || exercise.introduction;
-  const description = locale === "fr" ? exercise.description : exercise.descriptionEn || exercise.description;
+  const title = getExerciseText(exercise, "name", locale);
+  const introduction = getExerciseText(exercise, "introduction", locale);
+  const description = getExerciseText(exercise, "description", locale);
   const videoUrl = exercise.fullVideoUrl;
   const youTubeEmbedUrl = getYouTubeEmbedUrl(videoUrl ?? "");
 

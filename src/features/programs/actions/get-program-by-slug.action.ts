@@ -3,6 +3,7 @@
 import { ExerciseAttributeValueEnum, ProgramLevel, ProgramVisibility } from "@prisma/client";
 
 import { prisma } from "@/shared/lib/prisma";
+import { getProgramSlugFilter } from "@/features/programs/lib/program-slug-filter";
 
 export interface ProgramDetail {
   id: string;
@@ -14,12 +15,14 @@ export interface ProgramDetail {
   slugZhCn: string;
   title: string;
   titleEn: string;
+  titleSv: string | null;
   titleEs: string;
   titlePt: string;
   titleRu: string;
   titleZhCn: string;
   description: string;
   descriptionEn: string;
+  descriptionSv: string | null;
   descriptionEs: string;
   descriptionPt: string;
   descriptionRu: string;
@@ -46,18 +49,22 @@ export interface ProgramDetail {
     id: string;
     weekNumber: number;
     title: string;
+    titleSv: string | null;
     description: string;
+    descriptionSv: string | null;
     sessions: Array<{
       id: string;
       sessionNumber: number;
       title: string;
       titleEn: string;
+      titleSv: string | null;
       titleEs: string;
       titlePt: string;
       titleRu: string;
       titleZhCn: string;
       description: string;
       descriptionEn: string;
+      descriptionSv: string | null;
       descriptionEs: string;
       descriptionPt: string;
       descriptionRu: string;
@@ -80,7 +87,7 @@ export async function getProgramBySlug(slug: string): Promise<ProgramDetail | nu
   try {
     const program = await prisma.program.findFirst({
       where: {
-        OR: [{ slug }, { slugEn: slug }, { slugEs: slug }, { slugPt: slug }, { slugRu: slug }, { slugZhCn: slug }],
+        ...getProgramSlugFilter(slug),
         visibility: ProgramVisibility.PUBLISHED,
         isActive: true,
       },
@@ -125,12 +132,14 @@ export async function getProgramBySlug(slug: string): Promise<ProgramDetail | nu
       slugZhCn: program.slugZhCn,
       title: program.title,
       titleEn: program.titleEn,
+      titleSv: program.titleSv,
       titleEs: program.titleEs,
       titlePt: program.titlePt,
       titleRu: program.titleRu,
       titleZhCn: program.titleZhCn,
       description: program.description,
       descriptionEn: program.descriptionEn,
+      descriptionSv: program.descriptionSv,
       descriptionEs: program.descriptionEs,
       descriptionPt: program.descriptionPt,
       descriptionRu: program.descriptionRu,
@@ -157,12 +166,14 @@ export async function getProgramBySlug(slug: string): Promise<ProgramDetail | nu
         weekNumber: week.weekNumber,
         title: week.title,
         titleEn: week.titleEn,
+        titleSv: week.titleSv,
         titleEs: week.titleEs,
         titlePt: week.titlePt,
         titleRu: week.titleRu,
         titleZhCn: week.titleZhCn,
         description: week.description,
         descriptionEn: week.descriptionEn,
+        descriptionSv: week.descriptionSv,
         descriptionEs: week.descriptionEs,
         descriptionPt: week.descriptionPt,
         descriptionRu: week.descriptionRu,
@@ -172,12 +183,14 @@ export async function getProgramBySlug(slug: string): Promise<ProgramDetail | nu
           sessionNumber: session.sessionNumber,
           title: session.title,
           titleEn: session.titleEn,
+          titleSv: session.titleSv,
           titleEs: session.titleEs,
           titlePt: session.titlePt,
           titleRu: session.titleRu,
           titleZhCn: session.titleZhCn,
           description: session.description,
           descriptionEn: session.descriptionEn,
+          descriptionSv: session.descriptionSv,
           descriptionEs: session.descriptionEs,
           descriptionPt: session.descriptionPt,
           descriptionRu: session.descriptionRu,

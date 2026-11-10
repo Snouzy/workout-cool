@@ -1,13 +1,11 @@
 import { MetadataRoute } from "next/types";
+import { locales } from "locales/types";
 
 import { getSitemapData } from "@/features/programs/actions/get-sitemap-data.action";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://www.workout.cool";
   const currentDate = new Date().toISOString();
-
-  // Static routes with locale support
-  const locales = ["fr", "en", "es", "pt", "ru", "zh-CN"];
 
   const staticRoutes = [
     // Home page (root)
@@ -190,6 +188,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const programSlugs = {
       fr: program.slug,
       en: program.slugEn,
+      sv: program.slugEn,
       es: program.slugEs,
       pt: program.slugPt,
       ru: program.slugRu,
@@ -212,6 +211,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             const sessionSlugs = {
               fr: session.slug,
               en: session.slugEn,
+              sv: session.slugEn,
               es: session.slugEs,
               pt: session.slugPt,
               ru: session.slugRu,

@@ -21,6 +21,8 @@ export function DurationBadge({
   const formatDuration = () => {
     if (locale === "en") {
       return `${durationWeeks} weeks • ${totalHours}h total`;
+    } else if (locale === "sv") {
+      return `${durationWeeks} ${durationWeeks === 1 ? "vecka" : "veckor"} • totalt ${totalHours} h`;
     } else if (locale === "es") {
       return `${durationWeeks} semanas • ${totalHours}h total`;
     } else if (locale === "pt") {

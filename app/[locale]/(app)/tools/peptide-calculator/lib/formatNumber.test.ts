@@ -30,6 +30,10 @@ describe("formatLocaleNumber", () => {
     expect(formatLocaleNumber(12.5, 2, "ru")).toBe("12,5");
   });
 
+  it("utilise la virgule comme séparateur décimal en suédois", () => {
+    expect(formatLocaleNumber(12.5, 2, "sv")).toBe("12,5");
+  });
+
   it("supprime les zéros de fin superflus plutôt que d'afficher une fausse précision", () => {
     expect(formatLocaleNumber(12.5, 2, "en")).toBe("12.5");
     expect(formatLocaleNumber(12.5, 2, "fr")).toBe("12,5");

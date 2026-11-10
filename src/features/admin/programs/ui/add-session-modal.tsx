@@ -7,6 +7,8 @@ import { ExerciseAttributeValueEnum } from "@prisma/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { addSessionToWeek } from "../actions/add-session.action";
+import { SwedishTranslationFields } from "./swedish-translation-fields";
+
 
 import { generateSlugsForAllLanguages } from "@/shared/lib/slug";
 import { Textarea } from "@/components/ui/textarea";
@@ -25,12 +27,14 @@ const sessionSchema = z.object({
   titlePt: z.string().min(1, "Le titre en portugais est requis"),
   titleRu: z.string().min(1, "Le titre en russe est requis"),
   titleZhCn: z.string().min(1, "Le titre en chinois est requis"),
+  titleSv: z.string().optional(),
   description: z.string().min(1, "La description est requise"),
   descriptionEn: z.string().min(1, "La description en anglais est requise"),
   descriptionEs: z.string().min(1, "La description en espagnol est requise"),
   descriptionPt: z.string().min(1, "La description en portugais est requise"),
   descriptionRu: z.string().min(1, "La description en russe est requise"),
   descriptionZhCn: z.string().min(1, "La description en chinois est requise"),
+  descriptionSv: z.string().optional(),
   estimatedMinutes: z.number().min(5, "Au moins 5 minutes"),
   isPremium: z.boolean(),
   equipment: z.array(z.nativeEnum(ExerciseAttributeValueEnum)),
@@ -75,12 +79,14 @@ export function AddSessionModal({ open, onOpenChange, weekId, nextSessionNumber 
       titlePt: `Sessão ${nextSessionNumber}`,
       titleRu: `Сессия ${nextSessionNumber}`,
       titleZhCn: `第${nextSessionNumber}节`,
+      titleSv: "",
       description: `Description de la séance ${nextSessionNumber}`,
       descriptionEn: `Description of session ${nextSessionNumber}`,
       descriptionEs: `Descripción de la sesión ${nextSessionNumber}`,
       descriptionPt: `Descrição da sessão ${nextSessionNumber}`,
       descriptionRu: `Описание сессии ${nextSessionNumber}`,
       descriptionZhCn: `第${nextSessionNumber}节课程描述`,
+      descriptionSv: "",
       estimatedMinutes: 30,
       isPremium: true,
       equipment: [],
@@ -163,6 +169,9 @@ export function AddSessionModal({ open, onOpenChange, weekId, nextSessionNumber 
             <button className={`tab ${activeTab === "zh" ? "tab-active" : ""}`} onClick={() => setActiveTab("zh")} type="button">
               🇨🇳 ZH
             </button>
+            <button className={`tab ${activeTab === "sv" ? "tab-active" : ""}`} onClick={() => setActiveTab("sv")} type="button">
+              🇸🇪 SV
+            </button>
           </div>
 
           {/* French Fields */}
@@ -243,6 +252,13 @@ export function AddSessionModal({ open, onOpenChange, weekId, nextSessionNumber 
                 {errors.descriptionRu && <p className="text-sm text-red-500 mt-1">{errors.descriptionRu.message}</p>}
               </div>
             </div>
+          )}
+
+          {activeTab === "sv" && (
+            <SwedishTranslationFields
+              descriptionInput={register("descriptionSv")}
+              titleInput={register("titleSv")}
+            />
           )}
 
           {/* Chinese Fields */}

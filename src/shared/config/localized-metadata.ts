@@ -1,5 +1,8 @@
+import { locales } from "locales/types";
+
 export const LocalizedMetadata = {
   en: {
+    languageTag: "en-US",
     title: "Workout Cool",
     description: "Modern fitness coaching platform with comprehensive exercise database",
     keywords: [
@@ -19,7 +22,18 @@ export const LocalizedMetadata = {
     category: "fitness",
     classification: "Fitness & Health",
   },
+  sv: {
+    languageTag: "sv-SE",
+    title: "Workout Cool",
+    description: "Planera dina träningspass, hitta övningar och följ din utveckling med Workout Cool.",
+    keywords: ["träning", "träningspass", "övningar", "muskeluppbyggnad", "styrketräning", "träningsapp", "träningsplanering", "övningsbank"],
+    ogAlt: "Workout Cool – planera och följ din träning",
+    applicationName: "Workout Cool",
+    category: "träning",
+    classification: "Träning och hälsa",
+  },
   fr: {
+    languageTag: "fr-FR",
     title: "Workout Cool",
     description: "Plateforme de coaching fitness moderne avec base de données d'exercices complète",
     keywords: [
@@ -40,6 +54,7 @@ export const LocalizedMetadata = {
     classification: "Fitness et Santé",
   },
   es: {
+    languageTag: "es-ES",
     title: "Workout Cool",
     description: "Plataforma moderna de entrenamiento fitness con base de datos completa de ejercicios",
     keywords: [
@@ -60,6 +75,7 @@ export const LocalizedMetadata = {
     classification: "Fitness y Salud",
   },
   pt: {
+    languageTag: "pt-PT",
     title: "Workout Cool",
     description: "Plataforma moderna de coaching fitness com base de dados abrangente de exercícios",
     keywords: [
@@ -80,6 +96,7 @@ export const LocalizedMetadata = {
     classification: "Fitness e Saúde",
   },
   ru: {
+    languageTag: "ru-RU",
     title: "Workout Cool",
     description: "Современная платформа фитнес-коучинга с comprehensive базой данных упражнений",
     keywords: [
@@ -100,6 +117,7 @@ export const LocalizedMetadata = {
     classification: "Фитнес и Здоровье",
   },
   "zh-CN": {
+    languageTag: "zh-CN",
     title: "Workout Cool",
     description: "现代健身教练平台，拥有全面的运动数据库",
     keywords: ["健身", "锻炼", "运动", "训练", "肌肉训练", "力量训练", "健美", "健身应用", "锻炼计划", "运动数据库"],
@@ -113,11 +131,14 @@ export const LocalizedMetadata = {
 export type SupportedLocale = keyof typeof LocalizedMetadata;
 
 export function getLocalizedMetadata(locale: string) {
-  const supportedLocales: SupportedLocale[] = ["en", "fr", "es", "pt", "ru", "zh-CN"];
-
-  if (supportedLocales.includes(locale as SupportedLocale)) {
+  if (locales.includes(locale as SupportedLocale)) {
     return LocalizedMetadata[locale as SupportedLocale];
   }
 
   return LocalizedMetadata.en;
+}
+
+export function getDefaultOgImagePath(locale: string) {
+  const imageLocale = locale === "sv" ? "en" : locale === "zh-CN" ? "zh" : locale;
+  return `/images/default-og-image_${imageLocale}.jpg`;
 }

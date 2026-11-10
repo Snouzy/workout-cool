@@ -6,6 +6,7 @@ import { getSessionTitle, getSessionDescription, getProgramTitle } from "./trans
 import { getLocalizedMetadata } from "@/shared/config/localized-metadata";
 import { ProgramSessionWithExercises } from "@/entities/program-session/types/program-session.types";
 import { ProgramI18nReference } from "@/entities/program/types/program.types";
+import { getExerciseText } from "@/entities/exercise/shared/localized-text";
 
 
 export function generateSessionSEOKeywords(session: ProgramSessionWithExercises, program: ProgramI18nReference, locale: Locale): string[] {
@@ -13,22 +14,7 @@ export function generateSessionSEOKeywords(session: ProgramSessionWithExercises,
   const sessionTitle = getSessionTitle(session, locale);
   const programTitle = getProgramTitle(program, locale);
 
-  const exerciseNames = session.exercises.map((ex) => {
-    switch (locale) {
-      case "en":
-        return ex.exercise.nameEn || ex.exercise.name;
-      case "es":
-        return ex.exercise.nameEn || ex.exercise.name; // Using nameEn as fallback since nameEs doesn't exist
-      case "pt":
-        return ex.exercise.nameEn || ex.exercise.name; // Using nameEn as fallback since namePt doesn't exist
-      case "ru":
-        return ex.exercise.nameEn || ex.exercise.name; // Using nameEn as fallback since nameRu doesn't exist
-      case "zh-CN":
-        return ex.exercise.nameEn || ex.exercise.name; // Using nameEn as fallback since nameZhCn doesn't exist
-      default:
-        return ex.exercise.name;
-    }
-  });
+  const exerciseNames = session.exercises.map(({ exercise }) => getExerciseText(exercise, "name", locale));
 
   const localizedSessionType =
     locale === "en"
@@ -41,7 +27,9 @@ export function generateSessionSEOKeywords(session: ProgramSessionWithExercises,
             ? "тренировочная сессия"
             : locale === "zh-CN"
               ? "训练课程"
-              : "séance d'entraînement";
+              : locale === "sv"
+                ? "träningspass"
+                : "séance d'entraînement";
 
   return [
     ...baseData.keywords,
@@ -75,7 +63,9 @@ export function generateSessionMetadata(session: ProgramSessionWithExercises, pr
             ? `Тренировочная сессия ${sessionTitle} из программы ${programTitle}. ${session.exercises.length} упражнений, ~${Math.round(session.exercises.length * 3)} минут.`
             : locale === "zh-CN"
               ? `${programTitle}计划中的${sessionTitle}训练课程。${session.exercises.length}个练习，约${Math.round(session.exercises.length * 3)}分钟。`
-              : `Séance d'entraînement ${sessionTitle} du programme ${programTitle}. ${session.exercises.length} exercices, ~${Math.round(session.exercises.length * 3)} minutes.`);
+              : locale === "sv"
+                ? `${sessionTitle} ingår i programmet ${programTitle}. ${session.exercises.length} övningar, cirka ${Math.round(session.exercises.length * 3)} minuter.`
+                : `Séance d'entraînement ${sessionTitle} du programme ${programTitle}. ${session.exercises.length} exercices, ~${Math.round(session.exercises.length * 3)} minutes.`);
 
   return {
     title,

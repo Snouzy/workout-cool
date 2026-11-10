@@ -5,6 +5,7 @@ import { ProgramVisibility } from "@prisma/client";
 
 import { getLocaleSuffix } from "@/shared/types/i18n.types";
 import { prisma } from "@/shared/lib/prisma";
+import { getProgramSlugFilter } from "@/features/programs/lib/program-slug-filter";
 import { SessionDetailResponse } from "@/entities/program/types/program.types";
 
 /**
@@ -18,7 +19,7 @@ export async function getSessionBySlug(
 ): Promise<SessionDetailResponse | null> {
   try {
     // Determine slug field based on locale
-    const suffix = getLocaleSuffix(locale);
+    const suffix = getLocaleSuffix(locale, "slug");
     const sessionSlugField = suffix ? `slug${suffix}` : "slug";
 
     // Find session with all related data
@@ -27,14 +28,7 @@ export async function getSessionBySlug(
         [sessionSlugField]: sessionSlug,
         week: {
           program: {
-            OR: [
-              { slug: programSlug },
-              { slugEn: programSlug },
-              { slugEs: programSlug },
-              { slugPt: programSlug },
-              { slugRu: programSlug },
-              { slugZhCn: programSlug },
-            ],
+            ...getProgramSlugFilter(programSlug),
             visibility: ProgramVisibility.PUBLISHED,
             isActive: true,
           },
@@ -48,12 +42,14 @@ export async function getSessionBySlug(
                 id: true,
                 description: true,
                 descriptionEn: true,
+                descriptionSv: true,
                 descriptionEs: true,
                 descriptionPt: true,
                 descriptionRu: true,
                 descriptionZhCn: true,
                 title: true,
                 titleEn: true,
+                titleSv: true,
                 titleEs: true,
                 titlePt: true,
                 titleRu: true,
@@ -101,12 +97,14 @@ export async function getSessionBySlug(
         sessionNumber: session.sessionNumber,
         title: session.title,
         titleEn: session.titleEn,
+        titleSv: session.titleSv,
         titleEs: session.titleEs,
         titlePt: session.titlePt,
         titleRu: session.titleRu,
         titleZhCn: session.titleZhCn,
         description: session.description,
         descriptionEn: session.descriptionEn,
+        descriptionSv: session.descriptionSv,
         descriptionEs: session.descriptionEs,
         descriptionPt: session.descriptionPt,
         descriptionRu: session.descriptionRu,
@@ -127,6 +125,7 @@ export async function getSessionBySlug(
           order: ex.order,
           instructions: ex.instructions,
           instructionsEn: ex.instructionsEn,
+          instructionsSv: ex.instructionsSv,
           instructionsEs: ex.instructionsEs,
           instructionsPt: ex.instructionsPt,
           instructionsRu: ex.instructionsRu,
@@ -135,12 +134,14 @@ export async function getSessionBySlug(
             id: ex.exercise.id,
             name: ex.exercise.name,
             nameEn: ex.exercise.nameEn || "",
+            nameSv: ex.exercise.nameSv,
             nameEs: ex.exercise.nameEn || "", // TODO: Fix when DB has proper values
             namePt: ex.exercise.nameEn || "",
             nameRu: ex.exercise.nameEn || "",
             nameZhCn: ex.exercise.nameEn || "",
             description: ex.exercise.description || "",
             descriptionEn: ex.exercise.descriptionEn || "",
+            descriptionSv: ex.exercise.descriptionSv,
             descriptionEs: ex.exercise.descriptionEn || "", // TODO: Fix when DB has proper values
             descriptionPt: ex.exercise.descriptionEn || "",
             descriptionRu: ex.exercise.descriptionEn || "",
@@ -178,12 +179,14 @@ export async function getSessionBySlug(
         id: session.week.program.id,
         title: session.week.program.title,
         titleEn: session.week.program.titleEn,
+        titleSv: session.week.program.titleSv,
         titleEs: session.week.program.titleEs,
         titlePt: session.week.program.titlePt,
         titleRu: session.week.program.titleRu,
         titleZhCn: session.week.program.titleZhCn,
         description: session.week.program.description,
         descriptionEn: session.week.program.descriptionEn,
+        descriptionSv: session.week.program.descriptionSv,
         descriptionEs: session.week.program.descriptionEs,
         descriptionPt: session.week.program.descriptionPt,
         descriptionRu: session.week.program.descriptionRu,
@@ -200,12 +203,14 @@ export async function getSessionBySlug(
         weekNumber: session.week.weekNumber,
         title: session.week.title,
         titleEn: session.week.titleEn,
+        titleSv: session.week.titleSv,
         titleEs: session.week.titleEs,
         titlePt: session.week.titlePt,
         titleRu: session.week.titleRu,
         titleZhCn: session.week.titleZhCn,
         description: session.week.description,
         descriptionEn: session.week.descriptionEn,
+        descriptionSv: session.week.descriptionSv,
         descriptionEs: session.week.descriptionEs,
         descriptionPt: session.week.descriptionPt,
         descriptionRu: session.week.descriptionRu,

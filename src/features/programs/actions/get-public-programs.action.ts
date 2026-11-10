@@ -16,6 +16,7 @@ export interface PublicProgram {
 
   title: string;
   titleEn: string;
+  titleSv: string | null;
   titleEs: string;
   titlePt: string;
   titleRu: string;
@@ -23,6 +24,7 @@ export interface PublicProgram {
 
   description: string;
   descriptionEn: string;
+  descriptionSv: string | null;
   descriptionEs: string;
   descriptionPt: string;
   descriptionRu: string;
@@ -89,6 +91,7 @@ export async function getPublicPrograms(): Promise<PublicProgram[]> {
 
       title: program.title,
       titleEn: program.titleEn,
+      titleSv: program.titleSv,
       titleEs: program.titleEs,
       titlePt: program.titlePt,
       titleRu: program.titleRu,
@@ -96,6 +99,7 @@ export async function getPublicPrograms(): Promise<PublicProgram[]> {
 
       description: program.description,
       descriptionEn: program.descriptionEn,
+      descriptionSv: program.descriptionSv,
       descriptionEs: program.descriptionEs,
       descriptionPt: program.descriptionPt,
       descriptionRu: program.descriptionRu,

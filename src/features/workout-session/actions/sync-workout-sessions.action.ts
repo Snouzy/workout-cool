@@ -8,6 +8,7 @@ import { prisma } from "@/shared/lib/prisma";
 import { ALL_WORKOUT_SET_TYPES, WORKOUT_SET_UNITS_TUPLE } from "@/shared/constants/workout-set-types";
 import { ERROR_MESSAGES } from "@/shared/constants/errors";
 import { actionClient } from "@/shared/api/safe-actions";
+import { serverAuth } from "@/entities/user/model/get-server-session-user";
 
 const workoutSetSchema = z.object({
   id: z.string(),
@@ -43,13 +44,37 @@ export const syncWorkoutSessionAction = actionClient.schema(syncWorkoutSessionSc
   try {
     const { session } = parsedInput;
 
+    // session.userId arrives in the request body, so it identifies whoever the
+    // client says it is — not the caller. Pin it to the authenticated user
+    // instead; otherwise a caller can create sessions owned by someone else,
+    // and the upsert below would rewrite that user's session on id collision.
+    const caller = await serverAuth();
+    if (!caller?.id) {
+      return { serverError: ERROR_MESSAGES.USER_NOT_FOUND };
+    }
+    const ownerId = caller.id;
+
+    if (session.userId && session.userId !== ownerId) {
+      return { serverError: "Unauthorized" };
+    }
+
+    // Existing row with this id must belong to the caller, or the update
+    // branch would delete their exercises and rebuild them from this payload.
+    const existing = await prisma.workoutSession.findUnique({
+      where: { id: session.id },
+      select: { userId: true },
+    });
+    if (existing && existing.userId !== ownerId) {
+      return { serverError: "Unauthorized" };
+    }
+
     // Check if user exists
     const userExists = await prisma.user.findUnique({
-      where: { id: session.userId },
+      where: { id: ownerId },
     });
 
     if (!userExists) {
-      console.error(`User with ID ${session.userId} does not exist`);
+      console.error(`User with ID ${ownerId} does not exist`);
       return { serverError: ERROR_MESSAGES.USER_NOT_FOUND };
     }
 
@@ -74,6 +99,7 @@ export const syncWorkoutSessionAction = actionClient.schema(syncWorkoutSessionSc
       where: { id: session.id },
       create: {
         ...sessionData,
+        userId: ownerId,
         muscles: session.muscles,
         rating: session.rating,
         ratingComment: session.ratingComment,

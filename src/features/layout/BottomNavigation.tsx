@@ -5,11 +5,14 @@ import Link from "next/link";
 import { Dumbbell, Grid, Hammer, Crown, Activity, Trophy } from "lucide-react";
 import { useCurrentLocale, useI18n } from "locales/client";
 
+import { BOTTOM_AD_OFFSET_VAR, useBottomAdOffset } from "./use-bottom-ad-offset";
+
 import { cn } from "@/shared/lib/utils";
 import { paths } from "@/shared/constants/paths";
 
 export function BottomNavigation() {
   const pathname = usePathname();
+  useBottomAdOffset();
   const t = useI18n();
   const locale = useCurrentLocale();
 
@@ -84,8 +87,12 @@ export function BottomNavigation() {
     // Docked to the viewport at every width, so the content scrolls under it instead of the
     // nav sitting at the end of the document. `left-1/2 -translate-x-1/2 w-full max-w-3xl`
     // keeps it aligned with the app shell's centred card rather than spanning the whole
-    // desktop viewport, ad columns included.
-    <nav className="fixed bottom-0 left-1/2 z-40 w-full max-w-3xl -translate-x-1/2 bg-white/90 dark:bg-[#232324]/90 backdrop-blur-xl border-t border-[#4F8EF7]/15 dark:border-slate-700/50">
+    // desktop viewport, ad columns included. On a tool page it sits above the anchor ad docked to
+    // the bottom of the viewport, instead of under it.
+    <nav
+      className="fixed left-1/2 z-40 w-full max-w-3xl -translate-x-1/2 bg-white/90 dark:bg-[#232324]/90 backdrop-blur-xl border-t border-[#4F8EF7]/15 dark:border-slate-700/50"
+      style={{ bottom: `var(${BOTTOM_AD_OFFSET_VAR}, 0px)` }}
+    >
       {/* Subtle background gradient */}
       <div className="absolute inset-0 bg-gradient-to-r from-[#4F8EF7]/3 via-transparent to-[#25CB78]/3 pointer-events-none" />
 

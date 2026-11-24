@@ -20,6 +20,7 @@ import { TailwindIndicator } from "@/components/utils/TailwindIndicator";
 import { NextTopLoader } from "@/components/ui/next-top-loader";
 import { ServiceWorkerRegistration } from "@/components/pwa/ServiceWorkerRegistration";
 import { AdScripts } from "@/components/ads/AdScripts";
+import { AdOverlayRouteSync } from "@/components/ads/AdOverlayRouteSync";
 import { VerticalLeftBanner, VerticalRightBanner, AdBlockerForPremium } from "@/components/ads";
 
 import "@/shared/styles/globals.css";
@@ -306,6 +307,9 @@ export default async function RootLayout({ params, children }: RootLayoutProps) 
           className={cn(
             "flex items-center justify-center min-h-screen w-full max-sm:p-0 max-sm:min-h-full bg-base-200 dark:bg-[#18181b] dark:text-gray-200 antialiased",
             "bg-hero-light dark:bg-hero-dark",
+            // Tells AdSense not to add ad intent chips, anchors and links: the floating chip lands on
+            // the header and on the form fields.
+            "google-anno-skip",
             GeistMono.variable,
             GeistSans.variable,
             inter.variable,
@@ -320,6 +324,7 @@ export default async function RootLayout({ params, children }: RootLayoutProps) 
             <ThemeSynchronizer />
             {/* <AdSenseAutoAds /> */}
             <AdBlockerForPremium />
+            <AdOverlayRouteSync />
             <NextTopLoader color="#FF5722" delay={100} showSpinner={false} />
 
             <div className="flex items-center justify-center min-h-screen w-full max-sm:min-h-full">

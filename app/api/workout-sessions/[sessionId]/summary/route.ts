@@ -60,14 +60,19 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
         if (set.completed) {
           totalSets++;
 
-          // Calculate reps
-          if (set.types.includes("REPS") && set.valuesInt.length > 0) {
-            const reps = set.valuesInt[0];
+          // Read reps/weight by their type index. Columns are user-reorderable,
+          // so REPS isn't necessarily column 0 or WEIGHT column 1; reading
+          // valuesInt[0]/[1] scrambled the totals when a set was e.g.
+          // [WEIGHT, REPS].
+          const repsIndex = set.types.indexOf("REPS");
+          const weightIndex = set.types.indexOf("WEIGHT");
+
+          if (repsIndex !== -1 && set.valuesInt && set.valuesInt[repsIndex]) {
+            const reps = set.valuesInt[repsIndex];
             totalReps += reps;
 
-            // Calculate volume if weight is present
-            if (set.types.includes("WEIGHT") && set.valuesInt.length > 1) {
-              const weight = set.valuesInt[1];
+            if (weightIndex !== -1 && set.valuesInt && set.valuesInt[weightIndex]) {
+              const weight = set.valuesInt[weightIndex];
               totalVolume += weight * reps;
               totalWeightLifted += weight;
             }

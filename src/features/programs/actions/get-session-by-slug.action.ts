@@ -165,7 +165,7 @@ export async function getSessionBySlug(
           suggestedSets: ex.suggestedSets.map((set) => ({
             id: set.id,
             programSessionExerciseId: set.programSessionExerciseId,
-            programExerciseId: set.programSessionExerciseId,
+            programExerciseId: ex.exerciseId,
             setIndex: set.setIndex,
             types: set.types,
             valuesInt: set.valuesInt,

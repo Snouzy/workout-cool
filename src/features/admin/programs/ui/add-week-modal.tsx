@@ -6,6 +6,8 @@ import { X } from "lucide-react";
 
 import { addWeekToProgram } from "../actions/add-week.action";
 
+import { useRouter } from "next/navigation";
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const weekSchema = z.object({
   title: z.string().min(1, "Le titre est requis"),
@@ -21,6 +23,8 @@ const weekSchema = z.object({
   descriptionRu: z.string().optional(),
   descriptionZhCn: z.string().optional(),
 });
+
+const router = useRouter();
 
 type WeekFormData = z.infer<typeof weekSchema>;
 
@@ -60,7 +64,7 @@ export function AddWeekModal({ open, onOpenChange, programId, nextWeekNumber }: 
       });
 
       onOpenChange(false);
-      window.location.reload(); // Refresh to show new week
+      router.refresh(); // Refresh to show new week
     } catch (error) {
       console.error("Error adding week:", error);
       alert("Erreur lors de l'ajout de la semaine");

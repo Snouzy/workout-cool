@@ -17,16 +17,18 @@ export const getUserPositionAction = actionClient.schema(inputSchema).action(asy
   try {
     const { startDate, endDate } = getDateRangeForPeriod(period);
 
+    // Only count sessions the user actually finished. Abandoned sessions keep
+    // status "active" with endedAt null and would otherwise inflate counts.
+    const completedSessionFilter = {
+      endedAt: { not: null },
+      ...(startDate && { startedAt: { gte: startDate, lte: endDate } }),
+    };
+
     // Get user's workout count
     const userWorkoutCount = await prisma.workoutSession.count({
       where: {
         userId,
-        ...(startDate && {
-          startedAt: {
-            gte: startDate,
-            lte: endDate,
-          },
-        }),
+        ...completedSessionFilter,
       },
     });
 
@@ -34,14 +36,7 @@ export const getUserPositionAction = actionClient.schema(inputSchema).action(asy
     const totalUsersWithWorkouts = await prisma.user.count({
       where: {
         WorkoutSession: {
-          some: startDate
-            ? {
-                startedAt: {
-                  gte: startDate,
-                  lte: endDate,
-                },
-              }
-            : {},
+          some: completedSessionFilter,
         },
       },
     });
@@ -50,30 +45,16 @@ export const getUserPositionAction = actionClient.schema(inputSchema).action(asy
     const allUsers = await prisma.user.findMany({
       where: {
         WorkoutSession: {
-          some: startDate
-            ? {
-                startedAt: {
-                  gte: startDate,
-                  lte: endDate,
-                },
-              }
-            : {},
+          some: completedSessionFilter,
         },
       },
       select: {
         id: true,
         _count: {
           select: {
-            WorkoutSession: startDate
-              ? {
-                  where: {
-                    startedAt: {
-                      gte: startDate,
-                      lte: endDate,
-                    },
-                  },
-                }
-              : true,
+            WorkoutSession: {
+              where: completedSessionFilter,
+            },
           },
         },
       },
@@ -83,6 +64,10 @@ export const getUserPositionAction = actionClient.schema(inputSchema).action(asy
         },
       },
     });
+
+    // Order by the number of *completed* sessions so abandoned ones cannot
+    // push a user up the ranking (the DB _count orderBy above is unfiltered).
+    allUsers.sort((a, b) => b._count.WorkoutSession - a._count.WorkoutSession);
 
     const position = allUsers.findIndex((user) => user.id === userId) + 1;
 
